@@ -1,0 +1,6 @@
+hts-cache/
+*.zip
+*.pyc
+__pycache__/
+.tempmediaStorage/
+.gemini/
