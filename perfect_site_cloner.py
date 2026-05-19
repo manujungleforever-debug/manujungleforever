@@ -385,10 +385,24 @@ for folder in PAGES:
     hero_bg_path = rel_prefix + hero_bg
     og_image = hero_bg_path
     
-    # Analyze if it's a tour (contains itinerary accordions or icon-lists with day keywords)
     is_tour = False
     if main_el.select('.elementor-accordion-item') or 'day' in folder.lower() or 'expedition' in folder.lower() or 'road-trip' in folder.lower():
         is_tour = True
+        
+    if is_tour:
+        correct_days = None
+        try:
+            parts = folder.split('-')
+            if parts[0].isdigit():
+                correct_days = parts[0]
+        except:
+            pass
+        if correct_days:
+            # Correct any mismatched SEO titles and metadata (e.g., "4-Day" to "2-Day" based on folder)
+            title = re.sub(r'\b\d+[- ]*(?:[Dd]ay[s]?)\b', f"{correct_days}-Day", title)
+            description = re.sub(r'\b\d+[- ]*(?:[Dd]ay[s]?)\b', f"{correct_days}-Day", description)
+            og_title = re.sub(r'\b\d+[- ]*(?:[Dd]ay[s]?)\b', f"{correct_days}-Day", og_title)
+            og_description = re.sub(r'\b\d+[- ]*(?:[Dd]ay[s]?)\b', f"{correct_days}-Day", og_description)
         
     # We will build two streams:
     # 1. Main rich text flow
