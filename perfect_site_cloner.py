@@ -329,22 +329,37 @@ def relative_urls(html_str, rel_prefix):
     html_str = html_str.replace('/index.html/index.html', '/index.html')
     return html_str
 
+LIVE_FETCH_PAGES = ['departures']
+
 z = zipfile.ZipFile(ZIP_PATH, 'r')
 
 for folder in PAGES:
     url = f"https://www.hiddenjunglecusco.com/{folder}/"
     print(f"Cloning {url} ...")
     
-    try:
-        html = z.read(url)
-    except KeyError:
-        print(f"  Warning: page not found in zip as {url}, trying contact or alternative formats...")
-        # Try without trailing slash
+    html = None
+    if folder in LIVE_FETCH_PAGES:
+        print(f"  Fetching FRESH live page from {url}...")
+        import urllib.request
+        headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
+        req = urllib.request.Request(url, headers=headers)
         try:
-            html = z.read(url[:-1])
+            with urllib.request.urlopen(req) as response:
+                html = response.read()
+        except Exception as e:
+            print(f"  Error fetching live page: {e}, falling back to zip cache...")
+            
+    if html is None:
+        try:
+            html = z.read(url)
         except KeyError:
-            print(f"  CRITICAL ERROR: {url} is completely missing in zip cache!")
-            continue
+            print(f"  Warning: page not found in zip as {url}, trying contact or alternative formats...")
+            # Try without trailing slash
+            try:
+                html = z.read(url[:-1])
+            except KeyError:
+                print(f"  CRITICAL ERROR: {url} is completely missing in zip cache!")
+                continue
 
     soup = BeautifulSoup(html, 'html.parser')
     
