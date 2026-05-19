@@ -73,7 +73,8 @@ HERO_IMAGES = {
     "rainforest-road-trip-from-cusco": "wp-content/uploads/2022/10/Hero-wildlife-cuest-3-dyas-machuwasi.jpg",
     "amazon-expedition-from-cusco": "wp-content/uploads/2022/10/Hero-Road-trip-4-days.jpg",
     "cusco-to-machu-wasi": "wp-content/uploads/2022/10/Hero-wildlife-cuest-3-dyas-machuwasi.jpg",
-    "cusco-to-nuevo-eden": "wp-content/uploads/2022/10/Hero-wildlife-cuest-4-dyas-eden.jpg"
+    "cusco-to-nuevo-eden": "wp-content/uploads/2022/10/Hero-wildlife-cuest-4-dyas-eden.jpg",
+    "departures": "wp-content/uploads/2022/10/Hero-Departures.jpg"
 }
 
 # General style tokens & styling definitions
