@@ -51,8 +51,8 @@ custom_styles = """
 }
 .reclamo-header i {
   font-size: 3rem;
-  color: #00e5ff;
-  text-shadow: 0 0 15px rgba(0,229,255,0.6);
+  color: var(--a);
+  text-shadow: 0 0 15px rgba(201,168,76,0.5);
   margin-bottom: 15px;
 }
 .reclamo-header h1 {
@@ -61,21 +61,21 @@ custom_styles = """
   color: #fff;
   margin-bottom: 10px;
 }
-.reclamo-header h1 span { color: #00e5ff; }
+.reclamo-header h1 span { color: var(--a); }
 .reclamo-header p {
   color: rgba(255,255,255,0.6);
   font-size: 0.9rem;
 }
 .reclamo-box {
-  background: #11141a;
+  background: var(--d);
   border: 1px solid rgba(255,255,255,0.05);
   border-radius: 16px;
   padding: 30px;
   margin-bottom: 30px;
 }
 .reclamo-box.glow {
-  border: 1px solid rgba(0,229,255,0.2);
-  box-shadow: inset 0 0 20px rgba(0,229,255,0.05);
+  border: 1px solid rgba(201,168,76,0.3);
+  box-shadow: inset 0 0 20px rgba(201,168,76,0.03);
 }
 .reclamo-box h3 {
   color: #fff;
@@ -84,7 +84,7 @@ custom_styles = """
   margin-bottom: 10px;
 }
 .reclamo-box.glow h3 {
-  color: #00e5ff;
+  color: var(--a);
 }
 .reclamo-box p {
   font-size: 0.85rem;
@@ -119,12 +119,12 @@ custom_styles = """
 }
 .reclamo-input-group input:focus, .reclamo-input-group textarea:focus, .reclamo-input-group select:focus {
   outline: none;
-  border-color: #00e5ff;
-  box-shadow: 0 0 0 2px rgba(0,229,255,0.2);
+  border-color: var(--a);
+  box-shadow: 0 0 0 2px rgba(201,168,76,0.25);
 }
 .reclamo-submit {
-  background: #00e5ff;
-  color: #000;
+  background: var(--a);
+  color: var(--k);
   border: none;
   padding: 14px 32px;
   font-weight: 700;
@@ -135,8 +135,8 @@ custom_styles = """
   font-size: 1rem;
 }
 .reclamo-submit:hover {
-  background: #fff;
-  box-shadow: 0 0 15px rgba(0,229,255,0.5);
+  background: var(--al);
+  box-shadow: 0 0 15px rgba(201,168,76,0.4);
 }
 """
 
