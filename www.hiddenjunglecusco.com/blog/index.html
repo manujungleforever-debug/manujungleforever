@@ -210,6 +210,39 @@
   50%      { transform: scale(1.07); }
 }
 
+
+/* ── Legal Footer Section ── */
+.fg-legal {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  margin-top: 56px;
+  padding-top: 48px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+@media(max-width: 768px) {
+  .fg-legal { grid-template-columns: 1fr; }
+}
+.leg-col h3 { font-family: 'Outfit', sans-serif; font-size: 1.4rem; color: #fff; margin-bottom: 24px; font-weight: 600; }
+.leg-links { list-style: none; padding: 0; margin: 0; }
+.leg-links li { margin-bottom: 16px; }
+.leg-links a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 1.05rem; display: flex; align-items: center; gap: 12px; transition: color 0.2s; }
+.leg-links a:hover { color: var(--a); }
+.leg-links a i { color: #4488ff; font-size: 0.9rem; }
+
+.libro-box {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  padding: 32px;
+  text-align: center;
+  transition: border-color 0.3s;
+  height: 100%;
+  box-sizing: border-box;
+}
+.libro-box:hover { border-color: rgba(255,255,255,0.2); }
+.libro-box p { font-size: 0.85rem; color: rgba(255,255,255,0.6); line-height: 1.6; margin: 0; }
+
 </style>
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-5476BC9');</script>
 </head><body>
@@ -467,6 +500,31 @@
       <li><a href="../amazon-rainforest-tour-to-manu-national-park-from-cusco/index.html">Amazon Rainforest Tour to Manu National Park ...</a></li><li><a href="../sustainable-tourism-in-the-manu-biosphere-reserve-conservation-through-private-agricultural-lands/index.html">Sustainable Tourism in the Manu Biosphere Res...</a></li><li><a href="../manu-national-park-in-8-days-complete-travel-guide-to-the-peruvian-amazon/index.html">Manu National Park in 8 Days: Complete Travel...</a></li><li><a href="../what-to-see-when-traveling-to-the-peruvian-amazon-complete-guide-2026/index.html">What you will See When Traveling to the Peruv...</a></li><li><a href="../climate-change-manu-national-park-peru/index.html">Climate Change in Manu National Park: Protect...</a></li><li><a href="../how-tourism-helps-the-manu-national-park/index.html">How Tourism Helps the Manu National Park</a></li>
     </ul></div>
   </div>
+  
+  <div class="fg-legal">
+    <div class="leg-col">
+      <h3>Soporte y Legal</h3>
+      <ul class="leg-links">
+        <li><a href="../contact/index.html"><i class="fas fa-angle-double-right"></i> Contáctenos</a></li>
+        <li><a href="../faq/index.html"><i class="fas fa-angle-double-right"></i> Preguntas frecuentes</a></li>
+        <li><a href="../terms-and-conditions/index.html"><i class="fas fa-angle-double-right"></i> Términos y Condiciones</a></li>
+        <li><a href="../privacy-policy/index.html"><i class="fas fa-angle-double-right"></i> Política de privacidad</a></li>
+        <li><a href="../cookies-policy/index.html"><i class="fas fa-angle-double-right"></i> Política de Cookies</a></li>
+      </ul>
+    </div>
+    <div class="leg-col">
+      <a href="../libro-de-reclamaciones/index.html" style="text-decoration:none; display:block;">
+        <div class="libro-box">
+          <div style="background:#fff; border-radius:12px; padding:20px 24px; display:inline-flex; flex-direction:column; align-items:center; margin-bottom:24px; box-shadow:0 4px 12px rgba(0,0,0,0.15);">
+            <div style="color:#007bff; font-weight:800; font-size:1.15rem; line-height:1.2; font-family:Arial,sans-serif; text-align:center;">Libro de<br>Reclamaciones</div>
+            <i class="fas fa-book-open" style="color:#555; font-size:2.2rem; margin-top:12px;"></i>
+          </div>
+          <p>Conforme al Código de Protección y Defensa del Consumidor contamos con un Libro de Reclamaciones Virtual. Solicítalo para registrar una queja o reclamo.</p>
+        </div>
+      </a>
+    </div>
+  </div>
+
   <div class="fb"><div class="fbi"><span>Copyright &copy; 2026 Hidden Jungle Cusco. All rights reserved.</span><span>Site design: Meyer Consulting and Management</span></div></div>
 </div></footer>
 
