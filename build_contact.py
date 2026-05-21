@@ -1,55 +1,63 @@
-<!doctype html><html lang="en"><head>
+import re, sys, os
+sys.stdout.reconfigure(encoding='utf-8')
+
+REL = '../'
+OUT_FILE = 'www.hiddenjunglecusco.com/contact/index.html'
+
+COMMON_CSS = """
+.in-hero { position: relative; padding: 220px 0 140px; background-size: cover; background-position: center; background-repeat: no-repeat; text-align: center; }
+.in-hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(5,13,8,.3) 0%, rgba(5,13,8,.85) 100%); z-index: 1; }
+.in-hero .cx { position: relative; z-index: 2; }
+@media(max-width:991px) { .tour-layout { grid-template-columns: 1fr; gap: 40px; } }
+"""
+
+HEADER = f"""<!doctype html><html lang="en"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Contact – Hidden Jungle Cusco – What Will You Discover?</title>
 <meta name="description" content="Want to know a bit more about The Peruvian Rainforest or Trips from Cusco? Get in Touch! We would be happy tell you more! Contact Us Now!">
 <meta property="og:title" content="Contact">
 <meta property="og:description" content="Want to know a bit more about The Peruvian Rainforest or Trips from Cusco? Get in Touch! We would be happy tell you more! Contact Us Now!">
-<meta property="og:image" content="../wp-content/uploads/2018/02/HiddenJungleCusco_Sliders2.jpg">
+<meta property="og:image" content="{REL}wp-content/uploads/2018/02/HiddenJungleCusco_Sliders2.jpg">
 <meta property="og:type" content="website"><meta property="og:url" content="https://www.hiddenjunglecusco.com/contact/">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://www.hiddenjunglecusco.com/contact/">
-<link rel="icon" href="../wp-content/uploads/2018/01/cropped-HJC_Logo_PlainSeal_2Color-32x32.png" sizes="32x32">
-<link rel="apple-touch-icon" href="../wp-content/uploads/2018/01/cropped-HJC_Logo_PlainSeal_2Color-180x180.png">
+<link rel="icon" href="{REL}wp-content/uploads/2018/01/cropped-HJC_Logo_PlainSeal_2Color-32x32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="{REL}wp-content/uploads/2018/01/cropped-HJC_Logo_PlainSeal_2Color-180x180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous">
-<link rel="stylesheet" href="../assets/css/new.css">
+<link rel="stylesheet" href="{REL}assets/css/new.css">
 <style>
-
-.in-hero { position: relative; padding: 220px 0 140px; background-size: cover; background-position: center; background-repeat: no-repeat; text-align: center; }
-.in-hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(5,13,8,.3) 0%, rgba(5,13,8,.85) 100%); z-index: 1; }
-.in-hero .cx { position: relative; z-index: 2; }
-@media(max-width:991px) { .tour-layout { grid-template-columns: 1fr; gap: 40px; } }
-
+{COMMON_CSS}
 
 /* Contact page specific */
-.contact-grid {
+.contact-grid {{
   display: grid;
   grid-template-columns: 1fr 1.3fr;
   gap: 64px;
   margin-top: 60px;
   align-items: start;
-}
-@media(max-width:900px) {
-  .contact-grid { grid-template-columns: 1fr; gap: 40px; }
-}
-.contact-info-card {
+}}
+@media(max-width:900px) {{
+  .contact-grid {{ grid-template-columns: 1fr; gap: 40px; }}
+}}
+.contact-info-card {{
   background: var(--f);
   border: 1px solid rgba(255,255,255,.07);
   border-radius: 24px;
   padding: 40px;
   position: sticky;
   top: 100px;
-}
-.contact-info-item {
+}}
+.contact-info-item {{
   display: flex;
   align-items: flex-start;
   gap: 18px;
   padding: 20px 0;
   border-bottom: 1px solid rgba(255,255,255,.05);
-}
-.contact-info-item:last-child { border-bottom: none; }
-.ci-icon {
+}}
+.contact-info-item:last-child {{ border-bottom: none; }}
+.ci-icon {{
   width: 46px;
   height: 46px;
   border-radius: 50%;
@@ -61,32 +69,32 @@
   color: var(--a);
   font-size: 1.1rem;
   flex-shrink: 0;
-}
-.ci-label {
+}}
+.ci-label {{
   font-size: .72rem;
   text-transform: uppercase;
   letter-spacing: .1em;
   color: rgba(255,255,255,.35);
   margin-bottom: 4px;
-}
-.ci-val {
+}}
+.ci-val {{
   font-size: .95rem;
   color: rgba(255,255,255,.85);
   line-height: 1.5;
-}
-.ci-val a { color: rgba(255,255,255,.85); text-decoration: none; transition: color .2s; }
-.ci-val a:hover { color: var(--a); }
+}}
+.ci-val a {{ color: rgba(255,255,255,.85); text-decoration: none; transition: color .2s; }}
+.ci-val a:hover {{ color: var(--a); }}
 
 /* Form card */
-.form-card {
+.form-card {{
   background: var(--f);
   border: 1px solid rgba(255,255,255,.07);
   border-radius: 24px;
   padding: 48px;
-}
-@media(max-width:600px) { .form-card { padding: 28px 20px; } }
-.form-row { margin-bottom: 24px; }
-.form-row label {
+}}
+@media(max-width:600px) {{ .form-card {{ padding: 28px 20px; }} }}
+.form-row {{ margin-bottom: 24px; }}
+.form-row label {{
   display: block;
   font-size: .8rem;
   font-weight: 600;
@@ -94,10 +102,10 @@
   letter-spacing: .08em;
   color: rgba(255,255,255,.5);
   margin-bottom: 8px;
-}
+}}
 .form-row input,
 .form-row textarea,
-.form-row select {
+.form-row select {{
   width: 100%;
   background: rgba(255,255,255,.04);
   border: 1px solid rgba(255,255,255,.1);
@@ -109,33 +117,33 @@
   transition: border-color .2s, box-shadow .2s;
   outline: none;
   box-sizing: border-box;
-}
+}}
 .form-row input:focus,
 .form-row textarea:focus,
-.form-row select:focus {
+.form-row select:focus {{
   border-color: rgba(201,168,76,.5);
   box-shadow: 0 0 0 3px rgba(201,168,76,.08);
-}
-.form-row textarea { min-height: 130px; resize: vertical; }
-.form-2col {
+}}
+.form-row textarea {{ min-height: 130px; resize: vertical; }}
+.form-2col {{
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
-}
-@media(max-width:600px) { .form-2col { grid-template-columns: 1fr; } }
-.form-req { color: var(--a); }
-.form-msg { border-radius: 10px; padding: 14px 18px; margin-bottom: 20px; display:none; font-size:.9rem; }
-.form-msg.ok { display:block; background: rgba(57,255,106,.1); border:1px solid rgba(57,255,106,.3); color:#39ff6a; }
-.form-msg.er { display:block; background: rgba(255,80,80,.1); border:1px solid rgba(255,80,80,.3); color:#ff6b6b; }
+}}
+@media(max-width:600px) {{ .form-2col {{ grid-template-columns: 1fr; }} }}
+.form-req {{ color: var(--a); }}
+.form-msg {{ border-radius: 10px; padding: 14px 18px; margin-bottom: 20px; display:none; font-size:.9rem; }}
+.form-msg.ok {{ display:block; background: rgba(57,255,106,.1); border:1px solid rgba(57,255,106,.3); color:#39ff6a; }}
+.form-msg.er {{ display:block; background: rgba(255,80,80,.1); border:1px solid rgba(255,80,80,.3); color:#ff6b6b; }}
 
 /* Social icons row */
-.social-row {
+.social-row {{
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
   margin-top: 28px;
-}
-.soc-btn {
+}}
+.soc-btn {{
   display: flex;
   align-items: center;
   justify-content: center;
@@ -147,26 +155,26 @@
   font-size: 1.1rem;
   text-decoration: none;
   transition: border-color .2s, color .2s, background .2s;
-}
-.soc-btn:hover { border-color: var(--a); color: var(--a); background: rgba(201,168,76,.08); }
+}}
+.soc-btn:hover {{ border-color: var(--a); color: var(--a); background: rgba(201,168,76,.08); }}
 
 /* Map section */
-.map-container {
+.map-container {{
   width: 100%;
   height: 320px;
   border-radius: 16px;
   overflow: hidden;
   margin-top: 40px;
   border: 1px solid rgba(255,255,255,.07);
-}
-.map-container iframe {
+}}
+.map-container iframe {{
   width: 100%;
   height: 100%;
   border: none;
-}
+}}
 
 /* WhatsApp CTA */
-.wa-cta-bar {
+.wa-cta-bar {{
   background: linear-gradient(135deg, rgba(37,211,102,.12) 0%, rgba(18,140,80,.08) 100%);
   border: 1px solid rgba(37,211,102,.2);
   border-radius: 20px;
@@ -177,10 +185,10 @@
   gap: 24px;
   margin-top: 56px;
   flex-wrap: wrap;
-}
-.wa-cta-text p { color: rgba(255,255,255,.65); margin: 6px 0 0; font-size:.9rem; }
-.wa-cta-text h3 { font-family:'Syne',sans-serif; font-size:1.35rem; color:#fff; margin:0; }
-.wa-cta-bar .btn-wa {
+}}
+.wa-cta-text p {{ color: rgba(255,255,255,.65); margin: 6px 0 0; font-size:.9rem; }}
+.wa-cta-text h3 {{ font-family:'Syne',sans-serif; font-size:1.35rem; color:#fff; margin:0; }}
+.wa-cta-bar .btn-wa {{
   display: inline-flex;
   align-items: center;
   gap: 10px;
@@ -194,71 +202,71 @@
   white-space: nowrap;
   box-shadow: 0 4px 20px rgba(37,211,102,.3);
   transition: transform .2s, box-shadow .2s;
-}
-.wa-cta-bar .btn-wa:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(37,211,102,.45); }
+}}
+.wa-cta-bar .btn-wa:hover {{ transform: translateY(-2px); box-shadow: 0 8px 28px rgba(37,211,102,.45); }}
 </style>
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-5476BC9');</script>
+<script>(function(w,d,s,l,i){{w[l]=w[l]||[];w[l].push({{'gtm.start':new Date().getTime(),event:'gtm.js'}});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);}})(window,document,'script','dataLayer','GTM-5476BC9');</script>
 </head><body>
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5476BC9" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <a class="skip" href="#main">Skip to content</a>
 
 <header id="N"><div class="cx ni">
-  <div class="nl"><a href="../index.html"><img src="../wp-content/uploads/2018/01/cropped-HiddenJungleCusco_Logo-1.png" alt="Hidden Jungle Cusco" width="190" height="54" loading="eager"></a></div>
+  <div class="nl"><a href="{REL}index.html"><img src="{REL}wp-content/uploads/2018/01/cropped-HiddenJungleCusco_Logo-1.png" alt="Hidden Jungle Cusco" width="190" height="54" loading="eager"></a></div>
   <nav class="nm" aria-label="Main navigation">
-    <a href="../index.html">Home</a>
-    <div class="hd"><a href="../guided-tours/index.html">Guided Tours <i class="fas fa-caret-down"></i></a>
+    <a href="{REL}index.html">Home</a>
+    <div class="hd"><a href="{REL}guided-tours/index.html">Guided Tours <i class="fas fa-caret-down"></i></a>
       <ul class="dm">
-        <li><a href="../wildlife-tours-from-cusco/index.html">Wildlife Tours From Cusco</a></li>
-        <li><a href="../3-day-wildlife-quest-machu-wasi/index.html">3-Day Wildlife – Machu Wasi</a></li>
-        <li><a href="../4-day-wildlife-quest-machu-wasi/index.html">4-Day Wildlife – Machu Wasi</a></li>
-        <li><a href="../4-day-wildlife-quest-nuevo-eden/index.html">4-Day Wildlife – Nuevo Eden</a></li>
-        <li><a href="../5-day-wildlife-quest-nuevo-eden/index.html">5-Day Wildlife – Nuevo Eden</a></li>
-        <li><a href="../6-day-wildlife-quest-blanquillo/index.html">6-Day Wildlife – Blanquillo</a></li>
-        <li><a href="../6-day-wildlife-quest-reserved-zone/index.html">Manu Reserved Zone – 6 Days</a></li>
-        <li><a href="../8-day-wildlife-photography-tour/index.html">Wildlife Photography – 8 Days</a></li>
-        <li><a href="../rainforest-road-trip-from-cusco/index.html">Rainforest Road Trip</a></li>
-        <li><a href="../5-day-amazon-expedition/index.html">5-Day Amazon Expedition</a></li>
-        <li><a href="../6-day-amazon-expedition/index.html">6-Day Amazon Expedition</a></li>
+        <li><a href="{REL}wildlife-tours-from-cusco/index.html">Wildlife Tours From Cusco</a></li>
+        <li><a href="{REL}3-day-wildlife-quest-machu-wasi/index.html">3-Day Wildlife – Machu Wasi</a></li>
+        <li><a href="{REL}4-day-wildlife-quest-machu-wasi/index.html">4-Day Wildlife – Machu Wasi</a></li>
+        <li><a href="{REL}4-day-wildlife-quest-nuevo-eden/index.html">4-Day Wildlife – Nuevo Eden</a></li>
+        <li><a href="{REL}5-day-wildlife-quest-nuevo-eden/index.html">5-Day Wildlife – Nuevo Eden</a></li>
+        <li><a href="{REL}6-day-wildlife-quest-blanquillo/index.html">6-Day Wildlife – Blanquillo</a></li>
+        <li><a href="{REL}6-day-wildlife-quest-reserved-zone/index.html">Manu Reserved Zone – 6 Days</a></li>
+        <li><a href="{REL}8-day-wildlife-photography-tour/index.html">Wildlife Photography – 8 Days</a></li>
+        <li><a href="{REL}rainforest-road-trip-from-cusco/index.html">Rainforest Road Trip</a></li>
+        <li><a href="{REL}5-day-amazon-expedition/index.html">5-Day Amazon Expedition</a></li>
+        <li><a href="{REL}6-day-amazon-expedition/index.html">6-Day Amazon Expedition</a></li>
       </ul>
     </div>
-    <a href="../about-2/index.html">About Us</a>
-    <a href="../departures/index.html">Departures</a>
-    <a href="../news-and-gallery/index.html">Gallery</a>
-    <a href="../blog/index.html">Blog</a>
-    <a href="../contact/index.html" class="nb on">Book Now</a>
+    <a href="{REL}about-2/index.html">About Us</a>
+    <a href="{REL}departures/index.html">Departures</a>
+    <a href="{REL}news-and-gallery/index.html">Gallery</a>
+    <a href="{REL}blog/index.html">Blog</a>
+    <a href="{REL}contact/index.html" class="nb on">Book Now</a>
   </nav>
   <button class="bg" id="bg" aria-label="Toggle menu" aria-expanded="false"><span class="bb"></span><span class="bb"></span><span class="bb"></span></button>
 </div></header>
 
 <div class="mo" id="mo" aria-hidden="true">
   <ul class="ml">
-    <li><a href="../index.html">Home</a></li>
+    <li><a href="{REL}index.html">Home</a></li>
     <li><button class="mb" id="mbt">Guided Tours <i class="fas fa-caret-down"></i></button>
       <ul class="md" id="mdd">
-        <li><a href="../wildlife-tours-from-cusco/index.html">Wildlife Tours From Cusco</a></li>
-        <li><a href="../3-day-wildlife-quest-machu-wasi/index.html">3-Day Wildlife – Machu Wasi</a></li>
-        <li><a href="../4-day-wildlife-quest-machu-wasi/index.html">4-Day Wildlife – Machu Wasi</a></li>
-        <li><a href="../4-day-wildlife-quest-nuevo-eden/index.html">4-Day Wildlife – Nuevo Eden</a></li>
-        <li><a href="../5-day-wildlife-quest-nuevo-eden/index.html">5-Day Wildlife – Nuevo Eden</a></li>
-        <li><a href="../6-day-wildlife-quest-blanquillo/index.html">6-Day Wildlife – Blanquillo</a></li>
-        <li><a href="../6-day-wildlife-quest-reserved-zone/index.html">Manu Reserved Zone – 6 Days</a></li>
-        <li><a href="../8-day-wildlife-photography-tour/index.html">Wildlife Photography – 8 Days</a></li>
-        <li><a href="../2-day-rainforest-road-trip/index.html">2-Day Road Trip</a></li>
-        <li><a href="../5-day-rainforest-road-trip/index.html">5-Day Road Trip</a></li>
-        <li><a href="../5-day-amazon-expedition/index.html">5-Day Amazon Expedition</a></li>
-        <li><a href="../6-day-amazon-expedition/index.html">6-Day Amazon Expedition</a></li>
+        <li><a href="{REL}wildlife-tours-from-cusco/index.html">Wildlife Tours From Cusco</a></li>
+        <li><a href="{REL}3-day-wildlife-quest-machu-wasi/index.html">3-Day Wildlife – Machu Wasi</a></li>
+        <li><a href="{REL}4-day-wildlife-quest-machu-wasi/index.html">4-Day Wildlife – Machu Wasi</a></li>
+        <li><a href="{REL}4-day-wildlife-quest-nuevo-eden/index.html">4-Day Wildlife – Nuevo Eden</a></li>
+        <li><a href="{REL}5-day-wildlife-quest-nuevo-eden/index.html">5-Day Wildlife – Nuevo Eden</a></li>
+        <li><a href="{REL}6-day-wildlife-quest-blanquillo/index.html">6-Day Wildlife – Blanquillo</a></li>
+        <li><a href="{REL}6-day-wildlife-quest-reserved-zone/index.html">Manu Reserved Zone – 6 Days</a></li>
+        <li><a href="{REL}8-day-wildlife-photography-tour/index.html">Wildlife Photography – 8 Days</a></li>
+        <li><a href="{REL}2-day-rainforest-road-trip/index.html">2-Day Road Trip</a></li>
+        <li><a href="{REL}5-day-rainforest-road-trip/index.html">5-Day Road Trip</a></li>
+        <li><a href="{REL}5-day-amazon-expedition/index.html">5-Day Amazon Expedition</a></li>
+        <li><a href="{REL}6-day-amazon-expedition/index.html">6-Day Amazon Expedition</a></li>
       </ul>
     </li>
-    <li><a href="../about-2/index.html">About Us</a></li>
-    <li><a href="../departures/index.html">Departures</a></li>
-    <li><a href="../news-and-gallery/index.html">Gallery</a></li>
-    <li><a href="../blog/index.html">Blog</a></li>
-    <li><a href="../contact/index.html">Contact</a></li>
+    <li><a href="{REL}about-2/index.html">About Us</a></li>
+    <li><a href="{REL}departures/index.html">Departures</a></li>
+    <li><a href="{REL}news-and-gallery/index.html">Gallery</a></li>
+    <li><a href="{REL}blog/index.html">Blog</a></li>
+    <li><a href="{REL}contact/index.html">Contact</a></li>
   </ul>
 </div>
 
 <main id="main">
-<section class="in-hero" style="background-image: url('../wp-content/uploads/2018/02/HiddenJungleCusco_Sliders2.jpg');">
+<section class="in-hero" style="background-image: url('{REL}wp-content/uploads/2018/02/HiddenJungleCusco_Sliders2.jpg');">
   <div class="cx">
     <span class="ey">Hidden Jungle Cusco</span>
     <h1 class="h1" style="font-size:clamp(2.5rem,6vw,4.5rem)">Get in Touch</h1>
@@ -420,7 +428,7 @@
 <footer class="ft"><div class="cx">
   <div class="fg">
     <div>
-      <a href="../index.html"><img src="../wp-content/uploads/2018/01/HiddenJungleCusco_Logo_TextSeal_3Color.png" alt="Hidden Jungle Cusco" class="fl" loading="lazy"></a>
+      <a href="{REL}index.html"><img src="{REL}wp-content/uploads/2018/01/HiddenJungleCusco_Logo_TextSeal_3Color.png" alt="Hidden Jungle Cusco" class="fl" loading="lazy"></a>
       <p class="fa">Guided jungle tours from Cusco to the Manu National Park &amp; the Peruvian Amazon. Local. Wild. Authentic.</p>
       <address class="fc">
         <p><i class="fas fa-map-marker-alt"></i><a href="https://goo.gl/maps/B8NjhLZizA6YKwKD6" target="_blank" rel="noopener">Hidden Jungle Cusco – La Casa Escondida 17800, Nuevo Eden, Peru</a></p>
@@ -436,9 +444,9 @@
         <a href="https://www.tiktok.com/@hidden.jungle.cus" class="sc" target="_blank" rel="noopener" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
       </div>
     </div>
-    <div><p class="fh">Explore</p><ul class="fli"><li><a href="../index.html">Home</a></li><li><a href="../about-2/index.html">About Us</a></li><li><a href="../guided-tours/index.html">Guided Jungle Tours</a></li><li><a href="../departures/index.html">Departures</a></li><li><a href="../news-and-gallery/index.html">Gallery</a></li><li><a href="../blog/index.html">Blog</a></li><li><a href="../contact/index.html">Contact</a></li></ul></div>
-    <div><p class="fh">Wildlife Tours</p><ul class="fli"><li><a href="../3-day-wildlife-quest-machu-wasi/index.html">3-Day Wildlife Tour</a></li><li><a href="../4-day-wildlife-quest-machu-wasi/index.html">4-Day Wildlife – Machu Wasi</a></li><li><a href="../4-day-wildlife-quest-nuevo-eden/index.html">4-Day Wildlife – Nuevo Eden</a></li><li><a href="../5-day-wildlife-quest-nuevo-eden/index.html">5-Day Wildlife – Nuevo Eden</a></li><li><a href="../6-day-wildlife-quest-blanquillo/index.html">6-Day Wildlife – Blanquillo</a></li><li><a href="../6-day-wildlife-quest-reserved-zone/index.html">Manu Reserved Zone – 6 Days</a></li><li><a href="../8-day-wildlife-photography-tour/index.html">Wildlife Photography – 8 Days</a></li></ul></div>
-    <div><p class="fh">Expeditions</p><ul class="fli"><li><a href="../5-day-amazon-expedition/index.html">5-Day Amazon Expedition</a></li><li><a href="../6-day-amazon-expedition/index.html">6-Day Amazon Expedition</a></li><li><a href="../2-day-rainforest-road-trip/index.html">2-Day Road Trip</a></li><li><a href="../5-day-rainforest-road-trip/index.html">5-Day Road Trip</a></li><li><a href="../live-like-a-local-4d-3n/index.html">Live Like a Local – 4D/3N</a></li><li><a href="../live-like-a-local-5d-4n/index.html">Live Like a Local – 5D/4N</a></li></ul></div>
+    <div><p class="fh">Explore</p><ul class="fli"><li><a href="{REL}index.html">Home</a></li><li><a href="{REL}about-2/index.html">About Us</a></li><li><a href="{REL}guided-tours/index.html">Guided Jungle Tours</a></li><li><a href="{REL}departures/index.html">Departures</a></li><li><a href="{REL}news-and-gallery/index.html">Gallery</a></li><li><a href="{REL}blog/index.html">Blog</a></li><li><a href="{REL}contact/index.html">Contact</a></li></ul></div>
+    <div><p class="fh">Wildlife Tours</p><ul class="fli"><li><a href="{REL}3-day-wildlife-quest-machu-wasi/index.html">3-Day Wildlife Tour</a></li><li><a href="{REL}4-day-wildlife-quest-machu-wasi/index.html">4-Day Wildlife – Machu Wasi</a></li><li><a href="{REL}4-day-wildlife-quest-nuevo-eden/index.html">4-Day Wildlife – Nuevo Eden</a></li><li><a href="{REL}5-day-wildlife-quest-nuevo-eden/index.html">5-Day Wildlife – Nuevo Eden</a></li><li><a href="{REL}6-day-wildlife-quest-blanquillo/index.html">6-Day Wildlife – Blanquillo</a></li><li><a href="{REL}6-day-wildlife-quest-reserved-zone/index.html">Manu Reserved Zone – 6 Days</a></li><li><a href="{REL}8-day-wildlife-photography-tour/index.html">Wildlife Photography – 8 Days</a></li></ul></div>
+    <div><p class="fh">Expeditions</p><ul class="fli"><li><a href="{REL}5-day-amazon-expedition/index.html">5-Day Amazon Expedition</a></li><li><a href="{REL}6-day-amazon-expedition/index.html">6-Day Amazon Expedition</a></li><li><a href="{REL}2-day-rainforest-road-trip/index.html">2-Day Road Trip</a></li><li><a href="{REL}5-day-rainforest-road-trip/index.html">5-Day Road Trip</a></li><li><a href="{REL}live-like-a-local-4d-3n/index.html">Live Like a Local – 4D/3N</a></li><li><a href="{REL}live-like-a-local-5d-4n/index.html">Live Like a Local – 5D/4N</a></li></ul></div>
   </div>
   <div class="fb"><div class="fbi"><span>Copyright &copy; 2026 Hidden Jungle Cusco. All rights reserved.</span><span>Site design: Meyer Consulting and Management</span></div></div>
 </div></footer>
@@ -480,43 +488,43 @@
 </div>
 
 <script>
-(function(){
+(function(){{
   const N=document.getElementById('N');
-  window.addEventListener('scroll',()=>N.classList.toggle('s',scrollY>60),{passive:true});
+  window.addEventListener('scroll',()=>N.classList.toggle('s',scrollY>60),{{passive:true}});
   const bg=document.getElementById('bg'),mo=document.getElementById('mo');
-  bg.addEventListener('click',()=>{const o=mo.classList.toggle('o');bg.classList.toggle('o',o);bg.setAttribute('aria-expanded',o);mo.setAttribute('aria-hidden',!o);document.body.style.overflow=o?'hidden':'';});
+  bg.addEventListener('click',()=>{{const o=mo.classList.toggle('o');bg.classList.toggle('o',o);bg.setAttribute('aria-expanded',o);mo.setAttribute('aria-hidden',!o);document.body.style.overflow=o?'hidden':'';}});
   document.getElementById('mbt').addEventListener('click',()=>document.getElementById('mdd').classList.toggle('o'));
-  const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('v');obs.unobserve(e.target);}}),{threshold:.1});
+  const obs=new IntersectionObserver(es=>es.forEach(e=>{{if(e.isIntersecting){{e.target.classList.add('v');obs.unobserve(e.target);}}}}),{{threshold:.1}});
   document.querySelectorAll('.r,.rl,.rr').forEach(el=>obs.observe(el));
-})();
-function openModal() { const m = document.getElementById('modal'); m.classList.add('o'); m.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden'; }
-function closeModal() { const m = document.getElementById('modal'); m.classList.remove('o'); m.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; }
-async function submitBooking(e) {
+}})();
+function openModal() {{ const m = document.getElementById('modal'); m.classList.add('o'); m.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden'; }}
+function closeModal() {{ const m = document.getElementById('modal'); m.classList.remove('o'); m.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; }}
+async function submitBooking(e) {{
   e.preventDefault();
   const msg = document.getElementById('modal-msg'); msg.className = 'fm'; msg.innerText = '';
-  const payload = {
+  const payload = {{
     name: document.getElementById('b-name').value,
     email: document.getElementById('b-email').value,
     phone: document.getElementById('b-phone').value,
     date: document.getElementById('b-date').value,
     message: document.getElementById('b-msg').value,
     tour: document.title
-  };
-  try {
-    const res = await fetch('../handlers/send-booking.php', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+  }};
+  try {{
+    const res = await fetch('../handlers/send-booking.php', {{ method: 'POST', headers: {{ 'Content-Type': 'application/json' }}, body: JSON.stringify(payload) }});
     const data = await res.json();
-    if(data.success) { msg.classList.add('ok'); msg.innerText = 'Thank you! Your inquiry was sent successfully. We will email you shortly.'; document.getElementById('booking-form').reset(); }
-    else { msg.classList.add('er'); msg.innerText = data.error || 'Something went wrong. Please try again.'; }
-  } catch(err) { msg.classList.add('er'); msg.innerText = 'Unable to send booking at this time. Please email us directly!'; }
-}
-async function submitContact(e) {
+    if(data.success) {{ msg.classList.add('ok'); msg.innerText = 'Thank you! Your inquiry was sent successfully. We will email you shortly.'; document.getElementById('booking-form').reset(); }}
+    else {{ msg.classList.add('er'); msg.innerText = data.error || 'Something went wrong. Please try again.'; }}
+  }} catch(err) {{ msg.classList.add('er'); msg.innerText = 'Unable to send booking at this time. Please email us directly!'; }}
+}}
+async function submitContact(e) {{
   e.preventDefault();
   const btn = document.getElementById('contact-submit');
   const msg = document.getElementById('contact-msg');
   btn.disabled = true;
   btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
   msg.className = 'form-msg'; msg.innerText = '';
-  const payload = {
+  const payload = {{
     name: document.getElementById('c-name').value,
     email: document.getElementById('c-email').value,
     phone: document.getElementById('c-phone').value,
@@ -524,24 +532,31 @@ async function submitContact(e) {
     guests: document.getElementById('c-guests').value,
     tour: document.getElementById('c-tour').value,
     message: document.getElementById('c-msg').value
-  };
-  try {
-    const res = await fetch('../handlers/send-booking.php', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+  }};
+  try {{
+    const res = await fetch('../handlers/send-booking.php', {{ method: 'POST', headers: {{ 'Content-Type': 'application/json' }}, body: JSON.stringify(payload) }});
     const data = await res.json();
-    if(data.success) {
+    if(data.success) {{
       msg.classList.add('ok');
       msg.innerText = 'Thank you! Your message was sent successfully. We will reply within 24 hours.';
       document.getElementById('contact-form').reset();
-    } else {
+    }} else {{
       msg.classList.add('er');
       msg.innerText = data.error || 'Something went wrong. Please try again or email us directly.';
-    }
-  } catch(err) {
+    }}
+  }} catch(err) {{
     msg.classList.add('er');
     msg.innerText = 'Unable to send at this time. Please email us at discover@hiddenjunglecusco.com';
-  }
+  }}
   btn.disabled = false;
   btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Inquiry';
-}
+}}
 </script>
 </body></html>
+"""
+
+os.makedirs(os.path.dirname(OUT_FILE), exist_ok=True)
+with open(OUT_FILE, 'w', encoding='utf-8') as f:
+    f.write(HEADER)
+
+print(f"SUCCESS: {OUT_FILE} written ({len(HEADER)} bytes)")

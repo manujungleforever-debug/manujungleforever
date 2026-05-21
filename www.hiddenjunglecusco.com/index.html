@@ -17,14 +17,199 @@
 <link rel="stylesheet" href="assets/css/new.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"TouristAttraction","name":"<?php echo htmlspecialchars(SITE_NAME); ?>","url":"<?php echo htmlspecialchars(SITE_URL); ?>/","description":"Guided tours from Cusco to the Manu National Park in the Peruvian Amazon.","telephone":"+51979808013","email":"<?php echo htmlspecialchars(SITE_EMAIL); ?>","address":{"@type":"PostalAddress","addressLocality":"Nuevo Eden","addressCountry":"PE"},"sameAs":["https://www.facebook.com/hiddenjunglecusco","https://www.instagram.com/hiddenjunglecusco/","https://www.tripadvisor.com/Attraction_Review-g294314-d17476586-Reviews-Hidden_Jungle_Cusco-Cusco_Cusco_Region.html"]}</script>
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','<?php echo htmlspecialchars(GTM_ID); ?>');</script>
+<style>
+/* ── WhatsApp Neon Pulse ── */
+.wa-wrap {
+  position: fixed;
+  bottom: 28px;
+  right: 28px; width: 60px; height: 60px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wa-pulse-ring {
+  position: absolute; top: 0; left: 0;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: transparent;
+  border: 2px solid #39ff6a;
+  opacity: 0;
+  animation: wa-neon-ring 2.4s ease-out infinite;
+  pointer-events: none;
+}
+.wa-pulse-ring:nth-child(1) { animation-delay: 0s; }
+.wa-pulse-ring:nth-child(2) { animation-delay: 0.7s; }
+.wa-pulse-ring:nth-child(3) { animation-delay: 1.4s; }
+@keyframes wa-neon-ring {
+  0%   { transform: scale(1);   opacity: .9; }
+  100% { transform: scale(2.6); opacity: 0;  }
+}
+.wa {
+  position: relative;
+  bottom: auto !important; right: auto !important; margin: 0 !important;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #25d366 0%, #128c50 100%);
+  color: #fff;
+  font-size: 1.75rem;
+  box-shadow:
+    0 0 0 3px rgba(57,255,106,.35),
+    0 0 18px rgba(57,255,106,.55),
+    0 8px 24px rgba(0,0,0,.45);
+  animation: wa-icon-beat 2.4s ease-in-out infinite;
+  transition: transform .25s ease, box-shadow .25s ease;
+  text-decoration: none;
+}
+.wa:hover {
+  transform: scale(1.12);
+  box-shadow:
+    0 0 0 4px rgba(57,255,106,.55),
+    0 0 32px rgba(57,255,106,.85),
+    0 12px 32px rgba(0,0,0,.5);
+}
+@keyframes wa-icon-beat {
+  0%,100% { transform: scale(1);    }
+  50%      { transform: scale(1.07); }
+}
+
+/* ── Global Preloader ── */
+#hjc-preloader {
+  position: fixed;
+  inset: 0;
+  background-color: #050d08;
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+#hjc-preloader.hjc-loaded {
+  opacity: 0;
+  visibility: hidden;
+}
+.hjc-preloader-content {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hjc-preloader-logo {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  z-index: 10;
+  border-radius: 50%;
+  animation: hjc-pulse 1.8s infinite ease-in-out;
+}
+.hjc-spin-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  background: transparent;
+  pointer-events: none;
+}
+.hjc-ring-1 {
+  width: 120px;
+  height: 120px;
+  border: 3px solid transparent;
+  border-top: 3px solid #39ff6a;
+  border-bottom: 3px solid #39ff6a;
+  box-shadow: inset 0 0 15px rgba(57,255,106,0.4), 0 0 15px rgba(57,255,106,0.4);
+  animation: hjc-spin-1 4s linear infinite;
+}
+.hjc-ring-2 {
+  width: 140px;
+  height: 140px;
+  border: 2px solid transparent;
+  border-left: 2px solid #c9a84c;
+  border-right: 2px solid #c9a84c;
+  box-shadow: inset 0 0 10px rgba(201,168,76,0.3), 0 0 10px rgba(201,168,76,0.3);
+  animation: hjc-spin-2 6s linear infinite;
+}
+.hjc-ring-3 {
+  width: 160px;
+  height: 160px;
+  border: 2px dashed rgba(57,255,106,0.5);
+  animation: hjc-spin-1 8s linear infinite;
+}
+@keyframes hjc-spin-1 {
+  0%   { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+@keyframes hjc-spin-2 {
+  0%   { transform: translate(-50%, -50%) rotate(360deg); }
+  100% { transform: translate(-50%, -50%) rotate(0deg); }
+}
+@keyframes hjc-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; filter: drop-shadow(0 0 5px rgba(57,255,106,0.2)); }
+  50% { transform: scale(1.1); opacity: 0.9; filter: drop-shadow(0 0 15px rgba(57,255,106,0.6)); }
+}
+</style>
 </head><body>
+<!-- GLOBAL PRELOADER -->
+<div id="hjc-preloader">
+  <div class="hjc-preloader-content">
+    <div class="hjc-spin-ring hjc-ring-1"></div>
+    <div class="hjc-spin-ring hjc-ring-2"></div>
+    <div class="hjc-spin-ring hjc-ring-3"></div>
+    <img src="wp-content/uploads/2018/01/cropped-HJC_Logo_PlainSeal_2Color-192x192.png" alt="Loading..." class="hjc-preloader-logo">
+  </div>
+</div>
+<script>
+  (function() {
+    const preloader = document.getElementById("hjc-preloader");
+    if(!preloader) return;
+    
+    // Check if we've already shown the preloader this session
+    if (sessionStorage.getItem("hjc_preloaded")) {
+      preloader.style.display = 'none';
+      return;
+    }
+    
+    const startTime = Date.now();
+    let isLoaded = false;
+    
+    function hidePreloader() {
+      const elapsed = Date.now() - startTime;
+      if (elapsed < 2500) {
+        setTimeout(hidePreloader, 2500 - elapsed);
+        return;
+      }
+      preloader.classList.add("hjc-loaded");
+      sessionStorage.setItem("hjc_preloaded", "true");
+      setTimeout(() => preloader.remove(), 600);
+    }
+    
+    window.addEventListener("load", () => {
+      isLoaded = true;
+      hidePreloader();
+    });
+    
+    setTimeout(() => {
+      if(!isLoaded) {
+        isLoaded = true;
+        hidePreloader();
+      }
+    }, 6000);
+  })();
+</script>
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=<?php echo htmlspecialchars(GTM_ID); ?>" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <a class="skip" href="#main">Skip to content</a>
 
 <header id="N"><div class="cx ni">
-  <div class="nl"><a href="index.php"><img src="wp-content/uploads/2018/01/cropped-HiddenJungleCusco_Logo-1.png" alt="<?php echo htmlspecialchars(SITE_NAME); ?>" width="190" height="54" loading="eager"></a></div>
+  <div class="nl"><a href="index.html"><img src="wp-content/uploads/2018/01/cropped-HiddenJungleCusco_Logo-1.png" alt="<?php echo htmlspecialchars(SITE_NAME); ?>" width="190" height="54" loading="eager"></a></div>
   <nav class="nm" aria-label="Main navigation">
-    <a href="index.php" class="on">Home</a>
+    <a href="index.html" class="on">Home</a>
     <div class="hd"><a href="guided-tours/index.html">Guided Tours <i class="fas fa-caret-down"></i></a>
       <ul class="dm">
         <li><a href="wildlife-tours-from-cusco/index.html">Wildlife Tours From Cusco</a></li>
@@ -51,7 +236,7 @@
 
 <div class="mo" id="mo" aria-hidden="true">
   <ul class="ml">
-    <li><a href="index.php">Home</a></li>
+    <li><a href="index.html">Home</a></li>
     <li><button class="mb" id="mbt">Guided Tours <i class="fas fa-caret-down"></i></button>
       <ul class="md" id="mdd">
         <li><a href="wildlife-tours-from-cusco/index.html">Wildlife Tours From Cusco</a></li>
@@ -281,7 +466,7 @@
 <footer class="ft"><div class="cx">
   <div class="fg">
     <div>
-      <a href="index.php"><img src="wp-content/uploads/2018/01/HiddenJungleCusco_Logo_TextSeal_3Color.png" alt="<?php echo htmlspecialchars(SITE_NAME); ?>" class="fl" loading="lazy"></a>
+      <a href="index.html"><img src="wp-content/uploads/2018/01/HiddenJungleCusco_Logo_TextSeal_3Color.png" alt="<?php echo htmlspecialchars(SITE_NAME); ?>" class="fl" loading="lazy"></a>
       <p class="fa">Guided jungle tours from Cusco to the Manu National Park &amp; the Peruvian Amazon. Local. Wild. Authentic.</p>
       <address class="fc">
         <p><i class="fas fa-map-marker-alt"></i><a href="https://goo.gl/maps/B8NjhLZizA6YKwKD6" target="_blank" rel="noopener"><?php echo htmlspecialchars(SITE_ADDRESS); ?></a></p>
@@ -297,14 +482,19 @@
         <a href="<?php echo htmlspecialchars(SOCIAL_TIKTOK); ?>" class="sc" target="_blank" rel="noopener" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
       </div>
     </div>
-    <div><p class="fh">Explore</p><ul class="fli"><li><a href="index.php">Home</a></li><li><a href="about-2/index.html">About Us</a></li><li><a href="guided-tours/index.html">Guided Jungle Tours</a></li><li><a href="departures/index.html">Departures</a></li><li><a href="news-and-gallery/index.html">Gallery</a></li><li><a href="blog/index.html">Blog</a></li><li><a href="contact/index.html">Contact</a></li></ul></div>
+    <div><p class="fh">Explore</p><ul class="fli"><li><a href="index.html">Home</a></li><li><a href="about-2/index.html">About Us</a></li><li><a href="guided-tours/index.html">Guided Jungle Tours</a></li><li><a href="departures/index.html">Departures</a></li><li><a href="news-and-gallery/index.html">Gallery</a></li><li><a href="blog/index.html">Blog</a></li><li><a href="contact/index.html">Contact</a></li></ul></div>
     <div><p class="fh">Wildlife Tours</p><ul class="fli"><li><a href="3-day-wildlife-quest-machu-wasi/index.html">3-Day Wildlife Tour</a></li><li><a href="4-day-wildlife-quest-machu-wasi/index.html">4-Day Wildlife – Machu Wasi</a></li><li><a href="4-day-wildlife-quest-nuevo-eden/index.html">4-Day Wildlife – Nuevo Eden</a></li><li><a href="5-day-wildlife-quest-nuevo-eden/index.html">5-Day Wildlife – Nuevo Eden</a></li><li><a href="6-day-wildlife-quest-blanquillo/index.html">6-Day Wildlife – Blanquillo</a></li><li><a href="6-day-wildlife-quest-reserved-zone/index.html">Manu Reserved Zone – 6 Days</a></li><li><a href="8-day-wildlife-photography-tour/index.html">Wildlife Photography – 8 Days</a></li></ul></div>
     <div><p class="fh">Expeditions</p><ul class="fli"><li><a href="5-day-amazon-expedition/index.html">5-Day Amazon Expedition</a></li><li><a href="6-day-amazon-expedition/index.html">6-Day Amazon Expedition</a></li><li><a href="2-day-rainforest-road-trip/index.html">2-Day Road Trip</a></li><li><a href="5-day-rainforest-road-trip/index.html">5-Day Road Trip</a></li><li><a href="live-like-a-local-4d-3n/index.html">Live Like a Local – 4D/3N</a></li><li><a href="live-like-a-local-5d-4n/index.html">Live Like a Local – 5D/4N</a></li></ul></div>
   </div>
   <div class="fb"><div class="fbi"><span>Copyright &copy; <?php echo date('Y'); ?> <?php echo htmlspecialchars(SITE_NAME); ?>. All rights reserved.</span><span>Site design: Meyer Consulting and Management</span></div></div>
 </div></footer>
 
-<a href="https://api.whatsapp.com/send?phone=<?php echo htmlspecialchars(WHATSAPP_NUMBER); ?>&text=Hello!%20I%20would%20like%20to%20learn%20more%20about%20your%20jungle%20trips" class="wa" target="_blank" rel="noopener" aria-label="Chat on WhatsApp" id="whats-flotante"><i class="fab fa-whatsapp"></i></a>
+<div class="wa-wrap" id="whats-flotante">
+  <span class="wa-pulse-ring"></span>
+  <span class="wa-pulse-ring"></span>
+  <span class="wa-pulse-ring"></span>
+  <a href="https://api.whatsapp.com/send?phone=<?php echo htmlspecialchars(WHATSAPP_NUMBER); ?>&text=Hello!%20I%20would%20like%20to%20learn%20more%20about%20your%20jungle%20trips" class="wa" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"><i class="fab fa-whatsapp"></i></a>
+</div>
 
 <script>
 (function(){

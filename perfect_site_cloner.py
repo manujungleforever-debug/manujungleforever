@@ -160,7 +160,7 @@ HEADER_TEMPLATE = """<!doctype html><html lang="en"><head>
   <div class="nl"><a href="{rel_prefix}index.html"><img src="{rel_prefix}wp-content/uploads/2018/01/cropped-HiddenJungleCusco_Logo-1.png" alt="Hidden Jungle Cusco" width="190" height="54" loading="eager"></a></div>
   <nav class="nm" aria-label="Main navigation">
     <a href="{rel_prefix}index.html">Home</a>
-    <div class="hd"><a href="{rel_prefix}guided-tours/index.html" class="on">Guided Tours <i class="fas fa-caret-down"></i></a>
+    <div class="hd"><a href="{rel_prefix}guided-tours/index.html">Guided Tours <i class="fas fa-caret-down"></i></a>
       <ul class="dm">
         <li><a href="{rel_prefix}wildlife-tours-from-cusco/index.html">Wildlife Tours From Cusco</a></li>
         <li><a href="{rel_prefix}3-day-wildlife-quest-machu-wasi/index.html">3-Day Wildlife – Machu Wasi</a></li>
@@ -665,8 +665,34 @@ for folder in PAGES:
 </main>
 """
         else:
-            # Non-tour layout (e.g. About, Contact)
-            main_body_content = f"""
+            if folder == 'about-2':
+                # Use the custom template we built for the About Us page
+                try:
+                    with open('about_us_template.html', 'r', encoding='utf-8') as tf:
+                        main_body_content = tf.read()
+                except FileNotFoundError:
+                    print("Could not find about_us_template.html, skipping custom layout")
+                    main_body_content = f"""
+<main id="main">
+<section class="in-hero" style="background-image: url('{hero_bg_path}'); background-size: cover; background-position: center; position: relative;">
+  <div class="cx">
+    <span class="ey">Hidden Jungle Cusco</span>
+    <h1 class="h1" style="font-size:clamp(2.5rem,6vw,4.5rem)">{title_main}</h1>
+  </div>
+</section>
+
+<section class="sec" style="background:var(--k)">
+  <div class="cx">
+    <div class="article-w" style="max-width:900px; margin:0 auto;">
+      {rich_content}
+    </div>
+  </div>
+</section>
+</main>
+"""
+            else:
+                # Non-tour layout (e.g. Contact, Departures)
+                main_body_content = f"""
 <main id="main">
 <section class="in-hero" style="background-image: url('{hero_bg_path}'); background-size: cover; background-position: center; position: relative;">
   <div class="cx">

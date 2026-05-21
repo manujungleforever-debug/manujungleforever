@@ -171,7 +171,54 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-5476BC9');</script>
 <!-- End Google Tag Manager -->
 </head>
-<body class="wp-singular page-template page-template-elementor_header_footer page page-id-8448 wp-custom-logo wp-theme-hello-elementor ehf-footer ehf-template-hello-elementor ehf-stylesheet-hello-elementor elementor-default elementor-template-full-width elementor-kit-38 elementor-page elementor-page-8448">
+<body>
+<!-- GLOBAL PRELOADER -->
+<div id="hjc-preloader">
+  <div class="hjc-preloader-content">
+    <div class="hjc-spin-ring hjc-ring-1"></div>
+    <div class="hjc-spin-ring hjc-ring-2"></div>
+    <div class="hjc-spin-ring hjc-ring-3"></div>
+    <img src="../wp-content/uploads/2018/01/cropped-HJC_Logo_PlainSeal_2Color-192x192.png" alt="Loading..." class="hjc-preloader-logo">
+  </div>
+</div>
+<script>
+  (function() {
+    const preloader = document.getElementById("hjc-preloader");
+    if(!preloader) return;
+    
+    // Check if we've already shown the preloader this session
+    if (sessionStorage.getItem("hjc_preloaded")) {
+      preloader.style.display = 'none';
+      return;
+    }
+    
+    const startTime = Date.now();
+    let isLoaded = false;
+    
+    function hidePreloader() {
+      const elapsed = Date.now() - startTime;
+      if (elapsed < 2500) {
+        setTimeout(hidePreloader, 2500 - elapsed);
+        return;
+      }
+      preloader.classList.add("hjc-loaded");
+      sessionStorage.setItem("hjc_preloaded", "true");
+      setTimeout(() => preloader.remove(), 600);
+    }
+    
+    window.addEventListener("load", () => {
+      isLoaded = true;
+      hidePreloader();
+    });
+    
+    setTimeout(() => {
+      if(!isLoaded) {
+        isLoaded = true;
+        hidePreloader();
+      }
+    }, 6000);
+  })();
+</script>
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5476BC9"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
