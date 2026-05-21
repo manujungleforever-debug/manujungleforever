@@ -68,9 +68,128 @@
   .tour-layout { grid-template-columns: 1fr; gap: 40px; }
 }
 
+
+/* ── Global Preloader (HJC) ── */
+#hjc-preloader {
+  position: fixed; inset: 0;
+  background: radial-gradient(ellipse at center, #0a1a0f 0%, #050d08 100%);
+  z-index: 999999;
+  display: flex; align-items: center; justify-content: center;
+  transition: opacity 0.7s ease, visibility 0.7s ease;
+}
+#hjc-preloader.hjc-fade { opacity: 0; visibility: hidden; }
+.hjc-wrap {
+  position: relative; width: 180px; height: 180px;
+  display: flex; align-items: center; justify-content: center;
+}
+.hjc-logo {
+  width: 96px; height: 96px; border-radius: 50%; z-index: 10;
+  animation: hjcPulse 2s ease-in-out infinite;
+  filter: drop-shadow(0 0 6px rgba(57,255,106,0.25));
+}
+.hjc-ring {
+  position: absolute; top: 50%; left: 50%;
+  border-radius: 50%; background: transparent; pointer-events: none;
+}
+.hjc-ring-1 {
+  width: 128px; height: 128px;
+  border: 2.5px solid transparent;
+  border-top-color: #39ff6a; border-bottom-color: #39ff6a;
+  box-shadow: 0 0 12px rgba(57,255,106,0.35);
+  animation: hjcSpin 3s linear infinite;
+}
+.hjc-ring-2 {
+  width: 152px; height: 152px;
+  border: 2px solid transparent;
+  border-left-color: #c9a84c; border-right-color: #c9a84c;
+  box-shadow: 0 0 10px rgba(201,168,76,0.3);
+  animation: hjcSpin 5s linear infinite reverse;
+}
+.hjc-ring-3 {
+  width: 176px; height: 176px;
+  border: 1.5px dashed rgba(57,255,106,0.35);
+  animation: hjcSpin 8s linear infinite;
+}
+@keyframes hjcSpin {
+  to { transform: translate(-50%,-50%) rotate(360deg); }
+}
+@keyframes hjcPulse {
+  0%,100% { transform: scale(1);    filter: drop-shadow(0 0 5px rgba(57,255,106,0.25)); }
+  50%      { transform: scale(1.08); filter: drop-shadow(0 0 18px rgba(57,255,106,0.65)); }
+}
+
+
+/* ── WhatsApp Neon Float ── */
+.wa-wrap {
+  position: fixed; bottom: 28px; right: 28px;
+  width: 60px; height: 60px; z-index: 9998;
+  display: flex; align-items: center; justify-content: center;
+}
+.wa-ring {
+  position: absolute; top: 0; left: 0;
+  width: 60px; height: 60px; border-radius: 50%;
+  border: 2px solid #39ff6a; opacity: 0;
+  animation: waPulse 2.6s ease-out infinite;
+  pointer-events: none;
+}
+.wa-ring:nth-child(2) { animation-delay: 0.8s; }
+.wa-ring:nth-child(3) { animation-delay: 1.6s; }
+@keyframes waPulse {
+  0%   { transform: scale(1);   opacity: .85; }
+  100% { transform: scale(2.5); opacity: 0;   }
+}
+.wa {
+  position: relative; z-index: 1;
+  width: 60px; height: 60px; border-radius: 50%;
+  background: linear-gradient(135deg,#25d366,#128c50);
+  color: #fff; font-size: 1.75rem;
+  display: flex; align-items: center; justify-content: center;
+  text-decoration: none;
+  box-shadow: 0 0 0 3px rgba(57,255,106,.3), 0 0 18px rgba(57,255,106,.5), 0 8px 24px rgba(0,0,0,.4);
+  animation: waBeat 2.6s ease-in-out infinite;
+  transition: transform .25s, box-shadow .25s;
+  bottom: auto !important; right: auto !important; margin: 0 !important;
+}
+.wa:hover {
+  transform: scale(1.12);
+  box-shadow: 0 0 0 4px rgba(57,255,106,.5), 0 0 30px rgba(57,255,106,.8), 0 12px 32px rgba(0,0,0,.5);
+}
+@keyframes waBeat {
+  0%,100% { transform: scale(1);    }
+  50%      { transform: scale(1.07); }
+}
+
 </style>
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-5476BC9');</script>
 </head><body>
+<!-- HJC Preloader -->
+<div id="hjc-preloader">
+  <div class="hjc-wrap">
+    <div class="hjc-ring hjc-ring-1"></div>
+    <div class="hjc-ring hjc-ring-2"></div>
+    <div class="hjc-ring hjc-ring-3"></div>
+    <img src="../wp-content/uploads/2018/01/cropped-HJC_Logo_PlainSeal_2Color-192x192.png"
+         alt="Hidden Jungle Cusco" class="hjc-logo">
+  </div>
+</div>
+<script>
+(function(){{
+  var p = document.getElementById('hjc-preloader');
+  if (!p) return;
+  if (sessionStorage.getItem('hjc_loaded')) {{ p.style.display='none'; return; }}
+  var t0 = Date.now(), done = false;
+  function hide() {{
+    var elapsed = Date.now() - t0;
+    if (elapsed < 2500) {{ setTimeout(hide, 2500 - elapsed); return; }}
+    p.classList.add('hjc-fade');
+    sessionStorage.setItem('hjc_loaded','1');
+    setTimeout(function(){{ p.parentNode && p.parentNode.removeChild(p); }}, 750);
+  }}
+  window.addEventListener('load', function(){{ done=true; hide(); }});
+  setTimeout(function(){{ if(!done){{ done=true; hide(); }} }}, 7000);
+}})();
+</script>
+
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5476BC9" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <a class="skip" href="#main">Skip to content</a>
 
@@ -360,7 +479,7 @@
   <div class="fb"><div class="fbi"><span>Copyright &copy; 2026 Hidden Jungle Cusco. All rights reserved.</span><span>Site design: Meyer Consulting and Management</span></div></div>
 </div></footer>
 
-<a href="https://api.whatsapp.com/send?phone=51923289231&text=Hello!%20I%20would%20like%20to%20learn%20more%20about%20your%20jungle%20trips" class="wa" target="_blank" rel="noopener" aria-label="Chat on WhatsApp" id="whats-flotante"><i class="fab fa-whatsapp"></i></a>
+
 
 <!-- Universal enquiry modal -->
 <div class="modal" id="modal" aria-hidden="true">
@@ -437,4 +556,15 @@ async function submitBooking(e) {
   } catch(err) { msg.classList.add('er'); msg.innerText = 'Unable to send booking at this time. Please email us directly!'; }
 }
 </script>
+
+<div class="wa-wrap" id="whats-flotante">
+  <span class="wa-ring"></span>
+  <span class="wa-ring"></span>
+  <span class="wa-ring"></span>
+  <a href="https://api.whatsapp.com/send?phone=51923289231&text=Hello!%20I%20would%20like%20to%20learn%20more%20about%20your%20jungle%20trips"
+     class="wa" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+</div>
+
 </body></html>
