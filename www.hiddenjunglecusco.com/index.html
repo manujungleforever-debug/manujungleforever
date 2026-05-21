@@ -23,52 +23,51 @@
 /* ── Global Preloader (HJC) ── */
 #hjc-preloader {
   position: fixed; inset: 0;
-  background: radial-gradient(ellipse at center, #0a1a0f 0%, #050d08 100%);
+  background: radial-gradient(ellipse at center, #0a1a0f 0%, #030805 100%);
   z-index: 999999;
   display: flex; align-items: center; justify-content: center;
-  transition: opacity 0.7s ease, visibility 0.7s ease;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
 }
 #hjc-preloader.hjc-fade { opacity: 0; visibility: hidden; }
 .hjc-wrap {
-  position: relative; width: 180px; height: 180px;
+  position: relative; width: 220px; height: 220px;
   display: flex; align-items: center; justify-content: center;
 }
 .hjc-logo {
-  width: 96px; height: 96px; border-radius: 50%; z-index: 10;
-  animation: hjcPulse 2s ease-in-out infinite;
-  filter: drop-shadow(0 0 6px rgba(57,255,106,0.25));
+  width: 100px; height: 100px; border-radius: 50%; z-index: 10;
+  animation: hjcPulse 3s ease-in-out infinite;
+  filter: drop-shadow(0 0 8px rgba(57,255,106,0.15));
 }
 .hjc-ring {
   position: absolute; top: 50%; left: 50%;
   border-radius: 50%; background: transparent; pointer-events: none;
+  border: 1px solid rgba(57,255,106,0.1);
 }
 .hjc-ring-1 {
-  width: 128px; height: 128px;
-  border: 2.5px solid transparent;
-  border-top-color: #39ff6a; border-bottom-color: #39ff6a;
-  box-shadow: 0 0 12px rgba(57,255,106,0.35);
-  animation: hjcSpin 3s linear infinite;
-}
-.hjc-ring-2 {
-  width: 152px; height: 152px;
-  border: 2px solid transparent;
-  border-left-color: #c9a84c; border-right-color: #c9a84c;
-  box-shadow: 0 0 10px rgba(201,168,76,0.3);
-  animation: hjcSpin 5s linear infinite reverse;
-}
-.hjc-ring-3 {
-  width: 176px; height: 176px;
-  border: 1.5px dashed rgba(57,255,106,0.35);
+  width: 140px; height: 140px;
+  border-top-color: rgba(57,255,106,0.8);
+  border-bottom-color: rgba(57,255,106,0.8);
   animation: hjcSpin 8s linear infinite;
 }
+.hjc-ring-2 {
+  width: 170px; height: 170px;
+  border: 1px dashed rgba(201,168,76,0.4);
+  animation: hjcSpin 12s linear infinite reverse;
+}
+.hjc-ring-3 {
+  width: 200px; height: 200px;
+  border-left-color: rgba(57,255,106,0.6);
+  border-right-color: rgba(57,255,106,0.6);
+  animation: hjcSpin 18s linear infinite;
+}
 @keyframes hjcSpin {
-  to { transform: translate(-50%,-50%) rotate(360deg); }
+  0%   { transform: translate(-50%,-50%) rotate(0deg); }
+  100% { transform: translate(-50%,-50%) rotate(360deg); }
 }
 @keyframes hjcPulse {
-  0%,100% { transform: scale(1);    filter: drop-shadow(0 0 5px rgba(57,255,106,0.25)); }
-  50%      { transform: scale(1.08); filter: drop-shadow(0 0 18px rgba(57,255,106,0.65)); }
+  0%,100% { transform: scale(1);    filter: drop-shadow(0 0 5px rgba(57,255,106,0.15)); }
+  50%     { transform: scale(1.03); filter: drop-shadow(0 0 12px rgba(57,255,106,0.3)); }
 }
-
 </style>
 </head><body>
 <!-- HJC Preloader -->
