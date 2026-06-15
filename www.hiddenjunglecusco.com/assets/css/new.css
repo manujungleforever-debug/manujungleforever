@@ -14,7 +14,9 @@ img{max-width:100%;height:auto;display:block}a{color:inherit;text-decoration:non
 .nl img{height:50px;width:auto}
 .nm{display:flex;align-items:center;gap:4px}
 .nm a{padding:8px 15px;font-size:.87rem;font-weight:500;color:rgba(255,255,255,.78);border-radius:8px;transition:var(--t)}
-.nm a:hover,.nm a.on{color:var(--a)}
+.nm a:hover{color:var(--a)}
+.nm a.on{color:var(--a);font-weight:700;position:relative;}
+.nm a.on::after{content:'';position:absolute;bottom:2px;left:15px;right:15px;height:2px;background:var(--a);border-radius:2px;}
 .nb{background:var(--a)!important;color:var(--k)!important;font-weight:700!important;border-radius:24px!important;padding:10px 24px!important}
 .nb:hover{background:var(--al)!important;transform:translateY(-1px)}
 .hd{position:relative}
