@@ -1,0 +1,94 @@
+{
+  "hero": {
+    "location_tag": "Cusco, Peru · Manu National Park",
+    "title": "What Will",
+    "title_emphasis": "Discover?",
+    "subtitle": "Visit Manu National Park from Cusco — guided jungle tours deep into the Peruvian Amazon. Local. Wild. Authentic.",
+    "video_id": "osF2gQHSCdo",
+    "video_start": 4,
+    "video_end": 56,
+    "cta_primary": "Book a Tour",
+    "cta_tours": "See All Tours",
+    "cta_about": "About Us"
+  },
+  "stats": [
+    { "value": 500, "suffix": "+", "label": "Travelers Guided", "type": "counter" },
+    { "value": 10, "suffix": "+", "label": "Years Experience", "type": "counter" },
+    { "value": 12, "suffix": "", "label": "Tour Options", "type": "counter" },
+    { "value": "4.9★", "label": "Average Rating", "type": "static" }
+  ],
+  "about_section": {
+    "eyebrow": "Why Choose Us",
+    "title": "Visit Manu National Park with a Local Company",
+    "paragraphs": [
+      "Going to the Amazon rainforest is a dream for many travelers planning their South American adventure. If you're looking for an amazing jungle trip near Cusco, Peru, you're in the right place.",
+      "The Manu National Park is accessible by road and river from Cusco, located on the Madre de Dios and Manu rivers — tributaries to the Amazon itself. Our founder grew up in the small village of Nuevo Eden that we use as our base; the rainforest is his home.",
+      "We offer multi-day guided small-group tours and can also organize independent trips to Manu. All our jungle tours can be added onto your Cusco trip while visiting Machu Picchu and the Sacred Valley. You will get a taste of local life and opportunities to see amazing creatures in their natural habitat."
+    ],
+    "chips": [
+      "Small Groups (2–8)",
+      "Born-Local Guides",
+      "All-Inclusive Tours",
+      "Flexible Departures",
+      "Guided or Independent"
+    ],
+    "image": "wp-content/uploads/2022/10/Wildlife-quest-3days-machuwasi.jpg",
+    "image_alt": "Wildlife quest at Machu Wasi – Manu National Park",
+    "cta_text": "Our Full Story",
+    "cta_url": "about-2/index.html"
+  },
+  "unique_section": {
+    "title": "WHAT MAKES US UNIQUE?",
+    "text": "We are a family-run, local company that only operates in Manu. Our lodge and paths in Nuevo Eden are on the land where Moises (co-founder) grew up. We believe that tourism is the safest, most sustainable industry for the rainforest, and our goal is to use tourism to support the community and wildlife in the surrounding area. Without this effort, this precious land would be in danger to logging and destructive agriculture. We are passionate about the region, the wildlife, and the culture of the Manu National Park.",
+    "image": "wp-content/uploads/2022/10/Hero-About-Us.jpg",
+    "image_alt": "Hidden Jungle Cusco Family and Guides"
+  },
+  "wildlife_section": {
+    "eyebrow": "Biodiversity",
+    "title": "Wildlife in the Peruvian Rainforest",
+    "text": "The Manu National Park is the best place to see wildlife in Peru — you will always encounter animals in their natural habitats, surrounded by a complex ecosystem. When we visit the Amazon rainforest, we explore trails looking for monkeys, macaws, insects, snakes, and more. On the river banks we search for capybaras, turtles, caimans, and even the elusive jaguar.",
+    "image": "wp-content/uploads/2020/10/Hidden-Jungle-Cusco-Jaguar.jpg",
+    "image_alt": "Manu National Park wildlife - Jaguar",
+    "animals": [
+      { "emoji": "🐆", "name": "Jaguar" },
+      { "emoji": "🦜", "name": "Macaws" },
+      { "emoji": "🐊", "name": "Caimans" },
+      { "emoji": "🐒", "name": "Monkeys" },
+      { "emoji": "🦦", "name": "Giant Otters" },
+      { "emoji": "🐢", "name": "River Turtles" },
+      { "emoji": "🦫", "name": "Capybaras" },
+      { "emoji": "🐍", "name": "Anaconda" },
+      { "emoji": "🦋", "name": "Butterflies" },
+      { "emoji": "🐦", "name": "Cock-of-the-Rock" }
+    ]
+  },
+  "cta_section": {
+    "eyebrow": "Ready to Explore?",
+    "title": "Let's Go to the Jungle. Plan Your Trip Today.",
+    "text": "Contact us and we'll build your perfect jungle adventure — whether a 3-day wildlife tour or a 6-day deep Amazon expedition. We reply within 24 hours.",
+    "image": "wp-content/uploads/2018/02/HiddenJungleCusco_Sliders2.jpg"
+  },
+  "pillars_section": {
+    "eyebrow": "Our Values",
+    "title": "Our Pillars",
+    "pillars": [
+      {
+        "icon": "fas fa-home",
+        "title": "Family Business Supporting Locals",
+        "text": "We live in Peru, we love Peru. We work with our family and local professionals to operate our tours to Manu National Park. Every trip you take directly supports the local community of Nuevo Eden, Peru."
+      },
+      {
+        "icon": "fas fa-compass",
+        "title": "Guided Tours or Independent Trips",
+        "text": "We offer both guided tours and can also help organize independent trips for travelers who want to visit Manu with more flexibility. Whatever your style, we tailor the experience to fit you perfectly."
+      },
+      {
+        "icon": "fas fa-leaf",
+        "title": "Sustainable Tourism",
+        "text": "The Amazon Rainforest is one of our planet's most important ecosystems, and it's in danger. We are passionate about using tourism as a positive force to care for the jungle and its inhabitants."
+      }
+    ]
+  },
+  "featured_tour_ids": ["wildlife-tours", "rainforest-road-trip", "amazon-expedition"],
+  "map_embed_url": "https://www.google.com/maps/d/embed?mid=1CkYt9KUrq9Jjp9tgxChYmOYvyNaLZnxF"
+}

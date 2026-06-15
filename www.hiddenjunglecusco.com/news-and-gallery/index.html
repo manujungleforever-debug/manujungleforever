@@ -13,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous">
 <link rel="stylesheet" href="../assets/css/new.css">
+<script src="../assets/js/cms-loader.js" defer></script>
 <style>
 .insta-grid {
   display: grid;
@@ -244,7 +245,12 @@
       <p class="ld" style="margin:0 auto">Check out some of the amazing moments we have captured recently in the Amazon Jungle!</p>
     </div>
     
-    <div class="tour-gallery" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(300px, 1fr)); gap:24px; margin-bottom: 80px;">
+    <!-- Category Filter -->
+    <div id="gallery-filters" style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:32px"></div>
+
+    <div class="tour-gallery" id="gallery-grid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(300px, 1fr)); gap:24px; margin-bottom: 80px;">
+      <!-- Loaded dynamically from gallery.json -->
+      <!-- Static fallback images below if JS/fetch fails -->
       <a href="../wp-content/uploads/2020/10/Hidden-Jungle-Cusco-Jaguar.jpg" target="_blank" class="gallery-item">
         <img src="../wp-content/uploads/2020/10/Hidden-Jungle-Cusco-Jaguar.jpg" alt="Jaguar in the wild" loading="lazy" style="width:100%; height:300px; object-fit:cover; border-radius:16px; transition:transform .4s ease;">
       </a>
@@ -262,24 +268,6 @@
       </a>
       <a href="../wp-content/uploads/2020/10/Hidden-Jungle-Cusco-Brown-Capuchin-Monkey.jpg" target="_blank" class="gallery-item">
         <img src="../wp-content/uploads/2020/10/Hidden-Jungle-Cusco-Brown-Capuchin-Monkey.jpg" alt="Brown Capuchin Monkey" loading="lazy" style="width:100%; height:300px; object-fit:cover; border-radius:16px; transition:transform .4s ease;">
-      </a>
-      <a href="../wp-content/uploads/2022/10/Road-trip-5-days_.jpg" target="_blank" class="gallery-item">
-        <img src="../wp-content/uploads/2022/10/Road-trip-5-days_.jpg" alt="Road Trip" loading="lazy" style="width:100%; height:300px; object-fit:cover; border-radius:16px; transition:transform .4s ease;">
-      </a>
-      <a href="../wp-content/uploads/2018/06/HiddenJungleCusco_JungleBungalow7.jpg" target="_blank" class="gallery-item">
-        <img src="../wp-content/uploads/2018/06/HiddenJungleCusco_JungleBungalow7.jpg" alt="Jungle Bungalow" loading="lazy" style="width:100%; height:300px; object-fit:cover; border-radius:16px; transition:transform .4s ease;">
-      </a>
-      <a href="../wp-content/uploads/2018/02/HiddenJungleCusco_PeruvianJungle5.jpg" target="_blank" class="gallery-item">
-        <img src="../wp-content/uploads/2018/02/HiddenJungleCusco_PeruvianJungle5.jpg" alt="Peruvian Jungle" loading="lazy" style="width:100%; height:300px; object-fit:cover; border-radius:16px; transition:transform .4s ease;">
-      </a>
-      <a href="../wp-content/uploads/2020/10/Hidden-Jungle-Cusco-Squirrel-Monkey.jpg" target="_blank" class="gallery-item">
-        <img src="../wp-content/uploads/2020/10/Hidden-Jungle-Cusco-Squirrel-Monkey.jpg" alt="Squirrel Monkey" loading="lazy" style="width:100%; height:300px; object-fit:cover; border-radius:16px; transition:transform .4s ease;">
-      </a>
-      <a href="../wp-content/uploads/2018/02/HiddenJungleCusco_JungleFamily.jpg" target="_blank" class="gallery-item">
-        <img src="../wp-content/uploads/2018/02/HiddenJungleCusco_JungleFamily.jpg" alt="Jungle Family" loading="lazy" style="width:100%; height:300px; object-fit:cover; border-radius:16px; transition:transform .4s ease;">
-      </a>
-      <a href="../wp-content/uploads/2020/10/Hidden-Jungle-Cusco-Cock-of-the-Rock-1024x576.jpg" target="_blank" class="gallery-item">
-        <img src="../wp-content/uploads/2020/10/Hidden-Jungle-Cusco-Cock-of-the-Rock-1024x576.jpg" alt="Cock of the Rock" loading="lazy" style="width:100%; height:300px; object-fit:cover; border-radius:16px; transition:transform .4s ease;">
       </a>
     </div>
 
@@ -476,6 +464,70 @@
   document.getElementById('mbt').addEventListener('click',()=>document.getElementById('mdd').classList.toggle('o'));
   const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('v');obs.unobserve(e.target);}})  ,{threshold:.1});
   document.querySelectorAll('.r,.rl,.rr').forEach(el=>obs.observe(el));
+})();
+</script>
+
+<script>
+// ── Dynamic Gallery Loading ─────────────────────────────────────────────────
+// Lightbox
+window.openLightbox = function(url, alt) {
+  let lb = document.getElementById('hjc-lightbox');
+  if (!lb) {
+    lb = document.createElement('div');
+    lb.id = 'hjc-lightbox';
+    lb.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:99999;display:flex;align-items:center;justify-content:center;cursor:zoom-out;padding:20px';
+    lb.onclick = () => lb.remove();
+    document.body.appendChild(lb);
+  }
+  lb.innerHTML = `<img src="${url}" alt="${alt}" style="max-width:95vw;max-height:90vh;border-radius:12px;box-shadow:0 32px 80px rgba(0,0,0,.8)">`;
+};
+
+(async function() {
+  const grid = document.getElementById('gallery-grid');
+  const filtersEl = document.getElementById('gallery-filters');
+  if (!grid || !window.HJC) return;
+
+  const data = await HJC.loadGallery();
+  if (!data || !data.fotos || !data.fotos.length) return; // Keep fallback
+
+  let activeCategory = 'all';
+
+  function renderAll() {
+    // Render dynamic photos
+    const filtered = activeCategory === 'all' ? data.fotos : data.fotos.filter(f => f.categoria === activeCategory);
+    grid.innerHTML = filtered.map(foto => `
+      <div style="overflow:hidden;border-radius:16px;cursor:zoom-in" onclick="openLightbox('${HJC.BASE + foto.url}','${HJC.escapeHtml(foto.alt)}')"
+           onmouseover="this.querySelector('img').style.transform='scale(1.07)'" onmouseout="this.querySelector('img').style.transform=''">
+        <img src="${HJC.BASE + foto.url}" alt="${HJC.escapeHtml(foto.alt)}" loading="lazy"
+             style="width:100%;height:300px;object-fit:cover;border-radius:16px;transition:transform .4s ease">
+      </div>
+    `).join('');
+  }
+
+  // Build filter buttons
+  if (filtersEl && data.categorias) {
+    const allBtn = document.createElement('button');
+    allBtn.className = 'btn ba'; allBtn.style.cssText = 'padding:8px 18px;font-size:.8rem';
+    allBtn.textContent = 'All'; allBtn.id = 'filter-all';
+    allBtn.onclick = () => { activeCategory = 'all'; renderAll(); updateActive(allBtn); };
+    filtersEl.appendChild(allBtn);
+    data.categorias.forEach(cat => {
+      const btn = document.createElement('button');
+      btn.className = 'btn bg2'; btn.style.cssText = 'padding:8px 18px;font-size:.8rem';
+      btn.textContent = cat.nombre; btn.dataset.cat = cat.id;
+      btn.onclick = () => { activeCategory = cat.id; renderAll(); updateActive(btn); };
+      filtersEl.appendChild(btn);
+    });
+  }
+
+  function updateActive(activeBtn) {
+    filtersEl.querySelectorAll('button').forEach(b => {
+      b.className = b === activeBtn ? 'btn ba' : 'btn bg2';
+      b.style.cssText = 'padding:8px 18px;font-size:.8rem';
+    });
+  }
+
+  renderAll();
 })();
 </script>
 

@@ -14,6 +14,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous">
 <link rel="stylesheet" href="../assets/css/new.css">
+<script src="../assets/js/cms-loader.js" defer></script>
 <style>
 .blog-grid {
   display: grid;
@@ -293,7 +294,7 @@
     <div class="r" style="text-align:center; margin-bottom:12px">
       <span class="ey">All Articles</span>
       <h2 class="h2">Stories from the Jungle</h2>
-      <p class="ld" style="margin:0 auto">11 articles — tips, guides &amp; stories from the Peruvian Amazon</p>
+      <p class="ld" style="margin:0 auto" id="blog-count">Loading articles...</p>
     </div>
     <div class="blog-grid" id="blog-grid">
       <a href="../amazon-rainforest-tour-to-manu-national-park-from-cusco/index.html" class="blog-card r" style="text-decoration:none" aria-label="Amazon Rainforest Tour to Manu National Park from Cusco">
@@ -405,8 +406,8 @@
         </div>
       </a>
     </div>
-    
-<div class="pagination" style="margin-top:56px; display:flex; justify-content:center; gap:12px; align-items:center;"><span class="btn bg2" style="padding:10px 18px; pointer-events:none">1</span><a href="../blog/page/2/index.html" class="btn ba" style="padding:10px 18px">2</a><a href="../blog/page/2/index.html" class="btn ba" style="padding:10px 18px" aria-label="Next page"><i class="fas fa-chevron-right"></i></a></div>
+
+    <div id="blog-pagination" style="margin-top:56px; display:flex; justify-content:center; gap:12px; align-items:center; flex-wrap:wrap"></div>
 
     <!-- CTA -->
     <div class="r" style="text-align:center; margin-top:80px; padding:64px 40px; background:var(--f); border-radius:24px; border:1px solid rgba(255,255,255,.06)">
@@ -513,6 +514,58 @@
   document.getElementById('mbt').addEventListener('click',()=>document.getElementById('mdd').classList.toggle('o'));
   const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('v');obs.unobserve(e.target);}})  ,{threshold:.1});
   document.querySelectorAll('.r,.rl,.rr').forEach(el=>obs.observe(el));
+})();
+</script>
+
+<script>
+// ── Dynamic Blog Loading from JSON ──────────────────────────────────────────
+(async function() {
+  const grid = document.getElementById('blog-grid');
+  const countEl = document.getElementById('blog-count');
+  const paginationEl = document.getElementById('blog-pagination');
+  if (!grid || !window.HJC) return;
+
+  const POSTS_PER_PAGE = 9;
+
+  // Get current page from URL (e.g. /blog/page/2/)
+  const pageMatch = window.location.pathname.match(/\/page\/(\d+)/);
+  let currentPage = pageMatch ? parseInt(pageMatch[1]) : 1;
+
+  const data = await HJC.loadPostsIndex();
+  if (!data || !data.posts || !data.posts.length) return; // Keep hardcoded fallback
+
+  const { total, pages } = HJC.renderBlogGrid(grid, data.posts, currentPage, POSTS_PER_PAGE);
+
+  // Update count text
+  if (countEl) countEl.textContent = total + ' article' + (total !== 1 ? 's' : '') + ' — tips, guides & stories from the Peruvian Amazon';
+
+  // Re-observe animated elements
+  if (window.IntersectionObserver) {
+    const obs = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting){e.target.classList.add('v');obs.unobserve(e.target);} }), {threshold:.1});
+    grid.querySelectorAll('.r').forEach(el => obs.observe(el));
+  }
+
+  // Build pagination
+  if (paginationEl && pages > 1) {
+    let html = '';
+    if (currentPage > 1) {
+      const prevUrl = currentPage === 2 ? '../blog/index.html' : '../blog/page/' + (currentPage - 1) + '/index.html';
+      html += `<a href="${prevUrl}" class="btn bg2" style="padding:10px 18px" aria-label="Previous page"><i class="fas fa-chevron-left"></i></a>`;
+    }
+    for (let i = 1; i <= pages; i++) {
+      const url = i === 1 ? '../blog/index.html' : '../blog/page/' + i + '/index.html';
+      if (i === currentPage) {
+        html += `<span class="btn bg2" style="padding:10px 18px;pointer-events:none">${i}</span>`;
+      } else {
+        html += `<a href="${url}" class="btn ba" style="padding:10px 18px">${i}</a>`;
+      }
+    }
+    if (currentPage < pages) {
+      const nextUrl = '../blog/page/' + (currentPage + 1) + '/index.html';
+      html += `<a href="${nextUrl}" class="btn ba" style="padding:10px 18px" aria-label="Next page"><i class="fas fa-chevron-right"></i></a>`;
+    }
+    paginationEl.innerHTML = html;
+  }
 })();
 </script>
 

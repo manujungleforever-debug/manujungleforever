@@ -4,3 +4,8 @@ hts-cache/
 __pycache__/
 .tempmediaStorage/
 .gemini/
+
+# Cloudflare Pages Functions — secretos locales (NUNCA subir a GitHub)
+.dev.vars
+node_modules/
+.wrangler/
