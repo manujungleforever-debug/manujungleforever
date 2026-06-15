@@ -9,270 +9,311 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="icon" href="../wp-content/uploads/2018/01/cropped-HJC_Logo_PlainSeal_2Color-32x32.png">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --bg:#0b1a0f; --surface:#112017; --card:#162a1e; --border:rgba(255,255,255,.08);
-      --gold:#c9a84c; --gold-dim:#7a6028; --green:#2e7d52;
-      --text:#e8f0ea; --muted:rgba(232,240,234,.45);
-      --danger:#e05c5c; --success:#4caf82; --radius:12px;
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    :root{
+      --bg:#0b1a0f;--surface:#112017;--card:#162a1e;--card2:#1c3326;
+      --border:rgba(255,255,255,.08);--gold:#c9a84c;--gold-dim:#7a6028;
+      --green:#2e7d52;--text:#e8f0ea;--muted:rgba(232,240,234,.45);
+      --danger:#e05c5c;--success:#4caf82;--r:12px;
     }
     html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);}
     input,textarea,select,button{font-family:inherit;}
+    a{color:var(--gold);}
 
-    /* LOGIN */
+    /* ── LOGIN ─────────────────────────────────── */
     #login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;
       background:radial-gradient(ellipse at 40% 60%,#1a3d2a 0%,#0b1a0f 65%);}
-    .login-card{background:var(--card);border:1px solid var(--border);border-radius:20px;
+    .lcard{background:var(--card);border:1px solid var(--border);border-radius:20px;
       padding:48px 40px;width:100%;max-width:400px;box-shadow:0 32px 80px rgba(0,0,0,.5);}
-    .login-card .logo{text-align:center;margin-bottom:32px;}
-    .login-card .logo img{height:48px;}
-    .login-card h1{font-size:1.3rem;font-weight:600;text-align:center;margin-bottom:4px;}
-    .login-card p.sub{font-size:.85rem;color:var(--muted);text-align:center;margin-bottom:28px;}
-    .field{margin-bottom:16px;}
-    .field label{display:block;font-size:.78rem;font-weight:500;color:var(--muted);margin-bottom:6px;
-      text-transform:uppercase;letter-spacing:.05em;}
-    .field input{width:100%;padding:12px 14px;background:rgba(255,255,255,.05);
-      border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:.95rem;transition:border .2s;}
-    .field input:focus{outline:none;border-color:var(--gold);}
-    .btn-primary{width:100%;padding:13px;background:linear-gradient(135deg,var(--gold),#a07830);
-      border:none;border-radius:8px;color:#0b1a0f;font-weight:700;font-size:1rem;
-      cursor:pointer;transition:opacity .2s;margin-top:8px;}
-    .btn-primary:hover{opacity:.9;}
-    .btn-primary:disabled{opacity:.5;cursor:not-allowed;}
-    .error-msg{background:rgba(224,92,92,.12);border:1px solid rgba(224,92,92,.3);
+    .lcard .logo{text-align:center;margin-bottom:32px;}
+    .lcard .logo img{height:48px;}
+    .lcard h1{font-size:1.3rem;font-weight:600;text-align:center;margin-bottom:4px;}
+    .lcard p.sub{font-size:.85rem;color:var(--muted);text-align:center;margin-bottom:28px;}
+    .err-msg{background:rgba(224,92,92,.12);border:1px solid rgba(224,92,92,.3);
       border-radius:8px;padding:10px 14px;color:var(--danger);font-size:.85rem;
       margin-bottom:16px;display:none;}
 
-    /* APP */
+    /* ── APP SHELL ─────────────────────────────── */
     #app{display:none;height:100vh;flex-direction:column;}
-    header{display:flex;align-items:center;gap:0;height:60px;
-      background:var(--surface);border-bottom:1px solid var(--border);flex-shrink:0;}
-    .header-brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:.9rem;
-      padding:0 20px;white-space:nowrap;border-right:1px solid var(--border);height:100%;}
-    .header-brand img{height:26px;}
-    header nav{display:flex;flex:1;overflow-x:auto;padding:0 12px;}
-    header nav button{background:none;border:none;color:var(--muted);
-      padding:0 14px;height:60px;cursor:pointer;font-size:.82rem;white-space:nowrap;
+    header{display:flex;align-items:center;height:58px;background:var(--surface);
+      border-bottom:1px solid var(--border);flex-shrink:0;gap:0;}
+    .hbrand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:.88rem;
+      padding:0 18px;white-space:nowrap;border-right:1px solid var(--border);height:100%;flex-shrink:0;}
+    .hbrand img{height:24px;}
+    header nav{display:flex;flex:1;overflow-x:auto;padding:0 8px;}
+    header nav button{background:none;border:none;color:var(--muted);padding:0 13px;height:58px;
+      cursor:pointer;font-size:.82rem;white-space:nowrap;
       border-bottom:2px solid transparent;transition:color .15s,border-color .15s;}
     header nav button:hover{color:var(--text);}
     header nav button.active{color:var(--gold);border-bottom-color:var(--gold);}
-    .logout-btn{background:none;border:1px solid var(--border);color:var(--muted);
-      padding:6px 14px;border-radius:8px;cursor:pointer;font-size:.8rem;margin-right:16px;
-      white-space:nowrap;transition:all .15s;flex-shrink:0;}
-    .logout-btn:hover{border-color:var(--danger);color:var(--danger);}
+    .hright{display:flex;align-items:center;gap:8px;padding:0 14px;flex-shrink:0;}
+    .huser{font-size:.78rem;color:var(--muted);}
+    .btn-logout{background:none;border:1px solid var(--border);color:var(--muted);
+      padding:5px 12px;border-radius:7px;cursor:pointer;font-size:.78rem;transition:all .15s;}
+    .btn-logout:hover{border-color:var(--danger);color:var(--danger);}
 
-    /* SIDEBAR LAYOUT */
     .app-body{display:flex;flex:1;overflow:hidden;}
-    aside{width:220px;background:var(--surface);border-right:1px solid var(--border);
-      overflow-y:auto;flex-shrink:0;padding:16px 0;}
-    aside .section-label{font-size:.68rem;font-weight:600;text-transform:uppercase;
-      letter-spacing:.08em;color:var(--gold-dim);padding:12px 20px 6px;}
+    aside{width:210px;background:var(--surface);border-right:1px solid var(--border);
+      overflow-y:auto;flex-shrink:0;padding:12px 0;}
+    aside .slabel{font-size:.67rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;
+      color:var(--gold-dim);padding:14px 18px 5px;}
     aside button{display:block;width:100%;text-align:left;background:none;border:none;
-      color:var(--muted);padding:9px 20px;cursor:pointer;font-size:.85rem;
-      transition:background .15s,color .15s;border-left:2px solid transparent;}
+      color:var(--muted);padding:9px 18px;cursor:pointer;font-size:.83rem;
+      border-left:2px solid transparent;transition:all .15s;}
     aside button:hover{background:rgba(255,255,255,.04);color:var(--text);}
-    aside button.active{background:rgba(201,168,76,.08);color:var(--gold);
-      border-left-color:var(--gold);}
+    aside button.active{background:rgba(201,168,76,.08);color:var(--gold);border-left-color:var(--gold);}
 
-    main{flex:1;overflow-y:auto;padding:28px 32px;}
+    main{flex:1;overflow-y:auto;padding:24px 28px 80px;}
 
-    /* PANELS */
-    .panel-title{font-size:1.3rem;font-weight:600;margin-bottom:4px;}
-    .panel-sub{font-size:.82rem;color:var(--muted);margin-bottom:24px;}
+    /* ── COMMON ────────────────────────────────── */
+    .pt{font-size:1.25rem;font-weight:600;margin-bottom:3px;}
+    .ps{font-size:.8rem;color:var(--muted);margin-bottom:20px;}
 
-    /* LIST */
-    .list-grid{display:grid;gap:10px;}
-    .list-item{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
-      padding:14px 18px;display:flex;align-items:center;justify-content:space-between;}
-    .list-item:hover{border-color:var(--gold-dim);}
-    .list-item h3{font-size:.9rem;font-weight:500;}
-    .list-item span{font-size:.75rem;color:var(--muted);}
-    .badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:.72rem;font-weight:500;
-      background:rgba(46,125,82,.2);color:#4caf82;margin-left:8px;}
-    .badge.off{background:rgba(224,92,92,.15);color:var(--danger);}
-
-    /* EDITOR */
-    .editor-back{background:none;border:none;color:var(--muted);cursor:pointer;
-      font-size:.82rem;margin-bottom:20px;padding:0;display:flex;align-items:center;gap:5px;}
-    .editor-back:hover{color:var(--text);}
-    .editor-form{max-width:860px;}
-    .form-section{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
-      padding:22px;margin-bottom:14px;}
-    .section-h{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;
-      color:var(--gold);margin-bottom:16px;}
-    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-    .form-row.cols3{grid-template-columns:1fr 1fr 1fr;}
-    .form-row.full{grid-template-columns:1fr;}
-    .form-field{margin-bottom:14px;}
-    .form-field label{display:block;font-size:.73rem;font-weight:500;color:var(--muted);
-      margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em;}
-    .form-field input,.form-field textarea,.form-field select{
-      width:100%;padding:9px 12px;background:rgba(255,255,255,.04);
-      border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:.88rem;transition:border .2s;}
-    .form-field input:focus,.form-field textarea:focus,.form-field select:focus{
-      outline:none;border-color:var(--gold);}
-    .form-field textarea{min-height:90px;resize:vertical;line-height:1.5;}
-    .form-field select option{background:var(--surface);}
-    .hint{font-size:.7rem;color:var(--muted);margin-top:4px;}
-
-    /* TOGGLE */
-    .toggle-wrap{display:flex;align-items:center;gap:10px;padding-top:4px;}
-    .toggle{position:relative;width:40px;height:22px;flex-shrink:0;}
-    .toggle input{opacity:0;width:0;height:0;}
-    .toggle-slider{position:absolute;inset:0;background:rgba(255,255,255,.1);
-      border-radius:22px;cursor:pointer;transition:background .2s;}
-    .toggle-slider::before{content:'';position:absolute;width:16px;height:16px;
-      left:3px;top:3px;background:white;border-radius:50%;transition:transform .2s;}
-    .toggle input:checked+.toggle-slider{background:var(--green);}
-    .toggle input:checked+.toggle-slider::before{transform:translateX(18px);}
-
-    /* BUTTON ROW */
-    .btn-row{display:flex;gap:10px;align-items:center;}
+    .btn-primary{background:linear-gradient(135deg,var(--gold),#a07830);border:none;
+      border-radius:8px;color:#0b1a0f;font-weight:700;font-size:.88rem;
+      padding:9px 20px;cursor:pointer;transition:opacity .2s;}
+    .btn-primary:hover{opacity:.88;}
+    .btn-primary:disabled{opacity:.5;cursor:not-allowed;}
+    .btn-secondary{background:rgba(255,255,255,.06);border:1px solid var(--border);
+      color:var(--text);padding:8px 16px;border-radius:8px;cursor:pointer;font-size:.85rem;transition:all .15s;}
+    .btn-secondary:hover{background:rgba(255,255,255,.1);}
+    .btn-danger{background:rgba(224,92,92,.1);border:1px solid rgba(224,92,92,.3);
+      color:var(--danger);padding:7px 14px;border-radius:7px;cursor:pointer;font-size:.8rem;transition:all .15s;}
+    .btn-danger:hover{background:rgba(224,92,92,.2);}
     .btn-edit{background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.25);
-      color:var(--gold);padding:6px 14px;border-radius:7px;cursor:pointer;font-size:.8rem;transition:background .15s;}
+      color:var(--gold);padding:6px 14px;border-radius:7px;cursor:pointer;font-size:.8rem;transition:all .15s;}
     .btn-edit:hover{background:rgba(201,168,76,.2);}
-    .btn-danger{background:rgba(224,92,92,.1);border:1px solid rgba(224,92,92,.25);
-      color:var(--danger);padding:6px 14px;border-radius:7px;cursor:pointer;font-size:.8rem;}
 
-    /* SAVE BAR */
-    .save-bar{position:sticky;bottom:0;background:var(--surface);
-      border-top:1px solid var(--border);padding:12px 32px;
-      display:flex;align-items:center;justify-content:flex-end;gap:12px;}
+    /* ── LISTS ─────────────────────────────────── */
+    .list-grid{display:grid;gap:8px;}
+    .li{background:var(--card);border:1px solid var(--border);border-radius:var(--r);
+      padding:13px 16px;display:flex;align-items:center;justify-content:space-between;
+      transition:border-color .15s;}
+    .li:hover{border-color:var(--gold-dim);}
+    .li-info h3{font-size:.9rem;font-weight:500;line-height:1.3;}
+    .li-info span{font-size:.74rem;color:var(--muted);display:block;margin-top:2px;}
+    .li-actions{display:flex;gap:6px;flex-shrink:0;margin-left:12px;}
+    .badge{display:inline-block;padding:1px 7px;border-radius:20px;font-size:.7rem;font-weight:600;margin-left:6px;}
+    .badge.on{background:rgba(46,125,82,.2);color:var(--success);}
+    .badge.off{background:rgba(224,92,92,.15);color:var(--danger);}
+    .badge.warn{background:rgba(201,168,76,.15);color:var(--gold);}
+
+    /* ── EDITOR ────────────────────────────────── */
+    .back-btn{background:none;border:none;color:var(--muted);cursor:pointer;
+      font-size:.82rem;margin-bottom:18px;padding:0;display:flex;align-items:center;gap:5px;transition:color .15s;}
+    .back-btn:hover{color:var(--text);}
+    .eform{max-width:900px;}
+    .esec{background:var(--card);border:1px solid var(--border);border-radius:var(--r);
+      padding:20px;margin-bottom:12px;}
+    .esec-h{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;
+      color:var(--gold);margin-bottom:14px;}
+    .grow2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+    .grow3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+    .ff{margin-bottom:12px;}
+    .ff label{display:block;font-size:.71rem;font-weight:500;color:var(--muted);
+      margin-bottom:4px;text-transform:uppercase;letter-spacing:.04em;}
+    .ff input,.ff textarea,.ff select{
+      width:100%;padding:8px 11px;background:rgba(255,255,255,.04);
+      border:1px solid var(--border);border-radius:7px;color:var(--text);font-size:.88rem;transition:border .2s;}
+    .ff input:focus,.ff textarea:focus,.ff select:focus{outline:none;border-color:var(--gold);}
+    .ff textarea{resize:vertical;line-height:1.5;}
+    .ff select option{background:var(--surface);}
+    .hint{font-size:.69rem;color:var(--muted);margin-top:3px;}
+
+    /* ── IMAGE FIELD ───────────────────────────── */
+    .img-field-wrap{display:flex;flex-direction:column;gap:8px;}
+    .img-input-row{display:flex;gap:8px;}
+    .img-input-row input{flex:1;}
+    .img-preview{width:100%;max-height:180px;object-fit:cover;border-radius:8px;
+      border:1px solid var(--border);display:none;}
+    .img-preview.show{display:block;}
+    .upload-prog{font-size:.75rem;color:var(--muted);display:none;}
+
+    /* ── TOGGLE ────────────────────────────────── */
+    .tgl-wrap{display:flex;align-items:center;gap:10px;padding-top:2px;}
+    .tgl{position:relative;width:38px;height:21px;flex-shrink:0;}
+    .tgl input{opacity:0;width:0;height:0;}
+    .tgl-s{position:absolute;inset:0;background:rgba(255,255,255,.1);border-radius:21px;cursor:pointer;transition:background .2s;}
+    .tgl-s::before{content:'';position:absolute;width:15px;height:15px;left:3px;top:3px;
+      background:white;border-radius:50%;transition:transform .2s;}
+    .tgl input:checked+.tgl-s{background:var(--green);}
+    .tgl input:checked+.tgl-s::before{transform:translateX(17px);}
+
+    /* ── MARKDOWN TOOLBAR ──────────────────────── */
+    .md-wrap{border:1px solid var(--border);border-radius:7px;overflow:hidden;}
+    .md-toolbar{display:flex;gap:1px;padding:6px 8px;background:rgba(255,255,255,.03);
+      border-bottom:1px solid var(--border);flex-wrap:wrap;}
+    .md-toolbar button{background:none;border:1px solid transparent;color:var(--muted);
+      padding:3px 9px;border-radius:5px;cursor:pointer;font-size:.78rem;transition:all .15s;}
+    .md-toolbar button:hover{background:rgba(255,255,255,.08);color:var(--text);border-color:var(--border);}
+    .md-wrap textarea{border:none;border-radius:0;background:rgba(255,255,255,.03);}
+    .md-wrap textarea:focus{border:none;outline:none;}
+
+    /* ── SAVE BAR ──────────────────────────────── */
+    .save-bar{position:fixed;bottom:0;left:210px;right:0;background:var(--surface);
+      border-top:1px solid var(--border);padding:10px 28px;
+      display:flex;align-items:center;justify-content:flex-end;gap:10px;
+      z-index:100;transition:left .2s;}
     .save-status{font-size:.82rem;color:var(--muted);}
     .save-status.ok{color:var(--success);}
     .save-status.err{color:var(--danger);}
-    .btn-save{background:linear-gradient(135deg,var(--gold),#a07830);border:none;
-      border-radius:8px;color:#0b1a0f;font-weight:700;font-size:.88rem;
-      padding:9px 26px;cursor:pointer;transition:opacity .2s;}
-    .btn-save:hover{opacity:.88;}
-    .btn-save:disabled{opacity:.5;cursor:not-allowed;}
 
-    /* MISC */
-    .spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.15);
+    /* ── MODAL ─────────────────────────────────── */
+    .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;
+      align-items:center;justify-content:center;z-index:200;display:none;}
+    .modal-bg.open{display:flex;}
+    .modal{background:var(--card);border:1px solid var(--border);border-radius:16px;
+      padding:28px;width:100%;max-width:500px;box-shadow:0 24px 60px rgba(0,0,0,.5);}
+    .modal h3{font-size:1rem;font-weight:600;margin-bottom:16px;}
+    .modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:20px;}
+
+    /* ── MISC ──────────────────────────────────── */
+    .spinner{display:inline-block;width:15px;height:15px;border:2px solid rgba(255,255,255,.15);
       border-top-color:var(--gold);border-radius:50%;animation:spin .6s linear infinite;}
     @keyframes spin{to{transform:rotate(360deg);}}
-    .loading-state{display:flex;align-items:center;justify-content:center;
-      padding:60px;color:var(--muted);gap:10px;}
-    .empty-state{text-align:center;padding:60px;color:var(--muted);}
+    .loading{display:flex;align-items:center;justify-content:center;padding:60px;color:var(--muted);gap:10px;}
+    .empty{text-align:center;padding:60px;color:var(--muted);}
+    .sep{border:none;border-top:1px solid var(--border);margin:14px 0;}
+    .tag{display:inline-block;background:rgba(201,168,76,.12);color:var(--gold);
+      font-size:.7rem;padding:2px 8px;border-radius:10px;font-weight:500;}
   </style>
 </head>
 <body>
 
 <!-- LOGIN -->
 <div id="login-screen">
-  <div class="login-card">
-    <div class="logo">
-      <img src="../wp-content/uploads/2018/01/cropped-HJC_Logo_PlainSeal_2Color-32x32.png" alt="" onerror="this.style.display='none'">
-    </div>
+  <div class="lcard">
+    <div class="logo"><img src="../wp-content/uploads/2018/01/cropped-HJC_Logo_PlainSeal_2Color-32x32.png" alt="" onerror="this.style.display='none'"></div>
     <h1>Panel de Administración</h1>
     <p class="sub">Hidden Jungle Cusco</p>
-    <div class="error-msg" id="login-error"></div>
-    <div class="field"><label>Usuario</label><input type="text" id="inp-user" autocomplete="username"></div>
-    <div class="field"><label>Contraseña</label><input type="password" id="inp-pass" autocomplete="current-password"></div>
-    <button class="btn-primary" id="btn-login">Iniciar sesión</button>
+    <div class="err-msg" id="login-err"></div>
+    <div class="ff"><label>Usuario</label><input type="text" id="inp-u" autocomplete="username"></div>
+    <div class="ff"><label>Contraseña</label><input type="password" id="inp-p" autocomplete="current-password"></div>
+    <button class="btn-primary" id="btn-login" style="width:100%;padding:12px;margin-top:4px">Iniciar sesión</button>
   </div>
 </div>
 
 <!-- APP -->
 <div id="app">
   <header>
-    <div class="header-brand">
+    <div class="hbrand">
       <img src="../wp-content/uploads/2018/01/cropped-HJC_Logo_PlainSeal_2Color-32x32.png" alt="" onerror="this.style.display='none'">
       Hidden Jungle CMS
     </div>
     <nav id="top-nav"></nav>
-    <button class="logout-btn" id="btn-logout">Cerrar sesión</button>
+    <div class="hright">
+      <span class="huser" id="huser"></span>
+      <button class="btn-logout" id="btn-logout">Salir</button>
+    </div>
   </header>
   <div class="app-body">
     <aside id="sidebar"></aside>
-    <main id="main-content"></main>
+    <main id="mc"></main>
   </div>
   <div class="save-bar" id="save-bar" style="display:none">
     <span class="save-status" id="save-status"></span>
-    <button class="btn-save" id="btn-save">Guardar cambios</button>
+    <button class="btn-secondary" id="btn-cancel-save">Cancelar</button>
+    <button class="btn-primary" id="btn-save">💾 Guardar cambios</button>
   </div>
 </div>
+
+<!-- DELETE CONFIRM MODAL -->
+<div class="modal-bg" id="del-modal">
+  <div class="modal">
+    <h3 id="del-title">¿Eliminar este elemento?</h3>
+    <p style="font-size:.85rem;color:var(--muted)" id="del-msg">Esta acción no se puede deshacer.</p>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeModal()">Cancelar</button>
+      <button class="btn-danger" id="del-confirm">Sí, eliminar</button>
+    </div>
+  </div>
+</div>
+
+<input type="file" id="img-picker" accept="image/*" style="display:none">
 
 <script>
 const API = '/api/cms';
 let token = sessionStorage.getItem('cms_token');
-let currentSection = 'blog';
-let currentSha = null;
-let currentFile = null;
-let currentData = null;
+let cUser = sessionStorage.getItem('cms_user') || 'admin';
+let cSection = 'blog', cSha = null, cFile = null, cData = null;
+let saveFnRef = null;
 
-// ── NAV STRUCTURE ─────────────────────────────────────────────────────────────
-const NAV = [
-  { id:'blog',       label:'✍️ Blog',        sub: [] },
-  { id:'content',    label:'📄 Contenido',   sub: [
-    { id:'home',       label:'🏠 Página de Inicio' },
-    { id:'contact',    label:'📞 Contacto' },
-    { id:'global',     label:'⚙️ Datos Globales' },
+// ─────────────────────────────────────────────────────────────────────────────
+// NAV
+// ─────────────────────────────────────────────────────────────────────────────
+const SECTIONS = [
+  { id:'blog',    label:'✍️ Blog',       sub:[] },
+  { id:'content', label:'📄 Contenido',  sub:[
+    {id:'home',    label:'🏠 Inicio'},
+    {id:'contact', label:'📞 Contacto'},
+    {id:'global',  label:'⚙️ Datos Globales'},
   ]},
-  { id:'tours',      label:'🌿 Tours',        sub: [] },
-  { id:'departures', label:'📅 Salidas',      sub: [] },
-  { id:'testimonials',label:'⭐ Testimonios', sub: [] },
+  { id:'tours',        label:'🌿 Tours',       sub:[] },
+  { id:'departures',   label:'📅 Salidas',     sub:[] },
+  { id:'testimonials', label:'⭐ Testimonios', sub:[] },
 ];
 
-// ── BOOT ─────────────────────────────────────────────────────────────────────
-if (token) bootApp();
-buildNav();
-
-function buildNav() {
+function buildTopNav() {
   const nav = document.getElementById('top-nav');
-  nav.innerHTML = NAV.map(n =>
-    `<button data-section="${n.id}" ${n.id===currentSection?'class="active"':''}>${n.label}</button>`
+  nav.innerHTML = SECTIONS.map(s =>
+    `<button data-s="${s.id}">${s.label}</button>`
   ).join('');
   nav.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
     nav.querySelectorAll('button').forEach(x=>x.classList.remove('active'));
     b.classList.add('active');
-    switchSection(b.dataset.section);
+    switchSection(b.dataset.s);
   }));
+  nav.querySelector(`[data-s="${cSection}"]`)?.classList.add('active');
 }
 
 function buildSidebar(items) {
   const aside = document.getElementById('sidebar');
-  aside.innerHTML = items.length ? items.map(s =>
-    `<button data-sub="${s.id}" ${s.id===currentSection?'class="active"':''}>${s.label}</button>`
-  ).join('') : '';
+  aside.innerHTML = items.map(s =>
+    `<button data-sub="${s.id}">${s.label}</button>`
+  ).join('');
   aside.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
     aside.querySelectorAll('button').forEach(x=>x.classList.remove('active'));
     b.classList.add('active');
-    loadView(b.dataset.sub);
+    route(b.dataset.sub);
   }));
 }
 
 function switchSection(id) {
-  currentSection = id;
-  const sec = NAV.find(n=>n.id===id);
+  cSection = id;
+  hideSaveBar();
+  const sec = SECTIONS.find(s=>s.id===id);
   if (sec?.sub?.length) {
     buildSidebar(sec.sub);
-    loadView(sec.sub[0].id);
+    document.getElementById('sidebar').querySelector('button')?.classList.add('active');
+    route(sec.sub[0].id);
   } else {
     buildSidebar([]);
-    loadView(id);
+    route(id);
   }
 }
 
-// ── LOGIN ─────────────────────────────────────────────────────────────────────
-document.getElementById('inp-pass').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+// ─────────────────────────────────────────────────────────────────────────────
+// LOGIN / LOGOUT
+// ─────────────────────────────────────────────────────────────────────────────
+document.getElementById('inp-p').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
 document.getElementById('btn-login').addEventListener('click', doLogin);
 
 async function doLogin() {
-  const user = document.getElementById('inp-user').value.trim();
-  const pass = document.getElementById('inp-pass').value;
+  const u = document.getElementById('inp-u').value.trim();
+  const p = document.getElementById('inp-p').value;
   const btn = document.getElementById('btn-login');
-  const err = document.getElementById('login-error');
-  btn.disabled = true; btn.textContent = 'Entrando…'; err.style.display='none';
+  const err = document.getElementById('login-err');
+  btn.disabled=true; btn.textContent='Entrando…'; err.style.display='none';
   try {
-    const r = await fetch(`${API}/login`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({user,pass}) });
+    const r = await fetch(`${API}/login`, {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({user:u,pass:p})});
     const d = await r.json();
     if (!r.ok) throw new Error(d.error||'Credenciales incorrectas');
-    token = d.token;
-    sessionStorage.setItem('cms_token', token);
+    token=d.token; cUser=u;
+    sessionStorage.setItem('cms_token',token);
+    sessionStorage.setItem('cms_user',u);
     bootApp();
   } catch(e) {
-    err.textContent = e.message; err.style.display='block';
+    err.textContent=e.message; err.style.display='block';
     btn.disabled=false; btn.textContent='Iniciar sesión';
   }
 }
@@ -280,553 +321,699 @@ async function doLogin() {
 function bootApp() {
   document.getElementById('login-screen').style.display='none';
   document.getElementById('app').style.display='flex';
+  document.getElementById('huser').textContent=cUser;
+  buildTopNav();
   switchSection('blog');
 }
 
 document.getElementById('btn-logout').addEventListener('click', () => {
-  sessionStorage.removeItem('cms_token'); token=null;
+  sessionStorage.clear(); token=null;
   document.getElementById('app').style.display='none';
   document.getElementById('login-screen').style.display='flex';
 });
 
-// ── GITHUB HELPERS ────────────────────────────────────────────────────────────
+if (token) bootApp();
+
+// ─────────────────────────────────────────────────────────────────────────────
+// GITHUB API
+// ─────────────────────────────────────────────────────────────────────────────
 async function ghGet(path) {
-  const r = await fetch(`${API}/file?path=${encodeURIComponent(path)}`, {
-    headers:{'Authorization':`Bearer ${token}`}
-  });
-  if (r.status===401) { sessionStorage.removeItem('cms_token'); location.reload(); }
-  if (!r.ok) { const e=await r.json().catch(()=>({})); throw new Error(e.error||'Error al cargar'); }
+  const r = await fetch(`${API}/file?path=${encodeURIComponent(path)}`,{headers:{Authorization:`Bearer ${token}`}});
+  if (r.status===401){sessionStorage.clear();location.reload();}
+  if (!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e.error||'Error al cargar');}
   return r.json();
 }
 
 async function ghPut(path, content, sha, msg) {
-  const r = await fetch(`${API}/file`, {
-    method:'PUT', headers:{'Authorization':`Bearer ${token}`,'Content-Type':'application/json'},
-    body:JSON.stringify({path, content, sha, message:msg||`update: ${path}`})
-  });
-  if (r.status===401) { sessionStorage.removeItem('cms_token'); location.reload(); }
-  const d = await r.json();
-  if (!r.ok) throw new Error(d.error||'Error al guardar');
+  const r = await fetch(`${API}/file`,{method:'PUT',headers:{Authorization:`Bearer ${token}`,'Content-Type':'application/json'},
+    body:JSON.stringify({path,content,sha,message:msg||`update: ${path}`})});
+  if (r.status===401){sessionStorage.clear();location.reload();}
+  const d=await r.json(); if(!r.ok)throw new Error(d.error||'Error al guardar');
   return d;
 }
 
-// ── ROUTER ────────────────────────────────────────────────────────────────────
-async function loadView(id) {
-  hideSaveBar();
-  const m = document.getElementById('main-content');
-  m.innerHTML = `<div class="loading-state"><div class="spinner"></div> Cargando…</div>`;
+async function ghPutBinary(path, base64, msg) {
+  const r = await fetch(`${API}/file`,{method:'PUT',headers:{Authorization:`Bearer ${token}`,'Content-Type':'application/json'},
+    body:JSON.stringify({path,base64,message:msg||`upload: ${path}`})});
+  if (r.status===401){sessionStorage.clear();location.reload();}
+  const d=await r.json(); if(!r.ok)throw new Error(d.error||'Error al subir imagen');
+  return d;
+}
+
+async function ghDelete(path, sha, msg) {
+  const r = await fetch(`${API}/file`,{method:'DELETE',headers:{Authorization:`Bearer ${token}`,'Content-Type':'application/json'},
+    body:JSON.stringify({path,sha,message:msg||`delete: ${path}`})});
+  const d=await r.json(); if(!r.ok)throw new Error(d.error||'Error al eliminar');
+  return d;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// IMAGE UPLOAD
+// ─────────────────────────────────────────────────────────────────────────────
+let imgPickerCallback = null;
+document.getElementById('img-picker').addEventListener('change', async function() {
+  const file = this.files[0];
+  if (!file || !imgPickerCallback) return;
+  this.value='';
+
+  const progressEl = imgPickerCallback.progressEl;
+  if (progressEl) { progressEl.style.display='block'; progressEl.textContent='Subiendo imagen…'; }
+
   try {
-    if      (id==='blog')         await viewBlogList();
-    else if (id==='home')         await viewHomeEditor();
-    else if (id==='contact')      await viewContactEditor();
-    else if (id==='global')       await viewGlobalEditor();
-    else if (id==='tours')        await viewToursList();
-    else if (id==='departures')   await viewDeparturesList();
-    else if (id==='testimonials') await viewTestimonialsList();
+    const base64 = await fileToBase64(file);
+    const ext = file.name.split('.').pop().toLowerCase();
+    const slug = file.name.replace(/[^a-zA-Z0-9.]/g,'-').toLowerCase();
+    const path = `www.hiddenjunglecusco.com/uploads/${Date.now()}-${slug}`;
+    await ghPutBinary(path, base64, `upload: ${slug}`);
+    const url = `/uploads/${Date.now()}-${slug}`;
+    imgPickerCallback.onDone(`/uploads/${path.split('/uploads/')[1]}`);
+    if (progressEl) { progressEl.textContent='✓ Imagen subida'; setTimeout(()=>{progressEl.style.display='none';},2000); }
   } catch(e) {
-    m.innerHTML = `<p style="color:var(--danger);padding:20px">❌ ${e.message}</p>`;
+    if (progressEl) { progressEl.textContent='✗ Error: '+e.message; progressEl.style.color='var(--danger)'; }
+  }
+});
+
+function pickImage(inputId, previewId, progressId) {
+  imgPickerCallback = {
+    onDone: (url) => {
+      const inp = document.getElementById(inputId);
+      if (inp) inp.value = url;
+      const prev = document.getElementById(previewId);
+      if (prev) { prev.src=url; prev.classList.add('show'); }
+    },
+    progressEl: progressId ? document.getElementById(progressId) : null
+  };
+  document.getElementById('img-picker').click();
+}
+
+function fileToBase64(file) {
+  return new Promise((resolve,reject) => {
+    const r = new FileReader();
+    r.onload = e => resolve(e.target.result.split(',')[1]);
+    r.onerror = reject;
+    r.readAsDataURL(file);
+  });
+}
+
+function updateImgPreview(inputId, previewId) {
+  const val = document.getElementById(inputId)?.value;
+  const prev = document.getElementById(previewId);
+  if (!prev) return;
+  if (val) { prev.src=val; prev.classList.add('show'); }
+  else { prev.classList.remove('show'); }
+}
+
+function imgWidget(id, label, value='', hint='') {
+  const pid=id+'-prev', prid=id+'-prog';
+  return `<div class="ff"><label>${label}</label>
+    <div class="img-field-wrap">
+      <div class="img-input-row">
+        <input id="${id}" value="${esc(value)}" placeholder="URL o ruta de imagen" oninput="updateImgPreview('${id}','${pid}')">
+        <button type="button" class="btn-secondary" onclick="pickImage('${id}','${pid}','${prid}')">📁 Subir</button>
+      </div>
+      <span class="upload-prog" id="${prid}"></span>
+      ${value ? `<img class="img-preview show" id="${pid}" src="${esc(value)}" alt="">` : `<img class="img-preview" id="${pid}" alt="">`}
+      ${hint?`<span class="hint">${hint}</span>`:''}
+    </div></div>`;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// MARKDOWN EDITOR TOOLBAR
+// ─────────────────────────────────────────────────────────────────────────────
+function mdToolbar(textareaId) {
+  const cmds = [
+    ['**B**','**','**'],['*I*','*','*'],['~~S~~','~~','~~'],
+    ['# H1','# ',''],['## H2','## ',''],['### H3','### ',''],
+    ['🔗 Link','[','](url)'],['> Cita','> ',''],['- Lista','- ',''],
+    ['1. Lista','1. ',''],['```Código','```\n','\n```'],
+  ];
+  return `<div class="md-wrap">
+    <div class="md-toolbar">${cmds.map(([l,b,a])=>`<button type="button" onclick="mdWrap('${textareaId}','${b.replace(/\n/g,'\\n').replace(/'/g,"\\'")}','${a.replace(/\n/g,'\\n').replace(/'/g,"\\'")}')" title="${l}">${l}</button>`).join('')}</div>
+    <textarea id="${textareaId}" style="min-height:320px;font-family:monospace;font-size:.83rem;line-height:1.6;border:none;border-radius:0;background:rgba(255,255,255,.03);padding:12px"></textarea>
+  </div>`;
+}
+
+function mdWrap(id, before, after) {
+  const ta = document.getElementById(id);
+  if (!ta) return;
+  const s=ta.selectionStart, e=ta.selectionEnd;
+  const sel=ta.value.substring(s,e);
+  ta.value=ta.value.substring(0,s)+before+sel+after+ta.value.substring(e);
+  ta.focus(); ta.selectionStart=s+before.length; ta.selectionEnd=s+before.length+sel.length;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// ROUTER
+// ─────────────────────────────────────────────────────────────────────────────
+async function route(id) {
+  hideSaveBar(); cFile=null; cSha=null; cData=null;
+  set(`<div class="loading"><div class="spinner"></div> Cargando…</div>`);
+  try {
+    const views = {blog:viewBlog,home:viewHome,contact:viewContact,global:viewGlobal,
+      tours:viewTours,departures:viewDeps,testimonials:viewTestims};
+    if (views[id]) await views[id]();
+    else set(`<p>Sección no encontrada.</p>`);
+  } catch(e) {
+    set(`<p style="color:var(--danger);padding:20px">❌ ${e.message}</p>`);
   }
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
 // BLOG
 // ─────────────────────────────────────────────────────────────────────────────
-async function viewBlogList() {
+async function viewBlog() {
   const data = await ghGet('www.hiddenjunglecusco.com/posts');
-  const files = (data.files||[]).filter(f=>f.name.endsWith('.md'));
+  const files = (data.files||[]).filter(f=>f.name.endsWith('.md'))
+    .sort((a,b)=>b.name.localeCompare(a.name));
   set(`
-    <p class="panel-title">✍️ Artículos del Blog</p>
-    <p class="panel-sub">${files.length} artículos</p>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
+      <div><p class="pt">✍️ Artículos del Blog</p><p class="ps">${files.length} artículos</p></div>
+      <button class="btn-primary" onclick="newBlog()">+ Nuevo artículo</button>
+    </div>
     <div class="list-grid">
-      ${files.map(f=>`
-        <div class="list-item">
-          <div><h3>${f.name.replace('.md','').replace(/-/g,' ')}</h3><span>${f.name}</span></div>
-          <button class="btn-edit" onclick="editBlog('${f.path}')">Editar</button>
-        </div>`).join('')}
+      ${files.map(f=>{
+        const name=f.name.replace('.md','').replace(/-/g,' ');
+        return `<div class="li">
+          <div class="li-info"><h3>${name}</h3><span>${f.name}</span></div>
+          <div class="li-actions">
+            <button class="btn-edit" onclick="editBlog('${f.path}','${f.sha}')">Editar</button>
+            <button class="btn-danger" onclick="confirmDelete('${f.path}','${f.sha}','artículo','viewBlog')">🗑️</button>
+          </div>
+        </div>`;}).join('')}
     </div>`);
 }
 
-window.editBlog = async function(path) {
-  set(`<div class="loading-state"><div class="spinner"></div></div>`);
-  const data = await ghGet(path);
-  currentFile=path; currentSha=data.sha;
-  const fm = parseFM(data.content);
+function newBlog() {
+  cFile=null; cSha=null;
   set(`
-    <button class="editor-back" onclick="viewBlogList()">← Volver al blog</button>
-    <div class="editor-form">
-      <div class="form-section">
-        <div class="section-h">Información</div>
-        <div class="form-row">
-          <div class="form-field"><label>Título</label><input id="f-title" value="${esc(fm.title||'')}"></div>
-          <div class="form-field"><label>Fecha</label><input type="date" id="f-date" value="${esc(fm.date||'')}"></div>
+    <button class="back-btn" onclick="route('blog')">← Volver al blog</button>
+    <div class="eform">
+      <div class="esec">
+        <div class="esec-h">Nuevo Artículo</div>
+        <div class="ff"><label>Slug URL (sin espacios, solo guiones)</label>
+          <input id="f-slug" placeholder="mi-nuevo-articulo" oninput="this.value=this.value.toLowerCase().replace(/[^a-z0-9-]/g,'-')">
+          <span class="hint">El archivo se guardará como: <code id="slug-preview">mi-nuevo-articulo.md</code></span>
         </div>
-        <div class="form-row">
-          <div class="form-field"><label>Categoría</label>
-            <select id="f-cat">${['Wildlife','Conservation','Sustainability','Manu Park','Travel Tips'].map(c=>`<option ${fm.categoria===c?'selected':''}>${c}</option>`).join('')}</select>
-          </div>
-          <div class="form-field"><label>Publicado</label>
-            <div class="toggle-wrap"><label class="toggle"><input type="checkbox" id="f-pub" ${fm.publicado!==false?'checked':''}><span class="toggle-slider"></span></label>
-            <span id="pub-lbl">${fm.publicado!==false?'Sí':'No'}</span></div>
-          </div>
-        </div>
-        <div class="form-field"><label>Extracto</label><textarea id="f-extracto">${esc(fm.extracto||'')}</textarea></div>
-        <div class="form-field"><label>Imagen de portada (URL o ruta)</label><input id="f-img" value="${esc(fm.imagen||'')}"></div>
-        <div class="form-field"><label>Texto alternativo imagen</label><input id="f-imgalt" value="${esc(fm.imagen_alt||'')}"></div>
+        ${blogFields({title:'',date:new Date().toISOString().split('T')[0],categoria:'Wildlife',publicado:true,extracto:'',imagen:'',imagen_alt:''})}
       </div>
-      <div class="form-section">
-        <div class="section-h">Contenido (Markdown)</div>
-        <div class="form-field"><textarea id="f-body" style="min-height:380px;font-family:monospace;font-size:.82rem;line-height:1.6">${esc(fm.body||'')}</textarea></div>
-      </div>
+      <div class="esec"><div class="esec-h">Contenido (Markdown)</div>${mdToolbar('f-body')}</div>
     </div>`);
-  document.getElementById('f-pub').addEventListener('change',e=>{
-    document.getElementById('pub-lbl').textContent=e.target.checked?'Sí':'No';
+  document.getElementById('f-slug').addEventListener('input', e=>{
+    document.getElementById('slug-preview').textContent=e.target.value+'.md';
   });
-  currentData=fm;
   showSaveBar(async()=>{
-    const updated={...fm,
-      title:v('f-title'),date:v('f-date'),categoria:v('f-cat'),
-      publicado:document.getElementById('f-pub').checked,
-      extracto:v('f-extracto'),imagen:v('f-img'),imagen_alt:v('f-imgalt')
-    };
-    const body=v('f-body');
-    const content=buildFM(updated,body);
-    const res=await ghPut(path,content,currentSha,`update blog: ${updated.title}`);
-    currentSha=res.sha;
+    const slug=document.getElementById('f-slug').value.trim();
+    if(!slug)throw new Error('El slug es obligatorio');
+    const path=`www.hiddenjunglecusco.com/posts/${slug}.md`;
+    const fm=readBlogFields();
+    const content=buildFM(fm,document.getElementById('f-body').value);
+    const res=await ghPut(path,content,null,`new post: ${fm.title}`);
+    cFile=path; cSha=res.sha;
+    document.querySelector('.back-btn').textContent='← Blog (guardado ✓)';
   });
-};
+}
+
+async function editBlog(path, sha) {
+  set(`<div class="loading"><div class="spinner"></div></div>`);
+  const data=await ghGet(path);
+  cFile=path; cSha=data.sha;
+  const fm=parseFM(data.content);
+  set(`
+    <button class="back-btn" onclick="route('blog')">← Volver al blog</button>
+    <div class="eform">
+      <div class="esec">
+        <div class="esec-h">Información del Artículo</div>
+        ${blogFields(fm)}
+      </div>
+      <div class="esec"><div class="esec-h">Contenido (Markdown)</div>${mdToolbar('f-body')}</div>
+    </div>`);
+  document.getElementById('f-body').value=fm.body||'';
+  showSaveBar(async()=>{
+    const fm2=readBlogFields();
+    const content=buildFM(fm2,document.getElementById('f-body').value);
+    const res=await ghPut(cFile,content,cSha,`update: ${fm2.title}`);
+    cSha=res.sha;
+  });
+}
+
+function blogFields(fm) {
+  return `
+    <div class="grow2">
+      <div class="ff"><label>Título del artículo</label><input id="f-title" value="${esc(fm.title||'')}"></div>
+      <div class="ff"><label>Fecha de publicación</label><input type="date" id="f-date" value="${esc(fm.date||'')}"></div>
+    </div>
+    <div class="grow2">
+      <div class="ff"><label>Categoría</label>
+        <select id="f-cat">${['Wildlife','Conservation','Sustainability','Manu Park','Travel Tips'].map(c=>`<option ${fm.categoria===c?'selected':''}>${c}</option>`).join('')}</select>
+      </div>
+      <div class="ff"><label>Estado</label>
+        <div class="tgl-wrap" style="margin-top:6px">
+          <label class="tgl"><input type="checkbox" id="f-pub" ${fm.publicado!==false?'checked':''}><span class="tgl-s"></span></label>
+          <span id="pub-lbl">${fm.publicado!==false?'✅ Publicado':'📝 Borrador'}</span>
+        </div>
+      </div>
+    </div>
+    <div class="ff"><label>Extracto (resumen para el listado)</label><textarea id="f-ext" style="min-height:70px">${esc(fm.extracto||'')}</textarea></div>
+    ${imgWidget('f-img','Imagen de portada',fm.imagen||'','Recomendado: 1200×600px')}
+    <div class="ff"><label>Texto alternativo de la imagen</label><input id="f-imgalt" value="${esc(fm.imagen_alt||'')}"></div>
+    <script>document.getElementById('f-pub').addEventListener('change',e=>{document.getElementById('pub-lbl').textContent=e.target.checked?'✅ Publicado':'📝 Borrador';})<\/script>`;
+}
+
+function readBlogFields() {
+  return {
+    title:v('f-title'),date:v('f-date'),categoria:v('f-cat'),
+    publicado:document.getElementById('f-pub')?.checked!==false,
+    extracto:v('f-ext'),imagen:v('f-img'),imagen_alt:v('f-imgalt')
+  };
+}
 
 // ─────────────────────────────────────────────────────────────────────────────
 // HOME
 // ─────────────────────────────────────────────────────────────────────────────
-async function viewHomeEditor() {
-  const data = await ghGet('www.hiddenjunglecusco.com/data/home.json');
-  currentFile='www.hiddenjunglecusco.com/data/home.json'; currentSha=data.sha;
-  const d = JSON.parse(data.content);
+async function viewHome() {
+  const data=await ghGet('www.hiddenjunglecusco.com/data/home.json');
+  cFile='www.hiddenjunglecusco.com/data/home.json'; cSha=data.sha;
+  const d=JSON.parse(data.content); cData=d;
   set(`
-    <p class="panel-title">🏠 Página de Inicio</p>
-    <p class="panel-sub">Edita el contenido principal del sitio web</p>
-    <div class="editor-form">
-      <div class="form-section">
-        <div class="section-h">Sección Hero (Portada)</div>
-        <div class="form-field"><label>Título principal</label><input id="h-title" value="${esc(d.hero?.title||'')}"></div>
-        <div class="form-field"><label>Título énfasis (parte destacada)</label><input id="h-emph" value="${esc(d.hero?.title_emphasis||'')}"></div>
-        <div class="form-field"><label>Subtítulo / descripción</label><textarea id="h-sub">${esc(d.hero?.subtitle||'')}</textarea></div>
-        <div class="form-row">
-          <div class="form-field"><label>Texto de ubicación (ej: Cusco, Perú)</label><input id="h-loc" value="${esc(d.hero?.location_tag||'')}"></div>
-          <div class="form-field"><label>ID del video de YouTube</label><input id="h-vid" value="${esc(d.hero?.video_id||'')}"></div>
+    <p class="pt">🏠 Página de Inicio</p><p class="ps">Contenido principal del sitio</p>
+    <div class="eform">
+      <div class="esec"><div class="esec-h">Hero (Portada)</div>
+        <div class="ff"><label>Título principal</label><input id="h-t" value="${esc(d.hero?.title||'')}"></div>
+        <div class="ff"><label>Título énfasis (parte resaltada)</label><input id="h-e" value="${esc(d.hero?.title_emphasis||'')}"></div>
+        <div class="ff"><label>Subtítulo / descripción</label><textarea id="h-s">${esc(d.hero?.subtitle||'')}</textarea></div>
+        <div class="grow2">
+          <div class="ff"><label>Texto de ubicación</label><input id="h-l" value="${esc(d.hero?.location_tag||'')}"></div>
+          <div class="ff"><label>ID video YouTube</label><input id="h-v" value="${esc(d.hero?.video_id||'')}">
+            <span class="hint">Solo el ID, ej: <code>dQw4w9WgXcQ</code></span></div>
         </div>
       </div>
-      <div class="form-section">
-        <div class="section-h">Sección Sobre Nosotros</div>
-        <div class="form-row">
-          <div class="form-field"><label>Eyebrow (texto pequeño arriba)</label><input id="a-eye" value="${esc(d.about_section?.eyebrow||'')}"></div>
-          <div class="form-field"><label>Título</label><input id="a-title" value="${esc(d.about_section?.title||'')}"></div>
+      <div class="esec"><div class="esec-h">Sección Sobre Nosotros</div>
+        <div class="grow2">
+          <div class="ff"><label>Eyebrow (texto pequeño encima)</label><input id="a-ey" value="${esc(d.about_section?.eyebrow||'')}"></div>
+          <div class="ff"><label>Título</label><input id="a-t" value="${esc(d.about_section?.title||'')}"></div>
         </div>
-        <div class="form-field"><label>Párrafos (uno por línea en blanco)</label>
-          <textarea id="a-paras" style="min-height:140px">${(d.about_section?.paragraphs||[]).map(p=>p.text||p).join('\n\n')}</textarea>
-        </div>
+        <div class="ff"><label>Párrafos (separados por línea en blanco)</label>
+          <textarea id="a-p" style="min-height:120px">${(d.about_section?.paragraphs||[]).map(p=>p.text||p).join('\n\n')}</textarea></div>
+        ${imgWidget('a-img','Imagen de la sección',d.about_section?.image||'')}
+        <div class="ff"><label>Texto alt de la imagen</label><input id="a-ia" value="${esc(d.about_section?.image_alt||'')}"></div>
       </div>
-      <div class="form-section">
-        <div class="section-h">Sección Pilares / Valores</div>
-        <div class="form-field"><label>Título de la sección</label><input id="p-title" value="${esc(d.pillars_section?.title||'')}"></div>
+      <div class="esec"><div class="esec-h">Pilares / Valores</div>
+        <div class="ff"><label>Título de la sección</label><input id="p-t" value="${esc(d.pillars_section?.title||'')}"></div>
         ${(d.pillars_section?.pillars||[]).map((p,i)=>`
-          <div style="border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:10px">
-            <div class="form-row cols3">
-              <div class="form-field"><label>Ícono (FontAwesome)</label><input id="pi-icon-${i}" value="${esc(p.icon||'')}"></div>
-              <div class="form-field"><label>Título</label><input id="pi-title-${i}" value="${esc(p.title||'')}"></div>
-              <div class="form-field"><label>Descripción</label><input id="pi-text-${i}" value="${esc(p.text||'')}"></div>
+          <div style="background:var(--card2);border-radius:8px;padding:12px;margin-bottom:8px">
+            <p style="font-size:.72rem;color:var(--gold);font-weight:600;margin-bottom:10px">PILAR ${i+1}</p>
+            <div class="grow3">
+              <div class="ff"><label>Ícono (FontAwesome)</label><input id="pi-ic${i}" value="${esc(p.icon||'')}"><span class="hint">ej: fas fa-leaf</span></div>
+              <div class="ff"><label>Título</label><input id="pi-ti${i}" value="${esc(p.title||'')}"></div>
+              <div class="ff"><label>Descripción</label><input id="pi-tx${i}" value="${esc(p.text||'')}"></div>
             </div>
           </div>`).join('')}
       </div>
     </div>`);
-  currentData=d;
   showSaveBar(async()=>{
-    const dd={...d};
-    dd.hero={...d.hero,title:v('h-title'),title_emphasis:v('h-emph'),subtitle:v('h-sub'),location_tag:v('h-loc'),video_id:v('h-vid')};
-    const paras=document.getElementById('a-paras').value.split(/\n\n+/).map(t=>({text:t.trim()})).filter(p=>p.text);
-    dd.about_section={...d.about_section,eyebrow:v('a-eye'),title:v('a-title'),paragraphs:paras};
-    dd.pillars_section={...d.pillars_section,title:v('p-title'),
-      pillars:(d.pillars_section?.pillars||[]).map((_,i)=>({icon:v(`pi-icon-${i}`),title:v(`pi-title-${i}`),text:v(`pi-text-${i}`)})
-    )};
-    const res=await ghPut(currentFile,JSON.stringify(dd,null,2),currentSha,'update: home page');
-    currentSha=res.sha; currentData=dd;
+    const dd={...cData};
+    dd.hero={...d.hero,title:v('h-t'),title_emphasis:v('h-e'),subtitle:v('h-s'),location_tag:v('h-l'),video_id:v('h-v')};
+    const paras=document.getElementById('a-p').value.split(/\n\n+/).map(t=>({text:t.trim()})).filter(p=>p.text);
+    dd.about_section={...d.about_section,eyebrow:v('a-ey'),title:v('a-t'),paragraphs:paras,image:v('a-img'),image_alt:v('a-ia')};
+    dd.pillars_section={...d.pillars_section,title:v('p-t'),
+      pillars:(d.pillars_section?.pillars||[]).map((_,i)=>({icon:v(`pi-ic${i}`),title:v(`pi-ti${i}`),text:v(`pi-tx${i}`)}))};
+    const res=await ghPut(cFile,JSON.stringify(dd,null,2),cSha,'update: home page');
+    cSha=res.sha; cData=dd;
   });
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
 // CONTACT
 // ─────────────────────────────────────────────────────────────────────────────
-async function viewContactEditor() {
-  const data = await ghGet('www.hiddenjunglecusco.com/data/contact.json');
-  currentFile='www.hiddenjunglecusco.com/data/contact.json'; currentSha=data.sha;
-  const d = JSON.parse(data.content);
+async function viewContact() {
+  const data=await ghGet('www.hiddenjunglecusco.com/data/contact.json');
+  cFile='www.hiddenjunglecusco.com/data/contact.json'; cSha=data.sha;
+  const d=JSON.parse(data.content); cData=d;
   set(`
-    <p class="panel-title">📞 Página de Contacto</p>
-    <p class="panel-sub">Información de contacto y datos de la empresa</p>
-    <div class="editor-form">
-      <div class="form-section">
-        <div class="section-h">Textos de la Página</div>
-        <div class="form-field"><label>Título de la página</label><input id="c-titulo" value="${esc(d.titulo_pagina||'')}"></div>
-        <div class="form-field"><label>Subtítulo</label><input id="c-sub" value="${esc(d.subtitulo_pagina||'')}"></div>
+    <p class="pt">📞 Página de Contacto</p><p class="ps">Información de contacto y datos de la empresa</p>
+    <div class="eform">
+      <div class="esec"><div class="esec-h">Textos de la Página</div>
+        <div class="ff"><label>Título</label><input id="c-tit" value="${esc(d.titulo_pagina||'')}"></div>
+        <div class="ff"><label>Subtítulo</label><input id="c-sub" value="${esc(d.subtitulo_pagina||'')}"></div>
+        ${imgWidget('c-hero','Imagen hero',d.hero_image||'')}
       </div>
-      <div class="form-section">
-        <div class="section-h">Datos de Contacto</div>
-        <div class="form-row">
-          <div class="form-field"><label>Email</label><input id="c-email" value="${esc(d.contacto_principal?.email||'')}"></div>
-          <div class="form-field"><label>WhatsApp (solo números, ej: 51923289231)</label><input id="c-wa" value="${esc(d.contacto_principal?.whatsapp||'')}"></div>
+      <div class="esec"><div class="esec-h">Datos de Contacto</div>
+        <div class="grow2">
+          <div class="ff"><label>Email principal</label><input id="c-em" value="${esc(d.contacto_principal?.email||'')}"></div>
+          <div class="ff"><label>WhatsApp (solo números)</label><input id="c-wa" value="${esc(d.contacto_principal?.whatsapp||'')}"><span class="hint">Ej: 51923289231</span></div>
         </div>
-        <div class="form-row">
-          <div class="form-field"><label>Teléfono 1</label><input id="c-tel1" value="${esc(d.contacto_principal?.telefono_1||'')}"></div>
-          <div class="form-field"><label>Teléfono 2</label><input id="c-tel2" value="${esc(d.contacto_principal?.telefono_2||'')}"></div>
+        <div class="grow2">
+          <div class="ff"><label>Teléfono 1</label><input id="c-t1" value="${esc(d.contacto_principal?.telefono_1||'')}"></div>
+          <div class="ff"><label>Teléfono 2</label><input id="c-t2" value="${esc(d.contacto_principal?.telefono_2||'')}"></div>
+        </div>
+        <div class="ff"><label>Mensaje WhatsApp por defecto</label><input id="c-wam" value="${esc(d.contacto_principal?.whatsapp_texto||'')}"></div>
+      </div>
+      <div class="esec"><div class="esec-h">Dirección</div>
+        <div class="grow2">
+          <div class="ff"><label>Nombre del lugar</label><input id="c-pn" value="${esc(d.direccion?.nombre||'')}"></div>
+          <div class="ff"><label>Localidad / Ciudad</label><input id="c-pc" value="${esc(d.direccion?.localidad||'')}"></div>
+        </div>
+        <div class="grow2">
+          <div class="ff"><label>País</label><input id="c-py" value="${esc(d.direccion?.pais||'')}"></div>
+          <div class="ff"><label>URL Google Maps</label><input id="c-maps" value="${esc(d.direccion?.maps_url||'')}"></div>
         </div>
       </div>
-      <div class="form-section">
-        <div class="section-h">Dirección</div>
-        <div class="form-row">
-          <div class="form-field"><label>Nombre del lugar</label><input id="c-place" value="${esc(d.direccion?.nombre||'')}"></div>
-          <div class="form-field"><label>Localidad / Ciudad</label><input id="c-city" value="${esc(d.direccion?.localidad||'')}"></div>
+      <div class="esec"><div class="esec-h">Horario de Atención</div>
+        <div class="grow2">
+          <div class="ff"><label>Días</label><input id="c-hd" value="${esc(d.horario?.dias||'')}"><span class="hint">Ej: Lunes – Domingo</span></div>
+          <div class="ff"><label>Horas</label><input id="c-hh" value="${esc(d.horario?.horas||'')}"><span class="hint">Ej: 7:00 AM – 8:00 PM</span></div>
         </div>
-        <div class="form-field"><label>País</label><input id="c-country" value="${esc(d.direccion?.pais||'')}"></div>
-      </div>
-      <div class="form-section">
-        <div class="section-h">Horario de Atención</div>
-        <div class="form-row">
-          <div class="form-field"><label>Días (ej: Lunes – Domingo)</label><input id="c-days" value="${esc(d.horario?.dias||'')}"></div>
-          <div class="form-field"><label>Horas (ej: 7:00 AM – 8:00 PM)</label><input id="c-hours" value="${esc(d.horario?.horas||'')}"></div>
-        </div>
-        <div class="form-field"><label>Nota adicional</label><input id="c-note" value="${esc(d.horario?.nota||'')}"></div>
+        <div class="ff"><label>Nota adicional</label><input id="c-hn" value="${esc(d.horario?.nota||'')}"></div>
       </div>
     </div>`);
-  currentData=d;
   showSaveBar(async()=>{
-    const dd={...d,
-      titulo_pagina:v('c-titulo'), subtitulo_pagina:v('c-sub'),
-      contacto_principal:{...d.contacto_principal,email:v('c-email'),whatsapp:v('c-wa'),telefono_1:v('c-tel1'),telefono_2:v('c-tel2')},
-      direccion:{...d.direccion,nombre:v('c-place'),localidad:v('c-city'),pais:v('c-country')},
-      horario:{...d.horario,dias:v('c-days'),horas:v('c-hours'),nota:v('c-note')}
-    };
-    const res=await ghPut(currentFile,JSON.stringify(dd,null,2),currentSha,'update: contact page');
-    currentSha=res.sha; currentData=dd;
+    const dd={...d,titulo_pagina:v('c-tit'),subtitulo_pagina:v('c-sub'),hero_image:v('c-hero'),
+      contacto_principal:{...d.contacto_principal,email:v('c-em'),whatsapp:v('c-wa'),telefono_1:v('c-t1'),telefono_2:v('c-t2'),whatsapp_texto:v('c-wam')},
+      direccion:{...d.direccion,nombre:v('c-pn'),localidad:v('c-pc'),pais:v('c-py'),maps_url:v('c-maps')},
+      horario:{...d.horario,dias:v('c-hd'),horas:v('c-hh'),nota:v('c-hn')}};
+    const res=await ghPut(cFile,JSON.stringify(dd,null,2),cSha,'update: contact');
+    cSha=res.sha; cData=dd;
   });
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
 // GLOBAL
 // ─────────────────────────────────────────────────────────────────────────────
-async function viewGlobalEditor() {
-  const data = await ghGet('www.hiddenjunglecusco.com/data/global.json');
-  currentFile='www.hiddenjunglecusco.com/data/global.json'; currentSha=data.sha;
-  const d = JSON.parse(data.content);
+async function viewGlobal() {
+  const data=await ghGet('www.hiddenjunglecusco.com/data/global.json');
+  cFile='www.hiddenjunglecusco.com/data/global.json'; cSha=data.sha;
+  const d=JSON.parse(data.content); cData=d;
   set(`
-    <p class="panel-title">⚙️ Datos Globales del Sitio</p>
-    <p class="panel-sub">Información general del negocio</p>
-    <div class="editor-form">
-      <div class="form-section">
-        <div class="section-h">Información del Negocio</div>
-        <div class="form-row">
-          <div class="form-field"><label>Nombre</label><input id="g-name" value="${esc(d.site_name||'')}"></div>
-          <div class="form-field"><label>Eslogan</label><input id="g-slogan" value="${esc(d.slogan||'')}"></div>
+    <p class="pt">⚙️ Datos Globales del Sitio</p><p class="ps">Información general del negocio</p>
+    <div class="eform">
+      <div class="esec"><div class="esec-h">Información del Negocio</div>
+        <div class="grow2">
+          <div class="ff"><label>Nombre del negocio</label><input id="g-n" value="${esc(d.site_name||'')}"></div>
+          <div class="ff"><label>Eslogan</label><input id="g-sl" value="${esc(d.slogan||'')}"></div>
         </div>
-        <div class="form-field"><label>Tagline (descripción breve)</label><textarea id="g-tag">${esc(d.tagline||'')}</textarea></div>
-        <div class="form-row">
-          <div class="form-field"><label>Email</label><input id="g-email" value="${esc(d.email||'')}"></div>
-          <div class="form-field"><label>WhatsApp (solo números)</label><input id="g-wa" value="${esc(d.whatsapp_number||'')}"></div>
+        <div class="ff"><label>Tagline (descripción breve)</label><textarea id="g-tg">${esc(d.tagline||'')}</textarea></div>
+        <div class="grow2">
+          <div class="ff"><label>Email</label><input id="g-em" value="${esc(d.email||'')}"></div>
+          <div class="ff"><label>WhatsApp (solo números)</label><input id="g-wa" value="${esc(d.whatsapp_number||'')}"></div>
         </div>
-        <div class="form-row">
-          <div class="form-field"><label>Teléfono principal</label><input id="g-tel1" value="${esc(d.phone_primary||'')}"></div>
-          <div class="form-field"><label>Teléfono secundario</label><input id="g-tel2" value="${esc(d.phone_secondary||'')}"></div>
+        <div class="grow2">
+          <div class="ff"><label>Teléfono principal</label><input id="g-t1" value="${esc(d.phone_primary||'')}"></div>
+          <div class="ff"><label>Teléfono secundario</label><input id="g-t2" value="${esc(d.phone_secondary||'')}"></div>
         </div>
-        <div class="form-field"><label>Dirección física</label><input id="g-addr" value="${esc(d.address||'')}"></div>
+        <div class="ff"><label>Dirección física</label><input id="g-ad" value="${esc(d.address||'')}"></div>
       </div>
-      <div class="form-section">
-        <div class="section-h">Redes Sociales</div>
-        <div class="form-row">
-          <div class="form-field"><label>Facebook URL</label><input id="g-fb" value="${esc(d.social?.facebook||'')}"></div>
-          <div class="form-field"><label>Instagram URL</label><input id="g-ig" value="${esc(d.social?.instagram||'')}"></div>
+      <div class="esec"><div class="esec-h">Imágenes del Sitio</div>
+        ${imgWidget('g-logo','Logo principal',d.logo_main||'')}
+        ${imgWidget('g-fav','Favicon',d.favicon||'')}
+      </div>
+      <div class="esec"><div class="esec-h">Redes Sociales</div>
+        <div class="grow2">
+          <div class="ff"><label>Facebook</label><input id="g-fb" value="${esc(d.social?.facebook||'')}"></div>
+          <div class="ff"><label>Instagram</label><input id="g-ig" value="${esc(d.social?.instagram||'')}"></div>
         </div>
-        <div class="form-row">
-          <div class="form-field"><label>TripAdvisor URL</label><input id="g-ta" value="${esc(d.social?.tripadvisor||'')}"></div>
-          <div class="form-field"><label>YouTube URL</label><input id="g-yt" value="${esc(d.social?.youtube||'')}"></div>
+        <div class="grow2">
+          <div class="ff"><label>TripAdvisor</label><input id="g-ta" value="${esc(d.social?.tripadvisor||'')}"></div>
+          <div class="ff"><label>YouTube</label><input id="g-yt" value="${esc(d.social?.youtube||'')}"></div>
         </div>
-        <div class="form-row">
-          <div class="form-field"><label>TikTok URL</label><input id="g-tt" value="${esc(d.social?.tiktok||'')}"></div>
-          <div class="form-field"><label>Airbnb URL</label><input id="g-ab" value="${esc(d.social?.airbnb||'')}"></div>
+        <div class="grow2">
+          <div class="ff"><label>TikTok</label><input id="g-tt" value="${esc(d.social?.tiktok||'')}"></div>
+          <div class="ff"><label>Airbnb</label><input id="g-ab" value="${esc(d.social?.airbnb||'')}"></div>
         </div>
       </div>
-      <div class="form-section">
-        <div class="section-h">SEO por Defecto</div>
-        <div class="form-field"><label>Sufijo del título (ej: | Hidden Jungle Cusco)</label><input id="g-stitle" value="${esc(d.seo?.default_title_suffix||'')}"></div>
-        <div class="form-field"><label>Descripción por defecto</label><textarea id="g-sdesc">${esc(d.seo?.default_description||'')}</textarea></div>
+      <div class="esec"><div class="esec-h">SEO por Defecto</div>
+        <div class="ff"><label>Sufijo del título</label><input id="g-ts" value="${esc(d.seo?.default_title_suffix||'')}"><span class="hint">Ej: | Hidden Jungle Cusco</span></div>
+        <div class="ff"><label>Descripción por defecto</label><textarea id="g-td">${esc(d.seo?.default_description||'')}</textarea></div>
+        ${imgWidget('g-og','Imagen OG por defecto',d.seo?.default_og_image||'')}
       </div>
-      <div class="form-section">
-        <div class="section-h">Copyright</div>
-        <div class="form-field"><label>Texto de copyright</label><input id="g-copy" value="${esc(d.copyright||'')}"></div>
+      <div class="esec"><div class="esec-h">Copyright</div>
+        <div class="ff"><label>Texto de copyright</label><input id="g-cp" value="${esc(d.copyright||'')}"></div>
       </div>
     </div>`);
-  currentData=d;
   showSaveBar(async()=>{
-    const dd={...d,
-      site_name:v('g-name'),slogan:v('g-slogan'),tagline:v('g-tag'),
-      email:v('g-email'),whatsapp_number:v('g-wa'),phone_primary:v('g-tel1'),phone_secondary:v('g-tel2'),
-      address:v('g-addr'),copyright:v('g-copy'),
+    const dd={...d,site_name:v('g-n'),slogan:v('g-sl'),tagline:v('g-tg'),email:v('g-em'),
+      whatsapp_number:v('g-wa'),phone_primary:v('g-t1'),phone_secondary:v('g-t2'),
+      address:v('g-ad'),logo_main:v('g-logo'),favicon:v('g-fav'),copyright:v('g-cp'),
       social:{...d.social,facebook:v('g-fb'),instagram:v('g-ig'),tripadvisor:v('g-ta'),youtube:v('g-yt'),tiktok:v('g-tt'),airbnb:v('g-ab')},
-      seo:{...d.seo,default_title_suffix:v('g-stitle'),default_description:v('g-sdesc')}
-    };
-    const res=await ghPut(currentFile,JSON.stringify(dd,null,2),currentSha,'update: global data');
-    currentSha=res.sha; currentData=dd;
+      seo:{...d.seo,default_title_suffix:v('g-ts'),default_description:v('g-td'),default_og_image:v('g-og')}};
+    const res=await ghPut(cFile,JSON.stringify(dd,null,2),cSha,'update: global');
+    cSha=res.sha; cData=dd;
   });
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
 // TOURS
 // ─────────────────────────────────────────────────────────────────────────────
-async function viewToursList() {
-  const data = await ghGet('www.hiddenjunglecusco.com/data/tours.json');
-  currentFile='www.hiddenjunglecusco.com/data/tours.json'; currentSha=data.sha;
-  currentData=JSON.parse(data.content);
-  const tours=currentData.tours||[];
+async function viewTours() {
+  const data=await ghGet('www.hiddenjunglecusco.com/data/tours.json');
+  cFile='www.hiddenjunglecusco.com/data/tours.json'; cSha=data.sha;
+  cData=JSON.parse(data.content);
+  const ts=cData.tours||[];
   set(`
-    <p class="panel-title">🌿 Tours</p>
-    <p class="panel-sub">${tours.length} tours registrados</p>
+    <p class="pt">🌿 Tours</p><p class="ps">${ts.length} tours registrados</p>
     <div class="list-grid">
-      ${tours.map((t,i)=>`
-        <div class="list-item">
-          <div>
-            <h3>${t.nombre} <span class="badge ${t.estado==='activo'?'':'off'}">${t.estado}</span></h3>
-            <span>${t.duracion_dias} días · desde $${t.precio_desde} USD · ${t.categoria}</span>
+      ${ts.map((t,i)=>`
+        <div class="li">
+          <div class="li-info">
+            <h3>${t.nombre} <span class="badge ${t.estado==='activo'?'on':t.estado==='pausado'?'warn':'off'}">${t.estado}</span></h3>
+            <span>${t.duracion_dias} días · $${t.precio_desde} USD · ${t.categoria} · ${t.dificultad}</span>
           </div>
-          <button class="btn-edit" onclick="editTour(${i})">Editar</button>
+          <div class="li-actions"><button class="btn-edit" onclick="editTour(${i})">Editar</button></div>
         </div>`).join('')}
     </div>`);
 }
 
 window.editTour = function(idx) {
-  const t=currentData.tours[idx];
+  const t=cData.tours[idx];
   set(`
-    <button class="editor-back" onclick="viewToursList()">← Volver a tours</button>
-    <div class="editor-form">
-      <div class="form-section">
-        <div class="section-h">Información del Tour</div>
-        <div class="form-row">
-          <div class="form-field"><label>Nombre del tour</label><input id="t-nom" value="${esc(t.nombre)}"></div>
-          <div class="form-field"><label>Estado</label>
-            <select id="t-est"><option ${t.estado==='activo'?'selected':''}>activo</option><option ${t.estado==='pausado'?'selected':''}>pausado</option><option ${t.estado==='inactivo'?'selected':''}>inactivo</option></select>
-          </div>
+    <button class="back-btn" onclick="route('tours')">← Volver a tours</button>
+    <div class="eform">
+      <div class="esec"><div class="esec-h">Información General</div>
+        <div class="grow2">
+          <div class="ff"><label>Nombre del tour</label><input id="t-n" value="${esc(t.nombre)}"></div>
+          <div class="ff"><label>Estado</label><select id="t-e"><option ${t.estado==='activo'?'selected':''} value="activo">✅ Activo</option><option ${t.estado==='pausado'?'selected':''} value="pausado">⏸️ Pausado</option><option ${t.estado==='inactivo'?'selected':''} value="inactivo">❌ Inactivo</option></select></div>
         </div>
-        <div class="form-row cols3">
-          <div class="form-field"><label>Categoría</label>
-            <select id="t-cat"><option value="wildlife" ${t.categoria==='wildlife'?'selected':''}>Wildlife</option><option value="roadtrip" ${t.categoria==='roadtrip'?'selected':''}>Road Trip</option><option value="expedition" ${t.categoria==='expedition'?'selected':''}>Expedición</option></select>
-          </div>
-          <div class="form-field"><label>Duración (días)</label><input type="number" id="t-dias" value="${t.duracion_dias}" min="1"></div>
-          <div class="form-field"><label>Precio desde (USD)</label><input type="number" id="t-precio" value="${t.precio_desde}" min="0"></div>
+        <div class="grow3">
+          <div class="ff"><label>Categoría</label><select id="t-c"><option value="wildlife" ${t.categoria==='wildlife'?'selected':''}>🐆 Wildlife</option><option value="roadtrip" ${t.categoria==='roadtrip'?'selected':''}>🚗 Road Trip</option><option value="expedition" ${t.categoria==='expedition'?'selected':''}>⛺ Expedición</option></select></div>
+          <div class="ff"><label>Duración (días)</label><input type="number" id="t-d" value="${t.duracion_dias}" min="1"></div>
+          <div class="ff"><label>Noches</label><input type="number" id="t-dn" value="${t.duracion_noches||0}" min="0"></div>
         </div>
-        <div class="form-row">
-          <div class="form-field"><label>Capacidad mínima</label><input type="number" id="t-cmin" value="${t.capacidad_min}" min="1"></div>
-          <div class="form-field"><label>Capacidad máxima</label><input type="number" id="t-cmax" value="${t.capacidad_max}" min="1"></div>
+        <div class="grow3">
+          <div class="ff"><label>Precio desde (USD)</label><input type="number" id="t-p" value="${t.precio_desde}" min="0"></div>
+          <div class="ff"><label>Cap. mínima</label><input type="number" id="t-cmin" value="${t.capacidad_min}" min="1"></div>
+          <div class="ff"><label>Cap. máxima</label><input type="number" id="t-cmax" value="${t.capacidad_max}" min="1"></div>
         </div>
-        <div class="form-row">
-          <div class="form-field"><label>Dificultad</label>
-            <select id="t-dif"><option ${t.dificultad==='Fácil'?'selected':''}>Fácil</option><option ${t.dificultad==='Moderado'?'selected':''}>Moderado</option><option ${t.dificultad==='Difícil'?'selected':''}>Difícil</option></select>
-          </div>
-          <div class="form-field"><label>Temporada</label><input id="t-temp" value="${esc(t.temporada||'')}"></div>
+        <div class="grow2">
+          <div class="ff"><label>Dificultad</label><select id="t-dif"><option ${t.dificultad==='Fácil'?'selected':''}>Fácil</option><option ${t.dificultad==='Moderado'?'selected':''}>Moderado</option><option ${t.dificultad==='Difícil'?'selected':''}>Difícil</option></select></div>
+          <div class="ff"><label>Temporada</label><input id="t-tmp" value="${esc(t.temporada||'')}"></div>
         </div>
-        <div class="form-field"><label>Destacado en portada</label>
-          <div class="toggle-wrap"><label class="toggle"><input type="checkbox" id="t-dest" ${t.destacado?'checked':''}><span class="toggle-slider"></span></label>
-          <span>${t.destacado?'Sí':'No'}</span></div>
+        <div class="ff"><label>Destacado en portada</label>
+          <div class="tgl-wrap" style="margin-top:6px"><label class="tgl"><input type="checkbox" id="t-dest" ${t.destacado?'checked':''}><span class="tgl-s"></span></label><span>${t.destacado?'Sí':'No'}</span></div>
         </div>
       </div>
-      <div class="form-section">
-        <div class="section-h">Descripción</div>
-        <div class="form-field"><label>Descripción corta (tarjetas)</label><textarea id="t-dcorta">${esc(t.descripcion_corta||'')}</textarea></div>
-        <div class="form-field"><label>Descripción completa (Markdown)</label><textarea id="t-dlarga" style="min-height:200px;font-family:monospace;font-size:.82rem">${esc(t.descripcion_larga||'')}</textarea></div>
+      <div class="esec"><div class="esec-h">Imágenes</div>
+        ${imgWidget('t-img','Imagen hero / principal',t.imagen_hero||'')}
+        <div class="ff"><label>Texto alt imagen</label><input id="t-imgalt" value="${esc(t.imagen_alt||'')}"></div>
+      </div>
+      <div class="esec"><div class="esec-h">Descripciones</div>
+        <div class="ff"><label>Descripción corta (tarjetas)</label><textarea id="t-dc" style="min-height:80px">${esc(t.descripcion_corta||'')}</textarea></div>
+        <div class="ff"><label>Descripción completa (Markdown)</label>${mdToolbar('t-dl')}</div>
       </div>
     </div>`);
-
+  document.getElementById('t-dl').value=t.descripcion_larga||'';
   showSaveBar(async()=>{
-    currentData.tours[idx]={...t,
-      nombre:v('t-nom'),estado:v('t-est'),categoria:v('t-cat'),
-      duracion_dias:+v('t-dias'),precio_desde:+v('t-precio'),
+    cData.tours[idx]={...t,nombre:v('t-n'),estado:v('t-e'),categoria:v('t-c'),
+      duracion_dias:+v('t-d'),duracion_noches:+v('t-dn'),precio_desde:+v('t-p'),
       capacidad_min:+v('t-cmin'),capacidad_max:+v('t-cmax'),
-      dificultad:v('t-dif'),temporada:v('t-temp'),
+      dificultad:v('t-dif'),temporada:v('t-tmp'),
       destacado:document.getElementById('t-dest').checked,
-      descripcion_corta:v('t-dcorta'),descripcion_larga:v('t-dlarga')
-    };
-    const res=await ghPut(currentFile,JSON.stringify(currentData,null,2),currentSha,`update tour: ${t.nombre}`);
-    currentSha=res.sha;
+      imagen_hero:v('t-img'),imagen_alt:v('t-imgalt'),
+      descripcion_corta:v('t-dc'),descripcion_larga:document.getElementById('t-dl').value};
+    const res=await ghPut(cFile,JSON.stringify(cData,null,2),cSha,`update tour: ${t.nombre}`);
+    cSha=res.sha;
   });
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
 // DEPARTURES
 // ─────────────────────────────────────────────────────────────────────────────
-async function viewDeparturesList() {
-  const data = await ghGet('www.hiddenjunglecusco.com/data/departures.json');
-  currentFile='www.hiddenjunglecusco.com/data/departures.json'; currentSha=data.sha;
-  currentData=JSON.parse(data.content);
-  const sal=currentData.salidas||[];
+async function viewDeps() {
+  const data=await ghGet('www.hiddenjunglecusco.com/data/departures.json');
+  cFile='www.hiddenjunglecusco.com/data/departures.json'; cSha=data.sha;
+  cData=JSON.parse(data.content);
+  const sal=cData.salidas||[];
   set(`
-    <p class="panel-title">📅 Salidas Programadas</p>
-    <p class="panel-sub">${sal.length} salidas</p>
+    <p class="pt">📅 Salidas Programadas</p><p class="ps">${sal.length} salidas</p>
     <div class="list-grid">
       ${sal.map((s,i)=>`
-        <div class="list-item">
-          <div><h3>${s.tour_nombre} — ${s.fecha_salida}
-            <span class="badge ${['disponible'].includes(s.estado)?'':'off'}">${s.estado}</span></h3>
-            <span>ID: ${s.id} · Plazas: ${s.plazas_disponibles}/${s.plazas_totales} · $${s.precio} USD</span>
+        <div class="li">
+          <div class="li-info">
+            <h3>${s.tour_nombre} — ${s.fecha_salida} <span class="badge ${s.estado==='disponible'?'on':s.estado==='limitado'?'warn':'off'}">${s.estado}</span></h3>
+            <span>ID: ${s.id} · Plazas: ${s.plazas_disponibles}/${s.plazas_totales} · $${s.precio} USD · Regreso: ${s.fecha_regreso}</span>
           </div>
-          <button class="btn-edit" onclick="editDep(${i})">Editar</button>
+          <div class="li-actions"><button class="btn-edit" onclick="editDep(${i})">Editar</button></div>
         </div>`).join('')}
     </div>`);
 }
 
 window.editDep = function(idx) {
-  const s=currentData.salidas[idx];
+  const s=cData.salidas[idx];
   set(`
-    <button class="editor-back" onclick="viewDeparturesList()">← Volver a salidas</button>
-    <div class="editor-form">
-      <div class="form-section">
-        <div class="section-h">Datos de la Salida</div>
-        <div class="form-row">
-          <div class="form-field"><label>Nombre del tour</label><input id="d-nom" value="${esc(s.tour_nombre)}"></div>
-          <div class="form-field"><label>ID único</label><input id="d-id" value="${esc(s.id)}"></div>
-        </div>
-        <div class="form-row">
-          <div class="form-field"><label>Fecha de salida</label><input type="date" id="d-sal" value="${esc(s.fecha_salida)}"></div>
-          <div class="form-field"><label>Fecha de regreso</label><input type="date" id="d-reg" value="${esc(s.fecha_regreso)}"></div>
-        </div>
-        <div class="form-row cols3">
-          <div class="form-field"><label>Precio (USD)</label><input type="number" id="d-precio" value="${s.precio}"></div>
-          <div class="form-field"><label>Plazas totales</label><input type="number" id="d-tot" value="${s.plazas_totales}"></div>
-          <div class="form-field"><label>Plazas disponibles</label><input type="number" id="d-disp" value="${s.plazas_disponibles}"></div>
-        </div>
-        <div class="form-row">
-          <div class="form-field"><label>Estado</label>
-            <select id="d-est">
-              ${['disponible','limitado','completo','cancelado'].map(e=>`<option value="${e}" ${s.estado===e?'selected':''}>${e}</option>`).join('')}
-            </select>
-          </div>
-          <div class="form-field"><label>Notas</label><input id="d-notas" value="${esc(s.notas||'')}"></div>
-        </div>
+    <button class="back-btn" onclick="route('departures')">← Volver a salidas</button>
+    <div class="eform"><div class="esec"><div class="esec-h">Datos de la Salida</div>
+      <div class="grow2">
+        <div class="ff"><label>Nombre del tour</label><input id="d-n" value="${esc(s.tour_nombre)}"></div>
+        <div class="ff"><label>ID único</label><input id="d-id" value="${esc(s.id)}"></div>
       </div>
-    </div>`);
+      <div class="grow2">
+        <div class="ff"><label>Fecha de salida</label><input type="date" id="d-s" value="${esc(s.fecha_salida)}"></div>
+        <div class="ff"><label>Fecha de regreso</label><input type="date" id="d-r" value="${esc(s.fecha_regreso)}"></div>
+      </div>
+      <div class="grow3">
+        <div class="ff"><label>Precio (USD)</label><input type="number" id="d-p" value="${s.precio}"></div>
+        <div class="ff"><label>Plazas totales</label><input type="number" id="d-t" value="${s.plazas_totales}"></div>
+        <div class="ff"><label>Plazas disponibles</label><input type="number" id="d-d" value="${s.plazas_disponibles}"></div>
+      </div>
+      <div class="grow2">
+        <div class="ff"><label>Estado</label><select id="d-e">${['disponible','limitado','completo','cancelado'].map(e=>`<option ${s.estado===e?'selected':''} value="${e}">${e}</option>`).join('')}</select></div>
+        <div class="ff"><label>Notas adicionales</label><input id="d-no" value="${esc(s.notas||'')}"></div>
+      </div>
+    </div></div>`);
   showSaveBar(async()=>{
-    currentData.salidas[idx]={...s,
-      tour_nombre:v('d-nom'),id:v('d-id'),
-      fecha_salida:v('d-sal'),fecha_regreso:v('d-reg'),
-      precio:+v('d-precio'),plazas_totales:+v('d-tot'),plazas_disponibles:+v('d-disp'),
-      estado:v('d-est'),notas:v('d-notas')
-    };
-    const res=await ghPut(currentFile,JSON.stringify(currentData,null,2),currentSha,`update salida: ${s.id}`);
-    currentSha=res.sha;
+    cData.salidas[idx]={...s,tour_nombre:v('d-n'),id:v('d-id'),
+      fecha_salida:v('d-s'),fecha_regreso:v('d-r'),precio:+v('d-p'),
+      plazas_totales:+v('d-t'),plazas_disponibles:+v('d-d'),estado:v('d-e'),notas:v('d-no')};
+    const res=await ghPut(cFile,JSON.stringify(cData,null,2),cSha,`update salida: ${s.id}`);
+    cSha=res.sha;
   });
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
 // TESTIMONIALS
 // ─────────────────────────────────────────────────────────────────────────────
-async function viewTestimonialsList() {
-  const data = await ghGet('www.hiddenjunglecusco.com/data/testimonials.json');
-  currentFile='www.hiddenjunglecusco.com/data/testimonials.json'; currentSha=data.sha;
-  currentData=JSON.parse(data.content);
-  const ts=currentData.testimonials||[];
+async function viewTestims() {
+  const data=await ghGet('www.hiddenjunglecusco.com/data/testimonials.json');
+  cFile='www.hiddenjunglecusco.com/data/testimonials.json'; cSha=data.sha;
+  cData=JSON.parse(data.content);
+  const ts=cData.testimonials||[];
   set(`
-    <p class="panel-title">⭐ Testimonios</p>
-    <p class="panel-sub">${ts.length} testimonios</p>
+    <p class="pt">⭐ Testimonios de Clientes</p><p class="ps">${ts.length} testimonios</p>
     <div class="list-grid">
       ${ts.map((t,i)=>`
-        <div class="list-item">
-          <div><h3>${t.nombre} ${t.bandera||''} — ⭐${t.rating}
-            <span class="badge ${t.activo?'':'off'}">${t.activo?'visible':'oculto'}</span></h3>
+        <div class="li">
+          <div class="li-info">
+            <h3>${t.nombre} ${t.bandera||''} — ${'⭐'.repeat(t.rating||5)} <span class="badge ${t.activo?'on':'off'}">${t.activo?'visible':'oculto'}</span></h3>
             <span>${t.pais} · ${t.tour} · ${t.fecha}</span>
           </div>
-          <button class="btn-edit" onclick="editTestim(${i})">Editar</button>
+          <div class="li-actions">
+            <button class="btn-edit" onclick="editTestim(${i})">Editar</button>
+          </div>
         </div>`).join('')}
     </div>`);
 }
 
 window.editTestim = function(idx) {
-  const t=currentData.testimonials[idx];
+  const t=cData.testimonials[idx];
   set(`
-    <button class="editor-back" onclick="viewTestimonialsList()">← Volver a testimonios</button>
-    <div class="editor-form">
-      <div class="form-section">
-        <div class="section-h">Datos del Cliente</div>
-        <div class="form-row">
-          <div class="form-field"><label>Nombre</label><input id="tm-nom" value="${esc(t.nombre)}"></div>
-          <div class="form-field"><label>País</label><input id="tm-pais" value="${esc(t.pais)}"></div>
-        </div>
-        <div class="form-row">
-          <div class="form-field"><label>Bandera emoji (ej: 🇺🇸)</label><input id="tm-flag" value="${esc(t.bandera||'')}"></div>
-          <div class="form-field"><label>Tour realizado</label><input id="tm-tour" value="${esc(t.tour)}"></div>
-        </div>
-        <div class="form-row">
-          <div class="form-field"><label>Fecha del viaje</label><input type="date" id="tm-fecha" value="${esc(t.fecha)}"></div>
-          <div class="form-field"><label>Calificación</label>
-            <select id="tm-rating"><option ${t.rating==5?'selected':''}>5</option><option ${t.rating==4?'selected':''}>4</option><option ${t.rating==3?'selected':''}>3</option></select>
-          </div>
-        </div>
-        <div class="form-field"><label>Texto del testimonio</label><textarea id="tm-texto" style="min-height:120px">${esc(t.texto)}</textarea></div>
-        <div class="form-field"><label>Visible en el sitio</label>
-          <div class="toggle-wrap"><label class="toggle"><input type="checkbox" id="tm-activo" ${t.activo?'checked':''}><span class="toggle-slider"></span></label>
-          <span>${t.activo?'Visible':'Oculto'}</span></div>
-        </div>
+    <button class="back-btn" onclick="route('testimonials')">← Volver a testimonios</button>
+    <div class="eform"><div class="esec"><div class="esec-h">Datos del Testimonio</div>
+      <div class="grow2">
+        <div class="ff"><label>Nombre del cliente</label><input id="tm-n" value="${esc(t.nombre)}"></div>
+        <div class="ff"><label>País</label><input id="tm-p" value="${esc(t.pais)}"></div>
       </div>
-    </div>`);
+      <div class="grow2">
+        <div class="ff"><label>Bandera emoji</label><input id="tm-fl" value="${esc(t.bandera||'')}"><span class="hint">Ej: 🇺🇸 🇬🇧 🇩🇪 🇦🇺</span></div>
+        <div class="ff"><label>Tour realizado</label><input id="tm-t" value="${esc(t.tour)}"></div>
+      </div>
+      <div class="grow2">
+        <div class="ff"><label>Fecha del viaje</label><input type="date" id="tm-f" value="${esc(t.fecha)}"></div>
+        <div class="ff"><label>Calificación (estrellas)</label><select id="tm-r"><option ${t.rating==5?'selected':''} value="5">⭐⭐⭐⭐⭐ (5)</option><option ${t.rating==4?'selected':''} value="4">⭐⭐⭐⭐ (4)</option><option ${t.rating==3?'selected':''} value="3">⭐⭐⭐ (3)</option></select></div>
+      </div>
+      <div class="ff"><label>Texto del testimonio</label><textarea id="tm-tx" style="min-height:120px">${esc(t.texto)}</textarea></div>
+      ${imgWidget('tm-img','Foto del cliente (opcional)',t.foto||'')}
+      <div class="ff"><label>Visibilidad en el sitio</label>
+        <div class="tgl-wrap" style="margin-top:6px"><label class="tgl"><input type="checkbox" id="tm-a" ${t.activo?'checked':''}><span class="tgl-s"></span></label>
+        <span id="tm-lbl">${t.activo?'✅ Visible':'❌ Oculto'}</span></div>
+      </div>
+    </div></div>`);
+  document.getElementById('tm-a').addEventListener('change',e=>{document.getElementById('tm-lbl').textContent=e.target.checked?'✅ Visible':'❌ Oculto';});
   showSaveBar(async()=>{
-    currentData.testimonials[idx]={...t,
-      nombre:v('tm-nom'),pais:v('tm-pais'),bandera:v('tm-flag'),
-      tour:v('tm-tour'),fecha:v('tm-fecha'),rating:+v('tm-rating'),
-      texto:v('tm-texto'),activo:document.getElementById('tm-activo').checked
-    };
-    const res=await ghPut(currentFile,JSON.stringify(currentData,null,2),currentSha,`update testimonio: ${t.nombre}`);
-    currentSha=res.sha;
+    cData.testimonials[idx]={...t,nombre:v('tm-n'),pais:v('tm-p'),bandera:v('tm-fl'),
+      tour:v('tm-t'),fecha:v('tm-f'),rating:+v('tm-r'),texto:v('tm-tx'),
+      foto:v('tm-img'),activo:document.getElementById('tm-a').checked};
+    const res=await ghPut(cFile,JSON.stringify(cData,null,2),cSha,`update testimonio: ${t.nombre}`);
+    cSha=res.sha;
   });
 };
+
+// ─────────────────────────────────────────────────────────────────────────────
+// DELETE
+// ─────────────────────────────────────────────────────────────────────────────
+function confirmDelete(path, sha, label, backFn) {
+  document.getElementById('del-title').textContent=`¿Eliminar este ${label}?`;
+  document.getElementById('del-msg').textContent=`"${path.split('/').pop()}" — Esta acción no se puede deshacer.`;
+  document.getElementById('del-modal').classList.add('open');
+  document.getElementById('del-confirm').onclick = async () => {
+    try {
+      await ghDelete(path,sha,`delete: ${path}`);
+      closeModal();
+      eval(backFn+'()');
+    } catch(e) { alert('Error: '+e.message); }
+  };
+}
+function closeModal() { document.getElementById('del-modal').classList.remove('open'); }
+window.confirmDelete=confirmDelete; window.closeModal=closeModal;
 
 // ─────────────────────────────────────────────────────────────────────────────
 // SAVE BAR
 // ─────────────────────────────────────────────────────────────────────────────
 function showSaveBar(fn) {
+  saveFnRef=fn;
   const bar=document.getElementById('save-bar');
   const btn=document.getElementById('btn-save');
   const st=document.getElementById('save-status');
   bar.style.display='flex'; st.textContent=''; st.className='save-status';
   btn.onclick=async()=>{
     btn.disabled=true; st.textContent='Guardando…'; st.className='save-status';
-    try { await fn(); st.textContent='✓ Guardado'; st.className='save-status ok'; }
+    try { await fn(); st.textContent='✓ Guardado correctamente'; st.className='save-status ok'; }
     catch(e) { st.textContent='✗ '+e.message; st.className='save-status err'; }
     finally { btn.disabled=false; }
   };
+  document.getElementById('btn-cancel-save').onclick=()=>{
+    if(confirm('¿Descartar cambios?')){ hideSaveBar(); route(cSection); }
+  };
 }
-function hideSaveBar(){ document.getElementById('save-bar').style.display='none'; }
+function hideSaveBar() { document.getElementById('save-bar').style.display='none'; saveFnRef=null; }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// HELPERS
+// UTILS
 // ─────────────────────────────────────────────────────────────────────────────
-function set(html){ document.getElementById('main-content').innerHTML=html; }
-function v(id){ return document.getElementById(id)?.value||''; }
-function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+function set(h){ document.getElementById('mc').innerHTML=h; }
+function v(id){ return document.getElementById(id)?.value??''; }
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
 function parseFM(raw) {
   const m=raw.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);
   if(!m) return {body:raw};
   const fm={};
   m[1].split('\n').forEach(line=>{
-    const [k,...v]=line.split(':');
-    if(k) fm[k.trim()]=v.join(':').trim().replace(/^["']|["']$/g,'');
+    const i=line.indexOf(':');
+    if(i<0)return;
+    const k=line.slice(0,i).trim();
+    const val=line.slice(i+1).trim().replace(/^["']|["']$/g,'');
+    fm[k]=val;
   });
-  if(fm.publicado!==undefined) fm.publicado=fm.publicado!=='false'&&fm.publicado!==false;
+  if(fm.publicado!==undefined) fm.publicado=fm.publicado!=='false';
   fm.body=m[2].trim();
   return fm;
 }
-
 function buildFM(fm,body) {
   const skip=['body'];
   let out='---\n';
   for(const [k,vv] of Object.entries(fm)){
-    if(skip.includes(k)) continue;
-    const val=typeof vv==='string'&&(vv.includes(':')||vv.includes('"'))?`"${vv}"`:vv;
-    out+=`${k}: ${val}\n`;
+    if(skip.includes(k))continue;
+    const s=String(vv);
+    const quoted=s.includes(':')||s.includes('"')||s.includes("'")?`"${s.replace(/"/g,'\\"')}"`:s;
+    out+=`${k}: ${quoted}\n`;
   }
   return out+`---\n\n${body}`;
 }

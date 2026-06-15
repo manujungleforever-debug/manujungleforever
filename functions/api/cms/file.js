@@ -1,17 +1,20 @@
 /**
  * GET  /api/cms/file?path=<repo-path>   → lee un archivo o directorio del repo
- * PUT  /api/cms/file                    → escribe un archivo en el repo
+ * PUT  /api/cms/file                    → escribe un archivo (texto o binario) en el repo
  *
- * Variables de entorno requeridas:
+ * Para binarios (imágenes), enviar { path, base64, sha?, message }
+ * Para texto, enviar { path, content, sha?, message }
+ *
+ * Variables de entorno:
  *   GITHUB_TOKEN  — Personal Access Token con scope `repo`
- *   CMS_SECRET    — misma clave usada en login.js para verificar el token
+ *   CMS_SECRET    — clave para verificar tokens de sesión
  */
 
-const REPO  = 'hiddenjunglecusco/hiddenjunglecusco';
+const REPO   = 'hiddenjunglecusco/hiddenjunglecusco';
 const BRANCH = 'master';
-const GH    = 'https://api.github.com';
+const GH     = 'https://api.github.com';
+const IMAGE_EXTS = ['jpg','jpeg','png','gif','webp','svg','ico','avif'];
 
-// ── CORS preflight ────────────────────────────────────────────────────────────
 export async function onRequestOptions() {
   return new Response(null, { status: 204, headers: cors() });
 }
@@ -26,7 +29,7 @@ export async function onRequestGet(context) {
   const path = url.searchParams.get('path');
   if (!path) return json({ error: 'path requerido' }, 400);
 
-  const ghUrl = `${GH}/repos/${REPO}/contents/${path}?ref=${BRANCH}`;
+  const ghUrl = `${GH}/repos/${REPO}/contents/${encodeURIComponent(path).replace(/%2F/g,'/')}?ref=${BRANCH}`;
   const ghRes = await ghFetch(ghUrl, env.GITHUB_TOKEN);
 
   if (!ghRes.ok) {
@@ -36,12 +39,18 @@ export async function onRequestGet(context) {
 
   const data = await ghRes.json();
 
-  // Si es un directorio, devuelve listado
+  // Directorio → listado
   if (Array.isArray(data)) {
     return json({ files: data.map(f => ({ name: f.name, path: f.path, type: f.type, sha: f.sha })) });
   }
 
-  // Si es un archivo, decodifica el contenido correctamente como UTF-8
+  // Imagen → devuelve base64 tal cual (para preview)
+  const ext = path.split('.').pop().toLowerCase();
+  if (IMAGE_EXTS.includes(ext)) {
+    return json({ base64: data.content.replace(/\n/g,''), sha: data.sha, path: data.path, isImage: true });
+  }
+
+  // Texto → decodifica correctamente como UTF-8
   const bytes = Uint8Array.from(atob(data.content.replace(/\n/g, '')), c => c.charCodeAt(0));
   const content = new TextDecoder('utf-8').decode(bytes);
   return json({ content, sha: data.sha, path: data.path });
@@ -53,18 +62,34 @@ export async function onRequestPut(context) {
   const authErr = await verifyToken(request, env);
   if (authErr) return authErr;
 
-  const { path, content, sha, message } = await request.json();
-  if (!path || content === undefined) return json({ error: 'path y content requeridos' }, 400);
+  const body = await request.json();
+  const { path, sha, message } = body;
+  if (!path) return json({ error: 'path requerido' }, 400);
 
-  // Codifica el contenido como UTF-8 → base64
-  const bytes = new TextEncoder().encode(content);
-  const encoded = btoa(String.fromCharCode(...bytes));
+  let encoded;
 
-  const body = { message: message || `update: ${path}`, content: encoded, branch: BRANCH };
-  if (sha) body.sha = sha;
+  if (body.base64 !== undefined) {
+    // Archivo binario: ya viene en base64 del navegador
+    encoded = body.base64;
+  } else if (body.content !== undefined) {
+    // Texto: codificar UTF-8 → base64
+    const bytes = new TextEncoder().encode(body.content);
+    // Manejo de buffers grandes con reduce
+    const CHUNK = 8192;
+    let binary = '';
+    for (let i = 0; i < bytes.length; i += CHUNK) {
+      binary += String.fromCharCode(...bytes.subarray(i, i + CHUNK));
+    }
+    encoded = btoa(binary);
+  } else {
+    return json({ error: 'content o base64 requerido' }, 400);
+  }
 
-  const ghUrl = `${GH}/repos/${REPO}/contents/${path}`;
-  const ghRes = await ghFetch(ghUrl, env.GITHUB_TOKEN, 'PUT', body);
+  const ghBody = { message: message || `update: ${path}`, content: encoded, branch: BRANCH };
+  if (sha) ghBody.sha = sha;
+
+  const ghUrl = `${GH}/repos/${REPO}/contents/${encodeURIComponent(path).replace(/%2F/g,'/')}`;
+  const ghRes = await ghFetch(ghUrl, env.GITHUB_TOKEN, 'PUT', ghBody);
 
   if (!ghRes.ok) {
     const err = await ghRes.json().catch(() => ({}));
@@ -75,9 +100,30 @@ export async function onRequestPut(context) {
   return json({ sha: result.content?.sha, path });
 }
 
+// ── DELETE ────────────────────────────────────────────────────────────────────
+export async function onRequestDelete(context) {
+  const { request, env } = context;
+  const authErr = await verifyToken(request, env);
+  if (authErr) return authErr;
+
+  const { path, sha, message } = await request.json();
+  if (!path || !sha) return json({ error: 'path y sha requeridos' }, 400);
+
+  const ghBody = { message: message || `delete: ${path}`, sha, branch: BRANCH };
+  const ghUrl = `${GH}/repos/${REPO}/contents/${encodeURIComponent(path).replace(/%2F/g,'/')}`;
+  const ghRes = await ghFetch(ghUrl, env.GITHUB_TOKEN, 'DELETE', ghBody);
+
+  if (!ghRes.ok) {
+    const err = await ghRes.json().catch(() => ({}));
+    return json({ error: err.message || 'Error eliminando archivo' }, ghRes.status);
+  }
+
+  return json({ ok: true });
+}
+
 // ── helpers ───────────────────────────────────────────────────────────────────
 function ghFetch(url, token, method = 'GET', body = null) {
-  const opts = {
+  return fetch(url, {
     method,
     headers: {
       'Authorization': `Bearer ${token}`,
@@ -87,25 +133,20 @@ function ghFetch(url, token, method = 'GET', body = null) {
       ...(body ? { 'Content-Type': 'application/json' } : {})
     },
     ...(body ? { body: JSON.stringify(body) } : {})
-  };
-  return fetch(url, opts);
+  });
 }
 
 async function verifyToken(request, env) {
   const auth = request.headers.get('Authorization') || '';
   const token = auth.replace('Bearer ', '').trim();
-
   if (!token) return json({ error: 'No autenticado' }, 401);
-
   try {
     const [payload, sig] = token.split('.');
     const expected = await hmac(payload, env.CMS_SECRET);
     if (sig !== expected) return json({ error: 'Token inválido' }, 401);
-
     const { exp } = JSON.parse(atob(payload));
     if (Date.now() > exp) return json({ error: 'Sesión expirada' }, 401);
-
-    return null; // ok
+    return null;
   } catch {
     return json({ error: 'Token inválido' }, 401);
   }
@@ -129,7 +170,7 @@ function json(data, status = 200) {
 function cors() {
   return {
     'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET, PUT, OPTIONS',
+    'Access-Control-Allow-Methods': 'GET, PUT, DELETE, OPTIONS',
     'Access-Control-Allow-Headers': 'Authorization, Content-Type',
   };
 }
