@@ -27,7 +27,6 @@ export async function onRequestGet(context) {
   }
 }
 
-// ── POST: Subir archivo a R2 ──────────────────────────────────────────────────
 export async function onRequestPost(context) {
   const { request, env } = context;
   const authErr = await verifyToken(request, env);
@@ -36,18 +35,20 @@ export async function onRequestPost(context) {
   if (!env.MEDIA_BUCKET) return json({ error: 'R2 MEDIA_BUCKET no configurado' }, 500);
 
   try {
-    const { name, base64, contentType } = await request.json();
-    if (!name || !base64) return json({ error: 'name y base64 requeridos' }, 400);
+    const rawName = request.headers.get('X-File-Name');
+    if (!rawName) return json({ error: 'X-File-Name header requerido' }, 400);
+    
+    const name = decodeURIComponent(rawName);
+    const contentType = request.headers.get('Content-Type') || getMimeType(name.split('.').pop().toLowerCase());
 
     // Limpiar nombre de archivo (slugify simple manteniendo extensión)
     const ext = name.split('.').pop().toLowerCase();
     const slug = name.slice(0, -(ext.length + 1)).replace(/[^a-z0-9]/gi, '-').toLowerCase() + '.' + ext;
     const finalName = `${Date.now()}-${slug}`;
 
-    const binary = Uint8Array.from(atob(base64), c => c.charCodeAt(0));
-    
-    await env.MEDIA_BUCKET.put(finalName, binary, {
-      httpMetadata: { contentType: contentType || getMimeType(ext) }
+    // Subir a R2 directamente como stream
+    await env.MEDIA_BUCKET.put(finalName, request.body, {
+      httpMetadata: { contentType }
     });
 
     return json({ 
