@@ -41,8 +41,9 @@ export async function onRequestGet(context) {
     return json({ files: data.map(f => ({ name: f.name, path: f.path, type: f.type, sha: f.sha })) });
   }
 
-  // Si es un archivo, decodifica el contenido
-  const content = atob(data.content.replace(/\n/g, ''));
+  // Si es un archivo, decodifica el contenido correctamente como UTF-8
+  const bytes = Uint8Array.from(atob(data.content.replace(/\n/g, '')), c => c.charCodeAt(0));
+  const content = new TextDecoder('utf-8').decode(bytes);
   return json({ content, sha: data.sha, path: data.path });
 }
 
@@ -55,7 +56,9 @@ export async function onRequestPut(context) {
   const { path, content, sha, message } = await request.json();
   if (!path || content === undefined) return json({ error: 'path y content requeridos' }, 400);
 
-  const encoded = btoa(unescape(encodeURIComponent(content)));
+  // Codifica el contenido como UTF-8 → base64
+  const bytes = new TextEncoder().encode(content);
+  const encoded = btoa(String.fromCharCode(...bytes));
 
   const body = { message: message || `update: ${path}`, content: encoded, branch: BRANCH };
   if (sha) body.sha = sha;
