@@ -7,8 +7,8 @@ backend:
   name: github
   repo: hiddenjunglecusco/hiddenjunglecusco
   branch: master
-  base_url: https://hiddenjunglecusco-2jc.pages.dev
-  auth_endpoint: /api/auth
+  auth_type: pkce
+  app_id: Ov23li8l7QLOZbG6OIKt
 
 # Carpeta donde se subirán las imágenes desde el panel
 media_folder: "www.hiddenjunglecusco.com/uploads"
