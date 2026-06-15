@@ -495,10 +495,11 @@ async function handleMediaUploadEvent(e) {
   if (!files.length) return;
   e.target.value = '';
   
-  const progEl = document.getElementById('media-upload-prog');
+  const inModal = document.getElementById('media-modal').classList.contains('open');
+  const progEl = document.getElementById(inModal ? 'media-upload-prog' : 'main-upload-prog');
   const body = document.getElementById('media-modal-body');
   
-  let successCount = 0, errorCount = 0;
+  let successCount = 0, errorCount = 0, lastError = '';
   
   for (let i=0; i<files.length; i++) {
     const file = files[i];
@@ -508,16 +509,20 @@ async function handleMediaUploadEvent(e) {
       await r2Upload(file, null);
       successCount++;
     } catch(err) {
-      console.error(err); errorCount++;
+      console.error(err); errorCount++; lastError = err.message;
     }
   }
   
   if (progEl) {
      progEl.textContent = `✓ Subidos: ${successCount}` + (errorCount ? `, ✗ Errores: ${errorCount}` : '');
-     setTimeout(()=> { if(progEl) progEl.textContent=''; }, 4000);
+     setTimeout(()=> { if(progEl) progEl.textContent=''; }, 5000);
   }
   
-  if (document.getElementById('media-modal').classList.contains('open')) {
+  if (errorCount > 0) {
+    alert(`Ocurrieron ${errorCount} errores al subir.\\nÚltimo error: ${lastError}\\nSi es un error 500 o 503, revisa que Cloudflare tenga configurada la variable MEDIA_BUCKET correctamente o intenta en un par de minutos.`);
+  }
+  
+  if (inModal) {
     body.innerHTML = `<div class="loading"><div class="spinner"></div> Actualizando...</div>`;
     currentMediaFiles = await r2GetList();
     renderMediaGrid(body, currentMediaFiles, true);
@@ -574,7 +579,8 @@ async function viewMedia() {
   set(`
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
       <div><p class="pt">🖼️ Biblioteca de Medios</p><p class="ps">Gestiona todas las imágenes y videos (Cloudflare R2)</p></div>
-      <div style="display:flex;gap:8px;">
+      <div style="display:flex;gap:8px;align-items:center;">
+        <span id="main-upload-prog" style="font-size:.8rem;color:var(--gold);margin-right:8px;"></span>
         <button class="btn-primary" onclick="document.getElementById('media-upload').click()">📁 Subir archivo(s)</button>
         <button class="btn-secondary" onclick="document.getElementById('media-upload-folder').click()">📂 Subir carpeta</button>
       </div>
