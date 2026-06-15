@@ -71,11 +71,11 @@
 
     .btn-primary{background:linear-gradient(135deg,var(--gold),#a07830);border:none;
       border-radius:8px;color:#0b1a0f;font-weight:700;font-size:.88rem;
-      padding:9px 20px;cursor:pointer;transition:opacity .2s;}
+      padding:9px 20px;cursor:pointer;transition:opacity .2s;display:inline-flex;align-items:center;gap:6px;}
     .btn-primary:hover{opacity:.88;}
     .btn-primary:disabled{opacity:.5;cursor:not-allowed;}
     .btn-secondary{background:rgba(255,255,255,.06);border:1px solid var(--border);
-      color:var(--text);padding:8px 16px;border-radius:8px;cursor:pointer;font-size:.85rem;transition:all .15s;}
+      color:var(--text);padding:8px 16px;border-radius:8px;cursor:pointer;font-size:.85rem;transition:all .15s;display:inline-flex;align-items:center;gap:6px;}
     .btn-secondary:hover{background:rgba(255,255,255,.1);}
     .btn-danger{background:rgba(224,92,92,.1);border:1px solid rgba(224,92,92,.3);
       color:var(--danger);padding:7px 14px;border-radius:7px;cursor:pointer;font-size:.8rem;transition:all .15s;}
@@ -127,7 +127,6 @@
     .img-preview{width:100%;max-height:180px;object-fit:cover;border-radius:8px;
       border:1px solid var(--border);display:none;}
     .img-preview.show{display:block;}
-    .upload-prog{font-size:.75rem;color:var(--muted);display:none;}
 
     /* ── TOGGLE ────────────────────────────────── */
     .tgl-wrap{display:flex;align-items:center;gap:10px;padding-top:2px;}
@@ -149,6 +148,16 @@
     .md-wrap textarea{border:none;border-radius:0;background:rgba(255,255,255,.03);}
     .md-wrap textarea:focus{border:none;outline:none;}
 
+    /* ── MEDIA GALLERY ─────────────────────────── */
+    .media-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin-top:16px;}
+    .m-item{position:relative;background:var(--surface);border:2px solid transparent;border-radius:8px;overflow:hidden;cursor:pointer;aspect-ratio:1;transition:border .15s;}
+    .m-item:hover{border-color:rgba(201,168,76,.5);}
+    .m-item.selected{border-color:var(--gold);}
+    .m-item img,.m-item video{width:100%;height:100%;object-fit:cover;display:block;}
+    .m-item .m-name{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.7);color:white;font-size:.7rem;padding:4px 6px;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;}
+    .m-item .btn-del{position:absolute;top:4px;right:4px;background:rgba(224,92,92,.9);color:white;border:none;border-radius:4px;width:24px;height:24px;cursor:pointer;display:none;align-items:center;justify-content:center;font-size:.8rem;}
+    .m-item:hover .btn-del{display:flex;}
+
     /* ── SAVE BAR ──────────────────────────────── */
     .save-bar{position:fixed;bottom:0;left:210px;right:0;background:var(--surface);
       border-top:1px solid var(--border);padding:10px 28px;
@@ -160,12 +169,15 @@
 
     /* ── MODAL ─────────────────────────────────── */
     .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;
-      align-items:center;justify-content:center;z-index:200;display:none;}
+      align-items:center;justify-content:center;z-index:200;display:none;padding:20px;}
     .modal-bg.open{display:flex;}
     .modal{background:var(--card);border:1px solid var(--border);border-radius:16px;
-      padding:28px;width:100%;max-width:500px;box-shadow:0 24px 60px rgba(0,0,0,.5);}
-    .modal h3{font-size:1rem;font-weight:600;margin-bottom:16px;}
-    .modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:20px;}
+      padding:28px;width:100%;max-width:500px;box-shadow:0 24px 60px rgba(0,0,0,.5);display:flex;flex-direction:column;max-height:100%;}
+    .modal.lg{max-width:900px;height:90vh;}
+    .modal-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
+    .modal-h h3{font-size:1.1rem;font-weight:600;}
+    .modal-body{flex:1;overflow-y:auto;min-height:0;padding-right:4px;}
+    .modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:20px;padding-top:16px;border-top:1px solid var(--border);}
 
     /* ── MISC ──────────────────────────────────── */
     .spinner{display:inline-block;width:15px;height:15px;border:2px solid rgba(255,255,255,.15);
@@ -220,19 +232,39 @@
 <!-- DELETE CONFIRM MODAL -->
 <div class="modal-bg" id="del-modal">
   <div class="modal">
-    <h3 id="del-title">¿Eliminar este elemento?</h3>
-    <p style="font-size:.85rem;color:var(--muted)" id="del-msg">Esta acción no se puede deshacer.</p>
+    <div class="modal-h"><h3 id="del-title">¿Eliminar este elemento?</h3></div>
+    <div class="modal-body">
+      <p style="font-size:.85rem;color:var(--muted)" id="del-msg">Esta acción no se puede deshacer.</p>
+    </div>
     <div class="modal-actions">
-      <button class="btn-secondary" onclick="closeModal()">Cancelar</button>
+      <button class="btn-secondary" onclick="closeModal('del-modal')">Cancelar</button>
       <button class="btn-danger" id="del-confirm">Sí, eliminar</button>
     </div>
   </div>
 </div>
 
-<input type="file" id="img-picker" accept="image/*" style="display:none">
+<!-- MEDIA PICKER MODAL -->
+<div class="modal-bg" id="media-modal">
+  <div class="modal lg">
+    <div class="modal-h">
+      <h3>🖼️ Seleccionar Medio</h3>
+      <button class="btn-primary" onclick="document.getElementById('media-upload').click()">📁 Subir archivo</button>
+      <input type="file" id="media-upload" accept="image/*,video/*" style="display:none">
+    </div>
+    <div class="modal-body" id="media-modal-body">
+      <div class="loading"><div class="spinner"></div> Cargando galería...</div>
+    </div>
+    <div class="modal-actions">
+      <span id="media-upload-prog" style="align-self:center;margin-right:auto;font-size:.8rem;color:var(--muted);"></span>
+      <button class="btn-secondary" onclick="closeModal('media-modal')">Cancelar</button>
+      <button class="btn-primary" id="media-confirm" disabled>Insertar</button>
+    </div>
+  </div>
+</div>
 
 <script>
 const API = '/api/cms';
+const MEDIA_API = '/api/media';
 let token = sessionStorage.getItem('cms_token');
 let cUser = sessionStorage.getItem('cms_user') || 'admin';
 let cSection = 'blog', cSha = null, cFile = null, cData = null;
@@ -251,6 +283,7 @@ const SECTIONS = [
   { id:'tours',        label:'🌿 Tours',       sub:[] },
   { id:'departures',   label:'📅 Salidas',     sub:[] },
   { id:'testimonials', label:'⭐ Testimonios', sub:[] },
+  { id:'media',        label:'🖼️ Medios',      sub:[] }
 ];
 
 function buildTopNav() {
@@ -335,7 +368,7 @@ document.getElementById('btn-logout').addEventListener('click', () => {
 if (token) bootApp();
 
 // ─────────────────────────────────────────────────────────────────────────────
-// GITHUB API
+// API WRAPPERS (GITHUB & R2)
 // ─────────────────────────────────────────────────────────────────────────────
 async function ghGet(path) {
   const r = await fetch(`${API}/file?path=${encodeURIComponent(path)}`,{headers:{Authorization:`Bearer ${token}`}});
@@ -352,14 +385,6 @@ async function ghPut(path, content, sha, msg) {
   return d;
 }
 
-async function ghPutBinary(path, base64, msg) {
-  const r = await fetch(`${API}/file`,{method:'PUT',headers:{Authorization:`Bearer ${token}`,'Content-Type':'application/json'},
-    body:JSON.stringify({path,base64,message:msg||`upload: ${path}`})});
-  if (r.status===401){sessionStorage.clear();location.reload();}
-  const d=await r.json(); if(!r.ok)throw new Error(d.error||'Error al subir imagen');
-  return d;
-}
-
 async function ghDelete(path, sha, msg) {
   const r = await fetch(`${API}/file`,{method:'DELETE',headers:{Authorization:`Bearer ${token}`,'Content-Type':'application/json'},
     body:JSON.stringify({path,sha,message:msg||`delete: ${path}`})});
@@ -367,43 +392,128 @@ async function ghDelete(path, sha, msg) {
   return d;
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// IMAGE UPLOAD
-// ─────────────────────────────────────────────────────────────────────────────
-let imgPickerCallback = null;
-document.getElementById('img-picker').addEventListener('change', async function() {
-  const file = this.files[0];
-  if (!file || !imgPickerCallback) return;
-  this.value='';
+// R2 Media API
+async function r2GetList() {
+  const r = await fetch(`${MEDIA_API}/index`,{headers:{Authorization:`Bearer ${token}`}});
+  if (r.status===401){sessionStorage.clear();location.reload();}
+  const d=await r.json(); if(!r.ok)throw new Error(d.error||'Error al cargar galería');
+  return d.files || [];
+}
 
-  const progressEl = imgPickerCallback.progressEl;
-  if (progressEl) { progressEl.style.display='block'; progressEl.textContent='Subiendo imagen…'; }
+async function r2Upload(file, progressEl) {
+  if (progressEl) progressEl.textContent = 'Codificando...';
+  const base64 = await fileToBase64(file);
+  
+  if (progressEl) progressEl.textContent = 'Subiendo a R2...';
+  const r = await fetch(`${MEDIA_API}/index`, {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name: file.name, base64, contentType: file.type })
+  });
+  if (r.status===401){sessionStorage.clear();location.reload();}
+  const d=await r.json(); if(!r.ok)throw new Error(d.error||'Error subiendo archivo');
+  
+  if (progressEl) { progressEl.textContent = '✓ Completado'; setTimeout(()=>progressEl.textContent='', 2000); }
+  return d.file;
+}
 
+async function r2Delete(key) {
+  const r = await fetch(`${MEDIA_API}/${encodeURIComponent(key)}`, {
+    method: 'DELETE', headers: { Authorization: `Bearer ${token}` }
+  });
+  const d=await r.json(); if(!r.ok)throw new Error(d.error||'Error eliminando archivo');
+  return true;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// MEDIA LIBRARY MODAL & IMAGE WIDGET
+// ─────────────────────────────────────────────────────────────────────────────
+let mediaSelectCallback = null;
+let currentMediaFiles = [];
+let selectedMediaUrl = null;
+
+async function openMediaModal(callback) {
+  mediaSelectCallback = callback;
+  selectedMediaUrl = null;
+  document.getElementById('media-confirm').disabled = true;
+  document.getElementById('media-modal').classList.add('open');
+  
+  const body = document.getElementById('media-modal-body');
+  body.innerHTML = `<div class="loading"><div class="spinner"></div> Cargando galería...</div>`;
+  
   try {
-    const base64 = await fileToBase64(file);
-    const ext = file.name.split('.').pop().toLowerCase();
-    const slug = file.name.replace(/[^a-zA-Z0-9.]/g,'-').toLowerCase();
-    const path = `www.hiddenjunglecusco.com/uploads/${Date.now()}-${slug}`;
-    await ghPutBinary(path, base64, `upload: ${slug}`);
-    const url = `/uploads/${Date.now()}-${slug}`;
-    imgPickerCallback.onDone(`/uploads/${path.split('/uploads/')[1]}`);
-    if (progressEl) { progressEl.textContent='✓ Imagen subida'; setTimeout(()=>{progressEl.style.display='none';},2000); }
+    currentMediaFiles = await r2GetList();
+    renderMediaGrid(body, currentMediaFiles, true);
   } catch(e) {
-    if (progressEl) { progressEl.textContent='✗ Error: '+e.message; progressEl.style.color='var(--danger)'; }
+    body.innerHTML = `<div class="err-msg" style="display:block">❌ ${e.message}</div>`;
+  }
+}
+
+function renderMediaGrid(container, files, isModal) {
+  if (!files.length) {
+    container.innerHTML = `<div class="empty">La galería está vacía.</div>`;
+    return;
+  }
+  
+  container.innerHTML = `<div class="media-grid">
+    ${files.map((f, i) => {
+      const isVideo = f.key.match(/\.(mp4|webm)$/i);
+      return `
+      <div class="m-item" onclick="selectMediaItem(${i}, this, ${isModal})">
+        ${isVideo 
+          ? `<video src="${f.url}" preload="metadata"></video>` 
+          : `<img src="${f.url}" loading="lazy" alt="${f.key}">`}
+        <div class="m-name">${f.key}</div>
+        ${!isModal ? `<button class="btn-del" onclick="event.stopPropagation(); deleteMedia('${f.key}')">×</button>` : ''}
+      </div>`;
+    }).join('')}
+  </div>`;
+}
+
+function selectMediaItem(idx, el, isModal) {
+  if (!isModal) return; // Solo selección en modal
+  const parent = el.parentElement;
+  parent.querySelectorAll('.m-item').forEach(e => e.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedMediaUrl = currentMediaFiles[idx].url;
+  document.getElementById('media-confirm').disabled = false;
+}
+
+document.getElementById('media-confirm').onclick = () => {
+  if (selectedMediaUrl && mediaSelectCallback) {
+    mediaSelectCallback(selectedMediaUrl);
+  }
+  closeModal('media-modal');
+};
+
+document.getElementById('media-upload').addEventListener('change', async function() {
+  const file = this.files[0];
+  if (!file) return;
+  this.value = '';
+  
+  const progEl = document.getElementById('media-upload-prog');
+  try {
+    await r2Upload(file, progEl);
+    // Recargar galería
+    const body = document.getElementById('media-modal-body');
+    if (document.getElementById('media-modal').classList.contains('open')) {
+      body.innerHTML = `<div class="loading"><div class="spinner"></div> Actualizando...</div>`;
+      currentMediaFiles = await r2GetList();
+      renderMediaGrid(body, currentMediaFiles, true);
+    } else {
+      route('media'); // Si está en la vista principal
+    }
+  } catch(e) {
+    alert('Error: ' + e.message);
   }
 });
 
-function pickImage(inputId, previewId, progressId) {
-  imgPickerCallback = {
-    onDone: (url) => {
-      const inp = document.getElementById(inputId);
-      if (inp) inp.value = url;
-      const prev = document.getElementById(previewId);
-      if (prev) { prev.src=url; prev.classList.add('show'); }
-    },
-    progressEl: progressId ? document.getElementById(progressId) : null
-  };
-  document.getElementById('img-picker').click();
+function pickImage(inputId, previewId) {
+  openMediaModal((url) => {
+    const inp = document.getElementById(inputId);
+    if (inp) inp.value = url;
+    updateImgPreview(inputId, previewId);
+  });
 }
 
 function fileToBase64(file) {
@@ -424,17 +534,45 @@ function updateImgPreview(inputId, previewId) {
 }
 
 function imgWidget(id, label, value='', hint='') {
-  const pid=id+'-prev', prid=id+'-prog';
+  const pid=id+'-prev';
   return `<div class="ff"><label>${label}</label>
     <div class="img-field-wrap">
       <div class="img-input-row">
         <input id="${id}" value="${esc(value)}" placeholder="URL o ruta de imagen" oninput="updateImgPreview('${id}','${pid}')">
-        <button type="button" class="btn-secondary" onclick="pickImage('${id}','${pid}','${prid}')">📁 Subir</button>
+        <button type="button" class="btn-secondary" onclick="pickImage('${id}','${pid}')">🖼️ Seleccionar</button>
       </div>
-      <span class="upload-prog" id="${prid}"></span>
       ${value ? `<img class="img-preview show" id="${pid}" src="${esc(value)}" alt="">` : `<img class="img-preview" id="${pid}" alt="">`}
       ${hint?`<span class="hint">${hint}</span>`:''}
     </div></div>`;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// VIEW: MEDIA GALLERY (MAIN)
+// ─────────────────────────────────────────────────────────────────────────────
+async function viewMedia() {
+  set(`
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
+      <div><p class="pt">🖼️ Biblioteca de Medios</p><p class="ps">Gestiona todas las imágenes y videos (Cloudflare R2)</p></div>
+      <button class="btn-primary" onclick="document.getElementById('media-upload').click()">📁 Subir archivo</button>
+    </div>
+    <div id="media-main-grid"><div class="loading"><div class="spinner"></div> Cargando...</div></div>
+  `);
+  
+  try {
+    currentMediaFiles = await r2GetList();
+    renderMediaGrid(document.getElementById('media-main-grid'), currentMediaFiles, false);
+  } catch(e) {
+    document.getElementById('media-main-grid').innerHTML = `<p style="color:var(--danger)">❌ ${e.message}</p>`;
+  }
+}
+
+async function deleteMedia(key) {
+  if (confirm(`¿Estás seguro de eliminar el archivo "${key}" permanentemente?`)) {
+    try {
+      await r2Delete(key);
+      route('media');
+    } catch(e) { alert('Error: ' + e.message); }
+  }
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -470,7 +608,7 @@ async function route(id) {
   set(`<div class="loading"><div class="spinner"></div> Cargando…</div>`);
   try {
     const views = {blog:viewBlog,home:viewHome,contact:viewContact,global:viewGlobal,
-      tours:viewTours,departures:viewDeps,testimonials:viewTestims};
+      tours:viewTours,departures:viewDeps,testimonials:viewTestims, media:viewMedia};
     if (views[id]) await views[id]();
     else set(`<p>Sección no encontrada.</p>`);
   } catch(e) {
@@ -955,12 +1093,12 @@ function confirmDelete(path, sha, label, backFn) {
   document.getElementById('del-confirm').onclick = async () => {
     try {
       await ghDelete(path,sha,`delete: ${path}`);
-      closeModal();
+      closeModal('del-modal');
       eval(backFn+'()');
     } catch(e) { alert('Error: '+e.message); }
   };
 }
-function closeModal() { document.getElementById('del-modal').classList.remove('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 window.confirmDelete=confirmDelete; window.closeModal=closeModal;
 
 // ─────────────────────────────────────────────────────────────────────────────
