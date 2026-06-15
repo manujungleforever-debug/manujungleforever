@@ -3,6 +3,7 @@ import re
 from bs4 import BeautifulSoup
 
 articles = [
+    'discovering-the-mysteries-of-the-peruvian-amazon',
     'amazon-rainforest-tour-to-manu-national-park-from-cusco',
     'climate-change-manu-national-park-peru',
     'everything-you-need-to-know-before-visiting-machu-picchu',
