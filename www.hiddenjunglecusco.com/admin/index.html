@@ -281,6 +281,7 @@ const SECTIONS = [
   { id:'blog',    label:'✍️ Blog',       sub:[] },
   { id:'content', label:'📄 Contenido',  sub:[
     {id:'home',    label:'🏠 Inicio'},
+    {id:'about',   label:'ℹ️ Sobre Nosotros'},
     {id:'contact', label:'📞 Contacto'},
     {id:'global',  label:'⚙️ Datos Globales'},
   ]},
@@ -647,7 +648,7 @@ async function route(id) {
   hideSaveBar(); cFile=null; cSha=null; cData=null;
   set(`<div class="loading"><div class="spinner"></div> Cargando…</div>`);
   try {
-    const views = {blog:viewBlog,home:viewHome,contact:viewContact,global:viewGlobal,
+    const views = {blog:viewBlog,home:viewHome,about:viewAbout,contact:viewContact,global:viewGlobal,
       tours:viewTours,departures:viewDeps,testimonials:viewTestims, media:viewMedia};
     if (views[id]) await views[id]();
     else set(`<p>Sección no encontrada.</p>`);
@@ -820,6 +821,61 @@ async function viewHome() {
   });
 }
 
+
+// ─────────────────────────────────────────────────────────────────────────────
+// ABOUT US
+// ─────────────────────────────────────────────────────────────────────────────
+async function viewAbout() {
+  const data=await ghGet('www.hiddenjunglecusco.com/data/about.json');
+  cFile='www.hiddenjunglecusco.com/data/about.json'; cSha=data.sha;
+  const d=JSON.parse(data.content); cData=d;
+  set(`
+    <p class="pt">ℹ️ Página Sobre Nosotros</p><p class="ps">Contenido de "About Us"</p>
+    <div class="eform">
+      <div class="esec"><div class="esec-h">General</div>
+        <div class="ff"><label>Título de la página</label><input id="ab-t" value="${esc(d.titulo_pagina||'')}"></div>
+        <div class="ff"><label>Subtítulo de la página</label><textarea id="ab-s">${esc(d.subtitulo_pagina||'')}</textarea></div>
+        ${imgWidget('ab-img','Imagen Hero',d.hero_image||'')}
+      </div>
+      <div class="esec"><div class="esec-h">Historia</div>
+        <div class="grow2">
+          <div class="ff"><label>Eyebrow</label><input id="ab-he" value="${esc(d.historia?.eyebrow||'')}"></div>
+          <div class="ff"><label>Título</label><input id="ab-ht" value="${esc(d.historia?.titulo||'')}"></div>
+        </div>
+        <div class="ff"><label>Párrafos (separados por línea en blanco)</label>
+          <textarea id="ab-hp" style="min-height:120px">${(d.historia?.paragrafos||[]).join('\n\n')}</textarea></div>
+        ${imgWidget('ab-himg','Imagen Historia',d.historia?.imagen||'')}
+      </div>
+      <div class="esec"><div class="esec-h">Misión</div>
+        <div class="grow2">
+          <div class="ff"><label>Eyebrow</label><input id="ab-me" value="${esc(d.mision?.eyebrow||'')}"></div>
+          <div class="ff"><label>Título</label><input id="ab-mt" value="${esc(d.mision?.titulo||'')}"></div>
+        </div>
+        <div class="ff"><label>Texto</label><textarea id="ab-mtex" style="min-height:80px">${esc(d.mision?.texto||'')}</textarea></div>
+      </div>
+    </div>`);
+
+  showSaveBar(async()=>{
+    const out = JSON.parse(JSON.stringify(cData));
+    out.titulo_pagina = v('ab-t');
+    out.subtitulo_pagina = v('ab-s');
+    out.hero_image = v('ab-img');
+    if(!out.historia) out.historia = {};
+    out.historia.eyebrow = v('ab-he');
+    out.historia.titulo = v('ab-ht');
+    out.historia.paragrafos = v('ab-hp').split('\n\n').filter(x=>x.trim());
+    out.historia.imagen = v('ab-himg');
+    if(!out.mision) out.mision = {};
+    out.mision.eyebrow = v('ab-me');
+    out.mision.titulo = v('ab-mt');
+    out.mision.texto = v('ab-mtex');
+    
+    const res=await ghPut(cFile,JSON.stringify(out,null,2),cSha,`update about.json`);
+    cSha=res.sha;
+    cData=out;
+  });
+}
+
 // ─────────────────────────────────────────────────────────────────────────────
 // CONTACT
 // ─────────────────────────────────────────────────────────────────────────────
@@ -947,7 +1003,7 @@ async function viewTours() {
   cData=JSON.parse(data.content);
   const ts=cData.tours||[];
   set(`
-    <p class="pt">🌿 Tours</p><p class="ps">${ts.length} tours registrados</p>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px"><div><p class="pt">🌿 Tours</p><p class="ps">${ts.length} tours registrados</p></div><button class="btn-primary" onclick="editTour(-1)">+ Nuevo Tour</button></div>
     <div class="list-grid">
       ${ts.map((t,i)=>`
         <div class="li">
@@ -961,7 +1017,7 @@ async function viewTours() {
 }
 
 window.editTour = function(idx) {
-  const t=cData.tours[idx];
+  const t= idx === -1 ? {nombre:'', estado:'activo', categoria:'wildlife', duracion_dias:1, duracion_noches:0, precio_desde:0, capacidad_min:1, capacidad_max:12, dificultad:'Fácil', temporada:'', descripcion_corta:'', descripcion_larga:'', imagen_hero:'', galeria:[], itinerario:[], incluye:[], no_incluye:[], destacado:false} : cData.tours[idx];
   set(`
     <button class="back-btn" onclick="route('tours')">← Volver a tours</button>
     <div class="eform">
@@ -999,14 +1055,21 @@ window.editTour = function(idx) {
     </div>`);
   document.getElementById('t-dl').value=t.descripcion_larga||'';
   showSaveBar(async()=>{
-    cData.tours[idx]={...t,nombre:v('t-n'),estado:v('t-e'),categoria:v('t-c'),
+    const updated = {...t,nombre:v('t-n'),estado:v('t-e'),categoria:v('t-c'),
       duracion_dias:+v('t-d'),duracion_noches:+v('t-dn'),precio_desde:+v('t-p'),
       capacidad_min:+v('t-cmin'),capacidad_max:+v('t-cmax'),
       dificultad:v('t-dif'),temporada:v('t-tmp'),
       destacado:document.getElementById('t-dest').checked,
       imagen_hero:v('t-img'),imagen_alt:v('t-imgalt'),
       descripcion_corta:v('t-dc'),descripcion_larga:document.getElementById('t-dl').value};
-    const res=await ghPut(cFile,JSON.stringify(cData,null,2),cSha,`update tour: ${t.nombre}`);
+    if (idx === -1) {
+        if(!updated.id) updated.id = 'tour-' + Date.now();
+        if(!updated.slug) updated.slug = updated.nombre.toLowerCase().replace(/[^a-z0-9-]/g,'-');
+        cData.tours.unshift(updated);
+    } else {
+        cData.tours[idx] = updated;
+    }
+    const res=await ghPut(cFile,JSON.stringify(cData,null,2),cSha,`update tour: ${updated.nombre}`);
     cSha=res.sha;
   });
 };
@@ -1074,7 +1137,7 @@ async function viewTestims() {
   cData=JSON.parse(data.content);
   const ts=cData.testimonials||[];
   set(`
-    <p class="pt">⭐ Testimonios de Clientes</p><p class="ps">${ts.length} testimonios</p>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px"><div><p class="pt">⭐ Testimonios de Clientes</p><p class="ps">${ts.length} testimonios</p></div><button class="btn-primary" onclick="editTestim(-1)">+ Nuevo Testimonio</button></div>
     <div class="list-grid">
       ${ts.map((t,i)=>`
         <div class="li">
@@ -1090,7 +1153,7 @@ async function viewTestims() {
 }
 
 window.editTestim = function(idx) {
-  const t=cData.testimonials[idx];
+  const t= idx === -1 ? {nombre:'', pais:'', bandera:'', tour:'', fecha:'', rating:5, texto:'', foto:'', activo:true} : cData.testimonials[idx];
   set(`
     <button class="back-btn" onclick="route('testimonials')">← Volver a testimonios</button>
     <div class="eform"><div class="esec"><div class="esec-h">Datos del Testimonio</div>
@@ -1115,10 +1178,16 @@ window.editTestim = function(idx) {
     </div></div>`);
   document.getElementById('tm-a').addEventListener('change',e=>{document.getElementById('tm-lbl').textContent=e.target.checked?'✅ Visible':'❌ Oculto';});
   showSaveBar(async()=>{
-    cData.testimonials[idx]={...t,nombre:v('tm-n'),pais:v('tm-p'),bandera:v('tm-fl'),
+    const updated = {...t,nombre:v('tm-n'),pais:v('tm-p'),bandera:v('tm-fl'),
       tour:v('tm-t'),fecha:v('tm-f'),rating:+v('tm-r'),texto:v('tm-tx'),
       foto:v('tm-img'),activo:document.getElementById('tm-a').checked};
-    const res=await ghPut(cFile,JSON.stringify(cData,null,2),cSha,`update testimonio: ${t.nombre}`);
+    if(idx===-1){
+      if(!updated.id) updated.id = Date.now();
+      cData.testimonials.unshift(updated);
+    } else {
+      cData.testimonials[idx] = updated;
+    }
+    const res=await ghPut(cFile,JSON.stringify(cData,null,2),cSha,`update testimonio: ${updated.nombre}`);
     cSha=res.sha;
   });
 };
