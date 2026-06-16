@@ -190,6 +190,15 @@
       font-size:.7rem;padding:2px 8px;border-radius:10px;font-weight:500;}
   
       @media (max-width: 768px) {
+            header { display: flex !important; flex-wrap: wrap; height: auto !important; padding: 0; align-items: center; justify-content: space-between; }
+            .hbrand { width: auto; height: auto !important; border-right: none; border-bottom: none; order: 1; padding: 12px 18px; }
+            .hright { order: 2; flex: 1; justify-content: flex-end; padding: 0 10px; border-top: none; }
+            #mobile-btn { display: block !important; order: 3; }
+            header nav { order: 4; width: 100%; display: none !important; flex-direction: column; padding: 0; background: rgba(0,0,0,0.15); }
+            header nav.show-menu { display: flex !important; }
+            header nav button { width: 100%; height: auto; text-align: left; padding: 14px 24px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+            main > div[style*="space-between"] { flex-direction: column !important; align-items: stretch !important; gap: 12px; }
+            main > div[style*="space-between"] button { width: 100%; }
           .app-body { flex-direction: column; }
           aside { width: 100%; display: flex; overflow-x: auto; padding: 0; border-right: none; border-bottom: 1px solid var(--border); }
           aside .slabel { display: none; }
@@ -198,14 +207,6 @@
           main { padding: 16px 12px 80px; }
           .lcard { padding: 32px 20px; border-radius: 12px; }
           .grow2, .grow3 { grid-template-columns: 1fr; }
-          header { display: block !important; height: auto !important; padding: 0; }
-          .hbrand { width: 100%; height: auto !important; border-right: none; justify-content: center; padding: 12px 0; border-bottom: 1px solid var(--border); }
-          header nav { justify-content: flex-start; flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 0 10px; }
-          header nav::-webkit-scrollbar { display: none; }
-          header nav button { flex: 0 0 auto; height: 50px; padding: 0 16px; }
-          .hright { justify-content: center; padding: 10px; border-top: 1px solid var(--border); }
-          main > div[style*="space-between"] { flex-direction: column !important; align-items: stretch !important; gap: 12px; }
-          main > div[style*="space-between"] button { width: 100%; }
         }
 </style>
 </head>
@@ -236,6 +237,7 @@
       <span class="huser" id="huser"></span>
       <button class="btn-logout" id="btn-logout">Salir</button>
     </div>
+    <button id="mobile-btn" style="display:none;background:none;border:none;color:var(--muted);font-size:1.6rem;padding:0 18px;cursor:pointer;line-height:1;" onclick="document.getElementById('top-nav').classList.toggle('show-menu')">☰</button>
   </header>
   <div class="app-body">
     <aside id="sidebar"></aside>
@@ -315,11 +317,12 @@ function buildTopNav() {
   nav.innerHTML = SECTIONS.map(s =>
     `<button data-s="${s.id}">${s.label}</button>`
   ).join('');
-  nav.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
-    nav.querySelectorAll('button').forEach(x=>x.classList.remove('active'));
-    b.classList.add('active');
-    switchSection(b.dataset.s);
-  }));
+    nav.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+      nav.querySelectorAll('button').forEach(x=>x.classList.remove('active'));
+      b.classList.add('active');
+      nav.classList.remove('show-menu');
+      switchSection(b.dataset.s);
+    }));
   nav.querySelector(`[data-s="${cSection}"]`)?.classList.add('active');
 }
 
