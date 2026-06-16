@@ -188,7 +188,22 @@
     .sep{border:none;border-top:1px solid var(--border);margin:14px 0;}
     .tag{display:inline-block;background:rgba(201,168,76,.12);color:var(--gold);
       font-size:.7rem;padding:2px 8px;border-radius:10px;font-weight:500;}
-  </style>
+  
+      @media (max-width: 768px) {
+        .app-body { flex-direction: column; }
+        aside { width: 100%; display: flex; overflow-x: auto; padding: 0; border-right: none; border-bottom: 1px solid var(--border); }
+        aside .slabel { display: none; }
+        aside button { width: auto; white-space: nowrap; border-left: none; border-bottom: 2px solid transparent; padding: 12px 18px; }
+        aside button.active { border-left-color: transparent; border-bottom-color: var(--gold); }
+        main { padding: 16px 12px 80px; }
+        .lcard { padding: 32px 20px; border-radius: 12px; }
+        .grow2, .grow3 { grid-template-columns: 1fr; }
+        header { height: auto; flex-wrap: wrap; }
+        .hbrand { width: 100%; border-right: none; justify-content: center; padding: 12px 0; border-bottom: 1px solid var(--border); }
+        header nav { flex: 1 1 100%; justify-content: center; }
+        .hright { flex: 1 1 100%; justify-content: center; padding: 10px; border-top: 1px solid var(--border); }
+      }
+</style>
 </head>
 <body>
 
