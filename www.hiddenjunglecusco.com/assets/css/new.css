@@ -23,7 +23,7 @@ img{max-width:100%;height:auto;display:block}a{color:inherit;text-decoration:non
 .hd{position:relative}
 .dm{position:absolute;top:calc(100% + 8px);left:0;min-width:240px;background:var(--d);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:8px;opacity:0;visibility:hidden;transform:translateY(-6px);transition:var(--t);z-index:99}
 .hd:hover .dm{opacity:1;visibility:visible;transform:translateY(0)}
-.dm a{display:block;padding:7px 14px 7px 24px;font-size:.85rem;color:rgba(255,255,255,.65);border-radius:8px;transition:var(--t)}
+.dm a{white-space:nowrap;display:block;padding:7px 14px 7px 24px;font-size:.85rem;color:rgba(255,255,255,.65);border-radius:8px;transition:var(--t)}
 .dm a:hover{color:var(--w);background:rgba(255,255,255,.06);padding-left:30px}
 .dm .dh{font-size:.7rem;font-weight:800;color:var(--a);text-transform:uppercase;letter-spacing:.1em;padding:12px 14px 6px 14px;margin-top:6px;border-bottom:1px solid rgba(255,255,255,.05);display:flex;align-items:center;gap:6px}
 .dm .dh:first-child{margin-top:0}
