@@ -478,6 +478,27 @@ HTML<html lang="en"><head>
 </div>
 </div>
 </section>
+
+  
+  <!-- RELATED POSTS -->
+  <section style="background:var(--f); border-top:1px solid rgba(255,255,255,.05)">
+    <div class="related-posts">
+      <h2 class="comments-title"><i class="fas fa-newspaper" style="color:var(--a)"></i> More Articles</h2>
+      <div class="related-grid" id="related-grid"></div>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const articles = [{"url": "../discovering-the-mysteries-of-the-peruvian-amazon/index.html", "title": "Discovering the Mysteries of the Peruvian Amazon", "img": "../media/2026/05/Avatar-3.jpg"}, {"url": "../amazon-rainforest-tour-to-manu-national-park-from-cusco/index.html", "title": "Amazon Rainforest Tour to Manu National Park from Cusco", "img": "../wp-content/uploads/2022/10/FullSizeRender.jpg"}, {"url": "../sustainable-tourism-in-the-manu-biosphere-reserve-conservation-through-private-agricultural-lands/index.html", "title": "Sustainable Tourism in the Manu Biosphere Reserve: Conservation Through Private Agricultural Lands", "img": "../wp-content/uploads/2022/10/Group-Shot_-exploring-the-beach-.jpg"}, {"url": "../manu-national-park-in-8-days-complete-travel-guide-to-the-peruvian-amazon/index.html", "title": "Manu National Park in 8 Days: Complete Travel Guide to the Peruvian Amazon", "img": "../wp-content/uploads/2022/10/Wildlife-quest-6dyas-blanquillo_.jpg"}, {"url": "../what-to-see-when-traveling-to-the-peruvian-amazon-complete-guide-2026/index.html", "title": "What you will See When Traveling to the Peruvian Amazon: Complete Guide 2026", "img": "../wp-content/uploads/2022/10/Road-trip-4-days_1.jpg"}, {"url": "../climate-change-manu-national-park-peru/index.html", "title": "Climate Change in Manu National Park: Protecting One of the World\u2019s Most Biodiverse Places", "img": "../wp-content/uploads/2025/08/Hidden_Jungle_Drone__optimized.jpg"}, {"url": "../how-tourism-helps-the-manu-national-park/index.html", "title": "How Tourism Helps the Manu National Park", "img": "../wp-content/uploads/2021/01/family-fishing-e1609677595723.jpg"}, {"url": "../everything-you-need-to-know-before-visiting-machu-picchu/index.html", "title": "Everything You Need to Know Before Visiting Machu Picchu", "img": "../wp-content/uploads/2023/11/Everything-You-Need-to-Know-Before-Visiting-Machu-Picchu-1.webp"}, {"url": "../peru-travel-tips/index.html", "title": "PERU TRAVEL TIPS", "img": "../wp-content/uploads/2019/07/DSC07062-u\u0308berarbeitet-e1562085886902.jpg"}, {"url": "../packing-list-for-your-trip-to-the-peruvian-amazon/index.html", "title": "PACKING LIST FOR YOUR TRIP TO THE PERUVIAN JUNGLE", "img": "../wp-content/uploads/2022/12/packing-list-for-your-trip-to-the-peruvian-jungle.webp"}, {"url": "../../../five-reasons-to-visit-manu-national-park/index.html", "title": "FIVE REASONS TO VISIT MANU NATIONAL PARK", "img": "../../wp-content/uploads/2022/12/five-reasons-to-visit-manu-national-park.webp"}, {"url": "../../../ten-days-in-peru/index.html", "title": "TEN DAYS IN PERU", "img": "../../wp-content/uploads/2022/12/ten-days-in-peru.webp"}];
+    const current = window.location.pathname;
+    const valid = articles.filter(a => !current.includes(a.url.replace('../', '')));
+    valid.sort(() => 0.5 - Math.random());
+    const grid = document.querySelector('.related-grid');
+    if(grid) {
+        grid.innerHTML = valid.slice(0, 3).map(a => `<a href="${a.url}" class="related-card"><img src="${a.img}" alt="${a.title}" loading="lazy"><div class="related-card-body"><h3>${a.title}</h3></div></a>`).join('');
+    }
+});
+</script>
+    </div>
+  </section>
 </main>
 <footer class="ft">
 <style>
