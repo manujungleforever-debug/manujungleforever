@@ -652,7 +652,7 @@ function mdToolbar(textareaId) {
   ];
   return `<div class="md-wrap">
     <div class="md-toolbar">${cmds.map(([l,b,a])=>`<button type="button" onclick="mdWrap('${textareaId}','${b.replace(/\n/g,'\\n').replace(/'/g,"\\'")}','${a.replace(/\n/g,'\\n').replace(/'/g,"\\'")}')" title="${l}">${l}</button>`).join('')}</div>
-    <textarea id="${textareaId}" style="min-height:320px;font-family:monospace;font-size:.83rem;line-height:1.6;border:none;border-radius:0;background:rgba(255,255,255,.03);padding:12px"></textarea>
+    <textarea id="${textareaId}" style="width:100%; box-sizing:border-box; resize:vertical; min-height:320px; font-family:monospace; font-size:.83rem; line-height:1.6; border:none; border-radius:0; background:rgba(255,255,255,.03); padding:12px"></textarea>
   </div>`;
 }
 
