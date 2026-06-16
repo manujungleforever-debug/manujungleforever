@@ -83,7 +83,7 @@ def get_new_footer(rel):
       </ul>
     </div>
   </div>
-  <div class="fb"><div class="fbi"><span>Copyright &copy; 2026 Hidden Jungle Cusco. All rights reserved.</span><span>Site design: Meyer Consulting and Management</span></div></div>
+  <div class="fb"><div class="fbi"><span>Copyright &copy; 2026 Hidden Jungle Cusco. All rights reserved.</span><span>Site design: kemmesik</span></div></div>
 </div></footer>"""
 
 updated_footer = 0

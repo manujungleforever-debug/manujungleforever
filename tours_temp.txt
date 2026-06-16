@@ -1,0 +1,69 @@
+async function viewTours() {
+  const data=await ghGet('www.hiddenjunglecusco.com/data/tours.json');
+  cFile='www.hiddenjunglecusco.com/data/tours.json'; cSha=data.sha;
+  cData=JSON.parse(data.content);
+  const ts=cData.tours||[];
+  set(`
+    <p class="pt">🌿 Tours</p><p class="ps">${ts.length} tours registrados</p>
+    <div class="list-grid">
+      ${ts.map((t,i)=>`
+        <div class="li">
+          <div class="li-info">
+            <h3>${t.nombre} <span class="badge ${t.estado==='activo'?'on':t.estado==='pausado'?'warn':'off'}">${t.estado}</span></h3>
+            <span>${t.duracion_dias} días · $${t.precio_desde} USD · ${t.categoria} · ${t.dificultad}</span>
+          </div>
+          <div class="li-actions"><button class="btn-edit" onclick="editTour(${i})">Editar</button></div>
+        </div>`).join('')}
+    </div>`);
+}
+
+window.editTour = function(idx) {
+  const t=cData.tours[idx];
+  set(`
+    <button class="back-btn" onclick="route('tours')">← Volver a tours</button>
+    <div class="eform">
+      <div class="esec"><div class="esec-h">Información General</div>
+        <div class="grow2">
+          <div class="ff"><label>Nombre del tour</label><input id="t-n" value="${esc(t.nombre)}"></div>
+          <div class="ff"><label>Estado</label><select id="t-e"><option ${t.estado==='activo'?'selected':''} value="activo">✅ Activo</option><option ${t.estado==='pausado'?'selected':''} value="pausado">⏸️ Pausado</option><option ${t.estado==='inactivo'?'selected':''} value="inactivo">❌ Inactivo</option></select></div>
+        </div>
+        <div class="grow3">
+          <div class="ff"><label>Categoría</label><select id="t-c"><option value="wildlife" ${t.categoria==='wildlife'?'selected':''}>🐆 Wildlife</option><option value="roadtrip" ${t.categoria==='roadtrip'?'selected':''}>🚗 Road Trip</option><option value="expedition" ${t.categoria==='expedition'?'selected':''}>⛺ Expedición</option></select></div>
+          <div class="ff"><label>Duración (días)</label><input type="number" id="t-d" value="${t.duracion_dias}" min="1"></div>
+          <div class="ff"><label>Noches</label><input type="number" id="t-dn" value="${t.duracion_noches||0}" min="0"></div>
+        </div>
+        <div class="grow3">
+          <div class="ff"><label>Precio desde (USD)</label><input type="number" id="t-p" value="${t.precio_desde}" min="0"></div>
+          <div class="ff"><label>Cap. mínima</label><input type="number" id="t-cmin" value="${t.capacidad_min}" min="1"></div>
+          <div class="ff"><label>Cap. máxima</label><input type="number" id="t-cmax" value="${t.capacidad_max}" min="1"></div>
+        </div>
+        <div class="grow2">
+          <div class="ff"><label>Dificultad</label><select id="t-dif"><option ${t.dificultad==='Fácil'?'selected':''}>Fácil</option><option ${t.dificultad==='Moderado'?'selected':''}>Moderado</option><option ${t.dificultad==='Difícil'?'selected':''}>Difícil</option></select></div>
+          <div class="ff"><label>Temporada</label><input id="t-tmp" value="${esc(t.temporada||'')}"></div>
+        </div>
+        <div class="ff"><label>Destacado en portada</label>
+          <div class="tgl-wrap" style="margin-top:6px"><label class="tgl"><input type="checkbox" id="t-dest" ${t.destacado?'checked':''}><span class="tgl-s"></span></label><span>${t.destacado?'Sí':'No'}</span></div>
+        </div>
+      </div>
+      <div class="esec"><div class="esec-h">Imágenes</div>
+        ${imgWidget('t-img','Imagen hero / principal',t.imagen_hero||'')}
+        <div class="ff"><label>Texto alt imagen</label><input id="t-imgalt" value="${esc(t.imagen_alt||'')}"></div>
+      </div>
+      <div class="esec"><div class="esec-h">Descripciones</div>
+        <div class="ff"><label>Descripción corta (tarjetas)</label><textarea id="t-dc" style="min-height:80px">${esc(t.descripcion_corta||'')}</textarea></div>
+        <div class="ff"><label>Descripción completa (Markdown)</label>${mdToolbar('t-dl')}</div>
+      </div>
+    </div>`);
+  document.getElementById('t-dl').value=t.descripcion_larga||'';
+  showSaveBar(async()=>{
+    cData.tours[idx]={...t,nombre:v('t-n'),estado:v('t-e'),categoria:v('t-c'),
+      duracion_dias:+v('t-d'),duracion_noches:+v('t-dn'),precio_desde:+v('t-p'),
+      capacidad_min:+v('t-cmin'),capacidad_max:+v('t-cmax'),
+      dificultad:v('t-dif'),temporada:v('t-tmp'),
+      destacado:document.getElementById('t-dest').checked,
+      imagen_hero:v('t-img'),imagen_alt:v('t-imgalt'),
+      descripcion_corta:v('t-dc'),descripcion_larga:document.getElementById('t-dl').value};
+    const res=await ghPut(cFile,JSON.stringify(cData,null,2),cSha,`update tour: ${t.nombre}`);
+    cSha=res.sha;
+  });
+}

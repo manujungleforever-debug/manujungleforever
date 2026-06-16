@@ -1,0 +1,543 @@
+HTML<html lang="en"><head>
+<meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>Blog – Selva Oculta Cusco | Consejos de viaje para el Amazonas y el Parque Nacional del Manu</title>
+<meta content="Visit our blog to learn more about us, where we work, what we love about Peru, and tips as you plan your Manu National Park trip." name="description"/>
+<meta content="Blog – Hidden Jungle Cusco" property="og:title"/>
+<meta content="Travel tips, wildlife guides and stories from the Peruvian Amazon." property="og:description"/>
+<meta content="../wp-content/uploads/2022/11/Hero-Blog-1.jpg" property="og:image"/>
+<meta content="website" property="og:type"/><meta content="https://www.hiddenjunglecusco.com/blog/" property="og:url"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="https://www.hiddenjunglecusco.com/blog/" rel="canonical"/>
+<link href="../../wp-content/uploads/2018/01/cropped-HJC_Logo_PlainSeal_2Color-32x32.png" rel="icon" sizes="32x32"/>
+<link href="../../wp-content/uploads/2018/01/cropped-HJC_Logo_PlainSeal_2Color-180x180.png" rel="apple-touch-icon"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&amp;family=Outfit:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+<link href="../../assets/css/new.css?v=2" rel="stylesheet"/>
+<style>
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  margin-top: 48px;
+}
+.blog-card {
+  background: var(--f);
+  border: 1px solid rgba(255,255,255,.06);
+  border-radius: 20px;
+  overflow: hidden;
+  transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+  display: flex;
+  flex-direction: column;
+}
+.blog-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 60px rgba(0,0,0,.45);
+  border-color: rgba(201,168,76,.3);
+}
+.blog-thumb {
+  position: relative;
+  height: 230px;
+  overflow: hidden;
+}
+.blog-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .6s ease;
+}
+.blog-card:hover .blog-thumb img {
+  transform: scale(1.07);
+}
+.blog-thumb::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 45%, rgba(5,13,8,.55) 100%);
+}
+.blog-cat {
+  position: absolute;
+  bottom: 14px;
+  left: 16px;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  background: rgba(201,168,76,.18);
+  border: 1px solid rgba(201,168,76,.45);
+  border-radius: 30px;
+  color: var(--a);
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  backdrop-filter: blur(8px);
+}
+.blog-body {
+  padding: 26px 28px 28px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.blog-date {
+  font-size: .74rem;
+  color: rgba(255,255,255,.35);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.blog-body h2 {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 800;
+  line-height: 1.35;
+  color: var(--w);
+  margin-bottom: 12px;
+  transition: color .3s;
+}
+.blog-card:hover .blog-body h2 {
+  color: var(--a);
+}
+.blog-body p {
+  font-size: .87rem;
+  color: rgba(255,255,255,.5);
+  line-height: 1.75;
+  flex: 1;
+  margin-bottom: 18px;
+}
+.blog-read {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: .78rem;
+  font-weight: 700;
+  color: var(--a);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  transition: gap .3s;
+}
+.blog-card:hover .blog-read { gap: 12px; }
+@media(max-width:1100px){ .blog-grid { grid-template-columns: repeat(2,1fr); } }
+@media(max-width:640px){ .blog-grid { grid-template-columns: 1fr; } }
+
+/* ── Global Preloader (HJC) ── */
+#hjc-preloader {
+  position: fixed; inset: 0;
+  background: radial-gradient(ellipse at center, #0a1a0f 0%, #030805 100%);
+  z-index: 999999;
+  display: flex; align-items: center; justify-content: center;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+#hjc-preloader.hjc-fade { opacity: 0; visibility: hidden; }
+.hjc-wrap {
+  position: relative; width: 220px; height: 220px;
+  display: flex; align-items: center; justify-content: center;
+}
+.hjc-logo {
+  width: 100px; height: 100px; border-radius: 50%; z-index: 10;
+  animation: hjcPulse 3s ease-in-out infinite;
+  filter: drop-shadow(0 0 8px rgba(57,255,106,0.15));
+}
+.hjc-ring {
+  position: absolute; top: 50%; left: 50%;
+  border-radius: 50%; background: transparent; pointer-events: none;
+  border: 1px solid rgba(57,255,106,0.1);
+}
+.hjc-ring-1 {
+  width: 140px; height: 140px;
+  border-top-color: rgba(57,255,106,0.8);
+  border-bottom-color: rgba(57,255,106,0.8);
+  animation: hjcSpin 8s linear infinite;
+}
+.hjc-ring-2 {
+  width: 170px; height: 170px;
+  border: 1px dashed rgba(201,168,76,0.4);
+  animation: hjcSpin 12s linear infinite reverse;
+}
+.hjc-ring-3 {
+  width: 200px; height: 200px;
+  border-left-color: rgba(57,255,106,0.6);
+  border-right-color: rgba(57,255,106,0.6);
+  animation: hjcSpin 18s linear infinite;
+}
+@keyframes hjcSpin {
+  0%   { transform: translate(-50%,-50%) rotate(0deg); }
+  100% { transform: translate(-50%,-50%) rotate(360deg); }
+}
+@keyframes hjcPulse {
+  0%,100% { transform: scale(1);    filter: drop-shadow(0 0 5px rgba(57,255,106,0.2)); }
+  50%     { transform: scale(1.1); filter: drop-shadow(0 0 20px rgba(57,255,106,0.6)); }
+}
+/* ── WhatsApp Neon Float ── */
+.wa-wrap {
+  position: fixed; bottom: 28px; right: 28px;
+  width: 60px; height: 60px; z-index: 9998;
+  display: flex; align-items: center; justify-content: center;
+}
+.wa-ring {
+  position: absolute; top: 0; left: 0;
+  width: 60px; height: 60px; border-radius: 50%;
+  border: 2px solid #39ff6a; opacity: 0;
+  animation: waPulse 2.6s ease-out infinite;
+  pointer-events: none;
+}
+.wa-ring:nth-child(2) { animation-delay: 0.8s; }
+.wa-ring:nth-child(3) { animation-delay: 1.6s; }
+@keyframes waPulse {
+  0%   { transform: scale(1);   opacity: .85; }
+  100% { transform: scale(2.5); opacity: 0;   }
+}
+.wa {
+  position: relative; z-index: 1;
+  width: 60px; height: 60px; border-radius: 50%;
+  background: linear-gradient(135deg,#25d366,#128c50);
+  color: #fff; font-size: 1.75rem;
+  display: flex; align-items: center; justify-content: center;
+  text-decoration: none;
+  box-shadow: 0 0 0 3px rgba(57,255,106,.3), 0 0 18px rgba(57,255,106,.5), 0 8px 24px rgba(0,0,0,.4);
+  animation: waBeat 2.6s ease-in-out infinite;
+  transition: transform .25s, box-shadow .25s;
+  bottom: auto !important; right: auto !important; margin: 0 !important;
+}
+.wa:hover {
+  transform: scale(1.12);
+  box-shadow: 0 0 0 4px rgba(57,255,106,.5), 0 0 30px rgba(57,255,106,.8), 0 12px 32px rgba(0,0,0,.5);
+}
+@keyframes waBeat {
+  0%,100% { transform: scale(1);    }
+  50%      { transform: scale(1.07); }
+}
+
+
+
+</style>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-5476BC9');</script>
+</head><body>
+ Precargador HJC 
+<div id="hjc-preloader">
+<div class="hjc-wrap">
+<div class="hjc-ring hjc-ring-1"></div>
+<div class="hjc-ring hjc-ring-2"></div>
+<div class="hjc-ring hjc-ring-3"></div>
+<img alt="Hidden Jungle Cusco" class="hjc-logo" src="../../wp-content/uploads/2018/01/cropped-HJC_Logo_PlainSeal_2Color-192x192.png"/>
+</div>
+</div>
+<script>
+(function(){{
+  var p = document.getElementById('hjc-preloader');
+  if (!p) return;
+  if (sessionStorage.getItem('hjc_loaded')) {{ p.style.display='none'; return; }}
+  var t0 = Date.now(), done = false;
+  function hide() {{
+    var elapsed = Date.now() - t0;
+    if (elapsed < 2500) {{ setTimeout(hide, 2500 - elapsed); return; }}
+    p.classList.add('hjc-fade');
+    sessionStorage.setItem('hjc_loaded','1');
+    setTimeout(function(){{ p.parentNode && p.parentNode.removeChild(p); }}, 750);
+  }}
+  window.addEventListener('load', function(){{ done=true; hide(); }});
+  setTimeout(function(){{ if(!done){{ done=true; hide(); }} }}, 7000);
+}})();
+</script>
+<noscript><iframe height="0" src="https://www.googletagmanager.com/ns.html?id=GTM-5476BC9" style="display:none;visibility:hidden" width="0"></iframe></noscript>
+<a class="skip" href="#main">Saltar al contenido</a>
+<header id="N"><div class="cx ni">
+<div class="nl"><a href="../../index.html"><img alt="Hidden Jungle Cusco" height="54" loading="eager" src="../../wp-content/uploads/2018/01/cropped-HiddenJungleCusco_Logo-1.png" width="190"/></a></div>
+<nav aria-label="Main navigation" class="nm"> <a href="../../index.html">Hogar</a> <div class="hd"><a href="../../guided-tours/index.html">Visitas guiadas <i class="fas fa-caret-down"></i></a> <ul class="dm">
+<li class="dh"><i class="fas fa-binoculars"></i> Búsqueda de vida silvestre</li>
+<li><a href="../../3-day-wildlife-quest-machu-wasi/index.html">3 días de vida salvaje – Machu Wasi</a></li>
+<li><a href="../../4-day-wildlife-quest-machu-wasi/index.html">4 días de vida salvaje – Machu Wasi</a></li>
+<li><a href="../../4-day-wildlife-quest-nuevo-eden/index.html">4 Días De Vida Silvestre – Nuevo Edén</a></li>
+<li><a href="../../5-day-wildlife-quest-nuevo-eden/index.html">5 días de vida salvaje – Nuevo Edén</a></li>
+<li><a href="../../6-day-wildlife-quest-blanquillo/index.html">6 días de vida salvaje – Blanquillo</a></li>
+<li><a href="../../6-day-wildlife-quest-reserved-zone/index.html">Zona Reservada Manu – 6 Días</a></li>
+<li><a href="../../8-day-wildlife-photography-tour/index.html">Fotografía de Vida Silvestre – 8 Días</a></li>
+<li class="dh"><i class="fas fa-route"></i> Viaje por carretera por la selva tropical</li>
+<li><a href="../../rainforest-road-trip-from-cusco/index.html">Descripción general del viaje por carretera por la selva tropical</a></li>
+<li><a href="../../2-day-rainforest-road-trip/index.html">Viaje por carretera de 2 días</a></li>
+<li><a href="../../5-day-rainforest-road-trip/index.html">Viaje por carretera de 5 días</a></li>
+<li class="dh"><i class="fas fa-campground"></i> Expedición al Amazonas</li>
+<li><a href="../../5-day-amazon-expedition/index.html">Expedición al Amazonas de 5 días</a></li>
+<li><a href="../../6-day-amazon-expedition/index.html">Expedición al Amazonas de 6 días</a></li>
+</ul> </div> <a href="../../about-2/index.html">Sobre nosotros</a> <a href="../../departures/index.html">Salidas</a> <a href="../../news-and-gallery/index.html">Galería</a> <a class="on" href="../../blog/index.html">Blog</a> <a class="nb" href="../../contact/index.html">Reserva ahora</a> </nav>
+<button aria-expanded="false" aria-label="Toggle menu" class="bg" id="bg"><span class="bb"></span><span class="bb"></span><span class="bb"></span></button>
+</div></header>
+<div aria-hidden="true" class="mo" id="mo">
+<ul class="ml">
+<li><a href="../../index.html">Hogar</a></li>
+<li><button class="m-btn" id="mbt">Visitas guiadas <i class="fas fa-caret-down"></i></button>
+<ul class="md" id="mdd">
+<li class="dh"><i class="fas fa-binoculars"></i> Búsqueda de vida silvestre</li>
+<li><a href="../../3-day-wildlife-quest-machu-wasi/index.html">3 días de vida salvaje – Machu Wasi</a></li>
+<li><a href="../../4-day-wildlife-quest-machu-wasi/index.html">4 días de vida salvaje – Machu Wasi</a></li>
+<li><a href="../../4-day-wildlife-quest-nuevo-eden/index.html">4 Días De Vida Silvestre – Nuevo Edén</a></li>
+<li><a href="../../5-day-wildlife-quest-nuevo-eden/index.html">5 días de vida salvaje – Nuevo Edén</a></li>
+<li><a href="../../6-day-wildlife-quest-blanquillo/index.html">6 días de vida salvaje – Blanquillo</a></li>
+<li><a href="../../6-day-wildlife-quest-reserved-zone/index.html">Zona Reservada Manu – 6 Días</a></li>
+<li><a href="../../8-day-wildlife-photography-tour/index.html">Fotografía de Vida Silvestre – 8 Días</a></li>
+<li class="dh"><i class="fas fa-route"></i> Viaje por carretera por la selva tropical</li>
+<li><a href="../../rainforest-road-trip-from-cusco/index.html">Descripción general del viaje por carretera por la selva tropical</a></li>
+<li><a href="../../2-day-rainforest-road-trip/index.html">Viaje por carretera de 2 días</a></li>
+<li><a href="../../5-day-rainforest-road-trip/index.html">Viaje por carretera de 5 días</a></li>
+<li class="dh"><i class="fas fa-campground"></i> Expedición al Amazonas</li>
+<li><a href="../../5-day-amazon-expedition/index.html">Expedición al Amazonas de 5 días</a></li>
+<li><a href="../../6-day-amazon-expedition/index.html">Expedición al Amazonas de 6 días</a></li>
+</ul>
+</li>
+<li><a href="../../about-2/index.html">Sobre nosotros</a></li>
+<li><a href="../../departures/index.html">Salidas</a></li>
+<li><a href="../../news-and-gallery/index.html">Galería</a></li>
+<li><a href="../../blog/index.html">Blog</a></li>
+<li><a href="../../contact/index.html">Contacto</a></li>
+</ul>
+</div>
+<main id="main">
+<section class="in-hero" style="background-image: url('../wp-content/uploads/2022/11/Hero-Blog-1.jpg');">
+<div class="cx">
+<span class="ey">Guías y conocimientos</span>
+<h1 class="h1" style="font-size:clamp(2.5rem,6vw,4.5rem)">El blog de la jungla escondida</h1>
+<p class="hs" style="margin:0 auto">Consejos de viaje, encuentros con la vida salvaje y consejos de expertos para su aventura en la Amazonía peruana, directamente de nuestros guías familiares locales.</p>
+</div>
+</section>
+<section class="sec" style="background:var(--k)">
+<div class="cx">
+<div class="r" style="text-align:center; margin-bottom:12px">
+<span class="ey">Todos los artículos</span>
+<h2 class="h2">Historias de la selva</h2>
+<p class="ld" style="margin:0 auto">11 artículos: consejos, guías e historias de la Amazonía peruana</p>
+</div>
+<div class="blog-grid" id="blog-grid">
+<a aria-label="Discovering the Mysteries of the Peruvian Amazon" class="blog-card r" href="../../discovering-the-mysteries-of-the-peruvian-amazon/index.html" style="text-decoration:none">
+<div class="blog-thumb">
+<img alt="Green Amazon jungle landscape" loading="lazy" src="../../media/2026/05/Avatar-3.jpg"/>
+<span class="blog-cat"><i class="fas fa-binoculars"></i> Fauna</span>
+</div>
+<div class="blog-body">
+<p class="blog-date"><i class="far fa-calendar-alt"></i> 15 de junio de 2026</p>
+<h2>Descubriendo los Misterios de la Amazonía Peruana</h2>
+<p>Un viaje profundo al corazón de Manu. Descubre qué especies habitan la reserva y cómo prepararte...</p>
+<span class="blog-read"><i class="fas fa-arrow-right"></i> Leer artículo</span>
+</div>
+</a>
+<a aria-label="Amazon Rainforest Tour to Manu National Park from Cusco" class="blog-card r" href="../../amazon-rainforest-tour-to-manu-national-park-from-cusco/index.html" style="text-decoration:none">
+<div class="blog-thumb">
+<img alt="Amazon Rainforest Tour to Manu National Park from Cusco" loading="lazy" src="../../wp-content/uploads/2022/10/FullSizeRender.jpg"/>
+<span class="blog-cat"><i class="fas fa-binoculars"></i> Fauna</span>
+</div>
+<div class="blog-body">
+<p class="blog-date"><i class="far fa-calendar-alt"></i> 15 de mayo de 2026</p>
+<h2>Tour por la selva amazónica al Parque Nacional Manu desde Cusco</h2>
+<p>Vida Silvestre del Parque Nacional Manu</p>
+<span class="blog-read"><i class="fas fa-arrow-right"></i> Leer artículo</span>
+</div>
+</a>
+<a aria-label="Sustainable Tourism in the Manu Biosphere Reserve: Conservation Through Private Agricultural Lands" class="blog-card r" href="../../sustainable-tourism-in-the-manu-biosphere-reserve-conservation-through-private-agricultural-lands/index.html" style="text-decoration:none">
+<div class="blog-thumb">
+<img alt="Sustainable Tourism in the Manu Biosphere Reserve: Conservation Through Private Agricultural Lands" loading="lazy" src="../../wp-content/uploads/2022/10/Group-Shot_-exploring-the-beach-.jpg"/>
+<span class="blog-cat"><i class="fas fa-globe-americas"></i> Sostenibilidad</span>
+</div>
+<div class="blog-body">
+<p class="blog-date"><i class="far fa-calendar-alt"></i> 12 de mayo de 2026</p>
+<h2>Turismo Sostenible en la Reserva de la Biosfera del Manu: Conservación a través de tierras agrícolas privadas</h2>
+<p>Turismo sostenible en la Reserva de la Biosfera del Manu promoviendo la conservación, la biodiversidad y los viajes ecológicos en la Amazonía Peruana.</p>
+<span class="blog-read"><i class="fas fa-arrow-right"></i> Leer artículo</span>
+</div>
+</a>
+<a aria-label="Manu National Park in 8 Days: Complete Travel Guide to the Peruvian Amazon" class="blog-card r" href="../../manu-national-park-in-8-days-complete-travel-guide-to-the-peruvian-amazon/index.html" style="text-decoration:none">
+<div class="blog-thumb">
+<img alt="Manu National Park in 8 Days: Complete Travel Guide to the Peruvian Amazon" loading="lazy" src="../../wp-content/uploads/2022/10/Wildlife-quest-6dyas-blanquillo_.jpg"/>
+<span class="blog-cat"><i class="fas fa-map-marked-alt"></i> Parque Manú</span>
+</div>
+<div class="blog-body">
+<p class="blog-date"><i class="far fa-calendar-alt"></i> 6 de abril de 2026</p>
+<h2>Parque Nacional del Manu en 8 Días: Guía de Viaje Completa de la Amazonía Peruana</h2>
+<p>Un viaje al Parque Nacional del Manu en Perú es una de las</p>
+<span class="blog-read"><i class="fas fa-arrow-right"></i> Leer artículo</span>
+</div>
+</a>
+<a aria-label="What you will See When Traveling to the Peruvian Amazon: Complete Guide 2026" class="blog-card r" href="../../what-to-see-when-traveling-to-the-peruvian-amazon-complete-guide-2026/index.html" style="text-decoration:none">
+<div class="blog-thumb">
+<img alt="What you will See When Traveling to the Peruvian Amazon: Complete Guide 2026" loading="lazy" src="../../wp-content/uploads/2022/10/Road-trip-4-days_1.jpg"/>
+<span class="blog-cat"><i class="fas fa-binoculars"></i> Fauna</span>
+</div>
+<div class="blog-body">
+<p class="blog-date"><i class="far fa-calendar-alt"></i> 23 de marzo de 2026</p>
+<h2>Lo que Verás Al Viajar a la Amazonía Peruana: Guía Completa 2026</h2>
+<p>Introducción La selva amazónica del Perú es una de las más biodiversas</p>
+<span class="blog-read"><i class="fas fa-arrow-right"></i> Leer artículo</span>
+</div>
+</a>
+<a aria-label="Climate Change in Manu National Park: Protecting One of the World’s Most Biodiverse Places" class="blog-card r" href="../../climate-change-manu-national-park-peru/index.html" style="text-decoration:none">
+<div class="blog-thumb">
+<img alt="Climate Change in Manu National Park: Protecting One of the World’s Most Biodiverse Places" loading="lazy" src="../../wp-content/uploads/2025/08/Hidden_Jungle_Drone__optimized.jpg"/>
+<span class="blog-cat"><i class="fas fa-leaf"></i> Conservación</span>
+</div>
+<div class="blog-body">
+<p class="blog-date"><i class="far fa-calendar-alt"></i> 5 de marzo de 2026</p>
+<h2>Cambio climático en el Parque Nacional del Manu: protegiendo uno de los lugares con mayor biodiversidad del mundo</h2>
+<p>El Parque Nacional del Manu es uno de los lugares con mayor biodiversidad</p>
+<span class="blog-read"><i class="fas fa-arrow-right"></i> Leer artículo</span>
+</div>
+</a>
+<a aria-label="How Tourism Helps the Manu National Park" class="blog-card r" href="../../how-tourism-helps-the-manu-national-park/index.html" style="text-decoration:none">
+<div class="blog-thumb">
+<img alt="How Tourism Helps the Manu National Park" loading="lazy" src="../../wp-content/uploads/2021/01/family-fishing-e1609677595723.jpg"/>
+<span class="blog-cat"><i class="fas fa-globe-americas"></i> Sostenibilidad</span>
+</div>
+<div class="blog-body">
+<p class="blog-date"><i class="far fa-calendar-alt"></i> 22 de junio de 2024</p>
+<h2>Cómo ayuda el turismo al Parque Nacional del Manu</h2>
+<p>Ubicado en el sureste de Perú, el Parque Nacional Manu es un notable Patrimonio de la Humanidad por la UNESCO. Abarca 1,5 millones</p>
+<span class="blog-read"><i class="fas fa-arrow-right"></i> Leer artículo</span>
+</div>
+</a>
+<a aria-label="Everything You Need to Know Before Visiting Machu Picchu" class="blog-card r" href="../../everything-you-need-to-know-before-visiting-machu-picchu/index.html" style="text-decoration:none">
+<div class="blog-thumb">
+<img alt="Everything You Need to Know Before Visiting Machu Picchu" loading="lazy" src="../../wp-content/uploads/2023/11/Everything-You-Need-to-Know-Before-Visiting-Machu-Picchu-1.webp"/>
+<span class="blog-cat"><i class="fas fa-mountain"></i> Consejos de viaje</span>
+</div>
+<div class="blog-body">
+<p class="blog-date"><i class="far fa-calendar-alt"></i> 16 de noviembre de 2023</p>
+<h2>Todo lo que necesitas saber antes de visitar Machu Picchu</h2>
+<p>Los tours a Machu Picchu desde Cusco están en la lista de deseos de muchos viajeros, y no es</p>
+<span class="blog-read"><i class="fas fa-arrow-right"></i> Leer artículo</span>
+</div>
+</a>
+<a aria-label="PERU TRAVEL TIPS" class="blog-card r" href="../../peru-travel-tips/index.html" style="text-decoration:none">
+<div class="blog-thumb">
+<img alt="PERU TRAVEL TIPS" loading="lazy" src="../../wp-content/uploads/2019/07/DSC07062-überarbeitet-e1562085886902.jpg"/>
+<span class="blog-cat"><i class="fas fa-map-marked-alt"></i> Consejos de viaje</span>
+</div>
+<div class="blog-body">
+<p class="blog-date"><i class="far fa-calendar-alt"></i> 20 de septiembre de 2023</p>
+<h2>CONSEJOS PARA VIAJAR A PERÚ</h2>
+<p>Perú es un país de impresionantes paisajes, rica historia y diversas culturas. Para aprovechar al máximo tu viaje a través de esta cautivadora</p>
+<span class="blog-read"><i class="fas fa-arrow-right"></i> Leer artículo</span>
+</div>
+</a>
+<a aria-label="PACKING LIST FOR YOUR TRIP TO THE PERUVIAN JUNGLE" class="blog-card r" href="../../packing-list-for-your-trip-to-the-peruvian-amazon/index.html" style="text-decoration:none">
+<div class="blog-thumb">
+<img alt="PACKING LIST FOR YOUR TRIP TO THE PERUVIAN JUNGLE" loading="lazy" src="../../wp-content/uploads/2022/12/packing-list-for-your-trip-to-the-peruvian-jungle.webp"/>
+<span class="blog-cat"><i class="fas fa-suitcase-rolling"></i> Consejos de viaje</span>
+</div>
+<div class="blog-body">
+<p class="blog-date"><i class="far fa-calendar-alt"></i> 31 de diciembre de 2022</p>
+<h2>LISTA DE EMBALAJE PARA TU VIAJE A LA SELVA PERUANA</h2>
+<p>Si ya has decidido que para tus próximas vacaciones harás un viaje a</p>
+<span class="blog-read"><i class="fas fa-arrow-right"></i> Leer artículo</span>
+</div>
+</a>
+</div>
+<div class="pagination" style="margin-top:56px; display:flex; justify-content:center; gap:12px; align-items:center;"><span class="btn bg2" style="padding:10px 18px; pointer-events:none">1</span><a class="btn ba" href="../../blog/page/2/index.html" style="padding:10px 18px">2</a><a aria-label="Next page" class="btn ba" href="../../blog/page/2/index.html" style="padding:10px 18px"><i class="fas fa-chevron-right"></i></a></div>
+ llamada a la acción 
+<div class="r" style="text-align:center; margin-top:80px; padding:64px 40px; background:var(--f); border-radius:24px; border:1px solid rgba(255,255,255,.06)">
+<span class="ey">¿Listo para partir?</span>
+<h2 class="h2" style="max-width:560px;margin:0 auto 18px">Deje de leer y comience a explorar</h2>
+<p class="ld" style="margin:0 auto 32px">Reserva tu tour guiado desde Cusco al Parque Nacional del Manu. Local. Salvaje. Auténtico.</p>
+<div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+<a class="btn ba" href="../../guided-tours/index.html"><i class="fas fa-binoculars"></i> Ver todos los tours</a>
+<a class="btn bg2" href="../../contact/index.html"><i class="fas fa-envelope"></i> Contáctenos</a>
+</div>
+</div>
+</div>
+</section>
+</main>
+<footer class="ft">
+<style>
+  @media (min-width: 992px) {
+    .fg { grid-template-columns: 1.8fr 0.9fr 1.1fr 0.8fr 1.6fr !important; gap: 40px !important; align-items: start !important; }
+  }
+  .libro-box:hover { border-color: #39ff6a !important; transform: translateY(-3px); }
+</style>
+<div class="cx">
+<div class="fg">
+<div>
+<a href="../../index.html"><img alt="Hidden Jungle Cusco" class="fl" loading="lazy" src="../../wp-content/uploads/2018/01/HiddenJungleCusco_Logo_TextSeal_3Color.png" style="max-width: 150px; margin-bottom: 20px;"/></a>
+<p class="fa">Tours guiados por la jungla desde Cusco al Parque Nacional del Manu y la Amazonía peruana. Local. Salvaje. Auténtico.</p>
+<address class="fc">
+<p><i class="fas fa-map-marker-alt"></i><a href="https://goo.gl/maps/B8NjhLZizA6YKwKD6" rel="noopener" target="_blank">Selva Oculta Cusco – La Casa Escondida 17800, Nuevo Edén, Perú</a></p>
+<p><i class="fas fa-phone"></i><a href="tel:+51979808013">+51 979 808 013</a> / <a href="tel:+51923289231">+51 923 289 231</a></p>
+<p><i class="fas fa-envelope"></i><a href="mailto:discover@hiddenjunglecusco.com">descubrir@hiddenjunglecusco.com</a></p>
+</address>
+<div class="so">
+<a aria-label="Facebook" class="sc" href="https://www.facebook.com/hiddenjunglecusco" rel="noopener" target="_blank"><i class="fab fa-facebook-f"></i></a>
+<a aria-label="Instagram" class="sc" href="https://www.instagram.com/hiddenjunglecusco/?hl=en" rel="noopener" target="_blank"><i class="fab fa-instagram"></i></a>
+<a aria-label="TripAdvisor" class="sc" href="https://www.tripadvisor.com/Attraction_Review-g294314-d17476586-Reviews-Hidden_Jungle_Cusco-Cusco_Cusco_Region.html?m=19905" rel="noopener" target="_blank"><svg fill="currentColor" height="1em" role="img" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M12.006 4.295c-2.67 0-5.338.784-7.645 2.353H0l1.963 2.135a5.997 5.997 0 0 0 4.04 10.43 5.976 5.976 0 0 0 4.075-1.6L12 19.705l1.922-2.09a5.972 5.972 0 0 0 4.072 1.598 6 6 0 0 0 6-5.998 5.982 5.982 0 0 0-1.957-4.432L24 6.648h-4.35a13.573 13.573 0 0 0-7.644-2.353zM12 6.255c1.531 0 3.063.303 4.504.903C13.943 8.138 12 10.43 12 13.1c0-2.671-1.942-4.962-4.504-5.942A11.72 11.72 0 0 1 12 6.256zM6.002 9.157a4.059 4.059 0 1 1 0 8.118 4.059 4.059 0 0 1 0-8.118zm11.992.002a4.057 4.057 0 1 1 .003 8.115 4.057 4.057 0 0 1-.003-8.115zm-11.992 1.93a2.128 2.128 0 0 0 0 4.256 2.128 2.128 0 0 0 0-4.256zm11.992 0a2.128 2.128 0 0 0 0 4.256 2.128 2.128 0 0 0 0-4.256z"></path></svg></a>
+<a aria-label="Airbnb" class="sc" href="https://abnb.me/Ri8XQWoA19" rel="noopener" target="_blank"><i class="fab fa-airbnb"></i></a>
+<a aria-label="WhatsApp" class="sc" href="https://wa.me/51923289231" rel="noopener" target="_blank"><i class="fab fa-whatsapp"></i></a>
+<a aria-label="TikTok" class="sc" href="https://www.tiktok.com/@hidden.jungle.cus" rel="noopener" target="_blank"><i class="fab fa-tiktok"></i></a>
+</div>
+</div>
+<div>
+<p class="fh">Soporte y Legal</p>
+<ul class="fli">
+<li><a href="../../contact/index.html">Contáctenos</a></li>
+<li><a href="../../faq/index.html">Preguntas frecuentes</a></li>
+<li><a href="../../terms-and-conditions/index.html">Términos y condiciones</a></li>
+<li><a href="../../privacy-policy/index.html">política de privacidad</a></li>
+<li><a href="../../cookies-policy/index.html">Política de cookies</a></li>
+</ul>
+</div>
+<div>
+<a href="../../libro-de-reclamaciones/index.html" style="text-decoration:none; display:block;">
+<div class="libro-box" style="background:rgba(255,255,255,0.02); border:1px solid rgba(201,168,76,0.3); border-radius:12px; padding:16px 12px; text-align:center; transition:0.3s; box-sizing:border-box;">
+<div style="background:#fff; border-radius:8px; padding:12px; display:inline-flex; flex-direction:column; align-items:center; margin-bottom:12px; box-shadow:0 4px 12px rgba(0,0,0,0.15);">
+<div style="color:#0a1a0f; font-weight:800; font-size:0.8rem; line-height:1.2; font-family:Arial,sans-serif; text-align:center; text-transform:uppercase; letter-spacing:0.5px;">Quejas<br/>Libro</div>
+<i class="fas fa-book-open" style="color:#c9a84c; font-size:1.5rem; margin-top:8px;"></i>
+</div>
+<p style="font-size:0.65rem; color:rgba(255,255,255,0.6); line-height:1.4; margin:0;">De acuerdo con el Código de Protección al Consumidor, tenemos disponible un Libro de Denuncias Virtual.</p>
+</div>
+</a>
+</div>
+<div>
+<p class="fh">Explorar</p>
+<ul class="fli">
+<li><a href="../../index.html">Hogar</a></li>
+<li><a href="../../about-2/index.html">Sobre nosotros</a></li>
+<li><a href="../../guided-tours/index.html">Tours guiados por la selva</a></li>
+<li><a href="../../departures/index.html">Salidas</a></li>
+<li><a href="../../news-and-gallery/index.html">Galería</a></li>
+<li><a href="../../blog/index.html">Blog</a></li>
+</ul>
+</div>
+<div>
+<p class="fh">Visitas guiadas</p>
+<ul class="fli">
+<li><a href="../../wildlife-tours-from-cusco/index.html">Tours de Vida Silvestre desde Cusco</a></li>
+<li><a href="../../3-day-wildlife-quest-machu-wasi/index.html">3 días de vida salvaje – Machu Wasi</a></li>
+<li><a href="../../4-day-wildlife-quest-machu-wasi/index.html">4 días de vida salvaje – Machu Wasi</a></li>
+<li><a href="../../4-day-wildlife-quest-nuevo-eden/index.html">4 Días De Vida Silvestre – Nuevo Edén</a></li>
+<li><a href="../../5-day-wildlife-quest-nuevo-eden/index.html">5 días de vida salvaje – Nuevo Edén</a></li>
+<li><a href="../../6-day-wildlife-quest-blanquillo/index.html">6 días de vida salvaje – Blanquillo</a></li>
+<li><a href="../../6-day-wildlife-quest-reserved-zone/index.html">Zona Reservada Manu – 6 Días</a></li>
+<li><a href="../../8-day-wildlife-photography-tour/index.html">Fotografía de Vida Silvestre – 8 Días</a></li>
+<li><a href="../../rainforest-road-trip-from-cusco/index.html">Viaje por carretera por la selva tropical</a></li>
+<li><a href="../../5-day-amazon-expedition/index.html">Expedición al Amazonas de 5 días</a></li>
+<li><a href="../../6-day-amazon-expedition/index.html">Expedición al Amazonas de 6 días</a></li>
+</ul>
+</div>
+</div>
+<div class="fb"><div class="fbi"><span>Copyright © 2026 Selva Oculta Cusco. Reservados todos los derechos.</span><span>Diseño del sitio: kemmesik</span></div></div>
+</div></footer>
+<script>
+(function(){
+  const N=document.getElementById('N');
+  window.addEventListener('scroll',()=>N.classList.toggle('s',scrollY>60),{passive:true});
+  const bg=document.getElementById('bg'),mo=document.getElementById('mo');
+  bg.addEventListener('click',()=>{const o=mo.classList.toggle('o');bg.classList.toggle('o',o);bg.setAttribute('aria-expanded',o);mo.setAttribute('aria-hidden',!o);document.body.style.overflow=o?'hidden':'';});
+  document.getElementById('mbt').addEventListener('click',()=>document.getElementById('mdd').classList.toggle('o'));
+  const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('v');obs.unobserve(e.target);}})  ,{threshold:.1});
+  document.querySelectorAll('.r,.rl,.rr').forEach(el=>obs.observe(el));
+})();
+</script>
+<div class="wa-wrap" id="whats-flotante">
+<span class="wa-ring"></span>
+<span class="wa-ring"></span>
+<span class="wa-ring"></span>
+<a aria-label="Chat on WhatsApp" class="wa" href="https://api.whatsapp.com/send?phone=51923289231&amp;text=Hello!%20I%20would%20like%20to%20learn%20more%20about%20your%20jungle%20trips" rel="noopener" target="_blank">
+<i class="fab fa-whatsapp"></i>
+</a>
+</div>
+</body></html>

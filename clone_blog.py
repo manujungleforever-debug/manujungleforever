@@ -403,7 +403,7 @@ for page_num in range(1, total_pages + 1):
       {''.join(f'<li><a href="{REL}{p["slug"]}/index.html">{p["title"][:45]}{"..." if len(p["title"])>45 else ""}</a></li>' for p in posts[:6])}
     </ul></div>
   </div>
-  <div class="fb"><div class="fbi"><span>Copyright &copy; 2026 Hidden Jungle Cusco. All rights reserved.</span><span>Site design: Meyer Consulting and Management</span></div></div>
+  <div class="fb"><div class="fbi"><span>Copyright &copy; 2026 Hidden Jungle Cusco. All rights reserved.</span><span>Site design: kemmesik</span></div></div>
 </div></footer>
 
 <a href="https://api.whatsapp.com/send?phone=51923289231&text=Hello!%20I%20would%20like%20to%20learn%20more%20about%20your%20jungle%20trips" class="wa" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"><i class="fab fa-whatsapp"></i></a>
