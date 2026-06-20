@@ -11,8 +11,12 @@ img{max-width:100%;height:auto;display:block}a{color:inherit;text-decoration:non
 #N{position:fixed;top:0;left:0;width:100%;z-index:900;padding:12px 0;background:rgba(5,13,8,.85);backdrop-filter:blur(10px);border-bottom:1px solid rgba(201,168,76,.15);transition:all var(--t)}
 #N.s{background:rgba(5,13,8,.98);border-bottom-color:rgba(201,168,76,.3)}
 .ni{display:flex;align-items:center;justify-content:space-between}
-.nl img{height:50px;width:auto;filter:drop-shadow(0 0 12px rgba(255,255,255,0.6));transition:filter var(--t)}
-.nl img:hover{filter:drop-shadow(0 0 20px rgba(255,255,255,0.9))}
+.nl{position:relative;display:flex;align-items:center;justify-content:center;padding:6px 18px;border-radius:50px;background:rgba(255,255,255,0.08);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.15);box-shadow:0 4px 20px rgba(0,0,0,0.3);transition:all 0.4s ease;overflow:hidden}
+.nl::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 60%);animation:logoPulse 4s infinite alternate;pointer-events:none}
+@keyframes logoPulse{0%{transform:scale(0.8);opacity:0.4}100%{transform:scale(1.2);opacity:1}}
+.nl:hover{background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.3);box-shadow:0 6px 25px rgba(255,255,255,0.1), 0 0 15px rgba(74,161,142,0.3);transform:translateY(-2px)}
+.nl img{height:46px;width:auto;position:relative;z-index:1;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.3));transition:filter 0.4s ease}
+.nl:hover img{filter:drop-shadow(0 0 10px rgba(255,255,255,0.8))}
 .nm{display:flex;align-items:center;gap:4px}
 .nm a{padding:8px 15px;font-size:.87rem;font-weight:500;color:rgba(255,255,255,.78);border-radius:8px;transition:var(--t)}
 .nm a:hover{color:var(--a)}
