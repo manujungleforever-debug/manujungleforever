@@ -22,7 +22,7 @@
 /* ── Global Preloader (HJC) ── */
 #hjc-preloader {
   position: fixed; inset: 0;
-  background: radial-gradient(ellipse at center, #0a1a0f 0%, #030805 100%);
+  background: radial-gradient(ellipse at center, #002e24 0%, #001c16 100%);
   z-index: 999999;
   display: flex; align-items: center; justify-content: center;
   transition: opacity 0.6s ease, visibility 0.6s ease;
@@ -35,17 +35,17 @@
 .hjc-logo {
   width: 100px; height: 100px; border-radius: 50%; z-index: 10;
   animation: hjcPulse 3s ease-in-out infinite;
-  filter: drop-shadow(0 0 8px rgba(57,255,106,0.15));
+  filter: drop-shadow(0 0 8px rgba(74,161,142,0.15));
 }
 .hjc-ring {
   position: absolute; top: 50%; left: 50%;
   border-radius: 50%; background: transparent; pointer-events: none;
-  border: 1px solid rgba(57,255,106,0.1);
+  border: 1px solid rgba(74,161,142,0.1);
 }
 .hjc-ring-1 {
   width: 140px; height: 140px;
-  border-top-color: rgba(57,255,106,0.8);
-  border-bottom-color: rgba(57,255,106,0.8);
+  border-top-color: rgba(74,161,142,0.8);
+  border-bottom-color: rgba(74,161,142,0.8);
   animation: hjcSpin 8s linear infinite;
 }
 .hjc-ring-2 {
@@ -55,8 +55,8 @@
 }
 .hjc-ring-3 {
   width: 200px; height: 200px;
-  border-left-color: rgba(57,255,106,0.6);
-  border-right-color: rgba(57,255,106,0.6);
+  border-left-color: rgba(74,161,142,0.6);
+  border-right-color: rgba(74,161,142,0.6);
   animation: hjcSpin 18s linear infinite;
 }
 @keyframes hjcSpin {
@@ -64,8 +64,8 @@
   100% { transform: translate(-50%,-50%) rotate(360deg); }
 }
 @keyframes hjcPulse {
-  0%,100% { transform: scale(1);    filter: drop-shadow(0 0 5px rgba(57,255,106,0.2)); }
-  50%     { transform: scale(1.1); filter: drop-shadow(0 0 20px rgba(57,255,106,0.6)); }
+  0%,100% { transform: scale(1);    filter: drop-shadow(0 0 5px rgba(74,161,142,0.2)); }
+  50%     { transform: scale(1.1); filter: drop-shadow(0 0 20px rgba(74,161,142,0.6)); }
 }
 /* ── WhatsApp Neon Float ── */
 .wa-wrap {
@@ -76,7 +76,7 @@
 .wa-ring {
   position: absolute; top: 0; left: 0;
   width: 60px; height: 60px; border-radius: 50%;
-  border: 2px solid #39ff6a; opacity: 0;
+  border: 2px solid #4aa18e; opacity: 0;
   animation: waPulse 2.6s ease-out infinite;
   pointer-events: none;
 }
@@ -93,14 +93,14 @@
   color: #fff; font-size: 1.75rem;
   display: flex; align-items: center; justify-content: center;
   text-decoration: none;
-  box-shadow: 0 0 0 3px rgba(57,255,106,.3), 0 0 18px rgba(57,255,106,.5), 0 8px 24px rgba(0,0,0,.4);
+  box-shadow: 0 0 0 3px rgba(74,161,142,.3), 0 0 18px rgba(74,161,142,.5), 0 8px 24px rgba(0,0,0,.4);
   animation: waBeat 2.6s ease-in-out infinite;
   transition: transform .25s, box-shadow .25s;
   bottom: auto !important; right: auto !important; margin: 0 !important;
 }
 .wa:hover {
   transform: scale(1.12);
-  box-shadow: 0 0 0 4px rgba(57,255,106,.5), 0 0 30px rgba(57,255,106,.8), 0 12px 32px rgba(0,0,0,.5);
+  box-shadow: 0 0 0 4px rgba(74,161,142,.5), 0 0 30px rgba(74,161,142,.8), 0 12px 32px rgba(0,0,0,.5);
 }
 @keyframes waBeat {
   0%,100% { transform: scale(1);    }
@@ -114,7 +114,7 @@
 .hero { position: relative; width: 100%; min-height: 80vh; overflow: hidden; display: flex; align-items: center; justify-content: center; }
 .hv { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
 .hv video { width: 100%; height: 100%; object-fit: cover; object-position: center center; pointer-events: none; transform: scale(1.02); }
-.ho { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(3,8,5,0.3) 0%, rgba(3,8,5,0.85) 100%); z-index: 1; pointer-events: none; }
+.ho { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,28,22,0.3) 0%, rgba(0,28,22,0.85) 100%); z-index: 1; pointer-events: none; }
 .hb { position: relative; z-index: 2; text-align: center; }
 </style>
 
@@ -257,7 +257,7 @@
     <div class="tc tc-xl">
       <img src="wp-content/uploads/2022/10/reserved-zone.jpg" alt="Manu National Park wildlife tour from Cusco" loading="lazy" width="900" height="600">
       <div class="tov">
-        <span class="tbg ton"><i class="fas fa-circle" style="font-size:.5rem"></i> Available Now</span>
+        <span class="tbg ton" id="badge-wildlife"><i class="fas fa-circle" style="font-size:.5rem"></i> Available Now</span>
         <h2 class="tt">Jungle Wildlife Tour</h2>
         <div class="tm"><span><i class="far fa-calendar-alt"></i> 3, 4, 5, 6 or 8 Days</span><span><i class="fas fa-users"></i> 2–8 Passengers</span><span><i class="fas fa-ship"></i> Van &amp; Boat</span></div>
         <p class="tp">Manu National Park tours from Cusco where you travel by van through the cloud forest, then search for Peruvian Amazon animals by boat. See caimans, macaws, capybaras, and the elusive jaguar. Beautiful scenery, local food, incredible nature — appropriate for all travelers.</p>
@@ -268,7 +268,7 @@
       <div class="tc tc-md">
         <img src="wp-content/uploads/2022/10/Hero-wildlife-cuest-3-dyas-machuwasi.jpg" alt="Rainforest Road Trip from Cusco to Manu" loading="lazy" width="600" height="290">
         <div class="tov">
-          <span class="tbg tof"><i class="fas fa-pause-circle"></i> Temporarily Unavailable</span>
+          <span class="tbg ton" id="badge-roadtrip"><i class="fas fa-circle" style="font-size:.5rem"></i> Available Now</span>
           <h2 class="tt">Rainforest Road Trip</h2>
           <div class="tm"><span><i class="far fa-calendar-alt"></i> 4 or 5 Days</span><span><i class="fas fa-users"></i> 1–3 Passengers</span><span><i class="fas fa-truck"></i> Private 4×4</span></div>
           <a href="guided-tours/index.html#rainforest" class="tbtn">View Details <i class="fas fa-arrow-right"></i></a>
@@ -277,7 +277,7 @@
       <div class="tc tc-md">
         <img src="wp-content/uploads/2022/10/Hero-Road-trip-4-days.jpg" alt="Manu Amazon Expedition from Cusco" loading="lazy" width="600" height="290">
         <div class="tov">
-          <span class="tbg tof"><i class="fas fa-pause-circle"></i> Temporarily Unavailable</span>
+          <span class="tbg tof" id="badge-expedition"><i class="fas fa-pause-circle"></i> Temporarily Unavailable</span>
           <h2 class="tt">Manu Expedition</h2>
           <div class="tm"><span><i class="far fa-calendar-alt"></i> 5 or 6 Days</span><span><i class="fas fa-users"></i> 2–8 Passengers</span><span><i class="fas fa-hiking"></i> Van, Boat &amp; Hiking</span></div>
           <a href="guided-tours/index.html#amazon" class="tbtn">View Details <i class="fas fa-arrow-right"></i></a>
@@ -409,7 +409,7 @@
   @media (min-width: 992px) {
     .fg { grid-template-columns: 1.8fr 0.9fr 1.1fr 0.8fr 1.6fr !important; gap: 40px !important; align-items: start !important; }
   }
-  .libro-box:hover { border-color: #39ff6a !important; transform: translateY(-3px); }
+  .libro-box:hover { border-color: #4aa18e !important; transform: translateY(-3px); }
 </style>
 <div class="cx">
   <div class="fg">
@@ -446,7 +446,7 @@
       <a href="libro-de-reclamaciones/index.html" style="text-decoration:none; display:block;">
         <div class="libro-box" style="background:rgba(255,255,255,0.02); border:1px solid rgba(201,168,76,0.3); border-radius:12px; padding:16px 12px; text-align:center; transition:0.3s; box-sizing:border-box;">
           <div style="background:#fff; border-radius:8px; padding:12px; display:inline-flex; flex-direction:column; align-items:center; margin-bottom:12px; box-shadow:0 4px 12px rgba(0,0,0,0.15);">
-            <div style="color:#0a1a0f; font-weight:800; font-size:0.8rem; line-height:1.2; font-family:Arial,sans-serif; text-align:center; text-transform:uppercase; letter-spacing:0.5px;">Complaints<br>Book</div>
+            <div style="color:#002e24; font-weight:800; font-size:0.8rem; line-height:1.2; font-family:Arial,sans-serif; text-align:center; text-transform:uppercase; letter-spacing:0.5px;">Complaints<br>Book</div>
             <i class="fas fa-book-open" style="color:#c9a84c; font-size:1.5rem; margin-top:8px;"></i>
           </div>
           <p style="font-size:0.65rem; color:rgba(255,255,255,0.6); line-height:1.4; margin:0;">In accordance with the Consumer Protection Code, we have a Virtual Complaints Book available.</p>
@@ -543,6 +543,29 @@ document.getElementById('bk-form').addEventListener('submit',async function(e){
     msg.textContent='Could not send. Please email discover@hiddenjunglecusco.com or use WhatsApp.';
   }finally{btn.disabled=false;btn.innerHTML='<i class="fas fa-paper-plane"></i> Send Enquiry';}
 });
+
+// Dynamic Tour Status from JSON
+fetch('data/tours.json').then(r=>r.json()).then(data=>{
+  const tours = data.tours || [];
+  const updateBadge = (id, isActive) => {
+    const b = document.getElementById(id);
+    if(!b) return;
+    if(isActive) {
+      b.className = 'tbg ton';
+      b.innerHTML = '<i class="fas fa-circle" style="font-size:.5rem"></i> Available Now';
+    } else {
+      b.className = 'tbg tof';
+      b.innerHTML = '<i class="fas fa-pause-circle"></i> Temporarily Unavailable';
+    }
+  };
+  const isWildlifeActive = tours.some(t => t.categoria === 'wildlife' && t.estado === 'activo');
+  const isRoadTripActive = tours.some(t => t.id === 'rainforest-road-trip' && t.estado === 'activo');
+  const isExpeditionActive = tours.some(t => t.categoria === 'expedition' && t.estado === 'activo');
+
+  updateBadge('badge-wildlife', isWildlifeActive);
+  updateBadge('badge-roadtrip', isRoadTripActive);
+  updateBadge('badge-expedition', isExpeditionActive);
+}).catch(console.error);
 </script>
 
 <!-- TSPARTICLES -->
@@ -557,7 +580,7 @@ document.addEventListener("DOMContentLoaded", function() {
         fpsLimit: 60,
         particles: {
             number: { value: 35, density: { enable: true, area: 800 } },
-            color: { value: ["#c9a84c", "#39ff6a", "#ffffff"] },
+            color: { value: ["#c9a84c", "#4aa18e", "#ffffff"] },
             shape: { type: "circle" },
             opacity: { value: 0.7, random: true, animation: { enable: true, speed: 0.5, minimumValue: 0.1, sync: false } },
             size: { value: 3, random: true, animation: { enable: true, speed: 1, minimumValue: 0.5, sync: false } },

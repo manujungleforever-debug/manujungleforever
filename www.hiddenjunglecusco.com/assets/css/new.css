@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Inter:wght@300;400;500;600&display=swap');
-:root{--k:#050D08;--f:#0A1A0F;--d:#0F2918;--m:#1A3D2B;--g:#2D6A4F;--v:#52B788;--a:#C9A84C;--al:#E8C97A;--w:#fff;--c:#F4EFE6;--t:.3s cubic-bezier(.4,0,.2,1)}
+:root{--k:#001C16;--f:#002E24;--d:#004538;--m:#006353;--g:#248270;--v:#4aa18e;--a:#C9A84C;--al:#E8C97A;--w:#fff;--c:#d4ece4;--t:.3s cubic-bezier(.4,0,.2,1)}
 *,::before,::after{box-sizing:border-box;margin:0;padding:0}
 html{font-size:16px;scroll-behavior:smooth;overflow-x:hidden}
 body{font-family:'Inter',sans-serif;background:var(--k);color:var(--w);overflow-x:hidden;line-height:1.7;max-width:100vw}

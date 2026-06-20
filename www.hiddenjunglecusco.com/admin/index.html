@@ -11,9 +11,9 @@
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     :root{
-      --bg:#0b1a0f;--surface:#112017;--card:#162a1e;--card2:#1c3326;
+      --bg:#001C16;--surface:#002E24;--card:#004538;--card2:#006353;
       --border:rgba(255,255,255,.08);--gold:#c9a84c;--gold-dim:#7a6028;
-      --green:#2e7d52;--text:#e8f0ea;--muted:rgba(232,240,234,.45);
+      --green:#4aa18e;--text:#e8f0ea;--muted:rgba(232,240,234,.45);
       --danger:#e05c5c;--success:#4caf82;--r:12px;
     }
     html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);}
@@ -22,7 +22,7 @@
 
     /* ── LOGIN ─────────────────────────────────── */
     #login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;
-      background:radial-gradient(ellipse at 40% 60%,#1a3d2a 0%,#0b1a0f 65%);}
+      background:radial-gradient(ellipse at 40% 60%,#006353 0%,#001C16 65%);}
     .lcard{background:var(--card);border:1px solid var(--border);border-radius:20px;
       padding:48px 40px;width:100%;max-width:400px;box-shadow:0 32px 80px rgba(0,0,0,.5);}
     .lcard .logo{text-align:center;margin-bottom:32px;}
@@ -70,7 +70,7 @@
     .ps{font-size:.8rem;color:var(--muted);margin-bottom:20px;}
 
     .btn-primary{background:linear-gradient(135deg,var(--gold),#a07830);border:none;
-      border-radius:8px;color:#0b1a0f;font-weight:700;font-size:.88rem;
+      border-radius:8px;color:#001C16;font-weight:700;font-size:.88rem;
       padding:9px 20px;cursor:pointer;transition:opacity .2s;display:inline-flex;align-items:center;gap:6px;}
     .btn-primary:hover{opacity:.88;}
     .btn-primary:disabled{opacity:.5;cursor:not-allowed;}
@@ -1302,7 +1302,7 @@ document.addEventListener("DOMContentLoaded", function() {
         fpsLimit: 60,
         particles: {
             number: { value: 35, density: { enable: true, area: 800 } },
-            color: { value: ["#c9a84c", "#39ff6a", "#ffffff"] },
+            color: { value: ["#c9a84c", "#4aa18e", "#ffffff"] },
             shape: { type: "circle" },
             opacity: { value: 0.7, random: true, animation: { enable: true, speed: 0.5, minimumValue: 0.1, sync: false } },
             size: { value: 3, random: true, animation: { enable: true, speed: 1, minimumValue: 0.5, sync: false } },

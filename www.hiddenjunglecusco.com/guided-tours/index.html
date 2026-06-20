@@ -95,7 +95,7 @@
   letter-spacing: .06em; padding: 5px 12px; border-radius: 20px;
   backdrop-filter: blur(4px);
 }
-.badge-wildlife { background: rgba(0,0,0,.65); border: 1px solid rgba(57,255,106,.4); color: #39ff6a; }
+.badge-wildlife { background: rgba(0,0,0,.65); border: 1px solid rgba(74,161,142,.4); color: #4aa18e; }
 .badge-expedition { background: rgba(0,0,0,.65); border: 1px solid rgba(255,140,0,.4); color: #ff8c00; }
 .badge-roadtrip { background: rgba(0,0,0,.65); border: 1px solid rgba(100,160,255,.4); color: #64a0ff; }
 .badge-days { background: rgba(0,0,0,.75); border: 1px solid rgba(255,255,255,.2); color: rgba(255,255,255,.9); }
@@ -135,7 +135,7 @@
 }
 .tc-btn-primary {
   background: linear-gradient(135deg,#c9a84c,#a07830);
-  color: #0a1a0f;
+  color: #002e24;
 }
 .tc-btn-primary:hover { filter: brightness(1.15); transform: translateY(-1px); }
 .tc-btn-ghost {
@@ -162,7 +162,7 @@
   display: flex; align-items: center; justify-content: center;
   font-size: 1.4rem;
 }
-.ci-icon-w { background: rgba(57,255,106,.1); color: #39ff6a; }
+.ci-icon-w { background: rgba(74,161,142,.1); color: #4aa18e; }
 .ci-icon-e { background: rgba(255,140,0,.1); color: #ff8c00; }
 .ci-icon-r { background: rgba(100,160,255,.1); color: #64a0ff; }
 .ci-title { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1rem; color: #fff; }
@@ -178,28 +178,28 @@
 /* ── Preloader ── */
 #hjc-preloader {
   position: fixed; inset: 0;
-  background: radial-gradient(ellipse at center, #0a1a0f 0%, #030805 100%);
+  background: radial-gradient(ellipse at center, #002e24 0%, #001c16 100%);
   z-index: 999999;
   display: flex; align-items: center; justify-content: center;
   transition: opacity 0.6s ease, visibility 0.6s ease;
 }
 #hjc-preloader.hjc-fade { opacity: 0; visibility: hidden; }
 .hjc-wrap { position: relative; width: 220px; height: 220px; display: flex; align-items: center; justify-content: center; }
-.hjc-logo { width: 100px; height: 100px; border-radius: 50%; z-index: 10; animation: hjcPulse 3s ease-in-out infinite; filter: drop-shadow(0 0 8px rgba(57,255,106,0.15)); }
-.hjc-ring { position: absolute; top: 50%; left: 50%; border-radius: 50%; background: transparent; pointer-events: none; border: 1px solid rgba(57,255,106,0.1); }
-.hjc-ring-1 { width: 140px; height: 140px; border-top-color: rgba(57,255,106,0.8); border-bottom-color: rgba(57,255,106,0.8); animation: hjcSpin 8s linear infinite; }
+.hjc-logo { width: 100px; height: 100px; border-radius: 50%; z-index: 10; animation: hjcPulse 3s ease-in-out infinite; filter: drop-shadow(0 0 8px rgba(74,161,142,0.15)); }
+.hjc-ring { position: absolute; top: 50%; left: 50%; border-radius: 50%; background: transparent; pointer-events: none; border: 1px solid rgba(74,161,142,0.1); }
+.hjc-ring-1 { width: 140px; height: 140px; border-top-color: rgba(74,161,142,0.8); border-bottom-color: rgba(74,161,142,0.8); animation: hjcSpin 8s linear infinite; }
 .hjc-ring-2 { width: 170px; height: 170px; border: 1px dashed rgba(201,168,76,0.4); animation: hjcSpin 12s linear infinite reverse; }
-.hjc-ring-3 { width: 200px; height: 200px; border-left-color: rgba(57,255,106,0.6); border-right-color: rgba(57,255,106,0.6); animation: hjcSpin 18s linear infinite; }
+.hjc-ring-3 { width: 200px; height: 200px; border-left-color: rgba(74,161,142,0.6); border-right-color: rgba(74,161,142,0.6); animation: hjcSpin 18s linear infinite; }
 @keyframes hjcSpin { 0%{ transform:translate(-50%,-50%) rotate(0deg); } 100%{ transform:translate(-50%,-50%) rotate(360deg); } }
-@keyframes hjcPulse { 0%,100%{ transform:scale(1); filter:drop-shadow(0 0 5px rgba(57,255,106,0.15)); } 50%{ transform:scale(1.03); filter:drop-shadow(0 0 12px rgba(57,255,106,0.3)); } }
+@keyframes hjcPulse { 0%,100%{ transform:scale(1); filter:drop-shadow(0 0 5px rgba(74,161,142,0.15)); } 50%{ transform:scale(1.03); filter:drop-shadow(0 0 12px rgba(74,161,142,0.3)); } }
 
 /* ── WhatsApp ── */
 .wa-wrap { position:fixed; bottom:28px; right:28px; width:60px; height:60px; z-index:9998; display:flex; align-items:center; justify-content:center; }
-.wa-ring { position:absolute; top:0; left:0; width:60px; height:60px; border-radius:50%; border:2px solid #39ff6a; opacity:0; animation:waPulse 2.6s ease-out infinite; pointer-events:none; }
+.wa-ring { position:absolute; top:0; left:0; width:60px; height:60px; border-radius:50%; border:2px solid #4aa18e; opacity:0; animation:waPulse 2.6s ease-out infinite; pointer-events:none; }
 .wa-ring:nth-child(2){animation-delay:.8s}.wa-ring:nth-child(3){animation-delay:1.6s}
 @keyframes waPulse { 0%{transform:scale(1);opacity:.85} 100%{transform:scale(2.5);opacity:0} }
-.wa { position:relative; z-index:1; width:60px; height:60px; border-radius:50%; background:linear-gradient(135deg,#25d366,#128c50); color:#fff; font-size:1.75rem; display:flex; align-items:center; justify-content:center; text-decoration:none; box-shadow:0 0 0 3px rgba(57,255,106,.3),0 0 18px rgba(57,255,106,.5),0 8px 24px rgba(0,0,0,.4); animation:waBeat 2.6s ease-in-out infinite; transition:transform .25s,box-shadow .25s; bottom:auto!important; right:auto!important; margin:0!important; }
-.wa:hover { transform:scale(1.12); box-shadow:0 0 0 4px rgba(57,255,106,.5),0 0 30px rgba(57,255,106,.8),0 12px 32px rgba(0,0,0,.5); }
+.wa { position:relative; z-index:1; width:60px; height:60px; border-radius:50%; background:linear-gradient(135deg,#25d366,#128c50); color:#fff; font-size:1.75rem; display:flex; align-items:center; justify-content:center; text-decoration:none; box-shadow:0 0 0 3px rgba(74,161,142,.3),0 0 18px rgba(74,161,142,.5),0 8px 24px rgba(0,0,0,.4); animation:waBeat 2.6s ease-in-out infinite; transition:transform .25s,box-shadow .25s; bottom:auto!important; right:auto!important; margin:0!important; }
+.wa:hover { transform:scale(1.12); box-shadow:0 0 0 4px rgba(74,161,142,.5),0 0 30px rgba(74,161,142,.8),0 12px 32px rgba(0,0,0,.5); }
 @keyframes waBeat { 0%,100%{transform:scale(1)} 50%{transform:scale(1.07)} }
 
 @media(max-width:640px) {
@@ -215,7 +215,7 @@
 .hero { position: relative; width: 100%; min-height: 80vh; overflow: hidden; display: flex; align-items: center; justify-content: center; }
 .hv { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
 .hv video { width: 100%; height: 100%; object-fit: cover; object-position: center center; pointer-events: none; transform: scale(1.02); }
-.ho { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(3,8,5,0.3) 0%, rgba(3,8,5,0.85) 100%); z-index: 1; pointer-events: none; }
+.ho { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,28,22,0.3) 0%, rgba(0,28,22,0.85) 100%); z-index: 1; pointer-events: none; }
 .hb { position: relative; z-index: 2; text-align: center; }
 </style>
 
@@ -335,7 +335,7 @@
       <div class="ci-card" style="cursor:pointer" onclick="document.getElementById('btn-wildlife').click()">
         <div style="display:flex; justify-content:space-between; align-items:flex-start">
           <div class="ci-icon ci-icon-w"><i class="fas fa-binoculars"></i></div>
-          <span class="badge badge-wildlife" style="backdrop-filter:none; background:rgba(57,255,106,.12)">7 Tours</span>
+          <span class="badge badge-wildlife" style="backdrop-filter:none; background:rgba(74,161,142,.12)">7 Tours</span>
         </div>
         <div class="ci-title">Wildlife Quest</div>
         <div class="ci-sub">Travel by van through the cloud forest then by boat to spot caimans, macaws, capybaras & jaguar in their natural habitat.</div>
@@ -372,7 +372,7 @@
           </div>
         </div>
         <div class="tc-body">
-          <div class="tc-cat-label" style="color:#39ff6a">Wildlife Quest</div>
+          <div class="tc-cat-label" style="color:#4aa18e">Wildlife Quest</div>
           <div class="tc-title">3-Day Wildlife Quest — Machu Wasi</div>
           <div class="tc-specs">
             <span class="tc-spec"><i class="fas fa-users"></i> 2–8 people</span>
@@ -396,7 +396,7 @@
           </div>
         </div>
         <div class="tc-body">
-          <div class="tc-cat-label" style="color:#39ff6a">Wildlife Quest</div>
+          <div class="tc-cat-label" style="color:#4aa18e">Wildlife Quest</div>
           <div class="tc-title">4-Day Wildlife Quest — Machu Wasi</div>
           <div class="tc-specs">
             <span class="tc-spec"><i class="fas fa-users"></i> 2–8 people</span>
@@ -420,7 +420,7 @@
           </div>
         </div>
         <div class="tc-body">
-          <div class="tc-cat-label" style="color:#39ff6a">Wildlife Quest</div>
+          <div class="tc-cat-label" style="color:#4aa18e">Wildlife Quest</div>
           <div class="tc-title">4-Day Wildlife Quest — Nuevo Eden</div>
           <div class="tc-specs">
             <span class="tc-spec"><i class="fas fa-users"></i> 2–8 people</span>
@@ -444,7 +444,7 @@
           </div>
         </div>
         <div class="tc-body">
-          <div class="tc-cat-label" style="color:#39ff6a">Wildlife Quest</div>
+          <div class="tc-cat-label" style="color:#4aa18e">Wildlife Quest</div>
           <div class="tc-title">5-Day Wildlife Quest — Nuevo Eden</div>
           <div class="tc-specs">
             <span class="tc-spec"><i class="fas fa-users"></i> 2–8 people</span>
@@ -468,7 +468,7 @@
           </div>
         </div>
         <div class="tc-body">
-          <div class="tc-cat-label" style="color:#39ff6a">Wildlife Quest</div>
+          <div class="tc-cat-label" style="color:#4aa18e">Wildlife Quest</div>
           <div class="tc-title">6-Day Wildlife Quest — Blanquillo</div>
           <div class="tc-specs">
             <span class="tc-spec"><i class="fas fa-users"></i> 2–8 people</span>
@@ -492,7 +492,7 @@
           </div>
         </div>
         <div class="tc-body">
-          <div class="tc-cat-label" style="color:#39ff6a">Wildlife Quest</div>
+          <div class="tc-cat-label" style="color:#4aa18e">Wildlife Quest</div>
           <div class="tc-title">Manu Reserved Zone — 6 Days</div>
           <div class="tc-specs">
             <span class="tc-spec"><i class="fas fa-users"></i> 2–8 people</span>
@@ -516,7 +516,7 @@
           </div>
         </div>
         <div class="tc-body">
-          <div class="tc-cat-label" style="color:#39ff6a">Wildlife Quest</div>
+          <div class="tc-cat-label" style="color:#4aa18e">Wildlife Quest</div>
           <div class="tc-title">Wildlife Photography — 8 Days</div>
           <div class="tc-specs">
             <span class="tc-spec"><i class="fas fa-users"></i> 2–6 people</span>
@@ -681,7 +681,7 @@
   @media (min-width: 992px) {
     .fg { grid-template-columns: 1.8fr 0.9fr 1.1fr 0.8fr 1.6fr !important; gap: 40px !important; align-items: start !important; }
   }
-  .libro-box:hover { border-color: #39ff6a !important; transform: translateY(-3px); }
+  .libro-box:hover { border-color: #4aa18e !important; transform: translateY(-3px); }
 </style>
 <div class="cx">
   <div class="fg">
@@ -716,7 +716,7 @@
       <a href="../libro-de-reclamaciones/index.html" style="text-decoration:none;display:block">
         <div class="libro-box" style="background:rgba(255,255,255,0.02);border:1px solid rgba(201,168,76,0.3);border-radius:12px;padding:16px 12px;text-align:center;transition:0.3s;box-sizing:border-box">
           <div style="background:#fff;border-radius:8px;padding:12px;display:inline-flex;flex-direction:column;align-items:center;margin-bottom:12px;box-shadow:0 4px 12px rgba(0,0,0,0.15)">
-            <div style="color:#0a1a0f;font-weight:800;font-size:0.8rem;line-height:1.2;font-family:Arial,sans-serif;text-align:center;text-transform:uppercase;letter-spacing:0.5px">Complaints<br>Book</div>
+            <div style="color:#002e24;font-weight:800;font-size:0.8rem;line-height:1.2;font-family:Arial,sans-serif;text-align:center;text-transform:uppercase;letter-spacing:0.5px">Complaints<br>Book</div>
             <i class="fas fa-book-open" style="color:#c9a84c;font-size:1.5rem;margin-top:8px"></i>
           </div>
           <p style="font-size:0.65rem;color:rgba(255,255,255,0.6);line-height:1.4;margin:0">In accordance with the Consumer Protection Code, we have a Virtual Complaints Book available.</p>
@@ -887,7 +887,7 @@ document.addEventListener("DOMContentLoaded", function() {
         fpsLimit: 60,
         particles: {
             number: { value: 35, density: { enable: true, area: 800 } },
-            color: { value: ["#c9a84c", "#39ff6a", "#ffffff"] },
+            color: { value: ["#c9a84c", "#4aa18e", "#ffffff"] },
             shape: { type: "circle" },
             opacity: { value: 0.7, random: true, animation: { enable: true, speed: 0.5, minimumValue: 0.1, sync: false } },
             size: { value: 3, random: true, animation: { enable: true, speed: 1, minimumValue: 0.5, sync: false } },
