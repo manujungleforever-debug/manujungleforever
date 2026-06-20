@@ -13,14 +13,20 @@
       "capacidad_min": 2,
       "capacidad_max": 8,
       "dificultad": "Fácil",
-      "transporte": ["Van privada", "Bote"],
+      "transporte": [
+        "Van privada",
+        "Bote"
+      ],
       "temporada": "Todo el año",
       "descripcion_corta": "Un tour de vida silvestre de 3 días al Parque Nacional Manu, ideal para quienes tienen poco tiempo pero quieren experimentar la Amazonía peruana.",
       "descripcion_larga": "Este tour de 3 días es perfecto para quienes quieren experimentar la selva amazónica sin alejarse demasiado. Viajamos en van por el bosque nuboso, descendemos hasta la selva baja y exploramos los ríos en bote buscando caimanes, capybaras y aves exóticas en Machu Wasi.",
       "imagen_hero": "wp-content/uploads/2022/10/Hero-wildlife-cuest-3-dyas-machuwasi.jpg",
       "imagen_alt": "3-Day Wildlife Quest at Machu Wasi – Manu National Park",
       "galeria": [
-        { "url": "wp-content/uploads/2022/10/Wildlife-quest-3days-machuwasi.jpg", "alt": "Wildlife at Machu Wasi" }
+        {
+          "url": "wp-content/uploads/2022/10/Wildlife-quest-3days-machuwasi.jpg",
+          "alt": "Wildlife at Machu Wasi"
+        }
       ],
       "itinerario": [
         {
@@ -72,7 +78,10 @@
       "capacidad_min": 2,
       "capacidad_max": 8,
       "dificultad": "Fácil",
-      "transporte": ["Van privada", "Bote"],
+      "transporte": [
+        "Van privada",
+        "Bote"
+      ],
       "temporada": "Todo el año",
       "descripcion_corta": "Cuatro días para explorar la selva amazónica en profundidad desde Machu Wasi. Ver caímanes, capybaras, monos y aves de la Amazonía.",
       "descripcion_larga": "El tour de 4 días a Machu Wasi ofrece más tiempo en la selva para aumentar las probabilidades de avistar vida silvestre. Con tres noches en el lodge, tenemos tiempo para caminatas de día y de noche, safaris en bote y actividades de kayak.",
@@ -80,10 +89,26 @@
       "imagen_alt": "4-Day Wildlife Quest at Machu Wasi – Manu National Park",
       "galeria": [],
       "itinerario": [
-        { "dia": 1, "titulo": "Cusco → Cloud Forest → Machu Wasi Lodge", "descripcion": "Departure from Cusco at 6:00 AM. Drive through the cloud forest with stops at scenic viewpoints. Arrive at the lodge in the afternoon for welcome dinner and night walk." },
-        { "dia": 2, "titulo": "River Safari & Jungle Walks", "descripcion": "Full day of wildlife activities: morning boat safari, afternoon jungle trails, evening optional piranha fishing." },
-        { "dia": 3, "titulo": "Deep Jungle Exploration", "descripcion": "Longer hike into the forest to discover hidden oxbow lakes. Kayaking on the river. Sunset watching from the observation platform." },
-        { "dia": 4, "titulo": "Morning Birds → Return to Cusco", "descripcion": "Final birdwatching session at dawn. Breakfast and return journey to Cusco arriving late afternoon." }
+        {
+          "dia": 1,
+          "titulo": "Cusco → Cloud Forest → Machu Wasi Lodge",
+          "descripcion": "Departure from Cusco at 6:00 AM. Drive through the cloud forest with stops at scenic viewpoints. Arrive at the lodge in the afternoon for welcome dinner and night walk."
+        },
+        {
+          "dia": 2,
+          "titulo": "River Safari & Jungle Walks",
+          "descripcion": "Full day of wildlife activities: morning boat safari, afternoon jungle trails, evening optional piranha fishing."
+        },
+        {
+          "dia": 3,
+          "titulo": "Deep Jungle Exploration",
+          "descripcion": "Longer hike into the forest to discover hidden oxbow lakes. Kayaking on the river. Sunset watching from the observation platform."
+        },
+        {
+          "dia": 4,
+          "titulo": "Morning Birds → Return to Cusco",
+          "descripcion": "Final birdwatching session at dawn. Breakfast and return journey to Cusco arriving late afternoon."
+        }
       ],
       "incluye": [
         "Transporte privado ida y vuelta desde Cusco",
@@ -96,7 +121,12 @@
         "Kayak",
         "Caminatas guiadas"
       ],
-      "no_incluye": ["Vuelos internacionales", "Seguro de viaje", "Propinas", "Bebidas alcohólicas"],
+      "no_incluye": [
+        "Vuelos internacionales",
+        "Seguro de viaje",
+        "Propinas",
+        "Bebidas alcohólicas"
+      ],
       "url_reserva": "contact/index.html",
       "destacado": true
     },
@@ -113,7 +143,10 @@
       "capacidad_min": 2,
       "capacidad_max": 8,
       "dificultad": "Fácil",
-      "transporte": ["Van privada", "Bote"],
+      "transporte": [
+        "Van privada",
+        "Bote"
+      ],
       "temporada": "Todo el año",
       "descripcion_corta": "Tour de vida silvestre de 4 días desde el pueblo de Nuevo Eden, hogar de nuestra familia fundadora. Una experiencia profundamente local y auténtica.",
       "descripcion_larga": "Nuevo Eden es el pueblo donde creció Moisés, co-fundador de Hidden Jungle Cusco. Este tour ofrece la experiencia más auténtica con acceso a nuestros propios senderos privados y lodge familiar.",
@@ -121,13 +154,43 @@
       "imagen_alt": "Wildlife Quest at Nuevo Eden – Manu National Park",
       "galeria": [],
       "itinerario": [
-        { "dia": 1, "titulo": "Cusco → Nuevo Eden Lodge", "descripcion": "Early morning departure from Cusco. Scenic drive through the Andes and cloud forest. Arrive at Nuevo Eden and begin with an evening boat trip." },
-        { "dia": 2, "titulo": "Wildlife Safari Day", "descripcion": "Full day wildlife activities: morning boat safari on the Madre de Dios river, afternoon jungle walks, night walk." },
-        { "dia": 3, "titulo": "Village Life & Nature", "descripcion": "Visit the community of Nuevo Eden, learn about local traditions, afternoon kayak session, evening wildlife spotting." },
-        { "dia": 4, "titulo": "Dawn Birds → Cusco", "descripcion": "Sunrise birdwatching, breakfast, return drive to Cusco." }
+        {
+          "dia": 1,
+          "titulo": "Cusco → Nuevo Eden Lodge",
+          "descripcion": "Early morning departure from Cusco. Scenic drive through the Andes and cloud forest. Arrive at Nuevo Eden and begin with an evening boat trip."
+        },
+        {
+          "dia": 2,
+          "titulo": "Wildlife Safari Day",
+          "descripcion": "Full day wildlife activities: morning boat safari on the Madre de Dios river, afternoon jungle walks, night walk."
+        },
+        {
+          "dia": 3,
+          "titulo": "Village Life & Nature",
+          "descripcion": "Visit the community of Nuevo Eden, learn about local traditions, afternoon kayak session, evening wildlife spotting."
+        },
+        {
+          "dia": 4,
+          "titulo": "Dawn Birds → Cusco",
+          "descripcion": "Sunrise birdwatching, breakfast, return drive to Cusco."
+        }
       ],
-      "incluye": ["Transporte privado", "3 noches en lodge familiar", "Todas las comidas", "Agua potable", "Botas de goma", "Guía local bilingüe", "Safari en bote", "Kayak"],
-      "no_incluye": ["Vuelos", "Seguro de viaje", "Propinas", "Alcohol"],
+      "incluye": [
+        "Transporte privado",
+        "3 noches en lodge familiar",
+        "Todas las comidas",
+        "Agua potable",
+        "Botas de goma",
+        "Guía local bilingüe",
+        "Safari en bote",
+        "Kayak"
+      ],
+      "no_incluye": [
+        "Vuelos",
+        "Seguro de viaje",
+        "Propinas",
+        "Alcohol"
+      ],
       "url_reserva": "contact/index.html",
       "destacado": false
     },
@@ -144,7 +207,10 @@
       "capacidad_min": 2,
       "capacidad_max": 8,
       "dificultad": "Moderado",
-      "transporte": ["Van privada", "Bote"],
+      "transporte": [
+        "Van privada",
+        "Bote"
+      ],
       "temporada": "Todo el año",
       "descripcion_corta": "Cinco días de inmersión total en la selva amazónica desde Nuevo Eden con mayores probabilidades de avistar fauna exótica.",
       "descripcion_larga": "El tour de 5 días a Nuevo Eden es nuestra opción más popular para quienes quieren máxima exposición a la vida silvestre con comodidad. Con cuatro noches, exploramos la selva, los ríos y el bosque nuboso en toda su diversidad.",
@@ -152,14 +218,49 @@
       "imagen_alt": "5-Day Wildlife Quest at Nuevo Eden",
       "galeria": [],
       "itinerario": [
-        { "dia": 1, "titulo": "Cusco → Nuevo Eden", "descripcion": "Departure from Cusco, cloud forest drive, evening arrival and welcome dinner." },
-        { "dia": 2, "titulo": "River Safari & Jungle Walks", "descripcion": "Full day of wildlife activities on the river and trails." },
-        { "dia": 3, "titulo": "Oxbow Lake & Deep Forest", "descripcion": "Boat trip to a hidden oxbow lake. Afternoon hiking in primary rainforest." },
-        { "dia": 4, "titulo": "Fishing, Kayak & Night Walk", "descripcion": "Fishing for piranhas, kayak session, traditional piranha fishing dinner, night wildlife walk." },
-        { "dia": 5, "titulo": "Dawn Walk → Return to Cusco", "descripcion": "Early morning bird walk, breakfast, return to Cusco." }
+        {
+          "dia": 1,
+          "titulo": "Cusco → Nuevo Eden",
+          "descripcion": "Departure from Cusco, cloud forest drive, evening arrival and welcome dinner."
+        },
+        {
+          "dia": 2,
+          "titulo": "River Safari & Jungle Walks",
+          "descripcion": "Full day of wildlife activities on the river and trails."
+        },
+        {
+          "dia": 3,
+          "titulo": "Oxbow Lake & Deep Forest",
+          "descripcion": "Boat trip to a hidden oxbow lake. Afternoon hiking in primary rainforest."
+        },
+        {
+          "dia": 4,
+          "titulo": "Fishing, Kayak & Night Walk",
+          "descripcion": "Fishing for piranhas, kayak session, traditional piranha fishing dinner, night wildlife walk."
+        },
+        {
+          "dia": 5,
+          "titulo": "Dawn Walk → Return to Cusco",
+          "descripcion": "Early morning bird walk, breakfast, return to Cusco."
+        }
       ],
-      "incluye": ["Transporte privado", "4 noches en lodge", "Todas las comidas", "Agua", "Botas de goma", "Guía bilingüe", "Safaris en bote", "Kayak", "Pesca"],
-      "no_incluye": ["Vuelos", "Seguro", "Propinas", "Alcohol"],
+      "incluye": [
+        "Transporte privado",
+        "4 noches en lodge",
+        "Todas las comidas",
+        "Agua",
+        "Botas de goma",
+        "Guía bilingüe",
+        "Safaris en bote",
+        "Kayak",
+        "Pesca"
+      ],
+      "no_incluye": [
+        "Vuelos",
+        "Seguro",
+        "Propinas",
+        "Alcohol"
+      ],
       "url_reserva": "contact/index.html",
       "destacado": true
     },
@@ -176,7 +277,10 @@
       "capacidad_min": 2,
       "capacidad_max": 8,
       "dificultad": "Moderado",
-      "transporte": ["Van privada", "Bote"],
+      "transporte": [
+        "Van privada",
+        "Bote"
+      ],
       "temporada": "Todo el año",
       "descripcion_corta": "El tour de 6 días a Blanquillo incluye la visita al famoso comedero de arcilla de guacamayos — uno de los espectáculos de vida silvestre más impresionantes del Perú.",
       "descripcion_larga": "Blanquillo es famoso por su colpa de guacamayos, donde cientos de guacamayos de colores llegan cada mañana al amanecer. Este tour de 6 días incluye esta experiencia única más 5 noches de exploración intensiva de la selva amazónica.",
@@ -184,15 +288,55 @@
       "imagen_alt": "6-Day Wildlife Quest – Blanquillo Macaw Clay Lick",
       "galeria": [],
       "itinerario": [
-        { "dia": 1, "titulo": "Cusco → Cloud Forest → Nuevo Eden", "descripcion": "Early departure, scenic cloud forest drive, afternoon arrival." },
-        { "dia": 2, "titulo": "River Wildlife Safari", "descripcion": "Full day boat safaris searching for caimans, giant otters and river wildlife." },
-        { "dia": 3, "titulo": "Blanquillo Macaw Clay Lick – Dawn", "descripcion": "Pre-dawn boat journey to the famous Blanquillo clay lick. Watch hundreds of colorful macaws gather at sunrise." },
-        { "dia": 4, "titulo": "Deep Jungle Expedition", "descripcion": "Trek into primary rainforest. Night walk to spot nocturnal wildlife." },
-        { "dia": 5, "titulo": "Oxbow Lake & Fishing", "descripcion": "Visit a remote oxbow lake, piranha fishing, community visit in Nuevo Eden." },
-        { "dia": 6, "titulo": "Sunrise Birds → Return to Cusco", "descripcion": "Final morning birdwatching, breakfast, return to Cusco." }
+        {
+          "dia": 1,
+          "titulo": "Cusco → Cloud Forest → Nuevo Eden",
+          "descripcion": "Early departure, scenic cloud forest drive, afternoon arrival."
+        },
+        {
+          "dia": 2,
+          "titulo": "River Wildlife Safari",
+          "descripcion": "Full day boat safaris searching for caimans, giant otters and river wildlife."
+        },
+        {
+          "dia": 3,
+          "titulo": "Blanquillo Macaw Clay Lick – Dawn",
+          "descripcion": "Pre-dawn boat journey to the famous Blanquillo clay lick. Watch hundreds of colorful macaws gather at sunrise."
+        },
+        {
+          "dia": 4,
+          "titulo": "Deep Jungle Expedition",
+          "descripcion": "Trek into primary rainforest. Night walk to spot nocturnal wildlife."
+        },
+        {
+          "dia": 5,
+          "titulo": "Oxbow Lake & Fishing",
+          "descripcion": "Visit a remote oxbow lake, piranha fishing, community visit in Nuevo Eden."
+        },
+        {
+          "dia": 6,
+          "titulo": "Sunrise Birds → Return to Cusco",
+          "descripcion": "Final morning birdwatching, breakfast, return to Cusco."
+        }
       ],
-      "incluye": ["Transporte privado", "5 noches en lodge", "Todas las comidas", "Agua potable", "Botas de goma", "Guía bilingüe experto", "Safaris en bote", "Visita colpa de guacamayos", "Kayak"],
-      "no_incluye": ["Vuelos", "Seguro de viaje", "Propinas", "Alcohol", "Gastos personales"],
+      "incluye": [
+        "Transporte privado",
+        "5 noches en lodge",
+        "Todas las comidas",
+        "Agua potable",
+        "Botas de goma",
+        "Guía bilingüe experto",
+        "Safaris en bote",
+        "Visita colpa de guacamayos",
+        "Kayak"
+      ],
+      "no_incluye": [
+        "Vuelos",
+        "Seguro de viaje",
+        "Propinas",
+        "Alcohol",
+        "Gastos personales"
+      ],
       "url_reserva": "contact/index.html",
       "destacado": true
     },
@@ -209,7 +353,10 @@
       "capacidad_min": 2,
       "capacidad_max": 8,
       "dificultad": "Moderado",
-      "transporte": ["Van privada", "Bote"],
+      "transporte": [
+        "Van privada",
+        "Bote"
+      ],
       "temporada": "Abril a Noviembre",
       "descripcion_corta": "El tour más exclusivo de Hidden Jungle Cusco: acceso a la Zona Reservada del Manu donde la vida silvestre es más abundante y el hábitat está pristino.",
       "descripcion_larga": "La Zona Reservada del Parque Nacional Manu es una de las áreas más biodiversas del planeta. Este tour de 6 días penetra hasta el corazón de la reserva con permisos especiales para brindar el máximo avistamiento de fauna.",
@@ -217,15 +364,52 @@
       "imagen_alt": "Manu National Park Reserved Zone Tour",
       "galeria": [],
       "itinerario": [
-        { "dia": 1, "titulo": "Cusco → Cloud Forest", "descripcion": "Early departure, overnight in cloud forest lodge." },
-        { "dia": 2, "titulo": "Cloud Forest → Manu Zone", "descripcion": "Continue journey into the Manu buffer zone. First wildlife sightings." },
-        { "dia": 3, "titulo": "Enter the Reserved Zone", "descripcion": "Enter the restricted reserved zone. Exceptional wildlife viewing on the river." },
-        { "dia": 4, "titulo": "Deep Manu Exploration", "descripcion": "Full day in the reserved zone: trails, river safaris, macaw lick." },
-        { "dia": 5, "titulo": "Return Journey Begins", "descripcion": "Start return, overnight in buffer zone." },
-        { "dia": 6, "titulo": "Return to Cusco", "descripcion": "Complete return to Cusco." }
+        {
+          "dia": 1,
+          "titulo": "Cusco → Cloud Forest",
+          "descripcion": "Early departure, overnight in cloud forest lodge."
+        },
+        {
+          "dia": 2,
+          "titulo": "Cloud Forest → Manu Zone",
+          "descripcion": "Continue journey into the Manu buffer zone. First wildlife sightings."
+        },
+        {
+          "dia": 3,
+          "titulo": "Enter the Reserved Zone",
+          "descripcion": "Enter the restricted reserved zone. Exceptional wildlife viewing on the river."
+        },
+        {
+          "dia": 4,
+          "titulo": "Deep Manu Exploration",
+          "descripcion": "Full day in the reserved zone: trails, river safaris, macaw lick."
+        },
+        {
+          "dia": 5,
+          "titulo": "Return Journey Begins",
+          "descripcion": "Start return, overnight in buffer zone."
+        },
+        {
+          "dia": 6,
+          "titulo": "Return to Cusco",
+          "descripcion": "Complete return to Cusco."
+        }
       ],
-      "incluye": ["Transporte privado", "5 noches en lodges", "Todas las comidas", "Permisos de la zona reservada", "Guía experto certificado", "Botas de goma", "Agua potable"],
-      "no_incluye": ["Vuelos", "Seguro de viaje", "Propinas", "Alcohol"],
+      "incluye": [
+        "Transporte privado",
+        "5 noches en lodges",
+        "Todas las comidas",
+        "Permisos de la zona reservada",
+        "Guía experto certificado",
+        "Botas de goma",
+        "Agua potable"
+      ],
+      "no_incluye": [
+        "Vuelos",
+        "Seguro de viaje",
+        "Propinas",
+        "Alcohol"
+      ],
       "url_reserva": "contact/index.html",
       "destacado": false
     },
@@ -242,7 +426,10 @@
       "capacidad_min": 2,
       "capacidad_max": 6,
       "dificultad": "Moderado",
-      "transporte": ["Van privada", "Bote"],
+      "transporte": [
+        "Van privada",
+        "Bote"
+      ],
       "temporada": "Todo el año",
       "descripcion_corta": "Diseñado para fotógrafos de vida silvestre: 8 días en los mejores puntos fotográficos de la Amazonía peruana con guías especializados.",
       "descripcion_larga": "Este tour de 8 días está diseñado específicamente para fotógrafos de naturaleza. Visitamos los mejores spots de fotografía de vida silvestre en el Manu: la colpa de guacamayos de Blanquillo, latrinas de mamíferos, lagos de cochas y mucho más.",
@@ -250,17 +437,64 @@
       "imagen_alt": "Wildlife Photography Tour – Manu National Park",
       "galeria": [],
       "itinerario": [
-        { "dia": 1, "titulo": "Cusco → Cloud Forest", "descripcion": "Departure and first stop for cloud forest bird photography at dawn." },
-        { "dia": 2, "titulo": "Cloud Forest Photography", "descripcion": "Full day shooting cloud forest wildlife: cock-of-the-rock, hummingbirds, orchids." },
-        { "dia": 3, "titulo": "Descent to Lowland Rainforest", "descripcion": "Journey to the lowlands. River photography afternoon." },
-        { "dia": 4, "titulo": "Blanquillo Macaw Lick", "descripcion": "Dawn at the famous macaw clay lick. Hundreds of macaws." },
-        { "dia": 5, "titulo": "Cocha Wildlife Photography", "descripcion": "Kayak to a remote oxbow lake to photograph giant otters and wading birds." },
-        { "dia": 6, "titulo": "Night Photography & Mammals", "descripcion": "Specialist night photography session for nocturnal mammals and insects." },
-        { "dia": 7, "titulo": "River Banks & Caiman Photography", "descripcion": "Early morning boat safari for caiman photography. Afternoon river birds." },
-        { "dia": 8, "titulo": "Return to Cusco", "descripcion": "Final morning shoot, return to Cusco." }
+        {
+          "dia": 1,
+          "titulo": "Cusco → Cloud Forest",
+          "descripcion": "Departure and first stop for cloud forest bird photography at dawn."
+        },
+        {
+          "dia": 2,
+          "titulo": "Cloud Forest Photography",
+          "descripcion": "Full day shooting cloud forest wildlife: cock-of-the-rock, hummingbirds, orchids."
+        },
+        {
+          "dia": 3,
+          "titulo": "Descent to Lowland Rainforest",
+          "descripcion": "Journey to the lowlands. River photography afternoon."
+        },
+        {
+          "dia": 4,
+          "titulo": "Blanquillo Macaw Lick",
+          "descripcion": "Dawn at the famous macaw clay lick. Hundreds of macaws."
+        },
+        {
+          "dia": 5,
+          "titulo": "Cocha Wildlife Photography",
+          "descripcion": "Kayak to a remote oxbow lake to photograph giant otters and wading birds."
+        },
+        {
+          "dia": 6,
+          "titulo": "Night Photography & Mammals",
+          "descripcion": "Specialist night photography session for nocturnal mammals and insects."
+        },
+        {
+          "dia": 7,
+          "titulo": "River Banks & Caiman Photography",
+          "descripcion": "Early morning boat safari for caiman photography. Afternoon river birds."
+        },
+        {
+          "dia": 8,
+          "titulo": "Return to Cusco",
+          "descripcion": "Final morning shoot, return to Cusco."
+        }
       ],
-      "incluye": ["Transporte privado", "7 noches en lodges", "Todas las comidas", "Agua potable", "Botas de goma", "Guía fotográfico especializado", "Safaris en bote", "Kayak", "Equipo de iluminación nocturna"],
-      "no_incluye": ["Equipo fotográfico", "Vuelos", "Seguro", "Propinas"],
+      "incluye": [
+        "Transporte privado",
+        "7 noches en lodges",
+        "Todas las comidas",
+        "Agua potable",
+        "Botas de goma",
+        "Guía fotográfico especializado",
+        "Safaris en bote",
+        "Kayak",
+        "Equipo de iluminación nocturna"
+      ],
+      "no_incluye": [
+        "Equipo fotográfico",
+        "Vuelos",
+        "Seguro",
+        "Propinas"
+      ],
       "url_reserva": "contact/index.html",
       "destacado": false
     },
@@ -269,7 +503,7 @@
       "slug": "rainforest-road-trip-from-cusco",
       "nombre": "Rainforest Road Trip",
       "categoria": "roadtrip",
-      "estado": "pausado",
+      "estado": "activo",
       "duracion_dias": 4,
       "duracion_noches": 3,
       "precio_desde": 380,
@@ -277,7 +511,9 @@
       "capacidad_min": 1,
       "capacidad_max": 3,
       "dificultad": "Fácil",
-      "transporte": ["4x4 privado"],
+      "transporte": [
+        "4x4 privado"
+      ],
       "temporada": "Abril a Noviembre (no disponible diciembre-marzo)",
       "descripcion_corta": "El tour más auténtico de la Amazonía peruana: un viaje en 4x4 por las aldeas y paisajes del camino de Cusco a Manu. Presupuesto amigable.",
       "descripcion_larga": "El Rainforest Road Trip es nuestra opción más económica y auténtica. Viajamos en 4x4 privado por el sinuoso camino de Cusco a Manu, parando en aldeas locales, probando comida tradicional y viendo fauna en el bosque nuboso.",
@@ -285,13 +521,40 @@
       "imagen_alt": "Rainforest Road Trip from Cusco to Manu",
       "galeria": [],
       "itinerario": [
-        { "dia": 1, "titulo": "Cusco → Cloud Forest Villages", "descripcion": "4x4 departure, visit local villages in the cloud forest." },
-        { "dia": 2, "titulo": "Deeper into the Jungle", "descripcion": "Continue towards the rainforest. Swimming in natural pools. Wildlife spotting." },
-        { "dia": 3, "titulo": "Jungle Exploration", "descripcion": "Walks in the lowland forest. Local food experience." },
-        { "dia": 4, "titulo": "Return to Cusco", "descripcion": "Return drive with stops along the way." }
+        {
+          "dia": 1,
+          "titulo": "Cusco → Cloud Forest Villages",
+          "descripcion": "4x4 departure, visit local villages in the cloud forest."
+        },
+        {
+          "dia": 2,
+          "titulo": "Deeper into the Jungle",
+          "descripcion": "Continue towards the rainforest. Swimming in natural pools. Wildlife spotting."
+        },
+        {
+          "dia": 3,
+          "titulo": "Jungle Exploration",
+          "descripcion": "Walks in the lowland forest. Local food experience."
+        },
+        {
+          "dia": 4,
+          "titulo": "Return to Cusco",
+          "descripcion": "Return drive with stops along the way."
+        }
       ],
-      "incluye": ["4x4 privado", "3 noches de alojamiento", "Comidas locales", "Agua potable", "Guía local"],
-      "no_incluye": ["Vuelos", "Seguro", "Propinas", "Alcohol"],
+      "incluye": [
+        "4x4 privado",
+        "3 noches de alojamiento",
+        "Comidas locales",
+        "Agua potable",
+        "Guía local"
+      ],
+      "no_incluye": [
+        "Vuelos",
+        "Seguro",
+        "Propinas",
+        "Alcohol"
+      ],
       "url_reserva": "contact/index.html",
       "destacado": false
     },
@@ -308,7 +571,11 @@
       "capacidad_min": 2,
       "capacidad_max": 8,
       "dificultad": "Difícil",
-      "transporte": ["Van privada", "Bote", "Senderismo"],
+      "transporte": [
+        "Van privada",
+        "Bote",
+        "Senderismo"
+      ],
       "temporada": "Mayo a Octubre",
       "descripcion_corta": "Para aventureros serios: 5 días de expedición profunda en la selva, acampando, pescando, aprendiendo supervivencia y alejándose de la civilización.",
       "descripcion_larga": "La Expedición Amazónica de 5 días es para quienes quieren realmente sumergirse en la selva. Dormimos en campamentos, pescamos piranhas, aprendemos técnicas de supervivencia y exploramos áreas remotas que los tours convencionales no alcanzan.",
@@ -316,14 +583,47 @@
       "imagen_alt": "5-Day Amazon Expedition from Cusco",
       "galeria": [],
       "itinerario": [
-        { "dia": 1, "titulo": "Cusco → Jungle Base Camp", "descripcion": "Travel to the jungle and set up base camp." },
-        { "dia": 2, "titulo": "River Expedition", "descripcion": "Full day boat expedition deep into the Amazon. Fishing and wildlife." },
-        { "dia": 3, "titulo": "Survival Skills", "descripcion": "Learn to build shelters, find food, navigate without technology." },
-        { "dia": 4, "titulo": "Deep Forest Trek", "descripcion": "Long day hike in rubber boots into primary rainforest. Night camping." },
-        { "dia": 5, "titulo": "Return to Cusco", "descripcion": "Pack up camp and return to Cusco." }
+        {
+          "dia": 1,
+          "titulo": "Cusco → Jungle Base Camp",
+          "descripcion": "Travel to the jungle and set up base camp."
+        },
+        {
+          "dia": 2,
+          "titulo": "River Expedition",
+          "descripcion": "Full day boat expedition deep into the Amazon. Fishing and wildlife."
+        },
+        {
+          "dia": 3,
+          "titulo": "Survival Skills",
+          "descripcion": "Learn to build shelters, find food, navigate without technology."
+        },
+        {
+          "dia": 4,
+          "titulo": "Deep Forest Trek",
+          "descripcion": "Long day hike in rubber boots into primary rainforest. Night camping."
+        },
+        {
+          "dia": 5,
+          "titulo": "Return to Cusco",
+          "descripcion": "Pack up camp and return to Cusco."
+        }
       ],
-      "incluye": ["Van y bote privados", "4 noches (lodge + camping)", "Todas las comidas", "Botas de goma", "Equipo de camping", "Guía de supervivencia", "Agua potable"],
-      "no_incluye": ["Vuelos", "Seguro de viaje", "Propinas", "Equipo personal"],
+      "incluye": [
+        "Van y bote privados",
+        "4 noches (lodge + camping)",
+        "Todas las comidas",
+        "Botas de goma",
+        "Equipo de camping",
+        "Guía de supervivencia",
+        "Agua potable"
+      ],
+      "no_incluye": [
+        "Vuelos",
+        "Seguro de viaje",
+        "Propinas",
+        "Equipo personal"
+      ],
       "url_reserva": "contact/index.html",
       "destacado": false
     },
@@ -340,7 +640,11 @@
       "capacidad_min": 2,
       "capacidad_max": 8,
       "dificultad": "Difícil",
-      "transporte": ["Van privada", "Bote", "Senderismo"],
+      "transporte": [
+        "Van privada",
+        "Bote",
+        "Senderismo"
+      ],
       "temporada": "Mayo a Octubre",
       "descripcion_corta": "La expedición más completa: 6 días de aventura profunda en la selva amazónica para viajeros en busca de una experiencia realmente salvaje.",
       "descripcion_larga": "La Expedición Amazónica de 6 días agrega un día completo de exploración comparado con la versión de 5 días, permitiendo llegar a áreas aún más remotas del Parque Nacional Manu.",
@@ -348,15 +652,51 @@
       "imagen_alt": "6-Day Amazon Expedition from Cusco",
       "galeria": [],
       "itinerario": [
-        { "dia": 1, "titulo": "Cusco → Base Camp", "descripcion": "Travel and setup." },
-        { "dia": 2, "titulo": "River Expedition", "descripcion": "Deep river exploration." },
-        { "dia": 3, "titulo": "Survival Day 1", "descripcion": "Survival skills training in the jungle." },
-        { "dia": 4, "titulo": "Remote Forest Trek", "descripcion": "Long trek into remote primary forest." },
-        { "dia": 5, "titulo": "Deep Amazon Camp", "descripcion": "Final night deep in the jungle." },
-        { "dia": 6, "titulo": "Return to Cusco", "descripcion": "Return journey." }
+        {
+          "dia": 1,
+          "titulo": "Cusco → Base Camp",
+          "descripcion": "Travel and setup."
+        },
+        {
+          "dia": 2,
+          "titulo": "River Expedition",
+          "descripcion": "Deep river exploration."
+        },
+        {
+          "dia": 3,
+          "titulo": "Survival Day 1",
+          "descripcion": "Survival skills training in the jungle."
+        },
+        {
+          "dia": 4,
+          "titulo": "Remote Forest Trek",
+          "descripcion": "Long trek into remote primary forest."
+        },
+        {
+          "dia": 5,
+          "titulo": "Deep Amazon Camp",
+          "descripcion": "Final night deep in the jungle."
+        },
+        {
+          "dia": 6,
+          "titulo": "Return to Cusco",
+          "descripcion": "Return journey."
+        }
       ],
-      "incluye": ["Van y bote privados", "5 noches", "Todas las comidas", "Botas de goma", "Equipo de camping", "Guía experto", "Agua"],
-      "no_incluye": ["Vuelos", "Seguro", "Propinas"],
+      "incluye": [
+        "Van y bote privados",
+        "5 noches",
+        "Todas las comidas",
+        "Botas de goma",
+        "Equipo de camping",
+        "Guía experto",
+        "Agua"
+      ],
+      "no_incluye": [
+        "Vuelos",
+        "Seguro",
+        "Propinas"
+      ],
       "url_reserva": "contact/index.html",
       "destacado": false
     }
