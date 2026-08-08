@@ -1,0 +1,86 @@
+/* ═══════════════════════════════════════════
+   modal.css – Booking modal & form styles
+   ═══════════════════════════════════════════ */
+
+/* ─── Modal overlay ──────────────────────── */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 2000;
+  background: rgba(13,31,19,.72);
+  backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; visibility: hidden;
+  transition: opacity .35s ease, visibility .35s ease;
+  padding: 20px;
+}
+.modal-overlay.open { opacity: 1; visibility: visible; }
+
+.modal-box {
+  background: #fff; border-radius: 20px;
+  box-shadow: 0 32px 80px rgba(0,0,0,.28);
+  width: 100%; max-width: 560px;
+  max-height: 90vh; overflow-y: auto;
+  padding: 40px 36px;
+  position: relative;
+  transform: translateY(24px);
+  transition: transform .35s ease;
+}
+.modal-overlay.open .modal-box { transform: translateY(0); }
+
+.modal-close {
+  position: absolute; top: 16px; right: 20px;
+  font-size: 1.6rem; color: var(--gray-600);
+  line-height: 1; padding: 4px 8px; border-radius: 6px;
+  transition: var(--transition);
+}
+.modal-close:hover { color: var(--gray-900); background: var(--gray-100); }
+
+/* ─── Form elements ──────────────────────── */
+.form-row { display: flex; flex-direction: column; gap: 6px; margin-bottom: 18px; }
+.form-row-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-row label {
+  font-size: .85rem; font-weight: 600; color: var(--gray-900);
+  letter-spacing: .02em;
+}
+.form-row .req { color: #dc2626; }
+.form-row input,
+.form-row select,
+.form-row textarea {
+  padding: 11px 14px;
+  border: 1.5px solid var(--gray-300);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body); font-size: .93rem;
+  color: var(--gray-900); background: var(--white);
+  transition: border-color var(--transition), box-shadow var(--transition);
+  width: 100%;
+}
+.form-row input:focus,
+.form-row select:focus,
+.form-row textarea:focus {
+  outline: none;
+  border-color: var(--green-600);
+  box-shadow: 0 0 0 3px rgba(64,145,108,.15);
+}
+.form-row textarea { resize: vertical; min-height: 100px; }
+
+/* ─── Feedback messages ───────────────────── */
+.form-msg {
+  display: block; padding: 12px 16px; border-radius: var(--radius-sm);
+  font-size: .9rem; font-weight: 500; margin-bottom: 16px;
+  border: 1.5px solid transparent;
+}
+.form-msg:empty { display: none; }
+.form-msg.success {
+  background: #D1FAE5; color: #065F46; border-color: #6EE7B7;
+}
+.form-msg.error {
+  background: #FEE2E2; color: #991B1B; border-color: #FCA5A5;
+}
+
+/* ─── Standalone contact form (contact page) ─ */
+#contact-form { max-width: 680px; margin: 0 auto; }
+
+/* ─── Responsive modal ───────────────────── */
+@media (max-width: 480px) {
+  .modal-box { padding: 28px 20px; }
+  .form-row-2col { grid-template-columns: 1fr; }
+}

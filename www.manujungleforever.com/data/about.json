@@ -1,0 +1,74 @@
+{
+  "hero_image": "assets/media_to_upload/photos/placeholder.jpg",
+  "hero_image_alt": "Manu Jungle Forever – Familia y Guías",
+  "titulo_pagina": "About Manu Jungle Forever",
+  "subtitulo_pagina": "A family-run eco-tourism company born from the rainforest of Nuevo Eden, Peru.",
+  "historia": {
+    "eyebrow": "Our Story",
+    "titulo": "Born in the Jungle",
+    "paragrafos": [
+      "Manu Jungle Forever was founded by Moises Araña and his family, who were born and raised in the small Amazonian village of Nuevo Eden, nestled deep within the Manu Biosphere Reserve in southeastern Peru.",
+      "Moises grew up learning the forest — its rhythms, its animals, its dangers and its extraordinary beauty. When travelers began arriving to experience the Amazon, Moises saw an opportunity to share his home with the world in a way that would protect it, not exploit it.",
+      "What started as a simple guesthouse and guiding service has grown into one of the most respected jungle tour operators in the Cusco region, known for its authenticity, safety record, and genuine commitment to conservation and community support.",
+      "Today, Manu Jungle Forever employs 12 local guides and staff, all from the communities of Nuevo Eden and surrounding villages. Every tour you book directly supports these families and their livelihoods."
+    ],
+    "imagen": "assets/media_to_upload/photos/placeholder.jpg",
+    "imagen_alt": "Moises Araña – Founder of Manu Jungle Forever"
+  },
+  "mision": {
+    "eyebrow": "Our Mission",
+    "titulo": "Tourism as Conservation",
+    "texto": "We believe that responsible, community-based ecotourism is the most powerful tool available to protect the Amazon rainforest. By making the jungle economically valuable to local communities through tourism, we create a sustainable alternative to logging and destructive agriculture. Our mission is to show visitors the extraordinary beauty of the Manu National Park while ensuring that every visit leaves a positive impact on the environment and local people.",
+    "valores": [
+      {
+        "icono": "fas fa-home",
+        "titulo": "Community First",
+        "texto": "100% of our staff are local community members. Your tour dollars go directly into the village economy."
+      },
+      {
+        "icono": "fas fa-leaf",
+        "titulo": "Environmental Stewardship",
+        "texto": "We practice strict Leave No Trace principles and actively participate in reforestation and wildlife monitoring programs."
+      },
+      {
+        "icono": "fas fa-users",
+        "titulo": "Small Groups Only",
+        "texto": "We limit group sizes to a maximum of 8 travelers to minimize our environmental footprint and maximize personal attention."
+      },
+      {
+        "icono": "fas fa-shield-alt",
+        "titulo": "Safety & Professionalism",
+        "texto": "All guides are certified in wilderness first aid. We maintain the highest safety standards without compromising adventure."
+      }
+    ]
+  },
+  "equipo": [
+    {
+      "nombre": "Moises Araña",
+      "cargo": "Co-Founder & Head Guide",
+      "bio": "Born and raised in Nuevo Eden, Moises has been guiding in the Manu National Park for over 15 years. His encyclopedic knowledge of Amazonian wildlife and his warm, engaging personality make every tour unforgettable.",
+      "foto": "assets/media_to_upload/photos/placeholder.jpg",
+      "especialidad": "Wildlife identification, river navigation, jungle survival"
+    },
+    {
+      "nombre": "Rosa Araña",
+      "cargo": "Co-Founder & Operations Manager",
+      "bio": "Rosa manages the day-to-day operations of Manu Jungle Forever and oversees the kitchen team, ensuring that every meal served reflects the authentic flavors of the Peruvian Amazon.",
+      "foto": "assets/media_to_upload/photos/placeholder.jpg",
+      "especialidad": "Operations, logistics, Amazonian cuisine"
+    },
+    {
+      "nombre": "Carlos Araña",
+      "cargo": "Senior Wildlife Guide",
+      "bio": "Carlos is Moises's brother and has a particular passion for herpetology — snakes, frogs, and lizards of the Amazon. He is also an expert birder with knowledge of over 800 species of Manu birds.",
+      "foto": "assets/media_to_upload/photos/placeholder.jpg",
+      "especialidad": "Herpetology, birding, jungle trekking"
+    }
+  ],
+  "numeros": [
+    { "valor": "10+", "etiqueta": "Years in Business" },
+    { "valor": "500+", "etiqueta": "Travelers Guided" },
+    { "valor": "12", "etiqueta": "Local Staff Members" },
+    { "valor": "4.9★", "etiqueta": "Average Rating" }
+  ]
+}

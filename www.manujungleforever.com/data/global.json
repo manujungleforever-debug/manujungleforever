@@ -1,0 +1,38 @@
+{
+  "site_name": "Manu Jungle Forever",
+  "slogan": "Local. Wild. Authentic.",
+  "tagline": "Guided jungle tours from Cusco to the Manu National Park & the Peruvian Amazon.",
+  "url": "https://www.manujungleforever.com",
+  "email": "discover@manujungleforever.com",
+  "phone_primary": "+51 979 808 013",
+  "phone_secondary": "+51 923 289 231",
+  "whatsapp_number": "51923289231",
+  "whatsapp_text": "Hello! I would like to learn more about your jungle trips",
+  "address": "Manu Jungle Forever – La Casa Escondida 17800, Nuevo Eden, Peru",
+  "address_maps_url": "https://goo.gl/maps/B8NjhLZizA6YKwKD6",
+  "logo_main": "assets/media_to_upload/photos/placeholder.jpg",
+  "logo_seal": "assets/media_to_upload/photos/placeholder.jpg",
+  "logo_footer": "assets/media_to_upload/photos/placeholder.jpg",
+  "favicon": "assets/media_to_upload/photos/placeholder.jpg",
+  "apple_touch_icon": "assets/media_to_upload/photos/placeholder.jpg",
+  "social": {
+    "facebook": "https://www.facebook.com/manujungleforever",
+    "instagram": "https://www.instagram.com/manujungleforever/?hl=en",
+    "tripadvisor": "https://www.tripadvisor.com/Attraction_Review-g294314-d17476586-Reviews-Hidden_Jungle_Cusco-Cusco_Cusco_Region.html?m=19905",
+    "airbnb": "https://abnb.me/Ri8XQWoA19",
+    "whatsapp": "https://wa.me/51923289231",
+    "tiktok": "https://www.tiktok.com/@hidden.jungle.cus",
+    "youtube": "https://www.youtube.com/@manujungleforever"
+  },
+  "analytics": {
+    "gtm_id": "GTM-5476BC9",
+    "ga_id": "GT-NS9ZNKJP"
+  },
+  "seo": {
+    "default_title_suffix": "| Manu Jungle Forever",
+    "default_description": "Explore Cusco Jungle & Manu National Park tours with Manu Jungle Forever. Immerse yourself in wildlife — book your Peruvian Amazon adventure now!",
+    "default_og_image": "assets/media_to_upload/photos/placeholder.jpg"
+  },
+  "copyright": "Copyright © 2026 Manu Jungle Forever. All rights reserved.",
+  "copyright_design": "Site design: Meyer Consulting and Management"
+}

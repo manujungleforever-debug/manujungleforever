@@ -1,0 +1,35 @@
+{
+  "titulo_pagina": "Contact Manu Jungle Forever",
+  "subtitulo_pagina": "Ready to plan your jungle adventure? Get in touch with our team.",
+  "hero_image": "assets/media_to_upload/photos/placeholder.jpg",
+  "contacto_principal": {
+    "email": "discover@manujungleforever.com",
+    "telefono_1": "+51 979 808 013",
+    "telefono_2": "+51 923 289 231",
+    "whatsapp": "51923289231",
+    "whatsapp_texto": "Hello! I would like to learn more about your jungle trips"
+  },
+  "direccion": {
+    "nombre": "Manu Jungle Forever – La Casa Escondida",
+    "calle": "17800",
+    "localidad": "Nuevo Eden",
+    "pais": "Peru",
+    "maps_url": "https://goo.gl/maps/B8NjhLZizA6YKwKD6",
+    "maps_embed": "https://www.google.com/maps/d/embed?mid=1CkYt9KUrq9Jjp9tgxChYmOYvyNaLZnxF"
+  },
+  "horario": {
+    "dias": "Monday – Sunday",
+    "horas": "7:00 AM – 8:00 PM (Peru Time)",
+    "nota": "We typically respond within 24 hours"
+  },
+  "formulario": {
+    "titulo": "Send Us a Message",
+    "subtitulo": "Fill in the form below and we'll get back to you within 24 hours.",
+    "endpoint": "handlers/send-booking.php"
+  },
+  "cta_whatsapp": {
+    "titulo": "Prefer WhatsApp?",
+    "texto": "Chat with us directly on WhatsApp for instant answers about tours, availability and pricing.",
+    "boton": "WhatsApp Us Now"
+  }
+}

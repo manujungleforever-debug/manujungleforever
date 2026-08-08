@@ -1,0 +1,76 @@
+{
+  "testimonials": [
+    {
+      "id": 1,
+      "nombre": "Sarah & Tom Mitchell",
+      "pais": "United Kingdom",
+      "bandera": "🇬🇧",
+      "tour": "4-Day Wildlife Quest – Nuevo Eden",
+      "fecha": "2026-04-10",
+      "rating": 5,
+      "texto": "An absolutely incredible experience! Moises and the team made us feel like family from the moment we arrived. We saw caimans, capybaras, monkeys and even spotted a jaguar on the riverbank. The lodge was cozy and the food was amazing. We couldn't recommend Manu Jungle Forever enough!",
+      "foto": "",
+      "activo": true
+    },
+    {
+      "id": 2,
+      "nombre": "Lucas Müller",
+      "pais": "Germany",
+      "bandera": "🇩🇪",
+      "tour": "6-Day Wildlife Quest – Blanquillo",
+      "fecha": "2026-03-22",
+      "rating": 5,
+      "texto": "Truly a once-in-a-lifetime trip. Our guide knew every bird call and footprint in the jungle. The Blanquillo macaw clay lick was a highlight I will never forget. Absolutely worth every penny. Professional, safe, and deeply authentic.",
+      "foto": "",
+      "activo": true
+    },
+    {
+      "id": 3,
+      "nombre": "Maria & Carlos Fernández",
+      "pais": "Spain",
+      "bandera": "🇪🇸",
+      "tour": "3-Day Wildlife Quest – Machu Wasi",
+      "fecha": "2026-02-14",
+      "rating": 5,
+      "texto": "Perfect company for your Amazon adventure. The guides were knowledgeable, the lodge beautiful, and the nature overwhelming. Even in 3 days we saw so much wildlife. We are already planning to come back for the 6-day tour!",
+      "foto": "",
+      "activo": true
+    },
+    {
+      "id": 4,
+      "nombre": "Emma Johnson",
+      "pais": "United States",
+      "bandera": "🇺🇸",
+      "tour": "5-Day Amazon Expedition",
+      "fecha": "2025-11-05",
+      "rating": 5,
+      "texto": "Manu Jungle Forever exceeded all expectations. The expedition felt genuinely wild — camping by the river, fishing for piranhas, learning to navigate by the stars. A real adventure with a safety-first approach. Five stars without hesitation.",
+      "foto": "",
+      "activo": true
+    },
+    {
+      "id": 5,
+      "nombre": "Camille Dubois",
+      "pais": "France",
+      "bandera": "🇫🇷",
+      "tour": "8-Day Wildlife Photography Tour",
+      "fecha": "2025-10-18",
+      "rating": 5,
+      "texto": "As a wildlife photographer, I have been on many jungle tours around the world. Manu Jungle Forever is in a league of its own. The locations, the knowledge of the guides, and the access to pristine habitats resulted in the best wildlife shots of my career.",
+      "foto": "",
+      "activo": true
+    },
+    {
+      "id": 6,
+      "nombre": "James & Anna O'Brien",
+      "pais": "Ireland",
+      "bandera": "🇮🇪",
+      "tour": "4-Day Wildlife Quest – Machu Wasi",
+      "fecha": "2025-09-30",
+      "rating": 5,
+      "texto": "We chose Manu Jungle Forever because of the personal touch — a real family business. Moises was our guide and his stories about growing up in the jungle made every moment magical. We saw giant otters, macaws, and countless species of birds.",
+      "foto": "",
+      "activo": true
+    }
+  ]
+}

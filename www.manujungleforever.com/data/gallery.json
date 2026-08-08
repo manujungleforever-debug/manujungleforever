@@ -1,0 +1,109 @@
+{
+  "fotos": [
+    {
+      "id": "gal-001",
+      "url": "assets/media_to_upload/photos/placeholder.jpg",
+      "alt": "Jaguar in Manu National Park",
+      "categoria": "wildlife",
+      "destacada": true
+    },
+    {
+      "id": "gal-002",
+      "url": "assets/media_to_upload/photos/placeholder.jpg",
+      "alt": "Manu National Park Reserved Zone",
+      "categoria": "paisaje",
+      "destacada": true
+    },
+    {
+      "id": "gal-003",
+      "url": "assets/media_to_upload/photos/placeholder.jpg",
+      "alt": "Wildlife Quest at Machu Wasi",
+      "categoria": "actividades",
+      "destacada": true
+    },
+    {
+      "id": "gal-004",
+      "url": "assets/media_to_upload/photos/placeholder.jpg",
+      "alt": "Blanquillo Macaw Clay Lick",
+      "categoria": "wildlife",
+      "destacada": true
+    },
+    {
+      "id": "gal-005",
+      "url": "assets/media_to_upload/photos/placeholder.jpg",
+      "alt": "Manu Jungle Forever Family and Guides",
+      "categoria": "gente",
+      "destacada": true
+    },
+    {
+      "id": "gal-006",
+      "url": "assets/media_to_upload/photos/placeholder.jpg",
+      "alt": "Rainforest Road Trip from Cusco",
+      "categoria": "actividades",
+      "destacada": false
+    },
+    {
+      "id": "gal-007",
+      "url": "assets/media_to_upload/photos/placeholder.jpg",
+      "alt": "Amazon Rainforest Tour – Manu National Park",
+      "categoria": "paisaje",
+      "destacada": false
+    },
+    {
+      "id": "gal-008",
+      "url": "assets/media_to_upload/photos/placeholder.jpg",
+      "alt": "Group exploring the beach in Manu",
+      "categoria": "gente",
+      "destacada": false
+    },
+    {
+      "id": "gal-009",
+      "url": "assets/media_to_upload/photos/placeholder.jpg",
+      "alt": "Road trip through the Peruvian Amazon",
+      "categoria": "actividades",
+      "destacada": false
+    },
+    {
+      "id": "gal-010",
+      "url": "assets/media_to_upload/photos/placeholder.jpg",
+      "alt": "Local family fishing in the Amazon river",
+      "categoria": "gente",
+      "destacada": false
+    },
+    {
+      "id": "gal-011",
+      "url": "assets/media_to_upload/photos/placeholder.jpg",
+      "alt": "Aerial view of the Manu National Park",
+      "categoria": "paisaje",
+      "destacada": true
+    },
+    {
+      "id": "gal-012",
+      "url": "assets/media_to_upload/photos/placeholder.jpg",
+      "alt": "Visit Manu National Park with Manu Jungle Forever",
+      "categoria": "paisaje",
+      "destacada": false
+    },
+    {
+      "id": "gal-013",
+      "url": "assets/media_to_upload/photos/placeholder.jpg",
+      "alt": "Wildlife Quest 3 Days Machu Wasi",
+      "categoria": "actividades",
+      "destacada": false
+    },
+    {
+      "id": "gal-014",
+      "url": "assets/media_to_upload/photos/placeholder.jpg",
+      "alt": "Manu Jungle Forever – Amazon Adventure",
+      "categoria": "paisaje",
+      "destacada": false
+    }
+  ],
+  "categorias": [
+    { "id": "wildlife", "nombre": "Vida Silvestre" },
+    { "id": "paisaje", "nombre": "Paisajes" },
+    { "id": "gente", "nombre": "Gente & Cultura" },
+    { "id": "actividades", "nombre": "Actividades" },
+    { "id": "lodge", "nombre": "Lodge & Alojamiento" }
+  ]
+}
