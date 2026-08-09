@@ -71,7 +71,6 @@ $rel = $rel ?? '';
 <script>
 // Accordion
 window.toggleAccordion = function(btn) {
-  const content = btn.nextElementSibling;
   const isActive = btn.classList.contains('active');
   
   document.querySelectorAll('.itinerary-toggle').forEach(function(otherBtn) {
@@ -83,9 +82,7 @@ window.toggleAccordion = function(btn) {
   
   if (!isActive) {
     btn.classList.add('active');
-    if(content) {
-       content.style.maxHeight = content.scrollHeight + "px";
-    }
+    // CSS max-height transition handles expansion
   }
 };
 </script>

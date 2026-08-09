@@ -1050,6 +1050,7 @@ body { top: 0px !important; position: relative !important; }
   padding: 0 24px;
 }
 .itinerary-toggle.active + .itinerary-content {
+  max-height: 2000px;
   padding-bottom: 24px;
 }
 .itinerary-content p {
