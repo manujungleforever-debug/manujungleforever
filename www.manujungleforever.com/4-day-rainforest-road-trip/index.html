@@ -186,7 +186,7 @@
     .ft .fg { grid-template-columns: 1fr; gap: 30px; }
   }
   .libro-box:hover { border-color: rgba(255,255,255,0.3) !important; transform: translateY(-3px); }
-  .fa { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 800; letter-spacing: 0.05em; line-height: 1.6; color: #ffffff; text-transform: uppercase; margin-bottom: 25px; margin-top: 15px; display: block; }
+  .fa { font-family: 'Outfit', sans-serif; font-size: 0.95rem; font-weight: 300; letter-spacing: 0; line-height: 1.6; color: rgba(255,255,255,0.7); text-transform: uppercase; margin-bottom: 25px; margin-top: 15px; display: block; }
   .fc p { margin-bottom: 10px; display: flex; align-items: flex-start; gap: 10px; font-size: 0.85rem; color: rgba(255,255,255,0.6); }
   .fc a { color: rgba(255,255,255,0.6); text-decoration: none; transition: color 0.3s ease; }
   .fc a:hover { color: var(--a); }
@@ -204,7 +204,7 @@
   .sc:hover { transform: translateY(-3px); }
 </style>
 <div class="cx">
-  <div class="fg" style="display: grid; grid-template-columns: 1.8fr 1fr 1.2fr 1.5fr; gap: 40px; align-items: start;">
+  <div class="fg" style="display: grid; grid-template-columns: 1.8fr 1fr 1.2fr 1.3fr 1.2fr; gap: 40px; align-items: start;">
     
     <!-- COLUMN 1: Logo & Contact -->
     <div>
@@ -237,18 +237,7 @@
         <li><a href="../guided-tours/index.html"><i class="fas fa-arrow-right"></i> Guided Jungle Tours</a></li>
         <li><a href="../contact/index.html"><i class="fas fa-arrow-right"></i> Contact</a></li>
       </ul>
-
-      <!-- Libro de reclamaciones -->
-      <a href="../libro-de-reclamaciones/index.html" style="text-decoration:none; display:block; max-width: 250px;">
-        <div class="libro-box" style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:16px 12px; text-align:center; transition:0.3s; box-sizing:border-box;">
-          <div style="background:#fff; border-radius:8px; padding:12px; display:inline-flex; flex-direction:column; align-items:center; margin-bottom:12px; box-shadow:0 4px 12px rgba(0,0,0,0.15);">
-            <div style="color:#002e24; font-weight:800; font-size:0.8rem; line-height:1.2; font-family:Arial,sans-serif; text-align:center; text-transform:uppercase; letter-spacing:0.5px;">Complaints<br>Book</div>
-            <img src="../assets/img/libro_reclamaciones.png" alt="Complaints Book" style="max-width:40px; margin-top:8px;">
-          </div>
-          <div style="color:rgba(255,255,255,0.6); font-size:0.7rem; line-height:1.4;">In accordance with the Consumer Protection and Defense Code, we have a Virtual Complaints Book.</div>
-        </div>
-      </a>
-    </div>
+</div>
 
     <!-- COLUMN 3: Wildlife Tours -->
     <div class="f-col">
@@ -276,6 +265,29 @@
       </ul>
     </div>
 
+
+    <!-- COLUMN 5: Legal & Support -->
+    <div class="f-col">
+      <h3>Legal &amp; Support</h3>
+      <ul style="margin-bottom: 20px;">
+        <li><a href="../terms-and-conditions/index.html"><i class="fas fa-arrow-right"></i> Terms &amp; Conditions</a></li>
+        <li><a href="../privacy-policy/index.html"><i class="fas fa-arrow-right"></i> Privacy Policy</a></li>
+        <li><a href="../cookies-policy/index.html"><i class="fas fa-arrow-right"></i> Cookies Policy</a></li>
+        <li><a href="../faq/index.html"><i class="fas fa-arrow-right"></i> FAQ</a></li>
+      </ul>
+
+
+      <!-- Libro de reclamaciones -->
+      <a href="../libro-de-reclamaciones/index.html" style="text-decoration:none; display:block; max-width: 250px;">
+        <div class="libro-box" style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:16px 12px; text-align:center; transition:0.3s; box-sizing:border-box;">
+          <div style="background:#fff; border-radius:8px; padding:12px; display:inline-flex; flex-direction:column; align-items:center; margin-bottom:12px; box-shadow:0 4px 12px rgba(0,0,0,0.15);">
+            <div style="color:#002e24; font-weight:800; font-size:0.8rem; line-height:1.2; font-family:Arial,sans-serif; text-align:center; text-transform:uppercase; letter-spacing:0.5px;">Complaints<br>Book</div>
+            <img src="../assets/img/libro_reclamaciones.png" alt="Complaints Book" style="max-width:40px; margin-top:8px;">
+          </div>
+          <div style="color:rgba(255,255,255,0.6); font-size:0.7rem; line-height:1.4;">In accordance with the Consumer Protection and Defense Code, we have a Virtual Complaints Book.</div>
+        </div>
+      </a>
+    </div>
   </div>
 </div>
 </footer>
