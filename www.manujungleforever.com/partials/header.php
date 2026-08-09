@@ -10,15 +10,23 @@ $active_page = $active_page ?? '';
   <img src="../assets/img/logo.png" alt="Loading Manu Jungle Forever">
 </div>
 <script>
-  window.addEventListener('load', function() {
-    setTimeout(function() {
-      var preloader = document.getElementById('preloader');
-      if (preloader) {
-        preloader.classList.add('loaded');
-        setTimeout(function() { preloader.style.display = 'none'; }, 700);
-      }
-    }, 1200); // 1.2s delay to show off the animation
-  });
+  (function(){
+    var p = document.getElementById('preloader');
+    // Mostrar solo una vez por sesion, o si hay un parametro "lang=" en la URL
+    if(sessionStorage.getItem('mjf_loader_shown') === '1' && !window.location.search.includes('lang=')) {
+      if(p) p.style.display = 'none';
+    } else {
+      sessionStorage.setItem('mjf_loader_shown', '1');
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          if (p) {
+            p.classList.add('loaded');
+            setTimeout(function() { p.style.display = 'none'; }, 700);
+          }
+        }, 800); // Pequeña espera para que se vea la animacion
+      });
+    }
+  })();
 </script>
 
 <header id="N"><div class="cx ni">

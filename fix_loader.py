@@ -1,18 +1,39 @@
-import os
-import re
+import os, glob, re
 
-index_path = "g:\\Git\\MANUJUNGLEFOREVER\\www.manujungleforever.com\\index.php"
+base = r'g:\Git\MANUJUNGLEFOREVER\www.manujungleforever.com'
+files = glob.glob(os.path.join(base, '**', '*.html'), recursive=True) + glob.glob(os.path.join(base, '**', '*.php'), recursive=True)
 
-with open(index_path, "r", encoding="utf-8") as f:
-    content = f.read()
+script_pattern = re.compile(r'(<div id="preloader">.*?</div>\s*)<script>.*?window\.addEventListener\(\'load\'.*?</script>', re.DOTALL)
 
-# Replace 1200 with 3000
-old_script = "}, 1200); // 1.2s delay to show off the animation"
-new_script = "}, 3000); // 3s delay as requested"
+replacement = r'''\1<script>
+  (function(){
+    var p = document.getElementById('preloader');
+    // Mostrar solo una vez por sesion, o si hay un parametro "lang=" en la URL
+    if(sessionStorage.getItem('mjf_loader_shown') === '1' && !window.location.search.includes('lang=')) {
+      if(p) p.style.display = 'none';
+    } else {
+      sessionStorage.setItem('mjf_loader_shown', '1');
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          if (p) {
+            p.classList.add('loaded');
+            setTimeout(function() { p.style.display = 'none'; }, 700);
+          }
+        }, 800); // Pequeña espera para que se vea la animacion
+      });
+    }
+  })();
+</script>'''
 
-content = content.replace(old_script, new_script)
-
-with open(index_path, "w", encoding="utf-8") as f:
-    f.write(content)
-
-print("Updated preloader time in index.php")
+for fpath in files:
+    try:
+        with open(fpath, 'r', encoding='utf-8') as f:
+            content = f.read()
+        
+        new_content, count = script_pattern.subn(replacement, content)
+        if count > 0:
+            with open(fpath, 'w', encoding='utf-8') as f:
+                f.write(new_content)
+            print(f'Updated {os.path.relpath(fpath, base)}')
+    except Exception as e:
+        pass

@@ -24,19 +24,23 @@
   <img src="../assets/img/logo.png" alt="Loading Manu Jungle Forever">
 </div>
 <script>
-  var _preloaderStart = Date.now();
-  window.addEventListener('load', function() {
-    var elapsed = Date.now() - _preloaderStart;
-    var minDuration = 3000; 
-    var delay = Math.max(500, minDuration - elapsed);
-    setTimeout(function() {
-      var preloader = document.getElementById('preloader');
-      if (preloader) {
-        preloader.classList.add('loaded');
-        setTimeout(function() { preloader.style.display = 'none'; }, 700);
-      }
-    }, delay);
-  });
+  (function(){
+    var p = document.getElementById('preloader');
+    // Mostrar solo una vez por sesion, o si hay un parametro "lang=" en la URL
+    if(sessionStorage.getItem('mjf_loader_shown') === '1' && !window.location.search.includes('lang=')) {
+      if(p) p.style.display = 'none';
+    } else {
+      sessionStorage.setItem('mjf_loader_shown', '1');
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          if (p) {
+            p.classList.add('loaded');
+            setTimeout(function() { p.style.display = 'none'; }, 700);
+          }
+        }, 800); // Pequeña espera para que se vea la animacion
+      });
+    }
+  })();
 </script>
 
 
