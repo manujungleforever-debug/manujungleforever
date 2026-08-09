@@ -31,7 +31,7 @@ define('SOCIAL_TIKTOK',      'https://www.tiktok.com/@hidden.jungle.cus');
 // ─── Analytics ────────────────────────────────────────────────────
 define('GTM_ID',     'GTM-5476BC9');
 define('GA_ID',      'GT-NS9ZNKJP');
-define('GOOGLE_MAP', 'https://maps.google.com/maps?q=-12.551044080333435,-71.16934096724118&hl=en&z=15&output=embed&t=k');
+define('GOOGLE_MAP', 'https://maps.google.com/maps?q=-12.540468,-71.166289&hl=en&z=15&output=embed&t=k');
 
 // ─── Environment ──────────────────────────────────────────────────
 define('APP_ENV', 'production'); // 'development' | 'production'
