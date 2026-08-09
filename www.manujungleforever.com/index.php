@@ -235,7 +235,7 @@
       <div class="ac"><div class="ic">🐒</div><p>Monkeys</p></div>
       <div class="ac"><div class="ic">🦦</div><p>Giant Otters</p></div>
       <div class="ac"><div class="ic">🐢</div><p>River Turtles</p></div>
-      <div class="ac"><div class="ic">🦦</div><p>Capybaras</p></div>
+      <div class="ac"><div class="ic"><i class="fas fa-paw"></i></div><p>Capybaras</p></div>
       <div class="ac"><div class="ic">🐍</div><p>Anaconda</p></div>
       <div class="ac"><div class="ic">🦋</div><p>Butterflies</p></div>
       <div class="ac"><div class="ic">🐦</div><p>Cock-of-the-Rock</p></div>
