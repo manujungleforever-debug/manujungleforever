@@ -48,7 +48,7 @@
 <header id="N"><div class="cx ni">
   <div class="nl"><a href="index.html"><img src="assets/img/logo.png" alt="<?php echo htmlspecialchars(SITE_NAME); ?>" loading="eager"></a></div>
   <nav class="nm" aria-label="Main navigation">
-    <a href="index.html" class="on">Home</a>
+    <a href="index.html" >Home</a>
     <a href="about-2/index.html">About Us</a>
     <a href="departures/index.html">Departures</a>
     <a href="news-and-gallery/index.html">Gallery</a>
@@ -114,6 +114,9 @@
         <li><a href="5-day-amazon-expedition/index.html">5-Day Amazon Expedition</a></li>
         <li><a href="6-day-amazon-expedition/index.html">6-Day Amazon Expedition</a></li>
       </ul>
+    </li>
+    <li><a href="contact/index.html">Contact</a></li>
+  </ul>
     </li>
     <li><a href="contact/index.html">Contact</a></li>
   </ul>
