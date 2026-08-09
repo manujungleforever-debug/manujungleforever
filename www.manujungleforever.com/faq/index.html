@@ -26,18 +26,17 @@
 <script>
   (function(){
     var p = document.getElementById('preloader');
-    // Mostrar solo una vez por sesion, o si hay un parametro "lang=" en la URL
-    if(sessionStorage.getItem('mjf_loader_shown') === '1' && !window.location.search.includes('lang=')) {
+    if(localStorage.getItem('mjf_loader_shown') === '1') {
       if(p) p.style.display = 'none';
     } else {
-      sessionStorage.setItem('mjf_loader_shown', '1');
+      localStorage.setItem('mjf_loader_shown', '1');
       window.addEventListener('load', function() {
         setTimeout(function() {
           if (p) {
             p.classList.add('loaded');
             setTimeout(function() { p.style.display = 'none'; }, 700);
           }
-        }, 800); // Pequeña espera para que se vea la animacion
+        }, 2300); // Wait 2.3s + 0.7s animation = 3s total
       });
     }
   })();
@@ -469,6 +468,7 @@ function googleTranslateElementInit() {
   new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'en,es', autoDisplay: false}, 'google_translate_element');
 }
 function doTranslate(lang) {
+  localStorage.removeItem('mjf_loader_shown');
   document.cookie = "googtrans=/en/" + lang + "; path=/;";
   window.location.reload();
 }
