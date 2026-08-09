@@ -28,6 +28,7 @@ $rel = $rel ?? '';
 </div></footer>
 
 <div class="wa-wrap">
+    <div class="wa-tooltip">How can I help you?</div>
     <span class="wa-ring"></span>
     <span class="wa-ring"></span>
     <span class="wa-ring"></span>
