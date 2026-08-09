@@ -18,8 +18,10 @@ $active_page = $active_page ?? '';
         document.documentElement.style.opacity = '0';
         window.addEventListener('load', function() {
            setTimeout(function() {
+             if (window.getSelection) { window.getSelection().removeAllRanges(); }
              document.documentElement.style.transition = 'opacity 0.5s ease';
              document.documentElement.style.opacity = '1';
+             setTimeout(function() { if (window.getSelection) { window.getSelection().removeAllRanges(); } }, 500);
            }, 600);
         });
       }
