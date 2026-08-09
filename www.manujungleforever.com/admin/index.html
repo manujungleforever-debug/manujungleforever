@@ -26,7 +26,19 @@
     .lcard{background:var(--card);border:1px solid var(--border);border-radius:20px;
       padding:48px 40px;width:100%;max-width:400px;box-shadow:0 32px 80px rgba(0,0,0,.5);}
     .lcard .logo{text-align:center;margin-bottom:32px;}
-    .lcard .logo img{height:48px;}
+    @keyframes adminLogoEnter {
+      0% { opacity: 0; transform: translateY(-20px) scale(0.9); filter: drop-shadow(0 0 0px rgba(201,168,76,0)); }
+      100% { opacity: 1; transform: translateY(0) scale(1); filter: drop-shadow(0 4px 15px rgba(201,168,76,0.3)); }
+    }
+    @keyframes adminLogoFloat {
+      0%, 100% { transform: translateY(0); filter: drop-shadow(0 4px 15px rgba(201,168,76,0.3)); }
+      50% { transform: translateY(-6px); filter: drop-shadow(0 12px 25px rgba(201,168,76,0.5)); }
+    }
+    .lcard .logo img{
+      height:56px;
+      animation: adminLogoEnter 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards, adminLogoFloat 4s ease-in-out 1.2s infinite;
+      will-change: transform, filter;
+    }
     .lcard h1{font-size:1.3rem;font-weight:600;text-align:center;margin-bottom:4px;}
     .lcard p.sub{font-size:.85rem;color:var(--muted);text-align:center;margin-bottom:28px;}
     .err-msg{background:rgba(224,92,92,.12);border:1px solid rgba(224,92,92,.3);
@@ -221,7 +233,7 @@
 <!-- LOGIN -->
 <div id="login-screen">
   <div class="lcard">
-    <div class="logo"><img src="../assets/media_to_upload/photos/placeholder.jpg" alt="" onerror="this.style.display='none'"></div>
+    <div class="logo"><img src="../assets/img/logo.png" alt="Manu Jungle Forever"></div>
     <h1>Panel de Administración</h1>
     <p class="sub">Manu Jungle Forever</p>
     <div class="err-msg" id="login-err"></div>
@@ -235,7 +247,7 @@
 <div id="app">
   <header>
     <div class="hbrand">
-      <img src="../assets/media_to_upload/photos/placeholder.jpg" alt="" onerror="this.style.display='none'">
+      <img src="../assets/img/logo.png" alt="Manu Jungle Forever">
       Manu Jungle CMS
     </div>
     <nav id="top-nav"></nav>
