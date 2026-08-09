@@ -27,7 +27,7 @@ $page_desc  = $page_desc  ?? 'Explore Cusco Jungle &amp; Manu National Park Tour
 <!-- Favicons -->
 <link rel="icon"             href="<?= $rel ?>assets/media_to_upload/photos/placeholder.jpg"   sizes="32x32">
 <link rel="icon"             href="<?= $rel ?>assets/media_to_upload/photos/placeholder.jpg" sizes="192x192">
-<link rel="apple-touch-icon" href="<?= $rel ?>assets/media_to_upload/photos/placeholder.jpg">
+<link rel="apple-touch-icon" href="../assets/img/favicon.png">
 
 <!-- Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -47,7 +47,7 @@ $page_desc  = $page_desc  ?? 'Explore Cusco Jungle &amp; Manu National Park Tour
    "url":"https://www.manujungleforever.com/",
    "description":"Guided tours from Cusco to the Manu National Park in the Peruvian Amazon.",
    "image":"https://www.manujungleforever.com/assets/media_to_upload/photos/placeholder.jpg",
-   "telephone":"+51979808013","email":"discover@manujungleforever.com",
+   "telephone":"+51901525679","email":"discover@manujungleforever.com",
    "address":{"@type":"PostalAddress","addressLocality":"Nuevo Eden","addressCountry":"PE"},
    "sameAs":["https://www.facebook.com/manujungleforever","https://www.instagram.com/manujungleforever/","https://www.tripadvisor.com/Attraction_Review-g294314-d17476586-Reviews-Hidden_Jungle_Cusco-Cusco_Cusco_Region.html"]
   },

@@ -25,27 +25,31 @@ $active_page = $active_page ?? '';
   <div class="nl"><a href="../index.html"><img src="../assets/img/logo.png" alt="<?php echo htmlspecialchars(SITE_NAME); ?>" loading="eager"></a></div>
   <nav class="nm" aria-label="Main navigation">
     <a href="../index.html" class="on">Home</a>
-    <div class="hd"><a href="../guided-tours/index.html">Guided Tours <i class="fas fa-caret-down"></i></a>
-      <ul class="dm">
-        <span class="dh"><i class="fas fa-leaf"></i> Wildlife Tours</span>
-        <li><a href="../3-day-wildlife-quest-machu-wasi/index.html">3-Day Wildlife - Machu Wasi</a></li>
-        <li><a href="../4-day-wildlife-quest-machu-wasi/index.html">4-Day Wildlife - Machu Wasi</a></li>
-        <li><a href="../4-day-wildlife-quest-nuevo-eden/index.html">4-Day Wildlife - Nuevo Eden</a></li>
-        <li><a href="../5-day-wildlife-quest-nuevo-eden/index.html">5-Day Wildlife - Nuevo Eden</a></li>
-        <li><a href="../6-day-wildlife-quest-blanquillo/index.html">6-Day Wildlife - Blanquillo</a></li>
-        <li><a href="../6-day-wildlife-quest-reserved-zone/index.html">Manu Reserved Zone - 6 Days</a></li>
-        <li><a href="../8-day-wildlife-photography-tour/index.html">Wildlife Photography - 8 Days</a></li>
-        
-        <span class="dh"><i class="fas fa-compass"></i> Expeditions</span>
-        <li><a href="../rainforest-road-trip-from-cusco/index.html">Rainforest Road Trip</a></li>
-        <li><a href="../5-day-amazon-expedition/index.html">5-Day Amazon Expedition</a></li>
-        <li><a href="../6-day-amazon-expedition/index.html">6-Day Amazon Expedition</a></li>
-      </ul>
-    </div>
     <a href="../about-2/index.html">About Us</a>
     <a href="../departures/index.html">Departures</a>
     <a href="../news-and-gallery/index.html">Gallery</a>
     <a href="../blog/index.html">Blog</a>
+    <div class="hd"><a href="../guided-tours/index.html">Guided Tours <i class="fas fa-caret-down"></i></a>
+      <ul class="dm">
+        <span class="dh"><i class="fas fa-binoculars"></i> WILDLIFE QUEST</span>
+        <li><a href="../3-day-wildlife-quest-machu-wasi/index.html">3-Day Wildlife &ndash; Machu Wasi</a></li>
+        <li><a href="../4-day-wildlife-quest-machu-wasi/index.html">4-Day Wildlife &ndash; Machu Wasi</a></li>
+        <li><a href="../4-day-wildlife-quest-nuevo-eden/index.html">4-Day Wildlife &ndash; Nuevo Eden</a></li>
+        <li><a href="../5-day-wildlife-quest-nuevo-eden/index.html">5-Day Wildlife &ndash; Nuevo Eden</a></li>
+        <li><a href="../6-day-wildlife-quest-blanquillo/index.html">6-Day Wildlife &ndash; Blanquillo</a></li>
+        <li><a href="../6-day-wildlife-quest-reserved-zone/index.html">Manu Reserved Zone &ndash; 6 Days</a></li>
+        <li><a href="../8-day-wildlife-photography-tour/index.html">Wildlife Photography &ndash; 8 Days</a></li>
+        
+        <span class="dh"><i class="fas fa-route"></i> RAINFOREST ROAD TRIP</span>
+        <li><a href="../rainforest-road-trip-from-cusco/index.html">Rainforest Road Trip Overview</a></li>
+        <li><a href="../2-day-rainforest-road-trip/index.html">2-Day Road Trip</a></li>
+        <li><a href="../5-day-rainforest-road-trip/index.html">5-Day Road Trip</a></li>
+
+        <span class="dh"><i class="fas fa-campground"></i> AMAZON EXPEDITION</span>
+        <li><a href="../5-day-amazon-expedition/index.html">5-Day Amazon Expedition</a></li>
+        <li><a href="../6-day-amazon-expedition/index.html">6-Day Amazon Expedition</a></li>
+      </ul>
+    </div>
     <a href="../contact/index.html" class="nb">Book Now</a>
   </nav>
   <button class="bg" id="bg" aria-label="Toggle menu" aria-expanded="false"><span class="bb"></span><span class="bb"></span><span class="bb"></span></button>
