@@ -29,6 +29,15 @@
     var p = document.getElementById('preloader');
     if(localStorage.getItem('mjf_loader_shown') === '1') {
       if(p) p.style.display = 'none';
+      if (document.cookie.indexOf("googtrans=/en/es") !== -1) {
+        document.documentElement.style.opacity = '0';
+        window.addEventListener('load', function() {
+           setTimeout(function() {
+             document.documentElement.style.transition = 'opacity 0.5s ease';
+             document.documentElement.style.opacity = '1';
+           }, 600);
+        });
+      }
     } else {
       localStorage.setItem('mjf_loader_shown', '1');
       window.addEventListener('load', function() {
@@ -37,7 +46,7 @@
             p.classList.add('loaded');
             setTimeout(function() { p.style.display = 'none'; }, 700);
           }
-        }, 2300); // Wait 2.3s + 0.7s animation = 3s total
+        }, 2300);
       });
     }
   })();
