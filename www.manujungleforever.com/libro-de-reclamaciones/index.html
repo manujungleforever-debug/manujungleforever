@@ -215,7 +215,7 @@
     .ft .fg { grid-template-columns: 1fr; gap: 30px; }
   }
   .libro-box:hover { border-color: rgba(255,255,255,0.3) !important; transform: translateY(-3px); }
-  .fa { font-family: 'Syne', sans-serif; font-size: 0.85rem; line-height: 1.6; color: rgba(255,255,255,0.7); text-transform: uppercase; margin-bottom: 25px; margin-top: 15px; display: block; }
+  .fa { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 800; letter-spacing: 0.05em; line-height: 1.6; color: #ffffff; text-transform: uppercase; margin-bottom: 25px; margin-top: 15px; display: block; }
   .fc p { margin-bottom: 10px; display: flex; align-items: flex-start; gap: 10px; font-size: 0.85rem; color: rgba(255,255,255,0.6); }
   .fc a { color: rgba(255,255,255,0.6); text-decoration: none; transition: color 0.3s ease; }
   .fc a:hover { color: var(--a); }
@@ -227,20 +227,24 @@
   .f-col a i { color: var(--a); font-size: 0.7rem; transition: transform 0.3s ease; }
   .f-col a:hover { color: var(--a); }
   .f-col a:hover i { transform: translateX(3px); }
+
+  .sc { width: 36px; height: 36px; border-radius: 50%; background: var(--a); display: inline-flex; align-items: center; justify-content: center; color: #fff !important; text-decoration: none; transition: transform 0.3s ease; margin-right: 8px; }
+  .sc i { color: #fff !important; width: auto !important; margin-top: 0 !important; }
+  .sc:hover { transform: translateY(-3px); }
 </style>
 <div class="cx">
   <div class="fg" style="display: grid; grid-template-columns: 1.8fr 1fr 1.2fr 1.5fr; gap: 40px; align-items: start;">
     
     <!-- COLUMN 1: Logo & Contact -->
     <div>
-      <a href="../index.html"><img src="../assets/img/logo.png" alt="Manu Jungle Forever" class="fl" loading="lazy" style="max-width: 250px;"></a>
+      <a href="../index.html"><img src="../assets/img/logo.png" alt="Manu Jungle Forever" class="fl" loading="lazy" style="max-width: 320px;"></a>
       <span class="fa">GUIDED JUNGLE TOURS FROM CUSCO TO THE MANU NATIONAL PARK &amp; THE PERUVIAN AMAZON. LOCAL, WILD, AND AUTHENTIC.</span>
       <address class="fc">
         <p><i class="fas fa-map-marker-alt"></i><a href="https://goo.gl/maps/B8NjhLZizA6YKwKD6" target="_blank" rel="noopener">Nuevo Eden, Manu National Park, Peru</a></p>
         <p><i class="fas fa-phone"></i><a href="tel:+51901525679">+51 901 525 679</a></p>
         <p><i class="fas fa-envelope"></i><a href="mailto:discover@manujungleforever.com">discover@manujungleforever.com</a></p>
       </address>
-      <div class="so" style="margin-top: 25px;">
+      <div class="so" style="margin-top: 25px; display: flex; gap: 10px; flex-wrap: wrap;">
         <a href="https://www.facebook.com/manujungleforever" class="sc" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
         <a href="https://www.instagram.com/manujungleforever/?hl=en" class="sc" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
         <a href="https://www.tripadvisor.com/Attraction_Review-g294314-d17476586-Reviews-Hidden_Jungle_Cusco-Cusco_Cusco_Region.html?m=19905" class="sc" target="_blank" rel="noopener" aria-label="TripAdvisor"><i class="custom-tripadvisor-icon"></i></a>
