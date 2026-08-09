@@ -75,13 +75,15 @@
     </div>
     <a href="../contact/index.html" class="nb">Book Now</a>
 
-    <div class="ls-custom" tabindex="0">
-      <div class="ls-current"><span class="flg">&#x1F1FA;&#x1F1F8;</span> EN</div>
-      <ul class="ls-options">
-        <li onclick="doTranslate('en')"><span class="flg">&#x1F1FA;&#x1F1F8;</span> EN</li>
-        <li onclick="doTranslate('es')"><span class="flg">&#x1F1EA;&#x1F1F8;</span> ES</li>
-      </ul>
-    </div>
+    <button class="lang-toggle" onclick="document.cookie.indexOf('googtrans=/en/es')!==-1 ? doTranslate('en') : doTranslate('es')" translate="no">
+      <script>
+        if(document.cookie.indexOf('googtrans=/en/es')!==-1) {
+          document.write('<span class="flg">&#x1F1FA;&#x1F1F8;</span> EN');
+        } else {
+          document.write('<span class="flg">&#x1F1EA;&#x1F1F8;</span> ES');
+        }
+      </script>
+    </button>
   </nav>
   <button class="bg" id="bg" aria-label="Toggle menu" aria-expanded="false"><span class="bb"></span><span class="bb"></span><span class="bb"></span></button>
 </div></header>

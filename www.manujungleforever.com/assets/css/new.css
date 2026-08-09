@@ -364,15 +364,8 @@ img{max-width:100%;height:auto;display:block}a{color:inherit;text-decoration:non
 
 
 /* Language Selector */
-.ls-custom {
-  position: relative;
-  display: inline-block;
-  margin-right: 12px;
-  margin-left: 8px;
-  cursor: pointer;
-  z-index: 1000;
-}
-.ls-current {
+/* Language Selector */
+.lang-toggle {
   background: rgba(255,255,255,.05);
   border: 1px solid rgba(255,255,255,.1);
   color: #fff;
@@ -380,50 +373,16 @@ img{max-width:100%;height:auto;display:block}a{color:inherit;text-decoration:non
   border-radius: 24px;
   font-weight: 600;
   font-size: 0.85rem;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 6px;
   backdrop-filter: blur(10px);
   transition: 0.3s;
+  cursor: pointer;
+  margin-left: 8px;
 }
-.ls-current:hover {
+.lang-toggle:hover {
   background: rgba(255,255,255,.1);
-}
-.ls-options {
-  position: absolute;
-  top: 110%;
-  left: 0;
-  background: var(--k);
-  border: 1px solid rgba(255,255,255,.1);
-  border-radius: 12px;
-  list-style: none;
-  padding: 8px 0;
-  margin: 0;
-  width: 100px;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(10px);
-  transition: 0.3s;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-}
-.ls-custom:focus-within .ls-options, .ls-custom:hover .ls-options {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
-.ls-options li {
-  padding: 8px 16px;
-  color: rgba(255,255,255,.8);
-  font-weight: 500;
-  font-size: 0.85rem;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  transition: 0.2s;
-}
-.ls-options li:hover {
-  background: rgba(255,255,255,.05);
-  color: var(--a);
 }
 .flg {
   font-size: 1.1rem;
