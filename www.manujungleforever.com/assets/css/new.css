@@ -1002,3 +1002,62 @@ body { top: 0px !important; position: relative !important; }
   .policy-card { padding: 30px; }
   .policy-img-placeholder { height: 200px; margin-bottom: 30px; }
 }
+
+/* --- Accordion / Itinerary Cards --- */
+.itinerary-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.itinerary-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+.itinerary-card:hover {
+  background: rgba(255,255,255,0.05);
+  border-color: rgba(255,255,255,0.15);
+}
+.itinerary-toggle {
+  width: 100%;
+  text-align: left;
+  padding: 24px;
+  background: none;
+  border: none;
+  color: #fff;
+  font-family: 'Syne', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s;
+}
+.itinerary-toggle i {
+  color: var(--a);
+  transition: transform 0.3s;
+}
+.itinerary-toggle.active i {
+  transform: rotate(180deg);
+}
+.itinerary-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+  padding: 0 24px;
+}
+.itinerary-toggle.active + .itinerary-content {
+  padding-bottom: 24px;
+}
+.itinerary-content p {
+  color: rgba(255,255,255,0.7);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin-bottom: 12px;
+}
+.itinerary-content p:last-child {
+  margin-bottom: 0;
+}

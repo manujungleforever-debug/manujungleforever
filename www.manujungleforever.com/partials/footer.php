@@ -68,5 +68,26 @@ $rel = $rel ?? '';
   document.querySelectorAll('.r,.rl,.rr').forEach(el => obs.observe(el));
 })();
 </script>
+<script>
+// Accordion
+window.toggleAccordion = function(btn) {
+  const content = btn.nextElementSibling;
+  const isActive = btn.classList.contains('active');
+  
+  document.querySelectorAll('.itinerary-toggle').forEach(function(otherBtn) {
+    otherBtn.classList.remove('active');
+    if(otherBtn.nextElementSibling) {
+       otherBtn.nextElementSibling.style.maxHeight = null;
+    }
+  });
+  
+  if (!isActive) {
+    btn.classList.add('active');
+    if(content) {
+       content.style.maxHeight = content.scrollHeight + "px";
+    }
+  }
+};
+</script>
 </body>
 </html>

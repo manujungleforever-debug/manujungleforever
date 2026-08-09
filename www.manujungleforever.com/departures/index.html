@@ -308,6 +308,27 @@ document.getElementById('bk-form').addEventListener('submit',async function(e){
     msg.textContent='Could not send. Please email discover@manujungleforever.com or use WhatsApp.';
   }finally{btn.disabled=false;btn.innerHTML='<i class="fas fa-paper-plane"></i> Send Enquiry';}
 });
+
+// Accordion
+window.toggleAccordion = function(btn) {
+  const content = btn.nextElementSibling;
+  const isActive = btn.classList.contains('active');
+  
+  document.querySelectorAll('.itinerary-toggle').forEach(function(otherBtn) {
+    otherBtn.classList.remove('active');
+    if(otherBtn.nextElementSibling) {
+       otherBtn.nextElementSibling.style.maxHeight = null;
+    }
+  });
+  
+  if (!isActive) {
+    btn.classList.add('active');
+    if(content) {
+       content.style.maxHeight = content.scrollHeight + "px";
+    }
+  }
+};
+
 </script>
 
 <div id="google_translate_element" style="display:none;"></div>
