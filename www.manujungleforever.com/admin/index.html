@@ -55,95 +55,13 @@
     .err-msg{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:8px;padding:12px;color:var(--danger);font-size:0.85rem;margin-bottom:20px;display:none;}
     .lcard .ff label{color:#475569;font-weight:500;font-size:0.9rem;margin-bottom:8px;}
     .lcard .ff input{background:#f8fafc;border:1px solid #e2e8f0;color:#1e293b;padding:14px;border-radius:10px;font-size:1rem;transition:border-color 0.2s;}
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Panel de Administración – Manu Jungle Forever</title>
-  <meta name="robots" content="noindex, nofollow">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="icon" href="../assets/media_to_upload/photos/placeholder.jpg">
-  <style>
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-    :root{
-      /* Main Content (Light) */
-      --bg: #f3f4f6;
-      --surface: #ffffff;
-      --card: #ffffff;
-      --border: #e2e8f0;
-      --text: #1e293b;
-      --muted: #64748b;
-      
-      /* Sidebar / Dark Elements */
-      --sidebar-bg: #0f172a;
-      --sidebar-surface: #1e293b;
-      --sidebar-text: #f8fafc;
-      --sidebar-border: #334155;
-      
-      /* Accents */
-      --gold: #0d9488;
-      --gold-dim: #0f766e;
-      --green: #10b981;
-      --danger: #ef4444;
-      --success: #10b981;
-      --r: 12px;
-    }
-    html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);}
-    input,textarea,select,button{font-family:inherit;}
-    a{color:var(--gold);}
-
-    /* ── LOGIN ─────────────────────────────── */
-    #login-screen{display:grid;grid-template-columns:1fr 1fr;min-height:100vh;background:#fff;}
-    .ls-left{background:linear-gradient(135deg, #0f172a 0%, #0d9488 100%);color:#fff;padding:60px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;}
-    
-    @keyframes adminLogoEmerging {
-      0% { opacity: 0; transform: translateY(40px) scale(0.9); clip-path: inset(100% -50% -50% -50%); filter: drop-shadow(0 0 0 rgba(255,255,255,0)); }
-      100% { opacity: 1; transform: translateY(0) scale(1); clip-path: inset(-50% -50% -50% -50%); filter: drop-shadow(0 4px 20px rgba(0,0,0,0.3)); }
-    }
-    @keyframes adminLogoFloatWave {
-      0%, 100% { transform: translateY(0); filter: drop-shadow(0 4px 20px rgba(0,0,0,0.3)); }
-      50% { transform: translateY(-8px); filter: drop-shadow(0 15px 30px rgba(255,255,255,0.25)); }
-    }
-    @keyframes waterRipple {
-      0% { width: 60px; height: 15px; opacity: 0.8; }
-      100% { width: 220px; height: 60px; opacity: 0; }
-    }
-    .ls-left .logo { position: relative; display: inline-block; margin-bottom:30px; }
-    .ls-left .logo::after {
-      content: ''; position: absolute; bottom: 0px; left: 50%; transform: translateX(-50%);
-      background: radial-gradient(ellipse at center, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0) 70%);
-      border-radius: 50%; animation: waterRipple 3s infinite ease-out 1.5s; opacity: 0; pointer-events: none;
-    }
-    .ls-left .logo img{
-      height:130px; display: block; position: relative; z-index: 2;
-      animation: adminLogoEmerging 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards, adminLogoFloatWave 4s ease-in-out 1.5s infinite;
-      will-change: transform, filter, clip-path;
-    }
-    
-    .ls-left h1{font-size:2rem;font-weight:700;margin-bottom:16px;}
-    .ls-left p{color:rgba(255,255,255,0.8);line-height:1.6;margin-bottom:40px;max-width:400px;}
-    .ls-stats{display:flex;gap:30px;margin-top:20px;}
-    .ls-stat{background:rgba(255,255,255,0.1);padding:15px 25px;border-radius:12px;backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.1);}
-    .ls-stat h3{font-size:1.5rem;margin-bottom:4px;}
-    .ls-stat span{font-size:0.8rem;opacity:0.8;}
-    
-    .ls-right{display:flex;align-items:center;justify-content:center;padding:40px;}
-    .lcard{background:#fff;border-radius:20px;padding:40px;width:100%;max-width:420px;box-shadow:none;}
-    .lcard h2{font-size:1.8rem;font-weight:700;margin-bottom:8px;color:#1e293b;}
-    .lcard p.sub{font-size:0.95rem;color:#64748b;margin-bottom:32px;}
-    .err-msg{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:8px;padding:12px;color:var(--danger);font-size:0.85rem;margin-bottom:20px;display:none;}
-    .lcard .ff label{color:#475569;font-weight:500;font-size:0.9rem;margin-bottom:8px;}
-    .lcard .ff input{background:#f8fafc;border:1px solid #e2e8f0;color:#1e293b;padding:14px;border-radius:10px;font-size:1rem;transition:border-color 0.2s;}
     .lcard .ff input:focus{border-color:var(--gold);outline:none;background:#fff;}
     .btn-login{background:var(--gold);color:#fff;border:none;border-radius:10px;padding:14px;font-size:1rem;font-weight:600;cursor:pointer;transition:background 0.2s;width:100%;margin-top:10px;box-shadow:0 4px 14px rgba(13,148,136,0.3);}
     .btn-login:hover{background:var(--gold-dim);}
     
     .ls-quick{margin-top:40px;padding-top:30px;border-top:1px solid #e2e8f0;}
     .ls-quick h4{font-size:0.8rem;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;}
-    .ls-quick-card{background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:16px;display:flex;align-items:center;gap:16px;cursor:pointer;transition:all 0.2s;}
-    .ls-quick-card:hover{background:#f1f5f9;border-color:#cbd5e1;transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.05);}
+    .ls-quick-card{background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:16px;display:flex;align-items:center;gap:16px;}
     .ls-quick-card img{width:40px;height:40px;border-radius:50%;object-fit:cover;}
     .ls-quick-info p{font-size:0.9rem;font-weight:600;color:#1e293b;}
     .ls-quick-info span{font-size:0.8rem;color:#64748b;}
@@ -155,34 +73,58 @@
 
     /* ── APP SHELL ─────────────────────────────── */
     #app{display:none;height:100vh;flex-direction:column;}
-    header{display:flex;align-items:center;min-height:85px;background:var(--surface);
+    header{display:flex;align-items:center;min-height:80px;background:var(--surface);
       border-bottom:1px solid var(--border);flex-shrink:0;gap:0;}
-    .hbrand{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;font-weight:600;font-size:0.85rem;
-      padding:10px 24px;white-space:nowrap;background:linear-gradient(135deg, #0f172a 0%, #0d9488 100%);color:white;width:260px;height:100%;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,0.1);}
-    .hbrand img{height:55px; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.3s; filter: drop-shadow(0 0 4px rgba(0,0,0,0.3));}
-    .hbrand:hover img{transform: scale(1.15) rotate(-5deg); filter: drop-shadow(0 0 12px rgba(13,148,136,0.6));}
-    header nav{display:flex;flex:1;overflow-x:auto;padding:0 8px;align-self:stretch;}
-    header nav button{display:flex;align-items:center;gap:6px;background:none;border:none;color:var(--muted);padding:0 15px;align-self:stretch;
-      cursor:pointer;font-size:.85rem;font-weight:600;white-space:nowrap;
-      border-bottom:3px solid transparent;transition:color .15s,border-color .15s;}
+    .hbrand{
+      display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+      width:260px;flex-shrink:0;height:100%;
+      background:linear-gradient(160deg,#0f172a 0%,#0d9488 120%);
+      color:white;font-weight:700;font-size:0.8rem;letter-spacing:0.03em;
+      border-right:1px solid rgba(255,255,255,0.1);
+    }
+    .hbrand img{height:50px;transition:transform 0.3s cubic-bezier(0.175,0.885,0.32,1.275),filter 0.3s;filter:drop-shadow(0 0 6px rgba(0,0,0,0.4));}
+    .hbrand:hover img{transform:scale(1.12) rotate(-4deg);filter:drop-shadow(0 0 14px rgba(13,212,188,0.7));}
+    header nav{display:flex;flex:1;overflow-x:auto;padding:0 12px;align-self:stretch;}
+    header nav button{
+      display:inline-flex;align-items:center;gap:7px;
+      background:none;border:none;color:var(--muted);padding:0 16px;align-self:stretch;
+      cursor:pointer;font-size:.87rem;font-weight:600;white-space:nowrap;
+      border-bottom:3px solid transparent;transition:color .15s,border-color .15s;
+    }
+    header nav button i{font-size:1.1rem;}
     header nav button:hover{color:var(--text);}
     header nav button.active{color:var(--gold);border-bottom-color:var(--gold);}
-    .hright{display:flex;align-items:center;gap:8px;padding:0 14px;flex-shrink:0;}
-    .huser{font-size:.78rem;color:var(--muted);font-weight:500;}
-    .btn-logout{background:#f1f5f9;border:1px solid #e2e8f0;color:#64748b;
-      padding:6px 14px;border-radius:8px;cursor:pointer;font-size:.78rem;font-weight:600;transition:all .15s;display:flex;align-items:center;gap:6px;}
+    .hright{display:flex;align-items:center;gap:8px;padding:0 18px;flex-shrink:0;}
+    .huser{font-size:.78rem;color:var(--muted);font-weight:500;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+    .btn-logout{
+      background:#f1f5f9;border:1px solid #e2e8f0;color:#64748b;
+      padding:7px 16px;border-radius:8px;cursor:pointer;font-size:.8rem;font-weight:600;
+      transition:all .15s;display:inline-flex;align-items:center;gap:6px;
+    }
     .btn-logout:hover{background:#fee2e2;border-color:#fca5a5;color:var(--danger);}
 
     .app-body{display:flex;flex:1;overflow:hidden;}
-    aside{width:260px;background:linear-gradient(135deg, #0f172a -20%, #0d9488 120%);
-      overflow-y:auto;flex-shrink:0;padding:16px 0;}
-    aside .slabel{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;
-      color:rgba(255,255,255,0.5);padding:14px 24px 8px;}
-    aside button{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:none;border:none;
-      color:rgba(255,255,255,0.7);padding:12px 24px;cursor:pointer;font-size:.9rem;font-weight:500;
-      border-left:3px solid transparent;transition:all .15s;}
-    aside button:hover{background:rgba(255,255,255,0.05);color:white;}
-    aside button.active{background:rgba(255,255,255,0.1);color:white;border-left-color:var(--green);font-weight:600;}
+    aside{
+      width:260px;flex-shrink:0;overflow-y:auto;padding:20px 0;
+      background:linear-gradient(160deg,#0f172a 0%,#0d9488 120%);
+    }
+    aside .slabel{
+      font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;
+      color:rgba(255,255,255,0.4);padding:18px 24px 8px;
+    }
+    aside button{
+      display:flex;align-items:center;gap:10px;
+      width:100%;text-align:left;background:none;border:none;
+      color:rgba(255,255,255,0.65);padding:12px 24px;
+      cursor:pointer;font-size:.9rem;font-weight:500;
+      border-left:3px solid transparent;transition:all .15s;
+    }
+    aside button i{font-size:1.25rem;flex-shrink:0;}
+    aside button:hover{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.95);}
+    aside button.active{
+      background:rgba(255,255,255,0.12);color:white;
+      border-left-color:#10b981;font-weight:600;
+    }
 
     main{flex:1;overflow-y:auto;padding:32px 40px 80px;}
 
@@ -282,7 +224,7 @@
     .m-item:hover .btn-del{display:flex;}
 
     /* ── SAVE BAR ──────────────────────────────── */
-    .save-bar{position:fixed;bottom:0;left:220px;right:0;background:var(--surface);
+    .save-bar{position:fixed;bottom:0;left:260px;right:0;background:var(--surface);
       border-top:1px solid var(--border);padding:14px 32px;
       display:flex;align-items:center;justify-content:flex-end;gap:12px;
       z-index:100;transition:left .2s;box-shadow:0 -4px 20px rgba(0,0,0,0.03);}
@@ -314,7 +256,7 @@
   
       @media (max-width: 768px) {
             header { display: grid !important; grid-template-columns: auto 1fr auto; height: auto !important; padding: 0; align-items: center; }
-            .hbrand { width: auto; height: auto !important; border-right: none; border-bottom: none; padding: 12px 18px; flex-direction:row; background:linear-gradient(135deg, #0f172a 0%, #0d9488 100%); }
+            .hbrand { width: auto; height: auto !important; border-right: none; border-bottom: none; padding: 12px 18px; flex-direction:row; }
             .hbrand img { height: 40px; }
             .hbrand span { display: none; }
             .hright { justify-content: flex-end; padding: 0 10px; border-top: none; }
@@ -325,7 +267,7 @@
             main > div[style*="space-between"] { flex-direction: column !important; align-items: stretch !important; gap: 12px; }
             main > div[style*="space-between"] button { width: 100%; }
           .app-body { flex-direction: column; }
-          aside { width: 100%; display: flex; overflow-x: auto; padding: 0; border-right: none; border-bottom: 1px solid var(--sidebar-border); }
+          aside { width: 100%; display: flex; overflow-x: auto; padding: 0; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.15); }
           aside .slabel { display: none; }
           aside button { width: auto; white-space: nowrap; border-left: none; border-bottom: 2px solid transparent; padding: 12px 18px; }
           aside button.active { border-left-color: transparent; border-bottom-color: var(--gold); }
@@ -340,7 +282,7 @@
   .sc i { color: #fff !important; margin-top: 0 !important; }
   .sc:hover { transform: translateY(-3px); }
 </style>
-<script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
 <body>
 
@@ -353,14 +295,14 @@
       
       <div style="display:flex; flex-direction:column; gap:20px; text-align:left; max-width:300px; margin-top:20px;">
         <div style="display:flex; align-items:center; gap:16px;">
-          <div style="background:rgba(255,255,255,0.1); width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size: 1.2rem;"><i class="ph ph-pencil-simple" style="font-size:1.4rem"></i></div>
+          <div style="background:rgba(255,255,255,0.1); width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size: 1.2rem;">📝</div>
           <div>
             <h4 style="margin:0; font-size:0.95rem;">Gestión de Contenidos</h4>
             <span style="font-size:0.8rem; opacity:0.7;">Control total de tours, blog y testimonios.</span>
           </div>
         </div>
         <div style="display:flex; align-items:center; gap:16px;">
-          <div style="background:rgba(255,255,255,0.1); width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size: 1.2rem;"><i class="ph ph-image" style="font-size:1.4rem"></i></div>
+          <div style="background:rgba(255,255,255,0.1); width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size: 1.2rem;">🖼️</div>
           <div>
             <h4 style="margin:0; font-size:0.95rem;">Galería de Medios (R2)</h4>
             <span style="font-size:0.8rem; opacity:0.7;">Almacenamiento ultra rápido en la nube.</span>
@@ -419,6 +361,25 @@
     <button id="mobile-btn" style="display:none;background:none;border:none;color:var(--muted);font-size:1.6rem;padding:0 18px;cursor:pointer;line-height:1;" onclick="document.getElementById('top-nav').classList.toggle('show-menu')">☰</button>
   </header>
   <div class="app-body">
+    <aside id="sidebar"></aside>
+    <main id="mc"></main>
+  </div>
+  <div class="save-bar" id="save-bar" style="display:none">
+    <span class="save-status" id="save-status"></span>
+    <button class="btn-secondary" id="btn-cancel-save">Cancelar</button>
+    <button class="btn-primary" id="btn-save"><i class="ph ph-floppy-disk"></i> Guardar cambios</button>
+  </div>
+</div>
+
+<!-- DELETE CONFIRM MODAL -->
+<div class="modal-bg" id="del-modal">
+  <div class="modal">
+    <div class="modal-h"><h3 id="del-title">¿Eliminar este elemento?</h3></div>
+    <div class="modal-body">
+      <p style="font-size:.85rem;color:var(--muted)" id="del-msg">Esta acción no se puede deshacer.</p>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeModal('del-modal')">Cancelar</button>
       <button class="btn-danger" id="del-confirm">Sí, eliminar</button>
     </div>
   </div>
@@ -428,7 +389,7 @@
 <div class="modal-bg" id="media-modal">
   <div class="modal lg">
     <div class="modal-h">
-      <h3><i class="ph ph-image" style="font-size:1.4rem"></i> Seleccionar Medio</h3>
+      <h3>🖼️ Seleccionar Medio</h3>
       <div style="display:flex;gap:8px;">
         <button class="btn-primary" onclick="document.getElementById('media-upload').click()">📁 Archivo(s)</button>
         <button class="btn-secondary" onclick="document.getElementById('media-upload-folder').click()">📂 Carpeta</button>
@@ -459,17 +420,17 @@ let saveFnRef = null;
 // NAV
 // ─────────────────────────────────────────────────────────────────────────────
 const SECTIONS = [
-  { id:'blog',    label:'✍️ Blog',       sub:[] },
-  { id:'content', label:'📄 Contenido',  sub:[
-    {id:'home',    label:'🏠 Inicio'},
-    {id:'about',   label:'ℹ️ Sobre Nosotros'},
-    {id:'contact', label:'📞 Contacto'},
-    {id:'global',  label:'⚙️ Datos Globales'},
+  { id:'blog',    label:'<i class="ph ph-article"></i> Blog',       sub:[] },
+  { id:'content', label:'<i class="ph ph-file-text"></i> Contenido',  sub:[
+    {id:'home',    label:'<i class="ph ph-house"></i> Inicio'},
+    {id:'about',   label:'<i class="ph ph-info"></i> Sobre Nosotros'},
+    {id:'contact', label:'<i class="ph ph-phone"></i> Contacto'},
+    {id:'global',  label:'<i class="ph ph-globe"></i> Datos Globales'},
   ]},
-  { id:'tours',        label:'🌿 Tours',       sub:[] },
-  { id:'departures',   label:'📅 Salidas',     sub:[] },
-  { id:'testimonials', label:'⭐ Testimonios', sub:[] },
-  { id:'media',        label:'<i class="ph ph-image" style="font-size:1.4rem"></i> Medios',      sub:[] }
+  { id:'tours',        label:'<i class="ph ph-leaf"></i> Tours',       sub:[] },
+  { id:'departures',   label:'<i class="ph ph-calendar-blank"></i> Salidas',     sub:[] },
+  { id:'testimonials', label:'<i class="ph ph-star"></i> Testimonios', sub:[] },
+  { id:'media',        label:'<i class="ph ph-image"></i> Medios',      sub:[] }
 ];
 
 function buildTopNav() {
@@ -761,7 +722,7 @@ function imgWidget(id, label, value='', hint='') {
     <div class="img-field-wrap">
       <div class="img-input-row">
         <input id="${id}" value="${esc(value)}" placeholder="URL o ruta de imagen" oninput="updateImgPreview('${id}','${pid}')">
-        <button type="button" class="btn-secondary" onclick="pickImage('${id}','${pid}')"><i class="ph ph-image" style="font-size:1.4rem"></i> Seleccionar</button>
+        <button type="button" class="btn-secondary" onclick="pickImage('${id}','${pid}')">🖼️ Seleccionar</button>
       </div>
       ${value ? `<img class="img-preview show" id="${pid}" src="${esc(value)}" alt="">` : `<img class="img-preview" id="${pid}" alt="">`}
       ${hint?`<span class="hint">${hint}</span>`:''}
@@ -774,7 +735,7 @@ function imgWidget(id, label, value='', hint='') {
 async function viewMedia() {
   set(`
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
-      <div><p class="pt"><i class="ph ph-image" style="font-size:1.4rem"></i> Biblioteca de Medios</p><p class="ps">Gestiona todas las imágenes y videos (Cloudflare R2)</p></div>
+      <div><p class="pt">🖼️ Biblioteca de Medios</p><p class="ps">Gestiona todas las imágenes y videos (Cloudflare R2)</p></div>
       <div style="display:flex;gap:8px;align-items:center;">
         <span id="main-upload-prog" style="font-size:.8rem;color:var(--gold);margin-right:8px;"></span>
         <button class="btn-primary" onclick="document.getElementById('media-upload').click()">📁 Subir archivo(s)</button>
@@ -812,7 +773,7 @@ function mdToolbar(textareaId) {
     ['1. Lista','1. ',''],['```Código','```\n','\n```'],
   ];
   return `<div class="md-wrap">
-      <div class="md-toolbar">${cmds.map(([l,b,a])=>`<button type="button" onclick="mdWrap('${textareaId}','${b.replace(/\n/g,'\\n').replace(/'/g,"\\'")}','${a.replace(/\n/g,'\\n').replace(/'/g,"\\'")}')" title="${l}">${l}</button>`).join('')} <button type="button" onclick="openMediaModal((url) => { mdWrap('${textareaId}', '![alt](', url + ')') })" title="Insertar Imagen de R2"><i class="ph ph-image" style="font-size:1.4rem"></i> R2</button></div>
+      <div class="md-toolbar">${cmds.map(([l,b,a])=>`<button type="button" onclick="mdWrap('${textareaId}','${b.replace(/\n/g,'\\n').replace(/'/g,"\\'")}','${a.replace(/\n/g,'\\n').replace(/'/g,"\\'")}')" title="${l}">${l}</button>`).join('')} <button type="button" onclick="openMediaModal((url) => { mdWrap('${textareaId}', '![alt](', url + ')') })" title="Insertar Imagen de R2">🖼️ R2</button></div>
     <textarea id="${textareaId}" style="width:100%; box-sizing:border-box; resize:vertical; min-height:320px; font-family:monospace; font-size:.83rem; line-height:1.6; border:none; border-radius:0; background:rgba(255,255,255,.03); padding:12px"></textarea>
   </div>`;
 }
@@ -933,14 +894,14 @@ function blogFields(fm) {
       <div class="ff"><label>Estado</label>
         <div class="tgl-wrap" style="margin-top:6px">
           <label class="tgl"><input type="checkbox" id="f-pub" ${fm.publicado!==false?'checked':''}><span class="tgl-s"></span></label>
-          <span id="pub-lbl">${fm.publicado!==false?'✅ Publicado':'<i class="ph ph-pencil-simple" style="font-size:1.4rem"></i> Borrador'}</span>
+          <span id="pub-lbl">${fm.publicado!==false?'✅ Publicado':'📝 Borrador'}</span>
         </div>
       </div>
     </div>
     <div class="ff"><label>Extracto (resumen para el listado)</label><textarea id="f-ext" style="min-height:70px">${esc(fm.extracto||'')}</textarea></div>
     ${imgWidget('f-img','Imagen de portada',fm.imagen||'','Recomendado: 1200×600px')}
     <div class="ff"><label>Texto alternativo de la imagen</label><input id="f-imgalt" value="${esc(fm.imagen_alt||'')}"></div>
-    <script>document.getElementById('f-pub').addEventListener('change',e=>{document.getElementById('pub-lbl').textContent=e.target.checked?'✅ Publicado':'<i class="ph ph-pencil-simple" style="font-size:1.4rem"></i> Borrador';})<\/script>`;
+    <script>document.getElementById('f-pub').addEventListener('change',e=>{document.getElementById('pub-lbl').textContent=e.target.checked?'✅ Publicado':'📝 Borrador';})<\/script>`;
 }
 
 function readBlogFields() {
@@ -1451,7 +1412,8 @@ function buildFM(fm,body) {
 }
 </script>
 
-
+<!-- TSPARTICLES -->
+<script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     const div = document.createElement("div");
