@@ -35,7 +35,7 @@ export async function onRequestGet(context) {
 
   if (!ghRes.ok) {
     const err = await ghRes.json().catch(() => ({}));
-    return json({ error: err.message || 'GitHub error' }, ghRes.status);
+    return json({ error: err.message || 'GitHub error' }, ghRes.status === 401 ? 502 : ghRes.status);
   }
 
   const data = await ghRes.json();
@@ -95,7 +95,7 @@ export async function onRequestPut(context) {
 
   if (!ghRes.ok) {
     const err = await ghRes.json().catch(() => ({}));
-    return json({ error: err.message || 'Error escribiendo en GitHub' }, ghRes.status);
+    return json({ error: err.message || 'Error escribiendo en GitHub' }, ghRes.status === 401 ? 502 : ghRes.status);
   }
 
   const result = await ghRes.json();
@@ -118,7 +118,7 @@ export async function onRequestDelete(context) {
 
   if (!ghRes.ok) {
     const err = await ghRes.json().catch(() => ({}));
-    return json({ error: err.message || 'Error eliminando archivo' }, ghRes.status);
+    return json({ error: err.message || 'Error eliminando archivo' }, ghRes.status === 401 ? 502 : ghRes.status);
   }
 
   return json({ ok: true });
