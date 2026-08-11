@@ -534,7 +534,7 @@ async function ghDelete(path, sha, msg) {
 
 // R2 Media API
 async function r2GetList() {
-  const r = await fetch(`${MEDIA_API}/index`,{headers:{Authorization:`Bearer ${token}`}});
+  const r = await fetch(`${MEDIA_API}`,{headers:{Authorization:`Bearer ${token}`}});
   if (r.status===401){sessionStorage.clear();location.reload();}
   const d=await r.json(); if(!r.ok)throw new Error(d.error||'Error al cargar galería');
   return d.files || [];
@@ -542,7 +542,7 @@ async function r2GetList() {
 
 async function r2Upload(file, progressEl) {
   if (progressEl) progressEl.textContent = 'Subiendo a R2...';
-  const r = await fetch(`${MEDIA_API}/index`, {
+  const r = await fetch(`${MEDIA_API}`, {
     method: 'POST',
     headers: { 
       Authorization: `Bearer ${token}`, 
