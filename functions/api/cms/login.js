@@ -13,23 +13,24 @@ export async function onRequestPost(context) {
   try {
     const { user, pass } = await request.json();
 
-    if (!env.CMS_USER || !env.CMS_PASSWORD || !env.CMS_SECRET) {
-      return json({ error: 'Panel no configurado. Contacta al administrador.' }, 500);
-    }
+    const validUser = 'manujungleforever@gmail.com';
+    const validPass = '123456aytana';
+    // CMS_SECRET desde env o fallback local
+    const secret = env.CMS_SECRET || 'mjf-cms-secret-2026-manujungleforever';
 
-    if (user !== env.CMS_USER || pass !== env.CMS_PASSWORD) {
+    if (user !== validUser || pass !== validPass) {
       return json({ error: 'Usuario o contraseña incorrectos.' }, 401);
     }
 
     // Token simple: base64(payload).signature
     const payload = btoa(JSON.stringify({ user, exp: Date.now() + 8 * 3600 * 1000 }));
-    const sig = await hmac(payload, env.CMS_SECRET);
+    const sig = await hmac(payload, secret);
     const token = `${payload}.${sig}`;
 
     return json({ token });
 
   } catch (e) {
-    return json({ error: 'Error interno.' }, 500);
+    return json({ error: 'Error interno: ' + e.message }, 500);
   }
 }
 

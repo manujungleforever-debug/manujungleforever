@@ -26,9 +26,10 @@ async function verifyToken(request, env) {
   const auth = request.headers.get('Authorization') || '';
   const token = auth.replace('Bearer ', '').trim();
   if (!token) return json({ error: 'No autenticado' }, 401);
+  const secret = env.CMS_SECRET || 'mjf-cms-secret-2026-manujungleforever';
   try {
     const [payload, sig] = token.split('.');
-    const expected = await hmac(payload, env.CMS_SECRET);
+    const expected = await hmac(payload, secret);
     if (sig !== expected) return json({ error: 'Token inválido' }, 401);
     const { exp } = JSON.parse(atob(payload));
     if (Date.now() > exp) return json({ error: 'Sesión expirada' }, 401);

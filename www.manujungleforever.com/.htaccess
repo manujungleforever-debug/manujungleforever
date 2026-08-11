@@ -68,5 +68,5 @@ ServerSignature Off
 </FilesMatch>
 
 # ─── Custom error pages ───────────────────────────────────────────
-ErrorDocument 404 /index.php
-ErrorDocument 500 /index.php
+ErrorDocument 404 /404.html
+ErrorDocument 500 /404.html

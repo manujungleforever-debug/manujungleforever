@@ -1,3 +1,4 @@
+<?php require_once __DIR__.'/config.php'; ?>
 <!doctype html><html lang="en"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Cusco Jungle &amp; Manu National Park Tours | Manu Jungle Forever</title>
@@ -147,76 +148,175 @@
   <p>Conforme a lo establecido en el Código de Protección y Defensa del Consumidor, Ley N° 29571.</p>
 </div>
 
-<div class="reclamo-box">
-  <h3>Hoja de Reclamación Virtual</h3>
-  <p>La formulación del reclamo no impide acudir a otras vías de solución de controversias ni es requisito previo para interponer una denuncia ante el INDECOPI.</p>
+
+<div class="reclamo-wrapper">
+  <div class="reclamo-box">
+    <h3 class="reclamo-subtitle">Hoja de Reclamación Virtual</h3>
+    <p class="reclamo-desc">La formulación del reclamo no impide acudir a otras vías de solución de controversias ni es requisito previo para interponer una denuncia ante el INDECOPI.</p>
+  </div>
+
+  <form id="formReclamo" class="reclamo-form-container" novalidate>
+    <!-- Honeypot anti-spam -->
+    <div style="display:none;">
+        <label>Si eres humano, deja este campo en blanco</label>
+        <input type="text" name="website_url" value="">
+    </div>
+    
+    <!-- 1. IDENTIFICACIÓN DEL CONSUMIDOR RECLAMANTE -->
+    <div class="reclamo-section">
+        <h4>1. Identificación del Consumidor</h4>
+        <div class="reclamo-grid">
+            <div class="reclamo-group">
+                <label>Nombres y Apellidos *</label>
+                <input type="text" name="nombres" required>
+            </div>
+            <div class="reclamo-group">
+                <label>DNI / CE / RUC *</label>
+                <input type="text" name="documento" required>
+            </div>
+            <div class="reclamo-group full-width">
+                <label>Domicilio *</label>
+                <input type="text" name="domicilio" required>
+            </div>
+            <div class="reclamo-group">
+                <label>Teléfono / Celular *</label>
+                <input type="tel" name="telefono" required>
+            </div>
+            <div class="reclamo-group">
+                <label>Correo Electrónico *</label>
+                <input type="email" name="correo" required>
+            </div>
+            <div class="reclamo-group full-width">
+                <label>Padre o Madre (Solo en caso de menores de edad)</label>
+                <input type="text" name="apoderado" placeholder="Nombres y apellidos del apoderado">
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. IDENTIFICACIÓN DEL BIEN CONTRATADO -->
+    <div class="reclamo-section">
+        <h4>2. Identificación del Bien Contratado</h4>
+        <div class="reclamo-grid">
+            <div class="reclamo-group">
+                <label>Tipo de Bien *</label>
+                <div class="reclamo-radio-group">
+                    <label class="reclamo-radio">
+                        <input type="radio" name="bien_tipo" value="Producto" required>
+                        <span>Producto</span>
+                    </label>
+                    <label class="reclamo-radio">
+                        <input type="radio" name="bien_tipo" value="Servicio" required>
+                        <span>Servicio</span>
+                    </label>
+                </div>
+            </div>
+            <div class="reclamo-group">
+                <label>Monto Reclamado (Opcional)</label>
+                <input type="number" step="0.01" name="bien_monto" placeholder="0.00">
+            </div>
+            <div class="reclamo-group full-width">
+                <label>Descripción del Producto/Servicio *</label>
+                <textarea name="bien_descripcion" rows="3" required placeholder="Ej. Tour de 3 días..."></textarea>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 3. DETALLE DE LA RECLAMACIÓN Y PEDIDO -->
+    <div class="reclamo-section">
+        <h4>3. Detalle de la Reclamación y Pedido</h4>
+        <div class="reclamo-group full-width">
+            <label>Tipo de Reclamación *</label>
+            <div class="reclamo-cards">
+                <label class="reclamo-card">
+                    <input type="radio" name="tipo" value="Reclamo" required>
+                    <div class="reclamo-card-content">
+                        <span class="reclamo-card-title">Reclamo</span>
+                        <span class="reclamo-card-desc">Disconformidad relacionada a los productos o servicios.</span>
+                    </div>
+                </label>
+                <label class="reclamo-card">
+                    <input type="radio" name="tipo" value="Queja" required>
+                    <div class="reclamo-card-content">
+                        <span class="reclamo-card-title">Queja</span>
+                        <span class="reclamo-card-desc">Disconformidad no relacionada a los productos o servicios; o, malestar o descontento respecto a la atención al público.</span>
+                    </div>
+                </label>
+            </div>
+        </div>
+        
+        <div class="reclamo-group full-width">
+            <label>Detalle de lo ocurrido *</label>
+            <textarea name="detalle" rows="4" required placeholder="Describa los hechos..."></textarea>
+        </div>
+        <div class="reclamo-group full-width">
+            <label>Pedido (Lo que usted solicita) *</label>
+            <textarea name="pedido" rows="3" required placeholder="Indique qué solicita como solución..."></textarea>
+        </div>
+    </div>
+
+    <!-- DECLARACIÓN JURADA -->
+    <div class="reclamo-section">
+        <label class="reclamo-checkbox">
+            <input type="checkbox" id="declaracion" required>
+            <span>
+                Declaro que el contenido de mi reclamación es verdadero y acepto las <a href="../privacy-policy/index.html" target="_blank">Políticas de Privacidad</a> para el tratamiento de mis datos personales en la gestión de mi reclamo/queja.
+            </span>
+        </label>
+    </div>
+
+    <!-- CAPTCHA Matemático -->
+    <div class="reclamo-section captcha-section">
+        <label><i class="fa-solid fa-shield-halved"></i> Verificación de Seguridad *</label>
+        <div class="captcha-container">
+            <div id="captcha-box"></div>
+            <input type="number" id="captcha-input" required placeholder="Resultado matemático">
+        </div>
+    </div>
+    
+    <button type="submit" class="reclamo-btn-submit">
+        Enviar Libro de Reclamaciones
+    </button>
+  </form>
 </div>
 
-<form>
-  <div class="reclamo-box glow">
-    <h3>1. Identificación del Consumidor</h3>
-    <div class="reclamo-form-row">
-      <div class="reclamo-input-group">
-        <label>Nombres y Apellidos *</label>
-        <input type="text" required>
-      </div>
-      <div class="reclamo-input-group">
-        <label>DNI / CE / RUC *</label>
-        <input type="text" required>
-      </div>
-    </div>
-    <div class="reclamo-form-row" style="grid-template-columns: 1fr;">
-      <div class="reclamo-input-group">
-        <label>Domicilio *</label>
-        <input type="text" required>
-      </div>
-    </div>
-    <div class="reclamo-form-row">
-      <div class="reclamo-input-group">
-        <label>Teléfono *</label>
-        <input type="text" required>
-      </div>
-      <div class="reclamo-input-group">
-        <label>Correo Electrónico *</label>
-        <input type="email" required>
-      </div>
-    </div>
-  </div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Captcha
+    const captchaBox = document.getElementById('captcha-box');
+    const captchaInput = document.getElementById('captcha-input');
+    let expectedCaptcha = 0;
+    function generateCaptcha() {
+        const n1 = Math.floor(Math.random() * 10) + 1;
+        const n2 = Math.floor(Math.random() * 10) + 1;
+        expectedCaptcha = n1 + n2;
+        if(captchaBox) captchaBox.innerText = `${n1} + ${n2} =`;
+        if(captchaInput) captchaInput.value = '';
+    }
+    if (captchaBox) generateCaptcha();
 
-  <div class="reclamo-box glow">
-    <h3>2. Detalle del Reclamo / Queja</h3>
-    <div class="reclamo-form-row">
-      <div class="reclamo-input-group">
-        <label>Tipo *</label>
-        <select required>
-          <option value="">Seleccionar...</option>
-          <option value="reclamo">Reclamo (Disconformidad relacionada a los productos o servicios)</option>
-          <option value="queja">Queja (Disconformidad no relacionada a los productos o servicios)</option>
-        </select>
-      </div>
-      <div class="reclamo-input-group">
-        <label>Fecha de la incidencia *</label>
-        <input type="date" required>
-      </div>
-    </div>
-    <div class="reclamo-form-row" style="grid-template-columns: 1fr;">
-      <div class="reclamo-input-group">
-        <label>Detalle *</label>
-        <textarea rows="4" required placeholder="Describa el hecho..."></textarea>
-      </div>
-    </div>
-    <div class="reclamo-form-row" style="grid-template-columns: 1fr;">
-      <div class="reclamo-input-group">
-        <label>Pedido *</label>
-        <textarea rows="3" required placeholder="Indique su petición..."></textarea>
-      </div>
-    </div>
-  </div>
+    // Formularios Submit (Por ahora validamos y mostramos alerta hasta tener la API)
+    const form = document.getElementById('formReclamo');
+    if(form) {
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            if (parseInt(captchaInput.value) !== expectedCaptcha) {
+                captchaInput.style.borderColor = 'red';
+                captchaInput.value = '';
+                captchaInput.placeholder = '¡Incorrecto!';
+                setTimeout(() => {
+                    captchaInput.style.borderColor = '';
+                    captchaInput.placeholder = 'Resultado matemático';
+                }, 2000);
+                generateCaptcha();
+                return;
+            }
+            alert("El formulario está listo para integrarse con la API de Resend.");
+            // Aquí irá la lógica de fetch
+        });
+    }
+});
+</script>
 
-  <div style="text-align: right;">
-    <button type="submit" class="reclamo-submit">Enviar Reclamo</button>
-  </div>
-</form>
 
     </div>
   </div>
@@ -225,117 +325,46 @@
 
 
 
-<footer class="ft">
-<style>
-  @media (max-width: 991px) {
-    .ft .fg { grid-template-columns: 1fr; gap: 30px; }
-  }
-  .libro-box:hover { border-color: rgba(255,255,255,0.3) !important; transform: translateY(-3px); }
-  .fa { font-family: 'Outfit', sans-serif; font-size: 0.95rem; font-weight: 300; letter-spacing: 0; line-height: 1.6; color: rgba(255,255,255,0.7); text-transform: uppercase; margin-bottom: 25px; margin-top: 15px; display: block; }
-  .fc p { margin-bottom: 10px; display: flex; align-items: flex-start; gap: 10px; font-size: 0.85rem; color: rgba(255,255,255,0.6); }
-  .fc a { color: rgba(255,255,255,0.6); text-decoration: none; transition: color 0.3s ease; }
-  .fc a:hover { color: var(--a); }
-  .fc i { color: var(--a); width: 16px; text-align: center; margin-top: 3px; }
-  .f-col h3 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.5); margin-bottom: 20px; font-weight: 800; }
-  .f-col ul { list-style: none; padding: 0; margin: 0; }
-  .f-col li { margin-bottom: 12px; }
-  .f-col a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.85rem; display: flex; align-items: center; gap: 8px; transition: color 0.3s ease; }
-  .f-col a i { color: var(--a); font-size: 0.7rem; transition: transform 0.3s ease; }
-  .f-col a:hover { color: var(--a); }
-  .f-col a:hover i { transform: translateX(3px); }
-
-  .sc { width: 36px; height: 36px; border-radius: 50%; background: var(--a); display: inline-flex; align-items: center; justify-content: center; color: #fff !important; text-decoration: none; transition: transform 0.3s ease; margin-right: 8px; }
-  .sc i { color: #fff !important; margin-top: 0 !important; }
-  .sc:hover { transform: translateY(-3px); }
-</style>
-<div class="cx">
-  <div class="fg" style="display: grid; grid-template-columns: 1.8fr 1fr 1.2fr 1.3fr 1.2fr; gap: 40px; align-items: start;">
-    
-    <!-- COLUMN 1: Logo & Contact -->
+<footer class="ft"><div class="cx">
+  <div class="fg">
     <div>
-      <a href="../index.html"><img src="../assets/img/logo.png" alt="Manu Jungle Forever" class="fl" loading="lazy" style="max-width: 320px;"></a>
-      <span class="fa">GUIDED JUNGLE TOURS FROM CUSCO TO THE MANU NATIONAL PARK &amp; THE PERUVIAN AMAZON. LOCAL, WILD, AND AUTHENTIC.</span>
+      <a href="../index.html"><img src="../assets/img/logo.png" alt="Manu Jungle Forever" class="fl" loading="lazy"></a>
+      <p class="fa"><span style="display: block; margin-top: 15px; font-size: 0.95rem; line-height: 1.6; color: rgba(255,255,255,0.65); font-weight: 300;">Guided jungle tours from Cusco to the Manu National Park &amp; the Peruvian Amazon. Local, wild, and authentic.</span></p>
       <address class="fc">
-        <p><i class="fas fa-map-marker-alt"></i><a href="https://goo.gl/maps/B8NjhLZizA6YKwKD6" target="_blank" rel="noopener">Fitzcarrald 17800, Nuevo Eden, Peru</a></p>
-        <p><i class="fas fa-phone"></i><a href="tel:+51901525679">+51 901 525 679</a></p>
+        <p><i class="fas fa-map-marker-alt"></i><a href="https://goo.gl/maps/B8NjhLZizA6YKwKD6" target="_blank" rel="noopener"></a></p>
+        <p><i class="fas fa-phone"></i><a href="tel:+51901525679"></a></p>
         <p><i class="fas fa-envelope"></i><a href="mailto:discover@manujungleforever.com">discover@manujungleforever.com</a></p>
       </address>
-      <div class="so" style="margin-top: 25px; display: flex; gap: 10px; flex-wrap: wrap;">
-        <a href="https://www.facebook.com/manujungleforever" class="sc" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-        <a href="https://www.instagram.com/manujungleforever/?hl=en" class="sc" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <div class="so">
+        <a href="https://www.facebook.com/manujungleforever" class="sc" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="https://www.instagram.com/manujungleforever/?hl=en" class="sc" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
         <a href="https://www.tripadvisor.com/Attraction_Review-g294314-d17476586-Reviews-Hidden_Jungle_Cusco-Cusco_Cusco_Region.html?m=19905" class="sc" target="_blank" rel="noopener" aria-label="TripAdvisor"><i class="custom-tripadvisor-icon"></i></a>
-        <a href="https://abnb.me/Ri8XQWoA19" class="sc" target="_blank" rel="noopener" aria-label="Airbnb"><i class="fab fa-airbnb"></i></a>
-        <a href="https://wa.me/51901525679" class="sc" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-        <a href="https://www.tiktok.com/@hidden.jungle.cus" class="sc" target="_blank" rel="noopener" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+        <a href="https://abnb.me/Ri8XQWoA19" class="sc" target="_blank" rel="noopener" aria-label="Airbnb"><i class="fa-brands fa-airbnb"></i></a>
+        <a href="https://wa.me/51923289231" class="sc" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="https://www.tiktok.com/@hidden.jungle.cus" class="sc" target="_blank" rel="noopener" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
       </div>
+
+      
+
     </div>
-
-    <!-- COLUMN 2: Explore -->
-    <div class="f-col">
-      <h3>Explore</h3>
-      <ul style="margin-bottom: 30px;">
-        <li><a href="../index.html"><i class="fas fa-arrow-right"></i> Home</a></li>
-        <li><a href="../about-2/index.html"><i class="fas fa-arrow-right"></i> About Us</a></li>
-        <li><a href="../departures/index.html"><i class="fas fa-arrow-right"></i> Departures</a></li>
-        <li><a href="../news-and-gallery/index.html"><i class="fas fa-arrow-right"></i> Gallery</a></li>
-        <li><a href="../blog/index.html"><i class="fas fa-arrow-right"></i> Blog</a></li>
-        <li><a href="../guided-tours/index.html"><i class="fas fa-arrow-right"></i> Guided Jungle Tours</a></li>
-        <li><a href="../contact/index.html"><i class="fas fa-arrow-right"></i> Contact</a></li>
-      </ul>
-</div>
-
-    <!-- COLUMN 3: Wildlife Tours -->
-    <div class="f-col">
-      <h3>Wildlife Tours</h3>
-      <ul>
-        <li><a href="../3-day-wildlife-quest-machu-wasi/index.html"><i class="fas fa-arrow-right"></i> 3-Day Wildlife Tour</a></li>
-        <li><a href="../4-day-wildlife-quest-machu-wasi/index.html"><i class="fas fa-arrow-right"></i> 4-Day Wildlife &ndash; Machu Wasi</a></li>
-        <li><a href="../4-day-wildlife-quest-nuevo-eden/index.html"><i class="fas fa-arrow-right"></i> 4-Day Wildlife &ndash; Nuevo Eden</a></li>
-        <li><a href="../5-day-wildlife-quest-nuevo-eden/index.html"><i class="fas fa-arrow-right"></i> 5-Day Wildlife &ndash; Nuevo Eden</a></li>
-        <li><a href="../6-day-wildlife-quest-blanquillo/index.html"><i class="fas fa-arrow-right"></i> 6-Day Wildlife &ndash; Blanquillo</a></li>
-        <li><a href="../6-day-wildlife-quest-reserved-zone/index.html"><i class="fas fa-arrow-right"></i> Manu Reserved Zone &ndash; 6 Days</a></li>
-        <li><a href="../8-day-wildlife-photography-tour/index.html"><i class="fas fa-arrow-right"></i> Wildlife Photography &ndash; 8 Days</a></li>
-      </ul>
-    </div>
-
-    <!-- COLUMN 4: Expeditions -->
-    <div class="f-col">
-      <h3>Expeditions</h3>
-      <ul>
-        <li><a href="../5-day-amazon-expedition/index.html"><i class="fas fa-arrow-right"></i> 5-Day Amazon Expedition</a></li>
-        <li><a href="../6-day-amazon-expedition/index.html"><i class="fas fa-arrow-right"></i> 6-Day Amazon Expedition</a></li>
-        <li><a href="../2-day-rainforest-road-trip/index.html"><i class="fas fa-arrow-right"></i> 2-Day Road Trip</a></li>
-        <li><a href="../5-day-rainforest-road-trip/index.html"><i class="fas fa-arrow-right"></i> 5-Day Road Trip</a></li>
-        <li><a href="../rainforest-road-trip-from-cusco/index.html"><i class="fas fa-arrow-right"></i> Rainforest Road Trip</a></li>
-      </ul>
-    </div>
-
-
-    <!-- COLUMN 5: Legal & Support -->
-    <div class="f-col">
-      <h3>Legal &amp; Support</h3>
-      <ul style="margin-bottom: 20px;">
-        <li><a href="../terms-and-conditions/index.html"><i class="fas fa-arrow-right"></i> Terms &amp; Conditions</a></li>
-        <li><a href="../privacy-policy/index.html"><i class="fas fa-arrow-right"></i> Privacy Policy</a></li>
-        <li><a href="../cookies-policy/index.html"><i class="fas fa-arrow-right"></i> Cookies Policy</a></li>
-        <li><a href="../faq/index.html"><i class="fas fa-arrow-right"></i> FAQ</a></li>
-      </ul>
-
-
-      <!-- Libro de reclamaciones -->
-      <a href="../libro-de-reclamaciones/index.html" style="text-decoration:none; display:block; max-width: 250px;">
-        <div class="libro-box" style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:16px 12px; text-align:center; transition:0.3s; box-sizing:border-box;">
-          <div style="background:#fff; border-radius:8px; padding:12px; display:inline-flex; flex-direction:column; align-items:center; margin-bottom:12px; box-shadow:0 4px 12px rgba(0,0,0,0.15);">
-            <div style="color:#002e24; font-weight:800; font-size:0.8rem; line-height:1.2; font-family:Arial,sans-serif; text-align:center; text-transform:uppercase; letter-spacing:0.5px;">Complaints<br>Book</div>
-            <img src="../assets/img/libro_reclamaciones.png" alt="Complaints Book" style="max-width:40px; margin-top:8px;">
+    <div><p class="fh">Explore</p><ul class="fli"><li><a href="../index.html">Home</a></li><li><a href="../about-2/index.html">About Us</a></li><li><a href="../departures/index.html">Departures</a></li><li><a href="../news-and-gallery/index.html">Gallery</a></li><li><a href="../blog/index.html">Blog</a></li><li><a href="../guided-tours/index.html">Guided Jungle Tours</a></li><li><a href="../contact/index.html">Contact</a></li></ul>
+      <div style="margin-top:30px;">
+        <a href="https://www.manujungleforever.com/libro-de-reclamaciones/index.html" style="text-decoration:none; display:block;">
+          <div class="libro-box" style="background:rgba(255,255,255,0.02); border:1px solid rgba(201,168,76,0.3); border-radius:12px; padding:16px 12px; text-align:center; transition:0.3s; box-sizing:border-box;">
+            <div style="background:#fff; border-radius:8px; padding:12px; display:inline-flex; flex-direction:column; align-items:center; margin-bottom:12px; box-shadow:0 4px 12px rgba(0,0,0,0.15);">
+              <div style="color:#002e24; font-weight:800; font-size:0.8rem; line-height:1.2; font-family:Arial,sans-serif; text-align:center; text-transform:uppercase; letter-spacing:0.5px;">Complaints<br>Book</div>
+              <img src="../assets/img/libro_reclamaciones.png" alt="Complaints Book" style="max-width:40px; margin-top:8px;">
+            </div>
+            <p style="font-size:0.65rem; color:rgba(255,255,255,0.6); line-height:1.4; margin:0;">In accordance with the Consumer Protection and Defense Code, we have a Virtual Complaints Book.</p>
           </div>
-          <div style="color:rgba(255,255,255,0.6); font-size:0.7rem; line-height:1.4;">In accordance with the Consumer Protection and Defense Code, we have a Virtual Complaints Book.</div>
-        </div>
-      </a>
-    </div>
-  </div>
+        </a>
+      </div>
 </div>
-</footer>
+    <div><p class="fh">Wildlife Tours</p><ul class="fli"><li><a href="../3-day-wildlife-quest-machu-wasi/index.html">3-Day Wildlife Tour</a></li><li><a href="../4-day-wildlife-quest-machu-wasi/index.html">4-Day Wildlife – Machu Wasi</a></li><li><a href="../4-day-wildlife-quest-nuevo-eden/index.html">4-Day Wildlife – Nuevo Eden</a></li><li><a href="../5-day-wildlife-quest-nuevo-eden/index.html">5-Day Wildlife – Nuevo Eden</a></li><li><a href="../6-day-wildlife-quest-blanquillo/index.html">6-Day Wildlife – Blanquillo</a></li><li><a href="../6-day-wildlife-quest-reserved-zone/index.html">Manu Reserved Zone – 6 Days</a></li><li><a href="../8-day-wildlife-photography-tour/index.html">Wildlife Photography – 8 Days</a></li></ul></div>
+    <div><p class="fh">Expeditions</p><ul class="fli"><li><a href="../5-day-amazon-expedition/index.html">5-Day Amazon Expedition</a></li><li><a href="../6-day-amazon-expedition/index.html">6-Day Amazon Expedition</a></li><li><a href="../2-day-rainforest-road-trip/index.html">2-Day Road Trip</a></li><li><a href="../5-day-rainforest-road-trip/index.html">5-Day Road Trip</a></li><li><a href="../live-like-a-local-4d-3n/index.html">Live Like a Local – 4D/3N</a></li><li><a href="../live-like-a-local-5d-4n/index.html">Live Like a Local – 5D/4N</a></li></ul></div>
+  </div>
+    <div class="fb"><div class="fbi"><span>Copyright &copy; 2026 Manu Jungle Forever. All rights reserved.</span><span>Created with love <i class="fas fa-heart" style="color:red;"></i> by Kemmesik</span></div></div>
+</div></footer>
 
 <div class="wa-wrap">
     <div class="wa-tooltip">How can I help you?</div>

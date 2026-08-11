@@ -86,15 +86,9 @@ def adapt_paths(html_str, rel_prefix):
     html_str = html_str.replace('href="blog/index.html"', f'href="{rel_prefix}blog/index.html"')
     html_str = html_str.replace('href="news-and-gallery/index.html"', f'href="{rel_prefix}news-and-gallery/index.html"')
     
-    # Fix tour links in footer/header
-    for t in [
-        "3-day-wildlife-quest-machu-wasi", "4-day-wildlife-quest-machu-wasi", 
-        "4-day-wildlife-quest-nuevo-eden", "5-day-wildlife-quest-nuevo-eden", 
-        "6-day-wildlife-quest-blanquillo", "6-day-wildlife-quest-reserved-zone", 
-        "8-day-wildlife-photography-tour", "5-day-amazon-expedition",
-        "6-day-amazon-expedition", "2-day-rainforest-road-trip", "5-day-rainforest-road-trip",
-        "live-like-a-local-4d-3n", "live-like-a-local-5d-4n", "libro-de-reclamaciones"
-    ]:
+    # Fix all root-level directory links
+    root_dirs = [d for d in os.listdir(base_dir) if os.path.isdir(os.path.join(base_dir, d)) and d not in ("assets", "admin", "data", "handlers", "partials")]
+    for t in root_dirs:
         html_str = html_str.replace(f'href="{t}/index.html"', f'href="{rel_prefix}{t}/index.html"')
     return html_str
 
@@ -115,7 +109,7 @@ for root, dirs, files in os.walk(base_dir):
             with open(file_path, "r", encoding="utf-8") as f:
                 content = f.read()
             
-            if rel_prefix == '': # Root level (index.html)
+            if rel_prefix == '': # Root level
                 if file == 'index.html':
                     # Fully overwrite index.html with stripped index.php
                     new_content = strip_php(master_content)
@@ -125,7 +119,7 @@ for root, dirs, files in os.walk(base_dir):
                     with open(file_path, "w", encoding="utf-8") as f:
                         f.write(new_content)
                     print(f"Synced root {file_path}")
-                continue
+                    continue
             
             # For nested pages, extract their unique main block
             m = re.search(r'<main id="main">(.*?)</main>', content, flags=re.DOTALL)
