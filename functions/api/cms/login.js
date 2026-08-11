@@ -13,8 +13,8 @@ export async function onRequestPost(context) {
   try {
     const { user, pass } = await request.json();
 
-    const validUser = 'manujungleforever@gmail.com';
-    const validPass = '123456aytana';
+    const validUser = env.CMS_USER || 'manujungleforever@gmail.com';
+    const validPass = env.CMS_PASSWORD || '123456aytana';
     // CMS_SECRET desde env o fallback local
     const secret = env.CMS_SECRET || 'mjf-cms-secret-2026-manujungleforever';
 
