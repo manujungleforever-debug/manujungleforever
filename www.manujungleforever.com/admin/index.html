@@ -97,7 +97,31 @@
     /* ── LOGIN ─────────────────────────────── */
     #login-screen{display:grid;grid-template-columns:1fr 1fr;min-height:100vh;background:#fff;}
     .ls-left{background:linear-gradient(135deg, #0f172a 0%, #0d9488 100%);color:#fff;padding:60px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;}
-    .ls-left .logo img{height:120px;margin-bottom:30px;filter:drop-shadow(0 4px 20px rgba(0,0,0,0.3));}
+    
+    @keyframes adminLogoEmerging {
+      0% { opacity: 0; transform: translateY(40px) scale(0.9); clip-path: inset(100% -50% -50% -50%); filter: drop-shadow(0 0 0 rgba(255,255,255,0)); }
+      100% { opacity: 1; transform: translateY(0) scale(1); clip-path: inset(-50% -50% -50% -50%); filter: drop-shadow(0 4px 20px rgba(0,0,0,0.3)); }
+    }
+    @keyframes adminLogoFloatWave {
+      0%, 100% { transform: translateY(0); filter: drop-shadow(0 4px 20px rgba(0,0,0,0.3)); }
+      50% { transform: translateY(-8px); filter: drop-shadow(0 15px 30px rgba(255,255,255,0.25)); }
+    }
+    @keyframes waterRipple {
+      0% { width: 60px; height: 15px; opacity: 0.8; }
+      100% { width: 220px; height: 60px; opacity: 0; }
+    }
+    .ls-left .logo { position: relative; display: inline-block; margin-bottom:30px; }
+    .ls-left .logo::after {
+      content: ''; position: absolute; bottom: 0px; left: 50%; transform: translateX(-50%);
+      background: radial-gradient(ellipse at center, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0) 70%);
+      border-radius: 50%; animation: waterRipple 3s infinite ease-out 1.5s; opacity: 0; pointer-events: none;
+    }
+    .ls-left .logo img{
+      height:130px; display: block; position: relative; z-index: 2;
+      animation: adminLogoEmerging 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards, adminLogoFloatWave 4s ease-in-out 1.5s infinite;
+      will-change: transform, filter, clip-path;
+    }
+    
     .ls-left h1{font-size:2rem;font-weight:700;margin-bottom:16px;}
     .ls-left p{color:rgba(255,255,255,0.8);line-height:1.6;margin-bottom:40px;max-width:400px;}
     .ls-stats{display:flex;gap:30px;margin-top:20px;}
