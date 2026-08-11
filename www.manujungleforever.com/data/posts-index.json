@@ -1,6 +1,18 @@
 {
   "posts": [
     {
+      "slug": "meet-jordy-our-expert-guide",
+      "titulo": "Meet Jordy: Our Expert Amazon Guide",
+      "fecha": "2026-08-11",
+      "categoria": "Our Team",
+      "categoria_icono": "fas fa-user",
+      "extracto": "Get to know Jordy, our passionate and experienced guide who will take you deep into the heart of the Manu National Park.",
+      "imagen": "/media/1786477360363-jordy.jpg",
+      "imagen_alt": "Jordy in the Manu Jungle",
+      "url": "meet-jordy-our-expert-guide/index.html",
+      "publicado": true
+    },
+    {
       "slug": "amazon-rainforest-tour-to-manu-national-park-from-cusco",
       "titulo": "Amazon Rainforest Tour to Manu National Park from Cusco",
       "fecha": "2026-05-15",
