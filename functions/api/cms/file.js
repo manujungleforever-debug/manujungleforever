@@ -29,8 +29,9 @@ export async function onRequestGet(context) {
   const path = url.searchParams.get('path');
   if (!path) return json({ error: 'path requerido' }, 400);
 
+  const token = env.GH_TOKEN || env.GITHUB_TOKEN;
   const ghUrl = `${GH}/repos/${REPO}/contents/${encodeURIComponent(path).replace(/%2F/g,'/')}?ref=${BRANCH}`;
-  const ghRes = await ghFetch(ghUrl, env.GITHUB_TOKEN);
+  const ghRes = await ghFetch(ghUrl, token);
 
   if (!ghRes.ok) {
     const err = await ghRes.json().catch(() => ({}));
@@ -88,8 +89,9 @@ export async function onRequestPut(context) {
   const ghBody = { message: message || `update: ${path}`, content: encoded, branch: BRANCH };
   if (sha) ghBody.sha = sha;
 
+  const token = env.GH_TOKEN || env.GITHUB_TOKEN;
   const ghUrl = `${GH}/repos/${REPO}/contents/${encodeURIComponent(path).replace(/%2F/g,'/')}`;
-  const ghRes = await ghFetch(ghUrl, env.GITHUB_TOKEN, 'PUT', ghBody);
+  const ghRes = await ghFetch(ghUrl, token, 'PUT', ghBody);
 
   if (!ghRes.ok) {
     const err = await ghRes.json().catch(() => ({}));
@@ -110,8 +112,9 @@ export async function onRequestDelete(context) {
   if (!path || !sha) return json({ error: 'path y sha requeridos' }, 400);
 
   const ghBody = { message: message || `delete: ${path}`, sha, branch: BRANCH };
+  const token = env.GH_TOKEN || env.GITHUB_TOKEN;
   const ghUrl = `${GH}/repos/${REPO}/contents/${encodeURIComponent(path).replace(/%2F/g,'/')}`;
-  const ghRes = await ghFetch(ghUrl, env.GITHUB_TOKEN, 'DELETE', ghBody);
+  const ghRes = await ghFetch(ghUrl, token, 'DELETE', ghBody);
 
   if (!ghRes.ok) {
     const err = await ghRes.json().catch(() => ({}));
