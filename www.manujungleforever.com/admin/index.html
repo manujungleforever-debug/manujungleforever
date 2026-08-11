@@ -51,9 +51,10 @@
     #app{display:none;height:100vh;flex-direction:column;}
     header{display:flex;align-items:center;height:58px;background:var(--surface);
       border-bottom:1px solid var(--border);flex-shrink:0;gap:0;}
-    .hbrand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:.88rem;
-      padding:0 18px;white-space:nowrap;border-right:1px solid var(--border);height:100%;flex-shrink:0;}
-    .hbrand img{height:24px;}
+    .hbrand{display:flex;align-items:center;gap:12px;font-weight:600;font-size:1rem;
+      padding:0 22px;white-space:nowrap;border-right:1px solid var(--border);height:100%;flex-shrink:0;}
+    .hbrand img{height:38px; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.3s; filter: drop-shadow(0 0 4px rgba(201,168,76,0.3));}
+    .hbrand:hover img{transform: scale(1.15) rotate(-5deg); filter: drop-shadow(0 0 12px rgba(201,168,76,0.9));}
     header nav{display:flex;flex:1;overflow-x:auto;padding:0 8px;}
     header nav button{background:none;border:none;color:var(--muted);padding:0 13px;height:58px;
       cursor:pointer;font-size:.82rem;white-space:nowrap;
