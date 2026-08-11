@@ -188,8 +188,8 @@ img{max-width:100%;height:auto;display:block}a{color:inherit;text-decoration:non
 .pl p{font-size:.9rem;color:rgba(255,255,255,.55);line-height:1.8}
 
 /* FOOTER */
-.ft{background:#030A05}
-.fg{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:48px;padding:72px 0 56px}
+.ft{background:#030A05; position:relative; overflow:hidden;}
+.fg{position:relative; z-index:1; display:grid;grid-template-columns:1fr max-content max-content max-content max-content;gap:40px;padding:72px 0 56px}
 .fl img{height:76px;margin-bottom:20px}
 .fa{font-size:.87rem;color:rgba(255,255,255,.38);line-height:1.85;margin-bottom:24px}
 .fc{font-style:normal}
@@ -1628,3 +1628,12 @@ body { top: 0px !important; position: relative !important; }
     box-shadow: 0 0 25px rgba(13, 178, 107, 0.8);
     background: linear-gradient(to right, #065f46, var(--a));
 }
+
+font, font > font, font[style], font > font[style] {
+    background: transparent !important;
+    background-color: transparent !important;
+    color: inherit !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+}
+

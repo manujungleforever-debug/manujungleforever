@@ -51,8 +51,8 @@ php_replacements = {
     r'<\?php echo htmlspecialchars\(SITE_NAME\);\s*\?>': 'Manu Jungle Forever',
     r'<\?php echo htmlspecialchars\(SITE_URL\);\s*\?>': 'https://www.manujungleforever.com',
     r'<\?php echo htmlspecialchars\(SITE_EMAIL\);\s*\?>': 'discover@manujungleforever.com',
-    r'<\?php echo htmlspecialchars\(SITE_PHONE\);\s*\?>': '', 
-    r'<\?php echo htmlspecialchars\(SITE_ADDRESS\);\s*\?>': '',
+    r'<\?php echo htmlspecialchars\(SITE_PHONE\);\s*\?>': '+51 901 525 679', 
+    r'<\?php echo htmlspecialchars\(SITE_ADDRESS\);\s*\?>': 'Fitzcarrald 17800, Nuevo Eden, Peru',
     r'<\?php echo htmlspecialchars\(WHATSAPP_NUMBER\);\s*\?>': '51923289231',
     r'<\?php echo htmlspecialchars\(SOCIAL_FACEBOOK\);\s*\?>': 'https://www.facebook.com/manujungleforever',
     r'<\?php echo htmlspecialchars\(SOCIAL_INSTAGRAM\);\s*\?>': 'https://www.instagram.com/manujungleforever/?hl=en',
@@ -69,6 +69,7 @@ php_replacements = {
 def strip_php(html_str):
     for pattern, replacement in php_replacements.items():
         html_str = re.sub(pattern, replacement, html_str)
+    html_str = re.sub(r'<\?php\s+require_once.*?;\s*\?>\s*', '', html_str)
     return html_str
 
 def adapt_paths(html_str, rel_prefix):
@@ -141,6 +142,10 @@ for root, dirs, files in os.walk(base_dir):
             
             # Strip PHP
             full_html = strip_php(full_html)
+            
+            # Special case for 404.html
+            if file == '404.html' and rel_prefix == '':
+                full_html = full_html.replace('<head>', '<head>\n<base href="/">')
             
             with open(file_path, "w", encoding="utf-8") as f:
                 f.write(full_html)

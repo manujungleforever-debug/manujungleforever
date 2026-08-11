@@ -93,6 +93,7 @@
         <li onclick="doTranslate('es')"><span class="flg">&#x1F1EA;&#x1F1F8;</span> ES</li>
       </ul>
     </div>
+    <a href="<?php echo htmlspecialchars(SITE_URL); ?>/admin/index.html" style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:#fff; border-radius:50%; font-size:0.95rem; display:inline-flex; align-items:center; justify-content:center; width:36px; height:36px; margin-left:8px; backdrop-filter:blur(10px); transition:0.3s; text-decoration:none;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'" aria-label="Admin Login" title="Admin Login"><i class="fa-solid fa-user-shield"></i></a>
   </nav>
   <button class="bg" id="bg" aria-label="Toggle menu" aria-expanded="false"><span class="bb"></span><span class="bb"></span><span class="bb"></span></button>
 </div></header>
@@ -176,7 +177,7 @@
 <section class="sec" id="tours" style="background:var(--k);padding-bottom:0">
   <div class="cx">
     <div class="tr-intro r">
-      <span class="ey">Guided Jungle Tours</span>
+      <span class="ey">Guided Tours</span>
       <h2 class="h2">Curated Jungle Expeditions</h2>
     <p class="ld">Our itineraries are meticulously designed to cater to true nature enthusiasts. From deep-forest survival treks for the intrepid explorer, to focused wildlife spotting cruises along the riverbanks, our routes guarantee a transformative encounter with the wild.</p>
     </div>
@@ -345,7 +346,9 @@
 
 
 
-<footer class="ft"><div class="cx">
+<footer class="ft">
+<div id="tsparticles-footer" style="position:absolute; inset:0; z-index:0; pointer-events:none;"></div>
+<div class="cx">
   <div class="fg">
     <div>
       <a href="index.html"><img src="assets/img/logo.png" alt="<?php echo htmlspecialchars(SITE_NAME); ?>" class="fl" loading="lazy"></a>
@@ -367,21 +370,28 @@
       
 
     </div>
-    <div><p class="fh">Explore</p><ul class="fli"><li><a href="index.html">Home</a></li><li><a href="about-2/index.html">About Us</a></li><li><a href="departures/index.html">Departures</a></li><li><a href="news-and-gallery/index.html">Gallery</a></li><li><a href="blog/index.html">Blog</a></li><li><a href="guided-tours/index.html">Guided Jungle Tours</a></li><li><a href="contact/index.html">Contact</a></li></ul>
-      <div style="margin-top:30px;">
+    <div><p class="fh">Explore</p><ul class="fli"><li><a href="index.html">Home</a></li><li><a href="about-2/index.html">About Us</a></li><li><a href="departures/index.html">Departures</a></li><li><a href="news-and-gallery/index.html">Gallery</a></li><li><a href="blog/index.html">Blog</a></li><li><a href="guided-tours/index.html">Guided Tours</a></li></ul></div>
+    <div><p class="fh">Support &amp; Legal</p>
+      <div style="display:flex; flex-direction:column; gap:24px; align-items: flex-start;">
+        <ul class="fli">
+          <li><a href="contact/index.html">Contact Us</a></li>
+          <li><a href="faq/index.html">FAQs</a></li>
+          <li><a href="terms-and-conditions/index.html">Terms &amp; Conditions</a></li>
+          <li><a href="privacy-policy/index.html">Privacy Policy</a></li>
+          <li><a href="cookies-policy/index.html">Cookie Policy</a></li>
+        </ul>
         <a href="<?php echo htmlspecialchars(SITE_URL); ?>/libro-de-reclamaciones/index.html" style="text-decoration:none; display:block;">
-          <div class="libro-box" style="background:rgba(255,255,255,0.02); border:1px solid rgba(201,168,76,0.3); border-radius:12px; padding:16px 12px; text-align:center; transition:0.3s; box-sizing:border-box;">
-            <div style="background:#fff; border-radius:8px; padding:12px; display:inline-flex; flex-direction:column; align-items:center; margin-bottom:12px; box-shadow:0 4px 12px rgba(0,0,0,0.15);">
-              <div style="color:#002e24; font-weight:800; font-size:0.8rem; line-height:1.2; font-family:Arial,sans-serif; text-align:center; text-transform:uppercase; letter-spacing:0.5px;">Complaints<br>Book</div>
-              <img src="assets/img/libro_reclamaciones.png" alt="Complaints Book" style="max-width:40px; margin-top:8px;">
+          <div class="libro-box" style="max-width:170px; border:1px solid rgba(201,168,76,0.25); border-radius:12px; padding:16px; text-align:center; transition:0.3s; box-sizing:border-box;">
+            <div style="background:#fff; border-radius:8px; padding:12px; display:inline-flex; flex-direction:column; align-items:center; margin-bottom:12px;">
+              <div style="color:#002e24; font-weight:900; font-size:0.85rem; line-height:1.1; font-family:'Montserrat',sans-serif; text-align:center; text-transform:uppercase; margin-bottom:6px;">Complaints<br>Book</div>
+              <i class="fas fa-book-open" style="color:#c9a84c; font-size:2.2rem; margin-top:4px;"></i>
             </div>
-            <p style="font-size:0.65rem; color:rgba(255,255,255,0.6); line-height:1.4; margin:0;">In accordance with the Consumer Protection and Defense Code, we have a Virtual Complaints Book.</p>
+            <p style="font-size:0.65rem; color:rgba(255,255,255,0.7); line-height:1.4; margin:0;">In accordance with the Consumer Protection Code, we have a Virtual Complaints Book available.</p>
           </div>
         </a>
-      </div>
-</div>
-    <div><p class="fh">Wildlife Tours</p><ul class="fli"><li><a href="3-day-wildlife-quest-machu-wasi/index.html">3-Day Wildlife Tour</a></li><li><a href="4-day-wildlife-quest-machu-wasi/index.html">4-Day Wildlife – Machu Wasi</a></li><li><a href="4-day-wildlife-quest-nuevo-eden/index.html">4-Day Wildlife – Nuevo Eden</a></li><li><a href="5-day-wildlife-quest-nuevo-eden/index.html">5-Day Wildlife – Nuevo Eden</a></li><li><a href="6-day-wildlife-quest-blanquillo/index.html">6-Day Wildlife – Blanquillo</a></li><li><a href="6-day-wildlife-quest-reserved-zone/index.html">Manu Reserved Zone – 6 Days</a></li><li><a href="8-day-wildlife-photography-tour/index.html">Wildlife Photography – 8 Days</a></li></ul></div>
-    <div><p class="fh">Expeditions</p><ul class="fli"><li><a href="5-day-amazon-expedition/index.html">5-Day Amazon Expedition</a></li><li><a href="6-day-amazon-expedition/index.html">6-Day Amazon Expedition</a></li><li><a href="2-day-rainforest-road-trip/index.html">2-Day Road Trip</a></li><li><a href="5-day-rainforest-road-trip/index.html">5-Day Road Trip</a></li><li><a href="live-like-a-local-4d-3n/index.html">Live Like a Local – 4D/3N</a></li><li><a href="live-like-a-local-5d-4n/index.html">Live Like a Local – 5D/4N</a></li></ul></div>
+      </div></div>
+    <div><p class="fh">Wildlife Tours</p><ul class="fli" style="white-space: nowrap;"><li><a href="3-day-wildlife-quest-machu-wasi/index.html">3-Day Wildlife Tour</a></li><li><a href="4-day-wildlife-quest-machu-wasi/index.html">4-Day Wildlife – Machu Wasi</a></li><li><a href="4-day-wildlife-quest-nuevo-eden/index.html">4-Day Wildlife – Nuevo Eden</a></li><li><a href="5-day-wildlife-quest-nuevo-eden/index.html">5-Day Wildlife – Nuevo Eden</a></li><li><a href="6-day-wildlife-quest-blanquillo/index.html">6-Day Wildlife – Blanquillo</a></li><li><a href="6-day-wildlife-quest-reserved-zone/index.html">Manu Reserved Zone – 6 Days</a></li><li><a href="8-day-wildlife-photography-tour/index.html">Wildlife Photography – 8 Days</a></li></ul></div>
+    <div><p class="fh">Expeditions</p><ul class="fli" style="white-space: nowrap;"><li><a href="5-day-amazon-expedition/index.html">5-Day Amazon Expedition</a></li><li><a href="6-day-amazon-expedition/index.html">6-Day Amazon Expedition</a></li><li><a href="2-day-rainforest-road-trip/index.html">2-Day Road Trip</a></li><li><a href="5-day-rainforest-road-trip/index.html">5-Day Road Trip</a></li><li><a href="live-like-a-local-4d-3n/index.html">Live Like a Local – 4D/3N</a></li><li><a href="live-like-a-local-5d-4n/index.html">Live Like a Local – 5D/4N</a></li></ul></div>
   </div>
     <div class="fb"><div class="fbi"><span>Copyright &copy; <?php echo date('Y'); ?> <?php echo htmlspecialchars(SITE_NAME); ?>. All rights reserved.</span><span>Created with love <i class="fas fa-heart" style="color:red;"></i> by Kemmesik</span></div></div>
 </div></footer>
@@ -485,4 +495,18 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 </script>
 <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<script src="assets/js/particles.min.js"></script>
+<script>
+  tsParticles.load("tsparticles-footer", {
+    preset: "stars",
+    background: { color: "transparent" },
+    particles: {
+      number: { value: 60 },
+      color: { value: ["#ffffff", "#2d8a56", "#c9a84c"] },
+      opacity: { value: { min: 0.1, max: 0.5 } },
+      size: { value: { min: 1, max: 2.5 } },
+      move: { enable: true, speed: 0.3 }
+    }
+  });
+</script>
 </body></html>

@@ -9,9 +9,9 @@
 define('SITE_NAME',  'Manu Jungle Forever');
 define('SITE_URL',   'https://www.manujungleforever.com');
 define('SITE_EMAIL', 'discover@manujungleforever.com');
-define('SITE_PHONE', '');
+define('SITE_PHONE', '+51 901 525 679');
 define('WHATSAPP_NUMBER', '51923289231');
-define('SITE_ADDRESS', '');
+define('SITE_ADDRESS', 'Fitzcarrald 17800, Nuevo Eden, Peru');
 
 // ─── SMTP (Hostinger → hPanel → Email → SMTP) ─────────────────────
 define('SMTP_HOST',     'smtp.hostinger.com');     // Hostinger SMTP
@@ -31,7 +31,7 @@ define('SOCIAL_TIKTOK',      'https://www.tiktok.com/@hidden.jungle.cus');
 // ─── Analytics ────────────────────────────────────────────────────
 define('GTM_ID',     'GTM-5476BC9');
 define('GA_ID',      'GT-NS9ZNKJP');
-define('GOOGLE_MAP', 'https://maps.google.com/maps?q=-12.540468,-71.166289&hl=en&z=15&output=embed&t=k');
+define('GOOGLE_MAP', 'https://www.google.com/maps/d/embed?mid=12fWz1M5jmQ0jd8rUJY0VUfi6KnRmvnc');
 
 // ─── Environment ──────────────────────────────────────────────────
 define('APP_ENV', 'production'); // 'development' | 'production'
