@@ -55,13 +55,71 @@
     .err-msg{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:8px;padding:12px;color:var(--danger);font-size:0.85rem;margin-bottom:20px;display:none;}
     .lcard .ff label{color:#475569;font-weight:500;font-size:0.9rem;margin-bottom:8px;}
     .lcard .ff input{background:#f8fafc;border:1px solid #e2e8f0;color:#1e293b;padding:14px;border-radius:10px;font-size:1rem;transition:border-color 0.2s;}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel de Administración – Manu Jungle Forever</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="../assets/media_to_upload/photos/placeholder.jpg">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    :root{
+      /* Main Content (Light) */
+      --bg: #f3f4f6;
+      --surface: #ffffff;
+      --card: #ffffff;
+      --border: #e2e8f0;
+      --text: #1e293b;
+      --muted: #64748b;
+      
+      /* Sidebar / Dark Elements */
+      --sidebar-bg: #0f172a;
+      --sidebar-surface: #1e293b;
+      --sidebar-text: #f8fafc;
+      --sidebar-border: #334155;
+      
+      /* Accents */
+      --gold: #0d9488;
+      --gold-dim: #0f766e;
+      --green: #10b981;
+      --danger: #ef4444;
+      --success: #10b981;
+      --r: 12px;
+    }
+    html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);}
+    input,textarea,select,button{font-family:inherit;}
+    a{color:var(--gold);}
+
+    /* ── LOGIN ─────────────────────────────── */
+    #login-screen{display:grid;grid-template-columns:1fr 1fr;min-height:100vh;background:#fff;}
+    .ls-left{background:linear-gradient(135deg, #0f172a 0%, #0d9488 100%);color:#fff;padding:60px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;}
+    .ls-left .logo img{height:120px;margin-bottom:30px;filter:drop-shadow(0 4px 20px rgba(0,0,0,0.3));}
+    .ls-left h1{font-size:2rem;font-weight:700;margin-bottom:16px;}
+    .ls-left p{color:rgba(255,255,255,0.8);line-height:1.6;margin-bottom:40px;max-width:400px;}
+    .ls-stats{display:flex;gap:30px;margin-top:20px;}
+    .ls-stat{background:rgba(255,255,255,0.1);padding:15px 25px;border-radius:12px;backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.1);}
+    .ls-stat h3{font-size:1.5rem;margin-bottom:4px;}
+    .ls-stat span{font-size:0.8rem;opacity:0.8;}
+    
+    .ls-right{display:flex;align-items:center;justify-content:center;padding:40px;}
+    .lcard{background:#fff;border-radius:20px;padding:40px;width:100%;max-width:420px;box-shadow:none;}
+    .lcard h2{font-size:1.8rem;font-weight:700;margin-bottom:8px;color:#1e293b;}
+    .lcard p.sub{font-size:0.95rem;color:#64748b;margin-bottom:32px;}
+    .err-msg{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:8px;padding:12px;color:var(--danger);font-size:0.85rem;margin-bottom:20px;display:none;}
+    .lcard .ff label{color:#475569;font-weight:500;font-size:0.9rem;margin-bottom:8px;}
+    .lcard .ff input{background:#f8fafc;border:1px solid #e2e8f0;color:#1e293b;padding:14px;border-radius:10px;font-size:1rem;transition:border-color 0.2s;}
     .lcard .ff input:focus{border-color:var(--gold);outline:none;background:#fff;}
     .btn-login{background:var(--gold);color:#fff;border:none;border-radius:10px;padding:14px;font-size:1rem;font-weight:600;cursor:pointer;transition:background 0.2s;width:100%;margin-top:10px;box-shadow:0 4px 14px rgba(13,148,136,0.3);}
     .btn-login:hover{background:var(--gold-dim);}
     
     .ls-quick{margin-top:40px;padding-top:30px;border-top:1px solid #e2e8f0;}
     .ls-quick h4{font-size:0.8rem;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;}
-    .ls-quick-card{background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:16px;display:flex;align-items:center;gap:16px;}
+    .ls-quick-card{background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:16px;display:flex;align-items:center;gap:16px;cursor:pointer;transition:all 0.2s;}
+    .ls-quick-card:hover{background:#f1f5f9;border-color:#cbd5e1;transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.05);}
     .ls-quick-card img{width:40px;height:40px;border-radius:50%;object-fit:cover;}
     .ls-quick-info p{font-size:0.9rem;font-weight:600;color:#1e293b;}
     .ls-quick-info span{font-size:0.8rem;color:#64748b;}
