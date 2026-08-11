@@ -10,8 +10,8 @@
  *   CMS_SECRET    — clave para verificar tokens de sesión
  */
 
-const REPO   = 'hiddenjunglecusco/hiddenjunglecusco';
-const BRANCH = 'master';
+const REPO   = 'manujungleforever-debug/manujungleforever';
+const BRANCH = 'main';
 const GH     = 'https://api.github.com';
 const IMAGE_EXTS = ['jpg','jpeg','png','gif','webp','svg','ico','avif'];
 
