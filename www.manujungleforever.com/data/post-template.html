@@ -1,9 +1,9 @@
 <!doctype html><html lang="en"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Cusco Jungle &amp; Manu National Park Tours | Manu Jungle Forever</title>
-<meta name="description" content="Explore Cusco Jungle &amp; Manu National Park tours with Manu Jungle Forever. Immerse yourself in wildlife — book your Peruvian Amazon adventure now!">
-<meta property="og:title" content="Manu Jungle Forever – What Will You Discover?">
-<meta property="og:description" content="Guided tours from Cusco to the Manu National Park in the Peruvian Amazon. Local, wild, and authentic.">
+<title>{{TITLE}} | Manu Jungle Forever</title>
+<meta name="description" content="{{EXCERPT}}">
+<meta property="og:title" content="{{TITLE}} | Manu Jungle Forever">
+<meta property="og:description" content="{{EXCERPT}}">
 <meta property="og:image" content="https://www.manujungleforever.com/assets/img/hero.png">
 <meta property="og:type" content="website"><meta property="og:url" content="https://www.manujungleforever.com/">
 <meta name="twitter:card" content="summary_large_image">
@@ -130,78 +130,50 @@
 </div>
 
 <main id="main">
-<section class="in-hero" style="background-image: url('../wp-content/uploads/2022/11/Hero-Blog-1.jpg');">
+<section class="in-hero" style="background-image: url('..{{IMAGE}}'); background-size: cover; background-position: center; position: relative;">
   <div class="cx">
-    <span class="ey">Guides &amp; Insights</span>
-    <h1 class="h1" style="font-size:clamp(2.5rem,6vw,4.5rem)">The Manu Jungle Blog</h1>
-    <p class="hs" style="margin:0 auto">Travel tips, wildlife encounters and insider advice for your Peruvian Amazon adventure — straight from our local family guides.</p>
+    <span class="ey">Hidden Jungle Cusco</span>
+    <h1 class="h1" style="font-size:clamp(2.5rem,6vw,4.5rem)">{{TITLE}}</h1>
   </div>
 </section>
 
 <section class="sec" style="background:var(--k)">
   <div class="cx">
-    <div class="r" style="text-align:center; margin-bottom:12px">
-      <span class="ey">All Articles</span>
-      <h2 class="h2">Stories from the Jungle</h2>
-      <p class="ld" style="margin:0 auto">11 articles — tips, guides &amp; stories from the Peruvian Amazon</p>
+    <div class="article-w" style="max-width:900px; margin:0 auto;">
+    <div style="display:flex; align-items:center; gap:8px; margin-bottom:32px; font-size:.95rem; color:rgba(255,255,255,.6); font-family:'Inter',sans-serif">
+      <i class="fas fa-user-circle" style="font-size:1.5rem; color:var(--a)"></i>
+      <span>Published by: <strong style="color:var(--w)">Hidden Jungle Cusco</strong></span>
+      <span style="margin:0 12px; color:rgba(255,255,255,.2)">|</span>
+      <i class="far fa-calendar-alt"></i>
+      <span>{{DATE}}</span>
     </div>
-    <div class="blog-grid" id="blog-grid">
-    </div>
+    <img src="..{{IMAGE}}" alt="{{TITLE}}" style="width:100%; border-radius:16px; margin-bottom:48px; box-shadow:0 12px 40px rgba(0,0,0,.4); object-fit:cover; max-height:500px">
     
-    <script>
-    document.addEventListener('DOMContentLoaded', async () => {
-        try {
-            const res = await fetch('../data/posts-index.json');
-            const data = await res.json();
-            
-            const grid = document.getElementById('blog-grid');
-            let html = '';
-            
-            data.posts.filter(p => p.publicado).forEach(p => {
-                const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-                const formattedDate = new Date(p.fecha).toLocaleDateString('en-US', dateOptions);
-                
-                html += `
-                <a href="../${p.url}" class="blog-card r" style="text-decoration:none" aria-label="${p.titulo}">
-                    <div class="blog-thumb">
-                        <img src="..${p.imagen}" alt="${p.imagen_alt || p.titulo}" loading="lazy">
-                        <div class="blog-cat"><i class="${p.categoria_icono || 'fas fa-leaf'}"></i> ${p.categoria}</div>
-                    </div>
-                    <div class="blog-card-body">
-                        <div class="blog-meta"><i class="far fa-calendar-alt"></i> ${formattedDate}</div>
-                        <h3>${p.titulo}</h3>
-                        <p>${p.extracto}</p>
-                        <span class="blog-read-more">Read Article <i class="fas fa-arrow-right"></i></span>
-                    </div>
-                </a>`;
-            });
-            
-            grid.innerHTML = html;
-            
-            // Re-trigger intersection observer for new cards
-            if (window.obs) {
-                document.querySelectorAll('.r').forEach(el => window.obs.observe(el));
-            }
-        } catch (err) {
-            console.error("Error loading posts", err);
-        }
-    });
-    </script>
-    
-    <div class="pagination" style="margin-top:56px; display:flex; justify-content:center; gap:12px; align-items:center;"><span class="btn bg2" style="padding:10px 18px; pointer-events:none">1</span><a href="../blog/page/2/index.html" class="btn ba" style="padding:10px 18px">2</a><a href="../blog/page/2/index.html" class="btn ba" style="padding:10px 18px" aria-label="Next page"><i class="fas fa-chevron-right"></i></a></div>
-
-    <!-- CTA -->
-    <div class="r" style="text-align:center; margin-top:80px; padding:64px 40px; background:var(--f); border-radius:24px; border:1px solid rgba(255,255,255,.06)">
-      <span class="ey">Ready to go?</span>
-      <h2 class="h2" style="max-width:560px;margin:0 auto 18px">Stop Reading — Start Exploring</h2>
-      <p class="ld" style="margin:0 auto 32px">Book your guided tour from Cusco to the Manu National Park. Local. Wild. Authentic.</p>
-      <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
-        <a href="../guided-tours/index.html" class="btn ba"><i class="fas fa-binoculars"></i> See All Tours</a>
-        <a href="../contact/index.html" class="btn bg2"><i class="fas fa-envelope"></i> Contact Us</a>
-      </div>
+    <div class="tour-rich-text">
+{{CONTENT}}
     </div>
   </div>
 </section>
+
+<!-- RELATED POSTS -->
+  <section style="background:var(--f); border-top:1px solid rgba(255,255,255,.05)">
+    <div class="related-posts">
+      <h2 class="comments-title"><i class="fas fa-newspaper" style="color:var(--a)"></i> More Articles</h2>
+      <div class="related-grid" id="related-grid"></div>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const articles = [{"url": "../discovering-the-mysteries-of-the-peruvian-amazon/index.html", "title": "Discovering the Mysteries of the Peruvian Amazon", "img": "../media/2026/05/Avatar-3.jpg"}, {"url": "../amazon-rainforest-tour-to-manu-national-park-from-cusco/index.html", "title": "Amazon Rainforest Tour to Manu National Park from Cusco", "img": "../wp-content/uploads/2022/10/FullSizeRender.jpg"}, {"url": "../sustainable-tourism-in-the-manu-biosphere-reserve-conservation-through-private-agricultural-lands/index.html", "title": "Sustainable Tourism in the Manu Biosphere Reserve: Conservation Through Private Agricultural Lands", "img": "../wp-content/uploads/2022/10/Group-Shot_-exploring-the-beach-.jpg"}, {"url": "../manu-national-park-in-8-days-complete-travel-guide-to-the-peruvian-amazon/index.html", "title": "Manu National Park in 8 Days: Complete Travel Guide to the Peruvian Amazon", "img": "../wp-content/uploads/2022/10/Wildlife-quest-6dyas-blanquillo_.jpg"}, {"url": "../what-to-see-when-traveling-to-the-peruvian-amazon-complete-guide-2026/index.html", "title": "What you will See When Traveling to the Peruvian Amazon: Complete Guide 2026", "img": "../wp-content/uploads/2022/10/Road-trip-4-days_1.jpg"}, {"url": "../climate-change-manu-national-park-peru/index.html", "title": "Climate Change in Manu National Park: Protecting One of the World\u2019s Most Biodiverse Places", "img": "../wp-content/uploads/2025/08/Hidden_Jungle_Drone__optimized.jpg"}, {"url": "../how-tourism-helps-the-manu-national-park/index.html", "title": "How Tourism Helps the Manu National Park", "img": "../wp-content/uploads/2021/01/family-fishing-e1609677595723.jpg"}, {"url": "../everything-you-need-to-know-before-visiting-machu-picchu/index.html", "title": "Everything You Need to Know Before Visiting Machu Picchu", "img": "../wp-content/uploads/2023/11/Everything-You-Need-to-Know-Before-Visiting-Machu-Picchu-1.webp"}, {"url": "../peru-travel-tips/index.html", "title": "PERU TRAVEL TIPS", "img": "../wp-content/uploads/2019/07/DSC07062-u\u0308berarbeitet-e1562085886902.jpg"}, {"url": "../packing-list-for-your-trip-to-the-peruvian-amazon/index.html", "title": "PACKING LIST FOR YOUR TRIP TO THE PERUVIAN JUNGLE", "img": "../wp-content/uploads/2022/12/packing-list-for-your-trip-to-the-peruvian-jungle.webp"}, {"url": "../../../five-reasons-to-visit-manu-national-park/index.html", "title": "FIVE REASONS TO VISIT MANU NATIONAL PARK", "img": "../../wp-content/uploads/2022/12/five-reasons-to-visit-manu-national-park.webp"}, {"url": "../../../ten-days-in-peru/index.html", "title": "TEN DAYS IN PERU", "img": "../../wp-content/uploads/2022/12/ten-days-in-peru.webp"}];
+    const current = window.location.pathname;
+    const valid = articles.filter(a => !current.includes(a.url.replace('../', '')));
+    valid.sort(() => 0.5 - Math.random());
+    const grid = document.querySelector('.related-grid');
+    if(grid) {
+        grid.innerHTML = valid.slice(0, 3).map(a => `<a href="${a.url}" class="related-card"><img src="${a.img}" alt="${a.title}" loading="lazy"><div class="related-card-body"><h3>${a.title}</h3></div></a>`).join('');
+    }
+});
+</script>
+    </div>
+  </section>
 </main>
 
 
