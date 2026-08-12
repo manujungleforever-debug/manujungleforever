@@ -1186,7 +1186,12 @@ window.editTour = function(idx) {
           <div class="ff"><label>Estado</label><select id="t-e"><option ${t.estado==='activo'?'selected':''} value="activo">✅ Activo</option><option ${t.estado==='pausado'?'selected':''} value="pausado">⏸️ Pausado</option><option ${t.estado==='inactivo'?'selected':''} value="inactivo">❌ Inactivo</option></select></div>
         </div>
         <div class="grow3">
-          <div class="ff"><label>Categoría</label><select id="t-c"><option value="wildlife" ${t.categoria==='wildlife'?'selected':''}>🐆 Wildlife</option><option value="roadtrip" ${t.categoria==='roadtrip'?'selected':''}>🚗 Road Trip</option><option value="expedition" ${t.categoria==='expedition'?'selected':''}>⛺ Expedición</option></select></div>
+          <div class="ff"><label>Categoría</label>
+  <input type="text" id="t-c" list="tour-cats" value="${esc(t.categoria)}" style="padding:13px 16px;background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.1);border-radius:10px;color:var(--w);width:100%">
+  <datalist id="tour-cats">
+    ${[...new Set(cData.tours.map(x=>x.categoria))].map(c=>`<option value="${esc(c)}"></option>`).join('')}
+  </datalist>
+</div>
           <div class="ff"><label>Duración (días)</label><input type="number" id="t-d" value="${t.duracion_dias}" min="1"></div>
           <div class="ff"><label>Noches</label><input type="number" id="t-dn" value="${t.duracion_noches||0}" min="0"></div>
         </div>
