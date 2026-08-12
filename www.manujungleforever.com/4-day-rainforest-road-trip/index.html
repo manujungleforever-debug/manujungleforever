@@ -333,7 +333,10 @@ function googleTranslateElementInit() {
 }
 function doTranslate(lang) {
   localStorage.removeItem('mjf_loader_shown');
-  document.cookie = "googtrans=/en/" + lang + "; path=/;";
+  var d = window.location.hostname;
+    document.cookie = "googtrans=/en/" + lang + "; path=/; domain=" + d + ";";
+    document.cookie = "googtrans=/en/" + lang + "; path=/; domain=." + d.replace('www.', '') + ";";
+    document.cookie = "googtrans=/en/" + lang + "; path=/;";
   window.location.reload();
 }
 // Set current language display on load
