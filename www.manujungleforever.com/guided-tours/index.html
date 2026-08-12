@@ -150,7 +150,36 @@
 <!-- Main content -->
 <section class="sec" style="background:var(--k); padding-top:56px">
   <div class="cx">
-    <div class="tours-grid" id="dynamic-tours-container"></div>
+    
+    <!-- Category intro summary -->
+    <div class="cat-intro r" id="cat-intro" style="margin-bottom: 40px;">
+      <div class="ci-card" style="cursor:pointer" onclick="filterTours('wildlife')">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start">
+          <div class="ci-icon ci-icon-w"><i class="fas fa-binoculars"></i></div>
+          <span class="badge badge-wildlife" style="backdrop-filter:none; background:rgba(74,161,142,.12)">Wildlife</span>
+        </div>
+        <div class="ci-title">Wildlife Tracking</div>
+        <div class="ci-sub">Navigate the waterways with expert indigenous trackers to locate giant river otters, macaws, and apex predators like the jaguar.</div>
+      </div>
+      <div class="ci-card" style="cursor:pointer" onclick="filterTours('expedition')">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start">
+          <div class="ci-icon ci-icon-e"><i class="fas fa-campground"></i></div>
+          <span class="badge badge-expedition" style="backdrop-filter:none; background:rgba(255,140,0,.12)">Expedition</span>
+        </div>
+        <div class="ci-title">Deep Survival</div>
+        <div class="ci-sub">Venture entirely off the grid. Master jungle survival techniques, sleep under the canopy, and experience absolute isolation.</div>
+      </div>
+      <div class="ci-card" style="cursor:pointer" onclick="filterTours('roadtrip')">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start">
+          <div class="ci-icon ci-icon-r"><i class="fas fa-route"></i></div>
+          <span class="badge badge-roadtrip" style="backdrop-filter:none; background:rgba(100,160,255,.12)">Road Trip</span>
+        </div>
+        <div class="ci-title">Cloud Forest Ascent</div>
+        <div class="ci-sub">A cultural and ecological journey from the high Andes down into the Amazon basin, engaging with remote communities.</div>
+      </div>
+    </div>
+    
+<div class="tours-grid" id="dynamic-tours-container"></div>
   </div>
 </section>
 
