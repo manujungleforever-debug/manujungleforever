@@ -602,7 +602,7 @@ body { top: 0px !important; position: relative !important; }
 
 .blog-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 30px;
   margin-top: 40px;
 }
@@ -1872,3 +1872,6 @@ font, font > font, font[style], font > font[style] {
   .in-hero { min-height: 380px; padding: 120px 0 48px; }
   .article-nav { grid-template-columns: 1fr; }
 }
+
+ @ m e d i a   ( m a x - w i d t h :   7 6 8 p x )   {   . b l o g - g r i d   {   g r i d - t e m p l a t e - c o l u m n s :   1 f r ;   }   }  
+ 
