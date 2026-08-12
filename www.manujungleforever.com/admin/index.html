@@ -70,13 +70,13 @@
     /* SIDEBAR COLOR - same gradient as login */
     :root{ --sidebar-grad: linear-gradient(160deg, #0f172a 0%, #0c5c56 60%, #0d9488 100%); }
 
-    header{display:flex;align-items:center;height:140px;background:var(--surface);border-bottom:1px solid var(--border);flex-shrink:0;box-shadow:0 1px 0 rgba(0,0,0,0.06);}
+    header{display:flex;align-items:center;height:140px;background:linear-gradient(90deg, #0f172a 0%, #083833 100%);border-bottom:1px solid #0d9488;flex-shrink:0;box-shadow:0 4px 20px rgba(0,0,0,0.2);}
     
     /* Logo brand - exact same width as sidebar */
     .hbrand{
       display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
       width:270px;flex-shrink:0;height:100%;
-      background:var(--sidebar-grad);
+      background:transparent;
       color:rgba(255,255,255,0.85);font-weight:700;font-size:0.75rem;
       letter-spacing:0.08em;text-transform:uppercase;
       text-decoration:none;
@@ -95,7 +95,7 @@
     header nav{display:flex;flex:1;overflow-x:auto;padding:0 8px;align-self:stretch;}
     header nav button{
       display:inline-flex;align-items:center;gap:9px;
-      background:none;border:none;color:var(--muted);
+      background:none;border:none;color:rgba(255,255,255,0.6);
       padding:0 20px;align-self:stretch;
       cursor:pointer;font-size:.9rem;font-weight:600;white-space:nowrap;
       border-bottom:3px solid transparent;transition:all .2s ease;
@@ -104,20 +104,20 @@
       font-size:1.5rem;
       transition:transform 0.25s ease, filter 0.25s ease;
     }
-    header nav button:hover{color:var(--text);}
-    header nav button:hover i{transform:translateY(-2px);filter:drop-shadow(0 2px 4px rgba(13,148,136,0.4));}
-    header nav button.active{color:var(--gold);border-bottom-color:var(--gold);}
-    header nav button.active i{filter:drop-shadow(0 0 6px rgba(13,148,136,0.5));}
+    header nav button:hover{color:#ffffff;}
+    header nav button:hover i{transform:translateY(-2px);filter:drop-shadow(0 2px 4px rgba(255,255,255,0.4));}
+    header nav button.active{color:#2dd4bf;border-bottom-color:#2dd4bf;}
+    header nav button.active i{filter:drop-shadow(0 0 8px rgba(45,212,191,0.6));}
 
     .hright{display:flex;align-items:center;gap:10px;padding:0 20px;flex-shrink:0;}
-    .huser{font-size:.8rem;color:var(--muted);font-weight:500;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+    .huser{font-size:.85rem;color:rgba(255,255,255,0.8);font-weight:600;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
     .btn-logout{
-      background:#f1f5f9;border:1px solid #e2e8f0;color:#475569;
+      background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:#ffffff;
       padding:8px 16px;border-radius:8px;cursor:pointer;font-size:.82rem;font-weight:600;
       transition:all .15s;display:inline-flex;align-items:center;gap:6px;
     }
     .btn-logout i{font-size:1.1rem;}
-    .btn-logout:hover{background:#fee2e2;border-color:#fca5a5;color:var(--danger);}
+    .btn-logout:hover{background:rgba(239,68,68,0.2);border-color:#ef4444;color:#fca5a5;}
 
     .app-body{display:flex;flex:1;overflow:hidden;}
 
@@ -1426,6 +1426,7 @@ function buildFM(fm,body) {
 </script>
 
 
+<script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     const div = document.createElement("div");
