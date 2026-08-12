@@ -162,7 +162,7 @@
                 const formattedDate = new Date(p.fecha).toLocaleDateString('en-US', dateOptions);
                 
                 html += `
-                <a href="../${p.url}" class="blog-card r" style="text-decoration:none" aria-label="${p.titulo}">
+                <a href="../${p.url}" class="blog-card" style="text-decoration:none" aria-label="${p.titulo}">
                     <div class="blog-thumb">
                         <img src="..${p.imagen}" alt="${p.imagen_alt || p.titulo}" loading="lazy">
                         <div class="blog-cat"><i class="${p.categoria_icono || 'fas fa-leaf'}"></i> ${p.categoria}</div>
