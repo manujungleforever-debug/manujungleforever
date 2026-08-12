@@ -4,7 +4,7 @@ date: "2026-05-12"
 categoria: "Sustainability"
 publicado: true
 extracto: "Sustainable tourism in the Manu Biosphere Reserve promoting conservation, biodiversity, and eco-friendly travel in the Peruvian Amazon."
-imagen: "assets/media_to_upload/photos/placeholder.jpg"
+imagen: "/wp-content/uploads/2022/10/Group-Shot_-exploring-the-beach-.jpg"
 imagen_alt: "Sustainable Tourism in the Manu Biosphere Reserve"
 ---
 
