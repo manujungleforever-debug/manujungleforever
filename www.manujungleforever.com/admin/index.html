@@ -820,6 +820,51 @@ async function route(id) {
 // ─────────────────────────────────────────────────────────────────────────────
 // BLOG
 // ─────────────────────────────────────────────────────────────────────────────
+async function publishBlogPost(slug, fm, mdBody) {
+  const tmplData = await ghGet('www.manujungleforever.com/data/post-template.html');
+  let tmpl = tmplData.content;
+  
+  const htmlBody = marked.parse(mdBody);
+  const dateStr = fm.date ? new Date(fm.date + 'T12:00:00').toLocaleDateString('en-US', {year:'numeric', month:'long', day:'numeric'}) : '';
+  const replaceAll = (str, find, replace) => str.split(find).join(replace);
+  
+  tmpl = replaceAll(tmpl, '{{TITLE}}', fm.title || '');
+  tmpl = replaceAll(tmpl, '{{EXCERPT}}', fm.extracto || '');
+  tmpl = replaceAll(tmpl, '{{IMAGE}}', fm.imagen || '');
+  tmpl = replaceAll(tmpl, '{{DATE}}', dateStr);
+  tmpl = replaceAll(tmpl, '{{CONTENT}}', htmlBody);
+             
+  const htmlPath = `www.manujungleforever.com/${slug}/index.html`;
+  try {
+    const existingHtml = await ghGet(htmlPath);
+    await ghPut(htmlPath, tmpl, existingHtml.sha, `publish html: ${fm.title}`);
+  } catch(e) {
+    await ghPut(htmlPath, tmpl, null, `publish new html: ${fm.title}`);
+  }
+  
+  const idxData = await ghGet('www.manujungleforever.com/data/posts-index.json');
+  let idx = JSON.parse(idxData.content);
+  const postEntry = {
+    title: fm.title,
+    date: fm.date,
+    category: fm.categoria || 'Blog',
+    excerpt: fm.extracto,
+    image: fm.imagen,
+    imagen_alt: fm.imagen_alt,
+    publicado: fm.publicado,
+    slug: slug,
+    url: `${slug}/index.html`
+  };
+  
+  const existingIdx = idx.posts.findIndex(p => p.slug === slug);
+  if (existingIdx >= 0) {
+    idx.posts[existingIdx] = postEntry;
+  } else {
+    idx.posts.unshift(postEntry);
+  }
+  await ghPut('www.manujungleforever.com/data/posts-index.json', JSON.stringify(idx, null, 2), idxData.sha, `update index: ${fm.title}`);
+}
+
 async function viewBlog() {
   const data = await ghGet('www.manujungleforever.com/posts');
   const files = (data.files||[]).filter(f=>f.name.endsWith('.md'))
@@ -868,6 +913,7 @@ function newBlog() {
     const content=buildFM(fm,document.getElementById('f-body').value);
     const res=await ghPut(path,content,null,`new post: ${fm.title}`);
     cFile=path; cSha=res.sha;
+    await publishBlogPost(slug, fm, document.getElementById('f-body').value);
     document.querySelector('.back-btn').textContent='← Blog (guardado ✓)';
   });
 }
@@ -892,6 +938,8 @@ async function editBlog(path, sha) {
     const content=buildFM(fm2,document.getElementById('f-body').value);
     const res=await ghPut(cFile,content,cSha,`update: ${fm2.title}`);
     cSha=res.sha;
+    const slug = cFile.split('/').pop().replace('.md', '');
+    await publishBlogPost(slug, fm2, document.getElementById('f-body').value);
   });
 }
 

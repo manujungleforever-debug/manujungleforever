@@ -132,7 +132,7 @@
 <main id="main">
 <section class="in-hero" style="background-image: url('../wp-content/uploads/2022/12/five-reasons-to-visit-manu-national-park.webp'); background-size: cover; background-position: center; position: relative;">
   <div class="cx">
-    <span class="ey">Hidden Jungle Cusco</span>
+    <span class="ey">Manu Jungle Forever</span>
     <h1 class="h1" style="font-size:clamp(2.5rem,6vw,4.5rem)">PACKING LIST FOR YOUR TRIP TO THE PERUVIAN JUNGLE</h1>
   </div>
 </section>
@@ -198,6 +198,7 @@
 
   
   
+
 <!-- COMMENT FORM -->
 <section style="background:var(--k); padding:80px 0 0;">
   <div class="cx">
@@ -276,8 +277,8 @@ document.addEventListener("DOMContentLoaded", async function() {
     if (grid) {
       grid.innerHTML = valid.slice(0, 3).map(a => `
         <a href="../${a.url}" style="display:flex; flex-direction:column; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.07); border-radius:20px; overflow:hidden; text-decoration:none; transition:transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-6px)';this.style.boxShadow='0 16px 40px rgba(0,0,0,0.35)';" onmouseout="this.style.transform='';this.style.boxShadow='';">
-          <div style="width:100%; height:220px; overflow:hidden; flex-shrink:0;">
-            <img src="..${a.imagen}" alt="${a.imagen_alt || a.title}" loading="lazy" style="width:100%; height:100%; object-fit:cover; transition:transform 0.4s ease;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'">
+          <div style="width:100%; height:220px; overflow:hidden; flex-shrink:0; background:rgba(0,0,0,0.3); display:flex; align-items:center; justify-content:center;">
+            <img src="..${a.imagen}" alt="${a.imagen_alt || a.title}" loading="lazy" style="width:100%; height:100%; object-fit:contain; transition:transform 0.4s ease;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'">
           </div>
           <div style="padding:24px;">
             <p style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--a); margin:0 0 10px; font-weight:600;">${a.categoria || 'Blog'}</p>

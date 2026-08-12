@@ -149,7 +149,7 @@
     <!-- Added User Meta -->
     <div style="display:flex; align-items:center; gap:8px; margin-bottom:32px; font-size:1rem; color:rgba(255,255,255,.6); font-family:'Inter',sans-serif">
       <i class="fas fa-user-circle" style="font-size:1.8rem; color:rgba(255,255,255,.8)"></i>
-      <span>Published by: <strong style="color:var(--w)">Hidden Jungle Cusco</strong></span>
+      <span>Published by: <strong style="color:var(--w)">Manu Jungle Forever</strong></span>
       <span style="margin:0 12px; color:rgba(255,255,255,.2)">|</span>
       <i class="far fa-calendar-alt"></i>
       <span>Jun 15, 2026</span>
@@ -158,7 +158,7 @@
 
 <img src="../media/2026/05/Avatar-3.jpg" alt="Green Amazon jungle landscape" loading="lazy">
 <h1>Discovering the Mysteries of the Peruvian Amazon</h1>
-<p>The Peruvian Amazon hides mysteries that only the most intrepid adventurers get to know. At <strong>Hidden Jungle Cusco</strong>, we specialize in guiding you through these natural wonders.</p>
+<p>The Peruvian Amazon hides mysteries that only the most intrepid adventurers get to know. At <strong>Manu Jungle Forever</strong>, we specialize in guiding you through these natural wonders.</p>
 
 <h2>🐒 The Biodiversity of the Reserve</h2>
 <p>As you venture into the heart of Manu, you will find yourself surrounded by a vibrant ecosystem. This place is not just a destination; it's an immersive experience.</p>
@@ -208,6 +208,7 @@
 
   
   
+
 <!-- COMMENT FORM -->
 <section style="background:var(--k); padding:80px 0 0;">
   <div class="cx">
@@ -286,8 +287,8 @@ document.addEventListener("DOMContentLoaded", async function() {
     if (grid) {
       grid.innerHTML = valid.slice(0, 3).map(a => `
         <a href="../${a.url}" style="display:flex; flex-direction:column; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.07); border-radius:20px; overflow:hidden; text-decoration:none; transition:transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-6px)';this.style.boxShadow='0 16px 40px rgba(0,0,0,0.35)';" onmouseout="this.style.transform='';this.style.boxShadow='';">
-          <div style="width:100%; height:220px; overflow:hidden; flex-shrink:0;">
-            <img src="..${a.imagen}" alt="${a.imagen_alt || a.title}" loading="lazy" style="width:100%; height:100%; object-fit:cover; transition:transform 0.4s ease;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'">
+          <div style="width:100%; height:220px; overflow:hidden; flex-shrink:0; background:rgba(0,0,0,0.3); display:flex; align-items:center; justify-content:center;">
+            <img src="..${a.imagen}" alt="${a.imagen_alt || a.title}" loading="lazy" style="width:100%; height:100%; object-fit:contain; transition:transform 0.4s ease;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'">
           </div>
           <div style="padding:24px;">
             <p style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--a); margin:0 0 10px; font-weight:600;">${a.categoria || 'Blog'}</p>

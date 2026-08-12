@@ -1675,3 +1675,200 @@ font, font > font, font[style], font > font[style] {
   display: flex;
   align-items: center;
 }
+
+/* =========================================
+   ARTICLE / BLOG POST PAGES
+   ========================================= */
+
+/* Hero banner for articles */
+.in-hero {
+  min-height: 520px;
+  display: flex;
+  align-items: flex-end;
+  background-size: cover;
+  background-position: center top;
+  position: relative;
+  padding: 140px 0 60px;
+}
+.in-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(5,18,16,0.3) 0%, rgba(5,18,16,0.85) 100%);
+}
+.in-hero .cx {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  width: 100%;
+}
+.in-hero .h1 {
+  max-width: 860px;
+  margin: 0 auto;
+  line-height: 1.2;
+}
+
+/* Article body container */
+.article-w, .article-container {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 60px 0;
+}
+
+/* Rich text content styles */
+.tour-rich-text,
+.tour-rich-text-custom {
+  color: rgba(255,255,255,0.85);
+  font-size: 1.08rem;
+  line-height: 1.9;
+}
+.tour-rich-text h1,
+.tour-rich-text-custom h1 {
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 800;
+  color: var(--w);
+  margin: 48px 0 20px;
+  line-height: 1.25;
+}
+.tour-rich-text h2,
+.tour-rich-text-custom h2,
+.tour-rich-text .wp-block-heading,
+.tour-rich-text-custom .wp-block-heading {
+  font-size: clamp(1.25rem, 2.5vw, 1.7rem);
+  font-weight: 700;
+  color: var(--w);
+  margin: 44px 0 18px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid rgba(13,148,136,0.3);
+  line-height: 1.3;
+}
+.tour-rich-text h3,
+.tour-rich-text-custom h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--al);
+  margin: 32px 0 14px;
+}
+.tour-rich-text p,
+.tour-rich-text-custom p {
+  margin-bottom: 20px;
+  color: rgba(255,255,255,0.8);
+}
+.tour-rich-text ul,
+.tour-rich-text-custom ul,
+.tour-rich-text ol,
+.tour-rich-text-custom ol {
+  margin: 16px 0 24px 0;
+  padding-left: 28px;
+}
+.tour-rich-text li,
+.tour-rich-text-custom li {
+  margin-bottom: 10px;
+  color: rgba(255,255,255,0.8);
+  list-style: disc;
+}
+.tour-rich-text a,
+.tour-rich-text-custom a {
+  color: var(--al);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.tour-rich-text img,
+.tour-rich-text-custom img {
+  width: 100%;
+  border-radius: 16px;
+  margin: 32px 0;
+  object-fit: cover;
+  max-height: 520px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+}
+.tour-rich-text strong,
+.tour-rich-text-custom strong {
+  color: var(--w);
+  font-weight: 700;
+}
+
+/* Elementor junk override — strip all WP/Elementor wrappers */
+.elementor, .elementor-section, .elementor-container,
+.elementor-column, .elementor-widget-wrap,
+.elementor-element, .elementor-widget-container {
+  all: unset;
+  display: block;
+}
+
+/* Article hero image inside body */
+.article-hero-img {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 20px;
+  margin-bottom: 48px;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+}
+
+/* Article nav (prev/next) */
+.article-nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 64px 0;
+  padding-top: 48px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+}
+.article-nav a {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 16px;
+  padding: 20px 24px;
+  transition: all 0.25s;
+}
+.article-nav a:hover {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(13,148,136,0.4);
+}
+.nav-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--a);
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.nav-title {
+  font-size: 0.92rem;
+  color: var(--w);
+  font-weight: 600;
+}
+
+/* Author meta row */
+.article-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 36px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.55);
+  flex-wrap: wrap;
+}
+.article-meta strong { color: var(--w); }
+.article-meta .sep { color: rgba(255,255,255,0.2); margin: 0 4px; }
+
+/* Plan your Manu CTA box */
+.article-cta {
+  margin: 64px 0 80px;
+  padding: 52px 44px;
+  background: var(--f);
+  border-radius: 24px;
+  border: 1px solid rgba(255,255,255,0.06);
+  text-align: center;
+}
+
+/* Responsive */
+@media(max-width:768px){
+  .article-w { padding: 40px 0; }
+  .in-hero { min-height: 380px; padding: 120px 0 48px; }
+  .article-nav { grid-template-columns: 1fr; }
+}

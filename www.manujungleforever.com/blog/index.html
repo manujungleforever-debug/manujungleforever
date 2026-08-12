@@ -156,24 +156,29 @@
             
             const grid = document.getElementById('blog-grid');
             let html = '';
-            
-            data.posts.filter(p => p.publicado).forEach(p => {
+                  data.posts.filter(p => p.publicado).forEach(p => {
                 const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-                const formattedDate = new Date(p.fecha).toLocaleDateString('en-US', dateOptions);
+                const rawDate = p.date || p.fecha || '';
+                const formattedDate = rawDate ? new Date(rawDate + 'T12:00:00').toLocaleDateString('en-US', dateOptions) : '';
+                const title = p.title || p.titulo || '';
+                const excerpt = p.extracto || p.excerpt || '';
+                const cat = p.categoria || p.category || 'Blog';
+                const img = p.imagen || p.image || '';
+                const imgAlt = p.imagen_alt || title;
                 
                 html += `
-                <a href="../${p.url}" class="blog-card" style="text-decoration:none" aria-label="${p.titulo}">
-                    <div class="blog-thumb">
-                        <img src="..${p.imagen}" alt="${p.imagen_alt || p.titulo}" loading="lazy">
-                        <div class="blog-cat"><i class="${p.categoria_icono || 'fas fa-leaf'}"></i> ${p.categoria}</div>
+                <a href="../${p.url}" class="blog-card" style="text-decoration:none" aria-label="${title}">
+                    <div class="blog-thumb" style="background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center;">
+                        <img src="..${img}" alt="${imgAlt}" loading="lazy" style="width:100%;height:100%;object-fit:contain;">
+                        <div class="blog-cat"><i class="fas fa-leaf"></i> ${cat}</div>
                     </div>
-                    <div class="blog-card-body">
+                    <div class="blog-body">
                         <div class="blog-meta"><i class="far fa-calendar-alt"></i> ${formattedDate}</div>
-                        <h3>${p.titulo}</h3>
-                        <p>${p.extracto}</p>
-                        <span class="blog-read-more">Read Article <i class="fas fa-arrow-right"></i></span>
+                        <h2>${title}</h2>
+                        <p>${excerpt}</p>
+                        <span class="blog-read"><span>Read Article</span> <i class="fas fa-arrow-right"></i></span>
                     </div>
-                </a>`;
+                </a>`;  </a>`;
             });
             
             grid.innerHTML = html;
