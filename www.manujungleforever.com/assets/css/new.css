@@ -211,12 +211,12 @@ img{max-width:100%;height:auto;display:block}a{color:inherit;text-decoration:non
 /* WA Neon Float */
 .wa-wrap {
   position: fixed; bottom: 28px; right: 28px;
-  width: 60px; height: 60px; z-index: 9998;
+  width: 72px; height: 72px; z-index: 9998;
   display: flex; align-items: center; justify-content: center;
 }
 .wa-ring {
   position: absolute; top: 0; left: 0;
-  width: 60px; height: 60px; border-radius: 50%;
+  width: 72px; height: 72px; border-radius: 50%;
   border: 2px solid #25D366; opacity: 0;
   animation: waPulse 2.6s ease-out infinite;
 }
@@ -228,8 +228,8 @@ img{max-width:100%;height:auto;display:block}a{color:inherit;text-decoration:non
 }
 .wa-wrap .wa {
   position: relative; z-index: 2;
-  width: 58px; height: 58px; border-radius: 50%;
-  background: #25D366; color: #fff; font-size: 1.7rem;
+  width: 70px; height: 70px; border-radius: 50%;
+  background: #25D366; color: #fff; font-size: 2.1rem;
   display: flex; align-items: center; justify-content: center;
   box-shadow: 0 4px 15px rgba(37,211,102,0.4);
   transition: transform 0.3s ease;
@@ -941,7 +941,7 @@ body { top: 0px !important; position: relative !important; }
 }
 .wa-wrap .wa-tooltip {
   position: absolute;
-  right: 75px;
+  right: 85px;
   top: 50%;
   transform: translateY(-50%) translateX(10px);
   background: #fff;
