@@ -261,9 +261,156 @@ function submitComment(e) {
       <span style="background:var(--a); width:32px; height:32px; border-radius:8px; display:inline-flex; align-items:center; justify-content:center; font-size:1rem; flex-shrink:0;">
         <i class="fas fa-newspaper" style="color:#000;"></i>
       </span>
-      More Articles
-    </h2>
-    <div id="related-grid" style="display:grid; grid-template-columns:repeat(3,1fr); gap:24px;"></div>
+      More Articles</h2>
+
+    <style>
+      #related-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+        margin-top: 40px;
+      }
+      @media(max-width: 900px) {
+        #related-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .ref-card {
+        background: #07211a;
+        border-radius: 16px;
+        overflow: hidden;
+        text-decoration: none;
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: 1px solid rgba(255,255,255,0.05);
+      }
+      .ref-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+      }
+      .ref-img-wrap {
+        position: relative;
+        height: 280px;
+        width: 100%;
+        background: #000;
+      }
+      .ref-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center 20%;
+        transition: transform 0.5s ease;
+      }
+      .ref-card:hover .ref-img {
+        transform: scale(1.05);
+      }
+      .ref-badge {
+        position: absolute;
+        bottom: 15px;
+        left: 20px;
+        background: #cca94c;
+        color: #111;
+        padding: 5px 14px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .ref-body {
+        padding: 30px 30px 40px;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+      }
+      .ref-date {
+        color: rgba(255,255,255,0.5);
+        font-size: 0.9rem;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .ref-title {
+        color: #fff;
+        font-family: 'Syne', sans-serif;
+        font-size: 1.5rem;
+        font-weight: 700;
+        line-height: 1.3;
+        margin-bottom: 15px;
+      }
+      .ref-exc {
+        color: rgba(255,255,255,0.65);
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin-bottom: 25px;
+        flex-grow: 1;
+      }
+      .ref-btn {
+        color: #cca94c;
+        font-size: 0.85rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+    </style>
+
+<div id="related-grid"></div>
+
+      <script>
+      document.addEventListener('DOMContentLoaded', async () => {
+          try {
+              const res = await fetch('../data/posts-index.json?v=' + new Date().getTime());
+              const data = await res.json();
+              
+              const currentPath = window.location.pathname;
+              let others = data.posts.filter(p => p.publicado && !currentPath.includes(p.url.replace('/index.html','')));
+              
+              others.sort(() => 0.5 - Math.random());
+              const toShow = others.slice(0, 2); // Show 2 posts for 2 columns!
+              
+              const grid = document.getElementById('related-grid');
+              if(grid && toShow.length > 0) {
+                  let html = '';
+                  toShow.forEach(p => {
+                      const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+                      const rawDate = p.date || p.fecha || '';
+                      const formattedDate = rawDate ? new Date(rawDate + 'T12:00:00').toLocaleDateString('en-US', dateOptions) : '';
+                      const title = p.title || p.titulo || '';
+                      const excerpt = p.extracto || p.excerpt || '';
+                      const cat = p.categoria || p.category || 'Blog';
+                      const img = p.imagen || p.image || '';
+                      
+                      html += `
+                      <a href="../${p.url}" class="ref-card" aria-label="${title}">
+                          <div class="ref-img-wrap">
+                              <img src="..${img}" alt="${title}" loading="lazy" class="ref-img">
+                              <div class="ref-badge"><i class="fas fa-lock" style="font-size:0.7rem"></i> ${cat}</div>
+                          </div>
+                          <div class="ref-body">
+                              <div class="ref-date"><i class="far fa-calendar-alt"></i> ${formattedDate}</div>
+                              <h2 class="ref-title">${title}</h2>
+                              <p class="ref-exc">${excerpt}</p>
+                              <div class="ref-btn"><i class="fas fa-arrow-right"></i> READ ARTICLE</div>
+                          </div>
+                      </a>`;
+                  });
+                  grid.innerHTML = html;
+              }
+          } catch(e) {
+              console.error('Error loading related posts:', e);
+          }
+      });
+      </script>
+
+    
   </div>
 <script>
 document.addEventListener("DOMContentLoaded", async function() {
