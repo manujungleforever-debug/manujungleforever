@@ -1,4 +1,4 @@
-﻿<!doctype html><html lang="en"><head>
+<!doctype html><html lang="en"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Cusco Jungle &amp; Manu National Park Tours | Manu Jungle Forever</title>
 <meta name="description" content="Explore Cusco Jungle &amp; Manu National Park tours with Manu Jungle Forever. Immerse yourself in wildlife — book your Peruvian Amazon adventure now!">
@@ -268,7 +268,7 @@ async function submitComment(e) {
     fd.append('_subject', 'New Blog Comment!');
     fd.append('_captcha', 'false');
     
-    const r = await fetch('/api/booking', {
+    const r = await fetch('/api/comentario', {
         method: 'POST',
         body: fd
     });
