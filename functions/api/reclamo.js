@@ -1,4 +1,4 @@
-import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
+import { PDFDocument, rgb, StandardFonts } from './pdf-lib.js';
 
 // ─── Utilidades ──────────────────────────────────────────────────────────────
 const CORS_HEADERS = {
