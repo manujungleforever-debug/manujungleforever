@@ -1502,9 +1502,9 @@ body { top: 0px !important; position: relative !important; }
     gap: 12px;
     cursor: pointer;
     padding: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 12px;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.02);
     transition: all 0.3s ease;
 }
 .reclamo-card:hover {
@@ -1607,8 +1607,8 @@ body { top: 0px !important; position: relative !important; }
 
 .reclamo-btn-submit {
     width: 100%;
-    background: var(--a);
-    color: #fff;
+    background: linear-gradient(135deg, var(--a), #B8932A);
+    color: var(--k);
     font-weight: 700;
     padding: 14px 32px;
     border-radius: 30px;
@@ -1618,11 +1618,13 @@ body { top: 0px !important; position: relative !important; }
     text-transform: uppercase;
     letter-spacing: 0.05em;
     cursor: pointer;
+    box-shadow: 0 8px 32px rgba(201,168,76,.35);
     transition: all 0.3s ease;
 }
 .reclamo-btn-submit:hover {
-    transform: translateY(-2px);
-    filter: brightness(1.1);
+    transform: translateY(-3px);
+    box-shadow: 0 14px 40px rgba(201,168,76,.5);
+    filter: brightness(1.05);
 }
 
 font, font > font, font[style], font > font[style] {
