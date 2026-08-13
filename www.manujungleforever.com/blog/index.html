@@ -262,7 +262,20 @@
             const grid = document.getElementById('blog-grid-override');
             let html = '';
             
-            data.posts.filter(p => p.publicado).forEach(p => {
+            const urlParams = new URLSearchParams(window.location.search);
+            let currentPage = parseInt(urlParams.get('page')) || 1;
+            const POSTS_PER_PAGE = 8; // 8 posts for 2 columns looks nice
+            
+            let publishedPosts = data.posts.filter(p => p.publicado);
+            const totalPages = Math.ceil(publishedPosts.length / POSTS_PER_PAGE);
+            
+            if (currentPage < 1) currentPage = 1;
+            if (currentPage > totalPages && totalPages > 0) currentPage = totalPages;
+            
+            const startIdx = (currentPage - 1) * POSTS_PER_PAGE;
+            const toShow = publishedPosts.slice(startIdx, startIdx + POSTS_PER_PAGE);
+            
+            toShow.forEach(p => {
                 const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
                 const rawDate = p.date || p.fecha || '';
                 const formattedDate = rawDate ? new Date(rawDate + 'T12:00:00').toLocaleDateString('en-US', dateOptions) : '';
@@ -289,13 +302,33 @@
             
             grid.innerHTML = html;
             
+            // Render Pagination
+            let pagHtml = '';
+            if (totalPages > 1) {
+                if (currentPage > 1) {
+                    pagHtml += `<a href="?page=${currentPage - 1}" class="btn ba" style="padding:10px 18px" aria-label="Previous page"><i class="fas fa-chevron-left"></i></a>`;
+                }
+                for (let i = 1; i <= totalPages; i++) {
+                    if (i === currentPage) {
+                        pagHtml += `<span class="btn bg2" style="padding:10px 18px; pointer-events:none">${i}</span>`;
+                    } else {
+                        pagHtml += `<a href="?page=${i}" class="btn ba" style="padding:10px 18px">${i}</a>`;
+                    }
+                }
+                if (currentPage < totalPages) {
+                    pagHtml += `<a href="?page=${currentPage + 1}" class="btn ba" style="padding:10px 18px" aria-label="Next page"><i class="fas fa-chevron-right"></i></a>`;
+                }
+            }
+            const pagContainer = document.getElementById('dynamic-pagination');
+            if (pagContainer) pagContainer.innerHTML = pagHtml;
+            
         } catch(e) {
             console.error('Error loading blog posts:', e);
         }
     });
     </script>
     
-    <div class="pagination" style="margin-top:56px; display:flex; justify-content:center; gap:12px; align-items:center;"><span class="btn bg2" style="padding:10px 18px; pointer-events:none">1</span><a href="../blog/page/2/index.html" class="btn ba" style="padding:10px 18px">2</a><a href="../blog/page/2/index.html" class="btn ba" style="padding:10px 18px" aria-label="Next page"><i class="fas fa-chevron-right"></i></a></div>
+    <div id="dynamic-pagination" style="margin-top:56px; display:flex; justify-content:center; gap:12px; align-items:center;"></div>
 
     <!-- CTA -->
     <div class="r" style="text-align:center; margin-top:80px; padding:64px 40px; background:var(--f); border-radius:24px; border:1px solid rgba(255,255,255,.06)">
