@@ -48,11 +48,11 @@ async function generateReclamoPDF(data) {
   const h3 = 40;
   drawBorder(marginX, y, W, h3);
   dText('PROVEEDOR:', marginX + 5, y - 12, 8, bold);
-  dText('MANU JUNGLE FOREVER E.I.R.L.', marginX + 75, y - 12, 8, font);
+  dText('LLAQUI CHUSI JORDY LEONIDAS (MANU JUNGLE FOREVER)', marginX + 75, y - 12, 8, font);
   dText('RUC:', marginX + 5, y - 24, 8, bold);
-  dText('20610333283', marginX + 75, y - 24, 8, font);
+  dText('10712309283', marginX + 75, y - 24, 8, font);
   dText('DOMICILIO:', marginX + 5, y - 36, 8, bold);
-  dText('Fitzcarrald 17800, Nuevo Eden, Manu, Peru', marginX + 75, y - 36, 7, font);
+  dText('Cusco, Perú', marginX + 75, y - 36, 7, font);
   y -= h3;
 
   // -- 1. Identificacion --
