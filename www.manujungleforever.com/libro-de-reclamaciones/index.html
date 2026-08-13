@@ -30,8 +30,31 @@
     background: #051210 !important;
     background-image: none !important;
   }
+  .in-hero {
+    isolation: isolate;
+    overflow: hidden;
+    position: relative;
+  }
   .in-hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
     background: linear-gradient(to bottom, rgba(5, 13, 8, 0.3) 0%, rgba(5, 13, 8, 0.8) 100%) !important;
+    z-index: 0 !important;
+    pointer-events: none !important;
+  }
+  .in-hero .cx {
+    position: relative;
+    z-index: 2 !important;
+    pointer-events: auto !important;
+  }
+  .in-hero .ey,
+  .in-hero .h1 {
+    position: relative;
+    z-index: 3 !important;
+    pointer-events: auto !important;
+    user-select: text !important;
+    -webkit-user-select: text !important;
   }
   .reclamo-box,
   .reclamo-section {
@@ -161,10 +184,10 @@
 </div>
 
 <main id="main">
-<section class="in-hero" style="background-image: none !important; background-color: #020d0d !important; background-size: cover; background-position: center; position: relative; color:#fff;">
-  <div class="cx">
-    <span class="ey" style="color:#2dd4bf !important; opacity:1 !important;">Manu Jungle Forever</span>
-    <h1 class="h1" style="font-size:clamp(2.5rem,6vw,4.5rem); color:#fff !important; opacity:1 !important; text-shadow:0 4px 24px rgba(0,0,0,.5);">Complaints Book</h1>
+<section class="in-hero" style="background-image: none !important; background-color: #051210 !important; background-size: cover; background-position: center; color:#fff;">
+  <div class="cx" style="position:relative; z-index:2;">
+    <span class="ey" style="color:#2dd4bf !important; opacity:1 !important; position:relative; z-index:3; user-select:text; -webkit-user-select:text;">Manu Jungle Forever</span>
+    <h1 class="h1" style="font-size:clamp(2.5rem,6vw,4.5rem); color:#ffffff !important; opacity:1 !important; text-shadow:0 4px 24px rgba(0,0,0,.5); position:relative; z-index:3; user-select:text; -webkit-user-select:text;">Complaints Book</h1>
   </div>
 </section>
 <section class="sec" style="background:#020d0d !important">
