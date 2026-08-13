@@ -310,8 +310,35 @@ document.addEventListener('DOMContentLoaded', () => {
                 generateCaptcha();
                 return;
             }
-            alert("El formulario está listo para integrarse con la API de Resend.");
-            // Aquí irá la lógica de fetch
+            const btn = form.querySelector('button[type="submit"]');
+            const originalBtn = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+            
+            try {
+                const fd = new FormData(form);
+                fd.append('_subject', 'Nuevo Reclamo - Libro de Reclamaciones');
+                fd.append('_captcha', 'false');
+                
+                const r = await fetch('https://formsubmit.co/ajax/discover@manujungleforever.com', {
+                    method: 'POST',
+                    body: fd
+                });
+                const d = await r.json();
+                
+                if (d.success === "true" || d.success === true) {
+                    alert("Su reclamo ha sido enviado con éxito. Nos pondremos en contacto pronto.");
+                    form.reset();
+                    generateCaptcha();
+                } else {
+                    alert("Error al enviar el reclamo. Por favor, intente nuevamente.");
+                }
+            } catch(err) {
+                alert("Error al enviar el reclamo. Por favor, intente nuevamente.");
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = originalBtn;
+            }
         });
     }
 });
@@ -425,12 +452,15 @@ if(bkForm){
     const btn=this.querySelector('[type=submit]'),msg=document.getElementById('bk-msg');
     btn.disabled=true;btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Sending...';
     try{
-      const r=await fetch('handlers/send-booking.php',{method:'POST',body:new FormData(this)});
-      const d=await r.json();
-      msg.className='fm '+(d.ok?'ok':'er');
-      msg.textContent=d.message;
-      if(d.ok)this.reset();
-    }catch{
+        const fd = new FormData(this);
+        fd.append('_captcha', 'false');
+        const r=await fetch('https://formsubmit.co/ajax/discover@manujungleforever.com',{method:'POST',body:fd});
+        const d=await r.json();
+        const isOk = (d.success === "true" || d.success === true);
+        msg.className='fm '+(isOk?'ok':'er');
+        msg.textContent= isOk ? "Thank you! Your message has been sent." : "Could not send. Please try again.";
+        if(isOk)this.reset();
+      }catch{
       msg.className='fm er';
       msg.textContent='Could not send. Please email discover@manujungleforever.com or use WhatsApp.';
     }finally{btn.disabled=false;btn.innerHTML='<i class="fas fa-paper-plane"></i> Send Enquiry';}
