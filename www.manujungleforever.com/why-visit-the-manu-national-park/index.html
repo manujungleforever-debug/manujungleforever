@@ -370,33 +370,7 @@ function submitComment(e) {
 
     
   </div>
-<script>
-document.addEventListener("DOMContentLoaded", async function() {
-  try {
-    const res = await fetch('../data/posts-index.json');
-    const data = await res.json();
-    const current = window.location.pathname;
-    const valid = data.posts.filter(a => a.publicado && !current.includes(a.slug));
-    valid.sort(() => 0.5 - Math.random());
-    const grid = document.getElementById('related-grid');
-    if (grid) {
-      grid.innerHTML = valid.slice(0, 3).map(a => `
-        <a href="../${a.url}" style="display:flex; flex-direction:column; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.07); border-radius:20px; overflow:hidden; text-decoration:none; transition:transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-6px)';this.style.boxShadow='0 16px 40px rgba(0,0,0,0.35)';" onmouseout="this.style.transform='';this.style.boxShadow='';">
-          <div style="width:100%; height:220px; overflow:hidden; flex-shrink:0; background:rgba(0,0,0,0.3); display:flex; align-items:center; justify-content:center;">
-            <img src="..${a.imagen}" alt="${a.imagen_alt || a.title}" loading="lazy" style="width:100%; height:100%; object-fit:contain; transition:transform 0.4s ease;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'">
-          </div>
-          <div style="padding:24px;">
-            <p style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--a); margin:0 0 10px; font-weight:600;">${a.categoria || 'Blog'}</p>
-            <h3 style="margin:0; font-size:1.05rem; color:var(--w); line-height:1.5; font-weight:600;">${a.title}</h3>
-          </div>
-        </a>
-      `).join('');
-    }
-  } catch(err) {
-    console.error("Error loading related posts", err);
-  }
-});
-</script>
+
 </section>
 
 </main>
