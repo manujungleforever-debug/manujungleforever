@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+﻿@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 @keyframes logoEntrance {
   0% { opacity: 0; transform: scale(0.6) translateY(-30px); filter: drop-shadow(0 0 0 rgba(16,185,129,0)); }
@@ -711,7 +711,7 @@ body { top: 0px !important; position: relative !important; }
 
 
 /* =========================================
-   GUIDED TOURS PAGE ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Filter bar & Cards
+   GUIDED TOURS PAGE ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Filter bar & Cards
    ========================================= */
 
 /* Sticky filter bar */
@@ -1583,9 +1583,9 @@ body { top: 0px !important; position: relative !important; }
     width: 100%;
 }
 #captcha-box {
-    background: #020617;
-    border: 1px solid rgba(13, 178, 107, 0.3);
-    color: var(--a);
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
     font-family: 'Syne', sans-serif;
     font-weight: 700;
     font-size: 1.125rem;
@@ -1593,7 +1593,6 @@ body { top: 0px !important; position: relative !important; }
     border-radius: 12px;
     min-width: 120px;
     text-align: center;
-    box-shadow: 0 0 10px rgba(13, 178, 107, 0.1);
 }
 #captcha-input {
     width: 100%;
@@ -1791,7 +1790,7 @@ font, font > font, font[style], font > font[style] {
   font-weight: 700;
 }
 
-/* Elementor junk override ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â strip all WP/Elementor wrappers */
+/* Elementor junk override ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â strip all WP/Elementor wrappers */
 .elementor, .elementor-section, .elementor-container,
 .elementor-column, .elementor-widget-wrap,
 .elementor-element, .elementor-widget-container {
@@ -1892,6 +1891,7 @@ font, font > font, font[style], font > font[style] {
   background-size: 0.65rem auto !important;
   padding-right: 2.5rem !important;
 }
+
 
 
 
