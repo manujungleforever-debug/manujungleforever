@@ -18,6 +18,15 @@
 /data/*
   Cache-Control: no-cache, must-revalidate
 
+# ─── Control de caché para HTML ────────────────────────────────────────────────
+# Los archivos HTML se deben validar siempre para obtener versión actualizada
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
+/*/*.html
+  Cache-Control: public, max-age=0, must-revalidate
+/*/*/*.html
+  Cache-Control: public, max-age=0, must-revalidate
+
 # ─── Archivos estáticos con cache largo ───────────────────────────────────────
 /assets/css/*
   Cache-Control: public, max-age=31536000, immutable
