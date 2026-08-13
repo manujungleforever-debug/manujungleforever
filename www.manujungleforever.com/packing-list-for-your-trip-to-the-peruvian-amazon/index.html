@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head>
+﻿<!doctype html><html lang="en"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Cusco Jungle &amp; Manu National Park Tours | Manu Jungle Forever</title>
 <meta name="description" content="Explore Cusco Jungle &amp; Manu National Park tours with Manu Jungle Forever. Immerse yourself in wildlife — book your Peruvian Amazon adventure now!">
@@ -258,7 +258,7 @@ async function submitComment(e) {
     fd.append('_subject', 'New Blog Comment!');
     fd.append('_captcha', 'false');
     
-    const r = await fetch('https://formsubmit.co/ajax/discover@manujungleforever.com', {
+    const r = await fetch('/api/booking', {
         method: 'POST',
         body: fd
     });
@@ -549,7 +549,7 @@ if(bkForm){
     try{
         const fd = new FormData(this);
         fd.append('_captcha', 'false');
-        const r=await fetch('https://formsubmit.co/ajax/discover@manujungleforever.com',{method:'POST',body:fd});
+        const r=await fetch('/api/booking',{method:'POST',body:fd});
         const d=await r.json();
         const isOk = (d.success === "true" || d.success === true);
         msg.className='fm '+(isOk?'ok':'er');
