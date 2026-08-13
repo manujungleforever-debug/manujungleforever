@@ -713,7 +713,7 @@ body { top: 0px !important; position: relative !important; }
 
 
 /* =========================================
-   GUIDED TOURS PAGE Ã¢â‚¬â€ Filter bar & Cards
+   GUIDED TOURS PAGE ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Filter bar & Cards
    ========================================= */
 
 /* Sticky filter bar */
@@ -1117,10 +1117,10 @@ body { top: 0px !important; position: relative !important; }
 }
 
 .reclamo-box {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 16px;
-  padding: 30px;
+  border-radius: 24px;
+  padding: 40px;
   margin-bottom: 30px;
 }
 .reclamo-box.glow {
@@ -1162,10 +1162,10 @@ body { top: 0px !important; position: relative !important; }
 .reclamo-input-group select,
 .reclamo-input-group textarea {
   width: 100%;
-  background: rgba(255,255,255,0.05);
+  background: rgba(255,255,255,0.03);
   border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 8px;
-  padding: 12px 15px;
+  border-radius: 12px;
+  padding: 14px 16px;
   color: #fff;
   font-family: 'Outfit', sans-serif;
   font-size: 1rem;
@@ -1378,13 +1378,12 @@ body { top: 0px !important; position: relative !important; }
 
 /* --- Libro de Reclamaciones Wachicargo Style --- */
 .reclamo-wrapper {
-    max-width: 1000px;
-    margin: 0 auto;
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 40px;
-    border-radius: 24px;
+  max-width: 1000px;
+  margin: 0 auto;
+  background: transparent;
+  border: none;
+  padding: 0;
+  border-radius: 0;
     box-shadow: 0 20px 50px rgba(0,0,0,0.5);
     margin-top: 20px;
 }
@@ -1791,7 +1790,7 @@ font, font > font, font[style], font > font[style] {
   font-weight: 700;
 }
 
-/* Elementor junk override Ã¢â‚¬â€ strip all WP/Elementor wrappers */
+/* Elementor junk override ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â strip all WP/Elementor wrappers */
 .elementor, .elementor-section, .elementor-container,
 .elementor-column, .elementor-widget-wrap,
 .elementor-element, .elementor-widget-container {
@@ -1881,7 +1880,7 @@ font, font > font, font[style], font > font[style] {
 }
 
 .reclamo-group select {
-  background-color: rgba(255, 255, 255, 0.05) !important;
+  background-color: rgba(255, 255, 255, 0.03) !important;
   color: #fff !important;
   appearance: none !important;
   -webkit-appearance: none !important;
@@ -1892,4 +1891,6 @@ font, font > font, font[style], font > font[style] {
   background-size: 0.65rem auto !important;
   padding-right: 2.5rem !important;
 }
+
+
 
