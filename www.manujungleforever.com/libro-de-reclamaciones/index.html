@@ -138,364 +138,178 @@
 </section>
 <section class="sec" style="background:var(--k)">
   <div class="cx">
-    <div class="policy-card">
-      <div class="policy-img-placeholder">Image Placeholder (Owner will insert image here)</div>
+    
+<div class="policy-card" style="text-align: center;">
+  <img src="../assets/img/libro_reclamaciones.png" alt="Complaints Book" style="max-height: 80px; margin-bottom: 20px;">
+  <div class="reclamo-header" style="margin-bottom: 30px;">
+    <h1>Complaints <span>Book</span></h1>
+    <p>In accordance with the Consumer Protection Code, Law N° 29571.</p>
+  </div>
+</div>
 
-      
-
-<style>
-  .libro-container {
-    max-width: 800px;
-    margin: 0 auto;
-    background: #fff;
-    padding: 40px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    border-radius: 12px;
-    font-family: 'Outfit', sans-serif;
-  }
-  .libro-header {
-    text-align: center;
-    margin-bottom: 30px;
-  }
-  .libro-header img {
-    height: 60px;
-    margin-bottom: 15px;
-  }
-  .libro-header h1 {
-    color: #045c4b;
-    font-size: 2rem;
-    font-weight: 800;
-    margin: 0 0 10px 0;
-    text-transform: uppercase;
-  }
-  .libro-header p {
-    color: #666;
-    font-size: 0.9rem;
-    margin: 0;
-  }
-  .libro-info {
-    background: #f8f9fa;
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 30px;
-    font-size: 0.9rem;
-    color: #444;
-  }
-  .libro-info p {
-    margin: 5px 0;
-  }
-  .libro-info strong {
-    color: #222;
-  }
-  .libro-fieldset {
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    padding: 25px 20px;
-    margin-bottom: 25px;
-    position: relative;
-    background: #fff;
-    transition: 0.3s;
-  }
-  .libro-fieldset:hover {
-    border-color: #cbd5e1;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.02);
-  }
-  .libro-legend {
-    color: #045c4b;
-    font-weight: 700;
-    font-size: 1rem;
-    padding: 0 10px;
-    text-transform: uppercase;
-  }
-  .libro-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-  }
-  .libro-group {
-    display: flex;
-    flex-direction: column;
-  }
-  .libro-group.full {
-    grid-column: 1 / -1;
-  }
-  .libro-label {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: #333;
-    margin-bottom: 8px;
-  }
-  .libro-label span {
-    color: #c9a84c;
-  }
-  .libro-input, .libro-select, .libro-textarea {
-    padding: 12px 15px;
-    border: 1px solid #cbd5e1;
-    border-radius: 6px;
-    font-family: inherit;
-    font-size: 0.95rem;
-    color: #333;
-    transition: 0.3s;
-    background: #fff;
-  }
-  .libro-input:focus, .libro-select:focus, .libro-textarea:focus {
-    outline: none;
-    border-color: #045c4b;
-    box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.2);
-  }
-  .libro-textarea {
-    resize: vertical;
-    min-height: 100px;
-  }
-  .libro-menor-box {
-    background: #f8f9fa;
-    padding: 15px;
-    border-radius: 6px;
-    margin-top: 10px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .libro-menor-box label {
-    font-weight: 600;
-    font-size: 0.9rem;
-    color: #045c4b;
-    cursor: pointer;
-  }
-  .libro-apoderado-box {
-    background: #f4fbf9;
-    border: 1px solid #d1efe8;
-    padding: 20px;
-    border-radius: 6px;
-    margin-top: 15px;
-    display: none;
-  }
-  .libro-apoderado-box.active {
-    display: block;
-  }
-  .libro-apoderado-title {
-    color: #045c4b;
-    font-weight: 600;
-    font-size: 0.9rem;
-    margin-bottom: 15px;
-  }
-  .libro-declaracion {
-    background: #f8f9fa;
-    border: 1px solid #e2e8f0;
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 25px;
-    display: flex;
-    align-items: flex-start;
-    gap: 15px;
-    font-size: 0.85rem;
-    color: #555;
-    line-height: 1.5;
-  }
-  .libro-declaracion input[type="checkbox"] {
-    margin-top: 3px;
-  }
-  .libro-declaracion a {
-    color: #c9a84c;
-    text-decoration: underline;
-  }
-  .libro-captcha {
-    border: 2px dashed #045c4b;
-    background: #f4fbf9;
-    padding: 20px;
-    border-radius: 8px;
-    text-align: center;
-    margin-bottom: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-    font-weight: 600;
-    color: #333;
-  }
-  .libro-captcha-input {
-    width: 60px;
-    text-align: center;
-    padding: 8px;
-    border: 1px solid #cbd5e1;
-    border-radius: 4px;
-    font-weight: bold;
-  }
-  .libro-submit {
-    background: #045c4b;
-    color: #fff;
-    border: none;
-    padding: 18px;
-    width: 100%;
-    border-radius: 8px;
-    font-size: 1.1rem;
-    font-weight: 700;
-    cursor: pointer;
-    text-transform: uppercase;
-    transition: 0.3s;
-    letter-spacing: 1px;
-  }
-  .libro-submit:hover {
-    background: #012b23;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(4, 92, 75, 0.3);
-  }
-  @media(max-width: 768px) {
-    .libro-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-</style>
-
-<div class="libro-container">
-  <div class="libro-header">
-    <img src="../assets/img/libro_reclamaciones.png" alt="Libro de Reclamaciones">
-    <h1>Libro de Reclamaciones</h1>
-    <p>Conforme a lo establecido en la <strong>Ley N° 29571</strong>. Código de Protección y Defensa del Consumidor.</p>
+<div class="reclamo-wrapper">
+  <div class="reclamo-box">
+    <h3 class="reclamo-subtitle">Business Information</h3>
+    <p class="reclamo-desc"><strong>Legal Name:</strong> LLAQUI CHUSI JORDY LEONIDAS (MANU JUNGLE FOREVER)</p>
+    <p class="reclamo-desc"><strong>RUC:</strong> 10712309283</p>
+    <p class="reclamo-desc"><strong>Address:</strong> Cusco, Perú</p>
   </div>
 
-  <div class="libro-info">
-    <p><strong>Razón Social:</strong> LLAQUI CHUSI JORDY LEONIDAS (MANU JUNGLE FOREVER)</p>
-    <p><strong>RUC:</strong> 10712309283</p>
-    <p><strong>Dirección:</strong> Cusco, Perú</p>
-  </div>
-
-  <form id="formReclamo" novalidate>
-    <!-- Honeypot -->
+  <form id="formReclamo" class="reclamo-form-container" novalidate>
+    <!-- Honeypot anti-spam -->
     <div style="display:none;">
-        <label>Si eres humano, deja este campo en blanco</label>
+        <label>If you are human, leave this field blank</label>
         <input type="text" name="website_url" value="">
     </div>
-
-    <!-- 1. DATOS DEL CONSUMIDOR -->
-    <fieldset class="libro-fieldset">
-      <legend class="libro-legend">1. Datos del Consumidor</legend>
-      <div class="libro-grid">
-        <div class="libro-group">
-          <label class="libro-label">Tipo de Documento <span>*</span></label>
-          <select name="tipo_documento" class="libro-select" required>
-            <option value="DNI">DNI</option>
-            <option value="CE">CE</option>
-            <option value="Pasaporte">Pasaporte</option>
-          </select>
-        </div>
-        <div class="libro-group">
-          <label class="libro-label">Número de Documento <span>*</span></label>
-          <input type="text" name="documento" class="libro-input" placeholder="Ej. 76543210" required>
-        </div>
-        
-        <!-- Kombinamos nombres y apellidos visualmente pero los enviaremos en un solo campo al backend por compatibilidad, 
-             o usamos JS para juntarlos antes de enviar -->
-        <div class="libro-group">
-          <label class="libro-label">Nombres <span>*</span></label>
-          <input type="text" id="fnombres" class="libro-input" placeholder="Sus nombres completos" required>
-        </div>
-        <div class="libro-group">
-          <label class="libro-label">Apellidos <span>*</span></label>
-          <input type="text" id="fapellidos" class="libro-input" placeholder="Sus apellidos completos" required>
-        </div>
-        <input type="hidden" name="nombres" id="nombres_hidden">
-
-        <div class="libro-group">
-          <label class="libro-label">Teléfono de Contacto <span>*</span></label>
-          <input type="tel" name="telefono" class="libro-input" placeholder="Ej. 987654321" required>
-        </div>
-        <div class="libro-group">
-          <label class="libro-label">Correo Electrónico <span>*</span></label>
-          <input type="email" name="correo" class="libro-input" placeholder="elemail@correo.com" required>
-        </div>
-        
-        <div class="libro-group full">
-          <label class="libro-label">Domicilio / Dirección Completa <span>*</span></label>
-          <input type="text" name="domicilio" class="libro-input" placeholder="Ej. Av. Principal 123, Distrito, Ciudad" required>
-        </div>
-        
-        <div class="libro-group full">
-          <div class="libro-menor-box">
-            <input type="checkbox" id="check_menor" style="accent-color:#c9a84c; width:18px; height:18px;">
-            <label for="check_menor">Soy menor de edad</label>
-          </div>
-          
-          <div class="libro-apoderado-box" id="apoderado_box">
-            <div class="libro-apoderado-title">Datos del Padre, Madre o Apoderado representante:</div>
-            <div class="libro-grid">
-              <div class="libro-group">
-                <label class="libro-label">Nombre completo del Apoderado <span>*</span></label>
-                <input type="text" id="apoderado_nombre" class="libro-input" placeholder="Obligatorio si es menor">
-              </div>
-              <div class="libro-group">
-                <label class="libro-label">DNI / CE del Apoderado <span>*</span></label>
-                <input type="text" id="apoderado_doc" class="libro-input" placeholder="Obligatorio si es menor">
-              </div>
-              <input type="hidden" name="apoderado" id="apoderado_hidden">
+    
+    <!-- 1. IDENTIFICACIÓN DEL CONSUMIDOR RECLAMANTE -->
+    <div class="reclamo-section">
+        <h4>1. Consumer Details</h4>
+        <div class="reclamo-grid">
+            <div class="reclamo-group">
+                <label>Document Type *</label>
+                <select name="tipo_documento" required>
+                    <option value="Pasaporte">Passport</option>
+                    <option value="DNI">DNI (National ID)</option>
+                    <option value="CE">CE (Foreigner ID)</option>
+                </select>
             </div>
-          </div>
-        </div>
-      </div>
-    </fieldset>
+            <div class="reclamo-group">
+                <label>Document Number *</label>
+                <input type="text" name="documento" placeholder="e.g. 76543210" required>
+            </div>
+            
+            <div class="reclamo-group">
+                <label>First Names *</label>
+                <input type="text" id="fnombres" placeholder="Your first names" required>
+            </div>
+            <div class="reclamo-group">
+                <label>Last Names *</label>
+                <input type="text" id="fapellidos" placeholder="Your last names" required>
+            </div>
+            <input type="hidden" name="nombres" id="nombres_hidden">
 
-    <!-- 2. BIEN CONTRATADO -->
-    <fieldset class="libro-fieldset">
-      <legend class="libro-legend">2. Bien Contratado</legend>
-      <div class="libro-grid">
-        <div class="libro-group">
-          <label class="libro-label">Tipo de Bien <span>*</span></label>
-          <select name="bien_tipo" class="libro-select" required>
-            <option value="" disabled selected>Seleccione una opción...</option>
-            <option value="Producto">Producto</option>
-            <option value="Servicio">Servicio</option>
-          </select>
-        </div>
-        <div class="libro-group">
-          <label class="libro-label">Monto Reclamado (S/) <span>*</span></label>
-          <input type="number" step="0.01" name="bien_monto" class="libro-input" placeholder="0.00" required>
-        </div>
-        <div class="libro-group full">
-          <label class="libro-label">Descripción del Producto o Servicio <span>*</span></label>
-          <input type="text" name="bien_descripcion" class="libro-input" placeholder="Ej. Tour a Manu 4 días..." required>
-        </div>
-      </div>
-    </fieldset>
+            <div class="reclamo-group">
+                <label>Contact Number *</label>
+                <input type="tel" name="telefono" placeholder="e.g. +51 987 654 321" required>
+            </div>
+            <div class="reclamo-group">
+                <label>Email Address *</label>
+                <input type="email" name="correo" placeholder="email@address.com" required>
+            </div>
+            
+            <div class="reclamo-group full-width">
+                <label>Full Address *</label>
+                <input type="text" name="domicilio" placeholder="e.g. Main St 123, District, City, Country" required>
+            </div>
 
-    <!-- 3. DETALLE DE LA RECLAMACIÓN -->
-    <fieldset class="libro-fieldset">
-      <legend class="libro-legend">3. Detalle de la Reclamación</legend>
-      <div class="libro-grid">
-        <div class="libro-group full">
-          <label class="libro-label">Seleccione una opción <span>*</span></label>
-          <select name="tipo" class="libro-select" required>
-            <option value="" disabled selected>Seleccione tipo de solicitud...</option>
-            <option value="Reclamo">Reclamo</option>
-            <option value="Queja">Queja</option>
-          </select>
+            <div class="reclamo-group full-width">
+                <label class="reclamo-checkbox">
+                    <input type="checkbox" id="check_menor">
+                    <span>I am under 18 years old</span>
+                </label>
+            </div>
+            
+            <div class="reclamo-group full-width" id="apoderado_box" style="display:none; background:rgba(255,255,255,0.02); padding:20px; border-radius:12px; border:1px solid rgba(255,255,255,0.05); margin-top:10px;">
+                <h5 style="color:var(--a); font-family:'Syne',sans-serif; margin:0 0 15px 0;">Parent or Guardian Details</h5>
+                <div class="reclamo-grid">
+                    <div class="reclamo-group">
+                        <label>Guardian Full Name *</label>
+                        <input type="text" id="apoderado_nombre" placeholder="Required if under 18">
+                    </div>
+                    <div class="reclamo-group">
+                        <label>Guardian ID / Passport *</label>
+                        <input type="text" id="apoderado_doc" placeholder="Required if under 18">
+                    </div>
+                </div>
+                <input type="hidden" name="apoderado" id="apoderado_hidden">
+            </div>
         </div>
-        <div class="libro-group full">
-          <label class="libro-label">Detalle de la reclamación <span>*</span></label>
-          <textarea name="detalle" class="libro-textarea" placeholder="Explique de manera clara su inconformidad..." required></textarea>
-        </div>
-        <div class="libro-group full">
-          <label class="libro-label">Pedido (Lo que solicita del proveedor) <span>*</span></label>
-          <textarea name="pedido" class="libro-textarea" placeholder="Ej. Devolución del dinero, etc." required></textarea>
-        </div>
-      </div>
-    </fieldset>
-
-    <!-- Declaracion -->
-    <div class="libro-declaracion">
-      <input type="checkbox" id="declaracion" required style="accent-color:#c9a84c; width:18px; height:18px; flex-shrink:0;">
-      <label for="declaracion">
-        Declaro ser el titular del servicio y acepto el contenido del presente formulario declarando bajo juramento que los hechos descritos son verdaderos. Así mismo, acepto la <a href="../privacy-policy/index.html" target="_blank">Política de Privacidad</a>.
-      </label>
     </div>
 
-    <!-- Captcha -->
-    <div class="libro-captcha">
-      <span>Verificación antispam: ¿Cuánto es <span id="c_n1" style="color:#c9a84c;">4</span> + <span id="c_n2" style="color:#c9a84c;">8</span> ?</span>
-      <span>=</span>
-      <input type="number" id="captcha-input" class="libro-captcha-input" required>
+    <!-- 2. IDENTIFICACIÓN DEL BIEN CONTRATADO -->
+    <div class="reclamo-section">
+        <h4>2. Contracted Good / Service</h4>
+        <div class="reclamo-grid">
+            <div class="reclamo-group">
+                <label>Type of Good *</label>
+                <div class="reclamo-radio-group">
+                    <label class="reclamo-radio">
+                        <input type="radio" name="bien_tipo" value="Servicio" required checked>
+                        <span>Service</span>
+                    </label>
+                    <label class="reclamo-radio">
+                        <input type="radio" name="bien_tipo" value="Producto" required>
+                        <span>Product</span>
+                    </label>
+                </div>
+            </div>
+            <div class="reclamo-group">
+                <label>Claimed Amount (Optional)</label>
+                <input type="number" step="0.01" name="bien_monto" placeholder="0.00">
+            </div>
+            <div class="reclamo-group full-width">
+                <label>Description of Product / Service *</label>
+                <textarea name="bien_descripcion" rows="3" required placeholder="e.g. 4-Day Manu Tour..."></textarea>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 3. DETALLE DE LA RECLAMACIÓN Y PEDIDO -->
+    <div class="reclamo-section">
+        <h4>3. Complaint Details</h4>
+        <div class="reclamo-group full-width" style="margin-bottom: 24px;">
+            <label>Request Type *</label>
+            <div class="reclamo-cards">
+                <label class="reclamo-card">
+                    <input type="radio" name="tipo" value="Reclamo" required>
+                    <div class="reclamo-card-content">
+                        <span class="reclamo-card-title">Complaint (Reclamo)</span>
+                        <span class="reclamo-card-desc">Dissatisfaction related to the products or services provided.</span>
+                    </div>
+                </label>
+                <label class="reclamo-card">
+                    <input type="radio" name="tipo" value="Queja" required>
+                    <div class="reclamo-card-content">
+                        <span class="reclamo-card-title">Query / Grievance (Queja)</span>
+                        <span class="reclamo-card-desc">Dissatisfaction not directly related to products or services; or discomfort regarding customer service.</span>
+                    </div>
+                </label>
+            </div>
+        </div>
+        
+        <div class="reclamo-group full-width" style="margin-bottom: 24px;">
+            <label>Details of the Incident *</label>
+            <textarea name="detalle" rows="4" required placeholder="Describe the events clearly..."></textarea>
+        </div>
+        <div class="reclamo-group full-width">
+            <label>Request (What you ask from the provider) *</label>
+            <textarea name="pedido" rows="3" required placeholder="Indique qué solicita como solución..."></textarea>
+        </div>
     </div>
 
-    <button type="submit" class="libro-submit">Enviar Libro de Reclamaciones</button>
+    <!-- DECLARACIÓN JURADA -->
+    <div class="reclamo-section">
+        <label class="reclamo-checkbox">
+            <input type="checkbox" id="declaracion" required>
+            <span>
+                I declare that the content of my complaint is true, and I accept the <a href="../privacy-policy/index.html" target="_blank">Privacy Policy</a> regarding the processing of my personal data for managing my complaint/query.
+            </span>
+        </label>
+    </div>
+
+    <!-- CAPTCHA Matemático -->
+    <div class="reclamo-section captcha-section" style="border: 2px dashed rgba(255,255,255,0.2);">
+        <label style="color:#fff; font-weight:700;"><i class="fa-solid fa-shield-halved"></i> Security Verification *</label>
+        <div class="captcha-container" style="display:flex; align-items:center; gap:15px; margin-top:10px;">
+            <div id="captcha-box" style="font-size:1.1rem; color:var(--a); font-weight:700;"></div>
+            <input type="number" id="captcha-input" required placeholder="Answer" style="max-width:120px;">
+        </div>
+    </div>
+    
+    <button type="submit" class="reclamo-btn-submit">
+        SUBMIT COMPLAINTS BOOK
+    </button>
   </form>
 </div>
 
@@ -504,51 +318,49 @@ document.addEventListener('DOMContentLoaded', () => {
     // Apoderado toggle
     const checkMenor = document.getElementById('check_menor');
     const apoderadoBox = document.getElementById('apoderado_box');
-    
-    checkMenor.addEventListener('change', function() {
-        if (this.checked) {
-            apoderadoBox.classList.add('active');
-            document.getElementById('apoderado_nombre').required = true;
-            document.getElementById('apoderado_doc').required = true;
-        } else {
-            apoderadoBox.classList.remove('active');
-            document.getElementById('apoderado_nombre').required = false;
-            document.getElementById('apoderado_doc').required = false;
-        }
-    });
+    if (checkMenor) {
+        checkMenor.addEventListener('change', function() {
+            if (this.checked) {
+                apoderadoBox.style.display = 'block';
+                document.getElementById('apoderado_nombre').required = true;
+                document.getElementById('apoderado_doc').required = true;
+            } else {
+                apoderadoBox.style.display = 'none';
+                document.getElementById('apoderado_nombre').required = false;
+                document.getElementById('apoderado_doc').required = false;
+            }
+        });
+    }
 
     // Captcha
-    const cN1 = document.getElementById('c_n1');
-    const cN2 = document.getElementById('c_n2');
+    const captchaBox = document.getElementById('captcha-box');
     const captchaInput = document.getElementById('captcha-input');
     let expectedCaptcha = 0;
-    
     function generateCaptcha() {
         const n1 = Math.floor(Math.random() * 10) + 1;
         const n2 = Math.floor(Math.random() * 10) + 1;
         expectedCaptcha = n1 + n2;
-        cN1.textContent = n1;
-        cN2.textContent = n2;
-        captchaInput.value = '';
+        if(captchaBox) captchaBox.innerText = `What is ${n1} + ${n2} =`;
+        if(captchaInput) captchaInput.value = '';
     }
-    generateCaptcha();
+    if (captchaBox) generateCaptcha();
 
     // Formularios Submit
     const form = document.getElementById('formReclamo');
     if(form) {
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
-            
+
             // Juntar nombres y apellidos
             const n = document.getElementById('fnombres').value;
             const a = document.getElementById('fapellidos').value;
             document.getElementById('nombres_hidden').value = n + ' ' + a;
             
             // Juntar apoderado
-            if (checkMenor.checked) {
+            if (checkMenor && checkMenor.checked) {
                 const an = document.getElementById('apoderado_nombre').value;
                 const ad = document.getElementById('apoderado_doc').value;
-                document.getElementById('apoderado_hidden').value = an + ' (DNI/CE: ' + ad + ')';
+                document.getElementById('apoderado_hidden').value = an + ' (ID: ' + ad + ')';
             } else {
                 document.getElementById('apoderado_hidden').value = '';
             }
@@ -556,29 +368,22 @@ document.addEventListener('DOMContentLoaded', () => {
             if (parseInt(captchaInput.value) !== expectedCaptcha) {
                 captchaInput.style.borderColor = 'red';
                 captchaInput.value = '';
-                captchaInput.placeholder = 'X';
+                captchaInput.placeholder = 'Wrong answer!';
                 setTimeout(() => {
                     captchaInput.style.borderColor = '';
-                    captchaInput.placeholder = '';
+                    captchaInput.placeholder = 'Answer';
                 }, 2000);
                 generateCaptcha();
                 return;
             }
-            
-            // Validar HTML5 base
-            if (!form.checkValidity()) {
-                form.reportValidity();
-                return;
-            }
-
             const btn = form.querySelector('button[type="submit"]');
             const originalBtn = btn.innerHTML;
             btn.disabled = true;
-            btn.innerHTML = 'Enviando...';
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
             
             try {
                 const fd = new FormData(form);
-                fd.append('_subject', 'Nuevo Reclamo - Libro de Reclamaciones');
+                fd.append('_subject', 'New Complaint - Complaints Book');
                 fd.append('_captcha', 'false');
                 
                 const r = await fetch('/api/reclamo', {
@@ -588,16 +393,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 const d = await r.json();
                 
                 if (d.success === "true" || d.success === true || d.ok === true) {
-                    alert("Su reclamo ha sido enviado con éxito. Nos pondremos en contacto pronto.");
+                    alert("Your complaint has been successfully submitted. We will contact you soon.");
                     form.reset();
                     generateCaptcha();
-                    checkMenor.checked = false;
-                    checkMenor.dispatchEvent(new Event('change'));
+                    if(checkMenor){ checkMenor.checked = false; checkMenor.dispatchEvent(new Event('change')); }
                 } else {
-                    alert(d.error || "Error al enviar el reclamo. Por favor, intente nuevamente.");
+                    alert(d.error || "Error submitting complaint. Please try again.");
                 }
             } catch(err) {
-                alert("Error al enviar el reclamo. Por favor, intente nuevamente.");
+                alert("Error submitting complaint. Please try again.");
             } finally {
                 btn.disabled = false;
                 btn.innerHTML = originalBtn;
@@ -606,9 +410,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 </script>
-
-
-    </div>
+</div>
   </div>
 </section>
 </main>
