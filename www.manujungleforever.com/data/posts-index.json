@@ -12,15 +12,15 @@
       "imagen_alt": "Amazon Rainforest Tour to Manu National Park from Cusco"
     },
     {
-      "slug": "climate-change-manu-national-park-peru",
-      "url": "climate-change-manu-national-park-peru/index.html",
       "title": "Climate Change in Manu National Park: Protecting One of the World's Most Biodiverse Places",
       "date": "2026-03-05",
-      "categoria": "Conservation",
+      "category": "Conservation",
+      "excerpt": "The Manu National Park is one of the most biodiverse places on Earth. Here's how climate change threatens this paradise and what we can do.",
+      "image": "/media/1786477360363-jordy.jpg",
+      "imagen_alt": "Climate Change in Manu National Park Peru",
       "publicado": true,
-      "extracto": "The Manu National Park is one of the most biodiverse places on Earth. Here's how climate change threatens this paradise and what we can do.",
-      "imagen": "/media/1786477360363-jordy.jpg",
-      "imagen_alt": "Climate Change in Manu National Park Peru"
+      "slug": "climate-change-manu-national-park-peru",
+      "url": "climate-change-manu-national-park-peru/index.html"
     },
     {
       "slug": "everything-you-need-to-know-before-visiting-machu-picchu",
