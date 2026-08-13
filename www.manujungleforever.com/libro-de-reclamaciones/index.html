@@ -320,7 +320,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 fd.append('_subject', 'Nuevo Reclamo - Libro de Reclamaciones');
                 fd.append('_captcha', 'false');
                 
-                const r = await fetch('https://formsubmit.co/ajax/discover@manujungleforever.com', {
+                const r = await fetch('/api/reclamo', {
                     method: 'POST',
                     body: fd
                 });
