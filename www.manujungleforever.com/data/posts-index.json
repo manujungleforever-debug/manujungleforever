@@ -122,15 +122,15 @@
       "imagen_alt": "What to see in the Peruvian Amazon"
     },
     {
-      "slug": "why-visit-the-manu-national-park",
-      "url": "why-visit-the-manu-national-park/index.html",
       "title": "Why Visit the Manu National Park?",
       "date": "2021-03-15",
-      "categoria": "Manu Park",
+      "category": "Manu Park",
+      "excerpt": "Manu National Park is one of the world's most biodiverse places. Find out why it should be your next adventure destination.",
+      "image": "/media/1786591103305-pteronura-brasiliensis-zoo-brasilia-01.jpg",
+      "imagen_alt": "Why Visit the Manu National Park",
       "publicado": true,
-      "extracto": "Manu National Park is one of the world's most biodiverse places. Find out why it should be your next adventure destination.",
-      "imagen": "/media/1786477360363-jordy.jpg",
-      "imagen_alt": "Why Visit the Manu National Park"
+      "slug": "why-visit-the-manu-national-park",
+      "url": "why-visit-the-manu-national-park/index.html"
     }
   ]
 }
