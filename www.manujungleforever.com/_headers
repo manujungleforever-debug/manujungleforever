@@ -25,3 +25,4 @@
   Cache-Control: public, max-age=86400
 /wp-content/*
   Cache-Control: public, max-age=31536000, immutable
+<!-- Cloudflare cache purge 2026-08-13 02:21:13Z -->
