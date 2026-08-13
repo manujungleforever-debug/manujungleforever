@@ -7,41 +7,35 @@
     <link rel="icon" type="image/png" href="../assets/img/logo.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    colors: { 
-                        bg1: '#051210', 
-                        bg2: '#0b2623', 
-                        accent1: '#0d9488', 
-                        accent2: '#2dd4bf',
-                        gold: '#c9a84c'
-                    },
-                    fontFamily: { sans: ['Poppins', 'sans-serif'] }
+                    colors: { bg1: '#020617', bg2: '#0f172a', accent1: '#38bdf8', accent2: '#7dd3fc' },
+                    fontFamily: { sans: ['Poppins', 'sans-serif'], orbitron: ['Orbitron', 'sans-serif'] }
                 }
             }
         }
     </script>
     <style>
-        body { background-color: #051210; color: white; }
-        .glass-panel { background: rgba(11, 38, 35, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); }
+        body { background-color: #020617; color: white; }
+        .glass-panel { background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); }
     </style>
 </head>
 <body class="min-h-screen flex items-center justify-center font-sans relative overflow-hidden">
     
     <!-- Decorative background elements -->
     <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-accent1/20 blur-[120px] rounded-full pointer-events-none"></div>
-    <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-gold/10 blur-[100px] rounded-full pointer-events-none"></div>
+    <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-accent2/10 blur-[100px] rounded-full pointer-events-none"></div>
 
     <div class="glass-panel w-full max-w-md p-8 md:p-10 rounded-3xl shadow-2xl relative z-10 mx-4 border-accent1/20">
         <div class="flex flex-col items-center mb-8">
             <div class="relative w-24 h-24 mb-4">
                 <div class="absolute inset-0 bg-accent1 blur-lg opacity-40 animate-pulse rounded-full"></div>
-                <img src="../assets/img/logo.png" alt="Logo" class="w-full h-full object-contain relative z-10 filter drop-shadow-[0_0_10px_rgba(13,148,136,0.5)]">
+                <img src="../assets/img/logo.png" alt="Logo" class="w-full h-full object-contain relative z-10 filter drop-shadow-[0_0_10px_rgba(56,189,248,0.5)]">
             </div>
-            <h1 class="text-2xl font-bold text-center tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-white to-accent2">MANU JUNGLE CMS</h1>
+            <h1 class="font-orbitron text-2xl font-bold text-center tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-white to-accent2">MANU JUNGLE CMS</h1>
             <p class="text-gray-400 text-sm mt-1">Acceso Administrativo Seguro</p>
         </div>
 
@@ -68,22 +62,10 @@
 
             <div id="login-err" class="hidden bg-red-500/10 border border-red-500/30 text-red-400 text-sm px-4 py-3 rounded-lg text-center font-medium"></div>
 
-            <button type="submit" id="btn-login" class="w-full mt-6 bg-gradient-to-r from-accent1 to-accent2 hover:from-accent2 hover:to-accent1 text-white font-bold rounded-xl py-3.5 transition-all duration-300 shadow-[0_0_15px_rgba(13,148,136,0.4)] hover:shadow-[0_0_25px_rgba(13,148,136,0.6)] transform hover:-translate-y-0.5 flex justify-center items-center gap-2">
+            <button type="submit" id="btn-login" class="w-full mt-6 bg-gradient-to-r from-accent1 to-accent2 hover:from-accent2 hover:to-accent1 text-bg1 font-bold rounded-xl py-3.5 transition-all duration-300 shadow-[0_0_15px_rgba(56,189,248,0.4)] hover:shadow-[0_0_25px_rgba(56,189,248,0.6)] transform hover:-translate-y-0.5 flex justify-center items-center gap-2">
                 <i class="fa-solid fa-right-to-bracket"></i> Iniciar Sesión
             </button>
         </form>
-
-        <!-- Quick access card -->
-        <div class="mt-8 pt-6 border-t border-white/10">
-            <p class="text-xs text-gray-500 uppercase tracking-wider mb-3 font-semibold">Acceso Rápido</p>
-            <div class="flex items-center gap-3 p-3 bg-white/5 rounded-xl border border-white/5 cursor-pointer hover:border-accent1/30 transition" onclick="document.getElementById('inp-u').value='manujungleforever@gmail.com'; document.getElementById('inp-p').focus();">
-                <img src="../assets/img/logo.png" alt="Admin" class="w-10 h-10 rounded-full object-contain bg-bg2 p-1">
-                <div>
-                    <p class="text-sm font-semibold text-white">manujungleforever@gmail.com</p>
-                    <p class="text-xs text-gray-500">Administrador Principal</p>
-                </div>
-            </div>
-        </div>
     </div>
 
     <script>
@@ -110,6 +92,8 @@
                 
                 sessionStorage.setItem('cms_token', d.token);
                 sessionStorage.setItem('cms_user', u);
+                
+                // Redirigir al panel
                 window.location.href = 'panel.html';
                 
             } catch(e) {
@@ -120,6 +104,7 @@
             }
         });
 
+        // Si ya está logueado, redirigir
         if (sessionStorage.getItem('cms_token')) {
             window.location.href = 'panel.html';
         }
