@@ -1,4 +1,4 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 @keyframes logoEntrance {
   0% { opacity: 0; transform: scale(0.6) translateY(-30px); filter: drop-shadow(0 0 0 rgba(16,185,129,0)); }
@@ -1389,13 +1389,7 @@ body { top: 0px !important; position: relative !important; }
     .reclamo-wrapper { padding: 20px; }
 }
 
-.reclamo-box {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 24px;
-    margin-bottom: 32px;
-}
+
 .reclamo-subtitle {
     color: #fff;
     font-family: 'Syne', sans-serif;
