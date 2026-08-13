@@ -1,4 +1,4 @@
-import { PDFDocument, rgb, StandardFonts } from './pdf-lib.js';
+﻿import { PDFDocument, rgb, StandardFonts } from './pdf-lib.js';
 
 // ─── Utilidades ──────────────────────────────────────────────────────────────
 const CORS_HEADERS = {
@@ -286,35 +286,76 @@ export async function onRequestPost(context) {
   const { request, env } = context;
   try {
     const data = await request.formData().catch(() => null);
-    if (!data) return error('Formato inválido');
+    if (!data) return error('Formato invalido');
 
-    const nombres = data.get('nombres') || '';
-    const documento = data.get('documento') || '';
-    const domicilio = data.get('domicilio') || '';
-    const telefono = data.get('telefono') || '';
-    const correo = data.get('correo') || '';
-    const apoderado = data.get('apoderado') || '';
-    
-    const bien_tipo = data.get('bien_tipo') || '';
-    const bien_monto = data.get('bien_monto') || '';
+    const nombres          = data.get('nombres') || '';
+    const documento        = data.get('documento') || '';
+    const domicilio        = data.get('domicilio') || '';
+    const telefono         = data.get('telefono') || '';
+    const correo           = data.get('correo') || '';
+    const apoderado        = data.get('apoderado') || '';
+    const bien_tipo        = data.get('bien_tipo') || '';
+    const bien_monto       = data.get('bien_monto') || '';
     const bien_descripcion = data.get('bien_descripcion') || '';
-    
-    const tipo = data.get('tipo') || 'Reclamo';
-    const detalle = data.get('detalle') || '';
-    const pedido = data.get('pedido') || '';
+    const tipo             = data.get('tipo') || 'Reclamo';
+    const detalle          = data.get('detalle') || '';
+    const pedido           = data.get('pedido') || '';
 
     if (!nombres || !documento || !domicilio || !telefono || !correo || !detalle || !pedido) {
       return error('Faltan campos obligatorios');
     }
 
-    // Generar código
-    const anio = new Date().getFullYear();
-    const codigo_reclamo = `${anio}-${Math.floor(Math.random() * 900000) + 100000}`; // Random 6 digit for simplicity without DB
+    // 1. Leer GitHub PRIMERO para obtener ultimo correlativo del anio
+    const repo     = 'manujungleforever-debug/manujungleforever';
+    const branch   = 'main';
+    const filePath = 'www.manujungleforever.com/data/reclamos.json';
+    const ghUrl    = `https://api.github.com/repos/${repo}/contents/${filePath}?ref=${branch}`;
+    const ghHeaders = {
+      'User-Agent'   : 'Cloudflare-Worker',
+      'Authorization': `Bearer ${env.GITHUB_TOKEN}`,
+      'Accept'       : 'application/vnd.github.v3+json'
+    };
+
+    let fileSha  = null;
+    let reclamos = [];
+
+    if (env.GITHUB_TOKEN) {
+      try {
+        const getRes = await fetch(ghUrl, { headers: ghHeaders });
+        if (getRes.ok) {
+          const dataGet = await getRes.json();
+          fileSha  = dataGet.sha;
+          reclamos = JSON.parse(atob(dataGet.content.replace(/\n/g, '')));
+        }
+      } catch (ghErr) {
+        console.warn('No se pudo leer reclamos.json:', ghErr);
+      }
+    }
+
+    // 2. Correlativo secuencial YYYY-NNNNNN exigido por INDECOPI
+    // Se reinicia automaticamente cada 1 de enero.
+    const anio   = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Lima' })).getFullYear();
+    const prefix = `${anio}-`;
+
+    let maxNum = 0;
+    for (const rec of reclamos) {
+      if (rec.codigo_reclamo && rec.codigo_reclamo.startsWith(prefix)) {
+        const num = parseInt(rec.codigo_reclamo.slice(prefix.length), 10);
+        if (!isNaN(num) && num > maxNum) maxNum = num;
+        break; // array ordenado desc; el primero que coincide es el mas reciente del anio
+      }
+    }
+    const codigo_reclamo = `${prefix}${String(maxNum + 1).padStart(6, '0')}`;
     const fecha = new Date().toLocaleString('es-PE', { timeZone: 'America/Lima' });
 
-    const dataObj = { codigo_reclamo, fecha, nombres, documento, domicilio, telefono, correo, apoderado, bien_tipo, bien_monto, bien_descripcion, tipo, detalle, pedido };
+    const dataObj = {
+      codigo_reclamo, fecha,
+      nombres, documento, domicilio, telefono, correo, apoderado,
+      bien_tipo, bien_monto, bien_descripcion,
+      tipo, detalle, pedido
+    };
 
-    // Generar PDF
+    // 3. Generar PDF
     let pdfBytes;
     try {
       pdfBytes = await generateReclamoPDF(dataObj);
@@ -323,19 +364,17 @@ export async function onRequestPost(context) {
       return error('Error interno al generar el documento', 500);
     }
 
-    // Adjuntos
-    const pdfBase64 = btoa(String.fromCharCode(...new Uint8Array(pdfBytes)));
-    const attachments = [{
-      filename: `${codigo_reclamo}.pdf`,
-      content: pdfBase64
-    }];
+    const pdfBase64   = btoa(String.fromCharCode(...new Uint8Array(pdfBytes)));
+    const attachments = [{ filename: `${codigo_reclamo}.pdf`, content: pdfBase64 }];
 
-    // Correo Empresa — tag +reclamaciones para filtro de Gmail → carpeta "LIBRO DE RECLAMACIONES"
+    // 4. Enviar correos
+    // Tag +reclamaciones para filtro Zoho Mail -> carpeta "LIBRO DE RECLAMACIONES"
     const toEmail = 'discover+reclamaciones@manujungleforever.com';
+
     const msgEmpresa = `
       <div style="font-family:Arial,sans-serif;color:#333;line-height:1.6;max-width:600px;margin:0 auto;border:1px solid #ddd;padding:20px;border-radius:8px;">
         <h2 style="color:#2d8a56;text-align:center;border-bottom:2px solid #2d8a56;padding-bottom:10px;margin-bottom:10px;">NUEVO ${tipo.toUpperCase()} - LIBRO DE RECLAMACIONES</h2>
-        <p><strong>N°:</strong>    ${codigo_reclamo}</p>
+        <p><strong>N&deg;:</strong> ${codigo_reclamo}</p>
         <p><strong>Fecha:</strong> ${fecha}</p>
         <p><strong>Cliente:</strong> ${nombres} (DNI/CE: ${documento})</p>
         <p><strong>Contacto:</strong> ${correo} | ${telefono}</p>
@@ -345,75 +384,44 @@ export async function onRequestPost(context) {
           <h3 style="margin-top:15px;color:#2d8a56;">Pedido del Cliente:</h3>
           <p style="white-space:pre-wrap;">${pedido}</p>
         </div>
-        <p style="text-align:center;margin-top:20px;font-size:12px;color:#777;">El documento PDF oficial con la firma legal se encuentra adjunto a este correo.</p>
+        <p style="text-align:center;margin-top:20px;font-size:12px;color:#777;">El documento PDF oficial se encuentra adjunto.</p>
       </div>`;
 
-    // Correo Cliente
     const msgClienteHtml = `
       <div style="font-family:Arial,sans-serif;color:#333;line-height:1.6;max-width:600px;margin:0 auto;border:1px solid #ddd;padding:20px;border-radius:8px;">
-        <h2 style="color:#2d8a56;text-align:center;border-bottom:2px solid #2d8a56;padding-bottom:10px;margin-bottom:10px;">CARGO DE RECEPCIÓN: HOJA DE RECLAMACIÓN - N° ${codigo_reclamo}</h2>
+        <h2 style="color:#2d8a56;text-align:center;border-bottom:2px solid #2d8a56;padding-bottom:10px;margin-bottom:10px;">CARGO DE RECEPCION: HOJA DE RECLAMACION - N&deg; ${codigo_reclamo}</h2>
         <p>Estimado(a) <strong>${nombres}</strong>,</p>
-        <p>Le informamos que hemos recibido satisfactoriamente su <strong>${tipo.toLowerCase()}</strong> a través de nuestro Libro de Reclamaciones Virtual.</p>
+        <p>Le informamos que hemos recibido satisfactoriamente su <strong>${tipo.toLowerCase()}</strong> a traves de nuestro Libro de Reclamaciones Virtual.</p>
         <div style="background:#f9f9f9;padding:15px;border:1px solid #eee;margin:20px 0;text-align:center;">
           <p style="margin:0;font-size:14px;color:#555;">Fecha de registro:</p>
           <h3 style="margin:5px 0 0 0;color:#2d8a56;">${fecha}</h3>
         </div>
-        <p>Adjuntamos a este correo el documento PDF oficial que sirve como <strong>Cargo de Recepción</strong> de su reclamo/queja. Este documento contiene todos los detalles que usted proporcionó.</p>
+        <p>Adjuntamos el documento PDF oficial que sirve como <strong>Cargo de Recepcion</strong> de su reclamo/queja.</p>
         <div style="background:#fff3cd;border-left:4px solid #ffeeba;padding:15px;margin-top:20px;">
-            <p style="margin-bottom:0;color:#856404;font-size:13px;">La formulación del reclamo no impide acudir a otras vías de solución de controversias ni es requisito previo para interponer una denuncia ante el INDECOPI.<br><br><b>MANU JUNGLE FOREVER</b> cuenta con un plazo máximo de <b>quince (15) días hábiles</b> improrrogables para atender su solicitud y emitir una respuesta formal a su correo electrónico.</p>
+          <p style="margin-bottom:0;color:#856404;font-size:13px;">La formulacion del reclamo no impide acudir a otras vias de solucion de controversias ni es requisito previo para interponer una denuncia ante el INDECOPI.<br><br><b>MANU JUNGLE FOREVER</b> cuenta con un plazo maximo de <b>quince (15) dias habiles</b> improrrogables para atender su solicitud y emitir una respuesta formal.</p>
         </div>
         <p style="margin-top:20px;text-align:center;font-size:12px;color:#777;">Atentamente,<br><strong>Manu Jungle Forever</strong></p>
       </div>`;
 
     if (env.RESEND_API_KEY) {
       await sendEmail(env, toEmail, `[${tipo.toUpperCase()}] ${codigo_reclamo}`, msgEmpresa, msgEmpresa, attachments, toEmail);
-      await sendEmail(env, correo, `Cargo de Recepción - Hoja de Reclamación N° ${codigo_reclamo}`, 'Adjunto su cargo.', msgClienteHtml, attachments, toEmail);
+      await sendEmail(env, correo, `Cargo de Recepcion - Hoja de Reclamacion N&deg; ${codigo_reclamo}`, 'Adjunto su cargo.', msgClienteHtml, attachments, toEmail);
     } else {
-      console.warn("RESEND_API_KEY no configurada. Saltando envío de correos.");
+      console.warn('RESEND_API_KEY no configurada.');
     }
 
-    // Guardar en GitHub
+    // 5. Guardar en GitHub (reutiliza los datos ya leidos, sin segunda llamada a la API)
     if (env.GITHUB_TOKEN) {
       try {
-        const repo = 'manujungleforever-debug/manujungleforever';
-        const branch = 'main';
-        const filePath = 'www.manujungleforever.com/data/reclamos.json';
-        const url = `https://api.github.com/repos/${repo}/contents/${filePath}?ref=${branch}`;
-        const headers = {
-          'User-Agent': 'Cloudflare-Worker',
-          'Authorization': `Bearer ${env.GITHUB_TOKEN}`,
-          'Accept': 'application/vnd.github.v3+json'
-        };
-        
-        let fileSha = null;
-        let reclamos = [];
-        
-        const getRes = await fetch(url, { headers });
-        if (getRes.ok) {
-          const dataGet = await getRes.json();
-          fileSha = dataGet.sha;
-          reclamos = JSON.parse(atob(dataGet.content));
-        }
-        
-        // Append new
         reclamos.unshift({ ...dataObj, id: Date.now(), estado: 'Pendiente' });
-        
         const contentB64 = btoa(unescape(encodeURIComponent(JSON.stringify(reclamos, null, 2))));
-        const body = {
-          message: `Nuevo reclamo: ${codigo_reclamo}`,
-          content: contentB64,
-          branch: branch
-        };
-        if (fileSha) body.sha = fileSha;
-        
+        const putBody = { message: `Nuevo reclamo: ${codigo_reclamo}`, content: contentB64, branch };
+        if (fileSha) putBody.sha = fileSha;
         await fetch(`https://api.github.com/repos/${repo}/contents/${filePath}`, {
-          method: 'PUT',
-          headers,
-          body: JSON.stringify(body)
+          method: 'PUT', headers: ghHeaders, body: JSON.stringify(putBody)
         });
-        
-      } catch(err) {
-        console.error("Error guardando en GitHub:", err);
+      } catch (err) {
+        console.error('Error guardando en GitHub:', err);
       }
     }
 
