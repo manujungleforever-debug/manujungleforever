@@ -25,7 +25,6 @@ img{max-width:100%;height:auto;display:block}a{color:inherit;text-decoration:non
 .ni{display:flex;align-items:center;justify-content:space-between}
 .nl{position:relative;display:flex;align-items:center;justify-content:center;padding:2px 10px;transition:all 0.4s ease;}
 
-100%{opacity:1;transform:translate(-50%,-50%) scale(1.03)}}
 .nl:hover{transform:translateY(-2px) translateZ(0)}
 
 .nl img{height:140px;width:auto;position:relative;z-index:1;transition:all 0.4s ease;}
@@ -236,7 +235,6 @@ img{max-width:100%;height:auto;display:block}a{color:inherit;text-decoration:non
   animation: none; /* override old wa animation */
 }
 .wa-wrap .wa:hover { transform: scale(1.1); box-shadow: 0 12px 40px rgba(37,211,102,0.65); }
-70%{transform:scale(1.05);box-shadow:0 0 0 15px rgba(37,211,102,0)}100%{transform:scale(1);box-shadow:0 0 0 0 rgba(37,211,102,0)}}
 
 /* MODAL */
 .modal{position:fixed;inset:0;z-index:1000;background:rgba(3,10,5,.88);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;visibility:hidden;transition:var(--t)}
