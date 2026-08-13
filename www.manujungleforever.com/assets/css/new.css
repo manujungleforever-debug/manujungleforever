@@ -1180,6 +1180,7 @@ body { top: 0px !important; position: relative !important; }
   background: rgba(255,255,255,0.08);
 }
 /* Ensure dropdown options are readable on dark background */
+.reclamo-group select option,
 .reclamo-input-group select option {
   background: #0f1513; 
   color: #fff;
@@ -1458,6 +1459,7 @@ body { top: 0px !important; position: relative !important; }
 .reclamo-group input[type="tel"],
 .reclamo-group input[type="email"],
 .reclamo-group input[type="number"],
+.reclamo-group select,
 .reclamo-group textarea {
     width: 100%;
     background: rgba(15, 23, 42, 0.5);
@@ -1471,6 +1473,7 @@ body { top: 0px !important; position: relative !important; }
     box-sizing: border-box;
 }
 .reclamo-group input:focus,
+.reclamo-group select:focus,
 .reclamo-group textarea:focus {
     outline: none;
     border-color: var(--a);
