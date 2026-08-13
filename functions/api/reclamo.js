@@ -330,8 +330,8 @@ export async function onRequestPost(context) {
       content: pdfBase64
     }];
 
-    // Correo Empresa
-    const toEmail = 'discover@manujungleforever.com';
+    // Correo Empresa — tag +reclamaciones para filtro de Gmail → carpeta "LIBRO DE RECLAMACIONES"
+    const toEmail = 'discover+reclamaciones@manujungleforever.com';
     const msgEmpresa = `
       <div style="font-family:Arial,sans-serif;color:#333;line-height:1.6;max-width:600px;margin:0 auto;border:1px solid #ddd;padding:20px;border-radius:8px;">
         <h2 style="color:#2d8a56;text-align:center;border-bottom:2px solid #2d8a56;padding-bottom:10px;margin-bottom:10px;">NUEVO ${tipo.toUpperCase()} - LIBRO DE RECLAMACIONES</h2>

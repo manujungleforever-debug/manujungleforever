@@ -1,6 +1,7 @@
 // ─── Booking Form Handler ─────────────────────────────────────────────────────
 // Cloudflare Pages Function: /api/booking
 // Receives form data from the contact/book-now page and sends email via Resend.
+// Uses +tag addressing so Gmail filters can route to "SOLICITUDES DE RESERVA" folder.
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
@@ -42,58 +43,191 @@ async function sendEmail(env, to, subject, html, replyTo = '') {
   return res.json();
 }
 
-// ─── Email HTML template ──────────────────────────────────────────────────────
+// ─── Company notification email (high-contrast, premium design) ───────────────
 function buildEmailHtml({ name, email, phone, tour, travelers, date, contact, notes }) {
-  const dateStr = date ? new Date(date).toLocaleDateString('es-PE', { year: 'numeric', month: 'long', day: 'numeric' }) : 'No especificada';
-  return `
-  <div style="font-family:Arial,sans-serif;color:#333;line-height:1.6;max-width:620px;margin:0 auto;border:1px solid #ddd;border-radius:10px;overflow:hidden;">
-    <div style="background:#002e24;padding:28px 32px;text-align:center;">
-      <h1 style="color:#c9a84c;margin:0;font-size:22px;letter-spacing:1px;">🌿 NUEVA SOLICITUD DE RESERVA</h1>
-      <p style="color:rgba(255,255,255,0.65);margin:6px 0 0;font-size:13px;">Manu Jungle Forever — Tour Enquiry</p>
-    </div>
-    <div style="padding:32px;">
-      <table style="width:100%;border-collapse:collapse;font-size:14px;">
-        <tr><td style="padding:10px 12px;background:#f7f7f7;border:1px solid #eee;font-weight:bold;width:38%;">Nombre</td><td style="padding:10px 12px;border:1px solid #eee;">${name}</td></tr>
-        <tr><td style="padding:10px 12px;background:#f7f7f7;border:1px solid #eee;font-weight:bold;">Email</td><td style="padding:10px 12px;border:1px solid #eee;"><a href="mailto:${email}" style="color:#2d8a56;">${email}</a></td></tr>
-        <tr><td style="padding:10px 12px;background:#f7f7f7;border:1px solid #eee;font-weight:bold;">Teléfono / WhatsApp</td><td style="padding:10px 12px;border:1px solid #eee;">${phone}</td></tr>
-        <tr><td style="padding:10px 12px;background:#f7f7f7;border:1px solid #eee;font-weight:bold;">Tour Seleccionado</td><td style="padding:10px 12px;border:1px solid #eee;"><strong style="color:#2d8a56;">${tour}</strong></td></tr>
-        <tr><td style="padding:10px 12px;background:#f7f7f7;border:1px solid #eee;font-weight:bold;">N° de Viajeros</td><td style="padding:10px 12px;border:1px solid #eee;">${travelers}</td></tr>
-        <tr><td style="padding:10px 12px;background:#f7f7f7;border:1px solid #eee;font-weight:bold;">Fecha de Salida</td><td style="padding:10px 12px;border:1px solid #eee;">${dateStr}</td></tr>
-        <tr><td style="padding:10px 12px;background:#f7f7f7;border:1px solid #eee;font-weight:bold;">Contacto Preferido</td><td style="padding:10px 12px;border:1px solid #eee;">${contact}</td></tr>
-        ${notes ? `<tr><td style="padding:10px 12px;background:#f7f7f7;border:1px solid #eee;font-weight:bold;vertical-align:top;">Notas / Preguntas</td><td style="padding:10px 12px;border:1px solid #eee;white-space:pre-wrap;">${notes}</td></tr>` : ''}
+  const dateStr = date
+    ? new Date(date).toLocaleDateString('es-PE', { year: 'numeric', month: 'long', day: 'numeric' })
+    : 'No especificada';
+
+  const row = (label, value, highlight = false) => `
+    <tr>
+      <td style="padding:12px 16px;background:#f4f4f4;border:1px solid #e0e0e0;font-weight:700;font-size:13px;color:#333;width:36%;white-space:nowrap;">${label}</td>
+      <td style="padding:12px 16px;border:1px solid #e0e0e0;font-size:14px;color:${highlight ? '#1a7a45' : '#222'};font-weight:${highlight ? '700' : '400'};">${value}</td>
+    </tr>`;
+
+  return `<!DOCTYPE html>
+<html lang="es">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;padding:0;background:#f0f0f0;font-family:Arial,Helvetica,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f0f0f0;padding:32px 16px;">
+    <tr><td align="center">
+      <table width="620" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.10);max-width:620px;width:100%;">
+
+        <!-- HEADER -->
+        <tr>
+          <td style="background:linear-gradient(135deg,#002e24 0%,#004d3a 100%);padding:36px 40px;text-align:center;">
+            <div style="font-size:36px;margin-bottom:12px;">🌿</div>
+            <h1 style="margin:0;color:#c9a84c;font-size:24px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;">
+              NUEVA SOLICITUD DE RESERVA
+            </h1>
+            <p style="margin:10px 0 0;color:#ffffff;font-size:14px;font-weight:400;opacity:0.9;">
+              Manu Jungle Forever · Tour Enquiry
+            </p>
+            <div style="margin-top:16px;display:inline-block;background:#c9a84c;border-radius:20px;padding:4px 18px;">
+              <span style="color:#002e24;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;">⚡ Acción Requerida — Responder en 24h</span>
+            </div>
+          </td>
+        </tr>
+
+        <!-- BODY -->
+        <tr>
+          <td style="padding:36px 40px;">
+            <p style="margin:0 0 20px;font-size:15px;color:#444;">
+              Se ha recibido una nueva consulta de reserva desde el sitio web. Revisa los detalles a continuación y responde al cliente lo antes posible.
+            </p>
+
+            <!-- DATA TABLE -->
+            <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border-radius:8px;overflow:hidden;">
+              ${row('👤 Nombre', name)}
+              ${row('📧 Email', `<a href="mailto:${email}" style="color:#1a7a45;font-weight:600;">${email}</a>`)}
+              ${row('📞 Teléfono / WhatsApp', `<a href="https://wa.me/${phone.replace(/\D/g,'')}" style="color:#1a7a45;">${phone}</a>`)}
+              ${row('🗺️ Tour Seleccionado', tour, true)}
+              ${row('👥 N° de Viajeros', travelers || '—')}
+              ${row('📅 Fecha de Salida', dateStr)}
+              ${row('💬 Contacto Preferido', contact)}
+              ${notes ? row('📝 Notas / Preguntas', `<span style="white-space:pre-wrap;">${notes}</span>`) : ''}
+            </table>
+
+            <!-- CTA -->
+            <table width="100%" cellpadding="0" cellspacing="0" style="margin-top:28px;">
+              <tr>
+                <td style="background:#e8f5ee;border-left:4px solid #2d8a56;border-radius:0 8px 8px 0;padding:16px 20px;">
+                  <p style="margin:0;font-size:13px;font-weight:700;color:#1a7a45;">⚡ Próximo paso</p>
+                  <p style="margin:6px 0 0;font-size:13px;color:#333;">
+                    Responder a <a href="mailto:${email}" style="color:#1a7a45;font-weight:600;">${email}</a> con precios, disponibilidad y detalles del tour <strong>${tour}</strong>.
+                  </p>
+                </td>
+              </tr>
+            </table>
+
+            <!-- QUICK REPLY BUTTON -->
+            <table width="100%" cellpadding="0" cellspacing="0" style="margin-top:20px;text-align:center;">
+              <tr>
+                <td align="center">
+                  <a href="mailto:${email}?subject=Re: Consulta tour ${encodeURIComponent(tour)}&body=Hola ${encodeURIComponent(name)},%0A%0AGracias por tu interés en..."
+                     style="display:inline-block;background:#002e24;color:#c9a84c;text-decoration:none;padding:13px 32px;border-radius:8px;font-weight:700;font-size:14px;letter-spacing:0.5px;">
+                    ✉️ Responder al Cliente
+                  </a>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- FOOTER -->
+        <tr>
+          <td style="background:#f4f4f4;padding:18px 40px;text-align:center;border-top:1px solid #e0e0e0;">
+            <p style="margin:0;font-size:11px;color:#999;">
+              Este mensaje fue generado automáticamente desde
+              <a href="https://www.manujungleforever.com" style="color:#2d8a56;">manujungleforever.com</a>
+              · Fitzcarrald 17800, Nuevo Eden, Perú
+            </p>
+          </td>
+        </tr>
+
       </table>
-      <div style="background:#f0faf4;border-left:4px solid #2d8a56;padding:14px 18px;margin-top:24px;border-radius:4px;">
-        <p style="margin:0;font-size:13px;color:#2d8a56;font-weight:bold;">⚡ Acción Requerida</p>
-        <p style="margin:6px 0 0;font-size:13px;color:#555;">Responder dentro de las próximas 24 horas con precios y detalles del tour.</p>
-      </div>
-      <p style="margin-top:24px;font-size:12px;color:#aaa;text-align:center;">Este mensaje fue enviado desde el formulario de reservas de manujungleforever.com</p>
-    </div>
-  </div>`;
+    </td></tr>
+  </table>
+</body>
+</html>`;
 }
 
 // ─── Confirmation email to the client ────────────────────────────────────────
 function buildConfirmationHtml({ name, tour, date }) {
-  const dateStr = date ? new Date(date).toLocaleDateString('es-PE', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
-  return `
-  <div style="font-family:Arial,sans-serif;color:#333;line-height:1.6;max-width:620px;margin:0 auto;border:1px solid #ddd;border-radius:10px;overflow:hidden;">
-    <div style="background:#002e24;padding:28px 32px;text-align:center;">
-      <h1 style="color:#c9a84c;margin:0;font-size:22px;">🌿 ¡Gracias por tu consulta!</h1>
-      <p style="color:rgba(255,255,255,0.65);margin:6px 0 0;font-size:13px;">Manu Jungle Forever</p>
-    </div>
-    <div style="padding:32px;">
-      <p>Hola <strong>${name}</strong>,</p>
-      <p>Hemos recibido tu solicitud de reserva para el tour <strong style="color:#2d8a56;">${tour}</strong>${dateStr ? ` con fecha de salida el <strong>${dateStr}</strong>` : ''}.</p>
-      <p>Nuestro equipo te contactará dentro de las próximas <strong>24 horas</strong> con información sobre precios, disponibilidad y todos los detalles de tu aventura en el Amazonas.</p>
-      <div style="background:#f0faf4;border:1px solid #c3e6cb;padding:18px 22px;border-radius:8px;margin:24px 0;text-align:center;">
-        <p style="margin:0;font-size:13px;color:#555;">¿Necesitas respuesta inmediata?</p>
-        <a href="https://api.whatsapp.com/send?phone=51901525679&text=Hola!%20Quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20el%20tour%20${encodeURIComponent(tour)}" style="display:inline-block;margin-top:10px;background:#25d366;color:#fff;text-decoration:none;padding:10px 24px;border-radius:6px;font-weight:bold;font-size:14px;">💬 Escríbenos por WhatsApp</a>
-      </div>
-      <p style="font-size:13px;color:#777;">Atentamente,<br><strong>Jordy & el equipo de Manu Jungle Forever</strong><br>📧 discover@manujungleforever.com | 📞 +51 901 525 679</p>
-    </div>
-    <div style="background:#f7f7f7;padding:14px 32px;text-align:center;font-size:11px;color:#aaa;border-top:1px solid #eee;">
-      Manu Jungle Forever · Fitzcarrald 17800, Nuevo Eden, Perú
-    </div>
-  </div>`;
+  const dateStr = date
+    ? new Date(date).toLocaleDateString('es-PE', { year: 'numeric', month: 'long', day: 'numeric' })
+    : '';
+
+  return `<!DOCTYPE html>
+<html lang="es">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;padding:0;background:#f0f0f0;font-family:Arial,Helvetica,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f0f0f0;padding:32px 16px;">
+    <tr><td align="center">
+      <table width="620" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.10);max-width:620px;width:100%;">
+
+        <!-- HEADER -->
+        <tr>
+          <td style="background:linear-gradient(135deg,#002e24 0%,#004d3a 100%);padding:36px 40px;text-align:center;">
+            <div style="font-size:40px;margin-bottom:12px;">🌿</div>
+            <h1 style="margin:0;color:#c9a84c;font-size:22px;font-weight:800;">¡Gracias por tu consulta!</h1>
+            <p style="margin:10px 0 0;color:#ffffff;font-size:15px;font-weight:400;opacity:0.9;">
+              Hemos recibido tu solicitud correctamente
+            </p>
+          </td>
+        </tr>
+
+        <!-- BODY -->
+        <tr>
+          <td style="padding:36px 40px;">
+            <p style="margin:0 0 16px;font-size:15px;color:#333;">Hola <strong>${name}</strong>,</p>
+            <p style="margin:0 0 16px;font-size:15px;color:#555;">
+              Hemos recibido tu solicitud para el tour
+              <strong style="color:#1a7a45;">${tour}</strong>${dateStr ? ` con fecha de salida el <strong>${dateStr}</strong>` : ''}.
+            </p>
+            <p style="margin:0 0 28px;font-size:15px;color:#555;">
+              Nuestro equipo se pondrá en contacto contigo en las próximas
+              <strong>24 horas</strong> con precios, disponibilidad y todos los detalles de tu aventura en el Amazonas peruano.
+            </p>
+
+            <!-- SUMMARY BOX -->
+            <table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f4;border-radius:8px;margin-bottom:28px;">
+              <tr>
+                <td style="padding:20px 24px;">
+                  <p style="margin:0 0 6px;font-size:12px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:1px;">Tour solicitado</p>
+                  <p style="margin:0;font-size:17px;font-weight:700;color:#002e24;">${tour}</p>
+                  ${dateStr ? `<p style="margin:6px 0 0;font-size:13px;color:#666;">📅 ${dateStr}</p>` : ''}
+                </td>
+              </tr>
+            </table>
+
+            <!-- WHATSAPP CTA -->
+            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:28px;">
+              <tr>
+                <td style="background:#e8f5ee;border-radius:8px;padding:20px 24px;text-align:center;">
+                  <p style="margin:0 0 4px;font-size:14px;color:#333;font-weight:600;">¿Necesitas una respuesta inmediata?</p>
+                  <p style="margin:0 0 14px;font-size:13px;color:#666;">Escríbenos directamente por WhatsApp</p>
+                  <a href="https://api.whatsapp.com/send?phone=51901525679&text=Hola!%20Consulté%20por%20el%20tour%20${encodeURIComponent(tour)}"
+                     style="display:inline-block;background:#25d366;color:#ffffff;text-decoration:none;padding:12px 28px;border-radius:8px;font-weight:700;font-size:14px;">
+                    💬 WhatsApp: +51 901 525 679
+                  </a>
+                </td>
+              </tr>
+            </table>
+
+            <p style="font-size:13px;color:#888;margin:0;">
+              Atentamente,<br>
+              <strong style="color:#333;">Jordy &amp; el equipo de Manu Jungle Forever</strong><br>
+              📧 discover@manujungleforever.com &nbsp;·&nbsp; 📞 +51 901 525 679
+            </p>
+          </td>
+        </tr>
+
+        <!-- FOOTER -->
+        <tr>
+          <td style="background:#f4f4f4;padding:18px 40px;text-align:center;border-top:1px solid #e0e0e0;">
+            <p style="margin:0;font-size:11px;color:#999;">
+              Manu Jungle Forever · Fitzcarrald 17800, Nuevo Eden, Perú<br>
+              <a href="https://www.manujungleforever.com" style="color:#2d8a56;">www.manujungleforever.com</a>
+            </p>
+          </td>
+        </tr>
+
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`;
 }
 
 // ─── Route handlers ───────────────────────────────────────────────────────────
@@ -137,13 +271,13 @@ export async function onRequestPost(context) {
 
     const payload = { name, email, phone, tour, travelers, date, contact, notes };
 
-    // Send notification to the company
-    const toEmail = 'discover@manujungleforever.com';
+    // Use +reservas tag so Gmail filter routes to "SOLICITUDES DE RESERVA" folder
+    const companyEmail = 'discover+reservas@manujungleforever.com';
     const subject = `[RESERVA] ${name} — ${tour}`;
 
     if (env.RESEND_API_KEY) {
-      // Email to company
-      await sendEmail(env, toEmail, subject, buildEmailHtml(payload), email);
+      // Email to company (tagged for folder filtering)
+      await sendEmail(env, companyEmail, subject, buildEmailHtml(payload), email);
 
       // Confirmation email to client
       try {
@@ -152,14 +286,12 @@ export async function onRequestPost(context) {
           email,
           '✅ Hemos recibido tu consulta — Manu Jungle Forever',
           buildConfirmationHtml(payload),
-          toEmail
+          'discover@manujungleforever.com'
         );
       } catch (confirmErr) {
-        // Non-fatal: company email already sent
         console.warn('Could not send confirmation to client:', confirmErr);
       }
     } else {
-      // Fallback: log and still return success (so we know if env var is missing)
       console.warn('RESEND_API_KEY not set. Booking data:', JSON.stringify(payload));
       return error('Configuración de servidor incompleta. Por favor contáctanos por WhatsApp.', 500);
     }
