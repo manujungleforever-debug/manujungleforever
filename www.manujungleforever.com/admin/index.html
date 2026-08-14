@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="utf-8">
@@ -517,12 +517,18 @@ async function doLogin() {
   }
 
   function bootApp() {
-  document.getElementById('login-screen').style.display='none';
-  document.getElementById('app').style.display='flex';
-  document.getElementById('huser').textContent=cUser;
-  buildTopNav();
-  switchSection('blog');
-}
+    const params = new URLSearchParams(window.location.search);
+    const sec = params.get('sec');
+    if (sec) {
+      document.getElementById('login-screen').style.display='none';
+      document.getElementById('app').style.display='flex';
+      document.getElementById('huser').textContent=cUser;
+      buildTopNav();
+      switchSection(sec);
+    } else {
+      window.location.href = 'panel.html';
+    }
+  }
 
 document.getElementById('btn-logout').addEventListener('click', () => {
   sessionStorage.clear(); token=null;

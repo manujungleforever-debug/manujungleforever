@@ -1,8 +1,8 @@
-﻿(function () {
+(function () {
     const token = sessionStorage.getItem('cms_token');
     if (!token) { 
-        if (!window.location.href.includes('login.html')) {
-            window.location.href = 'login.html'; 
+        if (!window.location.href.includes('index.html') && window.location.pathname !== '/admin/') {
+            window.location.href = 'index.html'; 
         }
         return; 
     }
