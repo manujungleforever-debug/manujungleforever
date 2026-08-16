@@ -217,6 +217,31 @@ var currentReclamosData=[],currentReclamoId=null;
 window.sidebarItems=[];
 window.activeSubSection=null;
 
+window.addCustomItem = function(selectId, promptMsg) {
+  const sel = document.getElementById(selectId);
+  if (!sel) return;
+  setTimeout(function() {
+    const val = prompt(promptMsg || 'Ingrese el nuevo elemento:');
+    if (val && val.trim()) {
+      const cleanVal = val.trim();
+      let opt = Array.from(sel.options).find(o => o.value.toLowerCase() === cleanVal.toLowerCase());
+      if (!opt) {
+        opt = document.createElement('option');
+        opt.value = cleanVal;
+        opt.textContent = cleanVal;
+        const addOpt = Array.from(sel.options).find(o => o.value === '__add_new__');
+        if (addOpt) { sel.insertBefore(opt, addOpt); } else { sel.appendChild(opt); }
+      }
+      sel.value = cleanVal;
+      const saveBar = document.getElementById('save-bar');
+      if (saveBar && saveFnRef) saveBar.style.display = 'flex';
+    } else {
+      const firstReal = Array.from(sel.options).find(o => o.value !== '__add_new__');
+      if (firstReal) sel.value = firstReal.value;
+    }
+  }, 10);
+};
+
 function showSaveBar(fn,msg){
   saveFnRef=fn;
   document.getElementById('save-bar').style.display='flex';
