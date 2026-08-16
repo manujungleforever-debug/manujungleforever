@@ -1180,7 +1180,7 @@ body { top: 0px !important; position: relative !important; }
 /* Ensure dropdown options are readable on dark background */
 .reclamo-group select option,
 .reclamo-input-group select option {
-  background: #0f1513; 
+  background: var(--k); 
   color: #fff;
 }
 .reclamo-input-group input[type="date"]::-webkit-calendar-picker-indicator {
@@ -1513,7 +1513,7 @@ body { top: 0px !important; position: relative !important; }
     transition: all 0.3s ease;
 }
 .reclamo-card:hover {
-    border-color: rgba(13, 178, 107, 0.5);
+    border-color: var(--a);
 }
 .reclamo-card input[type="radio"] {
     margin-top: 4px;
