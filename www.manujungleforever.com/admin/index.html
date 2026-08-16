@@ -1614,7 +1614,7 @@ async function viewReclamos() {
     
     set(html);
     window.currentReclamosData = reclamos;
-    renderReclamosRows(reclamos);
+    window.renderReclamosRows(reclamos);
     
   } catch(e) {
     set(`<p style="color:var(--danger);padding:20px;">❌ Error cargando reclamos: ${e.message}</p>`);
@@ -1684,7 +1684,7 @@ window.filterReclamos = function() {
     list = list.filter(x => new Date(x.fecha.split(' ')[0]) <= td);
   }
   
-  renderReclamosRows(list);
+  window.renderReclamosRows(list);
 };
 
 window.exportReclamos = function() {
