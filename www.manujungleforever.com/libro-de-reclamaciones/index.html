@@ -22,56 +22,16 @@
 
 
 <style>
-  body, main, section { background-color: #060b13 !important; background-image: none !important; }
-  *::before, *::after { background-image: none !important; }
-  
-  /* HEADER */
-  header, #N, .site-header, .hdr { 
-    background: transparent !important; 
-    background-color: #060b13 !important; 
-    border-bottom: 1px solid #1e293b !important;
-  }
-  header::before, header::after, #N::before, #N::after { 
-    display: none !important; 
-    background: none !important; 
-  }
-  
-  /* HERO */
-  .in-hero-custom { 
-    padding-top: 140px !important; 
-    padding-bottom: 60px !important;
-    background: transparent !important; 
-    text-align: center;
-    position: relative;
-    z-index: 10;
-  }
-  
-  /* CARDS */
-  .form-card {
-    background-color: #0b1019 !important; 
-    border: 1px solid #1e293b !important; 
-    border-radius: 24px; 
-    padding: 40px; 
-    margin-bottom: 24px;
-  }
-
-  /* INPUTS */
-  input, select, textarea {
-    background: #0b1019 !important; 
-    color: #ffffff !important; 
-    border: 1px solid #1e293b !important;
-  }
-  input::placeholder, textarea::placeholder {
-    color: #94a3b8 !important;
-  }
-
-  /* TITLES */
-  .emerald-title {
-    color: #10b981 !important;
-  }
-  .white-title {
-    color: #ffffff !important;
-  }
+.sec, main, .in-hero {
+  padding-top: 140px !important;
+}
+header, .site-header, .in-hero {
+  background-color: #060b13 !important;
+  background-image: none !important;
+}
+.in-hero::before, .in-hero::after {
+  display: none !important;
+}
 </style>
 
 
