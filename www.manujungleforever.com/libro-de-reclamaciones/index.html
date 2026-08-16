@@ -19,6 +19,7 @@
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-5476BC9');</script>
 
 
+
 <style>
   body, main, section { background-color: #060b18 !important; background-image: none !important; }
   *::before, *::after { background-image: none !important; }
@@ -35,9 +36,10 @@
   }
   
   /* REESTRUCTURACIÓN DEL HERO */
-  .in-hero { padding-top: 180px !important; background: transparent !important; }
-  .title-container {
-    padding: 180px 0 60px 0 !important;
+  .in-hero-custom { 
+    padding-top: 180px !important; 
+    padding-bottom: 60px !important;
+    background: transparent !important; 
     text-align: center;
     position: relative;
     z-index: 10;
@@ -50,6 +52,7 @@
     border: 1px solid #374151 !important;
   }
 </style>
+
 
 </head><body>
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5476BC9" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -165,18 +168,26 @@
 </div>
 
 <main id="main" style="background-color: #060b18 !important; background-image: none !important;">
+
+<!-- NUEVO HERO ESTRUCTURADO COMO /CONTACT/ -->
+<section class="in-hero-custom">
+  <div class="cx">
+    <span class="ey" style="color:var(--a);">Manu Jungle Forever</span>
+    <h1 class="h1" style="font-size:clamp(2.5rem,6vw,4.5rem); color:#fff; margin-top:8px; margin-bottom:16px;">Complaints Book</h1>
+    <p class="hs" style="margin:0 auto 30px auto; color:rgba(255,255,255,0.7); max-width:600px;">In accordance with the Consumer Protection Code, Law N° 29571.</p>
+    <img src="../assets/img/libro_reclamaciones.png" alt="Complaints Book" style="max-height: 200px; width: 100%; object-fit: contain; margin: 0 auto;">
+  </div>
+</section>
+
 <div style="text-align:center; padding: 60px 0;"><span class="ey">Manu Jungle Forever</span><h1 class="h1" style="font-size:clamp(2.5rem,6vw,4.5rem)">Complaints Book</h1></div>
 <section class="sec" style="background-color: #060b18 !important; background-image: none !important;">
   <div class="cx">
     
-<div class="policy-card" style="text-align: center; background: transparent; border: none; padding: 0; margin-bottom: 40px;">
-  <img src="../assets/img/libro_reclamaciones.png" alt="Complaints Book" style="max-height: 250px; width: 100%; object-fit: contain; margin-bottom: 20px;">
-  <p style="color: rgba(255,255,255,0.7); font-size: 1.1rem;">In accordance with the Consumer Protection Code, Law N° 29571.</p>
-</div>
+
 
 
   <div style="background-color: #0b111e !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; border-radius:24px; padding:40px; margin-bottom: 24px;">
-    <h2 class="h2" style="margin-bottom:8px; font-size:1.8rem;">Business Information</h3>
+    <h2 class="h2" style="margin-bottom:16px; font-size:1.4rem; color:var(--a);">Business Information</h2>
     <p style="font-size:.87rem;color:rgba(255,255,255,.55);margin-bottom:8px;"><strong>Legal Name:</strong> LLAQUI CHUSI JORDY LEONIDAS (MANU JUNGLE FOREVER)</p>
     <p style="font-size:.87rem;color:rgba(255,255,255,.55);margin-bottom:8px;"><strong>RUC:</strong> 10712309283</p>
     <p style="font-size:.87rem;color:rgba(255,255,255,.55);margin-bottom:8px;"><strong>Address:</strong> Cusco, Perú</p>
@@ -191,7 +202,7 @@
     
     <!-- 1. IDENTIFICACIÓN DEL CONSUMIDOR RECLAMANTE -->
     <div style="background-color: #0b111e !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; border-radius:24px; padding:40px; margin-bottom: 24px;">
-        <h4>1. Consumer Details</h4>
+        <h2 class="h2" style="margin-bottom:24px; font-size:1.4rem; color:var(--a);">1. Consumer Details</h2>
         <div class="f2c">
             <div class="fr">
                 <label>Document Type *</label>
@@ -256,7 +267,7 @@
 
     <!-- 2. IDENTIFICACIÓN DEL BIEN CONTRATADO -->
     <div style="background-color: #0b111e !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; border-radius:24px; padding:40px; margin-bottom: 24px;">
-        <h4>2. Contracted Good / Service</h4>
+        <h2 class="h2" style="margin-bottom:24px; font-size:1.4rem; color:var(--a);">2. Contracted Good / Service</h2>
         <div class="f2c">
             <div class="fr">
                 <label>Type of Good *</label>
@@ -284,7 +295,7 @@
     
     <!-- 3. DETALLE DE LA RECLAMACIÓN Y PEDIDO -->
     <div style="background-color: #0b111e !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; border-radius:24px; padding:40px; margin-bottom: 24px;">
-        <h4>3. Complaint Details</h4>
+        <h2 class="h2" style="margin-bottom:24px; font-size:1.4rem; color:var(--a);">3. Complaint Details</h2>
         <div class="fr" style="margin-bottom: 24px;">
             <label>Request Type *</label>
             <div style="display:flex; flex-direction:column; gap:16px;">
