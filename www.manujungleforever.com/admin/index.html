@@ -1651,7 +1651,12 @@ window.editTestim = function(idx) {
       </div>
       <div class="grow2">
         <div class="ff"><label>Bandera emoji</label><input id="tm-fl" value="${esc(t.bandera||'')}"><span class="hint">Ej: 🇺🇸 🇬🇧 🇩🇪 🇦🇺</span></div>
-        <div class="ff"><label>Tour realizado</label><input id="tm-t" value="${esc(t.tour)}"></div>
+        <div class="ff"><label>Tour realizado</label>
+          <div style="display:flex;gap:8px;align-items:center">
+            <input id="tm-t" value="${esc(t.tour)}" style="flex:1" placeholder="Nombre del tour">
+            <button type="button" class="btn-secondary" style="white-space:nowrap" onclick="pickImage('tm-t','tm-img-prev')">🖼️ Medios</button>
+          </div>
+        </div>
       </div>
       <div class="grow2">
         <div class="ff"><label>Fecha del viaje</label><input type="date" id="tm-f" value="${esc(t.fecha)}"></div>
