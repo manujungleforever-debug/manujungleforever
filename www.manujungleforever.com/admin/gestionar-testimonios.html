@@ -63,6 +63,257 @@
             min-height: 100vh;
         }
 
+        /* ── LOGIN SCREEN ── */
+        #login-screen {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 100vh;
+            background-color: var(--bg-color);
+            background-image: var(--bg-gradient);
+            position: relative;
+            z-index: 100;
+        }
+
+        .ls-left {
+            background: linear-gradient(135deg, #071f1a 0%, #030807 100%);
+            color: #fff;
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+        }
+
+        .ls-left .logo {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 30px;
+        }
+
+        .ls-left .logo::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background: radial-gradient(ellipse at center, rgba(45, 212, 191, 0.4) 0%, rgba(45, 212, 191, 0) 70%);
+            border-radius: 50%;
+            animation: waterRipple 3s infinite ease-out 1.5s;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .ls-left .logo img {
+            height: 130px;
+            display: block;
+            position: relative;
+            z-index: 2;
+            animation: adminLogoEmerging 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards, adminLogoFloatWave 4s ease-in-out 1.5s infinite;
+            will-change: transform, filter;
+        }
+
+        .ls-left h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            background: linear-gradient(to right, var(--accent-teal), var(--accent-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .ls-left p {
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 40px;
+            max-width: 400px;
+        }
+
+        .ls-stats {
+            display: flex;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .ls-stat {
+            background: var(--card-bg);
+            padding: 15px 25px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--card-border);
+        }
+
+        .ls-stat h3 {
+            font-size: 1.5rem;
+            margin-bottom: 4px;
+            color: var(--text-main);
+        }
+
+        .ls-stat span {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .ls-right {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .lcard {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 420px;
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(12px);
+        }
+
+        .lcard h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-main);
+        }
+
+        .lcard p.sub {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 32px;
+        }
+
+        .err-msg {
+            background: var(--danger-red-bg);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            color: #f87171;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .lcard .ff label {
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .lcard .ff {
+            margin-bottom: 16px;
+        }
+
+        .lcard .ff input {
+            width: 100%;
+            background: rgba(3, 8, 7, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-main);
+            padding: 14px;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .lcard .ff input:focus {
+            border-color: var(--accent-teal);
+            box-shadow: 0 0 10px var(--accent-teal-glow);
+            outline: none;
+        }
+
+        .btn-login {
+            background: var(--accent-teal);
+            color: #030807;
+            border: none;
+            border-radius: 10px;
+            padding: 14px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+            margin-top: 10px;
+            box-shadow: 0 4px 14px var(--accent-teal-glow);
+        }
+
+        .btn-login:hover {
+            background: #12bfa8;
+            transform: translateY(-1px);
+        }
+
+        .ls-quick {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .ls-quick h4 {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+
+        .ls-quick-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .ls-quick-card:hover {
+            background: rgba(45, 212, 191, 0.05);
+            border-color: var(--accent-teal);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px var(--accent-teal-glow);
+        }
+
+        .ls-quick-card img {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .ls-quick-info p {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .ls-quick-info span {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        @keyframes adminLogoEmerging {
+            0% { opacity: 0; transform: translateY(40px) scale(0.9); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        @keyframes adminLogoFloatWave {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        @keyframes waterRipple {
+            0% { width: 60px; height: 15px; opacity: 0.8; }
+            100% { width: 220px; height: 60px; opacity: 0; }
+        }
+
         /* --- Header --- */
         header {
             position: sticky;
@@ -598,6 +849,8 @@
     </style>
   <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
 </head>
 <body>
 
@@ -788,8 +1041,6 @@ const SECTION_PAGES = {
 };
 
 function buildTopNav() {
-  // Navigation is now handled by the static header links.
-  // We just highlight the active link.
   document.querySelectorAll('.menu-nav a').forEach(a => a.classList.remove('active'));
   const mappedId = cSection === 'testimonials' ? 'testim' : (cSection === 'departures' ? 'tours' : (cSection === 'media' ? 'media' : cSection));
   const activeLink = document.getElementById('nav-' + mappedId);
