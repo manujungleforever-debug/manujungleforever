@@ -12,18 +12,43 @@
     "cta_about": "About Us"
   },
   "stats": [
-    { "value": 500, "suffix": "+", "label": "Travelers Guided", "type": "counter" },
-    { "value": 10, "suffix": "+", "label": "Years Experience", "type": "counter" },
-    { "value": 12, "suffix": "", "label": "Tour Options", "type": "counter" },
-    { "value": "4.9★", "label": "Average Rating", "type": "static" }
+    {
+      "value": 500,
+      "suffix": "+",
+      "label": "Travelers Guided",
+      "type": "counter"
+    },
+    {
+      "value": 10,
+      "suffix": "+",
+      "label": "Years Experience",
+      "type": "counter"
+    },
+    {
+      "value": 12,
+      "suffix": "",
+      "label": "Tour Options",
+      "type": "counter"
+    },
+    {
+      "value": "4.9★",
+      "label": "Average Rating",
+      "type": "static"
+    }
   ],
   "about_section": {
     "eyebrow": "Why Choose Us",
     "title": "Visit Manu National Park with a Local Company",
     "paragraphs": [
-      "Going to the Amazon rainforest is a dream for many travelers planning their South American adventure. If you're looking for an amazing jungle trip near Cusco, Peru, you're in the right place.",
-      "The Manu National Park is accessible by road and river from Cusco, located on the Madre de Dios and Manu rivers — tributaries to the Amazon itself. Our founder grew up in the small village of Nuevo Eden that we use as our base; the rainforest is his home.",
-      "We offer multi-day guided small-group tours and can also organize independent trips to Manu. All our jungle tours can be added onto your Cusco trip while visiting Machu Picchu and the Sacred Valley. You will get a taste of local life and opportunities to see amazing creatures in their natural habitat."
+      {
+        "text": "Going to the Amazon rainforest is a dream for many travelers planning their South American adventure. If you're looking for an amazing jungle trip near Cusco, Peru, you're in the right place."
+      },
+      {
+        "text": "The Manu National Park is accessible by road and river from Cusco, located on the Madre de Dios and Manu rivers — tributaries to the Amazon itself. Our founder grew up in the small village of Nuevo Eden that we use as our base; the rainforest is his home."
+      },
+      {
+        "text": "We offer multi-day guided small-group tours and can also organize independent trips to Manu. All our jungle tours can be added onto your Cusco trip while visiting Machu Picchu and the Sacred Valley. You will get a taste of local life and opportunities to see amazing creatures in their natural habitat."
+      }
     ],
     "chips": [
       "Small Groups (2–8)",
@@ -50,16 +75,46 @@
     "image": "assets/media_to_upload/photos/placeholder.jpg",
     "image_alt": "Manu National Park wildlife - Jaguar",
     "animals": [
-      { "emoji": "🐆", "name": "Jaguar" },
-      { "emoji": "🦜", "name": "Macaws" },
-      { "emoji": "🐊", "name": "Caimans" },
-      { "emoji": "🐒", "name": "Monkeys" },
-      { "emoji": "🦦", "name": "Giant Otters" },
-      { "emoji": "🐢", "name": "River Turtles" },
-      { "emoji": "🦫", "name": "Capybaras" },
-      { "emoji": "🐍", "name": "Anaconda" },
-      { "emoji": "🦋", "name": "Butterflies" },
-      { "emoji": "🐦", "name": "Cock-of-the-Rock" }
+      {
+        "emoji": "🐆",
+        "name": "Jaguar"
+      },
+      {
+        "emoji": "🦜",
+        "name": "Macaws"
+      },
+      {
+        "emoji": "🐊",
+        "name": "Caimans"
+      },
+      {
+        "emoji": "🐒",
+        "name": "Monkeys"
+      },
+      {
+        "emoji": "🦦",
+        "name": "Giant Otters"
+      },
+      {
+        "emoji": "🐢",
+        "name": "River Turtles"
+      },
+      {
+        "emoji": "🦫",
+        "name": "Capybaras"
+      },
+      {
+        "emoji": "🐍",
+        "name": "Anaconda"
+      },
+      {
+        "emoji": "🦋",
+        "name": "Butterflies"
+      },
+      {
+        "emoji": "🐦",
+        "name": "Cock-of-the-Rock"
+      }
     ]
   },
   "cta_section": {
@@ -89,6 +144,10 @@
       }
     ]
   },
-  "featured_tour_ids": ["wildlife-tours", "rainforest-road-trip", "amazon-expedition"],
+  "featured_tour_ids": [
+    "wildlife-tours",
+    "rainforest-road-trip",
+    "amazon-expedition"
+  ],
   "map_embed_url": "https://www.google.com/maps/d/embed?mid=1CkYt9KUrq9Jjp9tgxChYmOYvyNaLZnxF"
 }
