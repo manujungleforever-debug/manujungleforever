@@ -1535,7 +1535,7 @@ window.editTour = function(idx) {
         <div class="ff"><label>Descripción completa (Markdown)</label>${mdToolbar('t-dl')}</div>
       </div>
     </div>`);
-  document.getElementById('t-dl').value=t.descripcion_larga||'';
+  document.getElementById('t-dl').value=t.descripcion_larga||''; if(t.imagen_hero) updateImgPreview('t-img','t-img-prev');
   setTimeout(() => {
     document.querySelectorAll('.eform input, .eform select, .eform textarea').forEach(el => {
       el.addEventListener('input', () => { const sb = document.getElementById('save-bar'); if (sb && saveFnRef) sb.style.display = 'flex'; });
