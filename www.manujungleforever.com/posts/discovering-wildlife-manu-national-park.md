@@ -2,7 +2,7 @@
 title: Discovering the Untamed Wildlife of Manu National Park
 date: 2026-08-16
 categoria: Wildlife
-publicado: true
+publicado: false
 extracto: Explore the incredible biodiversity of Manu National Park. From elusive jaguars to vibrant macaws, discover why this untouched Amazonian paradise is a must-visit for wildlife enthusiasts.
 imagen: /media/1786897485978-133629791959893989.jpg
 imagen_alt: Vibrant scarlet macaws gathering at a clay lick in Manu National Park.
