@@ -18,10 +18,30 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"TouristAttraction","name":"Manu Jungle Forever","url":"https://www.manujungleforever.com/","description":"Guided tours from Cusco to the Manu National Park in the Peruvian Amazon.","telephone":"+51901525679","email":"discover@manujungleforever.com","address":{"@type":"PostalAddress","addressLocality":"Nuevo Eden","addressCountry":"PE"},"sameAs":["https://www.facebook.com/manujungleforever","https://www.instagram.com/manujungleforever/","https://www.tripadvisor.com/Interaction_Review-g294314-d17476586-Reviews-Hidden_Jungle_Cusco-Cusco_Cusco_Region.html"]}</script>
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-5476BC9');</script>
 
+
 <style>
   body, main, section { background-color: #060b18 !important; background-image: none !important; }
   *::before, *::after { background-image: none !important; }
-  .in-hero { padding-top: 140px !important; background: transparent !important; }
+  
+  /* UNIFICACIÓN DEL HEADER / NAVBAR */
+  header, #N, .site-header, .hdr { 
+    background: transparent !important; 
+    background-color: #060b18 !important; 
+    border-bottom: 1px solid rgba(255,255,255,0.05) !important;
+  }
+  header::before, header::after, #N::before, #N::after { 
+    display: none !important; 
+    background: none !important; 
+  }
+  
+  /* REESTRUCTURACIÓN DEL HERO */
+  .in-hero { padding-top: 180px !important; background: transparent !important; }
+  .title-container {
+    padding: 180px 0 60px 0 !important;
+    text-align: center;
+    position: relative;
+    z-index: 10;
+  }
   
   /* Inputs dark styling */
   input, select, textarea {
@@ -30,6 +50,7 @@
     border: 1px solid #374151 !important;
   }
 </style>
+
 </head><body>
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5476BC9" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <a class="skip" href="#main">Skip to content</a>
