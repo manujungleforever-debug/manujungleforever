@@ -127,61 +127,40 @@
             -webkit-text-fill-color: transparent;
         }
 
-        nav.menu-nav {
-            display: flex;
-            align-items: center;
-            gap: 24px;
-        }
-
-        nav.menu-nav a {
-            font-size: 0.88rem;
+        nav.mnav a {
+            font-size: 0.8rem;
             font-weight: 500;
             color: var(--text-muted);
             text-decoration: none;
-            transition: var(--transition);
-        }
-
-        nav.menu-nav a:hover, nav.menu-nav a.active {
-            color: var(--accent-teal);
-            text-shadow: 0 0 10px var(--accent-teal-glow);
-        }
-
-        .user-section {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .user-badge {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            background: rgba(255, 255, 255, 0.03);
-            padding: 6px 14px;
+            padding: 6px 11px;
             border-radius: 8px;
-            font-size: 0.85rem;
-        }
-
-        .user-badge i {
-            color: var(--accent-teal);
-        }
-
-        .btn-logout-header {
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            cursor: pointer;
-            font-size: 1.1rem;
             transition: var(--transition);
+            white-space: nowrap;
             display: flex;
             align-items: center;
-            justify-content: center;
+            gap: 5px;
         }
 
-        .btn-logout-header:hover {
-            color: #f87171;
-            transform: translateX(2px);
+        nav.mnav a i {
+            font-size: 0.78rem;
+        }
+
+        nav.mnav a:hover, nav.mnav a.active {
+            color: var(--accent-teal);
+            background: rgba(45,212,191,.09);
+        }
+
+        .user-sec {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-left: auto;
+        }
+
+        .btn-logout:hover {
+            background: var(--danger, #ef4444) !important;
+            color: #fff !important;
+            border-color: var(--danger, #ef4444) !important;
         }
 
         /* --- Main Layout --- */
@@ -465,21 +444,20 @@
                     <span class="brand-text">Manu Jungle</span>
                 </a>
                 
-                <nav class="menu-nav">
-                    <a href="panel.html" class="active">Panel</a>
-                    <a href="gestionar-tours.html">Tours</a>
-                    <a href="gestionar-blog.html">Blog</a>
-                    <a href="gestionar-testimonios.html">Testimonios</a>
-                    <a href="gestionar-reclamos.html">Reclamos</a>
+                <nav class="mnav" style="display:flex;align-items:center;gap:3px;flex-wrap:wrap;flex:1;margin-left:24px;">
+                    <a href="panel.html" class="active"><i class="fa-solid fa-house"></i> Panel</a>
+                    <a href="gestionar-tours.html"><i class="fa-solid fa-map-location-dot"></i> Tours</a>
+                    <a href="gestionar-blog.html"><i class="fa-solid fa-pencil"></i> Blog</a>
+                    <a href="gestionar-contenido.html"><i class="fa-solid fa-file-invoice"></i> Contenido</a>
+                    <a href="gestionar-salidas.html"><i class="fa-solid fa-calendar-days"></i> Salidas</a>
+                    <a href="gestionar-testimonios.html"><i class="fa-solid fa-star"></i> Testimonios</a>
+                    <a href="gestionar-reclamos.html"><i class="fa-solid fa-scale-balanced"></i> Reclamos</a>
+                    <a href="gestionar-medios.html"><i class="fa-solid fa-images"></i> Medios</a>
                 </nav>
 
-                <div class="user-section">
-                    <div class="user-badge">
-                        <i class="fa-solid fa-user-shield"></i>
-                        <span id="admin-name">Admin</span>
-                    </div>
-                    <button onclick="logout()" class="btn-logout-header" title="Cerrar Sesión">
-                        <i class="fa-solid fa-right-from-bracket"></i>
+                <div class="user-sec">
+                    <button onclick="logout()" class="btn-logout" style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);color:#f87171;cursor:pointer;font-size:.8rem;font-weight:600;padding:6px 12px;border-radius:8px;display:flex;align-items:center;gap:6px;">
+                        <i class="fa-solid fa-right-from-bracket"></i> Salir
                     </button>
                 </div>
 

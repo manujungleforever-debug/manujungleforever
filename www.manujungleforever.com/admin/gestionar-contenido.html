@@ -7,7 +7,6 @@
 <meta name="robots" content="noindex,nofollow">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.0.3/src/regular/style.css">
 <link rel="icon" href="../assets/img/logo.png">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -80,12 +79,7 @@ nav.mnav a {
 nav.mnav a i { font-size:.78rem; }
 nav.mnav a:hover, nav.mnav a.active { color:var(--teal); background:rgba(45,212,191,.09); }
 .user-sec { display:flex; align-items:center; gap:10px; margin-left:auto; }
-.ubadge {
-    display:flex; align-items:center; gap:7px;
-    border:1px solid rgba(255,255,255,.07); background:rgba(255,255,255,.03);
-    padding:5px 12px; border-radius:8px; font-size:.8rem; white-space:nowrap;
-}
-.ubadge i { color:var(--teal); }
+
 .btn-logout {
     background:rgba(239,68,68,.08); border:1px solid rgba(239,68,68,.2);
     color:#f87171; cursor:pointer; font-size:.8rem; font-weight:600;
@@ -278,7 +272,6 @@ code { background:rgba(45,212,191,.1); color:var(--teal); padding:2px 6px; borde
       <a href="gestionar-medios.html"><i class="fa-solid fa-images"></i> Medios</a>
     </nav>
     <div class="user-sec">
-      <div class="ubadge"><i class="fa-solid fa-user-shield"></i><span id="admin-name">Admin</span></div>
       <button onclick="logout()" class="btn-logout"><i class="fa-solid fa-right-from-bracket"></i> Salir</button>
     </div>
   </div>
@@ -432,6 +425,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ── CMS Logic (from index.html) ────────────────────────────────────────────
+= '/api/cms';
+
 // ─────────────────────────────────────────────────────────────────────────────
 // NAV
 // ─────────────────────────────────────────────────────────────────────────────
@@ -1588,48 +1583,6 @@ window.submitReclamoReply = async function() {
     statusDiv.style.background = 'rgba(239,68,68,0.1)';
     statusDiv.style.color = 'var(--danger)';
     statusDiv.textContent = `Error: ${e.message}`;
-  }
-};
-
-</script>
-
-
-<script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    const div = document.createElement("div");
-    div.id = "tsparticles";
-    div.style.position = "fixed"; div.style.inset = "0"; div.style.pointerEvents = "none"; div.style.zIndex = "998";
-    document.body.appendChild(div);
-    tsParticles.load("tsparticles", {
-        fpsLimit: 60,
-        particles: {
-            number: { value: 35, density: { enable: true, area: 800 } },
-            color: { value: ["#c9a84c", "#4aa18e", "#ffffff"] },
-            shape: { type: "circle" },
-            opacity: { value: 0.7, random: true, animation: { enable: true, speed: 0.5, minimumValue: 0.1, sync: false } },
-            size: { value: 3, random: true, animation: { enable: true, speed: 1, minimumValue: 0.5, sync: false } },
-            move: { enable: true, speed: 0.6, direction: "top", random: true, straight: false, outModes: { default: "out" } }
-        },
-        detectRetina: true
-    });
-});
-</script>
-<script>
-// Accordion
-window.toggleAccordion = function(btn) {
-  const isActive = btn.classList.contains('active');
-  
-  document.querySelectorAll('.itinerary-toggle').forEach(function(otherBtn) {
-    otherBtn.classList.remove('active');
-    if(otherBtn.nextElementSibling) {
-       otherBtn.nextElementSibling.style.maxHeight = null;
-    }
-  });
-  
-  if (!isActive) {
-    btn.classList.add('active');
-    // CSS max-height transition handles expansion
   }
 };
 </script>
