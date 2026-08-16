@@ -1437,6 +1437,7 @@ function confirmDelete(path, sha, label, backFn) {
   };
 }
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+function openModal(id) { document.getElementById(id).classList.add('open'); }
 window.confirmDelete=confirmDelete; window.closeModal=closeModal;
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -1498,7 +1499,7 @@ function buildFM(fm,body) {
 // RECLAMOS
 // ─────────────────────────────────────────────────────────────────────────────
 async function viewReclamos() {
-  set(`<div class="loading"><div class="spinner"></div> Cargando reclamos…</div>`);
+  set(`<div class="loading"><div class="spinner"></div> Cargando reclamos...</div>`);
   try {
     const r = await fetch('/api/admin/reclamos', {
       headers: { Authorization: `Bearer ${token}` }
@@ -1506,54 +1507,6 @@ async function viewReclamos() {
     if (r.status === 401) { sessionStorage.clear(); location.reload(); }
     if (!r.ok) throw new Error('Error al cargar');
     const reclamos = await r.json();
-    
-    let html = `<h2 class="pt"><i class="ph ph-shield-warning"></i> Libro de Reclamaciones</h2>
-                <p class="ps">Gestiona y responde los reclamos ingresados por los usuarios.</p>`;
-    
-    if (reclamos.length === 0) {
-      html += `<div class="li" style="justify-content:center"><p style="color:var(--muted)">No hay reclamos registrados.</p></div>`;
-      set(html);
-      return;
-    }
-    
-    html += `<div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;margin-top:20px;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.05);">
-              <thead>
-                <tr style="background:#f1f5f9;text-align:left;font-size:0.85rem;color:var(--muted);text-transform:uppercase;">
-                  <th style="padding:12px 16px;">Código / Fecha</th>
-                  <th style="padding:12px 16px;">Cliente</th>
-                  <th style="padding:12px 16px;">Tipo</th>
-                  <th style="padding:12px 16px;">Estado</th>
-                  <th style="padding:12px 16px;text-align:right;">Acciones</th>
-                </tr>
-              </thead>
-              <tbody>`;
-              
-    reclamos.forEach(r => {
-      const badge = r.estado === 'Atendido' ? `<span class="badge on">Atendido</span>` : `<span class="badge warn">Pendiente</span>`;
-      html += `<tr style="border-bottom:1px solid #e2e8f0;transition:background 0.2s;">
-                <td style="padding:12px 16px;"><strong>${r.codigo_reclamo}</strong><br><span style="font-size:0.75rem;color:var(--muted)">${r.fecha}</span></td>
-                <td style="padding:12px 16px;">${r.nombres}<br><span style="font-size:0.75rem;color:var(--muted)">${r.correo}</span></td>
-                <td style="padding:12px 16px;text-transform:uppercase;font-size:0.85rem;">${r.tipo}</td>
-                <td style="padding:12px 16px;">${badge}</td>
-                <td style="padding:12px 16px;text-align:right;">
-                  <button class="btn-secondary" onclick="openReclamoModal('${r.id}')" style="font-size:0.75rem;padding:5px 10px;">Ver / Responder</button>
-                </td>
-              </tr>`;
-    });
-    
-    html += `</tbody></table></div>`;
-    
-    // Modal HTML
-    html += `
-    <div id="modal-reclamo" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:999;align-items:center;justify-content:center;backdrop-filter:blur(4px);">
-      <div style="background:#fff;border-radius:16px;width:95%;max-width:700px;max-height:90vh;overflow-y:auto;padding:30px;position:relative;box-shadow:0 10px 40px rgba(0,0,0,0.2);">
-        <button onclick="document.getElementById('modal-reclamo').style.display='none'" style="position:absolute;top:20px;right:20px;background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--muted);">&times;</button>
-        <h3 id="mr-title" style="margin-bottom:5px;font-size:1.3rem;">Detalle del Reclamo</h3>
-        <p id="mr-subtitle" style="font-size:0.85rem;color:var(--muted);margin-bottom:20px;"></p>
-        
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:20px;background:#f8fafc;padding:15px;border-radius:10px;border:1px solid #e2e8f0;font-size:0.9rem;">
-          <div><strong>Cliente:</strong> <span id="mr-cliente"></span></div>
-          <div><strong>DNI/CE:</strong> <span id="mr-dni"></span></div>
           <div><strong>Teléfono:</strong> <span id="mr-tel"></span></div>
           <div><strong>Correo:</strong> <span id="mr-email"></span></div>
           <div style="grid-column:1/-1;"><strong>Domicilio:</strong> <span id="mr-domicilio"></span></div>
