@@ -1,0 +1,156 @@
+<form id="formReclamo" class="reclamo-form-container" novalidate>
+    <!-- Honeypot anti-spam -->
+    <div style="display:none;">
+        <label>If you are human, leave this field blank</label>
+        <input type="text" name="website_url" value="">
+    </div>
+    
+    <!-- 1. IDENTIFICACIÓN DEL CONSUMIDOR RECLAMANTE -->
+    <div class="reclamo-section">
+        <h4>1. Consumer Details</h4>
+        <div class="reclamo-grid">
+            <div class="reclamo-group">
+                <label>Document Type *</label>
+                <select name="tipo_documento" required>
+                    <option value="Pasaporte">Passport</option>
+                    <option value="DNI">DNI (National ID)</option>
+                    <option value="CE">CE (Foreigner ID)</option>
+                </select>
+            </div>
+            <div class="reclamo-group">
+                <label>Document Number *</label>
+                <input type="text" name="documento" placeholder="e.g. 76543210" required>
+            </div>
+            
+            <div class="reclamo-group">
+                <label>First Names *</label>
+                <input type="text" id="fnombres" placeholder="Your first names" required>
+            </div>
+            <div class="reclamo-group">
+                <label>Last Names *</label>
+                <input type="text" id="fapellidos" placeholder="Your last names" required>
+            </div>
+            <input type="hidden" name="nombres" id="nombres_hidden">
+
+            <div class="reclamo-group">
+                <label>Contact Number *</label>
+                <input type="tel" name="telefono" placeholder="e.g. +51 987 654 321" required>
+            </div>
+            <div class="reclamo-group">
+                <label>Email Address *</label>
+                <input type="email" name="correo" placeholder="email@address.com" required>
+            </div>
+            
+            <div class="reclamo-group full-width">
+                <label>Full Address *</label>
+                <input type="text" name="domicilio" placeholder="e.g. Main St 123, District, City, Country" required>
+            </div>
+
+            <div class="reclamo-group full-width">
+                <label class="reclamo-checkbox">
+                    <input type="checkbox" id="check_menor">
+                    <span>I am under 18 years old</span>
+                </label>
+            </div>
+            
+            <div class="reclamo-group full-width" id="apoderado_box" style="display:none; background:rgba(255,255,255,0.02); padding:20px; border-radius:12px; border:1px solid rgba(255,255,255,0.05); margin-top:10px;">
+                <h5 style="color:var(--a); font-family:'Syne',sans-serif; margin:0 0 15px 0;">Parent or Guardian Details</h5>
+                <div class="reclamo-grid">
+                    <div class="reclamo-group">
+                        <label>Guardian Full Name *</label>
+                        <input type="text" id="apoderado_nombre" placeholder="Required if under 18">
+                    </div>
+                    <div class="reclamo-group">
+                        <label>Guardian ID / Passport *</label>
+                        <input type="text" id="apoderado_doc" placeholder="Required if under 18">
+                    </div>
+                </div>
+                <input type="hidden" name="apoderado" id="apoderado_hidden">
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. IDENTIFICACIÓN DEL BIEN CONTRATADO -->
+    <div class="reclamo-section">
+        <h4>2. Contracted Good / Service</h4>
+        <div class="reclamo-grid">
+            <div class="reclamo-group">
+                <label>Type of Good *</label>
+                <div class="reclamo-radio-group">
+                    <label class="reclamo-radio">
+                        <input type="radio" name="bien_tipo" value="Servicio" required checked>
+                        <span>Service</span>
+                    </label>
+                    <label class="reclamo-radio">
+                        <input type="radio" name="bien_tipo" value="Producto" required>
+                        <span>Product</span>
+                    </label>
+                </div>
+            </div>
+            <div class="reclamo-group">
+                <label>Claimed Amount (Optional)</label>
+                <input type="number" step="0.01" name="bien_monto" placeholder="0.00">
+            </div>
+            <div class="reclamo-group full-width">
+                <label>Description of Product / Service *</label>
+                <textarea name="bien_descripcion" rows="3" required placeholder="e.g. 4-Day Manu Tour..."></textarea>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 3. DETALLE DE LA RECLAMACIÓN Y PEDIDO -->
+    <div class="reclamo-section">
+        <h4>3. Complaint Details</h4>
+        <div class="reclamo-group full-width" style="margin-bottom: 24px;">
+            <label>Request Type *</label>
+            <div class="reclamo-cards">
+                <label class="reclamo-card">
+                    <input type="radio" name="tipo" value="Reclamo" required>
+                    <div class="reclamo-card-content">
+                        <span class="reclamo-card-title">Complaint (Reclamo)</span>
+                        <span class="reclamo-card-desc">Dissatisfaction related to the products or services provided.</span>
+                    </div>
+                </label>
+                <label class="reclamo-card">
+                    <input type="radio" name="tipo" value="Queja" required>
+                    <div class="reclamo-card-content">
+                        <span class="reclamo-card-title">Query / Grievance (Queja)</span>
+                        <span class="reclamo-card-desc">Dissatisfaction not directly related to products or services; or discomfort regarding customer service.</span>
+                    </div>
+                </label>
+            </div>
+        </div>
+        
+        <div class="reclamo-group full-width" style="margin-bottom: 24px;">
+            <label>Details of the Incident *</label>
+            <textarea name="detalle" rows="4" required placeholder="Describe the events clearly..."></textarea>
+        </div>
+        <div class="reclamo-group full-width">
+            <label>Request (What you ask from the provider) *</label>
+            <textarea name="pedido" rows="3" required placeholder="Indique qué solicita como solución..."></textarea>
+        </div>
+    </div>
+
+    <!-- DECLARACIÓN JURADA -->
+    <div class="reclamo-section">
+        <label class="reclamo-checkbox">
+            <input type="checkbox" id="declaracion" required>
+            <span>
+                I declare that the content of my complaint is true, and I accept the <a href="../privacy-policy/index.html" target="_blank">Privacy Policy</a> regarding the processing of my personal data for managing my complaint/query.
+            </span>
+        </label>
+    </div>
+
+    <!-- CAPTCHA Matemático -->
+    <div class="reclamo-section captcha-section" style="border: 1px solid rgba(255,255,255,0.1);">
+        <label style="color:#fff; font-weight:700;"><i class="fa-solid fa-shield-halved" style="color:var(--w);"></i> Security Verification *</label>
+        <div class="captcha-container" style="display:flex; align-items:center; gap:15px; margin-top:10px;">
+            <div id="captcha-box"></div>
+            <input type="number" id="captcha-input" required placeholder="Answer" style="max-width:120px;">
+        </div>
+    </div>
+    
+    <button type="submit" class="reclamo-btn-submit">
+        SUBMIT COMPLAINTS BOOK
+    </button>
+  </form>
