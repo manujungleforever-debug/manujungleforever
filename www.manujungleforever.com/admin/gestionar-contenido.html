@@ -6,7 +6,7 @@
 <title>Contenido - Manu Jungle Admin</title>
 <meta name="robots" content="noindex,nofollow">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
 <link rel="icon" href="../assets/img/logo.png">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -76,7 +76,7 @@ nav.mnav a {
     text-decoration:none; padding:6px 11px; border-radius:8px;
     transition:.25s; white-space:nowrap; display:flex; align-items:center; gap:5px;
 }
-nav.mnav a i { font-size:.78rem; }
+nav.mnav a i { font-size:1.1rem; }
 nav.mnav a:hover, nav.mnav a.active { color:var(--teal); background:rgba(45,212,191,.09); }
 .user-sec { display:flex; align-items:center; gap:10px; margin-left:auto; }
 
@@ -260,19 +260,19 @@ code { background:rgba(45,212,191,.1); color:var(--teal); padding:2px 6px; borde
       <span class="brand-name">Manu Jungle</span>
     </a>
     <a href="panel.html" class="btn-panel">
-      <i class="fa-solid fa-arrow-left"></i> Volver al Panel
+      <i class="ph ph-arrow-left"></i> Volver al Panel
     </a>
     <nav class="mnav">
-      <a href="gestionar-tours.html"><i class="fa-solid fa-map-location-dot"></i> Tours</a>
-      <a href="gestionar-blog.html"><i class="fa-solid fa-pencil"></i> Blog</a>
-      <a href="gestionar-contenido.html" class="active"><i class="fa-solid fa-file-invoice"></i> Contenido</a>
-      <a href="gestionar-salidas.html"><i class="fa-solid fa-calendar-days"></i> Salidas</a>
-      <a href="gestionar-testimonios.html"><i class="fa-solid fa-star"></i> Testimonios</a>
-      <a href="gestionar-reclamos.html"><i class="fa-solid fa-scale-balanced"></i> Reclamos</a>
-      <a href="gestionar-medios.html"><i class="fa-solid fa-images"></i> Medios</a>
+      <a href="gestionar-tours.html"><i class="ph ph-map-trifold"></i> Tours</a>
+      <a href="gestionar-blog.html"><i class="ph ph-pencil"></i> Blog</a>
+      <a href="gestionar-contenido.html" class="active"><i class="ph ph-file-text"></i> Contenido</a>
+      <a href="gestionar-salidas.html"><i class="ph ph-calendar"></i> Salidas</a>
+      <a href="gestionar-testimonios.html"><i class="ph ph-star"></i> Testimonios</a>
+      <a href="gestionar-reclamos.html"><i class="ph ph-scales"></i> Reclamos</a>
+      <a href="gestionar-medios.html"><i class="ph ph-image"></i> Medios</a>
     </nav>
     <div class="user-sec">
-      <button onclick="logout()" class="btn-logout"><i class="fa-solid fa-right-from-bracket"></i> Salir</button>
+      <button onclick="logout()" class="btn-logout"><i class="ph ph-sign-out"></i> Salir</button>
     </div>
   </div>
 </header>
@@ -282,7 +282,7 @@ code { background:rgba(45,212,191,.1); color:var(--teal); padding:2px 6px; borde
 <div class="save-bar" id="save-bar" style="display:none">
   <span class="save-status" id="save-status"></span>
   <button class="btn-secondary" id="btn-cancel-save">Cancelar</button>
-  <button class="btn-primary" id="btn-save"><i class="fa-solid fa-floppy-disk"></i> Guardar cambios</button>
+  <button class="btn-primary" id="btn-save"><i class="ph ph-floppy-disk"></i> Guardar cambios</button>
 </div>
 
 <div class="modal-bg" id="del-modal">
@@ -299,9 +299,9 @@ code { background:rgba(45,212,191,.1); color:var(--teal); padding:2px 6px; borde
 <div class="modal-bg" id="media-modal">
   <div class="modal lg">
     <div class="modal-h">
-      <h3><i class="fa-solid fa-images"></i> Galeria de Medios</h3>
+      <h3><i class="ph ph-image"></i> Galeria de Medios</h3>
       <div style="display:flex;gap:8px;">
-        <button class="btn-primary" onclick="document.getElementById('media-upload').click()"><i class="fa-solid fa-upload"></i> Subir</button>
+        <button class="btn-primary" onclick="document.getElementById('media-upload').click()"><i class="ph ph-upload"></i> Subir</button>
         <button class="btn-secondary" onclick="document.getElementById('media-upload-folder').click()">Carpeta</button>
       </div>
       <input type="file" id="media-upload" accept="image/*,video/*" multiple style="display:none">
@@ -344,7 +344,7 @@ document.getElementById('btn-save').addEventListener('click', async () => {
   const btn = document.getElementById('btn-save');
   const ss  = document.getElementById('save-status');
   btn.disabled = true;
-  btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Guardando...';
+  btn.innerHTML = '<i class="ph ph-spinner ph-spin"></i> Guardando...';
   try {
     await saveFnRef();
     ss.textContent = 'Guardado correctamente'; ss.className = 'save-status ok';
@@ -352,7 +352,7 @@ document.getElementById('btn-save').addEventListener('click', async () => {
   } catch(e) {
     ss.textContent = 'Error: ' + e.message; ss.className = 'save-status err';
     btn.disabled = false;
-    btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Guardar cambios';
+    btn.innerHTML = '<i class="ph ph-floppy-disk"></i> Guardar cambios';
   }
 });
 document.getElementById('btn-cancel-save').addEventListener('click', () => {
@@ -425,8 +425,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ── CMS Logic (from index.html) ────────────────────────────────────────────
-= '/api/cms';
-
 // ─────────────────────────────────────────────────────────────────────────────
 // NAV
 // ─────────────────────────────────────────────────────────────────────────────

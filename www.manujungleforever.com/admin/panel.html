@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Administración – Manu Jungle Forever</title>
     <link rel="icon" type="image/png" href="../assets/img/logo.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after {
@@ -445,28 +445,28 @@
                 </a>
                 
                 <nav class="mnav" style="display:flex;align-items:center;gap:3px;flex-wrap:wrap;flex:1;margin-left:24px;">
-                    <a href="panel.html" class="active"><i class="fa-solid fa-house"></i> Panel</a>
-                    <a href="gestionar-tours.html"><i class="fa-solid fa-map-location-dot"></i> Tours</a>
-                    <a href="gestionar-blog.html"><i class="fa-solid fa-pencil"></i> Blog</a>
-                    <a href="gestionar-contenido.html"><i class="fa-solid fa-file-invoice"></i> Contenido</a>
-                    <a href="gestionar-salidas.html"><i class="fa-solid fa-calendar-days"></i> Salidas</a>
-                    <a href="gestionar-testimonios.html"><i class="fa-solid fa-star"></i> Testimonios</a>
-                    <a href="gestionar-reclamos.html"><i class="fa-solid fa-scale-balanced"></i> Reclamos</a>
-                    <a href="gestionar-medios.html"><i class="fa-solid fa-images"></i> Medios</a>
+                    <a href="panel.html" class="active"><i class="ph ph-house"></i> Panel</a>
+                    <a href="gestionar-tours.html"><i class="ph ph-map-trifold"></i> Tours</a>
+                    <a href="gestionar-blog.html"><i class="ph ph-pencil"></i> Blog</a>
+                    <a href="gestionar-contenido.html"><i class="ph ph-file-text"></i> Contenido</a>
+                    <a href="gestionar-salidas.html"><i class="ph ph-calendar"></i> Salidas</a>
+                    <a href="gestionar-testimonios.html"><i class="ph ph-star"></i> Testimonios</a>
+                    <a href="gestionar-reclamos.html"><i class="ph ph-scales"></i> Reclamos</a>
+                    <a href="gestionar-medios.html"><i class="ph ph-image"></i> Medios</a>
                 </nav>
 
                 <div class="user-sec">
                     <button onclick="logout()" class="btn-logout" style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);color:#f87171;cursor:pointer;font-size:.8rem;font-weight:600;padding:6px 12px;border-radius:8px;display:flex;align-items:center;gap:6px;">
-                        <i class="fa-solid fa-right-from-bracket"></i> Salir
+                        <i class="ph ph-sign-out"></i> Salir
                     </button>
                 </div>
 
                 <button id="mobile-menu-btn"><i class="fa-solid fa-bars"></i></button>
             </div>
             <div id="mobile-menu">
-                <a href="panel.html" class="active">Panel</a>
-                <a href="gestionar-reclamos.html">Reclamos</a>
-                <a href="#" onclick="logout(); return false;" style="color: #f87171;"><i class="fa-solid fa-right-from-bracket mr-2"></i> Cerrar Sesión</a>
+                <a href="panel.html" class="active"><i class="ph ph-house"></i> Panel</a>
+                <a href="gestionar-reclamos.html"><i class="ph ph-scales"></i> Reclamos</a>
+                <a href="#" onclick="logout(); return false;" style="color: #f87171;"><i class="ph ph-sign-out mr-2"></i> Cerrar Sesión</a>
             </div>
         </header>
 
@@ -478,12 +478,12 @@
                 <p>Gestiona los tours, el blog, los testimonios y toda la operación del Libro de Reclamaciones de Manu Jungle Forever desde aquí.</p>
             </div>
 
-            <!-- Stats Row -->
+            <!-- Stats Grid -->
             <div class="stats-grid">
                 <!-- Tours -->
                 <div class="stat-card">
                     <div class="stat-icon-wrap tours-icon">
-                        <i class="fa-solid fa-earth-americas"></i>
+                        <i class="ph ph-map-trifold"></i>
                     </div>
                     <div class="stat-info">
                         <span class="stat-val" id="stat-tours">-</span>
@@ -494,7 +494,7 @@
                 <!-- Blog -->
                 <div class="stat-card">
                     <div class="stat-icon-wrap blog-icon">
-                        <i class="fa-solid fa-newspaper"></i>
+                        <i class="ph ph-pencil"></i>
                     </div>
                     <div class="stat-info">
                         <span class="stat-val" id="stat-blog">-</span>
@@ -505,7 +505,7 @@
                 <!-- Testimonios -->
                 <div class="stat-card">
                     <div class="stat-icon-wrap testim-icon">
-                        <i class="fa-solid fa-star"></i>
+                        <i class="ph ph-star"></i>
                     </div>
                     <div class="stat-info">
                         <span class="stat-val" id="stat-testim">-</span>
@@ -516,7 +516,7 @@
                 <!-- Reclamos -->
                 <div class="stat-card">
                     <div class="stat-icon-wrap reclamos-icon">
-                        <i class="fa-solid fa-triangle-exclamation"></i>
+                        <i class="ph ph-scales"></i>
                     </div>
                     <div class="stat-info">
                         <span class="stat-val" id="stat-reclamos">-</span>
@@ -530,7 +530,7 @@
                 
                 <!-- Tours -->
                 <div class="menu-btn-card" onclick="window.location.href='gestionar-tours.html'">
-                    <div class="btn-card-icon"><i class="fa-solid fa-map-location-dot"></i></div>
+                    <div class="btn-card-icon"><i class="ph ph-map-trifold"></i></div>
                     <div class="btn-card-content">
                         <span class="btn-card-title">Gestionar Tours</span>
                         <span class="btn-card-desc">Ver, crear, editar y eliminar tours de aventura y selva.</span>
@@ -539,7 +539,7 @@
 
                 <!-- Blog -->
                 <div class="menu-btn-card" onclick="window.location.href='gestionar-blog.html'">
-                    <div class="btn-card-icon"><i class="fa-solid fa-pencil"></i></div>
+                    <div class="btn-card-icon"><i class="ph ph-pencil"></i></div>
                     <div class="btn-card-content">
                         <span class="btn-card-title">Gestionar Blog</span>
                         <span class="btn-card-desc">Escribe artículos de interés, novedades y guías de viaje.</span>
@@ -548,7 +548,7 @@
 
                 <!-- Testimonios -->
                 <div class="menu-btn-card" onclick="window.location.href='gestionar-testimonios.html'">
-                    <div class="btn-card-icon"><i class="fa-solid fa-comments"></i></div>
+                    <div class="btn-card-icon"><i class="ph ph-chat-circle-text"></i></div>
                     <div class="btn-card-content">
                         <span class="btn-card-title">Gestionar Testimonios</span>
                         <span class="btn-card-desc">Aprobar, editar y moderar opiniones de tus clientes.</span>
@@ -557,7 +557,7 @@
 
                 <!-- Reclamos -->
                 <div class="menu-btn-card gold-style" onclick="window.location.href='gestionar-reclamos.html'">
-                    <div class="btn-card-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+                    <div class="btn-card-icon"><i class="ph ph-scales"></i></div>
                     <div class="btn-card-content">
                         <span class="btn-card-title">Auditoría Reclamos</span>
                         <span class="btn-card-desc">Libro de Reclamaciones Virtual regulado por INDECOPI.</span>
@@ -566,7 +566,7 @@
 
                 <!-- Contenido -->
                 <div class="menu-btn-card" onclick="window.location.href='gestionar-contenido.html'">
-                    <div class="btn-card-icon"><i class="fa-solid fa-file-invoice"></i></div>
+                    <div class="btn-card-icon"><i class="ph ph-file-text"></i></div>
                     <div class="btn-card-content">
                         <span class="btn-card-title">Gestionar Contenido</span>
                         <span class="btn-card-desc">Configura el Inicio, Nosotros y datos generales del sitio.</span>
@@ -575,7 +575,7 @@
 
                 <!-- Salidas -->
                 <div class="menu-btn-card" onclick="window.location.href='gestionar-salidas.html'">
-                    <div class="btn-card-icon"><i class="fa-solid fa-calendar-days"></i></div>
+                    <div class="btn-card-icon"><i class="ph ph-calendar"></i></div>
                     <div class="btn-card-content">
                         <span class="btn-card-title">Salidas Programadas</span>
                         <span class="btn-card-desc">Monitorea fechas y plazas disponibles de salidas confirmadas.</span>
@@ -584,7 +584,7 @@
 
                 <!-- Medios -->
                 <div class="menu-btn-card" onclick="window.location.href='gestionar-medios.html'">
-                    <div class="btn-card-icon"><i class="fa-solid fa-images"></i></div>
+                    <div class="btn-card-icon"><i class="ph ph-image"></i></div>
                     <div class="btn-card-content">
                         <span class="btn-card-title">Galería Multimedia</span>
                         <span class="btn-card-desc">Sube y organiza fotos y videos de la selva en la nube R2.</span>
