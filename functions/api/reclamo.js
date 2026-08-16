@@ -1,4 +1,4 @@
-﻿import { PDFDocument, rgb, StandardFonts } from './pdf-lib.js';
+import { PDFDocument, rgb, StandardFonts } from './pdf-lib.js';
 
 // ─── Utilidades ──────────────────────────────────────────────────────────────
 const CORS_HEADERS = {
@@ -305,46 +305,24 @@ export async function onRequestPost(context) {
       return error('Faltan campos obligatorios');
     }
 
-    // 1. Leer GitHub PRIMERO para obtener ultimo correlativo del anio
-    const repo     = 'manujungleforever-debug/manujungleforever';
-    const branch   = 'main';
-    const filePath = 'www.manujungleforever.com/data/reclamos.json';
-    const ghUrl    = `https://api.github.com/repos/${repo}/contents/${filePath}?ref=${branch}`;
-    const ghHeaders = {
-      'User-Agent'   : 'Cloudflare-Worker',
-      'Authorization': `Bearer ${env.GITHUB_TOKEN}`,
-      'Accept'       : 'application/vnd.github.v3+json'
-    };
-
-    let fileSha  = null;
-    let reclamos = [];
-
-    if (env.GITHUB_TOKEN) {
-      try {
-        const getRes = await fetch(ghUrl, { headers: ghHeaders });
-        if (getRes.ok) {
-          const dataGet = await getRes.json();
-          fileSha  = dataGet.sha;
-          reclamos = JSON.parse(atob(dataGet.content.replace(/\n/g, '')));
-        }
-      } catch (ghErr) {
-        console.warn('No se pudo leer reclamos.json:', ghErr);
-      }
-    }
-
-    // 2. Correlativo secuencial YYYY-NNNNNN exigido por INDECOPI
-    // Se reinicia automaticamente cada 1 de enero.
-    const anio   = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Lima' })).getFullYear();
+    // 1. Obtener el correlativo secuencial YYYY-NNNNNN para el año actual desde D1
+    const anio = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Lima' })).getFullYear();
     const prefix = `${anio}-`;
-
     let maxNum = 0;
-    for (const rec of reclamos) {
-      if (rec.codigo_reclamo && rec.codigo_reclamo.startsWith(prefix)) {
-        const num = parseInt(rec.codigo_reclamo.slice(prefix.length), 10);
-        if (!isNaN(num) && num > maxNum) maxNum = num;
-        break; // array ordenado desc; el primero que coincide es el mas reciente del anio
+
+    try {
+      const result = await env.DB.prepare(
+        "SELECT codigo_reclamo FROM reclamos WHERE codigo_reclamo LIKE ? ORDER BY id DESC LIMIT 1"
+      ).bind(`${prefix}%`).first();
+
+      if (result && result.codigo_reclamo) {
+        const num = parseInt(result.codigo_reclamo.slice(prefix.length), 10);
+        if (!isNaN(num)) maxNum = num;
       }
+    } catch (dbErr) {
+      console.warn('Error al obtener el correlativo de D1:', dbErr);
     }
+
     const codigo_reclamo = `${prefix}${String(maxNum + 1).padStart(6, '0')}`;
     const fecha = new Date().toLocaleString('es-PE', { timeZone: 'America/Lima' });
 
@@ -355,7 +333,7 @@ export async function onRequestPost(context) {
       tipo, detalle, pedido
     };
 
-    // 3. Generar PDF
+    // 2. Generar PDF
     let pdfBytes;
     try {
       pdfBytes = await generateReclamoPDF(dataObj);
@@ -367,8 +345,7 @@ export async function onRequestPost(context) {
     const pdfBase64   = btoa(String.fromCharCode(...new Uint8Array(pdfBytes)));
     const attachments = [{ filename: `${codigo_reclamo}.pdf`, content: pdfBase64 }];
 
-    // 4. Enviar correos
-    // Tag +reclamaciones para filtro Zoho Mail -> carpeta "LIBRO DE RECLAMACIONES"
+    // 3. Enviar correos
     const toEmail = 'discover+reclamaciones@manujungleforever.com';
 
     const msgEmpresa = `
@@ -410,20 +387,22 @@ export async function onRequestPost(context) {
       console.warn('RESEND_API_KEY no configurada.');
     }
 
-    // 5. Guardar en GitHub (reutiliza los datos ya leidos, sin segunda llamada a la API)
-    if (env.GITHUB_TOKEN) {
-      try {
-        reclamos.unshift({ ...dataObj, id: Date.now(), estado: 'Pendiente' });
-        const contentB64 = btoa(unescape(encodeURIComponent(JSON.stringify(reclamos, null, 2))));
-        const putBody = { message: `Nuevo reclamo: ${codigo_reclamo}`, content: contentB64, branch };
-        if (fileSha) putBody.sha = fileSha;
-        await fetch(`https://api.github.com/repos/${repo}/contents/${filePath}`, {
-          method: 'PUT', headers: ghHeaders, body: JSON.stringify(putBody)
-        });
-      } catch (err) {
-        console.error('Error guardando en GitHub:', err);
-      }
+    // 4. Guardar en D1
+    try {
+      await env.DB.prepare(`
+        INSERT INTO reclamos (
+          codigo_reclamo, fecha, nombres, documento, domicilio, telefono, correo, apoderado,
+          bien_tipo, bien_monto, bien_descripcion, tipo, detalle, pedido, estado
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `).bind(
+        codigo_reclamo, fecha, nombres, documento, domicilio, telefono, correo, apoderado,
+        bien_tipo, bien_monto, bien_descripcion, tipo, detalle, pedido, 'Pendiente'
+      ).run();
+    } catch (err) {
+      console.error('Error guardando en D1:', err);
+      return error('Error al registrar el reclamo en la base de datos', 500);
     }
+
 
     return json({ ok: true, success: true, codigo_reclamo, message: 'Reclamo registrado correctamente' });
   } catch (e) {

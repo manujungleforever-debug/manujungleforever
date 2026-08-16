@@ -39,8 +39,41 @@ export async function onRequestOptions() {
   return new Response(null, { status: 204, headers: CORS_HEADERS });
 }
 
+async function verifyToken(request, env) {
+  const auth = request.headers.get('Authorization') || '';
+  const token = auth.replace('Bearer ', '').trim();
+  if (!token) return { error: 'No autenticado', status: 401 };
+  const secret = env.CMS_SECRET || 'mjf-cms-secret-2026-manujungleforever';
+  try {
+    const [payload, sig] = token.split('.');
+    const expected = await hmac(payload, secret);
+    if (sig !== expected) return { error: 'Token inválido', status: 401 };
+    const { exp } = JSON.parse(atob(payload));
+    if (Date.now() > exp) return { error: 'Sesión expirada', status: 401 };
+    return null;
+  } catch {
+    return { error: 'Token inválido', status: 401 };
+  }
+}
+
+async function hmac(data, secret) {
+  const key = await crypto.subtle.importKey(
+    'raw', new TextEncoder().encode(secret),
+    { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']
+  );
+  const sig = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(data));
+  return Array.from(new Uint8Array(sig)).map(b => b.toString(16).padStart(2,'0')).join('');
+}
+
 export async function onRequestPut(context) {
   const { request, env } = context;
+  
+  // Verify token
+  const authErr = await verifyToken(request, env);
+  if (authErr) {
+    return error(authErr.error, authErr.status);
+  }
+
   try {
     const data = await request.json().catch(() => null);
     if (!data) return error('JSON inválido');
@@ -48,34 +81,18 @@ export async function onRequestPut(context) {
     const { id, detalle_respuesta } = data;
     if (!id || !detalle_respuesta) return error('Faltan datos requeridos');
 
-    // 1. Obtener la lista de reclamos de GitHub
-    const repo = 'manujungleforever-debug/manujungleforever';
-    const branch = 'main';
-    const filePath = 'www.manujungleforever.com/data/reclamos.json';
-    const url = `https://api.github.com/repos/${repo}/contents/${filePath}?ref=${branch}`;
-    const headers = {
-      'User-Agent': 'Cloudflare-Worker',
-      'Authorization': `Bearer ${env.GITHUB_TOKEN}`,
-      'Accept': 'application/vnd.github.v3+json'
-    };
+    // 1. Obtener el reclamo de D1
+    const reclamo = await env.DB.prepare(
+      "SELECT * FROM reclamos WHERE id = ?"
+    ).bind(id).first();
 
-    const getRes = await fetch(url, { headers });
-    if (!getRes.ok) return error('Error al obtener reclamos de GitHub', 500);
-    const dataGet = await getRes.json();
-    const fileSha = dataGet.sha;
-    const reclamos = JSON.parse(atob(dataGet.content));
-
-    // 2. Encontrar el reclamo a responder
-    const index = reclamos.findIndex(r => String(r.id) === String(id));
-    if (index === -1) return error('Reclamo no encontrado', 404);
-
-    const reclamo = reclamos[index];
+    if (!reclamo) return error('Reclamo no encontrado', 404);
     if (reclamo.estado === 'Atendido') return error('Este reclamo ya fue atendido', 409);
 
-    // 3. Generar la fecha de respuesta
+    // 2. Generar la fecha de respuesta
     const fechaRespuesta = new Date().toLocaleString('es-PE', { timeZone: 'America/Lima' });
 
-    // 4. Enviar Correo de Respuesta
+    // 3. Enviar Correo de Respuesta
     const msgHtml = `
       <div style="font-family:Arial,sans-serif;color:#333;line-height:1.6;max-width:650px;margin:0 auto;border:1px solid #ddd;border-radius:8px;overflow:hidden;">
         <div style="background:#2d8a56;padding:20px;text-align:center;">
@@ -118,27 +135,15 @@ export async function onRequestPut(context) {
       await sendEmail(env, reclamo.correo, `Respuesta Oficial - Reclamo N° ${reclamo.codigo_reclamo}`, 'Por favor, revise la respuesta en el correo HTML.', msgHtml, [], 'discover@manujungleforever.com');
     }
 
-    // 5. Actualizar el estado en GitHub
-    reclamo.estado = 'Atendido';
-    reclamo.detalle_respuesta = detalle_respuesta;
-    reclamo.fecha_respuesta = fechaRespuesta;
-    reclamos[index] = reclamo;
-
-    const contentB64 = btoa(unescape(encodeURIComponent(JSON.stringify(reclamos, null, 2))));
-    const bodyPut = {
-      message: `Respuesta a reclamo: ${reclamo.codigo_reclamo}`,
-      content: contentB64,
-      sha: fileSha,
-      branch: branch
-    };
-    
-    const putRes = await fetch(`https://api.github.com/repos/${repo}/contents/${filePath}`, {
-      method: 'PUT',
-      headers,
-      body: JSON.stringify(bodyPut)
-    });
-    
-    if (!putRes.ok) return error('Error al actualizar reclamo en GitHub', 500);
+    // 4. Actualizar el estado en D1
+    try {
+      await env.DB.prepare(
+        "UPDATE reclamos SET estado = 'Atendido', detalle_respuesta = ?, fecha_respuesta = ? WHERE id = ?"
+      ).bind(detalle_respuesta, fechaRespuesta, id).run();
+    } catch (dbErr) {
+      console.error('Error al actualizar en D1:', dbErr);
+      return error('Error al guardar la respuesta en la base de datos', 500);
+    }
 
     return json({ ok: true, message: 'Reclamo atendido y correo enviado satisfactoriamente' });
   } catch (e) {

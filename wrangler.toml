@@ -1,0 +1,7 @@
+name = "manujungleforever"
+pages_build_output_dir = "www.manujungleforever.com"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "manujungleforever-db"
+database_id = "c0765748-5818-44ee-ab40-c43607a106d6"

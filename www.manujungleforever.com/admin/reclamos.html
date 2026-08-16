@@ -216,12 +216,15 @@
 
         async function fetchFromGithub() {
             try {
-                const data = await ghGet('www.manujungleforever.com/data/reclamos.json');
-                fileSha = data.sha;
-                const jsonStr = atob(data.content.replace(/\n/g, ''));
-                return JSON.parse(decodeURIComponent(escape(jsonStr)));
+                const token = sessionStorage.getItem('cms_token');
+                const r = await fetch('/api/admin/reclamos', {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                if (r.status === 401) { sessionStorage.clear(); window.location.href = 'index.html'; }
+                if (!r.ok) throw new Error('Error al cargar');
+                return await r.json();
             } catch (err) {
-                console.error('Error cargando Github:', err);
+                console.error('Error cargando D1:', err);
                 return [];
             }
         }
@@ -325,25 +328,23 @@
             btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Guardando...';
             
             try {
-                const realIndex = originalContent.findIndex(item => item.id === r.id);
-                if (realIndex !== -1) {
-                    originalContent[realIndex].estado = 'Atendido';
-                    originalContent[realIndex].detalle_respuesta = detalle;
-                    originalContent[realIndex].fecha_atencion = new Date().toLocaleString('es-PE', { timeZone: 'America/Lima' });
-                }
+                const token = sessionStorage.getItem('cms_token');
+                const rRes = await fetch('/api/admin/responder-reclamo', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ id: r.id, detalle_respuesta: detalle })
+                });
                 
-                const contentB64 = btoa(unescape(encodeURIComponent(JSON.stringify(originalContent, null, 2))));
-                const updateRes = await ghPut('www.manujungleforever.com/data/reclamos.json', contentB64, fileSha, `Atendido reclamo ${r.codigo_reclamo}`);
+                const d = await rRes.json();
+                if (!rRes.ok) throw new Error(d.error || 'Error al guardar');
                 
-                if (updateRes && updateRes.content) {
-                    fileSha = updateRes.content.sha;
-                    msgEl.textContent = '✓ Reclamo actualizado con éxito';
-                    msgEl.className = 'rounded-lg px-4 py-3 text-sm bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 mt-4';
-                    msgEl.classList.remove('hidden');
-                    setTimeout(() => { cerrarAtender(); loadData(); }, 1500);
-                } else {
-                    throw new Error('No se pudo verificar la actualización');
-                }
+                msgEl.textContent = '✓ Reclamo actualizado con éxito';
+                msgEl.className = 'rounded-lg px-4 py-3 text-sm bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 mt-4';
+                msgEl.classList.remove('hidden');
+                setTimeout(() => { cerrarAtender(); loadData(); }, 1500);
             } catch(e) {
                 msgEl.textContent = 'Error: ' + e.message;
                 msgEl.className = 'rounded-lg px-4 py-3 text-sm bg-red-500/10 border border-red-500/30 text-red-400 mt-4';

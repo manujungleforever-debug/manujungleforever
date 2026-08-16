@@ -1491,11 +1491,12 @@ function buildFM(fm,body) {
 async function viewReclamos() {
   set(`<div class="loading"><div class="spinner"></div> Cargando reclamos…</div>`);
   try {
-    const dataObj = await ghGet('www.manujungleforever.com/data/reclamos.json');
-    let reclamos = [];
-    if (dataObj.content) {
-      reclamos = JSON.parse(atob(dataObj.content));
-    }
+    const r = await fetch('/api/admin/reclamos', {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    if (r.status === 401) { sessionStorage.clear(); location.reload(); }
+    if (!r.ok) throw new Error('Error al cargar');
+    const reclamos = await r.json();
     
     let html = `<h2 class="pt"><i class="ph ph-shield-warning"></i> Libro de Reclamaciones</h2>
                 <p class="ps">Gestiona y responde los reclamos ingresados por los usuarios.</p>`;
