@@ -91,7 +91,18 @@ export async function onRequestPut(context) {
 
   const token = env.GH_TOKEN || env.GITHUB_TOKEN;
   const ghUrl = `${GH}/repos/${REPO}/contents/${encodeURIComponent(path).replace(/%2F/g,'/')}`;
-  const ghRes = await ghFetch(ghUrl, token, 'PUT', ghBody);
+  let ghRes = await ghFetch(ghUrl, token, 'PUT', ghBody);
+
+  if (!ghRes.ok && (ghRes.status === 409 || ghRes.status === 422)) {
+    const getRes = await ghFetch(`${ghUrl}?ref=${BRANCH}`, token);
+    if (getRes.ok) {
+      const currentFile = await getRes.json();
+      if (currentFile.sha) {
+        ghBody.sha = currentFile.sha;
+        ghRes = await ghFetch(ghUrl, token, 'PUT', ghBody);
+      }
+    }
+  }
 
   if (!ghRes.ok) {
     const err = await ghRes.json().catch(() => ({}));

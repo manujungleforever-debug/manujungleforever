@@ -1533,6 +1533,12 @@ window.editTour = function(idx) {
       </div>
     </div>`);
   document.getElementById('t-dl').value=t.descripcion_larga||'';
+  setTimeout(() => {
+    document.querySelectorAll('.eform input, .eform select, .eform textarea').forEach(el => {
+      el.addEventListener('input', () => { const sb = document.getElementById('save-bar'); if (sb && saveFnRef) sb.style.display = 'flex'; });
+      el.addEventListener('change', () => { const sb = document.getElementById('save-bar'); if (sb && saveFnRef) sb.style.display = 'flex'; });
+    });
+  }, 100);
   showSaveBar(async()=>{
     const updated = {...t,nombre:v('t-n'),estado:v('t-e'),categoria:v('t-c'),
       duracion_dias:+v('t-d'),duracion_noches:+v('t-dn'),precio_desde:+v('t-p'),
