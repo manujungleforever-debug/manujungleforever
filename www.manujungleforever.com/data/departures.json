@@ -11,7 +11,57 @@
       "plazas_totales": 8,
       "plazas_disponibles": 5,
       "estado": "disponible",
-      "notas": ""
+      "notas": "",
+      "plazas_minimas": 2,
+      "guia_asignado": "Alex Machaca",
+      "chofer_asignado": null,
+      "pasajeros": [
+        {
+          "id": "pax-dep-001-0",
+          "nombre_completo": "Pasajero de Prueba 1",
+          "nacionalidad": "US",
+          "pasaporte": "P100000",
+          "whatsapp": "+1234567890",
+          "email": "test0@example.com",
+          "restricciones_dieteticas": "Vegetariano",
+          "condiciones_medicas": "",
+          "monto_total": 450,
+          "monto_pagado": 450,
+          "saldo_pendiente": 0,
+          "estado_pago": "pagado",
+          "metodo_reserva": "web"
+        },
+        {
+          "id": "pax-dep-001-1",
+          "nombre_completo": "Pasajero de Prueba 2",
+          "nacionalidad": "US",
+          "pasaporte": "P100001",
+          "whatsapp": "+1234567890",
+          "email": "test1@example.com",
+          "restricciones_dieteticas": "",
+          "condiciones_medicas": "",
+          "monto_total": 450,
+          "monto_pagado": 200,
+          "saldo_pendiente": 250,
+          "estado_pago": "parcial",
+          "metodo_reserva": "web"
+        },
+        {
+          "id": "pax-dep-001-2",
+          "nombre_completo": "Pasajero de Prueba 3",
+          "nacionalidad": "US",
+          "pasaporte": "P100002",
+          "whatsapp": "+1234567890",
+          "email": "test2@example.com",
+          "restricciones_dieteticas": "",
+          "condiciones_medicas": "",
+          "monto_total": 450,
+          "monto_pagado": 450,
+          "saldo_pendiente": 0,
+          "estado_pago": "pagado",
+          "metodo_reserva": "web"
+        }
+      ]
     },
     {
       "id": "dep-002",
@@ -24,7 +74,87 @@
       "plazas_totales": 8,
       "plazas_disponibles": 3,
       "estado": "limitado",
-      "notas": "¡Solo 3 plazas disponibles!"
+      "notas": "¡Solo 3 plazas disponibles!",
+      "plazas_minimas": 2,
+      "guia_asignado": "Alex Machaca",
+      "chofer_asignado": null,
+      "pasajeros": [
+        {
+          "id": "pax-dep-002-0",
+          "nombre_completo": "Pasajero de Prueba 1",
+          "nacionalidad": "US",
+          "pasaporte": "P100000",
+          "whatsapp": "+1234567890",
+          "email": "test0@example.com",
+          "restricciones_dieteticas": "Vegetariano",
+          "condiciones_medicas": "",
+          "monto_total": 580,
+          "monto_pagado": 580,
+          "saldo_pendiente": 0,
+          "estado_pago": "pagado",
+          "metodo_reserva": "web"
+        },
+        {
+          "id": "pax-dep-002-1",
+          "nombre_completo": "Pasajero de Prueba 2",
+          "nacionalidad": "US",
+          "pasaporte": "P100001",
+          "whatsapp": "+1234567890",
+          "email": "test1@example.com",
+          "restricciones_dieteticas": "",
+          "condiciones_medicas": "",
+          "monto_total": 580,
+          "monto_pagado": 200,
+          "saldo_pendiente": 380,
+          "estado_pago": "parcial",
+          "metodo_reserva": "web"
+        },
+        {
+          "id": "pax-dep-002-2",
+          "nombre_completo": "Pasajero de Prueba 3",
+          "nacionalidad": "US",
+          "pasaporte": "P100002",
+          "whatsapp": "+1234567890",
+          "email": "test2@example.com",
+          "restricciones_dieteticas": "",
+          "condiciones_medicas": "",
+          "monto_total": 580,
+          "monto_pagado": 580,
+          "saldo_pendiente": 0,
+          "estado_pago": "pagado",
+          "metodo_reserva": "web"
+        },
+        {
+          "id": "pax-dep-002-3",
+          "nombre_completo": "Pasajero de Prueba 4",
+          "nacionalidad": "US",
+          "pasaporte": "P100003",
+          "whatsapp": "+1234567890",
+          "email": "test3@example.com",
+          "restricciones_dieteticas": "",
+          "condiciones_medicas": "",
+          "monto_total": 580,
+          "monto_pagado": 200,
+          "saldo_pendiente": 380,
+          "estado_pago": "parcial",
+          "metodo_reserva": "web"
+        },
+        {
+          "id": "pax-dep-002-4",
+          "nombre_completo": "Pasajero de Prueba 5",
+          "nacionalidad": "US",
+          "pasaporte": "P100004",
+          "whatsapp": "+1234567890",
+          "email": "test4@example.com",
+          "restricciones_dieteticas": "",
+          "condiciones_medicas": "",
+          "monto_total": 580,
+          "monto_pagado": 580,
+          "saldo_pendiente": 0,
+          "estado_pago": "pagado",
+          "metodo_reserva": "web"
+        }
+      ]
     },
     {
       "id": "dep-003",
@@ -37,7 +167,42 @@
       "plazas_totales": 8,
       "plazas_disponibles": 6,
       "estado": "disponible",
-      "notas": ""
+      "notas": "",
+      "plazas_minimas": 2,
+      "guia_asignado": "Alex Machaca",
+      "chofer_asignado": null,
+      "pasajeros": [
+        {
+          "id": "pax-dep-003-0",
+          "nombre_completo": "Pasajero de Prueba 1",
+          "nacionalidad": "US",
+          "pasaporte": "P100000",
+          "whatsapp": "+1234567890",
+          "email": "test0@example.com",
+          "restricciones_dieteticas": "Vegetariano",
+          "condiciones_medicas": "",
+          "monto_total": 680,
+          "monto_pagado": 680,
+          "saldo_pendiente": 0,
+          "estado_pago": "pagado",
+          "metodo_reserva": "web"
+        },
+        {
+          "id": "pax-dep-003-1",
+          "nombre_completo": "Pasajero de Prueba 2",
+          "nacionalidad": "US",
+          "pasaporte": "P100001",
+          "whatsapp": "+1234567890",
+          "email": "test1@example.com",
+          "restricciones_dieteticas": "",
+          "condiciones_medicas": "",
+          "monto_total": 680,
+          "monto_pagado": 200,
+          "saldo_pendiente": 480,
+          "estado_pago": "parcial",
+          "metodo_reserva": "web"
+        }
+      ]
     },
     {
       "id": "dep-004",
@@ -50,7 +215,102 @@
       "plazas_totales": 8,
       "plazas_disponibles": 2,
       "estado": "limitado",
-      "notas": "¡Últimas 2 plazas!"
+      "notas": "¡Últimas 2 plazas!",
+      "plazas_minimas": 2,
+      "guia_asignado": "Alex Machaca",
+      "chofer_asignado": null,
+      "pasajeros": [
+        {
+          "id": "pax-dep-004-0",
+          "nombre_completo": "Pasajero de Prueba 1",
+          "nacionalidad": "US",
+          "pasaporte": "P100000",
+          "whatsapp": "+1234567890",
+          "email": "test0@example.com",
+          "restricciones_dieteticas": "Vegetariano",
+          "condiciones_medicas": "",
+          "monto_total": 890,
+          "monto_pagado": 890,
+          "saldo_pendiente": 0,
+          "estado_pago": "pagado",
+          "metodo_reserva": "web"
+        },
+        {
+          "id": "pax-dep-004-1",
+          "nombre_completo": "Pasajero de Prueba 2",
+          "nacionalidad": "US",
+          "pasaporte": "P100001",
+          "whatsapp": "+1234567890",
+          "email": "test1@example.com",
+          "restricciones_dieteticas": "",
+          "condiciones_medicas": "",
+          "monto_total": 890,
+          "monto_pagado": 200,
+          "saldo_pendiente": 690,
+          "estado_pago": "parcial",
+          "metodo_reserva": "web"
+        },
+        {
+          "id": "pax-dep-004-2",
+          "nombre_completo": "Pasajero de Prueba 3",
+          "nacionalidad": "US",
+          "pasaporte": "P100002",
+          "whatsapp": "+1234567890",
+          "email": "test2@example.com",
+          "restricciones_dieteticas": "",
+          "condiciones_medicas": "",
+          "monto_total": 890,
+          "monto_pagado": 890,
+          "saldo_pendiente": 0,
+          "estado_pago": "pagado",
+          "metodo_reserva": "web"
+        },
+        {
+          "id": "pax-dep-004-3",
+          "nombre_completo": "Pasajero de Prueba 4",
+          "nacionalidad": "US",
+          "pasaporte": "P100003",
+          "whatsapp": "+1234567890",
+          "email": "test3@example.com",
+          "restricciones_dieteticas": "",
+          "condiciones_medicas": "",
+          "monto_total": 890,
+          "monto_pagado": 200,
+          "saldo_pendiente": 690,
+          "estado_pago": "parcial",
+          "metodo_reserva": "web"
+        },
+        {
+          "id": "pax-dep-004-4",
+          "nombre_completo": "Pasajero de Prueba 5",
+          "nacionalidad": "US",
+          "pasaporte": "P100004",
+          "whatsapp": "+1234567890",
+          "email": "test4@example.com",
+          "restricciones_dieteticas": "",
+          "condiciones_medicas": "",
+          "monto_total": 890,
+          "monto_pagado": 890,
+          "saldo_pendiente": 0,
+          "estado_pago": "pagado",
+          "metodo_reserva": "web"
+        },
+        {
+          "id": "pax-dep-004-5",
+          "nombre_completo": "Pasajero de Prueba 6",
+          "nacionalidad": "US",
+          "pasaporte": "P100005",
+          "whatsapp": "+1234567890",
+          "email": "test5@example.com",
+          "restricciones_dieteticas": "",
+          "condiciones_medicas": "",
+          "monto_total": 890,
+          "monto_pagado": 200,
+          "saldo_pendiente": 690,
+          "estado_pago": "parcial",
+          "metodo_reserva": "web"
+        }
+      ]
     },
     {
       "id": "dep-005",
@@ -63,7 +323,11 @@
       "plazas_totales": 8,
       "plazas_disponibles": 8,
       "estado": "disponible",
-      "notas": ""
+      "notas": "",
+      "plazas_minimas": 2,
+      "guia_asignado": "Alex Machaca",
+      "chofer_asignado": null,
+      "pasajeros": []
     },
     {
       "id": "dep-006",
@@ -76,7 +340,27 @@
       "plazas_totales": 8,
       "plazas_disponibles": 7,
       "estado": "disponible",
-      "notas": ""
+      "notas": "",
+      "plazas_minimas": 2,
+      "guia_asignado": "Alex Machaca",
+      "chofer_asignado": null,
+      "pasajeros": [
+        {
+          "id": "pax-dep-006-0",
+          "nombre_completo": "Pasajero de Prueba 1",
+          "nacionalidad": "US",
+          "pasaporte": "P100000",
+          "whatsapp": "+1234567890",
+          "email": "test0@example.com",
+          "restricciones_dieteticas": "Vegetariano",
+          "condiciones_medicas": "",
+          "monto_total": 560,
+          "monto_pagado": 560,
+          "saldo_pendiente": 0,
+          "estado_pago": "pagado",
+          "metodo_reserva": "web"
+        }
+      ]
     },
     {
       "id": "dep-007",
@@ -89,7 +373,42 @@
       "plazas_totales": 6,
       "plazas_disponibles": 4,
       "estado": "disponible",
-      "notas": "Tour especializado para fotógrafos"
+      "notas": "Tour especializado para fotógrafos",
+      "plazas_minimas": 2,
+      "guia_asignado": "Alex Machaca",
+      "chofer_asignado": null,
+      "pasajeros": [
+        {
+          "id": "pax-dep-007-0",
+          "nombre_completo": "Pasajero de Prueba 1",
+          "nacionalidad": "US",
+          "pasaporte": "P100000",
+          "whatsapp": "+1234567890",
+          "email": "test0@example.com",
+          "restricciones_dieteticas": "Vegetariano",
+          "condiciones_medicas": "",
+          "monto_total": 1450,
+          "monto_pagado": 1450,
+          "saldo_pendiente": 0,
+          "estado_pago": "pagado",
+          "metodo_reserva": "web"
+        },
+        {
+          "id": "pax-dep-007-1",
+          "nombre_completo": "Pasajero de Prueba 2",
+          "nacionalidad": "US",
+          "pasaporte": "P100001",
+          "whatsapp": "+1234567890",
+          "email": "test1@example.com",
+          "restricciones_dieteticas": "",
+          "condiciones_medicas": "",
+          "monto_total": 1450,
+          "monto_pagado": 200,
+          "saldo_pendiente": 1250,
+          "estado_pago": "parcial",
+          "metodo_reserva": "web"
+        }
+      ]
     },
     {
       "id": "dep-008",
@@ -102,7 +421,132 @@
       "plazas_totales": 8,
       "plazas_disponibles": 0,
       "estado": "cancelado",
-      "notas": ""
+      "notas": "",
+      "plazas_minimas": 2,
+      "guia_asignado": null,
+      "chofer_asignado": null,
+      "pasajeros": [
+        {
+          "id": "pax-dep-008-0",
+          "nombre_completo": "Pasajero de Prueba 1",
+          "nacionalidad": "US",
+          "pasaporte": "P100000",
+          "whatsapp": "+1234567890",
+          "email": "test0@example.com",
+          "restricciones_dieteticas": "Vegetariano",
+          "condiciones_medicas": "",
+          "monto_total": 680,
+          "monto_pagado": 680,
+          "saldo_pendiente": 0,
+          "estado_pago": "pagado",
+          "metodo_reserva": "web"
+        },
+        {
+          "id": "pax-dep-008-1",
+          "nombre_completo": "Pasajero de Prueba 2",
+          "nacionalidad": "US",
+          "pasaporte": "P100001",
+          "whatsapp": "+1234567890",
+          "email": "test1@example.com",
+          "restricciones_dieteticas": "",
+          "condiciones_medicas": "",
+          "monto_total": 680,
+          "monto_pagado": 200,
+          "saldo_pendiente": 480,
+          "estado_pago": "parcial",
+          "metodo_reserva": "web"
+        },
+        {
+          "id": "pax-dep-008-2",
+          "nombre_completo": "Pasajero de Prueba 3",
+          "nacionalidad": "US",
+          "pasaporte": "P100002",
+          "whatsapp": "+1234567890",
+          "email": "test2@example.com",
+          "restricciones_dieteticas": "",
+          "condiciones_medicas": "",
+          "monto_total": 680,
+          "monto_pagado": 680,
+          "saldo_pendiente": 0,
+          "estado_pago": "pagado",
+          "metodo_reserva": "web"
+        },
+        {
+          "id": "pax-dep-008-3",
+          "nombre_completo": "Pasajero de Prueba 4",
+          "nacionalidad": "US",
+          "pasaporte": "P100003",
+          "whatsapp": "+1234567890",
+          "email": "test3@example.com",
+          "restricciones_dieteticas": "",
+          "condiciones_medicas": "",
+          "monto_total": 680,
+          "monto_pagado": 200,
+          "saldo_pendiente": 480,
+          "estado_pago": "parcial",
+          "metodo_reserva": "web"
+        },
+        {
+          "id": "pax-dep-008-4",
+          "nombre_completo": "Pasajero de Prueba 5",
+          "nacionalidad": "US",
+          "pasaporte": "P100004",
+          "whatsapp": "+1234567890",
+          "email": "test4@example.com",
+          "restricciones_dieteticas": "",
+          "condiciones_medicas": "",
+          "monto_total": 680,
+          "monto_pagado": 680,
+          "saldo_pendiente": 0,
+          "estado_pago": "pagado",
+          "metodo_reserva": "web"
+        },
+        {
+          "id": "pax-dep-008-5",
+          "nombre_completo": "Pasajero de Prueba 6",
+          "nacionalidad": "US",
+          "pasaporte": "P100005",
+          "whatsapp": "+1234567890",
+          "email": "test5@example.com",
+          "restricciones_dieteticas": "",
+          "condiciones_medicas": "",
+          "monto_total": 680,
+          "monto_pagado": 200,
+          "saldo_pendiente": 480,
+          "estado_pago": "parcial",
+          "metodo_reserva": "web"
+        },
+        {
+          "id": "pax-dep-008-6",
+          "nombre_completo": "Pasajero de Prueba 7",
+          "nacionalidad": "US",
+          "pasaporte": "P100006",
+          "whatsapp": "+1234567890",
+          "email": "test6@example.com",
+          "restricciones_dieteticas": "",
+          "condiciones_medicas": "",
+          "monto_total": 680,
+          "monto_pagado": 680,
+          "saldo_pendiente": 0,
+          "estado_pago": "pagado",
+          "metodo_reserva": "web"
+        },
+        {
+          "id": "pax-dep-008-7",
+          "nombre_completo": "Pasajero de Prueba 8",
+          "nacionalidad": "US",
+          "pasaporte": "P100007",
+          "whatsapp": "+1234567890",
+          "email": "test7@example.com",
+          "restricciones_dieteticas": "",
+          "condiciones_medicas": "",
+          "monto_total": 680,
+          "monto_pagado": 200,
+          "saldo_pendiente": 480,
+          "estado_pago": "parcial",
+          "metodo_reserva": "web"
+        }
+      ]
     },
     {
       "id": "dep-009",
@@ -115,7 +559,11 @@
       "plazas_totales": 8,
       "plazas_disponibles": 8,
       "estado": "disponible",
-      "notas": ""
+      "notas": "",
+      "plazas_minimas": 2,
+      "guia_asignado": "Alex Machaca",
+      "chofer_asignado": null,
+      "pasajeros": []
     },
     {
       "id": "dep-010",
@@ -128,7 +576,57 @@
       "plazas_totales": 8,
       "plazas_disponibles": 5,
       "estado": "disponible",
-      "notas": "Permisos especiales para zona reservada incluidos"
+      "notas": "Permisos especiales para zona reservada incluidos",
+      "plazas_minimas": 2,
+      "guia_asignado": "Alex Machaca",
+      "chofer_asignado": null,
+      "pasajeros": [
+        {
+          "id": "pax-dep-010-0",
+          "nombre_completo": "Pasajero de Prueba 1",
+          "nacionalidad": "US",
+          "pasaporte": "P100000",
+          "whatsapp": "+1234567890",
+          "email": "test0@example.com",
+          "restricciones_dieteticas": "Vegetariano",
+          "condiciones_medicas": "",
+          "monto_total": 1200,
+          "monto_pagado": 1200,
+          "saldo_pendiente": 0,
+          "estado_pago": "pagado",
+          "metodo_reserva": "web"
+        },
+        {
+          "id": "pax-dep-010-1",
+          "nombre_completo": "Pasajero de Prueba 2",
+          "nacionalidad": "US",
+          "pasaporte": "P100001",
+          "whatsapp": "+1234567890",
+          "email": "test1@example.com",
+          "restricciones_dieteticas": "",
+          "condiciones_medicas": "",
+          "monto_total": 1200,
+          "monto_pagado": 200,
+          "saldo_pendiente": 1000,
+          "estado_pago": "parcial",
+          "metodo_reserva": "web"
+        },
+        {
+          "id": "pax-dep-010-2",
+          "nombre_completo": "Pasajero de Prueba 3",
+          "nacionalidad": "US",
+          "pasaporte": "P100002",
+          "whatsapp": "+1234567890",
+          "email": "test2@example.com",
+          "restricciones_dieteticas": "",
+          "condiciones_medicas": "",
+          "monto_total": 1200,
+          "monto_pagado": 1200,
+          "saldo_pendiente": 0,
+          "estado_pago": "pagado",
+          "metodo_reserva": "web"
+        }
+      ]
     }
   ]
 }

@@ -1227,53 +1227,224 @@ window.editTour = function(idx) {
 // ─────────────────────────────────────────────────────────────────────────────
 // DEPARTURES
 // ─────────────────────────────────────────────────────────────────────────────
+window.filterDeps = function() {
+  const q = document.getElementById('dep-search').value.toLowerCase();
+  const st = document.getElementById('dep-filter-status').value;
+  document.querySelectorAll('.dep-card').forEach(el => {
+    const matchQ = el.dataset.tour.includes(q) || el.dataset.id.includes(q);
+    const matchS = st === '' || el.dataset.status === st;
+    el.style.display = (matchQ && matchS) ? 'flex' : 'none';
+  });
+};
+
+window.adjPlaza = async function(idx, diff) {
+  const s = cData.salidas[idx];
+  const newVal = (s.plazas_disponibles||0) + diff;
+  if (newVal < 0 || newVal > (s.plazas_totales||0)) return;
+  s.plazas_disponibles = newVal;
+  if (newVal === 0) s.estado = 'completo';
+  else if (newVal <= 2) s.estado = 'limitado';
+  else s.estado = 'disponible';
+  
+  set(`<div class="loading"><div class="spinner"></div> Actualizando plazas...</div>`);
+  const res = await ghPut(cFile, JSON.stringify(cData, null, 2), cSha, `adj plaza: ${s.id}`);
+  cSha = res.sha;
+  await viewDeps();
+};
+
+window.viewPax = function(idx) {
+  const s = cData.salidas[idx];
+  const pax = s.pasajeros || [];
+  
+  let html = `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px">
+    <h3 style="margin:0">Pasajeros: ${s.tour_nombre} (${s.fecha_salida})</h3>
+    <button class="btn-secondary" onclick="exportPaxCSV(${idx})">⬇️ Exportar CSV</button>
+  </div>`;
+  
+  if (pax.length === 0) {
+    html += `<div style="padding:20px;text-align:center;color:var(--muted)">No hay pasajeros registrados para esta salida.</div>`;
+  } else {
+    html += `<table style="width:100%;text-align:left;border-collapse:collapse;font-size:.85rem;">
+      <tr style="border-bottom:1px solid rgba(255,255,255,.1);color:var(--muted)">
+        <th style="padding:8px">Nombre / Pasaporte</th>
+        <th style="padding:8px">Contacto</th>
+        <th style="padding:8px">Dietas / Médicas</th>
+        <th style="padding:8px">Pago</th>
+      </tr>`;
+    pax.forEach(p => {
+      html += `<tr style="border-bottom:1px solid rgba(255,255,255,.05)">
+        <td style="padding:8px"><strong>${p.nombre_completo}</strong><br><span style="color:var(--muted)">${p.nacionalidad} - ${p.pasaporte}</span></td>
+        <td style="padding:8px"><a href="https://wa.me/${p.whatsapp.replace(/[^0-9]/g,'')}" target="_blank" style="color:var(--teal)">${p.whatsapp}</a><br><span style="color:var(--muted)">${p.email}</span></td>
+        <td style="padding:8px;color:#fbbf24">${p.restricciones_dieteticas || '-'}<br>${p.condiciones_medicas || '-'}</td>
+        <td style="padding:8px">
+          <span class="badge ${p.estado_pago==='pagado'?'on':'warn'}">${p.estado_pago}</span><br>
+          <span style="color:var(--muted)">Pagado: $${p.monto_pagado} / Saldo: $${p.saldo_pendiente}</span>
+        </td>
+      </tr>`;
+    });
+    html += `</table>`;
+  }
+  
+  document.getElementById('media-modal-body').innerHTML = html;
+  const headerTitle = document.getElementById('media-modal-body').parentElement.querySelector('.modal-h h3');
+  if (headerTitle) headerTitle.innerHTML = '👥 Gestión de Pasajeros';
+  
+  const confirmBtn = document.getElementById('media-confirm');
+  if (confirmBtn) confirmBtn.style.display = 'none';
+  openModal('media-modal');
+};
+
+window.exportPaxCSV = function(idx) {
+  const s = cData.salidas[idx];
+  const pax = s.pasajeros || [];
+  if(pax.length===0) return alert('No hay pasajeros');
+  let csv = "Nombre,Nacionalidad,Pasaporte,WhatsApp,Email,Dietas,Medicas,Pagado,Saldo\n";
+  pax.forEach(p => {
+    csv += `"${p.nombre_completo}","${p.nacionalidad}","${p.pasaporte}","${p.whatsapp}","${p.email}","${p.restricciones_dieteticas}","${p.condiciones_medicas}",${p.monto_pagado},${p.saldo_pendiente}\n`;
+  });
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `pasajeros-${s.id}.csv`;
+  a.click();
+};
+
 async function viewDeps() {
   const data=await ghGet('www.manujungleforever.com/data/departures.json');
   cFile='www.manujungleforever.com/data/departures.json'; cSha=data.sha;
   cData=JSON.parse(data.content);
   const sal=cData.salidas||[];
+  
+  const activas = sal.filter(s => ['disponible', 'limitado'].includes(s.estado)).length;
+  const vendidas = sal.reduce((acc, s) => acc + ((s.plazas_totales||0) - (s.plazas_disponibles||0)), 0);
+  
   set(`
-    <p class="pt">📅 Salidas Programadas</p><p class="ps">${sal.length} salidas</p>
-    <div class="list-grid">
-      ${sal.map((s,i)=>`
-        <div class="li">
-          <div class="li-info">
-            <h3>${s.tour_nombre} — ${s.fecha_salida} <span class="badge ${s.estado==='disponible'?'on':s.estado==='limitado'?'warn':'off'}">${s.estado}</span></h3>
-            <span>ID: ${s.id} · Plazas: ${s.plazas_disponibles}/${s.plazas_totales} · $${s.precio} USD · Regreso: ${s.fecha_regreso}</span>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
+      <div><p class="pt">📅 Gestión de Salidas Programadas</p><p class="ps">Control de cupos, logística y ventas</p></div>
+      <button class="btn-primary" onclick="editDep(-1)">+ Crear Nueva Salida</button>
+    </div>
+    
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:15px;margin-bottom:20px;">
+      <div class="esec" style="padding:15px;"><div style="font-size:2rem;font-weight:bold;color:var(--teal)">${activas}</div><div style="font-size:.8rem;color:var(--muted)">Salidas Activas</div></div>
+      <div class="esec" style="padding:15px;"><div style="font-size:2rem;font-weight:bold;color:#34d399">${vendidas}</div><div style="font-size:.8rem;color:var(--muted)">Plazas Vendidas Totales</div></div>
+      <div class="esec" style="padding:15px;"><div style="font-size:2rem;font-weight:bold;color:var(--gold)">${sal.length}</div><div style="font-size:.8rem;color:var(--muted)">Salidas Históricas</div></div>
+    </div>
+    
+    <div style="display:flex;gap:10px;margin-bottom:20px;align-items:center">
+      <input type="text" id="dep-search" placeholder="Buscar por Tour o ID..." style="flex:1;background:rgba(3,8,7,.65);border:1px solid rgba(255,255,255,.1);color:var(--fg);padding:10px;border-radius:8px;outline:none;" onkeyup="filterDeps()">
+      <select id="dep-filter-status" style="background:rgba(3,8,7,.65);border:1px solid rgba(255,255,255,.1);color:var(--fg);padding:10px;border-radius:8px;outline:none;" onchange="filterDeps()">
+        <option value="">Todos los Estados</option>
+        <option value="disponible">Disponible</option>
+        <option value="limitado">Limitado</option>
+        <option value="completo">Agotado / Completo</option>
+        <option value="cancelado">Cancelado</option>
+      </select>
+    </div>
+
+    <div class="list-grid" id="dep-list">
+      ${sal.map((s,i)=>{
+        const sold = (s.plazas_totales||0) - (s.plazas_disponibles||0);
+        const pct = s.plazas_totales ? Math.round((sold/s.plazas_totales)*100) : 0;
+        let stCls = 'on'; let pColor = '#34d399';
+        if (s.estado === 'limitado' || pct >= 75) { stCls = 'warn'; pColor = '#fbbf24'; }
+        if (s.estado === 'completo' || pct >= 100) { stCls = 'off'; pColor = '#f87171'; }
+        if (s.estado === 'cancelado' || s.estado === 'cerrado') { stCls = 'off'; pColor = '#9ca3af'; }
+        
+        return \`<div class="li dep-card" data-tour="\${(s.tour_nombre||'').toLowerCase()}" data-id="\${(s.id||'').toLowerCase()}" data-status="\${s.estado}" style="flex-direction:row;align-items:stretch">
+          <div style="flex:1">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
+              <div>
+                <h3 style="margin-bottom:4px;font-size:1.05rem">\${s.tour_nombre} <span class="badge \${stCls}" style="vertical-align:middle;font-size:0.6rem">\${s.estado.toUpperCase()}</span></h3>
+                <span style="font-size:.8rem;color:var(--muted)">\${s.fecha_salida} ➔ \${s.fecha_regreso} &nbsp;|&nbsp; ID: \${s.id}</span>
+              </div>
+              <div style="text-align:right">
+                <div style="font-weight:bold;color:var(--gold);font-size:1.1rem">$\${s.precio} \${s.moneda||'USD'}</div>
+                <div style="font-size:.75rem;color:var(--muted)">por pax</div>
+              </div>
+            </div>
+            
+            <div style="margin-bottom:12px">
+              <div style="display:flex;justify-content:space-between;font-size:.75rem;margin-bottom:4px;">
+                <span>Ocupación: \${sold} / \${s.plazas_totales} (\${s.plazas_disponibles} disp.)</span>
+                <span>\${pct}%</span>
+              </div>
+              <div style="width:100%;height:8px;background:rgba(255,255,255,.1);border-radius:4px;overflow:hidden">
+                <div style="width:\${pct}%;height:100%;background:\${pColor};border-radius:4px"></div>
+              </div>
+            </div>
+            
+            <div style="display:flex;gap:15px;font-size:.78rem;color:var(--muted);border-top:1px solid rgba(255,255,255,.06);padding-top:10px">
+              <div><span style="color:var(--fg)">Guía:</span> \${s.guia_asignado || 'Sin asignar'}</div>
+              <div><span style="color:var(--fg)">Mínimo:</span> \${s.plazas_minimas||2} pax (\${sold >= (s.plazas_minimas||2) ? '<span style="color:#34d399">Alcanzado ✓</span>' : '<span style="color:#f87171">Faltan '+( (s.plazas_minimas||2) - sold )+'</span>'})</div>
+            </div>
           </div>
-          <div class="li-actions"><button class="btn-edit" onclick="editDep(${i})">Editar</button><button class="btn-danger" onclick="deleteDep(${i})">🗑️</button></div>
-        </div>`).join('')}
+          
+          <div class="li-actions" style="flex-direction:column;border-left:1px solid rgba(255,255,255,.06);padding-left:15px;margin-left:15px;width:140px;gap:8px;justify-content:center">
+            <button class="btn-primary" style="width:100%;justify-content:center;padding:7px 10px;font-size:.85rem" onclick="viewPax(\${i})">👥 Pasajeros (\${(s.pasajeros||[]).length})</button>
+            <button class="btn-secondary" style="width:100%;justify-content:center;padding:7px 10px;font-size:.85rem" onclick="editDep(\${i})">✏️ Editar Salida</button>
+            <div style="display:flex;gap:5px;width:100%">
+              <button class="btn-secondary" style="flex:1;padding:5px;font-size:.9rem;justify-content:center" title="Reducir plaza disponible" onclick="adjPlaza(\${i},-1)">-1 Disp.</button>
+              <button class="btn-secondary" style="flex:1;padding:5px;font-size:.9rem;justify-content:center" title="Aumentar plaza disponible" onclick="adjPlaza(\${i},1)">+1 Disp.</button>
+            </div>
+          </div>
+        </div>\`;
+      }).join('')}
     </div>`);
 }
 
-window.editDep = function(idx) {
-  const s=cData.salidas[idx];
+window.editDep = async function(idx) {
+  let toursList = [];
+  try {
+    const toursData = await ghGet('www.manujungleforever.com/data/tours.json');
+    toursList = JSON.parse(toursData.content).tours || [];
+  } catch(e) { console.error('Error load tours', e); }
+
+  const s= idx === -1 ? {tour_id:'', tour_nombre:'', id:'dep-'+Date.now(), fecha_salida:'', fecha_regreso:'', precio:0, moneda:'USD', plazas_totales:8, plazas_minimas:2, plazas_disponibles:8, estado:'disponible', guia_asignado:'', notas:'', pasajeros:[]} : cData.salidas[idx];
+  
   set(`
     <button class="back-btn" onclick="route('departures')">← Volver a salidas</button>
     <div class="eform"><div class="esec"><div class="esec-h">Datos de la Salida</div>
       <div class="grow2">
-        <div class="ff"><label>Nombre del tour</label><input id="d-n" value="${esc(s.tour_nombre)}"></div>
-        <div class="ff"><label>ID único</label><input id="d-id" value="${esc(s.id)}"></div>
-      </div>
-      <div class="grow2">
-        <div class="ff"><label>Fecha de salida</label><input type="date" id="d-s" value="${esc(s.fecha_salida)}"></div>
-        <div class="ff"><label>Fecha de regreso</label><input type="date" id="d-r" value="${esc(s.fecha_regreso)}"></div>
+        <div class="ff"><label>Seleccionar Tour Base</label>
+          <select id="d-tid" onchange="document.getElementById('d-n').value = this.options[this.selectedIndex].text">
+            <option value="">-- Seleccionar Tour --</option>
+            \${toursList.map(t => \`<option value="\${t.id||t.slug}" \${s.tour_id===(t.id||t.slug)?'selected':''}>\${t.nombre}</option>\`).join('')}
+          </select>
+        </div>
+        <div class="ff"><label>Nombre del tour (Sobreescribir)</label><input id="d-n" value="\${esc(s.tour_nombre)}"></div>
       </div>
       <div class="grow3">
-        <div class="ff"><label>Precio (USD)</label><input type="number" id="d-p" value="${s.precio}"></div>
-        <div class="ff"><label>Plazas totales</label><input type="number" id="d-t" value="${s.plazas_totales}"></div>
-        <div class="ff"><label>Plazas disponibles</label><input type="number" id="d-d" value="${s.plazas_disponibles}"></div>
+        <div class="ff"><label>ID único</label><input id="d-id" value="\${esc(s.id)}"></div>
+        <div class="ff"><label>Fecha de salida</label><input type="date" id="d-s" value="\${esc(s.fecha_salida)}"></div>
+        <div class="ff"><label>Fecha de regreso</label><input type="date" id="d-r" value="\${esc(s.fecha_regreso)}"></div>
       </div>
-      <div class="grow2">
-        <div class="ff"><label>Estado</label><select id="d-e">${['disponible','limitado','completo','cancelado'].map(e=>`<option ${s.estado===e?'selected':''} value="${e}">${e}</option>`).join('')}</select></div>
-        <div class="ff"><label>Notas adicionales</label><input id="d-no" value="${esc(s.notas||'')}"></div>
+      <div class="grow3">
+        <div class="ff"><label>Precio (\${s.moneda||'USD'})</label><input type="number" id="d-p" value="\${s.precio}"></div>
+        <div class="ff"><label>Plazas totales</label><input type="number" id="d-t" value="\${s.plazas_totales}"></div>
+        <div class="ff"><label>Mínimo de pasajeros</label><input type="number" id="d-min" value="\${s.plazas_minimas||2}"></div>
+      </div>
+      <div class="grow3">
+        <div class="ff"><label>Plazas disponibles</label><input type="number" id="d-d" value="\${s.plazas_disponibles}"></div>
+        <div class="ff"><label>Estado</label><select id="d-e">\${['disponible','limitado','completo','cancelado','cerrado'].map(e=>\`<option \${s.estado===e?'selected':''} value="\${e}">\${e}</option>\`).join('')}</select></div>
+        <div class="ff"><label>Guía Asignado</label><input id="d-g" value="\${esc(s.guia_asignado||'')}"></div>
+      </div>
+      <div class="ff"><label>Notas adicionales / Internas</label><textarea id="d-no" style="min-height:80px">\${esc(s.notas||'')}</textarea></div>
+      <div style="margin-top:20px;padding-top:15px;border-top:1px solid rgba(255,255,255,.06);display:flex;justify-content:flex-end">
+        <button class="btn-danger" type="button" onclick="deleteDep(\${idx})" \${idx===-1?'style="display:none"':''}>🗑️ Eliminar Salida</button>
       </div>
     </div></div>`);
+  
   showSaveBar(async()=>{
-    cData.salidas[idx]={...s,tour_nombre:v('d-n'),id:v('d-id'),
+    const updated = {...s,
+      tour_id:v('d-tid'),tour_nombre:v('d-n'),id:v('d-id'),
       fecha_salida:v('d-s'),fecha_regreso:v('d-r'),precio:+v('d-p'),
-      plazas_totales:+v('d-t'),plazas_disponibles:+v('d-d'),estado:v('d-e'),notas:v('d-no')};
-    const res=await ghPut(cFile,JSON.stringify(cData,null,2),cSha,`update salida: ${s.id}`);
+      plazas_totales:+v('d-t'),plazas_minimas:+v('d-min'),plazas_disponibles:+v('d-d'),
+      estado:v('d-e'),guia_asignado:v('d-g'),notas:document.getElementById('d-no').value
+    };
+    if (idx === -1) cData.salidas.unshift(updated);
+    else cData.salidas[idx] = updated;
+    const res=await ghPut(cFile,JSON.stringify(cData,null,2),cSha,`update salida: ${updated.id}`);
     cSha=res.sha;
   });
 };
