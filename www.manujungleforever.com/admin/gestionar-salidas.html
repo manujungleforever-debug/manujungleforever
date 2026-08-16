@@ -428,7 +428,35 @@ document.addEventListener('DOMContentLoaded', () => {
 // ─────────────────────────────────────────────────────────────────────────────
 // NAV
 // ─────────────────────────────────────────────────────────────────────────────
-">${s.label}</button>`
+const SECTIONS = [
+  { id:'blog',    label:'<i class="ph ph-pencil-line"></i> Blog',       sub:[] },
+  { id:'content', label:'<i class="ph ph-files"></i> Contenido',  sub:[
+    {id:'home',    label:'<i class="ph ph-house"></i> Inicio'},
+    {id:'about',   label:'<i class="ph ph-users"></i> Nosotros'},
+    {id:'contact', label:'<i class="ph ph-phone"></i> Contacto'},
+    {id:'global',  label:'<i class="ph ph-globe"></i> Globales'},
+  ]},
+  { id:'tours',        label:'<i class="ph ph-tree-palm"></i> Tours',      sub:[] },
+  { id:'departures',   label:'<i class="ph ph-calendar-check"></i> Salidas',    sub:[] },
+  { id:'testimonials', label:'<i class="ph ph-star"></i> Testimonios', sub:[] },
+  { id:'reclamos',     label:'<i class="ph ph-shield-warning"></i> Reclamos', sub:[] },
+  { id:'media',        label:'<i class="ph ph-images"></i> Medios',     sub:[] }
+];
+
+const SECTION_PAGES = {
+  blog: 'gestionar-blog.html',
+  content: 'gestionar-contenido.html',
+  tours: 'gestionar-tours.html',
+  departures: 'gestionar-salidas.html',
+  testimonials: 'gestionar-testimonios.html',
+  reclamos: 'gestionar-reclamos.html',
+  media: 'gestionar-medios.html'
+};
+
+function buildTopNav_DIS() {
+  const nav = document.getElementById('top-nav');
+  nav.innerHTML = SECTIONS.map(s =>
+    `<button data-s="${s.id}">${s.label}</button>`
   ).join('');
   nav.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
     const page = SECTION_PAGES[b.dataset.s];
@@ -439,7 +467,10 @@ document.addEventListener('DOMContentLoaded', () => {
   nav.querySelector(`[data-s="${cSection}"]`)?.classList.add('active');
 }
 
-">${s.label}</button>`
+function buildSidebar_DIS(items) {
+  const aside = document.getElementById('sidebar');
+  aside.innerHTML = items.map(s =>
+    `<button data-sub="${s.id}">${s.label}</button>`
   ).join('');
   aside.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
     aside.querySelectorAll('button').forEach(x=>x.classList.remove('active'));
@@ -448,7 +479,15 @@ document.addEventListener('DOMContentLoaded', () => {
   }));
 }
 
- else {
+function switchSection_DIS(id) {
+  cSection = id;
+  hideSaveBar();
+  const sec = SECTIONS.find(s=>s.id===id);
+  if (sec?.sub?.length) {
+    buildSidebar(sec.sub);
+    document.getElementById('sidebar').querySelector('button')?.classList.add('active');
+    route(sec.sub[0].id);
+  } else {
     buildSidebar([]);
     route(id);
   }
@@ -457,7 +496,51 @@ document.addEventListener('DOMContentLoaded', () => {
 // ─────────────────────────────────────────────────────────────────────────────
 // LOGIN / LOGOUT
 // ─────────────────────────────────────────────────────────────────────────────
+document.getElementById('inp-p').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+document.getElementById('btn-login').addEventListener('click', doLogin);
 
+async function doLogin() {
+    const u = document.getElementById('inp-u').value.trim();
+    const p = document.getElementById('inp-p').value;
+    const btn = document.getElementById('btn-login');
+    const err = document.getElementById('login-err');
+    btn.disabled=true; btn.textContent='Entrando...'; err.style.display='none';
+
+    try {
+      const r = await fetch(`${API}/login`, {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({user:u,pass:p})});
+      const d = await r.json();
+      if (!r.ok) throw new Error(d.error||'Credenciales incorrectas');
+      token=d.token; cUser=u;
+      sessionStorage.setItem('cms_token',token);
+      sessionStorage.setItem('cms_user',u);
+      bootApp();
+    } catch(e) {
+      err.textContent = 'Credenciales incorrectas'; 
+      err.style.display='block';
+      btn.disabled=false; btn.textContent='Iniciar Sesión';
+    }
+  }
+
+  function bootApp() {
+    const params = new URLSearchParams(window.location.search);
+    const sec = params.get('sec');
+    if (sec) {
+      const page = SECTION_PAGES[sec];
+      if (page) {
+        window.location.href = page;
+        return;
+      }
+    }
+    window.location.href = 'panel.html';
+  }
+
+document.getElementById('btn-logout').addEventListener('click', () => {
+  sessionStorage.clear(); token=null;
+  document.getElementById('app').style.display='none';
+  document.getElementById('login-screen').style.display='flex';
+});
+
+// if (token) bootApp();
 
 // ─────────────────────────────────────────────────────────────────────────────
 // API WRAPPERS (GITHUB & R2)
@@ -1348,12 +1431,21 @@ function confirmDelete(path, sha, label, backFn) {
     } catch(e) { alert('Error: '+e.message); }
   };
 }
+function closeModal_DIS(id) { document.getElementById(id).classList.remove('open'); }
 window.confirmDelete=confirmDelete; window.closeModal=closeModal;
 
 // ─────────────────────────────────────────────────────────────────────────────
 // SAVE BAR
 // ─────────────────────────────────────────────────────────────────────────────
-
+function showSaveBar_DIS(fn) {
+  saveFnRef=fn;
+  const bar=document.getElementById('save-bar');
+  const btn=document.getElementById('btn-save');
+  const st=document.getElementById('save-status');
+  bar.style.display='flex'; st.textContent=''; st.className='save-status';
+  btn.onclick=async()=>{
+    btn.disabled=true; st.textContent='Guardando…'; st.className='save-status';
+    try { await fn(); st.textContent='✓ Guardado correctamente'; st.className='save-status ok'; }
     catch(e) { st.textContent='✗ '+e.message; st.className='save-status err'; }
     finally { btn.disabled=false; }
   };
@@ -1361,9 +1453,12 @@ window.confirmDelete=confirmDelete; window.closeModal=closeModal;
     if(confirm('¿Descartar cambios?')){ hideSaveBar(); route(cSection); }
   };
 }
+function hideSaveBar_DIS() { document.getElementById('save-bar').style.display='none'; saveFnRef=null; }
+
 // ─────────────────────────────────────────────────────────────────────────────
 // UTILS
 // ─────────────────────────────────────────────────────────────────────────────
+function set_DIS(h){ document.getElementById('mc').innerHTML=h; }
 function v(id){ return document.getElementById(id)?.value??''; }
 function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
