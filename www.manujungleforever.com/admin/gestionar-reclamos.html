@@ -149,10 +149,10 @@ main { flex-grow:1; max-width:1400px; width:100%; margin:0 auto; padding:28px 24
 .li-info h3 { font-size:.97rem; font-weight:600; color:var(--fg); }
 .li-info span { font-size:.76rem; color:var(--muted); display:block; margin-top:2px; }
 .li-actions { display:flex; gap:8px; align-items:center; flex-shrink:0; }
-.badge { display:inline-block; padding:2px 9px; border-radius:20px; font-size:.68rem; font-weight:700; margin-left:6px; text-transform:uppercase; }
+.badge { display:inline-block; padding:3px 11px; border-radius:20px; font-size:.68rem; font-weight:700; margin-left:6px; text-transform:uppercase; }
 .badge.on  { background:rgba(16,185,129,.15); color:#34d399; border:1px solid rgba(16,185,129,.25); }
-.badge.off { background:rgba(239,68,68,.15);  color:#f87171; border:1px solid rgba(239,68,68,.25); }
-.badge.warn{ background:rgba(245,158,11,.15); color:#fbbf24; border:1px solid rgba(245,158,11,.25); }
+.badge.off { background:rgba(239,68,68,.18);  color:#f87171; border:1px solid rgba(239,68,68,.3); }
+.badge.warn{ background:rgba(245,158,11,.18); color:#fbbf24; border:1px solid rgba(245,158,11,.3); }
 
 /* EDITOR */
 .eform { max-width:900px; display:flex; flex-direction:column; gap:17px; margin-bottom: 60px; }
@@ -374,7 +374,6 @@ document.getElementById('btn-save').addEventListener('click', async () => {
     setTimeout(() => {
       btn.disabled = false;
       btn.innerHTML = '<i class="ph ph-floppy-disk"></i> Guardar cambios';
-      // DO NOT HIDE SAVE BAR! Keep it visible so user can keep editing or scroll!
     }, 1500);
   } catch(e) {
     ss.textContent = 'Error: ' + e.message; ss.className = 'save-status err';
