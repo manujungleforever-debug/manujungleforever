@@ -1507,50 +1507,204 @@ async function viewReclamos() {
     if (r.status === 401) { sessionStorage.clear(); location.reload(); }
     if (!r.ok) throw new Error('Error al cargar');
     const reclamos = await r.json();
-          <div><strong>Teléfono:</strong> <span id="mr-tel"></span></div>
-          <div><strong>Correo:</strong> <span id="mr-email"></span></div>
-          <div style="grid-column:1/-1;"><strong>Domicilio:</strong> <span id="mr-domicilio"></span></div>
+    window.currentReclamosData = reclamos;
+    
+    let html = `
+    <h2 class="pt">Libro de Reclamaciones</h2>
+    <p class="ps">Auditoría y exportación de quejas y reclamos legales.</p>
+
+    <!-- Filtros tipo Wachicargo -->
+    <div style="background:var(--card);border:1px solid var(--bdr);border-radius:14px;padding:20px;margin-bottom:20px;display:flex;gap:15px;align-items:flex-end;flex-wrap:wrap;">
+      <div style="flex:2;min-width:200px;">
+        <label style="font-size:0.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;margin-bottom:6px;display:block;">Buscar</label>
+        <div style="position:relative;">
+          <i class="ph ph-magnifying-glass" style="position:absolute;left:12px;top:10px;color:var(--muted);"></i>
+          <input type="text" id="r-search" placeholder="Código, nombre o documento..." style="width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:var(--fg);padding:9px 12px 9px 36px;border-radius:10px;font-size:0.85rem;outline:none;">
+        </div>
+      </div>
+      <div style="flex:1;min-width:120px;">
+        <label style="font-size:0.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;margin-bottom:6px;display:block;">Tipo</label>
+        <select id="r-type" style="width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:var(--fg);padding:9px 12px;border-radius:10px;font-size:0.85rem;outline:none;">
+          <option value="Todos" style="background:#0a1f1b;">Todos</option>
+          <option value="Reclamo" style="background:#0a1f1b;">Reclamo</option>
+          <option value="Queja" style="background:#0a1f1b;">Queja</option>
+        </select>
+      </div>
+      <div style="flex:1;min-width:120px;">
+        <label style="font-size:0.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;margin-bottom:6px;display:block;">Desde</label>
+        <input type="date" id="r-from" style="width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:var(--muted);padding:8px 12px;border-radius:10px;font-size:0.85rem;outline:none;">
+      </div>
+      <div style="flex:1;min-width:120px;">
+        <label style="font-size:0.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;margin-bottom:6px;display:block;">Hasta</label>
+        <input type="date" id="r-to" style="width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:var(--muted);padding:8px 12px;border-radius:10px;font-size:0.85rem;outline:none;">
+      </div>
+      <div style="display:flex;gap:10px;">
+        <button class="btn-primary" onclick="filterReclamos()" style="background:#38bdf8;color:#0f172a;border:none;box-shadow:0 0 14px rgba(56,189,248,.3);"><i class="ph ph-funnel"></i> Filtrar</button>
+        <button class="btn-primary" onclick="exportReclamos()" style="background:#10b981;color:#022c22;border:none;box-shadow:0 0 14px rgba(16,185,129,.3);"><i class="ph ph-file-csv"></i> Exportar</button>
+      </div>
+    </div>
+    
+    <div style="background:var(--card);border:1px solid var(--bdr);border-radius:14px;overflow-x:auto;">
+      <table style="width:100%;border-collapse:collapse;text-align:left;">
+        <thead>
+          <tr style="border-bottom:1px solid var(--bdr);font-size:0.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">
+            <th style="padding:16px 20px;">Código</th>
+            <th style="padding:16px 20px;">Fecha</th>
+            <th style="padding:16px 20px;">Cliente</th>
+            <th style="padding:16px 20px;">Tipo</th>
+            <th style="padding:16px 20px;">Estado</th>
+            <th style="padding:16px 20px;text-align:right;">Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="r-tbody">
+          <!-- rows -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Modal Reclamo -->
+    <div id="modal-reclamo" class="modal-bg">
+      <div class="modal lg">
+        <div class="modal-h">
+          <h3 id="mr-title" style="color:var(--teal)"></h3>
+          <span id="mr-subtitle" style="font-size:0.8rem;color:var(--muted)"></span>
         </div>
         
-        <div style="margin-bottom:20px;">
-          <h4 style="font-size:0.9rem;margin-bottom:8px;color:var(--gold-dim);">Detalle:</h4>
-          <div id="mr-detalle" style="background:#f1f5f9;padding:12px;border-radius:8px;font-size:0.9rem;white-space:pre-wrap;border-left:3px solid var(--gold-dim);"></div>
-        </div>
-        
-        <div style="margin-bottom:20px;">
-          <h4 style="font-size:0.9rem;margin-bottom:8px;color:var(--danger);">Pedido:</h4>
-          <div id="mr-pedido" style="background:rgba(239,68,68,0.05);padding:12px;border-radius:8px;font-size:0.9rem;white-space:pre-wrap;border-left:3px solid var(--danger);"></div>
-        </div>
-        
-        <div id="mr-respuesta-box" style="margin-top:30px;border-top:1px solid #e2e8f0;padding-top:20px;">
-          <h4 style="font-size:1rem;margin-bottom:10px;">Respuesta Oficial</h4>
-          <p style="font-size:0.8rem;color:var(--muted);margin-bottom:15px;">Escriba la respuesta que se enviará automáticamente al correo del cliente. Este texto será el contenido principal del correo oficial.</p>
-          <textarea id="mr-reply" rows="6" style="width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:8px;font-family:inherit;font-size:0.9rem;resize:vertical;" placeholder="Estimado cliente, en relación a su reclamo..."></textarea>
-          
-          <div id="mr-status" style="margin-top:15px;display:none;padding:10px;border-radius:8px;font-size:0.85rem;"></div>
-          
-          <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:20px;">
-            <button class="btn-secondary" onclick="document.getElementById('modal-reclamo').style.display='none'">Cancelar</button>
-            <button id="mr-btn-send" class="btn-primary" onclick="submitReclamoReply()"><i class="ph ph-paper-plane-tilt"></i> Enviar Respuesta</button>
+        <div class="modal-body">
+          <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:15px;margin-bottom:15px;display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:0.85rem;">
+            <div><strong style="color:var(--muted)">Cliente:</strong> <span id="mr-cliente"></span></div>
+            <div><strong style="color:var(--muted)">Doc/DNI:</strong> <span id="mr-dni"></span></div>
+            <div><strong style="color:var(--muted)">Teléfono:</strong> <span id="mr-tel"></span></div>
+            <div><strong style="color:var(--muted)">Correo:</strong> <span id="mr-email"></span></div>
+            <div style="grid-column:1/-1;"><strong style="color:var(--muted)">Domicilio:</strong> <span id="mr-domicilio"></span></div>
           </div>
+          
+          <div style="margin-bottom:15px;">
+            <h4 style="font-size:0.85rem;margin-bottom:6px;color:var(--gold);text-transform:uppercase;">Detalle:</h4>
+            <div id="mr-detalle" style="background:rgba(201,168,76,0.06);padding:14px;border-radius:10px;font-size:0.9rem;white-space:pre-wrap;border-left:3px solid var(--gold);"></div>
+          </div>
+          
+          <div style="margin-bottom:15px;">
+            <h4 style="font-size:0.85rem;margin-bottom:6px;color:var(--danger);text-transform:uppercase;">Pedido:</h4>
+            <div id="mr-pedido" style="background:rgba(239,68,68,0.06);padding:14px;border-radius:10px;font-size:0.9rem;white-space:pre-wrap;border-left:3px solid var(--danger);"></div>
+          </div>
+          
+          <div id="mr-respuesta-box" style="margin-top:20px;border-top:1px solid rgba(255,255,255,.08);padding-top:20px;">
+            <h4 style="font-size:0.95rem;margin-bottom:8px;color:var(--teal);">Respuesta Oficial</h4>
+            <p style="font-size:0.75rem;color:var(--muted);margin-bottom:12px;">Escriba la respuesta que se enviará automáticamente al correo del cliente. Este texto será el contenido principal del correo oficial.</p>
+            <textarea id="mr-reply" style="width:100%;padding:12px;border:1px solid rgba(255,255,255,.1);border-radius:10px;background:rgba(0,0,0,.3);color:var(--fg);font-family:inherit;font-size:0.85rem;min-height:120px;outline:none;" placeholder="Estimado cliente, en relación a su reclamo..."></textarea>
+            
+            <div id="mr-status" style="margin-top:10px;display:none;padding:10px;border-radius:8px;font-size:0.8rem;"></div>
+          </div>
+          
+          <div id="mr-atendido-box" style="display:none;margin-top:20px;border-top:1px solid rgba(255,255,255,.08);padding-top:20px;">
+            <h4 style="font-size:0.95rem;margin-bottom:8px;color:var(--green);"><i class="ph ph-check-circle"></i> Reclamo Atendido</h4>
+            <p style="font-size:0.75rem;color:var(--muted);margin-bottom:10px;">Respondido el: <span id="mr-fecha-res"></span></p>
+            <div id="mr-respuesta-texto" style="background:rgba(16,185,129,0.06);padding:14px;border-radius:10px;font-size:0.9rem;white-space:pre-wrap;border-left:3px solid var(--green);"></div>
+          </div>
+          
         </div>
-        
-        <div id="mr-atendido-box" style="display:none;margin-top:30px;border-top:1px solid #e2e8f0;padding-top:20px;">
-          <h4 style="font-size:1rem;margin-bottom:10px;color:var(--success);"><i class="ph ph-check-circle"></i> Reclamo Atendido</h4>
-          <p style="font-size:0.85rem;color:var(--muted);margin-bottom:10px;">Respondido el: <span id="mr-fecha-res"></span></p>
-          <div id="mr-respuesta-texto" style="background:#f0fdf4;padding:15px;border-radius:8px;font-size:0.9rem;white-space:pre-wrap;border-left:3px solid var(--success);"></div>
+        <div class="modal-actions">
+          <button class="btn-secondary" onclick="closeModal('modal-reclamo')">Cerrar</button>
+          <button id="mr-btn-send" class="btn-primary" onclick="submitReclamoReply()"><i class="ph ph-paper-plane-tilt"></i> Enviar Respuesta</button>
         </div>
-        
       </div>
     </div>
     `;
     
     set(html);
     window.currentReclamosData = reclamos;
+    renderReclamosRows(reclamos);
+    
   } catch(e) {
-    set(`<p style="color:var(--danger)">Error cargando reclamos: ${e.message}</p>`);
+    set(`<p style="color:var(--danger);padding:20px;">❌ Error cargando reclamos: ${e.message}</p>`);
   }
 }
+
+window.renderReclamosRows = function(list) {
+  const tbody = document.getElementById('r-tbody');
+  if (!tbody) return;
+  if (!list || list.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="6" style="padding:40px;text-align:center;color:var(--muted);">No se encontraron reclamos que coincidan con la búsqueda.</td></tr>`;
+    return;
+  }
+  
+  tbody.innerHTML = list.map(r => {
+    const isAtendido = (r.estado === 'Atendido');
+    return `
+    <tr style="border-bottom:1px solid rgba(255,255,255,.05);transition:.2s;" onmouseover="this.style.background='rgba(255,255,255,.02)'" onmouseout="this.style.background='transparent'">
+      <td style="padding:16px 20px;color:#38bdf8;font-weight:600;font-size:0.9rem;">${r.codigo_reclamo}</td>
+      <td style="padding:16px 20px;color:var(--muted);font-size:0.85rem;">${r.fecha}</td>
+      <td style="padding:16px 20px;">
+        <div style="font-weight:600;font-size:0.88rem;color:var(--fg);">${r.nombres}</div>
+        <div style="font-size:0.75rem;color:var(--muted);">${r.documento}</div>
+      </td>
+      <td style="padding:16px 20px;">
+        <span style="display:inline-block;padding:3px 10px;border-radius:20px;font-size:0.7rem;font-weight:600;background:rgba(239,68,68,.1);color:#fca5a5;border:1px solid rgba(239,68,68,.2);">${r.tipo}</span>
+      </td>
+      <td style="padding:16px 20px;">
+        <span style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:0.7rem;font-weight:600;${isAtendido ? 'background:rgba(16,185,129,.1);color:#6ee7b7;border:1px solid rgba(16,185,129,.2);' : 'background:rgba(245,158,11,.1);color:#fcd34d;border:1px solid rgba(245,158,11,.2);'}">
+          ${isAtendido ? '<i class="ph ph-check-circle"></i> Atendido' : '<i class="ph ph-clock"></i> Pendiente'}
+        </span>
+      </td>
+      <td style="padding:16px 20px;text-align:right;">
+        <button class="btn-secondary" style="padding:5px 12px;font-size:0.75rem;" onclick="openReclamoModal(${r.id})"><i class="ph ph-eye"></i> Ver</button>
+      </td>
+    </tr>
+  `}).join('');
+};
+
+window.filterReclamos = function() {
+  const q = document.getElementById('r-search').value.toLowerCase();
+  const t = document.getElementById('r-type').value;
+  const f = document.getElementById('r-from').value;
+  const to = document.getElementById('r-to').value;
+  
+  let list = window.currentReclamosData || [];
+  
+  if (q) {
+    list = list.filter(x => 
+      (x.codigo_reclamo||'').toLowerCase().includes(q) || 
+      (x.nombres||'').toLowerCase().includes(q) || 
+      (x.documento||'').includes(q)
+    );
+  }
+  
+  if (t !== 'Todos') {
+    list = list.filter(x => x.tipo === t);
+  }
+  
+  if (f) {
+    const fd = new Date(f);
+    list = list.filter(x => new Date(x.fecha.split(' ')[0]) >= fd);
+  }
+  
+  if (to) {
+    const td = new Date(to);
+    list = list.filter(x => new Date(x.fecha.split(' ')[0]) <= td);
+  }
+  
+  renderReclamosRows(list);
+};
+
+window.exportReclamos = function() {
+  const list = window.currentReclamosData || [];
+  if (!list.length) return alert('No hay datos para exportar.');
+  
+  let csv = 'Código,Fecha,Cliente,Documento,Teléfono,Correo,Tipo,Estado\n';
+  list.forEach(r => {
+    csv += `"${r.codigo_reclamo}","${r.fecha}","${r.nombres}","${r.documento}","${r.telefono}","${r.correo}","${r.tipo}","${r.estado}"\n`;
+  });
+  
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `Reclamos_ManuJungle_${new Date().toISOString().split('T')[0]}.csv`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+};
 
 window.openReclamoModal = function(id) {
   const r = window.currentReclamosData.find(x => String(x.id) === String(id));
@@ -1574,16 +1728,18 @@ window.openReclamoModal = function(id) {
     document.getElementById('mr-atendido-box').style.display = 'block';
     document.getElementById('mr-fecha-res').textContent = r.fecha_respuesta || 'Desconocida';
     document.getElementById('mr-respuesta-texto').textContent = r.detalle_respuesta || '';
+    document.getElementById('mr-btn-send').style.display = 'none';
   } else {
     document.getElementById('mr-atendido-box').style.display = 'none';
     document.getElementById('mr-respuesta-box').style.display = 'block';
     document.getElementById('mr-reply').value = '';
     document.getElementById('mr-status').style.display = 'none';
+    document.getElementById('mr-btn-send').style.display = 'inline-flex';
     document.getElementById('mr-btn-send').disabled = false;
     document.getElementById('mr-btn-send').innerHTML = '<i class="ph ph-paper-plane-tilt"></i> Enviar Respuesta';
   }
   
-  document.getElementById('modal-reclamo').style.display = 'flex';
+  openModal('modal-reclamo');
 };
 
 window.submitReclamoReply = async function() {
@@ -1596,7 +1752,7 @@ window.submitReclamoReply = async function() {
     statusDiv.style.display = 'block';
     statusDiv.style.background = 'rgba(239,68,68,0.1)';
     statusDiv.style.color = 'var(--danger)';
-    statusDiv.textContent = 'Debe escribir una respuesta oficial.';
+    statusDiv.innerHTML = '⚠️ Debe escribir una respuesta oficial.';
     return;
   }
   
@@ -1619,11 +1775,11 @@ window.submitReclamoReply = async function() {
     
     statusDiv.style.display = 'block';
     statusDiv.style.background = 'rgba(16,185,129,0.1)';
-    statusDiv.style.color = 'var(--success)';
-    statusDiv.textContent = 'Respuesta enviada y reclamo actualizado exitosamente.';
+    statusDiv.style.color = 'var(--green)';
+    statusDiv.innerHTML = '✅ Respuesta enviada y reclamo actualizado exitosamente.';
     
     setTimeout(() => {
-      document.getElementById('modal-reclamo').style.display = 'none';
+      closeModal('modal-reclamo');
       viewReclamos(); // Recargar vista
     }, 2000);
     
@@ -1635,7 +1791,7 @@ window.submitReclamoReply = async function() {
     statusDiv.style.color = 'var(--danger)';
     statusDiv.textContent = `Error: ${e.message}`;
   }
-};
+}
 
 </script>
 
