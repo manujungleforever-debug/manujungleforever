@@ -296,7 +296,45 @@
     }
   </style>
   <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js">
+window.deleteTour = function(idx) {
+  if (confirm(`¿Eliminar el tour "${cData.tours[idx].nombre}"?`)) {
+    cData.tours.splice(idx, 1);
+    showSaveBar(async () => {
+      const res = await ghPut(cFile, JSON.stringify(cData, null, 2), cSha, 'delete tour');
+      cSha = res.sha;
+      viewTours();
+    }, 'Guardando cambios tras eliminar tour...');
+  }
+};
+
+window.deleteDep = function(idx) {
+  if (confirm(`¿Eliminar la salida "${cData.salidas[idx].id}"?`)) {
+    cData.salidas.splice(idx, 1);
+    showSaveBar(async () => {
+      const res = await ghPut(cFile, JSON.stringify(cData, null, 2), cSha, 'delete departure');
+      cSha = res.sha;
+      viewDeps();
+    }, 'Guardando cambios tras eliminar salida...');
+  }
+};
+
+window.deleteTestim = function(idx) {
+  if (confirm(`¿Eliminar el testimonio de "${cData.testimonials[idx].nombre}"?`)) {
+    cData.testimonials.splice(idx, 1);
+    showSaveBar(async () => {
+      const res = await ghPut(cFile, JSON.stringify(cData, null, 2), cSha, 'delete testimonial');
+      cSha = res.sha;
+      viewTestims();
+    }, 'Guardando cambios tras eliminar testimonio...');
+  }
+};
+
+window.newTour = function() { editTour(-1); };
+window.newDep = function() { editDep(-1); };
+window.newTestim = function() { editTestim(-1); };
+
+</script>
 </head>
 <body>
 
@@ -619,9 +657,9 @@ async function r2Delete(key) {
 // ─────────────────────────────────────────────────────────────────────────────
 // MEDIA LIBRARY MODAL & IMAGE WIDGET
 // ─────────────────────────────────────────────────────────────────────────────
-let mediaSelectCallback = null;
-let currentMediaFiles = [];
-let selectedMediaUrl = null;
+var mediaSelectCallback = null;
+var currentMediaFiles = [];
+var selectedMediaUrl = null;
 
 async function openMediaModal(callback) {
   mediaSelectCallback = callback;
@@ -1235,7 +1273,7 @@ async function viewTours() {
             <h3>${t.nombre} <span class="badge ${t.estado==='activo'?'on':t.estado==='pausado'?'warn':'off'}">${t.estado}</span></h3>
             <span>${t.duracion_dias} días · $${t.precio_desde} USD · ${t.categoria} · ${t.dificultad}</span>
           </div>
-          <div class="li-actions"><button class="btn-edit" onclick="editTour(${i})">Editar</button></div>
+          <div class="li-actions"><button class="btn-edit" onclick="editTour(${i})">Editar</button><button class="btn-danger" onclick="deleteTour(${i})">🗑️</button></div>
         </div>`).join('')}
     </div>`);
 }
@@ -1320,7 +1358,7 @@ async function viewDeps() {
             <h3>${s.tour_nombre} — ${s.fecha_salida} <span class="badge ${s.estado==='disponible'?'on':s.estado==='limitado'?'warn':'off'}">${s.estado}</span></h3>
             <span>ID: ${s.id} · Plazas: ${s.plazas_disponibles}/${s.plazas_totales} · $${s.precio} USD · Regreso: ${s.fecha_regreso}</span>
           </div>
-          <div class="li-actions"><button class="btn-edit" onclick="editDep(${i})">Editar</button></div>
+          <div class="li-actions"><button class="btn-edit" onclick="editDep(${i})">Editar</button><button class="btn-danger" onclick="deleteDep(${i})">🗑️</button></div>
         </div>`).join('')}
     </div>`);
 }

@@ -324,7 +324,9 @@ const MEDIA_API = '/api/media';
 let token    = sessionStorage.getItem('cms_token');
 let cUser    = sessionStorage.getItem('cms_user') || '';
 let cSection = 'media';
-let cSha = null, cFile = null, cData = null, saveFnRef = null;
+var cSha = null, cFile = null, cData = null, saveFnRef = null;
+var currentMediaFiles = [], selectedMediaUrl = null, mediaSelectCallback = null;
+var currentReclamosData = [], currentReclamoId = null;
 window.sidebarItems = [];
 window.activeSubSection = null;
 
@@ -614,9 +616,9 @@ async function r2Delete(key) {
 // ─────────────────────────────────────────────────────────────────────────────
 // MEDIA LIBRARY MODAL & IMAGE WIDGET
 // ─────────────────────────────────────────────────────────────────────────────
-let mediaSelectCallback = null;
-let currentMediaFiles = [];
-let selectedMediaUrl = null;
+var mediaSelectCallback = null;
+var currentMediaFiles = [];
+var selectedMediaUrl = null;
 
 async function openMediaModal(callback) {
   mediaSelectCallback = callback;
@@ -1230,7 +1232,7 @@ async function viewTours() {
             <h3>${t.nombre} <span class="badge ${t.estado==='activo'?'on':t.estado==='pausado'?'warn':'off'}">${t.estado}</span></h3>
             <span>${t.duracion_dias} días · $${t.precio_desde} USD · ${t.categoria} · ${t.dificultad}</span>
           </div>
-          <div class="li-actions"><button class="btn-edit" onclick="editTour(${i})">Editar</button></div>
+          <div class="li-actions"><button class="btn-edit" onclick="editTour(${i})">Editar</button><button class="btn-danger" onclick="deleteTour(${i})">🗑️</button></div>
         </div>`).join('')}
     </div>`);
 }
@@ -1315,7 +1317,7 @@ async function viewDeps() {
             <h3>${s.tour_nombre} — ${s.fecha_salida} <span class="badge ${s.estado==='disponible'?'on':s.estado==='limitado'?'warn':'off'}">${s.estado}</span></h3>
             <span>ID: ${s.id} · Plazas: ${s.plazas_disponibles}/${s.plazas_totales} · $${s.precio} USD · Regreso: ${s.fecha_regreso}</span>
           </div>
-          <div class="li-actions"><button class="btn-edit" onclick="editDep(${i})">Editar</button></div>
+          <div class="li-actions"><button class="btn-edit" onclick="editDep(${i})">Editar</button><button class="btn-danger" onclick="deleteDep(${i})">🗑️</button></div>
         </div>`).join('')}
     </div>`);
 }
