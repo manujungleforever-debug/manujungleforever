@@ -1190,20 +1190,20 @@ async function viewBlog() {
       const isPub = p.publicado !== false;
 
       html += `
-        <div class="li blog-card-li" style="display:flex;gap:16px;align-items:center;padding:14px 18px;background:var(--card);border:1px solid var(--bdr);border-radius:14px;transition:all 0.25s ease;">
-          <div class="blog-thumb" style="width:110px;height:75px;flex-shrink:0;border-radius:10px;overflow:hidden;background:#000;border:1px solid rgba(45,212,191,0.25);">
-            <img src="${imgSrc}" alt="${esc(p.title)}" style="width:100%;height:100%;object-fit:cover;" onerror="this.src='../assets/img/hero.png'">
+        <div class="li blog-card-li">
+          <div class="blog-thumb">
+            <img src="${imgSrc}" alt="${esc(p.title)}" onerror="this.src='../assets/img/hero.png'">
           </div>
-          <div class="li-info" style="flex:1;min-width:0;">
+          <div class="li-info">
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;flex-wrap:wrap;">
               <span class="badge ${isPub ? 'on' : 'warn'}">${isPub ? '✅ PUBLICADO' : '📝 BORRADOR'}</span>
               <span class="badge" style="background:rgba(45,212,191,0.12);color:var(--teal);border:1px solid rgba(45,212,191,0.25);">🏷️ ${esc(p.category || 'Wildlife')}</span>
               <span style="font-size:0.75rem;color:var(--muted);display:inline-flex;align-items:center;gap:4px;"><i class="ph ph-calendar"></i> ${p.date || '2026-08-16'}</span>
             </div>
-            <h3 style="font-size:1.02rem;font-weight:600;color:var(--fg);margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(p.title)}</h3>
-            <span style="font-size:0.77rem;color:var(--muted);display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">/${p.slug}.md ${p.excerpt ? '— ' + esc(p.excerpt) : ''}</span>
+            <h3>${esc(p.title)}</h3>
+            <span>/${p.slug}.md ${p.excerpt ? '— ' + esc(p.excerpt) : ''}</span>
           </div>
-          <div class="li-actions" style="display:flex;gap:8px;align-items:center;flex-shrink:0;">
+          <div class="li-actions">
             <button class="btn-edit" onclick="editBlog('${file.path}','${file.sha}')"><i class="ph ph-pencil"></i> Editar</button>
             <button class="btn-danger" onclick="deleteBlog('${file.path}','${file.sha}','${file.name.replace(/'/g, "\\'")}')">🗑️</button>
           </div>

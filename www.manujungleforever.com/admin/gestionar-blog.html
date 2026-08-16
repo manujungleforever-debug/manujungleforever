@@ -140,18 +140,25 @@ main { flex-grow:1; max-width:1400px; width:100%; margin:0 auto; padding:28px 24
 }
 .btn-edit:hover { background:var(--teal); color:#030807; }
 
-/* LIST ITEMS */
-.list-grid { display:grid; gap:10px; }
-.li {
+/* LIST ITEMS & RESPONSIVE CARDS */
+.list-grid, .blog-grid { display:grid; gap:12px; width:100%; box-sizing:border-box; }
+.li, .blog-card-li {
     background:var(--card); backdrop-filter:blur(8px);
     border:1px solid var(--bdr); border-radius:14px;
-    padding:16px 22px; display:flex; align-items:center;
-    justify-content:space-between; transition:.25s;
+    padding:14px 18px; display:flex; align-items:center;
+    justify-content:space-between; gap:14px; width:100%;
+    box-sizing:border-box; transition:all .25s ease; overflow:hidden;
 }
-.li:hover { border-color:var(--bdr-h); transform:translateY(-1px); box-shadow:0 8px 22px rgba(45,212,191,.05); }
-.li-info h3 { font-size:.97rem; font-weight:600; color:var(--fg); }
-.li-info span { font-size:.76rem; color:var(--muted); display:block; margin-top:2px; }
+.li:hover, .blog-card-li:hover { border-color:var(--bdr-h); transform:translateY(-1px); box-shadow:0 8px 24px rgba(45,212,191,.06); }
+
+.blog-thumb { width:96px; height:66px; flex-shrink:0; border-radius:10px; overflow:hidden; background:#000; border:1px solid rgba(45,212,191,.25); }
+.blog-thumb img { width:100%; height:100%; object-fit:cover; display:block; }
+
+.li-info { flex:1 1 0%; min-width:0; overflow:hidden; }
+.li-info h3 { font-size:.95rem; font-weight:600; color:var(--fg); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.li-info span { font-size:.76rem; color:var(--muted); display:block; margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .li-actions { display:flex; gap:8px; align-items:center; flex-shrink:0; }
+
 .badge { display:inline-block; padding:3px 11px; border-radius:20px; font-size:.68rem; font-weight:700; margin-left:6px; text-transform:uppercase; }
 .badge.on  { background:rgba(16,185,129,.15); color:#34d399; border:1px solid rgba(16,185,129,.25); }
 .badge.off { background:rgba(239,68,68,.18);  color:#f87171; border:1px solid rgba(239,68,68,.3); }
@@ -271,12 +278,59 @@ code { background:rgba(45,212,191,.1); color:var(--teal); padding:2px 6px; borde
 .err-msg { color:#f87171; font-size:.82rem; margin-top:4px; display:none; }
 .err-msg.show { display:block; }
 
-@media(max-width:900px) {
-    nav.mnav { display:none; }
-    .grow2,.grow3 { grid-template-columns:1fr; }
-    .li { flex-direction:column; align-items:flex-start; gap:12px; }
-    .li-actions { width:100%; justify-content:flex-end; }
-    main { padding:16px 14px 80px; }
+/* FULL MOBILE RESPONSIVENESS */
+@media (max-width: 768px) {
+    header .hw { padding: 10px 14px; gap: 10px; }
+    .brand-name { font-size: .8rem; }
+    nav.mnav {
+        display: flex;
+        overflow-x: auto;
+        white-space: nowrap;
+        padding-bottom: 4px;
+        max-width: 100%;
+        -webkit-overflow-scrolling: touch;
+    }
+    nav.mnav::-webkit-scrollbar { display: none; }
+
+    main { padding: 16px 12px 100px; }
+
+    .li, .blog-card-li {
+        flex-wrap: wrap;
+        padding: 12px 14px;
+        gap: 10px;
+    }
+
+    .blog-thumb {
+        width: 70px;
+        height: 52px;
+    }
+
+    .li-info {
+        flex: 1 1 50%;
+        min-width: 0;
+    }
+
+    .li-actions {
+        width: 100%;
+        justify-content: flex-end;
+        border-top: 1px solid rgba(255,255,255,0.06);
+        padding-top: 8px;
+        margin-top: 4px;
+    }
+
+    .grow2, .grow3 {
+        grid-template-columns: 1fr;
+    }
+
+    .save-bar {
+        padding: 10px 16px;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+    .save-status {
+        width: 100%;
+        margin-bottom: 2px;
+    }
 }
 </style>
 </head>
@@ -928,20 +982,20 @@ async function viewBlog() {
       const isPub = p.publicado !== false;
 
       html += `
-        <div class="li blog-card-li" style="display:flex;gap:16px;align-items:center;padding:14px 18px;background:var(--card);border:1px solid var(--bdr);border-radius:14px;transition:all 0.25s ease;">
-          <div class="blog-thumb" style="width:110px;height:75px;flex-shrink:0;border-radius:10px;overflow:hidden;background:#000;border:1px solid rgba(45,212,191,0.25);">
-            <img src="${imgSrc}" alt="${esc(p.title)}" style="width:100%;height:100%;object-fit:cover;" onerror="this.src='../assets/img/hero.png'">
+        <div class="li blog-card-li">
+          <div class="blog-thumb">
+            <img src="${imgSrc}" alt="${esc(p.title)}" onerror="this.src='../assets/img/hero.png'">
           </div>
-          <div class="li-info" style="flex:1;min-width:0;">
+          <div class="li-info">
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;flex-wrap:wrap;">
               <span class="badge ${isPub ? 'on' : 'warn'}">${isPub ? '✅ PUBLICADO' : '📝 BORRADOR'}</span>
               <span class="badge" style="background:rgba(45,212,191,0.12);color:var(--teal);border:1px solid rgba(45,212,191,0.25);">🏷️ ${esc(p.category || 'Wildlife')}</span>
               <span style="font-size:0.75rem;color:var(--muted);display:inline-flex;align-items:center;gap:4px;"><i class="ph ph-calendar"></i> ${p.date || '2026-08-16'}</span>
             </div>
-            <h3 style="font-size:1.02rem;font-weight:600;color:var(--fg);margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(p.title)}</h3>
-            <span style="font-size:0.77rem;color:var(--muted);display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">/${p.slug}.md ${p.excerpt ? '— ' + esc(p.excerpt) : ''}</span>
+            <h3>${esc(p.title)}</h3>
+            <span>/${p.slug}.md ${p.excerpt ? '— ' + esc(p.excerpt) : ''}</span>
           </div>
-          <div class="li-actions" style="display:flex;gap:8px;align-items:center;flex-shrink:0;">
+          <div class="li-actions">
             <button class="btn-edit" onclick="editBlog('${file.path}','${file.sha}')"><i class="ph ph-pencil"></i> Editar</button>
             <button class="btn-danger" onclick="deleteBlog('${file.path}','${file.sha}','${file.name.replace(/'/g, "\\'")}')">🗑️</button>
           </div>
