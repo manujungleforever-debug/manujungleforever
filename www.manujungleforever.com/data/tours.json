@@ -1,6 +1,29 @@
 {
   "tours": [
     {
+      "nombre": "prueba",
+      "estado": "seasonal",
+      "categoria": "wildlife",
+      "duracion_dias": 1,
+      "duracion_noches": 0,
+      "precio_desde": 500,
+      "capacidad_min": 1,
+      "capacidad_max": 12,
+      "dificultad": "Fácil",
+      "temporada": "",
+      "descripcion_corta": "prueba1",
+      "descripcion_larga": "texto completo ",
+      "imagen_hero": "/media/1786897485978-133629791959893989.jpg",
+      "galeria": [],
+      "itinerario": [],
+      "incluye": [],
+      "no_incluye": [],
+      "destacado": false,
+      "imagen_alt": "prueba",
+      "id": "tour-1786897507336",
+      "slug": "prueba"
+    },
+    {
       "id": "3-day-wildlife-quest-machu-wasi",
       "slug": "3-day-wildlife-quest-machu-wasi",
       "nombre": "3-Day Wildlife Quest – Machu Wasi",
