@@ -20,7 +20,7 @@
       "temporada": "Todo el año",
       "descripcion_corta": "Un tour de vida silvestre de 3 días al Parque Nacional Manu, ideal para quienes tienen poco tiempo pero quieren experimentar la Amazonía peruana.",
       "descripcion_larga": "Este tour de 3 días es perfecto para quienes quieren experimentar la selva amazónica sin alejarse demasiado. Viajamos en van por el bosque nuboso, descendemos hasta la selva baja y exploramos los ríos en bote buscando caimanes, capybaras y aves exóticas en Machu Wasi.",
-      "imagen_hero": "assets/media_to_upload/photos/placeholder.jpg",
+      "imagen_hero": "assets/img/hero.png",
       "imagen_alt": "3-Day Wildlife Quest at Machu Wasi – Manu National Park",
       "galeria": [
         {
@@ -85,7 +85,7 @@
       "temporada": "Todo el año",
       "descripcion_corta": "Cuatro días para explorar la selva amazónica en profundidad desde Machu Wasi. Ver caímanes, capybaras, monos y aves de la Amazonía.",
       "descripcion_larga": "El tour de 4 días a Machu Wasi ofrece más tiempo en la selva para aumentar las probabilidades de avistar vida silvestre. Con tres noches en el lodge, tenemos tiempo para caminatas de día y de noche, safaris en bote y actividades de kayak.",
-      "imagen_hero": "assets/media_to_upload/photos/placeholder.jpg",
+      "imagen_hero": "assets/img/hero.png",
       "imagen_alt": "4-Day Wildlife Quest at Machu Wasi – Manu National Park",
       "galeria": [],
       "itinerario": [
@@ -150,7 +150,7 @@
       "temporada": "Todo el año",
       "descripcion_corta": "Tour de vida silvestre de 4 días desde el pueblo de Nuevo Eden, hogar de nuestra familia fundadora. Una experiencia profundamente local y auténtica.",
       "descripcion_larga": "Nuevo Eden es el pueblo donde creció Moisés, co-fundador de Manu Jungle Forever. Este tour ofrece la experiencia más auténtica con acceso a nuestros propios senderos privados y lodge familiar.",
-      "imagen_hero": "assets/media_to_upload/photos/placeholder.jpg",
+      "imagen_hero": "assets/img/hero.png",
       "imagen_alt": "Wildlife Quest at Nuevo Eden – Manu National Park",
       "galeria": [],
       "itinerario": [
@@ -214,7 +214,7 @@
       "temporada": "Todo el año",
       "descripcion_corta": "Cinco días de inmersión total en la selva amazónica desde Nuevo Eden con mayores probabilidades de avistar fauna exótica.",
       "descripcion_larga": "El tour de 5 días a Nuevo Eden es nuestra opción más popular para quienes quieren máxima exposición a la vida silvestre con comodidad. Con cuatro noches, exploramos la selva, los ríos y el bosque nuboso en toda su diversidad.",
-      "imagen_hero": "assets/media_to_upload/photos/placeholder.jpg",
+      "imagen_hero": "assets/img/hero.png",
       "imagen_alt": "5-Day Wildlife Quest at Nuevo Eden",
       "galeria": [],
       "itinerario": [
@@ -284,7 +284,7 @@
       "temporada": "Todo el año",
       "descripcion_corta": "El tour de 6 días a Blanquillo incluye la visita al famoso comedero de arcilla de guacamayos — uno de los espectáculos de vida silvestre más impresionantes del Perú.",
       "descripcion_larga": "Blanquillo es famoso por su colpa de guacamayos, donde cientos de guacamayos de colores llegan cada mañana al amanecer. Este tour de 6 días incluye esta experiencia única más 5 noches de exploración intensiva de la selva amazónica.",
-      "imagen_hero": "assets/media_to_upload/photos/placeholder.jpg",
+      "imagen_hero": "assets/img/hero.png",
       "imagen_alt": "6-Day Wildlife Quest – Blanquillo Macaw Clay Lick",
       "galeria": [],
       "itinerario": [
@@ -360,7 +360,7 @@
       "temporada": "Abril a Noviembre",
       "descripcion_corta": "El tour más exclusivo de Manu Jungle Forever: acceso a la Zona Reservada del Manu donde la vida silvestre es más abundante y el hábitat está pristino.",
       "descripcion_larga": "La Zona Reservada del Parque Nacional Manu es una de las áreas más biodiversas del planeta. Este tour de 6 días penetra hasta el corazón de la reserva con permisos especiales para brindar el máximo avistamiento de fauna.",
-      "imagen_hero": "assets/media_to_upload/photos/placeholder.jpg",
+      "imagen_hero": "assets/img/hero.png",
       "imagen_alt": "Manu National Park Reserved Zone Tour",
       "galeria": [],
       "itinerario": [
@@ -433,7 +433,7 @@
       "temporada": "Todo el año",
       "descripcion_corta": "Diseñado para fotógrafos de vida silvestre: 8 días en los mejores puntos fotográficos de la Amazonía peruana con guías especializados.",
       "descripcion_larga": "Este tour de 8 días está diseñado específicamente para fotógrafos de naturaleza. Visitamos los mejores spots de fotografía de vida silvestre en el Manu: la colpa de guacamayos de Blanquillo, latrinas de mamíferos, lagos de cochas y mucho más.",
-      "imagen_hero": "assets/media_to_upload/photos/placeholder.jpg",
+      "imagen_hero": "assets/img/hero.png",
       "imagen_alt": "Wildlife Photography Tour – Manu National Park",
       "galeria": [],
       "itinerario": [
@@ -517,7 +517,7 @@
       "temporada": "Abril a Noviembre (no disponible diciembre-marzo)",
       "descripcion_corta": "El tour más auténtico de la Amazonía peruana: un viaje en 4x4 por las aldeas y paisajes del camino de Cusco a Manu. Presupuesto amigable.",
       "descripcion_larga": "El Rainforest Road Trip es nuestra opción más económica y auténtica. Viajamos en 4x4 privado por el sinuoso camino de Cusco a Manu, parando en aldeas locales, probando comida tradicional y viendo fauna en el bosque nuboso.",
-      "imagen_hero": "assets/media_to_upload/photos/placeholder.jpg",
+      "imagen_hero": "assets/img/hero.png",
       "imagen_alt": "Rainforest Road Trip from Cusco to Manu",
       "galeria": [],
       "itinerario": [
@@ -579,7 +579,7 @@
       "temporada": "Mayo a Octubre",
       "descripcion_corta": "Para aventureros serios: 5 días de expedición profunda en la selva, acampando, pescando, aprendiendo supervivencia y alejándose de la civilización.",
       "descripcion_larga": "La Expedición Amazónica de 5 días es para quienes quieren realmente sumergirse en la selva. Dormimos en campamentos, pescamos piranhas, aprendemos técnicas de supervivencia y exploramos áreas remotas que los tours convencionales no alcanzan.",
-      "imagen_hero": "assets/media_to_upload/photos/placeholder.jpg",
+      "imagen_hero": "assets/img/hero.png",
       "imagen_alt": "5-Day Amazon Expedition from Cusco",
       "galeria": [],
       "itinerario": [
@@ -648,7 +648,7 @@
       "temporada": "Mayo a Octubre",
       "descripcion_corta": "La expedición más completa: 6 días de aventura profunda en la selva amazónica para viajeros en busca de una experiencia realmente salvaje.",
       "descripcion_larga": "La Expedición Amazónica de 6 días agrega un día completo de exploración comparado con la versión de 5 días, permitiendo llegar a áreas aún más remotas del Parque Nacional Manu.",
-      "imagen_hero": "assets/media_to_upload/photos/placeholder.jpg",
+      "imagen_hero": "assets/img/hero.png",
       "imagen_alt": "6-Day Amazon Expedition from Cusco",
       "galeria": [],
       "itinerario": [

@@ -361,7 +361,7 @@ document.addEventListener("DOMContentLoaded", function() {
     try {
       const res = await fetch('../data/tours.json');
       const data = await res.json();
-      const tours = data.tours.filter(t => t.estado === 'activo');
+      const tours = data.tours;
       
       const filtersContainer = document.getElementById('dynamic-filters-container');
       const toursContainer = document.getElementById('dynamic-tours-container');

@@ -90,7 +90,7 @@ nav.mnav a:hover, nav.mnav a.active { color:var(--teal); background:rgba(45,212,
 .btn-logout:hover { background:var(--danger); color:#fff; border-color:var(--danger); }
 
 /* MAIN */
-main { flex-grow:1; max-width:1400px; width:100%; margin:0 auto; padding:28px 24px 80px; position:relative; z-index:1; }
+main { flex-grow:1; max-width:1400px; width:100%; margin:0 auto; padding:28px 24px 100px; position:relative; z-index:1; }
 
 /* TITLES */
 .pt {
@@ -155,7 +155,7 @@ main { flex-grow:1; max-width:1400px; width:100%; margin:0 auto; padding:28px 24
 .badge.warn{ background:rgba(245,158,11,.15); color:#fbbf24; border:1px solid rgba(245,158,11,.25); }
 
 /* EDITOR */
-.eform { max-width:900px; display:flex; flex-direction:column; gap:17px; }
+.eform { max-width:900px; display:flex; flex-direction:column; gap:17px; margin-bottom: 60px; }
 .esec { background:var(--card); backdrop-filter:blur(10px); border:1px solid var(--bdr); border-radius:16px; padding:22px; }
 .esec-h { font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--gold); border-bottom:1px solid rgba(255,255,255,.07); padding-bottom:8px; margin-bottom:16px; }
 .grow2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
@@ -171,14 +171,14 @@ main { flex-grow:1; max-width:1400px; width:100%; margin:0 auto; padding:28px 24
 .ff select option { background:#0a1f1b; color:var(--fg); }
 .hint { font-size:.7rem; color:var(--muted); }
 
-/* SAVE BAR */
+/* ALWAYS VISIBLE UNMOVABLE SAVE BAR AT TOP Z-INDEX */
 .save-bar {
     position:fixed; bottom:0; left:0; right:0;
-    background:rgba(3,8,7,.94); backdrop-filter:blur(14px);
-    border-top:1px solid rgba(45,212,191,.2);
+    background:rgba(3,8,7,.96); backdrop-filter:blur(16px);
+    border-top:1px solid rgba(45,212,191,.3);
     padding:14px 28px; display:flex; align-items:center;
-    justify-content:flex-end; gap:12px; z-index:300;
-    box-shadow: 0 -6px 24px rgba(0,0,0,0.5);
+    justify-content:flex-end; gap:12px; z-index:99999;
+    box-shadow: 0 -8px 32px rgba(0,0,0,0.8);
 }
 .save-status { font-size:.83rem; color:var(--muted); margin-right:auto; font-weight:500; }
 .save-status.ok  { color:var(--green); }
@@ -345,7 +345,7 @@ var currentReclamosData = [], currentReclamoId = null;
 window.sidebarItems = [];
 window.activeSubSection = null;
 
-// Save bar - FOOLPROOF GUARANTEE THAT SAVE BUTTON NEVER DISAPPEARS OR GETS STUCK
+// Save bar - PERMANENTLY VISIBLE WHILE ON EDITOR FORM (NEVER HIDES ON SCROLL OR AFTER CLICKING SAVE)
 function showSaveBar(fn, msg) {
   saveFnRef = fn;
   document.getElementById('save-bar').style.display = 'flex';
@@ -374,7 +374,7 @@ document.getElementById('btn-save').addEventListener('click', async () => {
     setTimeout(() => {
       btn.disabled = false;
       btn.innerHTML = '<i class="ph ph-floppy-disk"></i> Guardar cambios';
-      hideSaveBar();
+      // DO NOT HIDE SAVE BAR! Keep it visible so user can keep editing or scroll!
     }, 1500);
   } catch(e) {
     ss.textContent = 'Error: ' + e.message; ss.className = 'save-status err';
