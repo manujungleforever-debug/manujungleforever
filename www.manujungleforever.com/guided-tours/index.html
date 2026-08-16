@@ -1,4 +1,4 @@
-﻿<!doctype html><html lang="en"><head>
+<!doctype html><html lang="en"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Cusco Jungle &amp; Manu National Park Tours | Manu Jungle Forever</title>
 <meta name="description" content="Explore Cusco Jungle &amp; Manu National Park tours with Manu Jungle Forever. Immerse yourself in wildlife — book your Peruvian Amazon adventure now!">
@@ -413,13 +413,28 @@ document.addEventListener("DOMContentLoaded", function() {
     let html = '';
     toursToRender.forEach(t => {
       const meta = window.getCatMeta(t.categoria);
+      let statusBadge = '';
+      let bookBtn = `<a href="../contact/index.html" class="tc-btn tc-btn-ghost"><i class="fas fa-calendar-check"></i> Book Now</a>`;
+      
+      if (t.estado === 'pausado') {
+        statusBadge = `<span class="badge" style="background: rgba(245,158,11,0.35); color: #fde047; border: 1px solid rgba(245,158,11,0.5); text-transform: uppercase; font-weight: 700; font-size: 0.72rem; padding: 4px 12px; border-radius: 20px; backdrop-filter: blur(4px);">PAUSADO</span>`;
+        bookBtn = `<button class="tc-btn tc-btn-ghost" disabled style="opacity: 0.5; cursor: not-allowed;"><i class="fas fa-pause-circle"></i> Pausado</button>`;
+      } else if (t.estado === 'seasonal') {
+        statusBadge = `<span class="badge" style="background: rgba(225,29,72,0.45); color: #fca5a5; border: 1px solid rgba(225,29,72,0.65); text-transform: uppercase; font-weight: 700; font-size: 0.72rem; padding: 4px 12px; border-radius: 20px; backdrop-filter: blur(4px);">SEASONAL</span>`;
+        bookBtn = `<a href="../contact/index.html" class="tc-btn tc-btn-ghost"><i class="fas fa-calendar-check"></i> Consultar fechas</a>`;
+      } else if (t.estado === 'inactivo' || t.estado === 'borrador') {
+        statusBadge = `<span class="badge" style="background: rgba(239,68,68,0.55); color: #ffffff; border: 1px solid rgba(239,68,68,0.75); text-transform: uppercase; font-weight: 700; font-size: 0.72rem; padding: 4px 12px; border-radius: 20px; backdrop-filter: blur(4px);">INACTIVO</span>`;
+        bookBtn = `<button class="tc-btn tc-btn-ghost" disabled style="opacity: 0.5; cursor: not-allowed;"><i class="fas fa-times-circle"></i> No disponible</button>`;
+      }
+
       html += `
-      <div class="tour-card r v" data-cat="${t.categoria}">
+      <div class="tour-card r v" data-cat="${t.categoria}" style="${(t.estado==='pausado'||t.estado==='inactivo')?'opacity:0.85;':''}">
         <div class="tc-img">
           <img src="${t.imagen_hero ? '../' + t.imagen_hero : '../assets/img/hero.png'}" alt="${t.nombre}" loading="lazy" onerror="this.src='../assets/img/hero.png'">
           <div class="tc-badges">
             <span class="badge ${meta.class}">${meta.name}</span>
             <span class="badge badge-days">${t.duracion_dias} Days</span>
+            ${statusBadge}
           </div>
         </div>
         <div class="tc-body">
@@ -433,7 +448,7 @@ document.addEventListener("DOMContentLoaded", function() {
           <p class="tc-desc" style="display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;">${t.descripcion_corta || ''}</p>
           <div class="tc-footer">
             <a href="../${t.slug}/index.html" class="tc-btn tc-btn-primary">View Itinerary <i class="fas fa-arrow-right"></i></a>
-            <a href="../contact/index.html" class="tc-btn tc-btn-ghost"><i class="fas fa-calendar-check"></i> Book Now</a>
+            ${bookBtn}
           </div>
         </div>
       </div>`;

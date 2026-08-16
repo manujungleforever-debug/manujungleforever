@@ -1479,14 +1479,17 @@ async function viewTours() {
   set(`
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px"><div><p class="pt">🌿 Tours</p><p class="ps">${ts.length} tours registrados</p></div><button class="btn-primary" onclick="editTour(-1)">+ Nuevo Tour</button></div>
     <div class="list-grid">
-      ${ts.map((t,i)=>`
-        <div class="li">
+      ${ts.map((t,i)=>{
+        const stCls = t.estado==='activo'?'on':(t.estado==='inactivo'?'off':'warn');
+        const stLbl = t.estado ? t.estado.toUpperCase() : 'ACTIVO';
+        return `<div class="li">
           <div class="li-info">
-            <h3>${t.nombre} <span class="badge ${t.estado==='activo'?'on':t.estado==='pausado'?'warn':'off'}">${t.estado}</span></h3>
+            <h3>${t.nombre} <span class="badge ${stCls}">${stLbl}</span></h3>
             <span>${t.duracion_dias} días · $${t.precio_desde} USD · ${t.categoria} · ${t.dificultad}</span>
           </div>
           <div class="li-actions"><button class="btn-edit" onclick="editTour(${i})">Editar</button><button class="btn-danger" onclick="deleteTour(${i})">🗑️</button></div>
-        </div>`).join('')}
+        </div>`;
+      }).join('')}
     </div>`);
 }
 
@@ -1498,7 +1501,7 @@ window.editTour = function(idx) {
       <div class="esec"><div class="esec-h">Información General</div>
         <div class="grow2">
           <div class="ff"><label>Nombre del tour</label><input id="t-n" value="${esc(t.nombre)}"></div>
-          <div class="ff"><label>Estado</label><select id="t-e"><option ${t.estado==='activo'?'selected':''} value="activo">✅ Activo</option><option ${t.estado==='pausado'?'selected':''} value="pausado">⏸️ Pausado</option><option ${t.estado==='inactivo'?'selected':''} value="inactivo">❌ Inactivo</option></select></div>
+          <div class="ff"><label>Estado</label><select id="t-e"><option ${t.estado==='activo'?'selected':''} value="activo">✅ Activo</option><option ${t.estado==='pausado'?'selected':''} value="pausado">⏸️ Pausado</option><option ${t.estado==='seasonal'?'selected':''} value="seasonal">🍂 Seasonal (De Temporada)</option><option ${t.estado==='inactivo'?'selected':''} value="inactivo">❌ Inactivo</option></select></div>
         </div>
         <div class="grow3">
           <div class="ff"><label>Categoría</label>
