@@ -1,6 +1,22 @@
 {
   "salidas": [
     {
+      "tour_id": "6-day-wildlife-quest-blanquillo",
+      "tour_nombre": "6-Day Wildlife Quest – Blanquillo(rapido)",
+      "id": "dep-1786919018740",
+      "fecha_salida": "",
+      "fecha_regreso": "",
+      "precio": 500,
+      "moneda": "USD",
+      "plazas_totales": 8,
+      "plazas_minimas": 5,
+      "plazas_disponibles": 5,
+      "estado": "disponible",
+      "guia_asignado": "Jordy Llaqui",
+      "notas": "prueba1",
+      "pasajeros": []
+    },
+    {
       "id": "dep-001",
       "tour_id": "3-day-wildlife-quest-machu-wasi",
       "tour_nombre": "3-Day Wildlife Quest – Machu Wasi",
