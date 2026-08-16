@@ -8,6 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
 <link rel="icon" href="../assets/img/logo.png">
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
@@ -894,7 +895,7 @@ async function viewBlog() {
           <div class="li-info"><h3>${name}</h3><span>${f.name}</span></div>
           <div class="li-actions">
             <button class="btn-edit" onclick="editBlog('${f.path}','${f.sha}')">Editar</button>
-            <button class="btn-danger" onclick="confirmDelete('${f.path}','${f.sha}','artículo','viewBlog')">🗑️</button>
+            <button class="btn-danger" onclick="deleteBlog('${f.path}','${f.sha}','${f.name.replace(/'/g,"\\'")}')">🗑️</button>
           </div>
         </div>`;}).join('')}
     </div>`);

@@ -334,7 +334,150 @@ window.newTour = function() { editTour(-1); };
 window.newDep = function() { editDep(-1); };
 window.newTestim = function() { editTestim(-1); };
 
+
+
+window.deleteBlog = async function(path, sha, name) {
+  if (confirm(`¿Estás seguro de eliminar permanentemente el artículo "${name}"?`)) {
+    set(`<div class="loading"><div class="spinner"></div> Eliminando artículo...</div>`);
+    try {
+      await ghDelete(path, sha, `delete post: ${name}`);
+      const slug = path.split('/').pop().replace('.md', '');
+      try {
+        const htmlFile = await ghGet(`www.manujungleforever.com/${slug}/index.html`);
+        if (htmlFile && htmlFile.sha) {
+          await ghDelete(`www.manujungleforever.com/${slug}/index.html`, htmlFile.sha, `delete post html: ${slug}`);
+        }
+      } catch(e){}
+      
+      try {
+        const idxData = await ghGet('www.manujungleforever.com/data/posts-index.json');
+        let idx = JSON.parse(idxData.content);
+        idx.posts = (idx.posts || []).filter(p => p.slug !== slug);
+        await ghPut('www.manujungleforever.com/data/posts-index.json', JSON.stringify(idx, null, 2), idxData.sha, `remove from index: ${slug}`);
+      } catch(e){}
+
+      await viewBlog();
+    } catch(e) {
+      alert(`Error al eliminar artículo: ${e.message}`);
+      await viewBlog();
+    }
+  }
+};
+
+window.deleteTour = async function(idx) {
+  if (!cData || !cData.tours || !cData.tours[idx]) return;
+  const tourName = cData.tours[idx].nombre;
+  if (confirm(`¿Estás seguro de eliminar permanentemente el tour "${tourName}"?`)) {
+    set(`<div class="loading"><div class="spinner"></div> Eliminando tour...</div>`);
+    cData.tours.splice(idx, 1);
+    try {
+      const res = await ghPut(cFile, JSON.stringify(cData, null, 2), cSha, `delete tour: ${tourName}`);
+      cSha = res.sha;
+      await viewTours();
+    } catch(e) {
+      alert(`Error al eliminar tour: ${e.message}`);
+      await viewTours();
+    }
+  }
+};
+
+window.deleteDep = async function(idx) {
+  if (!cData || !cData.salidas || !cData.salidas[idx]) return;
+  const depId = cData.salidas[idx].id;
+  if (confirm(`¿Estás seguro de eliminar permanentemente la salida "${depId}"?`)) {
+    set(`<div class="loading"><div class="spinner"></div> Eliminando salida...</div>`);
+    cData.salidas.splice(idx, 1);
+    try {
+      const res = await ghPut(cFile, JSON.stringify(cData, null, 2), cSha, `delete salida: ${depId}`);
+      cSha = res.sha;
+      await viewDeps();
+    } catch(e) {
+      alert(`Error al eliminar salida: ${e.message}`);
+      await viewDeps();
+    }
+  }
+};
+
+window.deleteTestim = async function(idx) {
+  if (!cData || !cData.testimonials || !cData.testimonials[idx]) return;
+  const name = cData.testimonials[idx].nombre;
+  if (confirm(`¿Estás seguro de eliminar permanentemente el testimonio de "${name}"?`)) {
+    set(`<div class="loading"><div class="spinner"></div> Eliminando testimonio...</div>`);
+    cData.testimonials.splice(idx, 1);
+    try {
+      const res = await ghPut(cFile, JSON.stringify(cData, null, 2), cSha, `delete testimonio: ${name}`);
+      cSha = res.sha;
+      await viewTestims();
+    } catch(e) {
+      alert(`Error al eliminar testimonio: ${e.message}`);
+      await viewTestims();
+    }
+  }
+};
+
+window.newBlog = function() {
+  cFile=null; cSha=null;
+  set(`
+    <button class="back-btn" onclick="route('blog')">← Volver al blog</button>
+    <div class="eform">
+      <div class="esec">
+        <div class="esec-h">Nuevo Artículo</div>
+        <div class="ff"><label>Slug URL (sin espacios, solo guiones)</label>
+          <input id="f-slug" placeholder="mi-nuevo-articulo" oninput="this.value=this.value.toLowerCase().replace(/[^a-z0-9-]/g,'-')">
+          <span class="hint">El archivo se guardará como: <code id="slug-preview">mi-nuevo-articulo.md</code></span>
+        </div>
+        ${blogFields({title:'',date:new Date().toISOString().split('T')[0],categoria:'Wildlife',publicado:true,extracto:'',imagen:'',imagen_alt:''})}
+      </div>
+      <div class="esec"><div class="esec-h">Contenido (Markdown)</div>${mdToolbar('f-body')}</div>
+    </div>`);
+  document.getElementById('f-slug').addEventListener('input', e=>{
+    document.getElementById('slug-preview').textContent=e.target.value+'.md';
+  });
+  showSaveBar(async()=>{
+    const slug=document.getElementById('f-slug').value.trim();
+    if(!slug)throw new Error('El slug es obligatorio');
+    const path=`www.manujungleforever.com/posts/${slug}.md`;
+    const fm=readBlogFields();
+    const content=buildFM(fm,document.getElementById('f-body').value);
+    const res=await ghPut(path,content,null,`new post: ${fm.title}`);
+    cFile=path; cSha=res.sha;
+    await publishBlogPost(slug, fm, document.getElementById('f-body').value);
+    setTimeout(() => { viewBlog(); }, 1500);
+  });
+};
+
+window.editBlog = async function(path, sha) {
+  set(`<div class="loading"><div class="spinner"></div> Cargando artículo...</div>`);
+  try {
+    const data=await ghGet(path);
+    cFile=path; cSha=data.sha;
+    const fm=parseFM(data.content);
+    set(`
+      <button class="back-btn" onclick="route('blog')">← Volver al blog</button>
+      <div class="eform">
+        <div class="esec">
+          <div class="esec-h">Información del Artículo</div>
+          ${blogFields(fm)}
+        </div>
+        <div class="esec"><div class="esec-h">Contenido (Markdown)</div>${mdToolbar('f-body')}</div>
+      </div>`);
+    document.getElementById('f-body').value=fm.body||'';
+    showSaveBar(async()=>{
+      const fm2=readBlogFields();
+      const content=buildFM(fm2,document.getElementById('f-body').value);
+      const res=await ghPut(cFile,content,cSha,`update: ${fm2.title}`);
+      cSha=res.sha;
+      const slug = cFile.split('/').pop().replace('.md', '');
+      await publishBlogPost(slug, fm2, document.getElementById('f-body').value);
+      setTimeout(() => { viewBlog(); }, 1500);
+    });
+  } catch(e) {
+    set(`<p style="color:var(--danger);padding:20px">❌ Error al abrir artículo: ${e.message}</p>`);
+  }
+};
+
 </script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
 
@@ -935,7 +1078,7 @@ async function viewBlog() {
           <div class="li-info"><h3>${name}</h3><span>${f.name}</span></div>
           <div class="li-actions">
             <button class="btn-edit" onclick="editBlog('${f.path}','${f.sha}')">Editar</button>
-            <button class="btn-danger" onclick="confirmDelete('${f.path}','${f.sha}','artículo','viewBlog')">🗑️</button>
+            <button class="btn-danger" onclick="deleteBlog('${f.path}','${f.sha}','${f.name.replace(/'/g,"\\'")}')">🗑️</button>
           </div>
         </div>`;}).join('')}
     </div>`);
