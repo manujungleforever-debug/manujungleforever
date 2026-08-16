@@ -20,24 +20,25 @@
 
 
 
+
 <style>
-  body, main, section { background-color: #060b18 !important; background-image: none !important; }
+  body, main, section { background-color: #060b13 !important; background-image: none !important; }
   *::before, *::after { background-image: none !important; }
   
-  /* UNIFICACIÓN DEL HEADER / NAVBAR */
+  /* HEADER */
   header, #N, .site-header, .hdr { 
     background: transparent !important; 
-    background-color: #060b18 !important; 
-    border-bottom: 1px solid rgba(255,255,255,0.05) !important;
+    background-color: #060b13 !important; 
+    border-bottom: 1px solid #1e293b !important;
   }
   header::before, header::after, #N::before, #N::after { 
     display: none !important; 
     background: none !important; 
   }
   
-  /* REESTRUCTURACIÓN DEL HERO */
+  /* HERO */
   .in-hero-custom { 
-    padding-top: 180px !important; 
+    padding-top: 140px !important; 
     padding-bottom: 60px !important;
     background: transparent !important; 
     text-align: center;
@@ -45,13 +46,34 @@
     z-index: 10;
   }
   
-  /* Inputs dark styling */
+  /* CARDS */
+  .form-card {
+    background-color: #0b1019 !important; 
+    border: 1px solid #1e293b !important; 
+    border-radius: 24px; 
+    padding: 40px; 
+    margin-bottom: 24px;
+  }
+
+  /* INPUTS */
   input, select, textarea {
-    background: #111827 !important; 
+    background: #0b1019 !important; 
     color: #ffffff !important; 
-    border: 1px solid #374151 !important;
+    border: 1px solid #1e293b !important;
+  }
+  input::placeholder, textarea::placeholder {
+    color: #94a3b8 !important;
+  }
+
+  /* TITLES */
+  .emerald-title {
+    color: #10b981 !important;
+  }
+  .white-title {
+    color: #ffffff !important;
   }
 </style>
+
 
 
 </head><body>
@@ -144,7 +166,7 @@
     <li><a href="../blog/index.html">Blog</a></li>
     <li><button class="mb" id="mbt">Guided Tours <i class="fas fa-caret-down"></i></button>
       <ul class="md" id="mdd">
-        <span class="dh" style="color:var(--a);font-size:0.8rem;text-transform:uppercase;padding:10px 20px;display:block;"><i class="fas fa-binoculars"></i> WILDLIFE QUEST</span>
+        <span class="dh" style="color:#10b981;font-size:0.8rem;text-transform:uppercase;padding:10px 20px;display:block;"><i class="fas fa-binoculars"></i> WILDLIFE QUEST</span>
         <li><a href="../3-day-wildlife-quest-machu-wasi/index.html">3-Day Wildlife &ndash; Machu Wasi</a></li>
         <li><a href="../4-day-wildlife-quest-machu-wasi/index.html">4-Day Wildlife &ndash; Machu Wasi</a></li>
         <li><a href="../4-day-wildlife-quest-nuevo-eden/index.html">4-Day Wildlife &ndash; Nuevo Eden</a></li>
@@ -153,12 +175,12 @@
         <li><a href="../6-day-wildlife-quest-reserved-zone/index.html">Manu Reserved Zone &ndash; 6 Days</a></li>
         <li><a href="../8-day-wildlife-photography-tour/index.html">Wildlife Photography &ndash; 8 Days</a></li>
         
-        <span class="dh" style="color:var(--a);font-size:0.8rem;text-transform:uppercase;padding:10px 20px;display:block;"><i class="fas fa-route"></i> RAINFOREST ROAD TRIP</span>
+        <span class="dh" style="color:#10b981;font-size:0.8rem;text-transform:uppercase;padding:10px 20px;display:block;"><i class="fas fa-route"></i> RAINFOREST ROAD TRIP</span>
         <li><a href="../rainforest-road-trip-from-cusco/index.html">Rainforest Road Trip Overview</a></li>
         <li><a href="../2-day-rainforest-road-trip/index.html">2-Day Road Trip</a></li>
         <li><a href="../5-day-rainforest-road-trip/index.html">5-Day Road Trip</a></li>
 
-        <span class="dh" style="color:var(--a);font-size:0.8rem;text-transform:uppercase;padding:10px 20px;display:block;"><i class="fas fa-campground"></i> AMAZON EXPEDITION</span>
+        <span class="dh" style="color:#10b981;font-size:0.8rem;text-transform:uppercase;padding:10px 20px;display:block;"><i class="fas fa-campground"></i> AMAZON EXPEDITION</span>
         <li><a href="../5-day-amazon-expedition/index.html">5-Day Amazon Expedition</a></li>
         <li><a href="../6-day-amazon-expedition/index.html">6-Day Amazon Expedition</a></li>
       </ul>
@@ -167,27 +189,29 @@
   </ul>
 </div>
 
-<main id="main" style="background-color: #060b18 !important; background-image: none !important;">
+<main id="main" style="background-color: #060b13 !important; background-image: none !important;">
 
-<!-- NUEVO HERO ESTRUCTURADO COMO /CONTACT/ -->
+
+<!-- HERO -->
 <section class="in-hero-custom">
   <div class="cx">
-    <span class="ey" style="color:var(--a);">Manu Jungle Forever</span>
-    <h1 class="h1" style="font-size:clamp(2.5rem,6vw,4.5rem); color:#fff; margin-top:8px; margin-bottom:16px;">Complaints Book</h1>
+    <span class="ey emerald-title" style="font-size:14px; font-weight:700; letter-spacing:2px; text-transform:uppercase;">— MANU JUNGLE FOREVER</span>
+    <h1 class="h1 white-title" style="font-size:clamp(2.5rem,6vw,4.5rem); margin-top:8px; margin-bottom:16px;">Complaints Book</h1>
     <p class="hs" style="margin:0 auto 30px auto; color:rgba(255,255,255,0.7); max-width:600px;">In accordance with the Consumer Protection Code, Law N° 29571.</p>
     <img src="../assets/img/libro_reclamaciones.png" alt="Complaints Book" style="max-height: 200px; width: 100%; object-fit: contain; margin: 0 auto;">
   </div>
 </section>
 
+
 <div style="text-align:center; padding: 60px 0;"><span class="ey">Manu Jungle Forever</span><h1 class="h1" style="font-size:clamp(2.5rem,6vw,4.5rem)">Complaints Book</h1></div>
-<section class="sec" style="background-color: #060b18 !important; background-image: none !important;">
+<section class="sec" style="background-color: #060b13 !important; background-image: none !important;">
   <div class="cx">
     
 
 
 
-  <div style="background-color: #0b111e !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; border-radius:24px; padding:40px; margin-bottom: 24px;">
-    <h2 class="h2" style="margin-bottom:16px; font-size:1.4rem; color:var(--a);">Business Information</h2>
+  <div style="background-color: #0b1019 !important; border: 1px solid #1e293b !important; border-radius:24px; padding:40px; margin-bottom: 24px;">
+    <h2 class="h2" style="margin-bottom:16px; font-size:1.4rem; color:#10b981;">Business Information</h2>
     <p style="font-size:.87rem;color:rgba(255,255,255,.55);margin-bottom:8px;"><strong>Legal Name:</strong> LLAQUI CHUSI JORDY LEONIDAS (MANU JUNGLE FOREVER)</p>
     <p style="font-size:.87rem;color:rgba(255,255,255,.55);margin-bottom:8px;"><strong>RUC:</strong> 10712309283</p>
     <p style="font-size:.87rem;color:rgba(255,255,255,.55);margin-bottom:8px;"><strong>Address:</strong> Cusco, Perú</p>
@@ -201,8 +225,8 @@
     </div>
     
     <!-- 1. IDENTIFICACIÓN DEL CONSUMIDOR RECLAMANTE -->
-    <div style="background-color: #0b111e !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; border-radius:24px; padding:40px; margin-bottom: 24px;">
-        <h2 class="h2" style="margin-bottom:24px; font-size:1.4rem; color:var(--a);">1. Consumer Details</h2>
+    <div style="background-color: #0b1019 !important; border: 1px solid #1e293b !important; border-radius:24px; padding:40px; margin-bottom: 24px;">
+        <h2 class="h2" style="margin-bottom:24px; font-size:1.4rem; color:#10b981;">1. Consumer Details</h2>
         <div class="f2c">
             <div class="fr">
                 <label>Document Type *</label>
@@ -249,7 +273,7 @@
             </div>
             
             <div class="fr" id="apoderado_box" style="display:none; background:rgba(255,255,255,0.02); padding:20px; border-radius:12px; border:1px solid rgba(255,255,255,0.05); margin-top:10px;">
-                <h5 style="color:var(--a); font-family:'Syne',sans-serif; margin:0 0 15px 0;">Parent or Guardian Details</h5>
+                <h5 style="color:#10b981; font-family:'Syne',sans-serif; margin:0 0 15px 0;">Parent or Guardian Details</h5>
                 <div class="f2c">
                     <div class="fr">
                         <label>Guardian Full Name *</label>
@@ -266,8 +290,8 @@
     </div>
 
     <!-- 2. IDENTIFICACIÓN DEL BIEN CONTRATADO -->
-    <div style="background-color: #0b111e !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; border-radius:24px; padding:40px; margin-bottom: 24px;">
-        <h2 class="h2" style="margin-bottom:24px; font-size:1.4rem; color:var(--a);">2. Contracted Good / Service</h2>
+    <div style="background-color: #0b1019 !important; border: 1px solid #1e293b !important; border-radius:24px; padding:40px; margin-bottom: 24px;">
+        <h2 class="h2" style="margin-bottom:24px; font-size:1.4rem; color:#10b981;">2. Contracted Good / Service</h2>
         <div class="f2c">
             <div class="fr">
                 <label>Type of Good *</label>
@@ -294,19 +318,19 @@
     </div>
     
     <!-- 3. DETALLE DE LA RECLAMACIÓN Y PEDIDO -->
-    <div style="background-color: #0b111e !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; border-radius:24px; padding:40px; margin-bottom: 24px;">
-        <h2 class="h2" style="margin-bottom:24px; font-size:1.4rem; color:var(--a);">3. Complaint Details</h2>
+    <div style="background-color: #0b1019 !important; border: 1px solid #1e293b !important; border-radius:24px; padding:40px; margin-bottom: 24px;">
+        <h2 class="h2" style="margin-bottom:24px; font-size:1.4rem; color:#10b981;">3. Complaint Details</h2>
         <div class="fr" style="margin-bottom: 24px;">
             <label>Request Type *</label>
             <div style="display:flex; flex-direction:column; gap:16px;">
-                <label style="display:flex; align-items:flex-start; gap:12px; padding:16px; border:1px solid rgba(255,255,255,0.08); border-radius:12px; background:rgba(255,255,255,0.02); cursor:pointer; transition:border-color 0.3s ease;" onmouseover="this.style.borderColor='var(--a)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'">
+                <label style="display:flex; align-items:flex-start; gap:12px; padding:16px; border:1px solid rgba(255,255,255,0.08); border-radius:12px; background:rgba(255,255,255,0.02); cursor:pointer; transition:border-color 0.3s ease;" onmouseover="this.style.borderColor='#10b981'" onmouseout="this.style.borderColor='#1e293b'">
                     <input type="radio" name="tipo" value="Reclamo" required>
                     <div style="display:flex; flex-direction:column;">
                         <span style="color:#fff; font-weight:700; margin-bottom:4px;">Complaint (Reclamo)</span>
                         <span style="color:rgba(255,255,255,0.6); font-size:0.875rem;">Dissatisfaction related to the products or services provided.</span>
                     </div>
                 </label>
-                <label style="display:flex; align-items:flex-start; gap:12px; padding:16px; border:1px solid rgba(255,255,255,0.08); border-radius:12px; background:rgba(255,255,255,0.02); cursor:pointer; transition:border-color 0.3s ease;" onmouseover="this.style.borderColor='var(--a)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'">
+                <label style="display:flex; align-items:flex-start; gap:12px; padding:16px; border:1px solid rgba(255,255,255,0.08); border-radius:12px; background:rgba(255,255,255,0.02); cursor:pointer; transition:border-color 0.3s ease;" onmouseover="this.style.borderColor='#10b981'" onmouseout="this.style.borderColor='#1e293b'">
                     <input type="radio" name="tipo" value="Queja" required>
                     <div style="display:flex; flex-direction:column;">
                         <span style="color:#fff; font-weight:700; margin-bottom:4px;">Query / Grievance (Queja)</span>
@@ -327,7 +351,7 @@
     </div>
 
     <!-- DECLARACIÓN JURADA -->
-    <div style="background-color: #0b111e !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; border-radius:24px; padding:40px; margin-bottom: 24px;">
+    <div style="background-color: #0b1019 !important; border: 1px solid #1e293b !important; border-radius:24px; padding:40px; margin-bottom: 24px;">
         <label style="display:flex; align-items:center; gap:12px; cursor:pointer;">
             <input type="checkbox" id="declaracion" required>
             <span>
