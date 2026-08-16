@@ -548,27 +548,32 @@ window.updateImgPreview = function(inputId, previewId) {
 window.addCustomItem = function(selectId, promptMsg) {
   const sel = document.getElementById(selectId);
   if (!sel) return;
-  const val = prompt(promptMsg || "Ingrese el nuevo elemento:");
-  if (val && val.trim()) {
-    const cleanVal = val.trim();
-    let opt = Array.from(sel.options).find(o => o.value.toLowerCase() === cleanVal.toLowerCase());
-    if (!opt) {
-      opt = document.createElement('option');
-      opt.value = cleanVal;
-      opt.textContent = cleanVal;
-      const addOpt = Array.from(sel.options).find(o => o.value === '__add_new__');
-      if (addOpt) {
-        sel.insertBefore(opt, addOpt);
-      } else {
-        sel.appendChild(opt);
+  // Use setTimeout so prompt fires AFTER browser has processed the change event
+  setTimeout(function() {
+    const val = prompt(promptMsg || 'Ingrese el nuevo elemento:');
+    if (val && val.trim()) {
+      const cleanVal = val.trim();
+      let opt = Array.from(sel.options).find(o => o.value.toLowerCase() === cleanVal.toLowerCase());
+      if (!opt) {
+        opt = document.createElement('option');
+        opt.value = cleanVal;
+        opt.textContent = cleanVal;
+        const addOpt = Array.from(sel.options).find(o => o.value === '__add_new__');
+        if (addOpt) {
+          sel.insertBefore(opt, addOpt);
+        } else {
+          sel.appendChild(opt);
+        }
       }
+      sel.value = cleanVal;
+      const saveBar = document.getElementById('save-bar');
+      if (saveBar && saveFnRef) saveBar.style.display = 'flex';
+    } else {
+      // Revert to first non-add option
+      const firstReal = Array.from(sel.options).find(o => o.value !== '__add_new__');
+      if (firstReal) sel.value = firstReal.value;
     }
-    sel.value = opt.value;
-    const saveBar = document.getElementById('save-bar');
-    if (saveBar && saveFnRef) saveBar.style.display = 'flex';
-  } else {
-    sel.selectedIndex = 0;
-  }
+  }, 10);
 };
 
 
@@ -1314,7 +1319,7 @@ function blogFields(fm) {
           const currentCat = fm.categoria || 'Wildlife';
           const allCats = Array.from(new Set([...baseCats, currentCat].filter(Boolean)));
           return allCats.map(c => `<option value="${esc(c)}" ${currentCat === c ? 'selected' : ''}>${esc(c)}</option>`).join('') +
-                 '<option value="__add_new__" style="font-weight:bold;color:var(--teal);">➕ + Añadir nueva categoría...</option>';
+                 '<option value="__add_new__" style="font-weight:bold;color:var(--teal);">+ Añadir nueva categoría...</option>';
         })()}
       </select>
       </div>
@@ -1610,7 +1615,7 @@ window.editTour = function(idx) {
               const existingCats = (cData?.tours || []).map(x => x.categoria).filter(Boolean);
               const allCats = Array.from(new Set([...baseCats, ...existingCats, t.categoria].filter(Boolean)));
               return allCats.map(c => `<option value="${esc(c)}" ${t.categoria === c ? 'selected' : ''}>${esc(c)}</option>`).join('') +
-                     '<option value="__add_new__" style="font-weight:bold;color:var(--teal);">➕ + Añadir nueva categoría...</option>';
+                     '<option value="__add_new__" style="font-weight:bold;color:var(--teal);">+ Añadir nueva categoría...</option>';
             })()}
           </select>
         </div>
@@ -1629,7 +1634,7 @@ window.editTour = function(idx) {
               const currentSeason = t.temporada || 'Todo el año';
               const allSeasons = Array.from(new Set([...baseSeasons, ...existingSeasons, currentSeason].filter(Boolean)));
               return allSeasons.map(s => `<option value="${esc(s)}" ${currentSeason === s ? 'selected' : ''}>${esc(s)}</option>`).join('') +
-                     '<option value="__add_new__" style="font-weight:bold;color:var(--teal);">➕ + Añadir nueva temporada...</option>';
+                     '<option value="__add_new__" style="font-weight:bold;color:var(--teal);">+ Añadir nueva temporada...</option>';
             })()}
           </select>
         </div>
