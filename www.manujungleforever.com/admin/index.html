@@ -545,6 +545,33 @@ window.updateImgPreview = function(inputId, previewId) {
   }
 };
 
+window.addCustomItem = function(selectId, promptMsg) {
+  const sel = document.getElementById(selectId);
+  if (!sel) return;
+  const val = prompt(promptMsg || "Ingrese el nuevo elemento:");
+  if (val && val.trim()) {
+    const cleanVal = val.trim();
+    let opt = Array.from(sel.options).find(o => o.value.toLowerCase() === cleanVal.toLowerCase());
+    if (!opt) {
+      opt = document.createElement('option');
+      opt.value = cleanVal;
+      opt.textContent = cleanVal;
+      const addOpt = Array.from(sel.options).find(o => o.value === '__add_new__');
+      if (addOpt) {
+        sel.insertBefore(opt, addOpt);
+      } else {
+        sel.appendChild(opt);
+      }
+    }
+    sel.value = opt.value;
+    const saveBar = document.getElementById('save-bar');
+    if (saveBar && saveFnRef) saveBar.style.display = 'flex';
+  } else {
+    sel.selectedIndex = 0;
+  }
+};
+
+
 </script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
@@ -1281,7 +1308,15 @@ function blogFields(fm) {
     </div>
     <div class="grow2">
       <div class="ff"><label>Categoría</label>
-        <select id="f-cat">${['Wildlife','Conservation','Sustainability','Manu Park','Travel Tips'].map(c=>`<option ${fm.categoria===c?'selected':''}>${c}</option>`).join('')}</select>
+        <select id="f-cat" onchange="if(this.value==='__add_new__') addCustomItem('f-cat', 'Nombre de la nueva categoría del blog:')">
+        ${(() => {
+          const baseCats = ['Wildlife', 'Conservation', 'Sustainability', 'Manu Park', 'Travel Tips'];
+          const currentCat = fm.categoria || 'Wildlife';
+          const allCats = Array.from(new Set([...baseCats, currentCat].filter(Boolean)));
+          return allCats.map(c => `<option value="${esc(c)}" ${currentCat === c ? 'selected' : ''}>${esc(c)}</option>`).join('') +
+                 '<option value="__add_new__" style="font-weight:bold;color:var(--teal);">➕ + Añadir nueva categoría...</option>';
+        })()}
+      </select>
       </div>
       <div class="ff"><label>Estado</label>
         <div class="tgl-wrap" style="margin-top:6px">
@@ -1569,13 +1604,15 @@ window.editTour = function(idx) {
         </div>
         <div class="grow3">
           <div class="ff"><label>Categoría</label>
-  <input type="text" id="t-c" list="tour-cats" value="${esc(t.categoria)}" style="padding:13px 16px;background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.1);border-radius:10px;color:var(--w);width:100%">
-  <datalist id="tour-cats">
-    ${[...new Set(cData.tours.map(x=>x.categoria))].map(c=>`<option value="${esc(c)}"></option>`).join('')}
-  </datalist>
-</div>
-          <div class="ff"><label>Duración (días)</label><input type="number" id="t-d" value="${t.duracion_dias}" min="1"></div>
-          <div class="ff"><label>Noches</label><input type="number" id="t-dn" value="${t.duracion_noches||0}" min="0"></div>
+          <select id="t-c" onchange="if(this.value==='__add_new__') addCustomItem('t-c', 'Nombre de la nueva categoría:')">
+            ${(() => {
+              const baseCats = ['wildlife', 'cultural', 'expedition', 'birdwatching', 'machu wasi'];
+              const existingCats = (cData?.tours || []).map(x => x.categoria).filter(Boolean);
+              const allCats = Array.from(new Set([...baseCats, ...existingCats, t.categoria].filter(Boolean)));
+              return allCats.map(c => `<option value="${esc(c)}" ${t.categoria === c ? 'selected' : ''}>${esc(c)}</option>`).join('') +
+                     '<option value="__add_new__" style="font-weight:bold;color:var(--teal);">➕ + Añadir nueva categoría...</option>';
+            })()}
+          </select>
         </div>
         <div class="grow3">
           <div class="ff"><label>Precio desde (USD)</label><input type="number" id="t-p" value="${t.precio_desde}" min="0"></div>
@@ -1584,7 +1621,18 @@ window.editTour = function(idx) {
         </div>
         <div class="grow2">
           <div class="ff"><label>Dificultad</label><select id="t-dif"><option ${t.dificultad==='Fácil'?'selected':''}>Fácil</option><option ${t.dificultad==='Moderado'?'selected':''}>Moderado</option><option ${t.dificultad==='Difícil'?'selected':''}>Difícil</option></select></div>
-          <div class="ff"><label>Temporada</label><input id="t-tmp" value="${esc(t.temporada||'')}"></div>
+          <div class="ff"><label>Temporada</label>
+          <select id="t-tmp" onchange="if(this.value==='__add_new__') addCustomItem('t-tmp', 'Nombre de la nueva temporada:')">
+            ${(() => {
+              const baseSeasons = ['Todo el año', 'Mayo - Octubre (Temporada Seca)', 'Noviembre - Abril (Temporada de Lluvias)', 'Junio - Septiembre'];
+              const existingSeasons = (cData?.tours || []).map(x => x.temporada).filter(Boolean);
+              const currentSeason = t.temporada || 'Todo el año';
+              const allSeasons = Array.from(new Set([...baseSeasons, ...existingSeasons, currentSeason].filter(Boolean)));
+              return allSeasons.map(s => `<option value="${esc(s)}" ${currentSeason === s ? 'selected' : ''}>${esc(s)}</option>`).join('') +
+                     '<option value="__add_new__" style="font-weight:bold;color:var(--teal);">➕ + Añadir nueva temporada...</option>';
+            })()}
+          </select>
+        </div>
         </div>
         <div class="ff"><label>Destacado en portada</label>
           <div class="tgl-wrap" style="margin-top:6px"><label class="tgl"><input type="checkbox" id="t-dest" ${t.destacado?'checked':''}><span class="tgl-s"></span></label><span>${t.destacado?'Sí':'No'}</span></div>
