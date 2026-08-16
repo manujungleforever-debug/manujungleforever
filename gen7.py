@@ -295,9 +295,9 @@ function set(h){{
   let tabs='';
   if(window.sidebarItems&&window.sidebarItems.length){{
     tabs='<div class="sub-nav-tabs">'+
-      window.sidebarItems.map(s=>{{
-        const ac=s.id===window.activeSubSection?' class="active"':'';
-        return '<button'+ac+' onclick="switchSubSection(\''+s.id+'\')">'+(s.label||s.id)+'</button>';
+      window.sidebarItems.map(function(s){{
+        var ac=s.id===window.activeSubSection?' class="active"':'';
+        return '<button'+ac+' onclick="switchSubSection(this.dataset.id)" data-id="'+s.id+'">'+(s.label||s.id)+'</button>';
       }}).join('')+'</div>';
   }}
   document.getElementById('mc').innerHTML=tabs+h;
