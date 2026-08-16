@@ -539,6 +539,10 @@ window.updateImgPreview = function(inputId, previewId) {
   } else {
     prev.classList.remove('show');
   }
+  const saveBar = document.getElementById('save-bar');
+  if (saveBar && saveFnRef) {
+    saveBar.style.display = 'flex';
+  }
 };
 
 </script>
@@ -2108,6 +2112,10 @@ window.updateImgPreview = function(inputId, previewId) {
     prev.classList.add('show');
   } else {
     prev.classList.remove('show');
+  }
+  const saveBar = document.getElementById('save-bar');
+  if (saveBar && saveFnRef) {
+    saveBar.style.display = 'flex';
   }
 };
 
