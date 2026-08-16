@@ -139,15 +139,143 @@
 
 <section class="sec" style="background:var(--k)">
   <div class="cx">
-    <div class="article-w" style="max-width:900px; margin:0 auto;">
-      <div class="tour-rich-text"><h2>Upcoming Departures</h2><p>Please contact us for information about coordinating a departure date!  We can plan any of our pre-determined itineraries, customize a private trip, or organize an independant visit to Nuevo Eden.  </p><p>To plan your trip and get a price quote, please reach out to us and we’ll be happy to coordinate! </p></div>
-<div class="tour-rich-text"><h4>Join a Group!  </h4><p><strong>2026</strong></p><p><strong><span style="text-decoration: underline;">May</span></strong></p><p>5 Days Nuevo Eden: May 19 – 23</p><p><strong><span style="text-decoration: underline;">Junio</span></strong></p><p>3 Days Machu Wasi: June 1 – 3 </p><p>tbc: 4 Days: June 29 – July 2</p><p><strong><span style="text-decoration: underline;">July</span></strong></p><p>3 Days Machu Wasi: July 16 – 18</p><p>4 Days Nuevo Eden: July 22 – 25 </p><p><strong><span style="text-decoration: underline;">August</span></strong></p><p>TBC: 6 Days Reserved Zone: August 2-7</p><p>TBC: 4/5 Days August 6</p><p>4 Days: August  12 – 15</p><p>6 Days Reserved Zone: August 14 – 19 </p><p><strong><span style="text-decoration: underline;">September </span></strong></p><p>5 Days Nuevo Eden: September 17 – 21</p><p><strong><span style="text-decoration: underline;">October</span></strong></p><p>5 Days Nuevo Eden: October 26 – 30 </p><h4>To join a trip, or inquire about new dates, please fill out our inquiry form, linked in the button below. Vamos a la selva!</h4></div>
-<div style="margin:24px 0;"><a href="https://forms.gle/e8sNMmNh1HvtUYgu7" class="btn ba"><i class="fas fa-envelope"></i> JOIN A TRIP - INQUIRE TODAY!</a></div>
-<div class="tour-rich-text"><img src="../assets/media_to_upload/photos/placeholder.jpg" alt="A boat on the Madre de Dios River" loading="lazy"></div>
-
+    <div style="text-align:center;max-width:800px;margin:0 auto 50px">
+      <h2 style="font-size:clamp(2rem,4vw,2.8rem);margin-bottom:15px;color:var(--g)">Upcoming Departures & Open Groups</h2>
+      <p style="color:var(--j);font-size:1.1rem;line-height:1.6">Join one of our scheduled groups and explore the Peruvian Amazon. <br>Can't find your dates? We organize private expeditions tailored to your schedule.</p>
     </div>
+    
+    <div id="deps-container" style="min-height:300px">
+      <!-- Skeleton Loader -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:25px;">
+        <div style="background:rgba(0,0,0,0.05);border-radius:12px;height:350px;animation:pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;"></div>
+        <div style="background:rgba(0,0,0,0.05);border-radius:12px;height:350px;animation:pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;"></div>
+        <div style="background:rgba(0,0,0,0.05);border-radius:12px;height:350px;animation:pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;"></div>
+      </div>
+    </div>
+    
+    <style>
+      @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
+      .dep-c { background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.08);display:flex;flex-direction:column;transition:transform .3s; border:1px solid rgba(0,0,0,0.05); }
+      .dep-c:hover { transform:translateY(-6px); box-shadow:0 15px 35px rgba(0,0,0,0.12); }
+      html[data-theme="dark"] .dep-c { background:var(--bg); border:1px solid rgba(255,255,255,0.08); }
+    </style>
+    
+    <div style="margin-top:60px;padding:40px;background:var(--g);border-radius:16px;text-align:center;color:#fff;box-shadow:0 15px 40px rgba(0,46,36,0.3);position:relative;overflow:hidden">
+      <div style="position:absolute;inset:0;opacity:0.1;background-image:url('../assets/img/hero.png');background-size:cover;background-position:center;pointer-events:none"></div>
+      <h3 style="font-size:1.8rem;margin-bottom:15px;position:relative;z-index:1">Can't find your ideal dates?</h3>
+      <p style="font-size:1.1rem;margin-bottom:25px;opacity:0.9;max-width:600px;margin-left:auto;margin-right:auto;position:relative;z-index:1">We operate private tours all year round. Contact us to start planning your custom Amazon itinerary.</p>
+      <a href="../contact/index.html" class="btn" style="background:#fff;color:var(--g);position:relative;z-index:1">Inquire Custom Dates</a>
+    </div>
+
   </div>
 </section>
+
+<script>
+async function loadPublicDepartures() {
+  const container = document.getElementById('deps-container');
+  try {
+    const res = await fetch('../data/departures.json');
+    if (!res.ok) throw new Error('Network error');
+    const data = await res.json();
+    let sal = data?.salidas || [];
+    
+    const now = new Date();
+    now.setHours(0,0,0,0);
+    sal = sal.filter(s => {
+      if (s.estado === 'cancelado' || s.estado === 'cerrado') return false;
+      if (!s.fecha_salida) return false;
+      const [y,m,d] = s.fecha_salida.split('-');
+      const depDate = new Date(y, parseInt(m)-1, d);
+      return depDate >= now;
+    });
+    
+    sal.sort((a,b) => new Date(a.fecha_salida) - new Date(b.fecha_salida));
+    
+    if (sal.length === 0) {
+      container.innerHTML = `
+        <div style="text-align:center;padding:50px 20px;background:rgba(0,0,0,0.02);border-radius:12px;border:1px dashed rgba(0,0,0,0.1)">
+          <i class="fas fa-calendar-times" style="font-size:3.5rem;color:var(--a);margin-bottom:20px"></i>
+          <h3 style="font-size:1.6rem;margin-bottom:12px;color:var(--g)">No scheduled departures found</h3>
+          <p style="color:var(--h);margin-bottom:0;max-width:500px;margin-left:auto;margin-right:auto;line-height:1.6">There are currently no open groups for the upcoming months. Please check back later or contact us to open a new date!</p>
+        </div>
+      `;
+      return;
+    }
+    
+    let html = `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:30px;">`;
+    sal.forEach(s => {
+      const sold = (s.plazas_totales||0) - (s.plazas_disponibles||0);
+      const pct = s.plazas_totales ? Math.round((sold/s.plazas_totales)*100) : 0;
+      let badgeHtml = `<span style="background:var(--a);color:#fff;padding:5px 10px;border-radius:6px;font-size:.7rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;display:inline-block">Guaranteed</span>`;
+      let barColor = `var(--a)`;
+      if (s.estado === 'limitado' || pct >= 75) {
+        badgeHtml = `<span style="background:#f59e0b;color:#fff;padding:5px 10px;border-radius:6px;font-size:.7rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;display:inline-block">Last Spots</span>`;
+        barColor = `#f59e0b`;
+      }
+      if (s.estado === 'completo' || pct >= 100) {
+        badgeHtml = `<span style="background:#ef4444;color:#fff;padding:5px 10px;border-radius:6px;font-size:.7rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;display:inline-block">Sold Out</span>`;
+        barColor = `#ef4444`;
+      }
+      
+      const tourSlug = s.tour_id ? `../${s.tour_id}/index.html` : '#';
+      
+      const formatF = (ds) => {
+         if(!ds) return '';
+         const [y,m,d] = ds.split('-');
+         return new Date(y, parseInt(m)-1, d).toLocaleDateString('en-US', {month:'short', day:'numeric'});
+      };
+      const fSal = formatF(s.fecha_salida);
+      const fReg = formatF(s.fecha_regreso);
+      
+      const msg = `Hello! I want to join the ${s.tour_nombre} group starting on ${s.fecha_salida}`;
+      const waLink = `https://api.whatsapp.com/send?phone=51901525679&text=${encodeURIComponent(msg)}`;
+      const isSoldOut = s.estado === 'completo' || pct >= 100;
+      
+      html += `
+        <div class="dep-c">
+          <div style="padding:25px;flex:1;background:var(--surface)">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px">
+              <div>${badgeHtml}</div>
+              <div style="text-align:right">
+                <div style="font-size:1.5rem;font-weight:800;color:var(--g);line-height:1">$${s.precio} <span style="font-size:.8rem;font-weight:600;color:var(--h)">${s.moneda||'USD'}</span></div>
+                <div style="font-size:.7rem;color:var(--h);text-transform:uppercase;margin-top:4px">per person</div>
+              </div>
+            </div>
+            
+            <h3 style="font-size:1.3rem;margin-bottom:12px;line-height:1.4;color:var(--g);font-weight:700"><a href="${tourSlug}" style="color:inherit;text-decoration:none">${s.tour_nombre}</a></h3>
+            
+            <div style="color:var(--g);font-size:1.05rem;font-weight:600;margin-bottom:25px;display:flex;align-items:center;gap:10px;background:rgba(0,46,36,0.04);padding:10px 14px;border-radius:8px">
+              <i class="far fa-calendar-alt" style="color:var(--a)"></i> ${fSal} &rarr; ${fReg}
+            </div>
+            
+            <div style="margin-bottom:6px;display:flex;justify-content:space-between;font-size:.85rem;color:var(--h);font-weight:600">
+              <span>Availability: ${isSoldOut ? '0' : s.plazas_disponibles} spots</span>
+              <span>${sold}/${s.plazas_totales}</span>
+            </div>
+            <div style="width:100%;height:8px;background:rgba(0,0,0,0.06);border-radius:4px;overflow:hidden;margin-bottom:5px">
+              <div style="width:${pct}%;height:100%;background:${barColor};border-radius:4px"></div>
+            </div>
+          </div>
+          
+          <div style="padding:0 25px 25px;background:var(--surface)">
+             <a href="${waLink}" target="_blank" class="btn" style="display:flex;justify-content:center;align-items:center;gap:8px;width:100%;background:${isSoldOut?'#9ca3af':'var(--g)'};color:#fff;pointer-events:${isSoldOut?'none':'auto'}">
+               <i class="fa-brands fa-whatsapp" style="font-size:1.1rem"></i> ${isSoldOut?'Sold Out':'Inquire by WhatsApp'}
+             </a>
+          </div>
+        </div>
+      `;
+    });
+    html += `</div>`;
+    container.innerHTML = html;
+    
+  } catch(e) {
+    console.error(e);
+    container.innerHTML = `<div style="padding:20px;background:rgba(239,68,68,0.1);color:#ef4444;border-radius:8px;border:1px solid rgba(239,68,68,0.3);text-align:center">⚠️ Could not load departures. Please check your connection or contact us directly.</div>`;
+  }
+}
+document.addEventListener('DOMContentLoaded', loadPublicDepartures);
+</script>
+
 </main>
 
 
