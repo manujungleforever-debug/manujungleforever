@@ -427,7 +427,7 @@ const API = '/api/cms';
 const MEDIA_API = '/api/media';
 let token = sessionStorage.getItem('cms_token');
 let cUser = sessionStorage.getItem('cms_user') || 'manujungleforever@gmail.com';
-let cSection = 'blog', cSha = null, cFile = null, cData = null;
+let cSection = 'media', cSha = null, cFile = null, cData = null;
 let saveFnRef = null;
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -524,19 +524,12 @@ async function doLogin() {
       err.style.display='block';
       btn.disabled=false; btn.textContent='Iniciar Sesión';
     }
-  }
-
-  function bootApp() {
-    const params = new URLSearchParams(window.location.search);
-    const sec = params.get('sec');
-    if (sec) {
-      const page = SECTION_PAGES[sec];
-      if (page) {
-        window.location.href = page;
-        return;
-      }
-    }
-    window.location.href = 'panel.html';
+  }  function bootApp() {
+    document.getElementById('login-screen').style.display='none';
+    document.getElementById('app').style.display='flex';
+    document.getElementById('huser').textContent=cUser;
+    buildTopNav();
+    switchSection(cSection);
   }
 
 document.getElementById('btn-logout').addEventListener('click', () => {
