@@ -198,12 +198,14 @@ main { flex-grow:1; max-width:1400px; width:100%; margin:0 auto; padding:28px 24
 .tgl input:checked+.tgl-s { background:var(--teal); }
 .tgl input:checked+.tgl-s:before { transform:translateX(20px); }
 
-/* IMG fields */
+/* IMG fields - UNDISTORTED PROPER ASPECT RATIOS */
 .img-field-wrap { display:flex; flex-direction:column; gap:6px; }
 .img-input-row { display:flex; gap:8px; }
 .img-input-row input { flex:1; }
-.img-preview { max-height:180px; border-radius:8px; margin-top:8px; border:1px solid rgba(255,255,255,.1); display:none; }
+.img-preview { width:100%; max-height:220px; object-fit:cover; object-position:center; border-radius:12px; margin-top:10px; border:1px solid rgba(45,212,191,0.2); box-shadow:0 4px 14px rgba(0,0,0,0.3); display:none; }
 .img-preview.show { display:block; }
+.avatar-preview { width:100px; height:100px; object-fit:cover; object-position:center; border-radius:50%; margin-top:10px; border:2px solid var(--teal); box-shadow:0 4px 14px rgba(45,212,191,0.25); display:none; }
+.avatar-preview.show { display:block; }
 
 /* SUB-NAV TABS */
 .sub-nav-tabs { display:flex; gap:7px; margin-bottom:22px; background:var(--card); padding:6px; border-radius:11px; border:1px solid var(--bdr); width:fit-content; }
@@ -331,7 +333,7 @@ var currentReclamosData = [], currentReclamoId = null;
 window.sidebarItems = [];
 window.activeSubSection = null;
 
-// Save bar
+// Save bar - FOOLPROOF GUARANTEE THAT SAVE BUTTON NEVER GETS STUCK IN 'Guardando...' STATE
 function showSaveBar(fn, msg) {
   saveFnRef = fn;
   document.getElementById('save-bar').style.display = 'flex';
@@ -341,6 +343,11 @@ function showSaveBar(fn, msg) {
 function hideSaveBar() {
   document.getElementById('save-bar').style.display = 'none';
   saveFnRef = null;
+  const btn = document.getElementById('btn-save');
+  if (btn) {
+    btn.disabled = false;
+    btn.innerHTML = '<i class="ph ph-floppy-disk"></i> Guardar cambios';
+  }
 }
 document.getElementById('btn-save').addEventListener('click', async () => {
   if (!saveFnRef) return;
@@ -351,7 +358,12 @@ document.getElementById('btn-save').addEventListener('click', async () => {
   try {
     await saveFnRef();
     ss.textContent = 'Guardado correctamente'; ss.className = 'save-status ok';
-    setTimeout(hideSaveBar, 2000);
+    btn.innerHTML = '<i class="ph ph-check-circle"></i> Guardado ✓';
+    setTimeout(() => {
+      btn.disabled = false;
+      btn.innerHTML = '<i class="ph ph-floppy-disk"></i> Guardar cambios';
+      hideSaveBar();
+    }, 1500);
   } catch(e) {
     ss.textContent = 'Error: ' + e.message; ss.className = 'save-status err';
     btn.disabled = false;
