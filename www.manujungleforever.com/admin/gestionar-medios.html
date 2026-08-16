@@ -872,25 +872,89 @@ async function publishBlogPost(slug, fm, mdBody) {
 }
 
 async function viewBlog() {
-  const data = await ghGet('www.manujungleforever.com/posts');
-  const files = (data.files||[]).filter(f=>f.name.endsWith('.md'))
-    .sort((a,b)=>b.name.localeCompare(a.name));
-  set(`
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
-      <div><p class="pt">✍️ Artículos del Blog</p><p class="ps">${files.length} artículos</p></div>
-      <button class="btn-primary" onclick="newBlog()">+ Nuevo artículo</button>
-    </div>
-    <div class="list-grid">
-      ${files.map(f=>{
-        const name=f.name.replace('.md','').replace(/-/g,' ');
-        return `<div class="li">
-          <div class="li-info"><h3>${name}</h3><span>${f.name}</span></div>
-          <div class="li-actions">
-            <button class="btn-edit" onclick="editBlog('${f.path}','${f.sha}')">Editar</button>
-            <button class="btn-danger" onclick="deleteBlog('${f.path}','${f.sha}','${f.name.replace(/'/g,"\\'")}')">🗑️</button>
+  set('<div class="loading"><div class="spinner"></div> Cargando artículos del blog...</div>');
+  try {
+    let posts = [];
+    let idxSha = null;
+
+    try {
+      const idxRes = await ghGet('www.manujungleforever.com/data/posts-index.json');
+      if (idxRes && idxRes.content) {
+        idxSha = idxRes.sha;
+        const idxData = JSON.parse(idxRes.content);
+        posts = idxData.posts || [];
+      }
+    } catch(e) {
+      console.warn('posts-index.json not loaded:', e);
+    }
+
+    const dirRes = await ghGet('www.manujungleforever.com/posts');
+    const files = (dirRes.files || []).filter(f => f.name.endsWith('.md'));
+    const fileMap = {};
+    files.forEach(f => {
+      const slug = f.name.replace('.md', '');
+      fileMap[slug] = f;
+    });
+
+    files.forEach(f => {
+      const slug = f.name.replace('.md', '');
+      if (!posts.some(p => p.slug === slug)) {
+        const prettyTitle = slug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+        posts.push({
+          title: prettyTitle,
+          date: '2026-08-16',
+          category: 'Wildlife',
+          publicado: true,
+          slug: slug,
+          image: '../assets/img/hero.png'
+        });
+      }
+    });
+
+    posts.sort((a, b) => new Date(b.date || '2000-01-01') - new Date(a.date || '2000-01-01'));
+
+    let html = `
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:22px">
+        <div>
+          <p class="pt">✍️ Artículos del Blog</p>
+          <p class="ps">${posts.length} artículos registrados (ordenados por fecha más reciente)</p>
+        </div>
+        <button class="btn-primary" onclick="newBlog()"><i class="ph ph-plus"></i> + Nuevo artículo</button>
+      </div>
+      <div class="blog-grid" style="display:grid;gap:14px;">`;
+
+    posts.forEach(p => {
+      const file = fileMap[p.slug] || { path: `www.manujungleforever.com/posts/${p.slug}.md`, sha: null, name: `${p.slug}.md` };
+      let imgSrc = p.image || '../assets/img/hero.png';
+      if (imgSrc.startsWith('/')) imgSrc = '..' + imgSrc;
+      const isPub = p.publicado !== false;
+
+      html += `
+        <div class="li blog-card-li" style="display:flex;gap:16px;align-items:center;padding:14px 18px;background:var(--card);border:1px solid var(--bdr);border-radius:14px;transition:all 0.25s ease;">
+          <div class="blog-thumb" style="width:110px;height:75px;flex-shrink:0;border-radius:10px;overflow:hidden;background:#000;border:1px solid rgba(45,212,191,0.25);">
+            <img src="${imgSrc}" alt="${esc(p.title)}" style="width:100%;height:100%;object-fit:cover;" onerror="this.src='../assets/img/hero.png'">
           </div>
-        </div>`;}).join('')}
-    </div>`);
+          <div class="li-info" style="flex:1;min-width:0;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;flex-wrap:wrap;">
+              <span class="badge ${isPub ? 'on' : 'warn'}">${isPub ? '✅ PUBLICADO' : '📝 BORRADOR'}</span>
+              <span class="badge" style="background:rgba(45,212,191,0.12);color:var(--teal);border:1px solid rgba(45,212,191,0.25);">🏷️ ${esc(p.category || 'Wildlife')}</span>
+              <span style="font-size:0.75rem;color:var(--muted);display:inline-flex;align-items:center;gap:4px;"><i class="ph ph-calendar"></i> ${p.date || '2026-08-16'}</span>
+            </div>
+            <h3 style="font-size:1.02rem;font-weight:600;color:var(--fg);margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(p.title)}</h3>
+            <span style="font-size:0.77rem;color:var(--muted);display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">/${p.slug}.md ${p.excerpt ? '— ' + esc(p.excerpt) : ''}</span>
+          </div>
+          <div class="li-actions" style="display:flex;gap:8px;align-items:center;flex-shrink:0;">
+            <button class="btn-edit" onclick="editBlog('${file.path}','${file.sha}')"><i class="ph ph-pencil"></i> Editar</button>
+            <button class="btn-danger" onclick="deleteBlog('${file.path}','${file.sha}','${file.name.replace(/'/g, "\\'")}')">🗑️</button>
+          </div>
+        </div>`;
+    });
+
+    html += '</div>';
+    set(html);
+  } catch(e) {
+    set('<div class="empty">Error al cargar artículos del blog: ' + e.message + '</div>');
+  }
 }
 
 function newBlog() {
