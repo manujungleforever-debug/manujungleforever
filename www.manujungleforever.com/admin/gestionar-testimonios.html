@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Testimonios – Manu Jungle Admin</title>
+<title>Testimonios - Manu Jungle Admin</title>
 <meta name="robots" content="noindex,nofollow">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -29,6 +29,8 @@
     --surface: rgba(11,38,35,0.6);
     --border: rgba(45,212,191,0.14);
     --text: #f1f5f9;
+    --w: #f1f5f9;
+    --card2: rgba(20,50,40,0.5);
 }
 html,body { height:100%; font-family:'Poppins',sans-serif; }
 body {
@@ -49,7 +51,7 @@ header {
 }
 .hw {
     max-width:1400px; margin:0 auto; padding:10px 24px;
-    display:flex; align-items:center; gap:16px; flex-wrap:wrap;
+    display:flex; align-items:center; gap:14px; flex-wrap:wrap;
 }
 .logo-brand { display:flex; align-items:center; gap:10px; text-decoration:none; flex-shrink:0; }
 .logo-wrap  { position:relative; display:flex; align-items:center; }
@@ -93,7 +95,7 @@ nav.mnav a:hover, nav.mnav a.active { color:var(--teal); background:rgba(45,212,
 .btn-logout:hover { background:var(--danger); color:#fff; border-color:var(--danger); }
 
 /* MAIN */
-main { flex-grow:1; max-width:1400px; width:100%; margin:0 auto; padding:28px 24px 80px; }
+main { flex-grow:1; max-width:1400px; width:100%; margin:0 auto; padding:28px 24px 80px; position:relative; z-index:1; }
 
 /* TITLES */
 .pt {
@@ -102,6 +104,15 @@ main { flex-grow:1; max-width:1400px; width:100%; margin:0 auto; padding:28px 24
     -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:4px;
 }
 .ps { color:var(--muted); font-size:.87rem; margin-bottom:20px; }
+
+/* BACK BTN */
+.back-btn {
+    display:inline-flex; align-items:center; gap:7px;
+    background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1);
+    color:var(--fg); padding:8px 16px; border-radius:9px;
+    font-size:.82rem; font-weight:600; cursor:pointer; transition:.25s; margin-bottom:20px;
+}
+.back-btn:hover { background:rgba(255,255,255,.12); }
 
 /* BUTTONS */
 .btn-primary {
@@ -159,9 +170,9 @@ main { flex-grow:1; max-width:1400px; width:100%; margin:0 auto; padding:28px 24
 .ff input,.ff textarea,.ff select {
     background:rgba(3,8,7,.65); border:1px solid rgba(255,255,255,.1);
     color:var(--fg); padding:10px 13px; border-radius:10px;
-    font-size:.85rem; outline:none; transition:.25s;
+    font-size:.85rem; outline:none; transition:.25s; width:100%;
 }
-.ff input:focus,.ff textarea:focus,.ff select:focus { border-color:var(--teal); box-shadow:0 0 10px var(--teal-g); }
+.ff input:focus,.ff textarea,.ff textarea:focus,.ff select:focus { border-color:var(--teal); box-shadow:0 0 10px var(--teal-g); }
 .ff select option { background:#0a1f1b; color:var(--fg); }
 .hint { font-size:.7rem; color:var(--muted); }
 
@@ -177,13 +188,25 @@ main { flex-grow:1; max-width:1400px; width:100%; margin:0 auto; padding:28px 24
 .save-status.ok  { color:var(--green); }
 .save-status.err { color:var(--danger); }
 
-/* MARKDOWN TOOLBAR */
+/* MARKDOWN / EDITOR */
 .md-wrap { border:1px solid rgba(255,255,255,.1); border-radius:10px; overflow:hidden; }
 .md-toolbar { background:rgba(0,0,0,.22); border-bottom:1px solid rgba(255,255,255,.07); padding:6px; display:flex; gap:5px; flex-wrap:wrap; }
 .md-toolbar button { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08); color:var(--fg); padding:5px 10px; border-radius:5px; cursor:pointer; font-size:.76rem; transition:.25s; }
 .md-toolbar button:hover { background:var(--teal); color:#030807; }
 
-/* IMG PREVIEW */
+/* TOGGLE */
+.tgl-wrap { display:flex; align-items:center; gap:10px; }
+.tgl { position:relative; display:inline-block; width:44px; height:24px; }
+.tgl input { opacity:0; width:0; height:0; }
+.tgl-s { position:absolute; inset:0; background:rgba(255,255,255,.1); border-radius:24px; transition:.3s; cursor:pointer; }
+.tgl-s:before { content:''; position:absolute; height:18px; width:18px; left:3px; bottom:3px; background:#fff; border-radius:50%; transition:.3s; }
+.tgl input:checked+.tgl-s { background:var(--teal); }
+.tgl input:checked+.tgl-s:before { transform:translateX(20px); }
+
+/* IMG fields */
+.img-field-wrap { display:flex; flex-direction:column; gap:6px; }
+.img-input-row { display:flex; gap:8px; }
+.img-input-row input { flex:1; }
 .img-preview { max-height:180px; border-radius:8px; margin-top:8px; border:1px solid rgba(255,255,255,.1); display:none; }
 .img-preview.show { display:block; }
 
@@ -194,6 +217,7 @@ main { flex-grow:1; max-width:1400px; width:100%; margin:0 auto; padding:28px 24
 
 /* MODALS */
 .modal-bg { position:fixed; inset:0; background:rgba(2,6,5,.9); backdrop-filter:blur(7px); align-items:center; justify-content:center; z-index:400; display:none; padding:20px; }
+.modal-bg.open { display:flex !important; }
 .modal { background:rgba(11,38,35,.8); backdrop-filter:blur(16px); border:1px solid rgba(255,255,255,.12); border-radius:18px; width:100%; max-width:600px; max-height:88vh; display:flex; flex-direction:column; box-shadow:0 24px 56px rgba(0,0,0,.6); }
 .modal.lg { max-width:920px; }
 .modal-h { padding:16px 22px; border-bottom:1px solid rgba(255,255,255,.08); display:flex; align-items:center; justify-content:space-between; background:rgba(0,0,0,.14); border-radius:18px 18px 0 0; }
@@ -207,14 +231,20 @@ main { flex-grow:1; max-width:1400px; width:100%; margin:0 auto; padding:28px 24
 @keyframes spin { to { transform:rotate(360deg); } }
 
 /* MEDIA GRID */
-.media-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(118px,1fr)); gap:8px; }
-.media-item { background:var(--card); border:2px solid var(--bdr); border-radius:9px; overflow:hidden; cursor:pointer; transition:.25s; position:relative; }
-.media-item:hover { border-color:var(--teal); }
-.media-item.selected { border-color:var(--teal); box-shadow:0 0 12px var(--teal-g); }
-.media-item img,.media-item video { width:100%; height:84px; object-fit:cover; display:block; }
-.media-item-name { font-size:.62rem; color:var(--muted); padding:3px 6px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-.media-item-del { position:absolute; top:4px; right:4px; background:rgba(239,68,68,.85); color:#fff; border:none; border-radius:50%; width:20px; height:20px; cursor:pointer; font-size:.68rem; display:none; align-items:center; justify-content:center; }
-.media-item:hover .media-item-del { display:flex; }
+.media-grid,.m-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(118px,1fr)); gap:8px; }
+.media-item,.m-item { background:var(--card); border:2px solid var(--bdr); border-radius:9px; overflow:hidden; cursor:pointer; transition:.25s; position:relative; }
+.media-item:hover,.m-item:hover { border-color:var(--teal); }
+.media-item.selected,.m-item.selected { border-color:var(--teal); box-shadow:0 0 12px var(--teal-g); }
+.media-item img,.media-item video,.m-item img,.m-item video { width:100%; height:84px; object-fit:cover; display:block; }
+.media-item-name,.m-name { font-size:.62rem; color:var(--muted); padding:3px 6px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.media-item-del,.btn-del { position:absolute; top:4px; right:4px; background:rgba(239,68,68,.85); color:#fff; border:none; border-radius:50%; width:20px; height:20px; cursor:pointer; font-size:.68rem; display:none; align-items:center; justify-content:center; }
+.media-item:hover .media-item-del,.m-item:hover .btn-del { display:flex; }
+
+/* MISC */
+.empty { color:var(--muted); text-align:center; padding:40px; font-size:.88rem; }
+code { background:rgba(45,212,191,.1); color:var(--teal); padding:2px 6px; border-radius:4px; font-size:.8em; }
+.err-msg { color:#f87171; font-size:.82rem; margin-top:4px; display:none; }
+.err-msg.show { display:block; }
 
 @media(max-width:900px) {
     nav.mnav { display:none; }
@@ -229,7 +259,6 @@ main { flex-grow:1; max-width:1400px; width:100%; margin:0 auto; padding:28px 24
 <script src="js/auth.js"></script>
 <div id="pg-particles" style="position:fixed;inset:0;pointer-events:none;z-index:0;"></div>
 
-<!-- HEADER -->
 <header>
   <div class="hw">
     <a href="panel.html" class="logo-brand">
@@ -255,17 +284,14 @@ main { flex-grow:1; max-width:1400px; width:100%; margin:0 auto; padding:28px 24
   </div>
 </header>
 
-<!-- CONTENT -->
 <main id="mc"></main>
 
-<!-- SAVE BAR -->
 <div class="save-bar" id="save-bar" style="display:none">
   <span class="save-status" id="save-status"></span>
   <button class="btn-secondary" id="btn-cancel-save">Cancelar</button>
   <button class="btn-primary" id="btn-save"><i class="fa-solid fa-floppy-disk"></i> Guardar cambios</button>
 </div>
 
-<!-- DELETE MODAL -->
 <div class="modal-bg" id="del-modal">
   <div class="modal">
     <div class="modal-h"><h3 id="del-title">Eliminar elemento</h3></div>
@@ -277,11 +303,10 @@ main { flex-grow:1; max-width:1400px; width:100%; margin:0 auto; padding:28px 24
   </div>
 </div>
 
-<!-- MEDIA MODAL -->
 <div class="modal-bg" id="media-modal">
   <div class="modal lg">
     <div class="modal-h">
-      <h3><i class="fa-solid fa-images"></i> Seleccionar Imagen</h3>
+      <h3><i class="fa-solid fa-images"></i> Galeria de Medios</h3>
       <div style="display:flex;gap:8px;">
         <button class="btn-primary" onclick="document.getElementById('media-upload').click()"><i class="fa-solid fa-upload"></i> Subir</button>
         <button class="btn-secondary" onclick="document.getElementById('media-upload-folder').click()">Carpeta</button>
@@ -289,7 +314,7 @@ main { flex-grow:1; max-width:1400px; width:100%; margin:0 auto; padding:28px 24
       <input type="file" id="media-upload" accept="image/*,video/*" multiple style="display:none">
       <input type="file" id="media-upload-folder" accept="image/*,video/*" webkitdirectory directory style="display:none">
     </div>
-    <div class="modal-body" id="media-modal-body"><div class="loading"><div class="spinner"></div> Cargando galeria...</div></div>
+    <div class="modal-body" id="media-modal-body"><div class="loading"><div class="spinner"></div> Cargando...</div></div>
     <div class="modal-actions">
       <span id="media-upload-prog" style="margin-right:auto;font-size:.77rem;color:var(--muted);"></span>
       <button class="btn-secondary" onclick="closeModal('media-modal')">Cancelar</button>
@@ -300,7 +325,7 @@ main { flex-grow:1; max-width:1400px; width:100%; margin:0 auto; padding:28px 24
 
 <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
 <script>
-// ── Core vars ─────────────────────────────────────────────
+// Core vars
 const API       = '/api/cms';
 const MEDIA_API = '/api/media';
 let token    = sessionStorage.getItem('cms_token');
@@ -310,7 +335,7 @@ let cSha = null, cFile = null, cData = null, saveFnRef = null;
 window.sidebarItems = [];
 window.activeSubSection = null;
 
-// ── Save bar ──────────────────────────────────────────────
+// Save bar
 function showSaveBar(fn, msg) {
   saveFnRef = fn;
   document.getElementById('save-bar').style.display = 'flex';
@@ -341,18 +366,18 @@ document.getElementById('btn-cancel-save').addEventListener('click', () => {
   hideSaveBar(); switchSection(cSection);
 });
 
-// ── Modals ────────────────────────────────────────────────
-function openModal(id)  { document.getElementById(id).style.display = 'flex'; }
-function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+// Modals
+function openModal(id)  { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); document.getElementById(id).style.display='none'; }
 
-// ── Render ────────────────────────────────────────────────
+// Render
 function set(h) {
   let tabs = '';
   if (window.sidebarItems && window.sidebarItems.length) {
     tabs = '<div class="sub-nav-tabs">' +
       window.sidebarItems.map(s => {
         const ac = s.id === window.activeSubSection ? ' class="active"' : '';
-        return '<button' + ac + ' onclick="switchSubSection(\'' + s.id + '\')">' + s.label + '</button>';
+        return '<button' + ac + ' onclick="switchSubSection(\'' + s.id + '\')">' + (s.label||s.id) + '</button>';
       }).join('') + '</div>';
   }
   document.getElementById('mc').innerHTML = tabs + h;
@@ -361,7 +386,7 @@ window.switchSubSection = function(id) {
   window.activeSubSection = id; route(id);
 };
 
-// ── Sections ──────────────────────────────────────────────
+// Sections
 const SEC_MAP = [
   { id:'blog',         sub:[] },
   { id:'content',      sub:[
@@ -388,7 +413,7 @@ function switchSection(id) {
   }
 }
 
-// ── Boot ──────────────────────────────────────────────────
+// Boot
 document.addEventListener('DOMContentLoaded', () => {
   if (!token) return;
   tsParticles.load('pg-particles', {
@@ -406,15 +431,35 @@ document.addEventListener('DOMContentLoaded', () => {
   switchSection('testimonials');
 });
 
-// ── CMS JS (extracted from index.html) ───────────────────
+// ── CMS Logic (from index.html) ────────────────────────────────────────────
 // ─────────────────────────────────────────────────────────────────────────────
 // NAV
 // ─────────────────────────────────────────────────────────────────────────────
+">${s.label}</button>`
+  ).join('');
+  nav.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+    const page = SECTION_PAGES[b.dataset.s];
+    if (page) {
+      window.location.href = page;
+    }
+  }));
+  nav.querySelector(`[data-s="${cSection}"]`)?.classList.add('active');
+}
 
+">${s.label}</button>`
+  ).join('');
+  aside.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+    aside.querySelectorAll('button').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    route(b.dataset.sub);
+  }));
+}
 
-
-
-
+ else {
+    buildSidebar([]);
+    route(id);
+  }
+}
 
 // ─────────────────────────────────────────────────────────────────────────────
 // LOGIN / LOGOUT
@@ -1310,14 +1355,40 @@ function confirmDelete(path, sha, label, backFn) {
     } catch(e) { alert('Error: '+e.message); }
   };
 }
-function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 window.confirmDelete=confirmDelete; window.closeModal=closeModal;
 
 // ─────────────────────────────────────────────────────────────────────────────
 // SAVE BAR
 // ─────────────────────────────────────────────────────────────────────────────
 
+    catch(e) { st.textContent='✗ '+e.message; st.className='save-status err'; }
+    finally { btn.disabled=false; }
+  };
+  document.getElementById('btn-cancel-save').onclick=()=>{
+    if(confirm('¿Descartar cambios?')){ hideSaveBar(); route(cSection); }
+  };
+}
+// ─────────────────────────────────────────────────────────────────────────────
+// UTILS
+// ─────────────────────────────────────────────────────────────────────────────
+function v(id){ return document.getElementById(id)?.value??''; }
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
+function parseFM(raw) {
+  const m=raw.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);
+  if(!m) return {body:raw};
+  const fm={};
+  m[1].split('\n').forEach(line=>{
+    const i=line.indexOf(':');
+    if(i<0)return;
+    const k=line.slice(0,i).trim();
+    const val=line.slice(i+1).trim().replace(/^["']|["']$/g,'');
+    fm[k]=val;
+  });
+  if(fm.publicado!==undefined) fm.publicado=fm.publicado!=='false';
+  fm.body=m[2].trim();
+  return fm;
+}
 function buildFM(fm,body) {
   const skip=['body'];
   let out='---\n';
