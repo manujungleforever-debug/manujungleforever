@@ -5,7 +5,7 @@
       "slug": "3-day-wildlife-quest-machu-wasi",
       "nombre": "3-Day Wildlife Quest – Machu Wasi",
       "categoria": "wildlife",
-      "estado": "inactivo",
+      "estado": "seasonal",
       "duracion_dias": 3,
       "duracion_noches": 2,
       "precio_desde": 450,
@@ -20,7 +20,7 @@
       "temporada": "Todo el año",
       "descripcion_corta": "Un tour de vida silvestre de 3 días al Parque Nacional Manu, ideal para quienes tienen poco tiempo pero quieren experimentar la Amazonía peruana.",
       "descripcion_larga": "Este tour de 3 días es perfecto para quienes quieren experimentar la selva amazónica sin alejarse demasiado. Viajamos en van por el bosque nuboso, descendemos hasta la selva baja y exploramos los ríos en bote buscando caimanes, capybaras y aves exóticas en Machu Wasi.",
-      "imagen_hero": "assets/img/hero.png",
+      "imagen_hero": "/media/1786591103305-pteronura-brasiliensis-zoo-brasilia-01.jpg",
       "imagen_alt": "3-Day Wildlife Quest at Machu Wasi – Manu National Park",
       "galeria": [
         {
