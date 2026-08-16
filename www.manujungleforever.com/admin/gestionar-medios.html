@@ -312,7 +312,7 @@ code { background:rgba(45,212,191,.1); color:var(--teal); padding:2px 6px; borde
     <div class="modal-actions">
       <span id="media-upload-prog" style="margin-right:auto;font-size:.77rem;color:var(--muted);"></span>
       <button class="btn-secondary" onclick="closeModal('media-modal')">Cancelar</button>
-      <button class="btn-primary" id="media-confirm" disabled>Insertar</button>
+      <button class="btn-primary" id="media-confirm" onclick="confirmMediaSelect()" disabled>Insertar</button>
     </div>
   </div>
 </div>
@@ -1796,6 +1796,151 @@ window.filterReclamos = filterReclamos;
 window.exportReclamos = exportReclamos;
 window.openReclamoModal = openReclamoModal;
 window.submitReclamoReply = submitReclamoReply;
+
+
+
+
+window.selectMediaItem = function(idx, el, isModal) {
+  if (!isModal) return;
+  const parent = el.parentElement;
+  if (parent) {
+    parent.querySelectorAll('.m-item').forEach(e => e.classList.remove('selected'));
+  }
+  el.classList.add('selected');
+  if (window.currentMediaFiles && window.currentMediaFiles[idx]) {
+    window.selectedMediaUrl = window.currentMediaFiles[idx].url;
+  }
+  const btn = document.getElementById('media-confirm');
+  if (btn) btn.disabled = false;
+};
+
+window.confirmMediaSelect = function() {
+  if (window.selectedMediaUrl && window.mediaSelectCallback) {
+    try {
+      window.mediaSelectCallback(window.selectedMediaUrl);
+    } catch(e) {
+      console.error('Error executing media callback:', e);
+    }
+  }
+  closeModal('media-modal');
+};
+
+window.openMediaModal = async function(callback) {
+  window.mediaSelectCallback = callback;
+  window.selectedMediaUrl = null;
+  const btn = document.getElementById('media-confirm');
+  if (btn) btn.disabled = true;
+  openModal('media-modal');
+  
+  const body = document.getElementById('media-modal-body');
+  body.innerHTML = `<div class="loading"><div class="spinner"></div> Cargando galería...</div>`;
+  
+  try {
+    window.currentMediaFiles = await r2GetList();
+    renderMediaGrid(body, window.currentMediaFiles, true);
+  } catch(e) {
+    body.innerHTML = `<div class="err-msg" style="display:block">❌ ${e.message}</div>`;
+  }
+};
+
+window.pickImage = function(inputId, previewId) {
+  openMediaModal((url) => {
+    const inp = document.getElementById(inputId);
+    if (inp) inp.value = url;
+    updateImgPreview(inputId, previewId);
+  });
+};
+
+window.updateImgPreview = function(inputId, previewId) {
+  const inp = document.getElementById(inputId);
+  const prev = document.getElementById(previewId);
+  if (!inp || !prev) return;
+  if (inp.value && inp.value.trim()) {
+    prev.src = inp.value.trim();
+    prev.classList.add('show');
+  } else {
+    prev.classList.remove('show');
+  }
+};
+
+window.deleteBlog = async function(path, sha, name) {
+  if (confirm(`¿Estás seguro de eliminar permanentemente el artículo "${name}"?`)) {
+    set(`<div class="loading"><div class="spinner"></div> Eliminando artículo...</div>`);
+    try {
+      await ghDelete(path, sha, `delete post: ${name}`);
+      const slug = path.split('/').pop().replace('.md', '');
+      try {
+        const htmlFile = await ghGet(`www.manujungleforever.com/${slug}/index.html`);
+        if (htmlFile && htmlFile.sha) {
+          await ghDelete(`www.manujungleforever.com/${slug}/index.html`, htmlFile.sha, `delete post html: ${slug}`);
+        }
+      } catch(e){}
+      
+      try {
+        const idxData = await ghGet('www.manujungleforever.com/data/posts-index.json');
+        let idx = JSON.parse(idxData.content);
+        idx.posts = (idx.posts || []).filter(p => p.slug !== slug);
+        await ghPut('www.manujungleforever.com/data/posts-index.json', JSON.stringify(idx, null, 2), idxData.sha, `remove from index: ${slug}`);
+      } catch(e){}
+
+      await viewBlog();
+    } catch(e) {
+      alert(`Error al eliminar artículo: ${e.message}`);
+      await viewBlog();
+    }
+  }
+};
+
+window.deleteTour = async function(idx) {
+  if (!cData || !cData.tours || !cData.tours[idx]) return;
+  const tourName = cData.tours[idx].nombre;
+  if (confirm(`¿Estás seguro de eliminar permanentemente el tour "${tourName}"?`)) {
+    set(`<div class="loading"><div class="spinner"></div> Eliminando tour...</div>`);
+    cData.tours.splice(idx, 1);
+    try {
+      const res = await ghPut(cFile, JSON.stringify(cData, null, 2), cSha, `delete tour: ${tourName}`);
+      cSha = res.sha;
+      await viewTours();
+    } catch(e) {
+      alert(`Error al eliminar tour: ${e.message}`);
+      await viewTours();
+    }
+  }
+};
+
+window.deleteDep = async function(idx) {
+  if (!cData || !cData.salidas || !cData.salidas[idx]) return;
+  const depId = cData.salidas[idx].id;
+  if (confirm(`¿Estás seguro de eliminar permanentemente la salida "${depId}"?`)) {
+    set(`<div class="loading"><div class="spinner"></div> Eliminando salida...</div>`);
+    cData.salidas.splice(idx, 1);
+    try {
+      const res = await ghPut(cFile, JSON.stringify(cData, null, 2), cSha, `delete salida: ${depId}`);
+      cSha = res.sha;
+      await viewDeps();
+    } catch(e) {
+      alert(`Error al eliminar salida: ${e.message}`);
+      await viewDeps();
+    }
+  }
+};
+
+window.deleteTestim = async function(idx) {
+  if (!cData || !cData.testimonials || !cData.testimonials[idx]) return;
+  const name = cData.testimonials[idx].nombre;
+  if (confirm(`¿Estás seguro de eliminar permanentemente el testimonio de "${name}"?`)) {
+    set(`<div class="loading"><div class="spinner"></div> Eliminando testimonio...</div>`);
+    cData.testimonials.splice(idx, 1);
+    try {
+      const res = await ghPut(cFile, JSON.stringify(cData, null, 2), cSha, `delete testimonio: ${name}`);
+      cSha = res.sha;
+      await viewTestims();
+    } catch(e) {
+      alert(`Error al eliminar testimonio: ${e.message}`);
+      await viewTestims();
+    }
+  }
+};
 </script>
 </body>
 </html>
