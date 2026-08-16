@@ -632,7 +632,7 @@
       "slug": "6-day-amazon-expedition",
       "nombre": "6-Day Amazon Expedition",
       "categoria": "expedition",
-      "estado": "pausado",
+      "estado": "activo",
       "duracion_dias": 6,
       "duracion_noches": 5,
       "precio_desde": 860,
