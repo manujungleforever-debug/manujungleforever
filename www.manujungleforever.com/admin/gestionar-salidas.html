@@ -1372,6 +1372,24 @@ async function viewDeps() {
     const validB = !isNaN(numB) && numB < 1000000 ? numB : 0;
     return validB - validA;
   });
+
+  // Auto-cierre de salidas con fechas pasadas
+  let modified = false;
+  const todayStr = new Date().toISOString().split('T')[0];
+  sal.forEach(s => {
+    if (s.fecha_salida && s.fecha_salida < todayStr && ['disponible', 'limitado'].includes(s.estado)) {
+      s.estado = 'cerrado';
+      modified = true;
+    }
+  });
+
+  if (modified) {
+    try {
+      const updatedData = await ghPut(cFile, JSON.stringify(cData, null, 2), 'auto-close: expired departures');
+      cSha = updatedData.content.sha;
+    } catch(e) { console.error('Auto-close error', e); }
+  }
+
   
   const activas = sal.filter(s => ['disponible', 'limitado'].includes(s.estado)).length;
   const vendidas = sal.reduce((acc, s) => acc + ((s.plazas_totales||0) - (s.plazas_disponibles||0)), 0);
