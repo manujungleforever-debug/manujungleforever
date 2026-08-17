@@ -498,7 +498,7 @@
       "moneda": "USD",
       "plazas_totales": 8,
       "plazas_disponibles": 3,
-      "estado": "limitado",
+      "estado": "disponible",
       "notas": "¡Solo 3 plazas disponibles!",
       "plazas_minimas": 2,
       "guia_asignado": "Alex Machaca",
