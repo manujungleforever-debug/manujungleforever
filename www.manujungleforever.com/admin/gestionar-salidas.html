@@ -73,11 +73,11 @@ main { flex-grow:1; max-width:1400px; width:100%; margin:0 auto; padding:28px 24
 .eform { max-width:900px; display:flex; flex-direction:column; gap:17px; margin-bottom:60px; }
 .esec { background:var(--card); backdrop-filter:blur(10px); border:1px solid var(--bdr); border-radius:16px; padding:22px; }
 .esec-h { font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--gold); border-bottom:1px solid rgba(255,255,255,.07); padding-bottom:8px; margin-bottom:16px; }
-.grow2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-.grow3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; }
-.ff { display:flex; flex-direction:column; gap:6px; margin-bottom:12px; }
+.grow2 { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+.grow3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:18px; }
+.ff { display:flex; flex-direction:column; gap:8px; margin-bottom:20px; }
 .ff label { font-size:.7rem; font-weight:600; text-transform:uppercase; letter-spacing:.8px; color:var(--muted); }
-.ff input,.ff textarea,.ff select { background:rgba(3,8,7,.65); border:1px solid rgba(255,255,255,.1); color:var(--fg); padding:10px 13px; border-radius:10px; font-size:.85rem; outline:none; transition:.25s; width:100%; }
+.ff input,.ff textarea,.ff select { background:rgba(3,8,7,.65); border:1px solid rgba(255,255,255,.1); color:var(--fg); padding:12px 14px; border-radius:10px; font-size:.9rem; outline:none; transition:.25s; width:100%; }
 .ff input:focus,.ff textarea:focus,.ff select:focus { border-color:var(--teal); box-shadow:0 0 10px var(--teal-g); }
 .ff select option { background:#0a1f1b; color:var(--fg); }
 .hint { font-size:.7rem; color:var(--muted); }
@@ -1400,10 +1400,12 @@ window.editPax = function(sIdx, pIdx) {
 
       <div class="ff" style="margin-top:10px">
         <label>Fotografía del Pasajero (URL o Galería)</label>
-        <div class="img-input-row" style="margin-bottom:10px">
-          <input id="p-foto" value="${esc(p.foto||'')}" placeholder="https://..." oninput="updateImgPreview('p-foto', 'p-foto-prev')">
-          <button class="btn-secondary" onclick="pickImage('p-foto', 'p-foto-prev')"><i class="ph ph-image"></i> Elegir</button>
-        </div>
+                  <div class="img-input-row" style="margin-bottom:10px; display:flex; gap:10px">
+            <input id="p-foto" value="${esc(p.foto||'')}" placeholder="https://..." oninput="updateImgPreview('p-foto', 'p-foto-prev')" style="flex-grow:1;">
+            <button class="btn-secondary" onclick="pickImage('p-foto', 'p-foto-prev')"><i class="ph ph-image"></i> Elegir</button>
+            <button class="btn-primary" onclick="takePaxPhoto(${sIdx})" style="background:var(--teal);color:white;border:none;white-space:nowrap;"><i class="ph ph-camera"></i> Tomar Foto</button>
+            <input type="file" id="p-camera-file" accept="image/*" capture="environment" style="display:none" onchange="uploadPaxPhoto(this, ${sIdx})">
+          </div>
         <img id="p-foto-prev" class="img-preview ${p.foto ? 'show' : ''}" src="${esc(p.foto||'')}">
       </div>
       
@@ -1414,6 +1416,48 @@ window.editPax = function(sIdx, pIdx) {
     </div></div>
   `;
   document.getElementById('pax-modal-body').innerHTML = html;
+};
+
+window.takePaxPhoto = function(sIdx) {
+  const name = document.getElementById('p-n').value.trim();
+  if (!name) {
+    alert("Por favor, ingrese el 'Nombre Completo' del pasajero antes de tomar la fotografía para archivarlo correctamente.");
+    document.getElementById('p-n').focus();
+    return;
+  }
+  document.getElementById('p-camera-file').click();
+};
+
+window.uploadPaxPhoto = async function(input, sIdx) {
+  if (!input.files || input.files.length === 0) return;
+  const file = input.files[0];
+  const name = document.getElementById('p-n').value.trim();
+  const s = cData.salidas[sIdx];
+  
+  const safeTour = (s.tour_nombre || 'tour').replace(/[^a-z0-9]/gi, '-');
+  const safeName = name.replace(/[^a-z0-9]/gi, '-');
+  const ext = file.name.split('.').pop() || 'jpg';
+  const folderDate = s.fecha_salida ? s.fecha_salida : 'no-date';
+  
+  const fileName = "pasajeros/${s.id}_${safeTour}_${folderDate}/${safeName}.${ext}";
+  const renamedFile = new File([file], eval(fileName), { type: file.type });
+  
+  const btn = input.previousElementSibling;
+  const oldText = btn.innerHTML;
+  btn.innerHTML = '<i class="ph ph-spinner animate-spin"></i> Subiendo...';
+  btn.disabled = true;
+  
+  try {
+    const url = await window.r2Upload(renamedFile, null);
+    document.getElementById('p-foto').value = url;
+    updateImgPreview('p-foto', 'p-foto-prev');
+  } catch(e) {
+    alert("Error al subir foto: " + e.message);
+  } finally {
+    btn.innerHTML = oldText;
+    btn.disabled = false;
+    input.value = '';
+  }
 };
 
 window.savePax = async function(sIdx, pIdx, event) {
@@ -2443,3 +2487,5 @@ window.deleteTestim = async function(idx) {
 </script>
 </body>
 </html>
+
+
