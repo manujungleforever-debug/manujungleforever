@@ -1364,7 +1364,26 @@ window.viewPax = function(idx) {
   openModal('pax-modal');
 };
 
-window.editPax = function(sIdx, pIdx) {
+  window.editPax = function(sIdx, pIdx) {
+    const countries = ["Peruana (PER)", "Estadounidense (USA)", "Canadiense (CAN)", "Británica (GBR)", "Alemana (GER)", "Francesa (FRA)", "Australiana (AUS)", "Española (ESP)", "Italiana (ITA)", "Holandesa (NED)", "Suiza (SUI)", "Brasileña (BRA)", "Argentina (ARG)", "Colombiana (COL)", "Chilena (CHI)"];
+    const diets = ["Ninguna", "Vegetariano", "Vegano", "Sin Gluten (Celíaco)", "Alergia a Nueces/Maní", "Intolerante a la Lactosa", "Pescetariano"];
+    const meds = ["Ninguna", "Asma", "Diabetes", "Hipertensión", "Problemas Cardíacos", "Alergia a Picaduras (Abejas)", "Epilepsia"];
+    
+    const makeSelect = (id, options, val) => {
+      let isCustom = val && !options.includes(val);
+      if (!val && id !== 'p-na') { val = 'Ninguna'; isCustom = false; }
+      
+      let html = `<select id="${id}" onchange="checkCustom(this, '${id}-c')">`;
+      if (id === 'p-na') html += `<option value="">Seleccionar...</option>`;
+      
+      options.forEach(o => {
+        html += `<option value="${o}" ${val === o ? 'selected' : ''}>${o}</option>`;
+      });
+      html += `<option value="_custom_" ${isCustom ? 'selected' : ''}>+ Añadir Nuevo...</option>`;
+      html += `</select>`;
+      html += `<input type="text" id="${id}-c" value="${isCustom ? val : ''}" style="display:${isCustom ? 'block' : 'none'}; margin-top:8px;" placeholder="Escriba aquí...">`;
+      return html;
+    };
   const s = cData.salidas[sIdx];
   const p = pIdx === -1 ? {nombre_completo:'', nacionalidad:'', fecha_nacimiento:'', pasaporte:'', whatsapp:'', email:'', restricciones_dieteticas:'Ninguna', condiciones_medicas:'Ninguna', estado_pago:'pendiente', monto_pagado:0, saldo_pendiente:0, foto:''} : (s.pasajeros[pIdx] || {});
   
@@ -1378,7 +1397,7 @@ window.editPax = function(sIdx, pIdx) {
       
               <div class="grow3">
           <div class="ff"><label>Nombre Completo</label><input id="p-n" value="${esc(p.nombre_completo||'')}"></div>
-          <div class="ff"><label>Nacionalidad</label><input id="p-na" value="${esc(p.nacionalidad||'')}"></div>
+          <div class="ff"><label>Nacionalidad</label>${makeSelect('p-na', countries, p.nacionalidad)}</div>
           <div class="ff"><label>F. Nacimiento</label><input type="date" id="p-fn" value="${esc(p.fecha_nacimiento||'')}"></div>
         </div>
       <div class="grow3">
@@ -1387,28 +1406,8 @@ window.editPax = function(sIdx, pIdx) {
         <div class="ff"><label>Email</label><input id="p-e" value="${esc(p.email||'')}"></div>
       </div>
               <div class="grow2">
-          <div class="ff"><label>Restricciones Dietéticas</label>
-            <input id="p-rd" list="lista-dietas" value="${esc(p.restricciones_dieteticas||'Ninguna')}">
-            <datalist id="lista-dietas">
-              <option value="Ninguna">
-              <option value="Vegetariano">
-              <option value="Vegano">
-              <option value="Sin Gluten (Celíaco)">
-              <option value="Alergia a Nueces/Maní">
-              <option value="Intolerante a la Lactosa">
-            </datalist>
-          </div>
-          <div class="ff"><label>Condiciones Médicas</label>
-            <input id="p-cm" list="lista-medicas" value="${esc(p.condiciones_medicas||'Ninguna')}">
-            <datalist id="lista-medicas">
-              <option value="Ninguna">
-              <option value="Asma">
-              <option value="Diabetes">
-              <option value="Hipertensión">
-              <option value="Problemas Cardíacos">
-              <option value="Alergia a Picaduras (Abejas)">
-            </datalist>
-          </div>
+          <div class="ff"><label>Restricciones Dietéticas</label>${makeSelect('p-rd', diets, p.restricciones_dieteticas)}</div>
+          <div class="ff"><label>Condiciones Médicas</label>${makeSelect('p-cm', meds, p.condiciones_medicas)}</div>
         </div>
       <div class="grow3">
         <div class="ff"><label>Estado de Pago</label>
@@ -1442,7 +1441,18 @@ window.editPax = function(sIdx, pIdx) {
   document.getElementById('pax-modal-body').innerHTML = html;
 };
 
-window.takePaxPhoto = function(sIdx) {
+  window.checkCustom = function(sel, cId) {
+    const c = document.getElementById(cId);
+    if (sel.value === '_custom_') {
+      c.style.display = 'block';
+      c.focus();
+    } else {
+      c.style.display = 'none';
+      c.value = '';
+    }
+  };
+
+  window.takePaxPhoto = function(sIdx) {
   const name = document.getElementById('p-n').value.trim();
   if (!name) {
     alert("Por favor, ingrese el 'Nombre Completo' del pasajero antes de tomar la fotografía para archivarlo correctamente.");
@@ -2510,6 +2520,8 @@ window.deleteTestim = async function(idx) {
 </script>
 </body>
 </html>
+
+
 
 
 
