@@ -76,6 +76,19 @@
           "saldo_pendiente": 0,
           "estado_pago": "pagado",
           "metodo_reserva": "web"
+        },
+        {
+          "nombre_completo": "idel everardo maza maza",
+          "nacionalidad": "PER",
+          "pasaporte": "46989140",
+          "whatsapp": "958113016",
+          "email": "kemmesik@gmail.com",
+          "restricciones_dieteticas": "ninguna",
+          "condiciones_medicas": "saludable",
+          "estado_pago": "reserva",
+          "monto_pagado": 100,
+          "saldo_pendiente": 400,
+          "foto": "https://www.facebook.com/photo/?fbid=122099747253357655&set=a.122099743185357655"
         }
       ]
     },
