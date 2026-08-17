@@ -1409,17 +1409,18 @@ window.viewPax = function(idx) {
           <div class="ff"><label>Restricciones Dietéticas</label>${makeSelect('p-rd', diets, p.restricciones_dieteticas)}</div>
           <div class="ff"><label>Condiciones Médicas</label>${makeSelect('p-cm', meds, p.condiciones_medicas)}</div>
         </div>
-      <div class="grow3">
-        <div class="ff"><label>Estado de Pago</label>
-            <select id="p-ep" data-total="${cData.salidas[sIdx].precio || 0}" onchange="calcPaxPrice()">
-              <option ${p.estado_pago==='pendiente'?'selected':''} value="pendiente">Pendiente</option>
-              <option ${p.estado_pago==='reserva'?'selected':''} value="reserva">Reserva (Parcial)</option>
-              <option ${p.estado_pago==='pagado'?'selected':''} value="pagado">Pagado 100%</option>
-            </select>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:18px;">
+          <div class="ff"><label>Costo del Tour ($)</label><input type="number" id="p-costo" value="${p.costo || cData.salidas[sIdx].precio || 0}" oninput="calcPaxPrice('costo')"></div>
+          <div class="ff"><label>Estado de Pago</label>
+              <select id="p-ep" onchange="calcPaxPrice()">
+                <option ${p.estado_pago==='pendiente'?'selected':''} value="pendiente">Pendiente</option>
+                <option ${p.estado_pago==='reserva'?'selected':''} value="reserva">Reserva (Parcial)</option>
+                <option ${p.estado_pago==='pagado'?'selected':''} value="pagado">Pagado 100%</option>
+              </select>
           </div>
           <div class="ff"><label>Monto Pagado ($)</label><input type="number" id="p-mp" value="${p.monto_pagado||0}" oninput="calcPaxPrice('mp')"></div>
           <div class="ff"><label>Saldo Pendiente ($)</label><input type="number" id="p-sp" value="${p.saldo_pendiente||0}" oninput="calcPaxPrice('sp')"></div>
-      </div>
+        </div>
 
       <div class="ff" style="margin-top:10px">
         <label>Fotografía del Pasajero (URL o Galería)</label>
@@ -1452,18 +1453,19 @@ window.viewPax = function(idx) {
     }
   };
 
-  window.calcPaxPrice = function(source) {
+    window.calcPaxPrice = function(source) {
     const epSelect = document.getElementById('p-ep');
     if (!epSelect) return;
     const state = epSelect.value;
-    const total = Number(epSelect.getAttribute('data-total')) || 0;
+    const costoInput = document.getElementById('p-costo');
+    const total = Number(costoInput ? costoInput.value : 0);
     const mpInput = document.getElementById('p-mp');
     const spInput = document.getElementById('p-sp');
     
     let mp = Number(mpInput.value) || 0;
     let sp = Number(spInput.value) || 0;
 
-    if (source === undefined) {
+    if (source === 'costo' || source === undefined) {
       if (state === 'pendiente') { mpInput.value = 0; spInput.value = total; }
       else if (state === 'pagado') { mpInput.value = total; spInput.value = 0; }
       else { spInput.value = Math.max(0, total - mp); }
@@ -1533,7 +1535,8 @@ window.savePax = async function(sIdx, pIdx, event) {
     email: v('p-e'),
     restricciones_dieteticas: v('p-rd'),
     condiciones_medicas: v('p-cm'),
-    estado_pago: v('p-ep'),
+    costo: +v('p-costo'),
+      estado_pago: v('p-ep'),
     monto_pagado: +v('p-mp'),
     saldo_pendiente: +v('p-sp'),
     foto: v('p-foto')
@@ -2548,6 +2551,8 @@ window.deleteTestim = async function(idx) {
 </script>
 </body>
 </html>
+
+
 
 
 
