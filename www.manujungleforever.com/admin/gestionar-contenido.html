@@ -78,8 +78,8 @@ main { flex-grow:1; max-width:1280px; margin:0 auto; width:100%; padding:28px 1.
 }
 .esec { background:var(--card); backdrop-filter:blur(10px); border:1px solid var(--bdr); border-radius:16px; padding:22px; }
 .esec-h { font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--gold); border-bottom:1px solid rgba(255,255,255,.07); padding-bottom:8px; margin-bottom:16px; }
-.grow2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-.grow3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; }
+.grow2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: start; }
+.grow3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; align-items: start; }
 .ff { display:flex; flex-direction:column; gap:6px; margin-bottom:12px; }
 .ff label { font-size:.7rem; font-weight:600; text-transform:uppercase; letter-spacing:.8px; color:var(--muted); }
 .ff input,.ff textarea,.ff select { background:rgba(3,8,7,.65); border:1px solid rgba(255,255,255,.1); color:var(--fg); padding:10px 13px; border-radius:10px; font-size:.85rem; outline:none; transition:.25s; width:100%; }
@@ -104,8 +104,10 @@ main { flex-grow:1; max-width:1280px; margin:0 auto; width:100%; padding:28px 1.
 .img-field-wrap { display:flex; flex-direction:column; gap:6px; }
 .img-input-row { display:flex; gap:8px; }
 .img-input-row input { flex:1; }
-.img-preview { width:100%; max-height:420px; min-height:200px; object-fit:contain; background:rgba(0,0,0,.45); border-radius:12px; margin-top:10px; padding:8px; border:1px dashed rgba(45,212,191,0.3); box-shadow:inset 0 0 20px rgba(0,0,0,0.5); display:none; }
+.img-preview { width:100%; height:140px; object-fit:contain; background:rgba(0,0,0,.45); border-radius:12px; margin-top:10px; padding:8px; border:1px dashed rgba(45,212,191,0.3); box-shadow:inset 0 0 20px rgba(0,0,0,0.5); display:none; }
 .img-preview.show { display:block; }
+.img-error-placeholder { display:none; height:60px; background:rgba(239,68,68,0.05); border:1px dashed rgba(239,68,68,0.3); border-radius:12px; margin-top:10px; align-items:center; justify-content:center; color:#f87171; font-size:0.8rem; gap:6px; }
+.img-error-placeholder.show { display:flex; }
 .avatar-preview { width:120px; height:120px; object-fit:cover; object-position:center; border-radius:50%; margin-top:10px; border:2px solid var(--teal); box-shadow:0 4px 14px rgba(45,212,191,0.25); display:none; }
 .avatar-preview.show { display:block; }
 .sub-nav-tabs {
@@ -720,25 +722,24 @@ function fileToBase64(file) {
 }
 
 function updateImgPreview(inputId, previewId) {
-  const val = document.getElementById(inputId)?.value;
-  const prev = document.getElementById(previewId);
-  if (!prev) return;
-  if (val) { prev.src=val; prev.classList.add('show'); }
+    if (window.updateImgPreview) { window.updateImgPreview(inputId, previewId); return; }
+  }
   else { prev.classList.remove('show'); }
 }
 
 function imgWidget(id, label, value='', hint='') {
-  const pid=id+'-prev';
-  return `<div class="ff"><label>${label}</label>
-    <div class="img-field-wrap">
-      <div class="img-input-row">
-        <input id="${id}" value="${esc(value)}" placeholder="URL o ruta de imagen" oninput="updateImgPreview('${id}','${pid}')">
-        <button type="button" class="btn-secondary" onclick="pickImage('${id}','${pid}')">🖼️ Seleccionar</button>
-      </div>
-      ${value ? `<img class="img-preview show" id="${pid}" src="${esc(value)}" alt="">` : `<img class="img-preview" id="${pid}" alt="">`}
-      ${hint?`<span class="hint">${hint}</span>`:''}
-    </div></div>`;
-}
+    const pid=id+'-prev';
+    return <div class="ff"><label>${label}</label>
+      <div class="img-field-wrap">
+        <div class="img-input-row">
+          <input id="${id}" value="${esc(value)}" placeholder="URL o ruta de imagen" oninput="updateImgPreview('${id}','${pid}')">
+          <button type="button" class="btn-secondary" onclick="pickImage('${id}','${pid}')">🖼️ Seleccionar</button>
+        </div>
+        <img class="img-preview ${value ? 'show' : ''}" id="${pid}" src="${esc(value)}" alt="" onerror="handleImgPreviewError(this)">
+        <div class="img-error-placeholder" id="${pid}-err"><i class="ph ph-image-broken"></i> Imagen no disponible</div>
+        ${hint?<span class="hint">${hint}</span>:''}
+      </div></div>;
+  }
 
 // ─────────────────────────────────────────────────────────────────────────────
 // VIEW: MEDIA GALLERY (MAIN)
@@ -2105,20 +2106,29 @@ window.pickImage = function(inputId, previewId) {
 };
 
 window.updateImgPreview = function(inputId, previewId) {
-  const inp = document.getElementById(inputId);
-  const prev = document.getElementById(previewId);
-  if (!inp || !prev) return;
-  if (inp.value && inp.value.trim()) {
-    prev.src = inp.value.trim();
-    prev.classList.add('show');
-  } else {
-    prev.classList.remove('show');
-  }
-  const saveBar = document.getElementById('save-bar');
-  if (saveBar && saveFnRef) {
-    saveBar.style.display = 'flex';
-  }
-};
+    const inp = document.getElementById(inputId);
+    const prev = document.getElementById(previewId);
+    if (!inp || !prev) return;
+    const errDiv = document.getElementById(previewId + '-err');
+    if (inp.value && inp.value.trim()) {
+      prev.src = inp.value.trim();
+      prev.classList.add('show');
+      if (errDiv) errDiv.classList.remove('show');
+    } else {
+      prev.classList.remove('show');
+      if (errDiv) errDiv.classList.remove('show');
+    }
+    const saveBar = document.getElementById('save-bar');
+    if (saveBar && typeof saveFnRef !== 'undefined' && saveFnRef) {
+      saveBar.style.display = 'flex';
+    }
+  };
+
+  window.handleImgPreviewError = function(img) {
+    img.classList.remove('show');
+    const errDiv = document.getElementById(img.id + '-err');
+    if (errDiv) errDiv.classList.add('show');
+  };
 
 window.deleteBlog = async function(path, sha, name) {
   if (confirm(`¿Estás seguro de eliminar permanentemente el artículo "${name}"?`)) {
@@ -2201,6 +2211,7 @@ window.deleteTestim = async function(idx) {
 </script>
 </body>
 </html>
+
 
 
 
