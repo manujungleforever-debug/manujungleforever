@@ -1593,12 +1593,7 @@ window.exportPaxPDF = async function(idx) {
     doc.setFont(undefined, 'normal');
     doc.text(s.guia_asignado || 'No asignado', 48, 62);
 
-    let totalPagado = 0;
-    let totalSaldo = 0;
-
     const tableData = pax.map((p, i) => {
-      totalPagado += (p.monto_pagado || 0);
-      totalSaldo += (p.saldo_pendiente || 0);
       return [
         i + 1,
         '', // Foto placeholder
@@ -1658,32 +1653,6 @@ window.exportPaxPDF = async function(idx) {
         );
       }
     });
-
-    // --- FINANCIAL SUMMARY ---
-    const finalY = doc.lastAutoTable.finalY + 10;
-    
-    // Add page if it doesn't fit
-    if (finalY > doc.internal.pageSize.height - 30) {
-      doc.addPage();
-    }
-    
-    doc.setFillColor(248, 250, 252);
-    doc.setDrawColor(226, 232, 240);
-    doc.roundedRect(120, finalY, 76, 22, 2, 2, 'FD');
-    
-    doc.setFontSize(9);
-    doc.setTextColor(15, 23, 42);
-    doc.setFont(undefined, 'bold');
-    doc.text("Resumen Financiero del Grupo", 125, finalY + 6);
-    
-    doc.setFont(undefined, 'normal');
-    doc.text("Total Pagado:", 125, finalY + 13);
-    doc.text(`$${totalPagado.toFixed(2)}`, 190, finalY + 13, { align: 'right' });
-    
-    doc.setFont(undefined, 'bold');
-    doc.setTextColor(220, 38, 38); // red
-    doc.text("Saldo Pendiente:", 125, finalY + 19);
-    doc.text(`$${totalSaldo.toFixed(2)}`, 190, finalY + 19, { align: 'right' });
 
     doc.save(`Manifiesto-${s.id}.pdf`);
   } catch(e) {
