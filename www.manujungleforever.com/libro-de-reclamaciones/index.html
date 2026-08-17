@@ -131,7 +131,21 @@
 
 
 <main id="main" class="max-w-3xl mx-auto flex flex-col items-center" style="max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; padding: 0 20px;">
-  <section class="relative flex flex-col items-center justify-center text-center bg-transparent" style="width: 100%; padding-top: 140px; padding-bottom: 40px; background: transparent !important;">
+  <style>
+    .complaints-hero {
+      width: 100%;
+      padding-top: 220px;
+      padding-bottom: 40px;
+      background: transparent !important;
+    }
+    @media (max-width: 768px) {
+      .complaints-hero {
+        padding-top: 160px;
+        padding-bottom: 30px;
+      }
+    }
+  </style>
+  <section class="complaints-hero relative flex flex-col items-center justify-center text-center bg-transparent">
     <!-- Tag superior verde esmeralda -->
     <span class="text-[#10b981] font-semibold tracking-widest text-xs uppercase mb-2" style="color: #10b981; font-weight: 600; letter-spacing: 0.1em; font-size: 0.75rem; text-transform: uppercase; margin-bottom: 8px;">
       — MANU JUNGLE FOREVER
