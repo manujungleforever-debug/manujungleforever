@@ -157,11 +157,7 @@
             margin-left: auto;
         }
 
-        .btn-logout:hover {
-            background: var(--danger, #ef4444) !important;
-            color: #fff !important;
-            border-color: var(--danger, #ef4444) !important;
-        }
+        
 
         /* --- Main Layout --- */
         main {
@@ -433,7 +429,29 @@
                 font-size: 2rem;
             }
         }
-    </style>
+    
+.btn-logout { 
+    background: linear-gradient(135deg, #ef4444, #b91c1c); 
+    color: #fff; 
+    border: none;
+    cursor: pointer; 
+    font-size: .85rem; 
+    font-weight: 700; 
+    padding: 8px 16px; 
+    border-radius: 10px; 
+    transition: .3s; 
+    display: flex; 
+    align-items: center; 
+    gap: 8px; 
+    box-shadow: 0 4px 15px rgba(239,68,68,0.35);
+}
+.btn-logout:hover { 
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(239,68,68,0.5);
+    filter: brightness(1.1);
+}
+
+</style>
 </head>
 <body>
 
@@ -463,7 +481,7 @@
                 </nav>
 
                 <div class="user-sec">
-                    <button onclick="logout()" class="btn-logout" style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);color:#f87171;cursor:pointer;font-size:.8rem;font-weight:600;padding:6px 12px;border-radius:8px;display:flex;align-items:center;gap:6px;">
+                    <button onclick="logout()" class="btn-logout">
                         <i class="ph ph-sign-out"></i> Salir
                     </button>
                 </div>

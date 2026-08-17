@@ -41,8 +41,8 @@ nav.mnav a { font-size:.8rem; font-weight:500; color:var(--muted); text-decorati
 nav.mnav a i { font-size:1.1rem; }
 nav.mnav a:hover, nav.mnav a.active { color:var(--teal); background:rgba(45,212,191,.09); }
 .user-sec { display:flex; align-items:center; gap:10px; margin-left:auto; }
-.btn-logout { background:rgba(239,68,68,.08); border:1px solid rgba(239,68,68,.2); color:#f87171; cursor:pointer; font-size:.8rem; font-weight:600; padding:6px 12px; border-radius:8px; transition:.25s; display:flex; align-items:center; gap:6px; }
-.btn-logout:hover { background:var(--danger); color:#fff; border-color:var(--danger); }
+
+
 main { flex-grow:1; max-width:1400px; width:100%; margin:0 auto; padding:28px 24px 100px; position:relative; z-index:1; }
 .pt { font-size:1.85rem; font-weight:700; letter-spacing:-.4px; background:linear-gradient(to right,#fff,#cbd5e1); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:4px; }
 .ps { color:var(--muted); font-size:.87rem; margin-bottom:20px; }
@@ -162,6 +162,28 @@ code { background:rgba(45,212,191,.1); color:var(--teal); padding:2px 6px; borde
             flex-shrink: 0;
             margin-right: 16px;
         }
+
+.btn-logout { 
+    background: linear-gradient(135deg, #ef4444, #b91c1c); 
+    color: #fff; 
+    border: none;
+    cursor: pointer; 
+    font-size: .85rem; 
+    font-weight: 700; 
+    padding: 8px 16px; 
+    border-radius: 10px; 
+    transition: .3s; 
+    display: flex; 
+    align-items: center; 
+    gap: 8px; 
+    box-shadow: 0 4px 15px rgba(239,68,68,0.35);
+}
+.btn-logout:hover { 
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(239,68,68,0.5);
+    filter: brightness(1.1);
+}
+
 </style>
 </head>
 <body>
