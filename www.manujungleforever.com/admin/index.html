@@ -1858,7 +1858,7 @@ window.savePax = async function(sIdx, pIdx, event) {
   btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
   
   try {
-    const res = await ghPut(cFile, JSON.stringify(cData, null, 2), null, \`update pax in: \${s.id}\`);
+    const res = await ghPut(cFile, JSON.stringify(cData, null, 2), null, `update pax in: ${s.id}`);
     cSha = res.sha;
     viewPax(sIdx);
     if(typeof viewDeps === 'function') viewDeps(); // Update main list in background
@@ -1881,7 +1881,7 @@ window.deletePax = async function(sIdx, pIdx) {
   btn.innerHTML = '🗑️...';
   
   try {
-    const res = await ghPut(cFile, JSON.stringify(cData, null, 2), null, \`delete pax in: \${s.id}\`);
+    const res = await ghPut(cFile, JSON.stringify(cData, null, 2), null, `delete pax in: ${s.id}`);
     cSha = res.sha;
     viewPax(sIdx);
     if(typeof viewDeps === 'function') viewDeps();
