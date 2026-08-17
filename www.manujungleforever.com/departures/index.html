@@ -263,7 +263,8 @@ window.renderPage = function(page) {
     if (!isSoldOut && s.plazas_disponibles <= 3 && s.plazas_disponibles > 0) {
       let mainColor = '#f59e0b'; // amber
       let strokeColor = '#fef08a'; // light yellow
-      let textLine2 = `SOLO ${s.plazas_disponibles}`;
+      let textLine1 = 'HURRY!';
+      let textLine2 = `ONLY ${s.plazas_disponibles}<br>LEFT`;
       let anim = 'transform-origin: center; animation: pulseBadge 1.5s infinite;';
       
       if (s.plazas_disponibles === 2) {
@@ -273,7 +274,8 @@ window.renderPage = function(page) {
         mainColor = '#dc2626'; // red
         strokeColor = '#fca5a5';
         anim = 'transform-origin: center; animation: pulseBadgeFast 0.8s infinite;';
-        textLine2 = `¡ÚLTIMA!`;
+        textLine1 = 'LAST';
+        textLine2 = `SPOT<br>AVAILABLE!`;
       }
       
       fomoAlertBadge = `
@@ -285,10 +287,10 @@ window.renderPage = function(page) {
           <svg viewBox="0 0 120 120" style="position:absolute; inset:0; width:100%; height:100%; z-index:-1;">
             <path d="M60.0,2.0 L70.9,19.4 L89.0,9.8 L89.7,30.3 L110.2,31.0 L100.6,49.1 L118.0,60.0 L100.6,70.9 L110.2,89.0 L89.7,89.7 L89.0,110.2 L70.9,100.6 L60.0,118.0 L49.1,100.6 L31.0,110.2 L30.3,89.7 L9.8,89.0 L19.4,70.9 L2.0,60.0 L19.4,49.1 L9.8,31.0 L30.3,30.3 L31.0,9.8 L49.1,19.4 Z" fill="${mainColor}" stroke="${strokeColor}" stroke-width="3" stroke-linejoin="round"/>
           </svg>
-          <div style="font-weight:900; color:#fff; font-size:1.05rem; line-height:1; text-transform:uppercase; text-shadow:1px 1px 0 rgba(0,0,0,0.5); text-align:center;">
-            OFERTA
+          <div style="font-weight:900; color:#fff; font-size:1.1rem; line-height:1; text-transform:uppercase; text-shadow:1px 1px 0 rgba(0,0,0,0.5); text-align:center;">
+            ${textLine1}
           </div>
-          <div style="font-weight:800; color:#fff; font-size:0.7rem; line-height:1; margin-top:2px; text-transform:uppercase; text-shadow:1px 1px 0 rgba(0,0,0,0.5); text-align:center;">
+          <div style="font-weight:800; color:#fff; font-size:0.75rem; line-height:1.2; margin-top:2px; text-transform:uppercase; text-shadow:1px 1px 0 rgba(0,0,0,0.5); text-align:center;">
             ${textLine2}
           </div>
         </div>
@@ -300,9 +302,9 @@ window.renderPage = function(page) {
         ${fomoAlertBadge}
         <div class="dep-c">
         <div style="padding:25px;flex:1;background:var(--surface)">
-          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px">
-            <div>${badgeHtml}</div>
-            <div style="text-align:right">
+          <div style="display:flex;align-items:flex-start;margin-bottom:20px;position:relative;">
+            <div style="position:absolute; left:50%; transform:translateX(-50%); top:0;">${badgeHtml}</div>
+            <div style="margin-left:auto;text-align:right">
               <div style="font-size:1.5rem;font-weight:800;color:var(--g);line-height:1">$${s.precio} <span style="font-size:.8rem;font-weight:600;color:var(--c)">${s.moneda||'USD'}</span></div>
               <div style="font-size:.7rem;color:var(--c);text-transform:uppercase;margin-top:4px">per person</div>
             </div>
