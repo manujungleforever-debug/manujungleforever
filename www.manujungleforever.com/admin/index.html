@@ -597,6 +597,8 @@ window.addCustomItem = function(selectId, promptMsg) {
 
 </script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
 </head>
 <body>
 
@@ -1742,6 +1744,7 @@ window.viewPax = function(idx) {
     <div style="display:flex;gap:10px">
       <button class="btn-primary" onclick="editPax(${idx}, -1)">+ Añadir Pasajero</button>
       <button class="btn-secondary" onclick="exportPaxCSV(${idx})">⬇️ Exportar CSV</button>
+      <button class="btn-secondary" onclick="exportPaxPDF(${idx})">📄 Exportar PDF</button>
     </div>
   </div>`;
   
@@ -1908,6 +1911,94 @@ window.exportPaxCSV = function(idx) {
   a.download = `pasajeros-${s.id}.csv`;
   a.click();
 };
+
+window.exportPaxPDF = function(idx) {
+  const s = cData.salidas[idx];
+  const pax = s.pasajeros || [];
+  if (pax.length === 0) return alert('No hay pasajeros registrados.');
+
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  
+  const img = new Image();
+  img.src = '../assets/img/logo.png';
+  img.onload = () => { generatePDF(img); };
+  img.onerror = () => { generatePDF(null); };
+
+  function generatePDF(logo) {
+    if (logo) {
+      doc.addImage(logo, 'PNG', 14, 10, 40, 40 * logo.height / logo.width);
+    }
+    
+    doc.setFontSize(16);
+    doc.setTextColor(15, 23, 42);
+    doc.text("MANIFIESTO DE PASAJEROS", 196, 25, { align: 'right' });
+    
+    doc.setFontSize(9);
+    doc.setTextColor(100);
+    const today = new Date().toLocaleDateString('es-PE', { year: 'numeric', month: 'long', day: 'numeric' });
+    doc.text(`Fecha de Emisión: ${today}`, 196, 31, { align: 'right' });
+    
+    let startY = 45;
+    doc.setFontSize(10);
+    doc.setTextColor(15, 23, 42);
+    
+    doc.setFont(undefined, 'bold');
+    doc.text("Tour:", 14, startY);
+    doc.setFont(undefined, 'normal');
+    doc.text(s.tour_nombre || 'No especificado', 28, startY);
+    
+    doc.setFont(undefined, 'bold');
+    doc.text("Fechas:", 14, startY + 7);
+    doc.setFont(undefined, 'normal');
+    doc.text(`${s.fecha_salida || 'TBD'} al ${s.fecha_retorno || 'TBD'}`, 32, startY + 7);
+    
+    doc.setFont(undefined, 'bold');
+    doc.text("ID Salida:", 110, startY);
+    doc.setFont(undefined, 'normal');
+    doc.text(s.id || '', 132, startY);
+    
+    doc.setFont(undefined, 'bold');
+    doc.text("Total Pasajeros:", 110, startY + 7);
+    doc.setFont(undefined, 'normal');
+    doc.text(pax.length.toString(), 145, startY + 7);
+    
+    doc.setFont(undefined, 'bold');
+    doc.text("Guía Asignado:", 14, startY + 14);
+    doc.setFont(undefined, 'normal');
+    doc.text(s.guia_asignado || 'No asignado', 45, startY + 14);
+    
+    const tableData = pax.map((p, i) => [
+      i + 1,
+      p.nombre_completo,
+      p.nacionalidad,
+      p.pasaporte,
+      p.restricciones_dieteticas || 'Ninguna',
+      p.condiciones_medicas || 'Ninguna',
+      p.whatsapp ? `WA: ${p.whatsapp}` : (p.email ? `E: ${p.email}` : '')
+    ]);
+    
+    doc.autoTable({
+      startY: startY + 22,
+      head: [['N°', 'Nombre', 'Nacional', 'Doc/Pasaporte', 'Dietas', 'Cond. Médicas', 'Contacto']],
+      body: tableData,
+      theme: 'grid',
+      headStyles: { fillColor: [13, 148, 136] },
+      styles: { fontSize: 8 },
+      didDrawPage: function(data) {
+        doc.setFontSize(8);
+        doc.text(
+          `Página ${doc.internal.getNumberOfPages()}`,
+          data.settings.margin.left,
+          doc.internal.pageSize.height - 10
+        );
+      }
+    });
+    
+    doc.save(`Manifiesto-${s.id}.pdf`);
+  }
+};
+
 
 async function viewDeps() {
   const data=await ghGet('www.manujungleforever.com/data/departures.json');
