@@ -434,19 +434,40 @@ async function ghGet(path) {
 }
 
 async function ghPut(path, content, sha, msg) {
-  const r = await fetch(`${API}/file`,{method:'PUT',headers:{Authorization:`Bearer ${token}`,'Content-Type':'application/json'},
-    body:JSON.stringify({path,content,sha,message:msg||`update: ${path}`})});
-  if (r.status===401){sessionStorage.clear();location.reload();}
-  const d=await r.json(); if(!r.ok)throw new Error(d.error||'Error al guardar');
-  return d;
-}
+    const r = await fetch(`${API}/file`,{method:'PUT',headers:{Authorization:`Bearer ${token}`,'Content-Type':'application/json'},
+      body:JSON.stringify({path,content,sha,message:msg||`update: ${path}`})});
+    if (r.status===401){sessionStorage.clear();location.reload();}
+    let d;
+    try { d = await r.json(); } catch(e) {
+      throw new Error("El servidor de GitHub no respondió correctamente (Timeout/503). Tu cambio podría haberse guardado en segundo plano. Por favor, recarga la página en unos segundos para verificar.");
+    }
+    if(!r.ok) {
+      let errStr = d.error || 'Error al guardar';
+      if (errStr.includes('No server is currently available') || errStr.includes('503')) {
+        errStr = "Los servidores de GitHub están saturados (Error 503). El cambio suele procesarse de todos modos en unos segundos. Por favor, recarga la página en breve para verificar.";
+      }
+      throw new Error(errStr);
+    }
+    return d;
+  }
 
 async function ghDelete(path, sha, msg) {
-  const r = await fetch(`${API}/file`,{method:'DELETE',headers:{Authorization:`Bearer ${token}`,'Content-Type':'application/json'},
-    body:JSON.stringify({path,sha,message:msg||`delete: ${path}`})});
-  const d=await r.json(); if(!r.ok)throw new Error(d.error||'Error al eliminar');
-  return d;
-}
+    const r = await fetch(`${API}/file`,{method:'DELETE',headers:{Authorization:`Bearer ${token}`,'Content-Type':'application/json'},
+      body:JSON.stringify({path,sha,message:msg||`delete: ${path}`})});
+    if (r.status===401){sessionStorage.clear();location.reload();}
+    let d;
+    try { d = await r.json(); } catch(e) {
+      throw new Error("El servidor de GitHub no respondió correctamente (Timeout/503). La eliminación podría haberse procesado en segundo plano. Recarga para verificar.");
+    }
+    if(!r.ok) {
+      let errStr = d.error || 'Error al eliminar';
+      if (errStr.includes('No server is currently available') || errStr.includes('503')) {
+        errStr = "Los servidores de GitHub están saturados (Error 503). El cambio suele procesarse de todos modos. Por favor, recarga la página en breve.";
+      }
+      throw new Error(errStr);
+    }
+    return d;
+  }
 
 // R2 Media API
 async function r2GetList() {
