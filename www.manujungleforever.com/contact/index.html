@@ -154,8 +154,8 @@
             <div>
               <div class="ci-label">Phone / WhatsApp</div>
               <div class="ci-val" id="dyn-contact-phones">
-                <a href="tel:+51979808013">+51 979 808 013</a><br>
-                <a href="https://api.whatsapp.com/send?phone=51923289231&text=Hello!%20I%20would%20like%20to%20learn%20more%20about%20your%20jungle%20trips" target="_blank" rel="noopener">+51 923 289 231</a>
+                <a href="tel:+51931022183">+51 931 022 183</a><br>
+                <a href="https://api.whatsapp.com/send?phone=51931022183&text=Hello!%20I%20would%20like%20to%20learn%20more%20about%20your%20jungle%20trips" target="_blank" rel="noopener">+51 923 289 231</a>
               </div>
             </div>
           </div>
@@ -164,17 +164,17 @@
             <div class="ci-icon"><i class="fas fa-envelope"></i></div>
             <div>
               <div class="ci-label">Email</div>
-              <div class="ci-val"><a href="mailto:discover@manujungleforever.com">discover@manujungleforever.com</a></div>
+              <div class="ci-val"><a href="mailto:discover@manujungleforever.com" id="dyn-contact-email">discover@manujungleforever.com</a></div>
             </div>
           </div>
 
           <div class="contact-info-item">
             <div class="ci-icon"><i class="fas fa-map-marker-alt"></i></div>
             <div>
-              <div class="ci-label">Location</div>
+              <div class="ci-label">Location / Base</div>
               <div class="ci-val">
-                <a href="https://goo.gl/maps/B8NjhLZizA6YKwKD6" target="_blank" rel="noopener">
-                  Fitzcarrald 17800<br>Nuevo Eden, Peru
+                <a href="https://goo.gl/maps/B8NjhLZizA6YKwKD6" target="_blank" rel="noopener" id="dyn-contact-location">
+                  Manu Jungle Forever – La Casa Escondida<br>Fitzcarrald 17800, Nuevo Eden, Peru
                 </a>
               </div>
             </div>
@@ -183,8 +183,11 @@
           <div class="contact-info-item">
             <div class="ci-icon"><i class="fas fa-clock"></i></div>
             <div>
-              <div class="ci-label">Response Time</div>
-              <div class="ci-val">We typically reply within 24 hours</div>
+              <div class="ci-label">Office Hours</div>
+              <div class="ci-val" id="dyn-contact-hours">
+                Monday – Sunday: 8:00 AM – 8:00 PM (Peru Time)<br>
+                <span style="font-size:0.82rem; color:rgba(255,255,255,0.6)">We typically respond within 24 hours</span>
+              </div>
             </div>
           </div>
 
@@ -193,7 +196,7 @@
             <a href="https://www.instagram.com/manujungleforever/?hl=en" class="soc-btn" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
             <a href="https://www.tripadvisor.com/Attraction_Review-g294314-d17476586-Reviews-Hidden_Jungle_Cusco-Cusco_Cusco_Region.html" class="soc-btn" target="_blank" rel="noopener" aria-label="TripAdvisor"><i class="custom-tripadvisor-icon"></i></a>
             <a href="https://abnb.me/Ri8XQWoA19" class="soc-btn" target="_blank" rel="noopener" aria-label="Airbnb"><i class="fab fa-airbnb"></i></a>
-            <a href="https://wa.me/51923289231" class="soc-btn" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://wa.me/51931022183" class="soc-btn" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
             <a href="https://www.tiktok.com/@hidden.jungle.cus" class="soc-btn" target="_blank" rel="noopener" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
           </div>
         </div>
@@ -201,7 +204,7 @@
         <!-- Map -->
         <div class="map-container">
           <iframe
-            src="https://www.google.com/maps/d/embed?mid=12fWz1M5jmQ0jd8rUJY0VUfi6KnRmvnc"
+            src="https://www.google.com/maps/d/embed?mid=1CkYt9KUrq9Jjp9tgxChYmOYvyNaLZnxF"
             width="100%"
             height="350"
             style="border:0;"
@@ -222,7 +225,7 @@
             <div class="fr"><label>Your Name(s) <span class="req">*</span></label><input type="text" name="traveler_name" placeholder="e.g. John &amp; Jane Doe" required></div>
             <div class="f2c">
               <div class="fr"><label>Email <span class="req">*</span></label><input type="email" name="email" placeholder="john@example.com" required></div>
-              <div class="fr"><label>Phone / WhatsApp <span class="req">*</span></label><input type="tel" name="phone" placeholder="+51 901 525 679" required></div>
+              <div class="fr"><label>Phone / WhatsApp <span class="req">*</span></label><input type="tel" name="phone" placeholder="+51 931 022 183" required></div>
             </div>
             <div class="fr"><label>Tour Type <span class="req">*</span></label>
               <select name="tour_type" required>
@@ -514,12 +517,15 @@ document.addEventListener("DOMContentLoaded", function() {
         }
       }
       const dir = cData.direccion || {};
-      if (dir.calle || dir.localidad || dir.nombre) {
-        const locLink = document.querySelector('.contact-info-item a[href*="maps"]');
+      if (dir.calle || dir.localidad || dir.nombre || dir.pais) {
+        const locLink = document.getElementById('dyn-contact-location') || document.querySelector('.contact-info-item a[href*="maps"]');
         if (locLink) {
           if (dir.maps_url) locLink.href = dir.maps_url;
-          const locText = [dir.nombre, [dir.calle, dir.localidad, dir.pais].filter(Boolean).join(', ')].filter(Boolean).join('<br>');
-          locLink.innerHTML = locText;
+          const locParts = [];
+          if (dir.nombre) locParts.push(dir.nombre);
+          const subParts = [dir.calle, dir.localidad, dir.pais].filter(Boolean).join(', ');
+          if (subParts) locParts.push(subParts);
+          locLink.innerHTML = locParts.join('<br>');
         }
       }
       if (dir.maps_embed) {
@@ -527,12 +533,16 @@ document.addEventListener("DOMContentLoaded", function() {
         if (mapIframe) mapIframe.src = dir.maps_embed;
       }
       const hor = cData.horario || {};
-      if (hor.nota || hor.dias || hor.horas) {
-        const timeItems = document.querySelectorAll('.contact-info-item .ci-val');
-        if (timeItems && timeItems.length >= 4) {
-          const parts = [hor.dias ? `${hor.dias}: ${hor.horas || ''}` : '', hor.nota || ''].filter(Boolean);
-          if (parts.length) timeItems[3].innerHTML = parts.join('<br>');
+      const hoursEl = document.getElementById('dyn-contact-hours');
+      if (hoursEl && (hor.dias || hor.horas || hor.nota)) {
+        let hParts = [];
+        if (hor.dias || hor.horas) {
+          hParts.push(`<strong>${hor.dias || 'Monday – Sunday'}</strong>: ${hor.horas || '8:00 AM – 8:00 PM (Peru Time)'}`);
         }
+        if (hor.nota) {
+          hParts.push(`<span style="font-size:0.82rem; color:rgba(255,255,255,0.6)">${hor.nota}</span>`);
+        }
+        hoursEl.innerHTML = hParts.join('<br>');
       }
       if (t1) {
         const phoneInput = document.querySelector('input[name="phone"]');
