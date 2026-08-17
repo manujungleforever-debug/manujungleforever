@@ -1326,7 +1326,8 @@ window.viewPax = function(idx) {
   if (pax.length === 0) {
     html += `<div style="padding:20px;text-align:center;color:var(--muted);background:rgba(255,255,255,.02);border-radius:8px">No hay pasajeros registrados para esta salida.</div>`;
   } else {
-    html += `<table style="width:100%;text-align:left;border-collapse:collapse;font-size:.85rem;">
+    html += `<div style="overflow-x:auto;width:100%;">
+      <table style="width:100%;text-align:left;border-collapse:collapse;font-size:.85rem;min-width:600px;">
       <tr style="border-bottom:1px solid rgba(255,255,255,.1);color:var(--muted)">
         <th style="padding:8px;width:50px">Foto</th>
         <th style="padding:8px">Nombre / Pasaporte</th>
@@ -1353,7 +1354,7 @@ window.viewPax = function(idx) {
         </td>
       </tr>`;
     });
-    html += `</table>`;
+    html += `</table></div>`;
   }
   
   document.getElementById('pax-modal-body').innerHTML = html;
@@ -1501,129 +1502,197 @@ window.exportPaxPDF = async function(idx) {
   const pax = s.pasajeros || [];
   if (pax.length === 0) return alert('No hay pasajeros registrados.');
 
-  // Visual loading state
   const btn = event.currentTarget;
   const oldText = btn.innerHTML;
   btn.innerHTML = 'Cargando...';
   btn.disabled = true;
 
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
-  
-  // Preload logo
-  const logoP = new Promise(resolve => {
-    const img = new Image();
-    img.src = '../assets/img/logomjf.png';
-    img.onload = () => resolve(img);
-    img.onerror = () => resolve(null);
-  });
+  try {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    
+    // Utility to prevent image loads from hanging forever
+    const withTimeout = (promise, ms) => {
+      let timeoutId;
+      const timeoutPromise = new Promise((_, reject) => {
+        timeoutId = setTimeout(() => { reject(new Error('Timeout')); }, ms);
+      });
+      return Promise.race([promise, timeoutPromise]).finally(() => clearTimeout(timeoutId));
+    };
 
-  // Preload passenger photos
-  const photoPs = pax.map(p => {
-    if (!p.foto) return Promise.resolve(null);
-    return new Promise(resolve => {
-      const im = new Image();
-      im.crossOrigin = 'Anonymous';
-      im.src = p.foto;
-      im.onload = () => resolve({url: p.foto, img: im});
-      im.onerror = () => resolve(null);
+    // Preload logo
+    const logoP = withTimeout(new Promise(resolve => {
+      const img = new Image();
+      img.src = '../assets/img/logomjf.png';
+      img.onload = () => resolve(img);
+      img.onerror = () => resolve(null);
+    }), 5000).catch(() => null);
+
+    // Preload passenger photos
+    const photoPs = pax.map(p => {
+      if (!p.foto) return Promise.resolve(null);
+      return withTimeout(new Promise(resolve => {
+        const im = new Image();
+        im.crossOrigin = 'Anonymous';
+        im.src = p.foto;
+        im.onload = () => resolve({url: p.foto, img: im});
+        im.onerror = () => resolve(null);
+      }), 5000).catch(() => null);
     });
-  });
 
-  const [logoImg, ...loadedPhotos] = await Promise.all([logoP, ...photoPs]);
-  
-  const imgMap = {};
-  loadedPhotos.forEach(im => { if(im) imgMap[im.url] = im.img; });
+    const [logoImg, ...loadedPhotos] = await Promise.all([logoP, ...photoPs]);
+    const imgMap = {};
+    loadedPhotos.forEach(im => { if(im) imgMap[im.url] = im.img; });
 
-  if (logoImg) {
-    const imgW = 40;
-    const imgH = 40 * logoImg.height / logoImg.width;
-    doc.addImage(logoImg, 'PNG', 14, 10, imgW, imgH);
-  }
-  
-  doc.setFontSize(16);
-  doc.setTextColor(15, 23, 42);
-  doc.text("MANIFIESTO DE PASAJEROS", 196, 25, { align: 'right' });
-  
-  doc.setFontSize(9);
-  doc.setTextColor(100);
-  const today = new Date().toLocaleDateString('es-PE', { year: 'numeric', month: 'long', day: 'numeric' });
-  doc.text(`Fecha de Emisión: ${today}`, 196, 31, { align: 'right' });
-  
-  let startY = 45;
-  doc.setFontSize(10);
-  doc.setTextColor(15, 23, 42);
-  
-  doc.setFont(undefined, 'bold');
-  doc.text("Tour:", 14, startY);
-  doc.setFont(undefined, 'normal');
-  doc.text(s.tour_nombre || 'No especificado', 28, startY);
-  
-  doc.setFont(undefined, 'bold');
-  doc.text("Fechas:", 14, startY + 7);
-  doc.setFont(undefined, 'normal');
-  doc.text(`${s.fecha_salida || 'TBD'} al ${s.fecha_retorno || 'TBD'}`, 32, startY + 7);
-  
-  doc.setFont(undefined, 'bold');
-  doc.text("ID Salida:", 110, startY);
-  doc.setFont(undefined, 'normal');
-  doc.text(s.id || '', 132, startY);
-  
-  doc.setFont(undefined, 'bold');
-  doc.text("Total Pasajeros:", 110, startY + 7);
-  doc.setFont(undefined, 'normal');
-  doc.text(pax.length.toString(), 145, startY + 7);
-  
-  doc.setFont(undefined, 'bold');
-  doc.text("Guía Asignado:", 14, startY + 14);
-  doc.setFont(undefined, 'normal');
-  doc.text(s.guia_asignado || 'No asignado', 45, startY + 14);
-  
-  const tableData = pax.map((p, i) => [
-    i + 1,
-    '', // Photo column placeholder
-    p.nombre_completo,
-    p.nacionalidad,
-    p.pasaporte,
-    p.restricciones_dieteticas || 'Ninguna',
-    p.condiciones_medicas || 'Ninguna',
-    p.whatsapp ? `WA: ${p.whatsapp}` : (p.email ? `E: ${p.email}` : '')
-  ]);
-  
-  doc.autoTable({
-    startY: startY + 22,
-    head: [['N°', 'Foto', 'Nombre', 'Nacional', 'Doc/Pasaporte', 'Dietas', 'Cond. Médicas', 'Contacto']],
-    body: tableData,
-    theme: 'grid',
-    headStyles: { fillColor: [13, 148, 136] },
-    styles: { fontSize: 8, valign: 'middle' },
-    columnStyles: { 1: { cellWidth: 15, minCellHeight: 15 } }, // Make photo cell square
-    didDrawCell: function(data) {
-      if (data.section === 'body' && data.column.index === 1) {
-        const rowData = pax[data.row.index];
-        if (rowData && rowData.foto && imgMap[rowData.foto]) {
-          // Draw image centered in the cell
-          const dim = 12;
-          const x = data.cell.x + (data.cell.width - dim) / 2;
-          const y = data.cell.y + (data.cell.height - dim) / 2;
-          doc.addImage(imgMap[rowData.foto], 'JPEG', x, y, dim, dim);
-        }
-      }
-    },
-    didDrawPage: function(data) {
-      doc.setFontSize(8);
-      doc.text(
-        `Página ${doc.internal.getNumberOfPages()}`,
-        data.settings.margin.left,
-        doc.internal.pageSize.height - 10
-      );
+    // --- HEADER ---
+    if (logoImg) {
+      const imgW = 40;
+      const imgH = 40 * logoImg.height / logoImg.width;
+      doc.addImage(logoImg, 'PNG', 14, 10, imgW, imgH);
     }
-  });
-  
-  doc.save(`Manifiesto-${s.id}.pdf`);
-  
-  btn.innerHTML = oldText;
-  btn.disabled = false;
+
+    doc.setFontSize(10);
+    doc.setTextColor(100);
+    doc.text("info@manujungleforever.com", 196, 14, { align: 'right' });
+    doc.text("www.manujungleforever.com", 196, 19, { align: 'right' });
+
+    doc.setFontSize(16);
+    doc.setTextColor(15, 23, 42); // slate-900
+    doc.text("MANIFIESTO DE PASAJEROS", 14, 35);
+    
+    // --- INFO BLOCK ---
+    doc.setFillColor(248, 250, 252); // slate-50
+    doc.setDrawColor(226, 232, 240); // slate-200
+    doc.roundedRect(14, 40, 182, 25, 2, 2, 'FD');
+
+    doc.setFontSize(10);
+    doc.setTextColor(15, 23, 42);
+    
+    doc.setFont(undefined, 'bold');
+    doc.text("Tour:", 18, 48);
+    doc.setFont(undefined, 'normal');
+    doc.text(s.tour_nombre || 'No especificado', 32, 48);
+    
+    doc.setFont(undefined, 'bold');
+    doc.text("Fechas:", 18, 55);
+    doc.setFont(undefined, 'normal');
+    doc.text(`${s.fecha_salida || 'TBD'} al ${s.fecha_retorno || 'TBD'}`, 36, 55);
+
+    doc.setFont(undefined, 'bold');
+    doc.text("ID Salida:", 110, 48);
+    doc.setFont(undefined, 'normal');
+    doc.text(s.id || '', 132, 48);
+    
+    doc.setFont(undefined, 'bold');
+    doc.text("Total Pasajeros:", 110, 55);
+    doc.setFont(undefined, 'normal');
+    doc.text(pax.length.toString(), 145, 55);
+
+    doc.setFont(undefined, 'bold');
+    doc.text("Guía Asignado:", 18, 62);
+    doc.setFont(undefined, 'normal');
+    doc.text(s.guia_asignado || 'No asignado', 48, 62);
+
+    let totalPagado = 0;
+    let totalSaldo = 0;
+
+    const tableData = pax.map((p, i) => {
+      totalPagado += (p.monto_pagado || 0);
+      totalSaldo += (p.saldo_pendiente || 0);
+      return [
+        i + 1,
+        '', // Foto placeholder
+        p.nombre_completo,
+        p.nacionalidad,
+        p.pasaporte,
+        p.restricciones_dieteticas || 'Ninguna',
+        p.condiciones_medicas || 'Ninguna',
+        p.whatsapp ? `WA: ${p.whatsapp}` : (p.email ? `E: ${p.email}` : '')
+      ];
+    });
+
+    // --- MAIN TABLE ---
+    doc.autoTable({
+      startY: 70,
+      head: [['N°', 'Foto', 'Nombre', 'Nacional', 'Doc/Pasaporte', 'Dietas', 'Cond. Médicas', 'Contacto']],
+      body: tableData,
+      theme: 'grid',
+      headStyles: { fillColor: [13, 148, 136], textColor: 255 }, // teal-600
+      alternateRowStyles: { fillColor: [248, 250, 252] },
+      styles: { fontSize: 8, valign: 'middle', cellPadding: 3 },
+      columnStyles: { 1: { cellWidth: 14, minCellHeight: 14 } },
+      didParseCell: function(data) {
+        if (data.section === 'body') {
+           if (data.column.index === 5 || data.column.index === 6) {
+             const val = data.cell.raw || '';
+             if (val.toLowerCase() !== 'ninguna' && val !== '-' && val !== '') {
+                data.cell.styles.textColor = [220, 38, 38]; // red-600
+                data.cell.styles.fontStyle = 'bold';
+             }
+           }
+        }
+      },
+      didDrawCell: function(data) {
+        if (data.section === 'body' && data.column.index === 1) {
+          const rowData = pax[data.row.index];
+          if (rowData && rowData.foto && imgMap[rowData.foto]) {
+            const dim = 10;
+            const x = data.cell.x + (data.cell.width - dim) / 2;
+            const y = data.cell.y + (data.cell.height - dim) / 2;
+            doc.addImage(imgMap[rowData.foto], 'JPEG', x, y, dim, dim);
+          }
+        }
+      },
+      didDrawPage: function(data) {
+        // FOOTER
+        doc.setFontSize(8);
+        doc.setTextColor(150);
+        const now = new Date();
+        const timestamp = now.toLocaleString('es-PE');
+        doc.text(`Generado: ${timestamp}`, data.settings.margin.left, doc.internal.pageSize.height - 10);
+        doc.text(
+          `Página ${doc.internal.getNumberOfPages()}`,
+          doc.internal.pageSize.width - data.settings.margin.right,
+          doc.internal.pageSize.height - 10,
+          { align: 'right' }
+        );
+      }
+    });
+
+    // --- FINANCIAL SUMMARY ---
+    const finalY = doc.lastAutoTable.finalY + 10;
+    
+    // Add page if it doesn't fit
+    if (finalY > doc.internal.pageSize.height - 30) {
+      doc.addPage();
+    }
+    
+    doc.setFillColor(248, 250, 252);
+    doc.setDrawColor(226, 232, 240);
+    doc.roundedRect(120, finalY, 76, 22, 2, 2, 'FD');
+    
+    doc.setFontSize(9);
+    doc.setTextColor(15, 23, 42);
+    doc.setFont(undefined, 'bold');
+    doc.text("Resumen Financiero del Grupo", 125, finalY + 6);
+    
+    doc.setFont(undefined, 'normal');
+    doc.text("Total Pagado:", 125, finalY + 13);
+    doc.text(`$${totalPagado.toFixed(2)}`, 190, finalY + 13, { align: 'right' });
+    
+    doc.setFont(undefined, 'bold');
+    doc.setTextColor(220, 38, 38); // red
+    doc.text("Saldo Pendiente:", 125, finalY + 19);
+    doc.text(`$${totalSaldo.toFixed(2)}`, 190, finalY + 19, { align: 'right' });
+
+    doc.save(`Manifiesto-${s.id}.pdf`);
+  } catch(e) {
+    console.error(e);
+    alert('Error al generar PDF: ' + e.message);
+  } finally {
+    btn.innerHTML = oldText;
+    btn.disabled = false;
+  }
 };
 
 async function viewDeps() {
