@@ -259,30 +259,46 @@ window.renderPage = function(page) {
     const waLink = `https://api.whatsapp.com/send?phone=51901525679&text=${encodeURIComponent(msg)}`;
     const isSoldOut = s.estado === 'completo' || pct >= 100;
     
-    let fomoAlertHtml = '';
+    let fomoAlertBadge = '';
     if (!isSoldOut && s.plazas_disponibles <= 3 && s.plazas_disponibles > 0) {
-      let bg = '#f59e0b'; // amber-500
-      let text = `⚡ HURRY! ONLY ${s.plazas_disponibles} SPOTS LEFT!`;
-      let anim = '';
+      let mainColor = '#f59e0b'; // amber
+      let strokeColor = '#fef08a'; // light yellow
+      let textLine2 = `SOLO ${s.plazas_disponibles}`;
+      let anim = 'transform-origin: center; animation: pulseBadge 1.5s infinite;';
+      
       if (s.plazas_disponibles === 2) {
-        bg = '#ea580c'; // orange-600
-        text = `🔥 ALMOST FULL! ONLY 2 SPOTS LEFT!`;
+        mainColor = '#ea580c'; // orange
+        strokeColor = '#fde68a'; 
       } else if (s.plazas_disponibles === 1) {
-        bg = '#ef4444'; // red-500
-        text = `🚨 LAST SPOT AVAILABLE! 🚨`;
-        anim = 'animation: fomoPulse 1s infinite;';
+        mainColor = '#dc2626'; // red
+        strokeColor = '#fca5a5';
+        anim = 'transform-origin: center; animation: pulseBadgeFast 0.8s infinite;';
+        textLine2 = `¡ÚLTIMA!`;
       }
       
-      fomoAlertHtml = `
-        <style>@keyframes fomoPulse { 0%, 100% { transform: scale(1); opacity: 1; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4); } 50% { transform: scale(1.03); opacity: 0.9; box-shadow: 0 8px 20px rgba(239, 68, 68, 0.6); } }</style>
-        <div style="background:${bg};color:#fff;padding:12px;border-radius:8px;margin-bottom:20px;font-weight:800;text-align:center;font-size:0.95rem;letter-spacing:0.5px;box-shadow:0 4px 12px rgba(0,0,0,0.15);${anim}display:flex;align-items:center;justify-content:center;gap:8px;text-transform:uppercase">
-          ${text}
+      fomoAlertBadge = `
+        <style>
+          @keyframes pulseBadge { 0%, 100% { transform: scale(1) rotate(-10deg); } 50% { transform: scale(1.05) rotate(-10deg); } }
+          @keyframes pulseBadgeFast { 0%, 100% { transform: scale(1) rotate(-10deg); } 50% { transform: scale(1.1) rotate(-10deg); } }
+        </style>
+        <div style="position:absolute; top:-18px; left:-14px; z-index:10; width:110px; height:110px; display:flex; align-items:center; justify-content:center; flex-direction:column; ${anim} filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3)); pointer-events:none;">
+          <svg viewBox="0 0 120 120" style="position:absolute; inset:0; width:100%; height:100%; z-index:-1;">
+            <path d="M60.0,2.0 L70.9,19.4 L89.0,9.8 L89.7,30.3 L110.2,31.0 L100.6,49.1 L118.0,60.0 L100.6,70.9 L110.2,89.0 L89.7,89.7 L89.0,110.2 L70.9,100.6 L60.0,118.0 L49.1,100.6 L31.0,110.2 L30.3,89.7 L9.8,89.0 L19.4,70.9 L2.0,60.0 L19.4,49.1 L9.8,31.0 L30.3,30.3 L31.0,9.8 L49.1,19.4 Z" fill="${mainColor}" stroke="${strokeColor}" stroke-width="3" stroke-linejoin="round"/>
+          </svg>
+          <div style="font-weight:900; color:#fff; font-size:1.05rem; line-height:1; text-transform:uppercase; text-shadow:1px 1px 0 rgba(0,0,0,0.5); text-align:center;">
+            OFERTA
+          </div>
+          <div style="font-weight:800; color:#fff; font-size:0.7rem; line-height:1; margin-top:2px; text-transform:uppercase; text-shadow:1px 1px 0 rgba(0,0,0,0.5); text-align:center;">
+            ${textLine2}
+          </div>
         </div>
       `;
     }
     
     html += `
-      <div class="dep-c">
+      <div style="position:relative; z-index:1;">
+        ${fomoAlertBadge}
+        <div class="dep-c">
         <div style="padding:25px;flex:1;background:var(--surface)">
           <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px">
             <div>${badgeHtml}</div>
@@ -297,8 +313,6 @@ window.renderPage = function(page) {
           <div style="color:var(--g);font-size:1.05rem;font-weight:600;margin-bottom:20px;display:flex;align-items:center;gap:10px;background:rgba(0,46,36,0.04);padding:10px 14px;border-radius:8px">
             <i class="far fa-calendar-alt" style="color:var(--a)"></i> ${dateText}
           </div>
-
-          ${fomoAlertHtml}
 
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;font-size:0.85rem;color:var(--g);">
             <div style="background:rgba(0,0,0,0.02);padding:10px;border-radius:6px;border:1px solid rgba(0,0,0,0.04)">
@@ -326,6 +340,7 @@ window.renderPage = function(page) {
              <i class="fa-brands fa-whatsapp" style="font-size:1.1rem"></i> ${isSoldOut?'Sold Out':'Inquire by WhatsApp'}
            </a>
         </div>
+      </div>
       </div>
     `;
   });
