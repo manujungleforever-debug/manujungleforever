@@ -10,8 +10,8 @@
       "moneda": "USD",
       "plazas_totales": 6,
       "plazas_minimas": 4,
-      "plazas_disponibles": 2,
-      "estado": "limitado",
+      "plazas_disponibles": 3,
+      "estado": "disponible",
       "guia_asignado": "Jordy Llaqui",
       "notas": "prueba1",
       "pasajeros": []
