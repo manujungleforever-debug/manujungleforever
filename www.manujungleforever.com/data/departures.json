@@ -33,19 +33,18 @@
       "chofer_asignado": null,
       "pasajeros": [
         {
-          "id": "pax-dep-010-0",
           "nombre_completo": "Pasajero de Prueba 1",
           "nacionalidad": "US",
+          "fecha_nacimiento": "",
           "pasaporte": "P100000",
           "whatsapp": "+1234567890",
           "email": "test0@example.com",
           "restricciones_dieteticas": "Vegetariano",
           "condiciones_medicas": "",
-          "monto_total": 1200,
+          "estado_pago": "pagado",
           "monto_pagado": 1200,
           "saldo_pendiente": 0,
-          "estado_pago": "pagado",
-          "metodo_reserva": "web"
+          "foto": "/media/1786595275420-libro-reclamaciones.png"
         },
         {
           "id": "pax-dep-010-1",
