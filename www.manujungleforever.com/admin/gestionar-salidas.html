@@ -1908,8 +1908,12 @@ async function viewDeps() {
           <div style="flex:1">
             <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
               <div>
-                <h3 style="margin-bottom:4px;font-size:1.05rem">${s.tour_nombre} <span class="badge ${stCls}" style="vertical-align:middle;font-size:0.6rem">${s.estado.toUpperCase()}</span></h3>
-                <span style="font-size:.8rem;color:var(--muted)">${s.fecha_salida} ➔ ${s.fecha_regreso} &nbsp;|&nbsp; ID: ${s.id}</span>
+                <h3 style="margin-bottom:4px;font-size:1.05rem;display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+                    <span style="background:var(--teal);color:#020617;padding:3px 10px;border-radius:6px;font-size:0.85rem;font-weight:800;letter-spacing:0.5px;box-shadow:0 2px 8px rgba(45,212,191,0.2);">ID: ${(s.id || '').toUpperCase()}</span>
+                    ${s.tour_nombre} 
+                    <span class="badge ${stCls}" style="vertical-align:middle;font-size:0.6rem">${s.estado.toUpperCase()}</span>
+                  </h3>
+                  <span style="font-size:.8rem;color:var(--muted)"><i class="ph ph-calendar"></i> ${s.fecha_salida || 'Sin fecha'} → ${s.fecha_regreso || 'Sin fecha'}</span>
               </div>
               <div style="text-align:right">
                 <div style="font-weight:bold;color:var(--gold);font-size:1.1rem">$${s.precio} ${s.moneda||'USD'}</div>
@@ -2615,6 +2619,8 @@ window.deleteTestim = async function(idx) {
 </script>
 </body>
 </html>
+
+
 
 
 
