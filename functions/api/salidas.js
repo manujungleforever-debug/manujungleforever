@@ -16,11 +16,13 @@ export async function onRequestGet(context) {
   // URL to fetch raw JSON content via GitHub API
   const url = `https://api.github.com/repos/manujungleforever-debug/manujungleforever/contents/www.manujungleforever.com/data/departures.json`;
   
+  const token = env.GH_TOKEN || env.GITHUB_TOKEN;
+  
   try {
     const res = await fetch(url, {
       headers: {
         'User-Agent': 'Cloudflare-Worker',
-        'Authorization': `Bearer ${env.GITHUB_TOKEN}`,
+        'Authorization': `Bearer ${token}`,
         'Accept': 'application/vnd.github.v3+json'
       }
     });
