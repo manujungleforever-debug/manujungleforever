@@ -1339,24 +1339,24 @@ window.viewPax = function(idx) {
           <th style="padding:0 15px 10px 15px;border-bottom:1px solid rgba(255,255,255,0.1)">Pago</th>
           <th style="padding:0 15px 10px 15px;text-align:right;border-bottom:1px solid rgba(255,255,255,0.1)">Acciones</th>
         </tr>`;
-    pax.forEach((p, pIdx) => {
-      html += `<tr style="border-bottom:1px solid rgba(255,255,255,.05)">
-        <td style="padding:8px">
-          ${p.foto ? `<img src="${p.foto}" style="width:40px;height:40px;border-radius:50%;object-fit:cover">` : `<div style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;color:var(--muted)"><i class="ph ph-user"></i></div>`}
-        </td>
-        <td style="padding:8px"><strong>${p.nombre_completo}</strong><br><span style="color:var(--muted)">${p.nacionalidad} - ${p.pasaporte}</span></td>
-        <td style="padding:8px"><a href="https://wa.me/${(p.whatsapp||'').replace(/[^0-9]/g,'')}" target="_blank" style="color:var(--teal)">${p.whatsapp||'-'}</a><br><span style="color:var(--muted)">${p.email||'-'}</span></td>
-        <td style="padding:8px;color:#fbbf24">${p.restricciones_dieteticas || '-'}<br>${p.condiciones_medicas || '-'}</td>
-        <td style="padding:8px">
-          <span class="badge ${p.estado_pago==='pagado'?'on':(p.estado_pago==='pendiente'?'err':'warn')}">${p.estado_pago||'pendiente'}</span><br>
-          <span style="color:var(--muted)">Pagado: $${p.monto_pagado||0} / Saldo: $${p.saldo_pendiente||0}</span>
-        </td>
-        <td style="padding:8px;text-align:right">
-          <button onclick="editPax(${idx}, ${pIdx})" class="btn-secondary" style="padding:4px 8px;font-size:0.75rem;margin-bottom:4px;width:100%">✏️ Editar</button><br>
-          <button onclick="deletePax(${idx}, ${pIdx})" class="btn-danger" style="padding:4px 8px;font-size:0.75rem;width:100%">🗑️ Eliminar</button>
-        </td>
-      </tr>`;
-    });
+          pax.forEach((p, pIdx) => {
+        html += `<tr style="background:rgba(255,255,255,0.02);box-shadow:0 4px 12px rgba(0,0,0,0.1);transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.background='rgba(255,255,255,0.02)'">
+          <td style="padding:15px;border-radius:12px 0 0 12px;vertical-align:middle;">
+            ${p.foto ? `<img src="${p.foto}" style="width:65px;height:65px;border-radius:50%;object-fit:cover;border:2px solid rgba(45,212,191,0.3);box-shadow:0 0 10px rgba(45,212,191,0.15)">` : `<div style="width:65px;height:65px;border-radius:50%;background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;color:var(--muted);border:2px solid rgba(255,255,255,0.05);font-size:1.5rem;"><i class="ph ph-user"></i></div>`}
+          </td>
+          <td style="padding:15px;vertical-align:middle;"><strong>${p.nombre_completo}</strong><br><span style="color:var(--muted)">${p.nacionalidad} - ${p.pasaporte}</span></td>
+          <td style="padding:15px;vertical-align:middle;"><a href="https://wa.me/${(p.whatsapp||'').replace(/[^0-9]/g,'')}" target="_blank" style="color:var(--teal)">${p.whatsapp||'-'}</a><br><span style="color:var(--muted)">${p.email||'-'}</span></td>
+          <td style="padding:15px;color:#fbbf24;vertical-align:middle;">${p.restricciones_dieteticas || '-'}<br>${p.condiciones_medicas || '-'}</td>
+          <td style="padding:15px;vertical-align:middle;">
+            <span class="badge ${p.estado_pago==='pagado'?'on':(p.estado_pago==='pendiente'?'err':'warn')}">${p.estado_pago||'pendiente'}</span><br>
+            <span style="color:var(--muted)">Pagado: ${p.monto_pagado||0} / Saldo: ${p.saldo_pendiente||0}</span>
+          </td>
+          <td style="padding:15px;border-radius:0 12px 12px 0;vertical-align:middle;display:flex;flex-direction:column;gap:8px;align-items:flex-end">
+            <button style="background:rgba(16,185,129,0.1);color:#34d399;border:1px solid rgba(16,185,129,0.3);border-radius:8px;width:110px;font-size:0.85rem;padding:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:background 0.2s;" onmouseover="this.style.background='rgba(16,185,129,0.2)'" onmouseout="this.style.background='rgba(16,185,129,0.1)'" onclick="editPax(${idx}, ${pIdx})">✏️ Editar</button>
+            <button style="background:rgba(239,68,68,0.1);color:#ef4444;border:1px solid rgba(239,68,68,0.3);border-radius:8px;width:110px;font-size:0.85rem;padding:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:background 0.2s;" onmouseover="this.style.background='rgba(239,68,68,0.2)'" onmouseout="this.style.background='rgba(239,68,68,0.1)'" onclick="deletePax(${idx}, ${pIdx})">🗑️ Eliminar</button>
+          </td>
+        </tr>`;
+      });
     html += `</table></div>`;
   }
   
@@ -2520,6 +2520,7 @@ window.deleteTestim = async function(idx) {
 </script>
 </body>
 </html>
+
 
 
 
