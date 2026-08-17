@@ -14,6 +14,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous">
 <link rel="stylesheet" href="assets/css/new.css">
+<style>
+.hv iframe { position: absolute; top: 50%; left: 50%; width: 100vw; height: 56.25vw; min-height: 100%; min-width: 177.77vh; transform: translate(-50%, -50%); pointer-events: none; border: 0; }
+</style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"TouristAttraction","name":"Manu Jungle Forever","url":"https://www.manujungleforever.com/","description":"Guided tours from Cusco to the Manu National Park in the Peruvian Amazon.","telephone":"+51901525679","email":"discover@manujungleforever.com","address":{"@type":"PostalAddress","addressLocality":"Nuevo Eden","addressCountry":"PE"},"sameAs":["https://www.facebook.com/manujungleforever","https://www.instagram.com/manujungleforever/","https://www.tripadvisor.com/Attraction_Review-g294314-d17476586-Reviews-Hidden_Jungle_Cusco-Cusco_Cusco_Region.html"]}</script>
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-5476BC9');</script>
 </head><body>
@@ -132,7 +135,7 @@
 <main id="main">
 
 <section class="hero" style="background: url('assets/img/hero.png') no-repeat center center/cover;">
-  <div class="hv"></div>
+  <div class="hv"><iframe src="https://www.youtube-nocookie.com/embed/osF2gQHSCdo?autoplay=1&mute=1&loop=1&playlist=osF2gQHSCdo&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1&enablejsapi=1&start=4&end=56" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
   <div class="ho"></div>
   <div class="cx hb">
     <p class="ht"><i class="fas fa-map-marker-alt"></i> Cusco, Peru &nbsp;·&nbsp; Manu National Park</p>
@@ -514,6 +517,19 @@ document.addEventListener("DOMContentLoaded", function() {
       if (hero.subtitle) {
         const hs = document.querySelector('.hero .hs');
         if (hs) hs.textContent = hero.subtitle;
+      }
+      if (hero.video_id) {
+        const cleanId = hero.video_id.trim();
+        const vStart = hero.video_start ? `&start=${hero.video_start}` : '';
+        const vEnd = hero.video_end ? `&end=${hero.video_end}` : '';
+        const hv = document.querySelector('.hero .hv');
+        if (hv) {
+          const currentIframe = hv.querySelector('iframe');
+          const newSrc = `https://www.youtube-nocookie.com/embed/${cleanId}?autoplay=1&mute=1&loop=1&playlist=${cleanId}&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1&enablejsapi=1${vStart}${vEnd}`;
+          if (!currentIframe || !currentIframe.src.includes(cleanId)) {
+            hv.innerHTML = `<iframe src="${newSrc}" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+          }
+        }
       }
       // About section
       const ab = hData.about_section || {};
