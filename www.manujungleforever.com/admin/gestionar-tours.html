@@ -1362,13 +1362,13 @@ window.editTour = function(idx) {
             </div>
             
             <div style="display:grid;grid-template-columns:1fr 2fr 1fr 1fr;gap:12px;margin-bottom:12px">
-              <div class="ff"><label>Dificultad</label><select id="t-dif"><option ${t.dificultad==='Fácil'?'selected':''}>Fácil</option><option ${t.dificultad==='Moderado'?'selected':''}>Moderado</option><option ${t.dificultad==='Difícil'?'selected':''}>Difícil</option></select></div>
+              <div class="ff"><label>Dificultad</label><select id="t-dif"><option value="Fácil" ${t.dificultad==='Fácil'?'selected':''}>Easy</option><option value="Moderado" ${t.dificultad==='Moderado'?'selected':''}>Moderate</option><option value="Difícil" ${t.dificultad==='Difícil'?'selected':''}>Hard</option></select></div>
               <div class="ff"><label>Temporada</label>
                 <select id="t-tmp" onchange="if(this.value==='__add_new__') addCustomItem('t-tmp', 'Nombre de la nueva temporada:')">
                   ${(() => {
-                    const baseSeasons = ['Todo el año', 'Mayo - Octubre (Temporada Seca)', 'Noviembre - Abril (Temporada de Lluvias)', 'Junio - Septiembre'];
+                    const baseSeasons = ['All year', 'May - October (Dry Season)', 'November - April (Rainy Season)', 'June - September'];
                     const existingSeasons = (cData?.tours || []).map(x => x.temporada).filter(Boolean);
-                    const currentSeason = t.temporada || 'Todo el año';
+                    const currentSeason = t.temporada || 'All year';
                     const allSeasons = Array.from(new Set([...baseSeasons, ...existingSeasons, currentSeason].filter(Boolean)));
                     return allSeasons.map(s => `<option value="${esc(s)}" ${currentSeason === s ? 'selected' : ''}>${esc(s)}</option>`).join('') +
                            '<option value="__add_new__" style="font-weight:bold;color:#2dd4bf;">+ Añadir temporada...</option>';
@@ -1394,7 +1394,7 @@ window.editTour = function(idx) {
           <!-- TARJETA 3 -->
           <div style="background: rgba(17,24,39,0.5); border: 1px solid rgba(255,255,255,0.05); padding: 24px; border-radius: 16px;">
             <h3 style="color: #10b981; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">Estado y Visibilidad</h3>
-            <div class="ff" style="margin-bottom:12px"><label>Estado</label><select id="t-e"><option ${t.estado==='activo'?'selected':''} value="activo">✅ Activo</option><option ${t.estado==='pausado'?'selected':''} value="pausado">⏸️ Pausado</option><option ${t.estado==='seasonal'?'selected':''} value="seasonal">🍂 De Temporada</option><option ${t.estado==='inactivo'?'selected':''} value="inactivo">❌ Inactivo</option></select></div>
+            <div class="ff" style="margin-bottom:12px"><label>Estado</label><select id="t-e"><option ${t.estado==='activo'?'selected':''} value="activo">✅ Active</option><option ${t.estado==='pausado'?'selected':''} value="pausado">⏸️ Paused</option><option ${t.estado==='seasonal'?'selected':''} value="seasonal">🍂 Seasonal</option><option ${t.estado==='inactivo'?'selected':''} value="inactivo">❌ Inactive</option></select></div>
             <div class="ff"><label>Destacado en portada</label>
               <div class="tgl-wrap" style="margin-top:6px"><label class="tgl"><input type="checkbox" id="t-dest" ${t.destacado?'checked':''}><span class="tgl-s"></span></label><span style="font-size:.83rem;color:var(--muted)">${t.destacado?'Sí, aparece en portada':'No aparece en portada'}</span></div>
             </div>
