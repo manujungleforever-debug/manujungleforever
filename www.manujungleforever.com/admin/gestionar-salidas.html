@@ -1421,6 +1421,7 @@ window.savePax = async function(sIdx, pIdx, event) {
   const p = {
     nombre_completo: v('p-n'),
     nacionalidad: v('p-na'),
+    fecha_nacimiento: v('p-fn'),
     pasaporte: v('p-pa'),
     whatsapp: v('p-w'),
     email: v('p-e'),
@@ -1549,12 +1550,10 @@ window.exportPaxPDF = async function(idx) {
       const imgW = 40;
       const imgH = 40 * logoImg.height / logoImg.width;
       doc.addImage(logoImg, 'PNG', 14, 10, imgW, imgH);
+    } else {
+      // Fallback si la imagen no carga por CORS u origin local
+      doc.addImage('../assets/img/logomjf.png', 'PNG', 14, 10, 50, 25);
     }
-
-    doc.setFontSize(10);
-    doc.setTextColor(100);
-    doc.text("info@manujungleforever.com", 196, 14, { align: 'right' });
-    doc.text("www.manujungleforever.com", 196, 19, { align: 'right' });
 
     doc.setFontSize(16);
     doc.setTextColor(15, 23, 42); // slate-900
@@ -1594,11 +1593,22 @@ window.exportPaxPDF = async function(idx) {
     doc.text(s.guia_asignado || 'No asignado', 48, 62);
 
     const tableData = pax.map((p, i) => {
+      let edad = '-';
+      if (p.fecha_nacimiento) {
+        const birthDate = new Date(p.fecha_nacimiento);
+        const today = new Date();
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+          age--;
+        }
+        edad = age.toString() + ' años';
+      }
       return [
         i + 1,
         '', // Foto placeholder
         p.nombre_completo,
-        p.nacionalidad,
+        `${p.nacionalidad}\n${edad}`,
         p.pasaporte,
         p.restricciones_dieteticas || 'Ninguna',
         p.condiciones_medicas || 'Ninguna',
@@ -1609,12 +1619,12 @@ window.exportPaxPDF = async function(idx) {
     // --- MAIN TABLE ---
     doc.autoTable({
       startY: 70,
-      head: [['N°', 'Foto', 'Nombre', 'Nacional', 'Doc/Pasaporte', 'Dietas', 'Cond. Médicas', 'Contacto']],
+      head: [['N°', 'Foto', 'Nombre', 'Nacional/Edad', 'Doc/Pasaporte', 'Dietas', 'Cond. Médicas', 'Contacto']],
       body: tableData,
-      theme: 'grid',
+      theme: 'striped',
       headStyles: { fillColor: [13, 148, 136], textColor: 255 }, // teal-600
       alternateRowStyles: { fillColor: [248, 250, 252] },
-      styles: { fontSize: 8, valign: 'middle', cellPadding: 3 },
+      styles: { fontSize: 8, valign: 'middle', cellPadding: 3, lineColor: [226, 232, 240], lineWidth: {bottom: 0.1} },
       columnStyles: { 1: { cellWidth: 14, minCellHeight: 14 } },
       didParseCell: function(data) {
         if (data.section === 'body') {
