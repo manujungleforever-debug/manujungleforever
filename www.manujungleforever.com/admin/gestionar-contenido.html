@@ -722,24 +722,22 @@ function fileToBase64(file) {
 }
 
 function updateImgPreview(inputId, previewId) {
-    if (window.updateImgPreview) { window.updateImgPreview(inputId, previewId); return; }
-  }
-  else { prev.classList.remove('show'); }
+  if (window.updateImgPreview) { window.updateImgPreview(inputId, previewId); return; }
 }
 
 function imgWidget(id, label, value='', hint='') {
-    const pid=id+'-prev';
-    return <div class="ff"><label>${label}</label>
-      <div class="img-field-wrap">
-        <div class="img-input-row">
-          <input id="${id}" value="${esc(value)}" placeholder="URL o ruta de imagen" oninput="updateImgPreview('${id}','${pid}')">
-          <button type="button" class="btn-secondary" onclick="pickImage('${id}','${pid}')">🖼️ Seleccionar</button>
-        </div>
-        <img class="img-preview ${value ? 'show' : ''}" id="${pid}" src="${esc(value)}" alt="" onerror="handleImgPreviewError(this)">
-        <div class="img-error-placeholder" id="${pid}-err"><i class="ph ph-image-broken"></i> Imagen no disponible</div>
-        ${hint?<span class="hint">${hint}</span>:''}
-      </div></div>;
-  }
+  const pid=id+'-prev';
+  return `<div class="ff"><label>${label}</label>
+    <div class="img-field-wrap">
+      <div class="img-input-row">
+        <input id="${id}" value="${esc(value)}" placeholder="URL o ruta de imagen" oninput="updateImgPreview('${id}','${pid}')">
+        <button type="button" class="btn-secondary" onclick="pickImage('${id}','${pid}')">🖼️ Seleccionar</button>
+      </div>
+      <img class="img-preview ${value ? 'show' : ''}" id="${pid}" src="${esc(value)}" alt="" onerror="handleImgPreviewError(this)">
+      <div class="img-error-placeholder" id="${pid}-err"><i class="ph ph-image-broken"></i> Imagen no disponible</div>
+      ${hint ? `<span class="hint">${hint}</span>` : ''}
+    </div></div>`;
+}
 
 // ─────────────────────────────────────────────────────────────────────────────
 // VIEW: MEDIA GALLERY (MAIN)
