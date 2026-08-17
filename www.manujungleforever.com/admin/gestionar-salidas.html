@@ -1321,8 +1321,8 @@ window.viewPax = function(idx) {
     <div style="display:flex;justify-content:flex-end;margin-bottom:15px">
       <div style="display:flex;gap:10px">
       <button class="btn-primary" onclick="editPax(${idx}, -1)">+ Añadir Pasajero</button>
-      <button class="btn-secondary" onclick="exportPaxCSV(${idx})">⬇️ Exportar CSV</button>
-      <button class="btn-secondary" onclick="exportPaxPDF(${idx})">📄 Exportar PDF</button>
+              <button style="background:rgba(59,130,246,0.1);color:#60a5fa;border:1px solid rgba(59,130,246,0.3);padding:8px 16px;border-radius:8px;cursor:pointer;font-weight:600;display:flex;align-items:center;gap:6px;transition:background 0.2s;" onmouseover="this.style.background='rgba(59,130,246,0.2)'" onmouseout="this.style.background='rgba(59,130,246,0.1)'" onclick="exportPaxCSV(${idx})">⬇ Exportar CSV</button>
+        <button style="background:rgba(245,158,11,0.1);color:#fbbf24;border:1px solid rgba(245,158,11,0.3);padding:8px 16px;border-radius:8px;cursor:pointer;font-weight:600;display:flex;align-items:center;gap:6px;transition:background 0.2s;" onmouseover="this.style.background='rgba(245,158,11,0.2)'" onmouseout="this.style.background='rgba(245,158,11,0.1)'" onclick="exportPaxPDF(${idx})">📄 Exportar PDF</button>
     </div>
   </div>`;
   
@@ -1332,7 +1332,7 @@ window.viewPax = function(idx) {
     html += `<div style="overflow-x:auto;width:100%;">
       <table style="width:100%;text-align:left;border-collapse:separate;border-spacing:0 12px;font-size:.9rem;min-width:800px;">
         <tr style="color:var(--muted);text-transform:uppercase;font-size:0.75rem;letter-spacing:1px;">
-          <th style="padding:0 15px 10px 15px;width:60px;border-bottom:1px solid rgba(255,255,255,0.1)">Foto</th>
+          <th style="padding:0 15px 10px 15px;width:80px;border-bottom:1px solid rgba(255,255,255,0.1)">Foto</th>
           <th style="padding:0 15px 10px 15px;border-bottom:1px solid rgba(255,255,255,0.1)">Nombre / Pasaporte</th>
           <th style="padding:0 15px 10px 15px;border-bottom:1px solid rgba(255,255,255,0.1)">Contacto</th>
           <th style="padding:0 15px 10px 15px;border-bottom:1px solid rgba(255,255,255,0.1)">Dietas / Médicas</th>
@@ -2510,6 +2510,7 @@ window.deleteTestim = async function(idx) {
 </script>
 </body>
 </html>
+
 
 
 
