@@ -298,10 +298,10 @@ window.renderPage = function(page) {
     }
     
     html += `
-      <div style="position:relative; z-index:1;">
+      <div style="position:relative; z-index:1; height:100%;">
         ${fomoAlertBadge}
-        <div class="dep-c">
-        <div style="padding:25px;flex:1;background:var(--surface)">
+        <div class="dep-c" style="height:100%;">
+          <div style="padding:25px;flex:1;background:var(--surface);display:flex;flex-direction:column;">
           <div style="display:flex;align-items:flex-start;margin-bottom:20px;position:relative;">
             <div style="position:absolute; left:50%; transform:translateX(-50%); top:0;">${badgeHtml}</div>
             <div style="margin-left:auto;text-align:right">
@@ -328,11 +328,11 @@ window.renderPage = function(page) {
           </div>
           
           <div style="font-size:0.9rem;color:var(--c);margin-bottom:20px;display:flex;flex-direction:column;gap:8px;line-height:1.4">
-            ${s.guia_asignado ? `<div><i class="fas fa-id-badge" style="width:20px;color:var(--a)"></i> <b style="color:var(--g)">Guide:</b> ${s.guia_asignado}</div>` : ''}
-            ${s.notas ? `<div><i class="fas fa-info-circle" style="width:20px;color:var(--a)"></i> <b style="color:var(--g)">Notes:</b> ${s.notas}</div>` : ''}
+            <div style="min-height:20px">${s.guia_asignado ? `<i class="fas fa-id-badge" style="width:20px;color:var(--a)"></i> <b style="color:var(--g)">Guide:</b> ${s.guia_asignado}` : ''}</div>
+            <div style="min-height:20px">${s.notas ? `<i class="fas fa-info-circle" style="width:20px;color:var(--a)"></i> <b style="color:var(--g)">Notes:</b> ${s.notas}` : ''}</div>
           </div>
           
-          <div style="width:100%;height:6px;background:rgba(0,0,0,0.06);border-radius:3px;overflow:hidden;margin-bottom:5px">
+          <div style="margin-top:auto;width:100%;height:6px;background:rgba(0,0,0,0.06);border-radius:3px;overflow:hidden;margin-bottom:5px">
             <div style="width:${pct}%;height:100%;background:${barColor};border-radius:3px;transition:width 1s cubic-bezier(0.4, 0, 0.2, 1)"></div>
           </div>
         </div>
