@@ -171,6 +171,9 @@
 </section>
 
 <script>
+let allDepartures = [];
+const itemsPerPage = 6;
+
 async function loadPublicDepartures() {
   const container = document.getElementById('deps-container');
   try {
@@ -183,96 +186,142 @@ async function loadPublicDepartures() {
     now.setHours(0,0,0,0);
     sal = sal.filter(s => {
       if (s.estado === 'cancelado' || s.estado === 'cerrado') return false;
-      if (!s.fecha_salida) return false;
+      if (!s.fecha_salida) return true; // Permite fechas vacías (TBD)
       const [y,m,d] = s.fecha_salida.split('-');
+      if (!y || !m || !d) return true;
       const depDate = new Date(y, parseInt(m)-1, d);
       return depDate >= now;
     });
     
-    sal.sort((a,b) => new Date(a.fecha_salida) - new Date(b.fecha_salida));
-    
-    if (sal.length === 0) {
-      container.innerHTML = `
-        <div style="text-align:center;padding:50px 20px;background:rgba(0,0,0,0.02);border-radius:12px;border:1px dashed rgba(0,0,0,0.1)">
-          <i class="fas fa-calendar-times" style="font-size:3.5rem;color:var(--a);margin-bottom:20px"></i>
-          <h3 style="font-size:1.6rem;margin-bottom:12px;color:var(--g)">No scheduled departures found</h3>
-          <p style="color:var(--h);margin-bottom:0;max-width:500px;margin-left:auto;margin-right:auto;line-height:1.6">There are currently no open groups for the upcoming months. Please check back later or contact us to open a new date!</p>
-        </div>
-      `;
-      return;
-    }
-    
-    let html = `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:30px;">`;
-    sal.forEach(s => {
-      const sold = (s.plazas_totales||0) - (s.plazas_disponibles||0);
-      const pct = s.plazas_totales ? Math.round((sold/s.plazas_totales)*100) : 0;
-      let badgeHtml = `<span style="background:var(--a);color:#fff;padding:5px 10px;border-radius:6px;font-size:.7rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;display:inline-block">Guaranteed</span>`;
-      let barColor = `var(--a)`;
-      if (s.estado === 'limitado' || pct >= 75) {
-        badgeHtml = `<span style="background:#f59e0b;color:#fff;padding:5px 10px;border-radius:6px;font-size:.7rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;display:inline-block">Last Spots</span>`;
-        barColor = `#f59e0b`;
-      }
-      if (s.estado === 'completo' || pct >= 100) {
-        badgeHtml = `<span style="background:#ef4444;color:#fff;padding:5px 10px;border-radius:6px;font-size:.7rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;display:inline-block">Sold Out</span>`;
-        barColor = `#ef4444`;
-      }
-      
-      const tourSlug = s.tour_id ? `../${s.tour_id}/index.html` : '#';
-      
-      const formatF = (ds) => {
-         if(!ds) return '';
-         const [y,m,d] = ds.split('-');
-         return new Date(y, parseInt(m)-1, d).toLocaleDateString('en-US', {month:'short', day:'numeric'});
-      };
-      const fSal = formatF(s.fecha_salida);
-      const fReg = formatF(s.fecha_regreso);
-      
-      const msg = `Hello! I want to join the ${s.tour_nombre} group starting on ${s.fecha_salida}`;
-      const waLink = `https://api.whatsapp.com/send?phone=51901525679&text=${encodeURIComponent(msg)}`;
-      const isSoldOut = s.estado === 'completo' || pct >= 100;
-      
-      html += `
-        <div class="dep-c">
-          <div style="padding:25px;flex:1;background:var(--surface)">
-            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px">
-              <div>${badgeHtml}</div>
-              <div style="text-align:right">
-                <div style="font-size:1.5rem;font-weight:800;color:var(--g);line-height:1">$${s.precio} <span style="font-size:.8rem;font-weight:600;color:var(--h)">${s.moneda||'USD'}</span></div>
-                <div style="font-size:.7rem;color:var(--h);text-transform:uppercase;margin-top:4px">per person</div>
-              </div>
-            </div>
-            
-            <h3 style="font-size:1.3rem;margin-bottom:12px;line-height:1.4;color:var(--g);font-weight:700"><a href="${tourSlug}" style="color:inherit;text-decoration:none">${s.tour_nombre}</a></h3>
-            
-            <div style="color:var(--g);font-size:1.05rem;font-weight:600;margin-bottom:25px;display:flex;align-items:center;gap:10px;background:rgba(0,46,36,0.04);padding:10px 14px;border-radius:8px">
-              <i class="far fa-calendar-alt" style="color:var(--a)"></i> ${fSal} &rarr; ${fReg}
-            </div>
-            
-            <div style="margin-bottom:6px;display:flex;justify-content:space-between;font-size:.85rem;color:var(--h);font-weight:600">
-              <span>Availability: ${isSoldOut ? '0' : s.plazas_disponibles} spots</span>
-              <span>${sold}/${s.plazas_totales}</span>
-            </div>
-            <div style="width:100%;height:8px;background:rgba(0,0,0,0.06);border-radius:4px;overflow:hidden;margin-bottom:5px">
-              <div style="width:${pct}%;height:100%;background:${barColor};border-radius:4px"></div>
-            </div>
-          </div>
-          
-          <div style="padding:0 25px 25px;background:var(--surface)">
-             <a href="${waLink}" target="_blank" class="btn" style="display:flex;justify-content:center;align-items:center;gap:8px;width:100%;background:${isSoldOut?'#9ca3af':'var(--g)'};color:#fff;pointer-events:${isSoldOut?'none':'auto'}">
-               <i class="fa-brands fa-whatsapp" style="font-size:1.1rem"></i> ${isSoldOut?'Sold Out':'Inquire by WhatsApp'}
-             </a>
-          </div>
-        </div>
-      `;
+    sal.sort((a,b) => {
+      if (!a.fecha_salida) return 1;
+      if (!b.fecha_salida) return -1;
+      return new Date(a.fecha_salida) - new Date(b.fecha_salida);
     });
-    html += `</div>`;
-    container.innerHTML = html;
+    
+    allDepartures = sal;
+    window.renderPage(1);
     
   } catch(e) {
     console.error(e);
     container.innerHTML = `<div style="padding:20px;background:rgba(239,68,68,0.1);color:#ef4444;border-radius:8px;border:1px solid rgba(239,68,68,0.3);text-align:center">⚠️ Could not load departures. Please check your connection or contact us directly.</div>`;
   }
 }
+
+window.renderPage = function(page) {
+  const container = document.getElementById('deps-container');
+  if (allDepartures.length === 0) {
+    container.innerHTML = `
+      <div style="text-align:center;padding:50px 20px;background:rgba(0,0,0,0.02);border-radius:12px;border:1px dashed rgba(0,0,0,0.1)">
+        <i class="fas fa-calendar-times" style="font-size:3.5rem;color:var(--a);margin-bottom:20px"></i>
+        <h3 style="font-size:1.6rem;margin-bottom:12px;color:var(--g)">No scheduled departures found</h3>
+        <p style="color:var(--h);margin-bottom:0;max-width:500px;margin-left:auto;margin-right:auto;line-height:1.6">There are currently no open groups for the upcoming months. Please check back later or contact us to open a new date!</p>
+      </div>
+    `;
+    return;
+  }
+  
+  const start = (page - 1) * itemsPerPage;
+  const paginated = allDepartures.slice(start, start + itemsPerPage);
+  
+  let html = `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:30px;">`;
+  
+  paginated.forEach(s => {
+    const sold = (s.plazas_totales||0) - (s.plazas_disponibles||0);
+    const pct = s.plazas_totales ? Math.round((sold/s.plazas_totales)*100) : 0;
+    
+    let badgeHtml = `<span style="background:var(--a);color:#fff;padding:5px 10px;border-radius:6px;font-size:.7rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;display:inline-block">Guaranteed</span>`;
+    let barColor = `var(--a)`;
+    
+    if (s.estado === 'limitado' || pct >= 75) {
+      badgeHtml = `<span style="background:#f59e0b;color:#fff;padding:5px 10px;border-radius:6px;font-size:.7rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;display:inline-block">Last Spots</span>`;
+      barColor = `#f59e0b`;
+    }
+    if (s.estado === 'completo' || pct >= 100) {
+      badgeHtml = `<span style="background:#ef4444;color:#fff;padding:5px 10px;border-radius:6px;font-size:.7rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;display:inline-block">Sold Out</span>`;
+      barColor = `#ef4444`;
+    }
+    
+    const tourSlug = s.tour_id ? `../${s.tour_id}/index.html` : '#';
+    
+    const formatF = (ds) => {
+       if(!ds) return '';
+       const parts = ds.split('-');
+       if(parts.length < 3) return ds;
+       return new Date(parts[0], parseInt(parts[1])-1, parts[2]).toLocaleDateString('en-US', {month:'short', day:'numeric'});
+    };
+    
+    const fSal = formatF(s.fecha_salida);
+    const fReg = formatF(s.fecha_regreso);
+    const dateText = fSal ? `${fSal} &rarr; ${fReg}` : 'Open Date / TBD';
+    
+    const msg = `Hello! I want to join the ${s.tour_nombre} group ${fSal ? 'starting on '+s.fecha_salida : ''}`;
+    const waLink = `https://api.whatsapp.com/send?phone=51901525679&text=${encodeURIComponent(msg)}`;
+    const isSoldOut = s.estado === 'completo' || pct >= 100;
+    
+    html += `
+      <div class="dep-c">
+        <div style="padding:25px;flex:1;background:var(--surface)">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px">
+            <div>${badgeHtml}</div>
+            <div style="text-align:right">
+              <div style="font-size:1.5rem;font-weight:800;color:var(--g);line-height:1">$${s.precio} <span style="font-size:.8rem;font-weight:600;color:var(--h)">${s.moneda||'USD'}</span></div>
+              <div style="font-size:.7rem;color:var(--h);text-transform:uppercase;margin-top:4px">per person</div>
+            </div>
+          </div>
+          
+          <h3 style="font-size:1.3rem;margin-bottom:12px;line-height:1.4;color:var(--g);font-weight:700"><a href="${tourSlug}" style="color:inherit;text-decoration:none">${s.tour_nombre}</a></h3>
+          
+          <div style="color:var(--g);font-size:1.05rem;font-weight:600;margin-bottom:20px;display:flex;align-items:center;gap:10px;background:rgba(0,46,36,0.04);padding:10px 14px;border-radius:8px">
+            <i class="far fa-calendar-alt" style="color:var(--a)"></i> ${dateText}
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;font-size:0.85rem;color:var(--g);">
+            <div style="background:rgba(0,0,0,0.02);padding:10px;border-radius:6px;border:1px solid rgba(0,0,0,0.04)">
+              <div style="color:var(--h);font-size:0.7rem;text-transform:uppercase;margin-bottom:4px;letter-spacing:0.5px">Spots Available</div>
+              <div style="font-weight:800;font-size:1.1rem;color:${isSoldOut ? '#ef4444' : 'var(--g)'}">${isSoldOut ? '0' : s.plazas_disponibles} <span style="font-size:0.8rem;color:var(--h);font-weight:500">/ ${s.plazas_totales}</span></div>
+            </div>
+            <div style="background:rgba(0,0,0,0.02);padding:10px;border-radius:6px;border:1px solid rgba(0,0,0,0.04)">
+              <div style="color:var(--h);font-size:0.7rem;text-transform:uppercase;margin-bottom:4px;letter-spacing:0.5px">Min. Passengers</div>
+              <div style="font-weight:800;font-size:1.1rem;">${s.plazas_minimas || 2} <span style="font-size:0.8rem;color:var(--h);font-weight:500">pax</span></div>
+            </div>
+          </div>
+          
+          <div style="font-size:0.9rem;color:var(--h);margin-bottom:20px;display:flex;flex-direction:column;gap:8px;line-height:1.4">
+            ${s.guia_asignado ? `<div><i class="fas fa-id-badge" style="width:20px;color:var(--a)"></i> <b>Guide:</b> ${s.guia_asignado}</div>` : ''}
+            ${s.notas ? `<div><i class="fas fa-info-circle" style="width:20px;color:var(--a)"></i> <b style="color:var(--g)">Notes:</b> ${s.notas}</div>` : ''}
+          </div>
+          
+          <div style="width:100%;height:6px;background:rgba(0,0,0,0.06);border-radius:3px;overflow:hidden;margin-bottom:5px">
+            <div style="width:${pct}%;height:100%;background:${barColor};border-radius:3px;transition:width 1s cubic-bezier(0.4, 0, 0.2, 1)"></div>
+          </div>
+        </div>
+        
+        <div style="padding:0 25px 25px;background:var(--surface)">
+           <a href="${waLink}" target="_blank" class="btn" style="display:flex;justify-content:center;align-items:center;gap:8px;width:100%;background:${isSoldOut?'#9ca3af':'var(--g)'};color:#fff;pointer-events:${isSoldOut?'none':'auto'}">
+             <i class="fa-brands fa-whatsapp" style="font-size:1.1rem"></i> ${isSoldOut?'Sold Out':'Inquire by WhatsApp'}
+           </a>
+        </div>
+      </div>
+    `;
+  });
+  
+  html += `</div>`;
+  
+  const totalPages = Math.ceil(allDepartures.length / itemsPerPage);
+  if (totalPages > 1) {
+    html += `<div style="display:flex;justify-content:center;margin-top:40px;gap:10px;">`;
+    for (let i = 1; i <= totalPages; i++) {
+      const activeStyle = i === page 
+        ? 'background:var(--a);color:#fff;border-color:var(--a);transform:scale(1.05)' 
+        : 'background:transparent;color:var(--g);border-color:rgba(0,0,0,0.2)';
+      html += `<button onclick="window.renderPage(${i})" style="padding:8px 16px;border-radius:8px;cursor:pointer;font-weight:700;border:2px solid;transition:all 0.2s;${activeStyle}">${i}</button>`;
+    }
+    html += `</div>`;
+  }
+  
+  container.innerHTML = html;
+};
 document.addEventListener('DOMContentLoaded', loadPublicDepartures);
 </script>
 
