@@ -1662,9 +1662,9 @@ window.exportPaxPDF = async function(idx) {
         '', // Foto placeholder
         p.nombre_completo,
         `${p.nacionalidad}\n${edad}`,
-                p.pasaporte,
-        ${p.restricciones_dieteticas || '-'}\n,
-        p.whatsapp ? WA:  : (p.email ? E:  : '')
+                        p.pasaporte,
+        `${p.restricciones_dieteticas || '-'}\n${p.condiciones_medicas || '-'}`,
+        p.whatsapp ? `WA: ${p.whatsapp}` : (p.email ? `E: ${p.email}` : '')
       ];
     });
 
@@ -2507,6 +2507,7 @@ window.deleteTestim = async function(idx) {
 </script>
 </body>
 </html>
+
 
 
 
