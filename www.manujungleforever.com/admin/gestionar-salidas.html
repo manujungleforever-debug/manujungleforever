@@ -1521,11 +1521,20 @@ window.exportPaxPDF = async function(idx) {
       return Promise.race([promise, timeoutPromise]).finally(() => clearTimeout(timeoutId));
     };
 
-    // Preload logo
+    // Preload logo via Canvas (converts to JPEG to avoid jsPDF PNG corrupt errors)
     const logoP = withTimeout(new Promise(resolve => {
       const img = new Image();
       img.src = '../assets/img/logomjf.png';
-      img.onload = () => resolve(img);
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0);
+        resolve({ url: canvas.toDataURL('image/jpeg', 0.9), w: img.width, h: img.height });
+      };
       img.onerror = () => resolve(null);
     }), 5000).catch(() => null);
 
@@ -1541,18 +1550,15 @@ window.exportPaxPDF = async function(idx) {
       }), 5000).catch(() => null);
     });
 
-    const [logoImg, ...loadedPhotos] = await Promise.all([logoP, ...photoPs]);
+    const [logoData, ...loadedPhotos] = await Promise.all([logoP, ...photoPs]);
     const imgMap = {};
     loadedPhotos.forEach(im => { if(im) imgMap[im.url] = im.img; });
 
     // --- HEADER ---
-    if (logoImg) {
-      const imgW = 40;
-      const imgH = 40 * logoImg.height / logoImg.width;
-      doc.addImage(logoImg, 'PNG', 14, 10, imgW, imgH);
-    } else {
-      // Fallback si la imagen no carga por CORS u origin local
-      doc.addImage('../assets/img/logomjf.png', 'PNG', 14, 10, 50, 25);
+    if (logoData && logoData.url) {
+      const imgW = 45;
+      const imgH = 45 * logoData.h / logoData.w;
+      doc.addImage(logoData.url, 'JPEG', 14, 10, imgW, imgH);
     }
 
     doc.setFontSize(16);
