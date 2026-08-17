@@ -382,7 +382,7 @@ export async function onRequestPost(context) {
 
     if (env.RESEND_API_KEY) {
       await sendEmail(env, toEmail, `[LIBRO DE RECLAMACIONES] ${tipo.toUpperCase()} - N° ${codigo_reclamo}`, msgEmpresa, msgEmpresa, attachments, toEmail);
-      await sendEmail(env, correo, `Cargo de Recepción - Hoja de Reclamación N° ${codigo_reclamo}`, 'Adjunto su cargo.', msgClienteHtml, attachments, toEmail);
+      await sendEmail(env, correo, `[LIBRO DE RECLAMACIONES] Cargo de Recepción - Hoja de Reclamación N° ${codigo_reclamo}`, 'Adjunto su cargo.', msgClienteHtml, attachments, toEmail);
     } else {
       console.warn('RESEND_API_KEY no configurada.');
     }
