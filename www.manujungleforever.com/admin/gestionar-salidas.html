@@ -70,7 +70,7 @@ main { flex-grow:1; max-width:1400px; width:100%; margin:0 auto; padding:28px 24
 .badge.on  { background:rgba(16,185,129,.15); color:#34d399; border:1px solid rgba(16,185,129,.25); }
 .badge.off { background:rgba(239,68,68,.18);  color:#f87171; border:1px solid rgba(239,68,68,.3); }
 .badge.warn{ background:rgba(245,158,11,.18); color:#fbbf24; border:1px solid rgba(245,158,11,.3); }
-.eform { max-width:900px; display:flex; flex-direction:column; gap:17px; margin-bottom:60px; }
+.eform { width:100%; display:flex; flex-direction:column; gap:17px; margin-bottom:60px; }
 .esec { background:var(--card); backdrop-filter:blur(10px); border:1px solid var(--bdr); border-radius:16px; padding:22px; }
 .esec-h { font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--gold); border-bottom:1px solid rgba(255,255,255,.07); padding-bottom:8px; margin-bottom:16px; }
 .grow2 { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
@@ -1369,7 +1369,7 @@ window.editPax = function(sIdx, pIdx) {
     <button style="margin-bottom:15px;background:none;border:none;color:var(--teal);cursor:pointer;font-weight:600;display:flex;align-items:center;gap:5px" onclick="viewPax(${sIdx})">
       <i class="ph ph-arrow-left"></i> Volver a la lista
     </button>
-    <div class="eform" style="margin:0;background:rgba(255,255,255,0.02);padding:20px;border-radius:12px;border:1px solid rgba(255,255,255,0.05)">
+    <div class="eform" style="margin:0 auto;width:100%;background:rgba(255,255,255,0.02);padding:20px;border-radius:12px;border:1px solid rgba(255,255,255,0.05)">
       <div class="esec" style="border:none;padding:0;margin:0;box-shadow:none;background:transparent;">
       <div class="esec-h" style="margin-top:0">${pIdx === -1 ? '✨ Nuevo Pasajero' : '✏️ Editar Pasajero'}</div>
       
@@ -2507,6 +2507,7 @@ window.deleteTestim = async function(idx) {
 </script>
 </body>
 </html>
+
 
 
 
