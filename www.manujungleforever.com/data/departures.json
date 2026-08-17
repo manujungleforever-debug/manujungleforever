@@ -33,18 +33,18 @@
       "chofer_asignado": null,
       "pasajeros": [
         {
-          "nombre_completo": "Pasajero de Prueba 1",
-          "nacionalidad": "US",
-          "fecha_nacimiento": "",
+          "nombre_completo": "MANUEL FERNANDEZ",
+          "nacionalidad": "Estadounidense (USA)",
+          "fecha_nacimiento": "2004-08-10",
           "pasaporte": "P100000",
           "whatsapp": "+1234567890",
           "email": "test0@example.com",
-          "restricciones_dieteticas": "Vegetariano",
-          "condiciones_medicas": "",
-          "estado_pago": "pagado",
-          "monto_pagado": 1200,
-          "saldo_pendiente": 0,
-          "foto": "/media/1786595275420-libro-reclamaciones.png"
+          "restricciones_dieteticas": "Vegano",
+          "condiciones_medicas": "Diabetes",
+          "estado_pago": "pendiente",
+          "monto_pagado": 200,
+          "saldo_pendiente": 1000,
+          "foto": "/media/1786986061520-1636089372301-topaz-cgi-6x.jpg"
         },
         {
           "id": "pax-dep-010-1",
