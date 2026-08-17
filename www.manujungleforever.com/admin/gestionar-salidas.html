@@ -1437,7 +1437,7 @@ async function viewDeps() {
             </div>
           </div>
         </div>`;
-      }).join('')}
+      }).reverse().join('')}
     </div>`);
 }
 
@@ -1448,7 +1448,19 @@ window.editDep = async function(idx) {
     toursList = JSON.parse(toursData.content).tours || [];
   } catch(e) { console.error('Error load tours', e); }
 
-  const s= idx === -1 ? {tour_id:'', tour_nombre:'', id:'dep-'+Date.now(), fecha_salida:'', fecha_regreso:'', precio:0, moneda:'USD', plazas_totales:8, plazas_minimas:2, plazas_disponibles:8, estado:'disponible', guia_asignado:'', notas:'', pasajeros:[]} : cData.salidas[idx];
+  let newId = '';
+  if (idx === -1) {
+    let nextNum = 1;
+    if (cData && cData.salidas && cData.salidas.length > 0) {
+      const existingNums = cData.salidas.map(s => parseInt(s.id, 10)).filter(n => !isNaN(n));
+      if (existingNums.length > 0) {
+        nextNum = Math.max(...existingNums) + 1;
+      }
+    }
+    newId = String(nextNum).padStart(3, '0');
+  }
+
+  const s= idx === -1 ? {tour_id:'', tour_nombre:'', id:newId, fecha_salida:'', fecha_regreso:'', precio:0, moneda:'USD', plazas_totales:8, plazas_minimas:2, plazas_disponibles:8, estado:'disponible', guia_asignado:'', notas:'', pasajeros:[]} : cData.salidas[idx];
   
   set(`
     <button class="back-btn" onclick="route('departures')">← Volver a salidas</button>
