@@ -105,11 +105,11 @@
       "precio": 680,
       "moneda": "USD",
       "plazas_totales": 8,
-      "plazas_disponibles": 0,
-      "estado": "cancelado",
+      "plazas_disponibles": 1,
+      "estado": "disponible",
       "notas": "",
       "plazas_minimas": 2,
-      "guia_asignado": null,
+      "guia_asignado": "",
       "chofer_asignado": null,
       "pasajeros": [
         {
