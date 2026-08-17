@@ -259,6 +259,28 @@ window.renderPage = function(page) {
     const waLink = `https://api.whatsapp.com/send?phone=51901525679&text=${encodeURIComponent(msg)}`;
     const isSoldOut = s.estado === 'completo' || pct >= 100;
     
+    let fomoAlertHtml = '';
+    if (!isSoldOut && s.plazas_disponibles <= 3 && s.plazas_disponibles > 0) {
+      let bg = '#f59e0b'; // amber-500
+      let text = `⚡ HURRY! ONLY ${s.plazas_disponibles} SPOTS LEFT!`;
+      let anim = '';
+      if (s.plazas_disponibles === 2) {
+        bg = '#ea580c'; // orange-600
+        text = `🔥 ALMOST FULL! ONLY 2 SPOTS LEFT!`;
+      } else if (s.plazas_disponibles === 1) {
+        bg = '#ef4444'; // red-500
+        text = `🚨 LAST SPOT AVAILABLE! 🚨`;
+        anim = 'animation: fomoPulse 1s infinite;';
+      }
+      
+      fomoAlertHtml = `
+        <style>@keyframes fomoPulse { 0%, 100% { transform: scale(1); opacity: 1; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4); } 50% { transform: scale(1.03); opacity: 0.9; box-shadow: 0 8px 20px rgba(239, 68, 68, 0.6); } }</style>
+        <div style="background:${bg};color:#fff;padding:12px;border-radius:8px;margin-bottom:20px;font-weight:800;text-align:center;font-size:0.95rem;letter-spacing:0.5px;box-shadow:0 4px 12px rgba(0,0,0,0.15);${anim}display:flex;align-items:center;justify-content:center;gap:8px;text-transform:uppercase">
+          ${text}
+        </div>
+      `;
+    }
+    
     html += `
       <div class="dep-c">
         <div style="padding:25px;flex:1;background:var(--surface)">
@@ -275,6 +297,8 @@ window.renderPage = function(page) {
           <div style="color:var(--g);font-size:1.05rem;font-weight:600;margin-bottom:20px;display:flex;align-items:center;gap:10px;background:rgba(0,46,36,0.04);padding:10px 14px;border-radius:8px">
             <i class="far fa-calendar-alt" style="color:var(--a)"></i> ${dateText}
           </div>
+
+          ${fomoAlertHtml}
 
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;font-size:0.85rem;color:var(--g);">
             <div style="background:rgba(0,0,0,0.02);padding:10px;border-radius:6px;border:1px solid rgba(0,0,0,0.04)">
