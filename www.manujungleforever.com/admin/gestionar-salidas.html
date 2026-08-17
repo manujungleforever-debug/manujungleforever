@@ -109,7 +109,7 @@ main { flex-grow:1; max-width:1400px; width:100%; margin:0 auto; padding:28px 24
 .modal-bg { position:fixed; inset:0; background:rgba(2,6,5,.9); backdrop-filter:blur(7px); align-items:center; justify-content:center; z-index:400; display:none; padding:20px; }
 .modal-bg.open { display:flex !important; }
 .modal { background:rgba(11,38,35,.8); backdrop-filter:blur(16px); border:1px solid rgba(255,255,255,.12); border-radius:18px; width:100%; max-width:600px; max-height:88vh; display:flex; flex-direction:column; box-shadow:0 24px 56px rgba(0,0,0,.6); }
-.modal.lg { max-width:920px; }
+.modal.lg { max-width:1050px; }
 .modal-h { padding:16px 22px; border-bottom:1px solid rgba(255,255,255,.08); display:flex; align-items:center; justify-content:space-between; background:rgba(0,0,0,.14); border-radius:18px 18px 0 0; }
 .modal-h h3 { font-size:.98rem; font-weight:700; color:var(--teal); }
 .modal-body { padding:20px 22px; overflow-y:auto; display:flex; flex-direction:column; gap:13px; }
@@ -232,7 +232,7 @@ code { background:rgba(45,212,191,.1); color:var(--teal); padding:2px 6px; borde
       <h3 style="color:#fff;margin:0" id="pax-modal-h">👥 Gestión de Pasajeros</h3>
       <button onclick="closeModal('pax-modal')" style="background:none;border:none;color:var(--muted);font-size:1.5rem;cursor:pointer">&times;</button>
     </div>
-    <div class="modal-body" id="pax-modal-body" style="padding:0"></div>
+    <div class="modal-body" id="pax-modal-body" style="padding:30px"></div>
   </div>
 </div>
 <div class="modal-bg" id="media-modal">
@@ -1662,17 +1662,16 @@ window.exportPaxPDF = async function(idx) {
         '', // Foto placeholder
         p.nombre_completo,
         `${p.nacionalidad}\n${edad}`,
-        p.pasaporte,
-        p.restricciones_dieteticas || 'Ninguna',
-        p.condiciones_medicas || 'Ninguna',
-        p.whatsapp ? `WA: ${p.whatsapp}` : (p.email ? `E: ${p.email}` : '')
+                p.pasaporte,
+        ${p.restricciones_dieteticas || '-'}\n,
+        p.whatsapp ? WA:  : (p.email ? E:  : '')
       ];
     });
 
     // --- MAIN TABLE ---
     doc.autoTable({
       startY: 70,
-      head: [['N°', 'Foto', 'Nombre', 'Nacional/Edad', 'Doc/Pasaporte', 'Dietas', 'Cond. Médicas', 'Contacto']],
+      head: [['N°', 'Foto', 'Nombre', 'Nacional/Edad', 'Doc/Pasaporte', 'Dietas / Médicas', 'Contacto']],
       body: tableData,
       theme: 'striped',
       headStyles: { fillColor: [13, 148, 136], textColor: 255 }, // teal-600
@@ -2508,6 +2507,7 @@ window.deleteTestim = async function(idx) {
 </script>
 </body>
 </html>
+
 
 
 
