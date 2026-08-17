@@ -443,40 +443,83 @@ async function ghGet(path) {
   return r.json();
 }
 
-async function ghPut(path, content, sha, msg) {
-    const r = await fetch(`${API}/file`,{method:'PUT',headers:{Authorization:`Bearer ${token}`,'Content-Type':'application/json'},
-      body:JSON.stringify({path,content,sha,message:msg||`update: ${path}`})});
-    if (r.status===401){sessionStorage.clear();location.reload();}
-    let d;
-    try { d = await r.json(); } catch(e) {
-      throw new Error("El servidor de GitHub no respondió correctamente (Timeout/503). Tu cambio podría haberse guardado en segundo plano. Por favor, recarga la página en unos segundos para verificar.");
-    }
-    if(!r.ok) {
-      let errStr = d.error || 'Error al guardar';
-      if (errStr.includes('No server is currently available') || errStr.includes('503')) {
-        errStr = "Los servidores de GitHub están saturados (Error 503). El cambio suele procesarse de todos modos en unos segundos. Por favor, recarga la página en breve para verificar.";
+async function ghPut(path, content, sha, msg, attempt = 1) {
+    const maxAttempts = 4;
+    try {
+      const r = await fetch(`${API}/file`, {
+        method: 'PUT',
+        headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ path, content, sha, message: msg || `update: ${path}` })
+      });
+      if (r.status === 401) { sessionStorage.clear(); location.reload(); }
+      
+      let d;
+      try { d = await r.json(); } catch(e) {
+        if (attempt < maxAttempts) {
+          await new Promise(res => setTimeout(res, 2000 * attempt));
+          return ghPut(path, content, sha, msg, attempt + 1);
+        }
+        throw new Error("Timeout de red. Verifica tu conexión y vuelve a intentarlo.");
       }
-      throw new Error(errStr);
+      
+      if (!r.ok) {
+        let errStr = d.error || 'Error al guardar';
+        if (r.status === 503 || errStr.includes('No server is currently available') || errStr.includes('503') || errStr.includes('Conflict')) {
+          if (attempt < maxAttempts) {
+            await new Promise(res => setTimeout(res, 2500 * attempt));
+            return ghPut(path, content, sha, msg, attempt + 1);
+          }
+          errStr = "Los servidores de GitHub están temporalmente fuera de servicio. Por favor, intenta de nuevo en unos minutos.";
+        }
+        throw new Error(errStr);
+      }
+      return d;
+    } catch (err) {
+      if (attempt < maxAttempts && (err.message.toLowerCase().includes('fetch') || err.message.toLowerCase().includes('network'))) {
+        await new Promise(res => setTimeout(res, 2000 * attempt));
+        return ghPut(path, content, sha, msg, attempt + 1);
+      }
+      throw err;
     }
-    return d;
   }
 
-async function ghDelete(path, sha, msg) {
-    const r = await fetch(`${API}/file`,{method:'DELETE',headers:{Authorization:`Bearer ${token}`,'Content-Type':'application/json'},
-      body:JSON.stringify({path,sha,message:msg||`delete: ${path}`})});
-    if (r.status===401){sessionStorage.clear();location.reload();}
-    let d;
-    try { d = await r.json(); } catch(e) {
-      throw new Error("El servidor de GitHub no respondió correctamente (Timeout/503). La eliminación podría haberse procesado en segundo plano. Recarga para verificar.");
-    }
-    if(!r.ok) {
-      let errStr = d.error || 'Error al eliminar';
-      if (errStr.includes('No server is currently available') || errStr.includes('503')) {
-        errStr = "Los servidores de GitHub están saturados (Error 503). El cambio suele procesarse de todos modos. Por favor, recarga la página en breve.";
+async function ghDelete(path, sha, msg, attempt = 1) {
+    const maxAttempts = 4;
+    try {
+      const r = await fetch(`${API}/file`, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ path, sha, message: msg || `delete: ${path}` })
+      });
+      if (r.status === 401) { sessionStorage.clear(); location.reload(); }
+      
+      let d;
+      try { d = await r.json(); } catch(e) {
+        if (attempt < maxAttempts) {
+          await new Promise(res => setTimeout(res, 2000 * attempt));
+          return ghDelete(path, sha, msg, attempt + 1);
+        }
+        throw new Error("Timeout de red. Verifica tu conexión y vuelve a intentarlo.");
       }
-      throw new Error(errStr);
+      
+      if (!r.ok) {
+        let errStr = d.error || 'Error al eliminar';
+        if (r.status === 503 || errStr.includes('No server is currently available') || errStr.includes('503') || errStr.includes('Conflict')) {
+          if (attempt < maxAttempts) {
+            await new Promise(res => setTimeout(res, 2500 * attempt));
+            return ghDelete(path, sha, msg, attempt + 1);
+          }
+        }
+        throw new Error(errStr);
+      }
+      return d;
+    } catch (err) {
+      if (attempt < maxAttempts && (err.message.toLowerCase().includes('fetch') || err.message.toLowerCase().includes('network'))) {
+        await new Promise(res => setTimeout(res, 2000 * attempt));
+        return ghDelete(path, sha, msg, attempt + 1);
+      }
+      throw err;
     }
-    return d;
   }
 
 // R2 Media API
@@ -2572,6 +2615,7 @@ window.deleteTestim = async function(idx) {
 </script>
 </body>
 </html>
+
 
 
 
