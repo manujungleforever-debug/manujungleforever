@@ -215,7 +215,7 @@ window.renderPage = function(page) {
       <div style="text-align:center;padding:50px 20px;background:rgba(0,0,0,0.02);border-radius:12px;border:1px dashed rgba(0,0,0,0.1)">
         <i class="fas fa-calendar-times" style="font-size:3.5rem;color:var(--a);margin-bottom:20px"></i>
         <h3 style="font-size:1.6rem;margin-bottom:12px;color:var(--g)">No scheduled departures found</h3>
-        <p style="color:var(--h);margin-bottom:0;max-width:500px;margin-left:auto;margin-right:auto;line-height:1.6">There are currently no open groups for the upcoming months. Please check back later or contact us to open a new date!</p>
+        <p style="color:var(--c);margin-bottom:0;max-width:500px;margin-left:auto;margin-right:auto;line-height:1.6">There are currently no open groups for the upcoming months. Please check back later or contact us to open a new date!</p>
       </div>
     `;
     return;
@@ -265,8 +265,8 @@ window.renderPage = function(page) {
           <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px">
             <div>${badgeHtml}</div>
             <div style="text-align:right">
-              <div style="font-size:1.5rem;font-weight:800;color:var(--g);line-height:1">$${s.precio} <span style="font-size:.8rem;font-weight:600;color:var(--h)">${s.moneda||'USD'}</span></div>
-              <div style="font-size:.7rem;color:var(--h);text-transform:uppercase;margin-top:4px">per person</div>
+              <div style="font-size:1.5rem;font-weight:800;color:var(--g);line-height:1">$${s.precio} <span style="font-size:.8rem;font-weight:600;color:var(--c)">${s.moneda||'USD'}</span></div>
+              <div style="font-size:.7rem;color:var(--c);text-transform:uppercase;margin-top:4px">per person</div>
             </div>
           </div>
           
@@ -278,17 +278,17 @@ window.renderPage = function(page) {
 
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;font-size:0.85rem;color:var(--g);">
             <div style="background:rgba(0,0,0,0.02);padding:10px;border-radius:6px;border:1px solid rgba(0,0,0,0.04)">
-              <div style="color:var(--h);font-size:0.7rem;text-transform:uppercase;margin-bottom:4px;letter-spacing:0.5px">Spots Available</div>
-              <div style="font-weight:800;font-size:1.1rem;color:${isSoldOut ? '#ef4444' : 'var(--g)'}">${isSoldOut ? '0' : s.plazas_disponibles} <span style="font-size:0.8rem;color:var(--h);font-weight:500">/ ${s.plazas_totales}</span></div>
+              <div style="color:var(--c);font-size:0.7rem;text-transform:uppercase;margin-bottom:4px;letter-spacing:0.5px">Spots Available</div>
+              <div style="font-weight:800;font-size:1.1rem;color:${isSoldOut ? '#ef4444' : 'var(--g)'}">${isSoldOut ? '0' : s.plazas_disponibles} <span style="font-size:0.8rem;color:var(--c);font-weight:500">/ ${s.plazas_totales}</span></div>
             </div>
             <div style="background:rgba(0,0,0,0.02);padding:10px;border-radius:6px;border:1px solid rgba(0,0,0,0.04)">
-              <div style="color:var(--h);font-size:0.7rem;text-transform:uppercase;margin-bottom:4px;letter-spacing:0.5px">Min. Passengers</div>
-              <div style="font-weight:800;font-size:1.1rem;">${s.plazas_minimas || 2} <span style="font-size:0.8rem;color:var(--h);font-weight:500">pax</span></div>
+              <div style="color:var(--c);font-size:0.7rem;text-transform:uppercase;margin-bottom:4px;letter-spacing:0.5px">Min. Passengers</div>
+              <div style="font-weight:800;font-size:1.1rem;">${s.plazas_minimas || 2} <span style="font-size:0.8rem;color:var(--c);font-weight:500">pax</span></div>
             </div>
           </div>
           
-          <div style="font-size:0.9rem;color:var(--h);margin-bottom:20px;display:flex;flex-direction:column;gap:8px;line-height:1.4">
-            ${s.guia_asignado ? `<div><i class="fas fa-id-badge" style="width:20px;color:var(--a)"></i> <b>Guide:</b> ${s.guia_asignado}</div>` : ''}
+          <div style="font-size:0.9rem;color:var(--c);margin-bottom:20px;display:flex;flex-direction:column;gap:8px;line-height:1.4">
+            ${s.guia_asignado ? `<div><i class="fas fa-id-badge" style="width:20px;color:var(--a)"></i> <b style="color:var(--g)">Guide:</b> ${s.guia_asignado}</div>` : ''}
             ${s.notas ? `<div><i class="fas fa-info-circle" style="width:20px;color:var(--a)"></i> <b style="color:var(--g)">Notes:</b> ${s.notas}</div>` : ''}
           </div>
           
