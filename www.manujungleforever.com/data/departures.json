@@ -11,7 +11,7 @@
       "plazas_totales": 8,
       "plazas_minimas": 5,
       "plazas_disponibles": 4,
-      "estado": "disponible",
+      "estado": "limitado",
       "guia_asignado": "Jordy Llaqui",
       "notas": "prueba1",
       "pasajeros": []
