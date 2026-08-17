@@ -1237,20 +1237,89 @@ async function viewTours() {
   cFile='www.manujungleforever.com/data/tours.json'; cSha=data.sha;
   cData=JSON.parse(data.content);
   const ts=cData.tours||[];
-  set(`
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px"><div style="display:flex;align-items:center;"><div class="btn-card-icon card-icon-tours"><i class="ph ph-map-trifold"></i></div><div><p class="pt" style="margin-bottom:0">Tours</p><p class="ps">${ts.length} tours registrados</p></div></div><button class="btn-primary" onclick="editTour(-1)">+ Nuevo Tour</button></div>
-    <div class="list-grid">
-      ${ts.map((t,i)=>{
-        const stCls = t.estado==='activo'?'on':(t.estado==='inactivo'?'off':'warn');
-        const stLbl = t.estado ? t.estado.toUpperCase() : 'ACTIVO';
-        return `<div class="li">
-          <div class="li-info">
-            <h3>${t.nombre} <span class="badge ${stCls}">${stLbl}</span></h3>
-            <span>${t.duracion_dias} días · $${t.precio_desde} USD · ${t.categoria} · ${t.dificultad}</span>
+  
+  // Agrupación
+  const grouped = {};
+  ts.forEach((t, i) => {
+    const cat = (t.categoria || 'Otros').toUpperCase();
+    if(!grouped[cat]) grouped[cat] = [];
+    grouped[cat].push({ t, originalIndex: i });
+  });
+
+  let htmlList = '';
+  for(const cat of Object.keys(grouped).sort()) {
+    htmlList += `<div style="margin-top: 32px; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+               <h2 style="color: #10b981; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.1em; margin: 0;">${cat}</h2>
+             </div>`;
+    htmlList += `<div style="display:flex; flex-direction:column; gap:12px;">`;
+    
+    grouped[cat].forEach((item, index) => {
+      const {t, originalIndex} = item;
+      const num = String(index + 1).padStart(2, '0');
+      const stCls = t.estado==='activo'?'on':(t.estado==='inactivo'?'off':'warn');
+      const stLbl = t.estado ? t.estado.toUpperCase() : 'ACTIVO';
+      const img = t.imagen_hero || '../assets/img/hero.png';
+      
+      htmlList += `
+      <div style="display:flex; flex-wrap:wrap; gap:16px; align-items:center; background:rgba(17,24,39,0.5); border:1px solid rgba(255,255,255,0.05); border-radius:12px; padding:12px; transition:all 0.2s;" onmouseover="this.style.borderColor='rgba(16,185,129,0.5)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.05)'">
+        
+        <div style="position:relative; width:80px; height:80px; flex-shrink:0;">
+          <img src="${img}" style="width:100%; height:100%; object-fit:cover; border-radius:8px; border:1px solid rgba(255,255,255,0.1);" onerror="this.src='../assets/img/hero.png'">
+          <div style="position:absolute; top:-6px; left:-6px; background:#10b981; color:#020617; font-size:0.65rem; font-weight:800; padding:2px 6px; border-radius:6px; box-shadow:0 2px 4px rgba(0,0,0,0.5);">${num}</div>
+        </div>
+        
+        <div style="flex: 2 1 250px; min-width:200px; overflow:hidden;">
+          <h3 style="color:#fff; font-size:1.05rem; font-weight:700; margin:0 0 4px 0; display:flex; align-items:center; gap:8px;">
+            ${t.nombre}
+            ${t.destacado ? '<i class="ph-fill ph-star" style="color:#fbbf24; font-size:1rem;" title="Destacado en portada"></i>' : ''}
+          </h3>
+          <div style="color:#9ca3af; font-size:0.85rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+            ${t.descripcion_corta || 'Sin descripción corta.'}
           </div>
-          <div class="li-actions"><button class="btn-edit" onclick="editTour(${i})">Editar</button><button class="btn-danger" onclick="deleteTour(${i})">🗑️</button></div>
-        </div>`;
-      }).join('')}
+        </div>
+        
+        <div style="flex: 2 1 300px; display:flex; gap:8px; flex-wrap:wrap; font-size:0.75rem;">
+          <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); padding:4px 8px; border-radius:6px; color:#d1d5db; display:flex; align-items:center; gap:4px;">
+            <i class="ph ph-moon"></i> ${t.duracion_dias}D / ${t.duracion_noches}N
+          </div>
+          <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); padding:4px 8px; border-radius:6px; color:#d1d5db; display:flex; align-items:center; gap:4px;">
+            <i class="ph ph-currency-dollar"></i> $${t.precio_desde}
+          </div>
+          <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); padding:4px 8px; border-radius:6px; color:#d1d5db; display:flex; align-items:center; gap:4px;">
+            <i class="ph ph-users"></i> ${t.capacidad_min}-${t.capacidad_max} pax
+          </div>
+          <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); padding:4px 8px; border-radius:6px; color:#d1d5db; display:flex; align-items:center; gap:4px;">
+            <i class="ph ph-mountains"></i> ${t.dificultad}
+          </div>
+        </div>
+        
+        <div style="flex: 1 1 150px; display:flex; align-items:center; justify-content:flex-end; gap:12px;">
+          <span class="badge ${stCls}" style="font-size:0.65rem;">${stLbl}</span>
+          <div style="display:flex; gap:6px;">
+            <button class="btn-edit" style="padding:6px 10px; border-radius:6px;" onclick="editTour(${originalIndex})" title="Editar"><i class="ph ph-pencil"></i></button>
+            <button class="btn-danger" style="padding:6px 10px; border-radius:6px;" onclick="deleteTour(${originalIndex})" title="Eliminar"><i class="ph ph-trash"></i></button>
+          </div>
+        </div>
+
+      </div>
+      `;
+    });
+    htmlList += `</div>`;
+  }
+
+  set(`
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
+      <div style="display:flex;align-items:center;">
+        <div class="btn-card-icon card-icon-tours"><i class="ph ph-map-trifold"></i></div>
+        <div>
+          <p class="pt" style="margin-bottom:0">Tours</p>
+          <p class="ps">${ts.length} tours registrados</p>
+        </div>
+      </div>
+      <button class="btn-primary" onclick="editTour(-1)">+ Nuevo Tour</button>
+    </div>
+    <div id="tours-container">
+      ${htmlList || '<div class="empty">No hay tours.</div>'}
     </div>`);
 }
 
