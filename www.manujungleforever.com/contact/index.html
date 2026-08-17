@@ -1,4 +1,4 @@
-﻿<!doctype html><html lang="en"><head>
+<!doctype html><html lang="en"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Cusco Jungle &amp; Manu National Park Tours | Manu Jungle Forever</title>
 <meta name="description" content="Explore Cusco Jungle &amp; Manu National Park tours with Manu Jungle Forever. Immerse yourself in wildlife — book your Peruvian Amazon adventure now!">
@@ -153,9 +153,9 @@
             <div class="ci-icon"><i class="fas fa-phone"></i></div>
             <div>
               <div class="ci-label">Phone / WhatsApp</div>
-              <div class="ci-val">
-                <a href="tel:+51901525679">+51 901 525 679</a><br>
-                <a href="https://api.whatsapp.com/send?phone=51901525679&text=Hello!%20I%20would%20like%20to%20learn%20more%20about%20your%20jungle%20trips" target="_blank" rel="noopener">+51 901 525 679</a>
+              <div class="ci-val" id="dyn-contact-phones">
+                <a href="tel:+51979808013">+51 979 808 013</a><br>
+                <a href="https://api.whatsapp.com/send?phone=51923289231&text=Hello!%20I%20would%20like%20to%20learn%20more%20about%20your%20jungle%20trips" target="_blank" rel="noopener">+51 923 289 231</a>
               </div>
             </div>
           </div>
@@ -464,5 +464,112 @@ document.addEventListener("DOMContentLoaded", function() {
       move: { enable: true, speed: 0.3 }
     }
   });
+</script>
+<script>
+// Dynamic Contact & Global Data Hydration
+(async function() {
+  try {
+    const [cRes, gRes] = await Promise.all([
+      fetch('../data/contact.json?v=' + Date.now()).catch(() => null),
+      fetch('../data/global.json?v=' + Date.now()).catch(() => null)
+    ]);
+    if (cRes && cRes.ok) {
+      const cData = await cRes.json();
+      if (cData.titulo_pagina) {
+        const h1 = document.querySelector('.in-hero .h1');
+        if (h1) h1.textContent = cData.titulo_pagina;
+      }
+      if (cData.subtitulo_pagina) {
+        const hs = document.querySelector('.in-hero .hs');
+        if (hs) hs.textContent = cData.subtitulo_pagina;
+      }
+      if (cData.hero_image && !cData.hero_image.includes('placeholder.jpg')) {
+        const hero = document.querySelector('.in-hero');
+        if (hero) hero.style.backgroundImage = `url('../${cData.hero_image}')`;
+      }
+      const cp = cData.contacto_principal || {};
+      const t1 = cp.telefono_1 || '';
+      const t2 = cp.telefono_2 || '';
+      const waNum = (cp.whatsapp || '').replace(/[^0-9]/g, '');
+      const waTxt = encodeURIComponent(cp.whatsapp_texto || 'Hello! I would like to learn more about your jungle trips');
+      
+      const phoneContainer = document.getElementById('dyn-contact-phones') || document.querySelector('.contact-info-item .ci-val');
+      if (phoneContainer && (t1 || t2 || waNum)) {
+        let pHtml = '';
+        if (t1) {
+          pHtml += `<a href="tel:${t1.replace(/[^0-9+]/g, '')}">${t1}</a><br>`;
+        }
+        if (waNum) {
+          pHtml += `<a href="https://api.whatsapp.com/send?phone=${waNum}&text=${waTxt}" target="_blank" rel="noopener">${t2 || ('+' + waNum)}</a>`;
+        } else if (t2) {
+          pHtml += `<a href="tel:${t2.replace(/[^0-9+]/g, '')}">${t2}</a>`;
+        }
+        phoneContainer.innerHTML = pHtml;
+      }
+      if (cp.email) {
+        const emailLink = document.querySelector('.contact-info-item a[href^="mailto:"]');
+        if (emailLink) {
+          emailLink.href = `mailto:${cp.email}`;
+          emailLink.textContent = cp.email;
+        }
+      }
+      const dir = cData.direccion || {};
+      if (dir.calle || dir.localidad || dir.nombre) {
+        const locLink = document.querySelector('.contact-info-item a[href*="maps"]');
+        if (locLink) {
+          if (dir.maps_url) locLink.href = dir.maps_url;
+          const locText = [dir.nombre, [dir.calle, dir.localidad, dir.pais].filter(Boolean).join(', ')].filter(Boolean).join('<br>');
+          locLink.innerHTML = locText;
+        }
+      }
+      if (dir.maps_embed) {
+        const mapIframe = document.querySelector('.map-container iframe');
+        if (mapIframe) mapIframe.src = dir.maps_embed;
+      }
+      const hor = cData.horario || {};
+      if (hor.nota || hor.dias || hor.horas) {
+        const timeItems = document.querySelectorAll('.contact-info-item .ci-val');
+        if (timeItems && timeItems.length >= 4) {
+          const parts = [hor.dias ? `${hor.dias}: ${hor.horas || ''}` : '', hor.nota || ''].filter(Boolean);
+          if (parts.length) timeItems[3].innerHTML = parts.join('<br>');
+        }
+      }
+      if (t1) {
+        const phoneInput = document.querySelector('input[name="phone"]');
+        if (phoneInput) phoneInput.placeholder = t1;
+      }
+    }
+    if (gRes && gRes.ok) {
+      const gData = await gRes.json();
+      const soc = gData.social || {};
+      if (soc.facebook) {
+        const fb = document.querySelector('.social-row a[aria-label="Facebook"]');
+        if (fb) fb.href = soc.facebook;
+      }
+      if (soc.instagram) {
+        const ig = document.querySelector('.social-row a[aria-label="Instagram"]');
+        if (ig) ig.href = soc.instagram;
+      }
+      if (soc.tripadvisor) {
+        const ta = document.querySelector('.social-row a[aria-label="TripAdvisor"]');
+        if (ta) ta.href = soc.tripadvisor;
+      }
+      if (soc.airbnb) {
+        const ab = document.querySelector('.social-row a[aria-label="Airbnb"]');
+        if (ab) ab.href = soc.airbnb;
+      }
+      if (soc.whatsapp) {
+        const wa = document.querySelector('.social-row a[aria-label="WhatsApp"]');
+        if (wa) wa.href = soc.whatsapp;
+      }
+      if (soc.tiktok) {
+        const tt = document.querySelector('.social-row a[aria-label="TikTok"]');
+        if (tt) tt.href = soc.tiktok;
+      }
+    }
+  } catch(e) {
+    console.warn('Contact hydration error:', e);
+  }
+})();
 </script>
 </body></html>

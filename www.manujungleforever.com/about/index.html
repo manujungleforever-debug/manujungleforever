@@ -1,4 +1,4 @@
-﻿<!doctype html><html lang="en"><head>
+<!doctype html><html lang="en"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Cusco Jungle &amp; Manu National Park Tours | Manu Jungle Forever</title>
 <meta name="description" content="Explore Cusco Jungle &amp; Manu National Park tours with Manu Jungle Forever. Immerse yourself in wildlife — book your Peruvian Amazon adventure now!">
@@ -678,5 +678,40 @@ document.addEventListener("DOMContentLoaded", function() {
       move: { enable: true, speed: 0.3 }
     }
   });
+</script>
+<script>
+// Dynamic About & Global Data Hydration
+(async function() {
+  try {
+    const [aRes, gRes] = await Promise.all([
+      fetch('../data/about.json?v=' + Date.now()).catch(() => null),
+      fetch('../data/global.json?v=' + Date.now()).catch(() => null)
+    ]);
+    if (aRes && aRes.ok) {
+      const aData = await aRes.json();
+      if (aData.titulo_pagina) {
+        const h1 = document.querySelector('.in-hero .h1');
+        if (h1) h1.textContent = aData.titulo_pagina;
+      }
+      if (aData.hero_image && !aData.hero_image.includes('placeholder.jpg')) {
+        const hero = document.querySelector('.in-hero');
+        if (hero) hero.style.backgroundImage = `url('../${aData.hero_image}')`;
+      }
+      const hist = aData.historia || {};
+      if (hist.titulo) {
+        const histTitle = document.querySelector('.intro-block .h2');
+        if (histTitle) histTitle.textContent = hist.titulo;
+      }
+      if (hist.paragrafos && hist.paragrafos.length) {
+        const container = document.querySelector('.intro-block .elementor-widget-container') || document.querySelector('.intro-block .tour-rich-text');
+        if (container) {
+          container.innerHTML = hist.paragrafos.map(p => `<p>${p}</p>`).join('');
+        }
+      }
+    }
+  } catch (e) {
+    console.warn('About hydration error:', e);
+  }
+})();
 </script>
 </body></html>

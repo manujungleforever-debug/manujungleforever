@@ -1,4 +1,4 @@
-﻿<!doctype html><html lang="en"><head>
+<!doctype html><html lang="en"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Cusco Jungle &amp; Manu National Park Tours | Manu Jungle Forever</title>
 <meta name="description" content="Explore Cusco Jungle &amp; Manu National Park tours with Manu Jungle Forever. Immerse yourself in wildlife — book your Peruvian Amazon adventure now!">
@@ -490,5 +490,66 @@ document.addEventListener("DOMContentLoaded", function() {
       move: { enable: true, speed: 0.3 }
     }
   });
+</script>
+<script>
+// Dynamic Home & Global Data Hydration
+(async function() {
+  try {
+    const [hRes, gRes] = await Promise.all([
+      fetch('data/home.json?v=' + Date.now()).catch(() => null),
+      fetch('data/global.json?v=' + Date.now()).catch(() => null)
+    ]);
+    if (hRes && hRes.ok) {
+      const hData = await hRes.json();
+      // Hero
+      const hero = hData.hero || {};
+      if (hero.location_tag) {
+        const ht = document.querySelector('.hero .ht');
+        if (ht) ht.innerHTML = `<i class="fas fa-map-marker-alt"></i> ${hero.location_tag}`;
+      }
+      if (hero.title || hero.title_emphasis) {
+        const h1 = document.querySelector('.hero .h1');
+        if (h1) h1.innerHTML = `${hero.title || ''}<br>${hero.title_emphasis ? `<em>${hero.title_emphasis}</em>` : ''}`;
+      }
+      if (hero.subtitle) {
+        const hs = document.querySelector('.hero .hs');
+        if (hs) hs.textContent = hero.subtitle;
+      }
+      // About section
+      const ab = hData.about_section || {};
+      if (ab.eyebrow) {
+        const ey = document.querySelector('#about .ey');
+        if (ey) ey.textContent = ab.eyebrow;
+      }
+      if (ab.title) {
+        const abTitle = document.querySelector('#about .h2');
+        if (abTitle) abTitle.textContent = ab.title;
+      }
+      if (ab.paragraphs && ab.paragraphs.length) {
+        const abTextContainer = document.querySelector('#about .spt');
+        if (abTextContainer) {
+          const existingParas = abTextContainer.querySelectorAll('p');
+          existingParas.forEach(p => p.remove());
+          const chips = abTextContainer.querySelector('.chips');
+          ab.paragraphs.forEach(p => {
+            const pEl = document.createElement('p');
+            pEl.textContent = p.text || p;
+            if (chips) abTextContainer.insertBefore(pEl, chips);
+            else abTextContainer.appendChild(pEl);
+          });
+        }
+      }
+      if (ab.image && !ab.image.includes('placeholder.jpg')) {
+        const abImg = document.querySelector('#about .spi img');
+        if (abImg) {
+          abImg.src = ab.image;
+          if (ab.image_alt) abImg.alt = ab.image_alt;
+        }
+      }
+    }
+  } catch (e) {
+    console.warn('Home hydration error:', e);
+  }
+})();
 </script>
 </body></html>
