@@ -1364,6 +1364,15 @@ async function viewDeps() {
   cData=JSON.parse(data.content);
   const sal=cData.salidas||[];
   
+  // Ordenar salidas numéricamente descendente (ej. 011, 010, 009)
+  sal.sort((a,b) => {
+    const numA = parseInt((a.id||'').replace(/\D/g, ''), 10);
+    const numB = parseInt((b.id||'').replace(/\D/g, ''), 10);
+    const validA = !isNaN(numA) && numA < 1000000 ? numA : 0;
+    const validB = !isNaN(numB) && numB < 1000000 ? numB : 0;
+    return validB - validA;
+  });
+  
   const activas = sal.filter(s => ['disponible', 'limitado'].includes(s.estado)).length;
   const vendidas = sal.reduce((acc, s) => acc + ((s.plazas_totales||0) - (s.plazas_disponibles||0)), 0);
   
@@ -1437,7 +1446,7 @@ async function viewDeps() {
             </div>
           </div>
         </div>`;
-      }).reverse().join('')}
+      }).join('')}
     </div>`);
 }
 
@@ -1452,7 +1461,10 @@ window.editDep = async function(idx) {
   if (idx === -1) {
     let nextNum = 1;
     if (cData && cData.salidas && cData.salidas.length > 0) {
-      const existingNums = cData.salidas.map(s => parseInt(s.id, 10)).filter(n => !isNaN(n));
+      const existingNums = cData.salidas.map(s => {
+        const num = parseInt((s.id||'').replace(/\D/g, ''), 10);
+        return (!isNaN(num) && num < 1000000) ? num : 0;
+      });
       if (existingNums.length > 0) {
         nextNum = Math.max(...existingNums) + 1;
       }
