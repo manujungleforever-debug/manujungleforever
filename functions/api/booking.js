@@ -66,7 +66,9 @@ function buildEmailHtml({ name, email, phone, tour, travelers, date, contact, no
         <!-- HEADER -->
         <tr>
           <td style="background:linear-gradient(135deg,#002e24 0%,#004d3a 100%);padding:36px 40px;text-align:center;">
-            <div style="font-size:36px;margin-bottom:12px;">🌿</div>
+            <div style="margin-bottom:12px;">
+              <img src="https://www.manujungleforever.com/assets/img/logo.png" alt="Manu Jungle Forever" style="height:65px;width:auto;">
+            </div>
             <h1 style="margin:0;color:#c9a84c;font-size:24px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;">
               NUEVA SOLICITUD DE RESERVA
             </h1>
@@ -159,7 +161,9 @@ function buildConfirmationHtml({ name, tour, date }) {
         <!-- HEADER -->
         <tr>
           <td style="background:linear-gradient(135deg,#002e24 0%,#004d3a 100%);padding:36px 40px;text-align:center;">
-            <div style="font-size:40px;margin-bottom:12px;">🌿</div>
+            <div style="margin-bottom:12px;">
+              <img src="https://www.manujungleforever.com/assets/img/logo.png" alt="Manu Jungle Forever" style="height:65px;width:auto;">
+            </div>
             <h1 style="margin:0;color:#c9a84c;font-size:22px;font-weight:800;">¡Gracias por tu consulta!</h1>
             <p style="margin:10px 0 0;color:#ffffff;font-size:15px;font-weight:400;opacity:0.9;">
               Hemos recibido tu solicitud correctamente
