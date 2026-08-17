@@ -1,4 +1,4 @@
-﻿<!doctype html><html lang="en"><head>
+<!doctype html><html lang="en"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Cusco Jungle &amp; Manu National Park Tours | Manu Jungle Forever</title>
 <meta name="description" content="Explore Cusco Jungle &amp; Manu National Park tours with Manu Jungle Forever. Immerse yourself in wildlife — book your Peruvian Amazon adventure now!">
@@ -174,7 +174,7 @@
 async function loadPublicDepartures() {
   const container = document.getElementById('deps-container');
   try {
-    const res = await fetch('../data/departures.json');
+    const res = await fetch('/api/salidas');
     if (!res.ok) throw new Error('Network error');
     const data = await res.json();
     let sal = data?.salidas || [];
