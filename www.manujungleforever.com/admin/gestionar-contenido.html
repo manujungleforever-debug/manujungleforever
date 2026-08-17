@@ -43,7 +43,7 @@ nav.mnav a:hover, nav.mnav a.active { color:var(--teal); background:rgba(45,212,
 .user-sec { display:flex; align-items:center; gap:10px; margin-left:auto; }
 
 
-main { flex-grow:1; max-width:1400px; width:100%; margin:0 auto; padding:28px 24px 100px; position:relative; z-index:1; }
+main { flex-grow:1; max-width:1280px; margin:0 auto; width:100%; padding:28px 1.5rem 100px; position:relative; z-index:1; box-sizing:border-box; }
 .pt { font-size:1.85rem; font-weight:700; letter-spacing:-.4px; background:linear-gradient(to right,#fff,#cbd5e1); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:4px; }
 .ps { color:var(--muted); font-size:.87rem; margin-bottom:20px; }
 .back-btn { display:inline-flex; align-items:center; gap:7px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); color:var(--fg); padding:8px 16px; border-radius:9px; font-size:.82rem; font-weight:600; cursor:pointer; transition:.25s; margin-bottom:20px; }
@@ -70,7 +70,7 @@ main { flex-grow:1; max-width:1400px; width:100%; margin:0 auto; padding:28px 24
 .badge.on  { background:rgba(16,185,129,.15); color:#34d399; border:1px solid rgba(16,185,129,.25); }
 .badge.off { background:rgba(239,68,68,.18);  color:#f87171; border:1px solid rgba(239,68,68,.3); }
 .badge.warn{ background:rgba(245,158,11,.18); color:#fbbf24; border:1px solid rgba(245,158,11,.3); }
-.eform { max-width: 1200px; margin: 0 auto; width: 100%; padding: 0 1.5rem; display:flex; flex-direction:column; gap:17px; margin-bottom:60px; }
+.eform { max-width: 100%; margin: 0; width: 100%; padding: 0; display:flex; flex-direction:column; gap:17px; margin-bottom:60px; }
 @media (min-width: 1024px) {
   .eform { display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; align-items: start; }
   .eform > .esec { grid-column: 2; }
@@ -86,7 +86,7 @@ main { flex-grow:1; max-width:1400px; width:100%; margin:0 auto; padding:28px 24
 .ff input:focus,.ff textarea:focus,.ff select:focus { border-color:var(--teal); box-shadow:0 0 10px var(--teal-g); }
 .ff select option { background:#0a1f1b; color:var(--fg); }
 .hint { font-size:.7rem; color:var(--muted); }
-.save-bar { position:fixed; bottom:0; left:50%; transform: translateX(-50%); width:100%; max-width:1200px; box-sizing:border-box; background:rgba(3,8,7,.96); backdrop-filter:blur(16px); border-top:1px solid rgba(45,212,191,.3); padding:14px 28px; display:flex; align-items:center; justify-content:flex-end; gap:12px; z-index:99999; box-shadow:0 -8px 32px rgba(0,0,0,0.8); }
+.save-bar { position:fixed; bottom:0; left:50%; transform: translateX(-50%); width:100%; max-width:1280px; box-sizing:border-box; background:rgba(3,8,7,.96); backdrop-filter:blur(16px); border-top:1px solid rgba(45,212,191,.3); padding:14px 28px; display:flex; align-items:center; justify-content:flex-end; gap:12px; z-index:99999; box-shadow:0 -8px 32px rgba(0,0,0,0.8); }
 .save-status { font-size:.83rem; color:var(--muted); margin-right:auto; font-weight:500; }
 .save-status.ok  { color:var(--green); }
 .save-status.err { color:var(--danger); }
@@ -189,6 +189,43 @@ code { background:rgba(45,212,191,.1); color:var(--teal); padding:2px 6px; borde
     filter: brightness(1.1);
 }
 
+/* Rediseño de Pestañas y Alineación */
+#mc > div[style*="overflow-x:auto"] {
+  border-bottom: none !important;
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+  display: inline-flex !important;
+  gap: 6px !important;
+  background: rgba(15, 23, 42, 0.6) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 0.75rem !important;
+  padding: 4px !important;
+}
+#mc > div[style*="overflow-x:auto"] > span {
+  padding: 8px 16px !important;
+  border: none !important;
+  color: #94a3b8 !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  border-radius: 8px !important;
+  transition: all 0.2s ease !important;
+}
+#mc > div[style*="overflow-x:auto"] > span:hover {
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+#mc > div[style*="overflow-x:auto"] > span[style*="var(--teal)"] {
+  background: rgba(16, 185, 129, 0.15) !important;
+  color: #10b981 !important;
+  border: 1px solid rgba(16, 185, 129, 0.4) !important;
+  font-weight: 600 !important;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.1) !important;
+}
+#sub-content > div:first-child,
+#mc > div:not([style*="overflow-x:auto"]):first-child {
+  margin-top: 1.5rem !important;
+  margin-bottom: 2rem !important;
+}
 </style>
 </head>
 <body>
@@ -2164,5 +2201,6 @@ window.deleteTestim = async function(idx) {
 </script>
 </body>
 </html>
+
 
 
