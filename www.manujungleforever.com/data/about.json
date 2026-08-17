@@ -7,10 +7,12 @@
     "eyebrow": "Our Story",
     "titulo": "Born in the Jungle",
     "paragrafos": [
-      "Manu Jungle Forever was founded by Moises Araña and his family, who were born and raised in the small Amazonian village of Nuevo Eden, nestled deep within the Manu Biosphere Reserve in southeastern Peru.",
-      "Moises grew up learning the forest — its rhythms, its animals, its dangers and its extraordinary beauty. When travelers began arriving to experience the Amazon, Moises saw an opportunity to share his home with the world in a way that would protect it, not exploit it.",
-      "What started as a simple guesthouse and guiding service has grown into one of the most respected jungle tour operators in the Cusco region, known for its authenticity, safety record, and genuine commitment to conservation and community support.",
-      "Today, Manu Jungle Forever employs 12 local guides and staff, all from the communities of Nuevo Eden and surrounding villages. Every tour you book directly supports these families and their livelihoods."
+      "Dear Curious Traveler, ",
+      "Our team at Manu Jungle Forever is excited to share your jungle travel with you. We are a family business, working with local professionals to create an unforgettable experience. ",
+      "The Llaqui family will welcome you and be your guides. Jordy has been a professional tour guide in the Amazon jungle for many years, and with Gloria’s dedication to conservation, they operate this project together. They have created these tours and jungle adventures to provide a unique experience in the Manu National Park. ",
+      "When Gloria joined the project, she brought her deep knowledge of the region to every itinerary. The Llaqui family were welcoming and generous with their time and hospitality. They organized fishing trips, ate fresh local food, swam in the river, and more.  Whereas her trip as a tourist was strictly nature-focused, this trip was a complete immersion into a totally different life. Yet, she was in the same little slice of jungle for both. ",
+      "Manu Jungle Forever celebrates the whole jungle: the magnificent nature, and the local life. As a traveler, you can choose your priority and focus. We offer 3 types of guided tours that range from very nature-based to very culture-based. Or, you can customize your own adventure using our beautiful jungle bungalow as your base. ",
+      "Let’s meet our team of jungle experts and family members that you’ll meet along the way. "
     ],
     "imagen": "assets/media_to_upload/photos/placeholder.jpg",
     "imagen_alt": "Moises Araña – Founder of Manu Jungle Forever"
@@ -66,9 +68,21 @@
     }
   ],
   "numeros": [
-    { "valor": "10+", "etiqueta": "Years in Business" },
-    { "valor": "500+", "etiqueta": "Travelers Guided" },
-    { "valor": "12", "etiqueta": "Local Staff Members" },
-    { "valor": "4.9★", "etiqueta": "Average Rating" }
+    {
+      "valor": "10+",
+      "etiqueta": "Years in Business"
+    },
+    {
+      "valor": "500+",
+      "etiqueta": "Travelers Guided"
+    },
+    {
+      "valor": "12",
+      "etiqueta": "Local Staff Members"
+    },
+    {
+      "valor": "4.9★",
+      "etiqueta": "Average Rating"
+    }
   ]
 }
