@@ -1536,7 +1536,16 @@ window.exportPaxPDF = async function(idx) {
   loadedPhotos.forEach(im => { if(im) imgMap[im.url] = im.img; });
 
   if (logoImg) {
-    doc.addImage(logoImg, 'PNG', 14, 10, 40, 40 * logoImg.height / logoImg.width);
+    const imgW = 40;
+    const imgH = 40 * logoImg.height / logoImg.width;
+    const pad = 3;
+    
+    // Fondo oscuro para que resalte el texto blanco del logo
+    doc.setFillColor(15, 23, 42); 
+    doc.roundedRect(14, 10, imgW + (pad * 2), imgH + (pad * 2), 2, 2, 'F');
+    
+    // Logo encima
+    doc.addImage(logoImg, 'PNG', 14 + pad, 10 + pad, imgW, imgH);
   }
   
   doc.setFontSize(16);
