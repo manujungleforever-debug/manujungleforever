@@ -228,7 +228,7 @@ window.renderPage = function(page) {
   const start = (page - 1) * itemsPerPage;
   const paginated = allDepartures.slice(start, start + itemsPerPage);
   
-  let html = `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:30px;">`;
+  let html = `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(450px,1fr));gap:30px;">`;
   
   paginated.forEach(s => {
     const sold = (s.plazas_totales||0) - (s.plazas_disponibles||0);
@@ -309,7 +309,7 @@ window.renderPage = function(page) {
           <div style="display:flex;align-items:flex-start;margin-bottom:20px;position:relative;">
             <div style="position:absolute; left:50%; transform:translateX(-50%); top:0;">${badgeHtml}</div>
             <div style="margin-left:auto;text-align:right">
-              <div style="font-size:1.5rem;font-weight:800;color:var(--g);line-height:1">$${s.precio} <span style="font-size:.8rem;font-weight:600;color:var(--c)">${s.moneda||'USD'}</span></div>
+              <div style="font-size:1.5rem;font-weight:800;color:var(--g);line-height:1">$${s.precio} <span translate="no" style="font-size:.8rem;font-weight:600;color:var(--c)">${s.moneda||'USD'}</span></div>
               <div style="font-size:.7rem;color:var(--c);text-transform:uppercase;margin-top:4px">per person</div>
             </div>
           </div>
