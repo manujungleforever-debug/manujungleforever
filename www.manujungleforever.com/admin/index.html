@@ -1738,12 +1738,15 @@ window.viewPax = function(idx) {
   const pax = s.pasajeros || [];
   
   let html = `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px">
-    <h3 style="margin:0">Pasajeros: ${s.tour_nombre} (${s.fecha_salida})</h3>
-    <button class="btn-secondary" onclick="exportPaxCSV(${idx})">⬇️ Exportar CSV</button>
+    <h3 style="margin:0">Pasajeros: ${s.tour_nombre} (${s.fecha_salida || 'TBD'})</h3>
+    <div style="display:flex;gap:10px">
+      <button class="btn-primary" onclick="editPax(${idx}, -1)">+ Añadir Pasajero</button>
+      <button class="btn-secondary" onclick="exportPaxCSV(${idx})">⬇️ Exportar CSV</button>
+    </div>
   </div>`;
   
   if (pax.length === 0) {
-    html += `<div style="padding:20px;text-align:center;color:var(--muted)">No hay pasajeros registrados para esta salida.</div>`;
+    html += `<div style="padding:20px;text-align:center;color:var(--muted);background:rgba(255,255,255,.02);border-radius:8px">No hay pasajeros registrados para esta salida.</div>`;
   } else {
     html += `<table style="width:100%;text-align:left;border-collapse:collapse;font-size:.85rem;">
       <tr style="border-bottom:1px solid rgba(255,255,255,.1);color:var(--muted)">
@@ -1751,15 +1754,20 @@ window.viewPax = function(idx) {
         <th style="padding:8px">Contacto</th>
         <th style="padding:8px">Dietas / Médicas</th>
         <th style="padding:8px">Pago</th>
+        <th style="padding:8px;text-align:right">Acciones</th>
       </tr>`;
-    pax.forEach(p => {
+    pax.forEach((p, pIdx) => {
       html += `<tr style="border-bottom:1px solid rgba(255,255,255,.05)">
         <td style="padding:8px"><strong>${p.nombre_completo}</strong><br><span style="color:var(--muted)">${p.nacionalidad} - ${p.pasaporte}</span></td>
-        <td style="padding:8px"><a href="https://wa.me/${p.whatsapp.replace(/[^0-9]/g,'')}" target="_blank" style="color:var(--teal)">${p.whatsapp}</a><br><span style="color:var(--muted)">${p.email}</span></td>
+        <td style="padding:8px"><a href="https://wa.me/${(p.whatsapp||'').replace(/[^0-9]/g,'')}" target="_blank" style="color:var(--teal)">${p.whatsapp||'-'}</a><br><span style="color:var(--muted)">${p.email||'-'}</span></td>
         <td style="padding:8px;color:#fbbf24">${p.restricciones_dieteticas || '-'}<br>${p.condiciones_medicas || '-'}</td>
         <td style="padding:8px">
-          <span class="badge ${p.estado_pago==='pagado'?'on':'warn'}">${p.estado_pago}</span><br>
-          <span style="color:var(--muted)">Pagado: $${p.monto_pagado} / Saldo: $${p.saldo_pendiente}</span>
+          <span class="badge ${p.estado_pago==='pagado'?'on':(p.estado_pago==='pendiente'?'err':'warn')}">${p.estado_pago||'pendiente'}</span><br>
+          <span style="color:var(--muted)">Pagado: $${p.monto_pagado||0} / Saldo: $${p.saldo_pendiente||0}</span>
+        </td>
+        <td style="padding:8px;text-align:right">
+          <button onclick="editPax(${idx}, ${pIdx})" class="btn-secondary" style="padding:4px 8px;font-size:0.75rem;margin-bottom:4px;width:100%">✏️ Editar</button><br>
+          <button onclick="deletePax(${idx}, ${pIdx})" class="btn-danger" style="padding:4px 8px;font-size:0.75rem;width:100%">🗑️ Eliminar</button>
         </td>
       </tr>`;
     });
@@ -1773,6 +1781,116 @@ window.viewPax = function(idx) {
   const confirmBtn = document.getElementById('media-confirm');
   if (confirmBtn) confirmBtn.style.display = 'none';
   openModal('media-modal');
+};
+
+window.editPax = function(sIdx, pIdx) {
+  const s = cData.salidas[sIdx];
+  const p = pIdx === -1 ? {nombre_completo:'', nacionalidad:'', pasaporte:'', whatsapp:'', email:'', restricciones_dieteticas:'', condiciones_medicas:'', estado_pago:'pendiente', monto_pagado:0, saldo_pendiente:0} : (s.pasajeros[pIdx] || {});
+  
+  const html = `
+    <button style="margin-bottom:15px;background:none;border:none;color:var(--a);cursor:pointer;font-weight:600;display:flex;align-items:center;gap:5px" onclick="viewPax(${sIdx})">
+      <i class="fas fa-arrow-left"></i> Volver a la lista
+    </button>
+    <div class="eform" style="margin:0;background:rgba(255,255,255,0.02);padding:20px;border-radius:12px;border:1px solid rgba(255,255,255,0.05)">
+      <div class="esec" style="border:none;padding:0;margin:0">
+      <div class="esec-h" style="margin-top:0">${pIdx === -1 ? '✨ Nuevo Pasajero' : '✏️ Editar Pasajero'}</div>
+      
+      <div class="grow2">
+        <div class="ff"><label>Nombre Completo</label><input id="p-n" value="${esc(p.nombre_completo||'')}"></div>
+        <div class="ff"><label>Nacionalidad</label><input id="p-na" value="${esc(p.nacionalidad||'')}"></div>
+      </div>
+      <div class="grow3">
+        <div class="ff"><label>Pasaporte / DNI</label><input id="p-pa" value="${esc(p.pasaporte||'')}"></div>
+        <div class="ff"><label>WhatsApp</label><input id="p-w" value="${esc(p.whatsapp||'')}"></div>
+        <div class="ff"><label>Email</label><input id="p-e" value="${esc(p.email||'')}"></div>
+      </div>
+      <div class="grow2">
+        <div class="ff"><label>Restricciones Dietéticas</label><input id="p-rd" value="${esc(p.restricciones_dieteticas||'')}"></div>
+        <div class="ff"><label>Condiciones Médicas</label><input id="p-cm" value="${esc(p.condiciones_medicas||'')}"></div>
+      </div>
+      <div class="grow3">
+        <div class="ff"><label>Estado de Pago</label>
+          <select id="p-ep">
+            <option ${p.estado_pago==='pendiente'?'selected':''} value="pendiente">Pendiente</option>
+            <option ${p.estado_pago==='reserva'?'selected':''} value="reserva">Reserva (Parcial)</option>
+            <option ${p.estado_pago==='pagado'?'selected':''} value="pagado">Pagado 100%</option>
+          </select>
+        </div>
+        <div class="ff"><label>Monto Pagado ($)</label><input type="number" id="p-mp" value="${p.monto_pagado||0}"></div>
+        <div class="ff"><label>Saldo Pendiente ($)</label><input type="number" id="p-sp" value="${p.saldo_pendiente||0}"></div>
+      </div>
+      
+      <div style="margin-top:20px;display:flex;justify-content:flex-end;gap:10px;border-top:1px solid rgba(255,255,255,0.1);padding-top:15px">
+        <button class="btn-secondary" onclick="viewPax(${sIdx})">Cancelar</button>
+        <button class="btn-primary" onclick="savePax(${sIdx}, ${pIdx}, event)"><i class="fas fa-save"></i> Guardar Pasajero</button>
+      </div>
+    </div></div>
+  `;
+  document.getElementById('media-modal-body').innerHTML = html;
+};
+
+window.savePax = async function(sIdx, pIdx, event) {
+  const s = cData.salidas[sIdx];
+  const p = {
+    nombre_completo: v('p-n'),
+    nacionalidad: v('p-na'),
+    pasaporte: v('p-pa'),
+    whatsapp: v('p-w'),
+    email: v('p-e'),
+    restricciones_dieteticas: v('p-rd'),
+    condiciones_medicas: v('p-cm'),
+    estado_pago: v('p-ep'),
+    monto_pagado: +v('p-mp'),
+    saldo_pendiente: +v('p-sp')
+  };
+  
+  if (!s.pasajeros) s.pasajeros = [];
+  
+  if (pIdx === -1) {
+    s.pasajeros.push(p);
+  } else {
+    s.pasajeros[pIdx] = p;
+  }
+  
+  const btn = event.currentTarget;
+  const oldText = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
+  
+  try {
+    const res = await ghPut(cFile, JSON.stringify(cData, null, 2), null, \`update pax in: \${s.id}\`);
+    cSha = res.sha;
+    viewPax(sIdx);
+    if(typeof viewDeps === 'function') viewDeps(); // Update main list in background
+  } catch(e) {
+    console.error(e);
+    alert('Error: ' + e.message);
+    btn.disabled = false;
+    btn.innerHTML = oldText;
+  }
+};
+
+window.deletePax = async function(sIdx, pIdx) {
+  if (!confirm('¿Estás seguro de eliminar este pasajero? Esta acción no se puede deshacer.')) return;
+  const s = cData.salidas[sIdx];
+  s.pasajeros.splice(pIdx, 1);
+  
+  const btn = event.currentTarget;
+  const oldText = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '🗑️...';
+  
+  try {
+    const res = await ghPut(cFile, JSON.stringify(cData, null, 2), null, \`delete pax in: \${s.id}\`);
+    cSha = res.sha;
+    viewPax(sIdx);
+    if(typeof viewDeps === 'function') viewDeps();
+  } catch(e) {
+    console.error(e);
+    alert('Error al eliminar: ' + e.message);
+    btn.disabled = false;
+    btn.innerHTML = oldText;
+  }
 };
 
 window.exportPaxCSV = function(idx) {
