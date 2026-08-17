@@ -1327,55 +1327,87 @@ window.editTour = function(idx) {
   const t= idx === -1 ? {nombre:'', estado:'activo', categoria:'wildlife', duracion_dias:1, duracion_noches:0, precio_desde:0, capacidad_min:1, capacidad_max:12, dificultad:'Fácil', temporada:'', descripcion_corta:'', descripcion_larga:'', imagen_hero:'', galeria:[], itinerario:[], incluye:[], no_incluye:[], destacado:false} : cData.tours[idx];
   set(`
     <button class="back-btn" onclick="route('tours')">← Volver a tours</button>
-    <div class="eform">
-      <div class="esec"><div class="esec-h">Información General</div>
-        <div class="grow2">
-          <div class="ff"><label>Nombre del tour</label><input id="t-n" value="${esc(t.nombre)}"></div>
-          <div class="ff"><label>Estado</label><select id="t-e"><option ${t.estado==='activo'?'selected':''} value="activo">✅ Activo</option><option ${t.estado==='pausado'?'selected':''} value="pausado">⏸️ Pausado</option><option ${t.estado==='seasonal'?'selected':''} value="seasonal">🍂 De Temporada</option><option ${t.estado==='inactivo'?'selected':''} value="inactivo">❌ Inactivo</option></select></div>
-        </div>
-        <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:12px;margin-bottom:12px">
-          <div class="ff"><label>Categoría</label>
-            <select id="t-c" onchange="if(this.value==='__add_new__') addCustomItem('t-c', 'Nombre de la nueva categoría:')">
-              ${(() => {
-                const baseCats = ['wildlife', 'cultural', 'expedition', 'birdwatching', 'machu wasi'];
-                const existingCats = (cData?.tours || []).map(x => x.categoria).filter(Boolean);
-                const allCats = Array.from(new Set([...baseCats, ...existingCats, t.categoria].filter(Boolean)));
-                return allCats.map(c => `<option value="${esc(c)}" ${t.categoria === c ? 'selected' : ''}>${esc(c)}</option>`).join('') +
-                       '<option value="__add_new__" style="font-weight:bold;color:#2dd4bf;">+ Añadir categoría...</option>';
-              })()}
-            </select>
+    <style>
+      @media (min-width: 1024px) {
+        .tour-layout-grid { grid-template-columns: 2fr 1fr !important; }
+      }
+    </style>
+    <div class="eform" style="max-width: 1280px; margin: 0 auto; width: 100%; padding: 0;">
+      <div style="display: grid; gap: 32px; grid-template-columns: 1fr;" class="tour-layout-grid">
+        
+        <!-- COLUMNA IZQUIERDA -->
+        <div style="display: flex; flex-direction: column; gap: 24px;">
+          
+          <!-- TARJETA 1 -->
+          <div style="background: rgba(17,24,39,0.5); border: 1px solid rgba(255,255,255,0.05); padding: 24px; border-radius: 16px;">
+            <h3 style="color: #10b981; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">Información General</h3>
+            
+            <div class="ff" style="margin-bottom:12px"><label>Nombre del tour</label><input id="t-n" value="${esc(t.nombre)}"></div>
+            
+            <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:12px;margin-bottom:12px">
+              <div class="ff"><label>Categoría</label>
+                <select id="t-c" onchange="if(this.value==='__add_new__') addCustomItem('t-c', 'Nombre de la nueva categoría:')">
+                  ${(() => {
+                    const baseCats = ['wildlife', 'cultural', 'expedition', 'birdwatching', 'machu wasi'];
+                    const existingCats = (cData?.tours || []).map(x => x.categoria).filter(Boolean);
+                    const allCats = Array.from(new Set([...baseCats, ...existingCats, t.categoria].filter(Boolean)));
+                    return allCats.map(c => `<option value="${esc(c)}" ${t.categoria === c ? 'selected' : ''}>${esc(c)}</option>`).join('') +
+                           '<option value="__add_new__" style="font-weight:bold;color:#2dd4bf;">+ Añadir categoría...</option>';
+                  })()}
+                </select>
+              </div>
+              <div class="ff"><label>Precio desde (USD)</label><input type="number" id="t-p" value="${t.precio_desde}" min="0"></div>
+              <div class="ff"><label>Cap. mínima</label><input type="number" id="t-cmin" value="${t.capacidad_min}" min="1"></div>
+              <div class="ff"><label>Cap. máxima</label><input type="number" id="t-cmax" value="${t.capacidad_max}" min="1"></div>
+            </div>
+            
+            <div style="display:grid;grid-template-columns:1fr 2fr 1fr 1fr;gap:12px;margin-bottom:12px">
+              <div class="ff"><label>Dificultad</label><select id="t-dif"><option ${t.dificultad==='Fácil'?'selected':''}>Fácil</option><option ${t.dificultad==='Moderado'?'selected':''}>Moderado</option><option ${t.dificultad==='Difícil'?'selected':''}>Difícil</option></select></div>
+              <div class="ff"><label>Temporada</label>
+                <select id="t-tmp" onchange="if(this.value==='__add_new__') addCustomItem('t-tmp', 'Nombre de la nueva temporada:')">
+                  ${(() => {
+                    const baseSeasons = ['Todo el año', 'Mayo - Octubre (Temporada Seca)', 'Noviembre - Abril (Temporada de Lluvias)', 'Junio - Septiembre'];
+                    const existingSeasons = (cData?.tours || []).map(x => x.temporada).filter(Boolean);
+                    const currentSeason = t.temporada || 'Todo el año';
+                    const allSeasons = Array.from(new Set([...baseSeasons, ...existingSeasons, currentSeason].filter(Boolean)));
+                    return allSeasons.map(s => `<option value="${esc(s)}" ${currentSeason === s ? 'selected' : ''}>${esc(s)}</option>`).join('') +
+                           '<option value="__add_new__" style="font-weight:bold;color:#2dd4bf;">+ Añadir temporada...</option>';
+                  })()}
+                </select>
+              </div>
+              <div class="ff"><label>Duración (días)</label><input type="number" id="t-d" value="${t.duracion_dias||1}" min="1"></div>
+              <div class="ff"><label>Duración (noches)</label><input type="number" id="t-dn" value="${t.duracion_noches||0}" min="0"></div>
+            </div>
           </div>
-          <div class="ff"><label>Precio desde (USD)</label><input type="number" id="t-p" value="${t.precio_desde}" min="0"></div>
-          <div class="ff"><label>Cap. mínima</label><input type="number" id="t-cmin" value="${t.capacidad_min}" min="1"></div>
-          <div class="ff"><label>Cap. máxima</label><input type="number" id="t-cmax" value="${t.capacidad_max}" min="1"></div>
-        </div>
-        <div style="display:grid;grid-template-columns:1fr 2fr 1fr 1fr;gap:12px;margin-bottom:12px">
-          <div class="ff"><label>Dificultad</label><select id="t-dif"><option ${t.dificultad==='Fácil'?'selected':''}>Fácil</option><option ${t.dificultad==='Moderado'?'selected':''}>Moderado</option><option ${t.dificultad==='Difícil'?'selected':''}>Difícil</option></select></div>
-          <div class="ff"><label>Temporada</label>
-            <select id="t-tmp" onchange="if(this.value==='__add_new__') addCustomItem('t-tmp', 'Nombre de la nueva temporada:')">
-              ${(() => {
-                const baseSeasons = ['Todo el año', 'Mayo - Octubre (Temporada Seca)', 'Noviembre - Abril (Temporada de Lluvias)', 'Junio - Septiembre'];
-                const existingSeasons = (cData?.tours || []).map(x => x.temporada).filter(Boolean);
-                const currentSeason = t.temporada || 'Todo el año';
-                const allSeasons = Array.from(new Set([...baseSeasons, ...existingSeasons, currentSeason].filter(Boolean)));
-                return allSeasons.map(s => `<option value="${esc(s)}" ${currentSeason === s ? 'selected' : ''}>${esc(s)}</option>`).join('') +
-                       '<option value="__add_new__" style="font-weight:bold;color:#2dd4bf;">+ Añadir temporada...</option>';
-              })()}
-            </select>
+          
+          <!-- TARJETA 2 -->
+          <div style="background: rgba(17,24,39,0.5); border: 1px solid rgba(255,255,255,0.05); padding: 24px; border-radius: 16px;">
+            <h3 style="color: #10b981; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">Descripciones</h3>
+            <div class="ff" style="margin-bottom:12px"><label>Descripción corta (tarjetas)</label><textarea id="t-dc" style="min-height:80px">${esc(t.descripcion_corta||'')}</textarea></div>
+            <div class="ff"><label>Descripción completa (Markdown)</label>${mdToolbar('t-dl')}</div>
           </div>
-          <div class="ff"><label>Duración (días)</label><input type="number" id="t-d" value="${t.duracion_dias||1}" min="1"></div>
-          <div class="ff"><label>Duración (noches)</label><input type="number" id="t-dn" value="${t.duracion_noches||0}" min="0"></div>
         </div>
-        <div class="ff"><label>Destacado en portada</label>
-          <div class="tgl-wrap" style="margin-top:6px"><label class="tgl"><input type="checkbox" id="t-dest" ${t.destacado?'checked':''}><span class="tgl-s"></span></label><span style="font-size:.83rem;color:var(--muted)">${t.destacado?'Sí, aparece en portada':'No aparece en portada'}</span></div>
+
+        <!-- COLUMNA DERECHA -->
+        <div style="display: flex; flex-direction: column; gap: 24px;">
+          
+          <!-- TARJETA 3 -->
+          <div style="background: rgba(17,24,39,0.5); border: 1px solid rgba(255,255,255,0.05); padding: 24px; border-radius: 16px;">
+            <h3 style="color: #10b981; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">Estado y Visibilidad</h3>
+            <div class="ff" style="margin-bottom:12px"><label>Estado</label><select id="t-e"><option ${t.estado==='activo'?'selected':''} value="activo">✅ Activo</option><option ${t.estado==='pausado'?'selected':''} value="pausado">⏸️ Pausado</option><option ${t.estado==='seasonal'?'selected':''} value="seasonal">🍂 De Temporada</option><option ${t.estado==='inactivo'?'selected':''} value="inactivo">❌ Inactivo</option></select></div>
+            <div class="ff"><label>Destacado en portada</label>
+              <div class="tgl-wrap" style="margin-top:6px"><label class="tgl"><input type="checkbox" id="t-dest" ${t.destacado?'checked':''}><span class="tgl-s"></span></label><span style="font-size:.83rem;color:var(--muted)">${t.destacado?'Sí, aparece en portada':'No aparece en portada'}</span></div>
+            </div>
+          </div>
+          
+          <!-- TARJETA 4 -->
+          <div style="background: rgba(17,24,39,0.5); border: 1px solid rgba(255,255,255,0.05); padding: 24px; border-radius: 16px;">
+            <h3 style="color: #10b981; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">Imagen Hero / Principal</h3>
+            <div style="margin-bottom:12px">${imgWidget('t-img','Imagen hero / principal',t.imagen_hero||'')}</div>
+            <div class="ff"><label>Texto alt imagen</label><input id="t-imgalt" value="${esc(t.imagen_alt||'')}"></div>
+          </div>
+          
         </div>
-      </div>
-        ${imgWidget('t-img','Imagen hero / principal',t.imagen_hero||'')}
-        <div class="ff"><label>Texto alt imagen</label><input id="t-imgalt" value="${esc(t.imagen_alt||'')}"></div>
-      </div>
-      <div class="esec"><div class="esec-h">Descripciones</div>
-        <div class="ff"><label>Descripción corta (tarjetas)</label><textarea id="t-dc" style="min-height:80px">${esc(t.descripcion_corta||'')}</textarea></div>
-        <div class="ff"><label>Descripción completa (Markdown)</label>${mdToolbar('t-dl')}</div>
       </div>
     </div>`);
   document.getElementById('t-dl').value=t.descripcion_larga||''; if(t.imagen_hero) updateImgPreview('t-img','t-img-prev');
