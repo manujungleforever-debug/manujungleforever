@@ -143,6 +143,25 @@ code { background:rgba(45,212,191,.1); color:var(--teal); padding:2px 6px; borde
     .save-bar { padding:10px 16px; flex-wrap:wrap; gap:8px; }
     .save-status { width:100%; margin-bottom:2px; }
 }
+
+        .card-icon-tours { background: linear-gradient(135deg, #f59e0b, #d97706); color: #fff; box-shadow: 0 6px 20px rgba(245,158,11,0.35); }
+        .card-icon-blog { background: linear-gradient(135deg, #14b8a6, #0d9488); color: #fff; box-shadow: 0 6px 20px rgba(20,184,166,0.35); }
+        .card-icon-testim { background: linear-gradient(135deg, #8b5cf6, #6d28d9); color: #fff; box-shadow: 0 6px 20px rgba(139,92,246,0.35); }
+        .card-icon-reclamos { background: linear-gradient(135deg, #ef4444, #b91c1c); color: #fff; box-shadow: 0 6px 20px rgba(239,68,68,0.35); }
+        .card-icon-contenido { background: linear-gradient(135deg, #3b82f6, #2563eb); color: #fff; box-shadow: 0 6px 20px rgba(59,130,246,0.35); }
+        .card-icon-salidas { background: linear-gradient(135deg, #ec4899, #be185d); color: #fff; box-shadow: 0 6px 20px rgba(236,72,153,0.35); }
+        .card-icon-medios { background: linear-gradient(135deg, #10b981, #059669); color: #fff; box-shadow: 0 6px 20px rgba(16,185,129,0.35); }
+        .btn-card-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            margin-right: 16px;
+        }
 </style>
 </head>
 <body>
@@ -599,7 +618,7 @@ function imgWidget(id, label, value='', hint='') {
 async function viewMedia() {
   set(`
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
-      <div><p class="pt">🖼️ Biblioteca de Medios</p><p class="ps">Gestiona todas las imágenes y videos (Cloudflare R2)</p></div>
+      <div style="display:flex;align-items:center;"><div class="btn-card-icon card-icon-medios"><i class="ph ph-image"></i></div><div><p class="pt" style="margin-bottom:0">Biblioteca de Medios</p><p class="ps">Gestiona todas las imágenes y videos (Cloudflare R2)</p></div></div>
       <div style="display:flex;gap:8px;align-items:center;">
         <span id="main-upload-prog" style="font-size:.8rem;color:var(--gold);margin-right:8px;"></span>
         <button class="btn-primary" onclick="document.getElementById('media-upload').click()">📁 Subir archivo(s)</button>
@@ -760,7 +779,7 @@ async function viewBlog() {
     let html = `
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:22px">
         <div>
-          <p class="pt">✍️ Artículos del Blog</p>
+          <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-blog"><i class="ph ph-pencil"></i></div><p class="pt" style="margin-bottom:0">Artículos del Blog</p></div>
           <p class="ps">${posts.length} artículos registrados (ordenados por fecha más reciente)</p>
         </div>
         <button class="btn-primary" onclick="newBlog()">+ Nuevo artículo</button>
@@ -904,7 +923,7 @@ async function viewHome() {
   cFile='www.manujungleforever.com/data/home.json'; cSha=data.sha;
   const d=JSON.parse(data.content); cData=d;
   set(`
-    <p class="pt">🏠 Página de Inicio</p><p class="ps">Contenido principal del sitio</p>
+    <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-contenido"><i class="ph ph-house"></i></div><div><p class="pt" style="margin-bottom:0">Página de Inicio</p><p class="ps">Contenido principal del sitio</p></div></div>
     <div class="eform">
       <div class="esec"><div class="esec-h">Hero (Portada)</div>
         <div class="ff"><label>Título principal</label><input id="h-t" value="${esc(d.hero?.title||'')}"></div>
@@ -960,7 +979,7 @@ async function viewAbout() {
   cFile='www.manujungleforever.com/data/about.json'; cSha=data.sha;
   const d=JSON.parse(data.content); cData=d;
   set(`
-    <p class="pt">ℹ️ Página Sobre Nosotros</p><p class="ps">Contenido de "About Us"</p>
+    <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-contenido"><i class="ph ph-info"></i></div><div><p class="pt" style="margin-bottom:0">Página Sobre Nosotros</p><p class="ps">Contenido de "About Us"</p></div></div>
     <div class="eform">
       <div class="esec"><div class="esec-h">General</div>
         <div class="ff"><label>Título de la página</label><input id="ab-t" value="${esc(d.titulo_pagina||'')}"></div>
@@ -1014,7 +1033,7 @@ async function viewContact() {
   cFile='www.manujungleforever.com/data/contact.json'; cSha=data.sha;
   const d=JSON.parse(data.content); cData=d;
   set(`
-    <p class="pt">📞 Página de Contacto</p><p class="ps">Información de contacto y datos de la empresa</p>
+    <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-contenido"><i class="ph ph-phone"></i></div><div><p class="pt" style="margin-bottom:0">Página de Contacto</p><p class="ps">Información de contacto y datos de la empresa</p></div></div>
     <div class="eform">
       <div class="esec"><div class="esec-h">Textos de la Página</div>
         <div class="ff"><label>Título</label><input id="c-tit" value="${esc(d.titulo_pagina||'')}"></div>
@@ -1068,7 +1087,7 @@ async function viewGlobal() {
   cFile='www.manujungleforever.com/data/global.json'; cSha=data.sha;
   const d=JSON.parse(data.content); cData=d;
   set(`
-    <p class="pt">⚙️ Datos Globales del Sitio</p><p class="ps">Información general del negocio</p>
+    <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-contenido"><i class="ph ph-gear"></i></div><div><p class="pt" style="margin-bottom:0">Datos Globales del Sitio</p><p class="ps">Información general del negocio</p></div></div>
     <div class="eform">
       <div class="esec"><div class="esec-h">Información del Negocio</div>
         <div class="grow2">
@@ -1133,7 +1152,7 @@ async function viewTours() {
   cData=JSON.parse(data.content);
   const ts=cData.tours||[];
   set(`
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px"><div><p class="pt">🌿 Tours</p><p class="ps">${ts.length} tours registrados</p></div><button class="btn-primary" onclick="editTour(-1)">+ Nuevo Tour</button></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px"><div style="display:flex;align-items:center;"><div class="btn-card-icon card-icon-tours"><i class="ph ph-map-trifold"></i></div><div><p class="pt" style="margin-bottom:0">Tours</p><p class="ps">${ts.length} tours registrados</p></div></div><button class="btn-primary" onclick="editTour(-1)">+ Nuevo Tour</button></div>
     <div class="list-grid">
       ${ts.map((t,i)=>{
         const stCls = t.estado==='activo'?'on':(t.estado==='inactivo'?'off':'warn');
@@ -1328,7 +1347,7 @@ async function viewDeps() {
   
   set(`
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
-      <div><p class="pt">📅 Gestión de Salidas Programadas</p><p class="ps">Control de cupos, logística y ventas</p></div>
+      <div style="display:flex;align-items:center;"><div class="btn-card-icon card-icon-salidas"><i class="ph ph-calendar"></i></div><div><p class="pt" style="margin-bottom:0">Salidas Programadas</p><p class="ps">Control de cupos, logística y ventas</p></div></div>
       <button class="btn-primary" onclick="editDep(-1)">+ Crear Nueva Salida</button>
     </div>
     
@@ -1465,7 +1484,7 @@ async function viewTestims() {
   cData=JSON.parse(data.content);
   const ts=cData.testimonials||[];
   set(`
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px"><div><p class="pt">⭐ Testimonios de Clientes</p><p class="ps">${ts.length} testimonios</p></div><button class="btn-primary" onclick="editTestim(-1)">+ Nuevo Testimonio</button></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px"><div style="display:flex;align-items:center;"><div class="btn-card-icon card-icon-testim"><i class="ph ph-chat-circle-text"></i></div><div><p class="pt" style="margin-bottom:0">Testimonios de Clientes</p><p class="ps">${ts.length} testimonios</p></div></div><button class="btn-primary" onclick="editTestim(-1)">+ Nuevo Testimonio</button></div>
     <div class="list-grid">
       ${ts.map((t,i)=>`
         <div class="li">
@@ -1614,7 +1633,7 @@ async function viewReclamos() {
     window.currentReclamosData = reclamos;
     
     let html = `
-    <h2 class="pt">Libro de Reclamaciones</h2>
+    <div style="display:flex;align-items:center;margin-bottom:20px;"><div class="btn-card-icon card-icon-reclamos"><i class="ph ph-scales"></i></div><h2 class="pt" style="margin-bottom:0">Libro de Reclamaciones</h2></div>
     <p class="ps">Auditoría y exportación de quejas y reclamos legales.</p>
 
     <!-- Filtros tipo Wachicargo -->
