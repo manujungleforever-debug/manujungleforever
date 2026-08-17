@@ -364,6 +364,9 @@ export async function onRequestPost(context) {
           <h3 style="margin-top:15px;color:#10b981;">Pedido del Cliente:</h3>
           <p style="white-space:pre-wrap;">${pedido}</p>
         </div>
+        <div style="text-align:center;margin-top:30px;margin-bottom:10px;">
+          <a href="https://www.manujungleforever.com/admin/gestionar-reclamos" style="background-color:#10b981;color:#ffffff;text-decoration:none;padding:14px 28px;border-radius:6px;font-weight:bold;display:inline-block;font-size:14px;">Responder / Auditar Reclamo</a>
+        </div>
         <p style="text-align:center;margin-top:20px;font-size:12px;color:#777;">El documento PDF oficial se encuentra adjunto.</p>
       </div>`;
 
