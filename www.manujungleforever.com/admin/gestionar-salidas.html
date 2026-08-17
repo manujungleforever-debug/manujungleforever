@@ -1385,8 +1385,10 @@ async function viewDeps() {
 
   if (modified) {
     try {
-      const updatedData = await ghPut(cFile, JSON.stringify(cData, null, 2), 'auto-close: expired departures');
-      cSha = updatedData.content.sha;
+      const updatedData = await ghPut(cFile, JSON.stringify(cData, null, 2), null, 'auto-close: expired departures');
+      if (updatedData && updatedData.sha) {
+        cSha = updatedData.sha;
+      }
     } catch(e) { console.error('Auto-close error', e); }
   }
 

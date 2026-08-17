@@ -39,8 +39,9 @@ export async function onRequestGet(context) {
     const json = await res.json();
     
     // GitHub API returns content in Base64
-    const base64Content = json.content;
-    const decodedContent = atob(base64Content);
+    const base64Content = json.content.replace(/\n/g, '');
+    const bytes = Uint8Array.from(atob(base64Content), c => c.charCodeAt(0));
+    const decodedContent = new TextDecoder('utf-8').decode(bytes);
     
     // Parse it to ensure it's valid JSON and to optionally strip sensitive fields if needed.
     // For now, we return the parsed data as string.
