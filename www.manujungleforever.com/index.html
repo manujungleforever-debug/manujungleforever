@@ -158,7 +158,14 @@
 </div></div>
 
 <section class="sp" id="about">
-  <div class="spi rl"><img src="wp-content/uploads/2022/10/Wildlife-quest-3days-machuwasi.jpg" alt="Wildlife quest at Machu Wasi – Manu National Park" loading="lazy" width="800" height="640"></div>
+  <div class="spi rl" style="position:relative; overflow:hidden; border-radius:18px;">
+    <img src="wp-content/uploads/2022/10/Wildlife-quest-3days-machuwasi.jpg" alt="Wildlife quest at Machu Wasi – Manu National Park" loading="lazy" width="800" height="640">
+    <div class="spi-caption" style="position: absolute; bottom: 0; inset-inline: 0; background: linear-gradient(to top, rgba(3,12,10,0.88) 0%, rgba(3,12,10,0.3) 60%, transparent 100%); padding: 18px 22px; color: #fff;">
+      <span style="font-size: 0.88rem; font-weight: 600; color: rgba(255,255,255,0.95); display: flex; align-items: center; gap: 8px;">
+        <i class="fas fa-camera" style="color: var(--teal, #2dd4bf);"></i> <span class="caption-text">Wildlife quest at Machu Wasi – Manu National Park</span>
+      </span>
+    </div>
+  </div>
   <div class="spt rr">
     <span class="ey">The Manu Experience</span>
     <h2 class="h2">Unearth the Amazon with True Local Experts</h2>
@@ -224,8 +231,13 @@
 </section>
 
 <section class="sp" id="unique-content" style="background:var(--k); border-top:1px solid rgba(255,255,255,.05)">
-  <div class="spi rl">
+  <div class="spi rl" style="position:relative; overflow:hidden; border-radius:18px;">
     <img src="wp-content/uploads/2022/10/Hero-About-Us.jpg" alt="Manu Jungle Forever Family and Guides" loading="lazy">
+    <div class="spi-caption" style="position: absolute; bottom: 0; inset-inline: 0; background: linear-gradient(to top, rgba(3,12,10,0.88) 0%, rgba(3,12,10,0.3) 60%, transparent 100%); padding: 18px 22px; color: #fff;">
+      <span style="font-size: 0.88rem; font-weight: 600; color: rgba(255,255,255,0.95); display: flex; align-items: center; gap: 8px;">
+        <i class="fas fa-camera" style="color: var(--teal, #2dd4bf);"></i> <span class="caption-text">Manu Jungle Forever Family and Guides</span>
+      </span>
+    </div>
   </div>
   <div class="spt rr" style="background:var(--k); justify-content:center; padding:80px 72px;">
     <div style="margin-bottom:28px">
@@ -897,8 +909,19 @@ document.addEventListener("DOMContentLoaded", function() {
       if (ab.image && !ab.image.includes('placeholder.jpg')) {
         const abImg = document.querySelector('#about .spi img');
         if (abImg) {
-          abImg.src = ab.image;
-          if (ab.image_alt) abImg.alt = ab.image_alt;
+          const cleanImg = ab.image.startsWith('/') ? ab.image.slice(1) : ab.image;
+          abImg.src = cleanImg;
+        }
+      }
+      if (ab.image_alt) {
+        const abImg = document.querySelector('#about .spi img');
+        if (abImg) {
+          abImg.alt = ab.image_alt;
+          abImg.title = ab.image_alt;
+        }
+        const abCap = document.querySelector('#about .spi .caption-text');
+        if (abCap) {
+          abCap.textContent = ab.image_alt;
         }
       }
 
@@ -915,8 +938,19 @@ document.addEventListener("DOMContentLoaded", function() {
       if (uq.image && !uq.image.includes('placeholder.jpg')) {
         const uqImg = document.querySelector('#unique-content .spi img');
         if (uqImg) {
-          uqImg.src = uq.image;
-          if (uq.image_alt) uqImg.alt = uq.image_alt;
+          const cleanImg = uq.image.startsWith('/') ? uq.image.slice(1) : uq.image;
+          uqImg.src = cleanImg;
+        }
+      }
+      if (uq.image_alt) {
+        const uqImg = document.querySelector('#unique-content .spi img');
+        if (uqImg) {
+          uqImg.alt = uq.image_alt;
+          uqImg.title = uq.image_alt;
+        }
+        const uqCap = document.querySelector('#unique-content .spi .caption-text');
+        if (uqCap) {
+          uqCap.textContent = uq.image_alt;
         }
       }
 
