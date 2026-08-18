@@ -120,6 +120,21 @@
           "monto_pagado": 200,
           "saldo_pendiente": 1200,
           "foto": "/media/1787074120429-fb-img-1645218643713.jpg"
+        },
+        {
+          "nombre_completo": "maicelo rojas",
+          "nacionalidad": "Peruana (PER)",
+          "fecha_nacimiento": "1988-05-12",
+          "pasaporte": "46989140",
+          "whatsapp": "+51958113016",
+          "email": "manujungleforever@gmail.com",
+          "restricciones_dieteticas": "Vegetariano",
+          "condiciones_medicas": "Diabetes",
+          "costo": 1400,
+          "estado_pago": "reserva",
+          "monto_pagado": 200,
+          "saldo_pendiente": 1200,
+          "foto": "/media/1787077673119-fb-img-1644970040656.jpg"
         }
       ]
     },
