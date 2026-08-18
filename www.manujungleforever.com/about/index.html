@@ -134,7 +134,8 @@
       style="background-image: url('../assets/img/hero.png'); background-size: cover; background-position: center; position: relative;">
       <div class="cx">
         <span class="ey">Manu Jungle Forever</span>
-        <h1 class="h1" style="font-size:clamp(2.5rem,6vw,4.5rem); text-transform: uppercase;">All About Us</h1>
+        <h1 class="h1" style="font-size:clamp(2.5rem,6vw,4.5rem); text-transform: uppercase;">About Manu Jungle Forever</h1>
+        <p class="hs" style="font-size:clamp(1.05rem, 2vw, 1.25rem); max-width: 780px; margin: 18px auto 0; color: rgba(255,255,255,0.92); font-weight: 300; line-height: 1.6; text-shadow: 0 2px 10px rgba(0,0,0,0.6);">A family-run eco-tourism company born from the rainforest of Nuevo Eden, Peru.</p>
       </div>
     </section>
 
@@ -693,11 +694,31 @@ document.addEventListener("DOMContentLoaded", function() {
         const h1 = document.querySelector('.in-hero .h1');
         if (h1) h1.textContent = aData.titulo_pagina;
       }
+      if (aData.subtitulo_pagina) {
+        let hs = document.querySelector('.in-hero .hs');
+        if (!hs) {
+          const cx = document.querySelector('.in-hero .cx');
+          if (cx) {
+            hs = document.createElement('p');
+            hs.className = 'hs';
+            hs.style.cssText = 'font-size:clamp(1.05rem, 2vw, 1.25rem); max-width: 780px; margin: 18px auto 0; color: rgba(255,255,255,0.92); font-weight: 300; line-height: 1.6; text-shadow: 0 2px 10px rgba(0,0,0,0.6);';
+            cx.appendChild(hs);
+          }
+        }
+        if (hs) hs.textContent = aData.subtitulo_pagina;
+      }
       if (aData.hero_image && !aData.hero_image.includes('placeholder.jpg')) {
         const hero = document.querySelector('.in-hero');
-        if (hero) hero.style.backgroundImage = `url('../${aData.hero_image}')`;
+        if (hero) {
+          const cleanImg = aData.hero_image.startsWith('/') ? '..' + aData.hero_image : (aData.hero_image.startsWith('http') ? aData.hero_image : '../' + aData.hero_image);
+          hero.style.backgroundImage = `url('${cleanImg}')`;
+        }
       }
       const hist = aData.historia || {};
+      if (hist.eyebrow) {
+        const histEy = document.querySelector('.intro-block .ey');
+        if (histEy) histEy.textContent = hist.eyebrow;
+      }
       if (hist.titulo) {
         const histTitle = document.querySelector('.intro-block .h2');
         if (histTitle) histTitle.textContent = hist.titulo;
