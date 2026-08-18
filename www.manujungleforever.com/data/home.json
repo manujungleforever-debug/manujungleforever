@@ -36,6 +36,58 @@
       "type": "static"
     }
   ],
+  "guided_tours": {
+    "title": "Guided Tours",
+    "subtitle": "Curated Jungle Expeditions",
+    "description": "Our itineraries are meticulously designed to cater to true nature enthusiasts. From deep-forest survival treks for the intrepid explorer, to focused wildlife spotting cruises along the riverbanks, our routes guarantee a transformative encounter with the wild.",
+    "categories": [
+      {
+        "id": "cat-1",
+        "categoria": "wildlife",
+        "badge_texto": "Available Now",
+        "disponible": true,
+        "titulo": "Jungle Wildlife Tour",
+        "duracion": "3, 4, 5, 6 or 8 Days",
+        "pasajeros": "2–8 Passengers",
+        "transporte": "Van & Boat",
+        "descripcion": "Manu National Park tours from Cusco where you travel by van through the cloud forest, then search for Peruvian Amazon animals by boat. See caimans, macaws, capybaras, and the elusive jaguar. Beautiful scenery, local food, incredible nature — appropriate for all travelers.",
+        "enlace": "guided-tours/index.html#wildlife",
+        "boton_texto": "Explore This Tour",
+        "imagen": "wp-content/uploads/2022/10/reserved-zone.jpg",
+        "imagen_alt": "Manu National Park wildlife tour from Cusco"
+      },
+      {
+        "id": "cat-2",
+        "categoria": "roadtrip",
+        "badge_texto": "Temporarily Unavailable",
+        "disponible": false,
+        "titulo": "Rainforest Road Trip",
+        "duracion": "4 or 5 Days",
+        "pasajeros": "1–3 Passengers",
+        "transporte": "Private 4×4",
+        "descripcion": "Our most authentic Peru Amazon tour takes you through villages along the winding road from Cusco to Manu. Spot animals in the cloud forest, taste local flavors, and visit hidden gems.",
+        "enlace": "guided-tours/index.html#rainforest",
+        "boton_texto": "View Details",
+        "imagen": "wp-content/uploads/2022/10/Hero-wildlife-cuest-3-dyas-machuwasi.jpg",
+        "imagen_alt": "Rainforest Road Trip from Cusco to Manu"
+      },
+      {
+        "id": "cat-3",
+        "categoria": "expedition",
+        "badge_texto": "Temporarily Unavailable",
+        "disponible": false,
+        "titulo": "Manu Expedition",
+        "duracion": "5 or 6 Days",
+        "pasajeros": "2–8 Passengers",
+        "transporte": "Van, Boat & Hiking",
+        "descripcion": "Perfect for adventurous nature lovers — this expedition takes you deep into the forest. Camp, fish, hike, and learn survival skills.",
+        "enlace": "guided-tours/index.html#amazon",
+        "boton_texto": "View Details",
+        "imagen": "wp-content/uploads/2022/10/Hero-Road-trip-4-days.jpg",
+        "imagen_alt": "Manu Amazon Expedition from Cusco"
+      }
+    ]
+  },
   "about_section": {
     "eyebrow": "Why Choose Us",
     "title": "Visit Manu National Park with a Local Company",

@@ -795,7 +795,7 @@ document.addEventListener("DOMContentLoaded", function() {
           }
         }
       }
-      // Tours header
+      // Tours header & categories
       const th = hData.tours_header || hData.guided_tours || {};
       if (th.title) {
         const thEy = document.querySelector('#tours .tr-intro .ey');
@@ -804,6 +804,70 @@ document.addEventListener("DOMContentLoaded", function() {
       if (th.subtitle) {
         const thSub = document.querySelector('#tours .tr-intro .h2');
         if (thSub) thSub.textContent = th.subtitle;
+      }
+      if (th.description) {
+        const thDesc = document.querySelector('#tours .tr-intro .ld');
+        if (thDesc) thDesc.textContent = th.description;
+      }
+
+      const tourCats = hData.guided_tours?.categories || [];
+      if (tourCats.length > 0) {
+        // Cat 0: Large Featured Card
+        const xlCard = document.querySelector('#tours .tc-xl');
+        if (xlCard && tourCats[0]) {
+          const c0 = tourCats[0];
+          const imgEl = xlCard.querySelector('img');
+          if (imgEl && c0.imagen && !c0.imagen.includes('placeholder.jpg')) {
+            imgEl.src = c0.imagen;
+            if (c0.imagen_alt || c0.titulo) imgEl.alt = c0.imagen_alt || c0.titulo;
+          }
+          const badgeEl = xlCard.querySelector('.tbg');
+          if (badgeEl) {
+            badgeEl.className = `tbg ${c0.disponible !== false ? 'ton' : 'tof'}`;
+            badgeEl.innerHTML = `<i class="fas fa-${c0.disponible !== false ? 'circle' : 'pause-circle'}" style="font-size:.5rem"></i> ${c0.badge_texto || (c0.disponible !== false ? 'Available Now' : 'Temporarily Unavailable')}`;
+          }
+          const titleEl = xlCard.querySelector('.tt');
+          if (titleEl && c0.titulo) titleEl.textContent = c0.titulo;
+          const metaEl = xlCard.querySelector('.tm');
+          if (metaEl) {
+            metaEl.innerHTML = `<span><i class="far fa-calendar-alt"></i> ${c0.duracion || ''}</span><span><i class="fas fa-users"></i> ${c0.pasajeros || ''}</span><span><i class="fas fa-ship"></i> ${c0.transporte || ''}</span>`;
+          }
+          const descEl = xlCard.querySelector('.tp');
+          if (descEl && c0.descripcion) descEl.textContent = c0.descripcion;
+          const btnEl = xlCard.querySelector('.tbtn');
+          if (btnEl) {
+            if (c0.boton_texto) btnEl.innerHTML = `${c0.boton_texto} <i class="fas fa-arrow-right"></i>`;
+            if (c0.enlace) btnEl.href = c0.enlace;
+          }
+        }
+
+        // Secondary cards in right column
+        const mdCards = document.querySelectorAll('#tours .tr-right-col .tc-md');
+        mdCards.forEach((mdCard, idx) => {
+          const cat = tourCats[idx + 1];
+          if (!cat) return;
+          const imgEl = mdCard.querySelector('img');
+          if (imgEl && cat.imagen && !cat.imagen.includes('placeholder.jpg')) {
+            imgEl.src = cat.imagen;
+            if (cat.imagen_alt || cat.titulo) imgEl.alt = cat.imagen_alt || cat.titulo;
+          }
+          const badgeEl = mdCard.querySelector('.tbg');
+          if (badgeEl) {
+            badgeEl.className = `tbg ${cat.disponible !== false ? 'ton' : 'tof'}`;
+            badgeEl.innerHTML = `<i class="fas fa-${cat.disponible !== false ? 'circle' : 'pause-circle'}" style="font-size:.5rem"></i> ${cat.badge_texto || (cat.disponible !== false ? 'Available Now' : 'Temporarily Unavailable')}`;
+          }
+          const titleEl = mdCard.querySelector('.tt');
+          if (titleEl && cat.titulo) titleEl.textContent = cat.titulo;
+          const metaEl = mdCard.querySelector('.tm');
+          if (metaEl) {
+            metaEl.innerHTML = `<span><i class="far fa-calendar-alt"></i> ${cat.duracion || ''}</span><span><i class="fas fa-users"></i> ${cat.pasajeros || ''}</span><span><i class="fas fa-${cat.transporte?.includes('4×4') ? 'truck' : 'hiking'}"></i> ${cat.transporte || ''}</span>`;
+          }
+          const btnEl = mdCard.querySelector('.tbtn');
+          if (btnEl) {
+            if (cat.boton_texto) btnEl.innerHTML = `${cat.boton_texto} <i class="fas fa-arrow-right"></i>`;
+            if (cat.enlace) btnEl.href = cat.enlace;
+          }
+        });
       }
 
       // About section

@@ -1053,10 +1053,207 @@ function readBlogFields() {
 // ─────────────────────────────────────────────────────────────────────────────
 // HOME
 // ─────────────────────────────────────────────────────────────────────────────
+// HOME
+// ─────────────────────────────────────────────────────────────────────────────
+let homeTourCategories = [];
+
+function renderHomeTourCategories() {
+  const container = document.getElementById('home-tour-cats-container');
+  if (!container) return;
+  const standardCats = ['wildlife', 'cultural', 'expedition', 'birdwatching', 'machu wasi', 'roadtrip'];
+
+  container.innerHTML = homeTourCategories.map((c, i) => {
+    const isCustom = c.categoria && !standardCats.includes(c.categoria.toLowerCase());
+    return `
+      <div class="tour-cat-card" style="background:rgba(3,18,14,0.7);border:1px solid rgba(45,212,191,0.18);border-radius:14px;padding:18px;margin-bottom:16px;position:relative;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;border-bottom:1px solid rgba(255,255,255,0.06);padding-bottom:8px;">
+          <span style="font-size:0.75rem;font-weight:800;color:var(--teal);letter-spacing:1px;text-transform:uppercase;">
+            <i class="ph ph-compass" style="margin-right:5px;"></i> CATEGORÍA ${i+1}: ${esc(c.titulo || c.categoria || 'Tour')}
+          </span>
+          <button type="button" class="btn-danger" style="padding:4px 10px;font-size:0.75rem;" onclick="removeHomeTourCat(${i})">
+            <i class="ph ph-trash"></i> Eliminar
+          </button>
+        </div>
+
+        <div class="grow2" style="margin-bottom:10px;">
+          <div class="ff">
+            <label>Categoría</label>
+            <select id="htc-cat-${i}" onchange="handleHomeCatSelectChange(${i}, this.value)">
+              ${standardCats.map(cat => `<option value="${cat}" ${c.categoria?.toLowerCase() === cat ? 'selected' : ''}>${cat}</option>`).join('')}
+              ${isCustom ? `<option value="${esc(c.categoria)}" selected>${esc(c.categoria)}</option>` : ''}
+              <option value="__NEW__" style="color:var(--teal);font-weight:700;">+ Añadir categoría...</option>
+            </select>
+          </div>
+          <div class="ff">
+            <label>Estado / Disponibilidad</label>
+            <select id="htc-disp-${i}">
+              <option value="true" ${c.disponible !== false ? 'selected' : ''}>🟢 Disponible (Available Now)</option>
+              <option value="false" ${c.disponible === false ? 'selected' : ''}>🔴 Temporalmente no disponible</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grow2" style="margin-bottom:10px;">
+          <div class="ff">
+            <label>Título de la Tarjeta</label>
+            <input id="htc-title-${i}" value="${esc(c.titulo || '')}" placeholder="ej: Jungle Wildlife Tour">
+          </div>
+          <div class="ff">
+            <label>Duración</label>
+            <input id="htc-dur-${i}" value="${esc(c.duracion || '')}" placeholder="ej: 3, 4, 5, 6 or 8 Days">
+          </div>
+        </div>
+
+        <div class="grow2" style="margin-bottom:10px;">
+          <div class="ff">
+            <label>Pasajeros</label>
+            <input id="htc-pax-${i}" value="${esc(c.pasajeros || '')}" placeholder="ej: 2–8 Passengers">
+          </div>
+          <div class="ff">
+            <label>Transporte</label>
+            <input id="htc-transp-${i}" value="${esc(c.transporte || '')}" placeholder="ej: Van & Boat">
+          </div>
+        </div>
+
+        <div class="ff" style="margin-bottom:10px;">
+          <label>Descripción</label>
+          <textarea id="htc-desc-${i}" rows="3" style="min-height:75px;">${esc(c.descripcion || '')}</textarea>
+        </div>
+
+        <div class="grow2" style="margin-bottom:10px;">
+          <div class="ff">
+            <label>Texto del Botón</label>
+            <input id="htc-btn-${i}" value="${esc(c.boton_texto || 'Explore This Tour')}" placeholder="Explore This Tour">
+          </div>
+          <div class="ff">
+            <label>Enlace / URL de Destino</label>
+            <input id="htc-link-${i}" value="${esc(c.enlace || '')}" placeholder="ej: guided-tours/index.html#wildlife">
+          </div>
+        </div>
+
+        ${imgWidget(`htc-img-${i}`, 'Foto de Portada de la Categoría', c.imagen || '')}
+      </div>
+    `;
+  }).join('');
+}
+
+window.handleHomeCatSelectChange = function(index, value) {
+  if (value === '__NEW__') {
+    const newCat = prompt('Escribe el nombre de la nueva categoría (ej: "birdwatching", "adventure"):');
+    if (newCat && newCat.trim()) {
+      homeTourCategories[index].categoria = newCat.trim().toLowerCase();
+    }
+    renderHomeTourCategories();
+  }
+};
+
+window.addHomeTourCat = function() {
+  saveCurrentHomeTourCats();
+  homeTourCategories.push({
+    id: 'cat-' + Date.now(),
+    categoria: 'wildlife',
+    disponible: true,
+    badge_texto: 'Available Now',
+    titulo: 'Nuevo Tour / Categoría',
+    duracion: '3–5 Days',
+    pasajeros: '2–8 Passengers',
+    transporte: 'Van & Boat',
+    descripcion: 'Descripción del tour o expedición...',
+    boton_texto: 'Explore This Tour',
+    enlace: 'guided-tours/index.html',
+    imagen: '',
+    imagen_alt: ''
+  });
+  renderHomeTourCategories();
+};
+
+window.removeHomeTourCat = function(i) {
+  if (confirm('¿Eliminar esta categoría de la página de inicio?')) {
+    saveCurrentHomeTourCats();
+    homeTourCategories.splice(i, 1);
+    renderHomeTourCategories();
+  }
+};
+
+function saveCurrentHomeTourCats() {
+  homeTourCategories = homeTourCategories.map((c, i) => {
+    const catSelect = document.getElementById(`htc-cat-${i}`);
+    let catVal = catSelect ? catSelect.value : (c.categoria || 'wildlife');
+    if (catVal === '__NEW__') catVal = c.categoria || 'wildlife';
+    const dispVal = document.getElementById(`htc-disp-${i}`)?.value === 'true';
+
+    return {
+      id: c.id || `cat-${i+1}`,
+      categoria: catVal,
+      disponible: dispVal,
+      badge_texto: dispVal ? 'Available Now' : 'Temporarily Unavailable',
+      titulo: v(`htc-title-${i}`) || c.titulo || '',
+      duracion: v(`htc-dur-${i}`) || c.duracion || '',
+      pasajeros: v(`htc-pax-${i}`) || c.pasajeros || '',
+      transporte: v(`htc-transp-${i}`) || c.transporte || '',
+      descripcion: v(`htc-desc-${i}`) || c.descripcion || '',
+      boton_texto: v(`htc-btn-${i}`) || c.boton_texto || 'Explore This Tour',
+      enlace: v(`htc-link-${i}`) || c.enlace || '',
+      imagen: v(`htc-img-${i}`) || c.imagen || '',
+      imagen_alt: v(`htc-title-${i}`) || c.imagen_alt || ''
+    };
+  });
+}
+
 async function viewHome() {
   const data=await ghGet('www.manujungleforever.com/data/home.json');
   cFile='www.manujungleforever.com/data/home.json'; cSha=data.sha;
   const d=JSON.parse(data.content); cData=d;
+
+  // Initialize tour categories
+  homeTourCategories = d.guided_tours?.categories || [
+    {
+      id: 'cat-1',
+      categoria: 'wildlife',
+      disponible: true,
+      badge_texto: 'Available Now',
+      titulo: 'Jungle Wildlife Tour',
+      duracion: '3, 4, 5, 6 or 8 Days',
+      pasajeros: '2–8 Passengers',
+      transporte: 'Van & Boat',
+      descripcion: 'Manu National Park tours from Cusco where you travel by van through the cloud forest, then search for Peruvian Amazon animals by boat. See caimans, macaws, capybaras, and the elusive jaguar. Beautiful scenery, local food, incredible nature — appropriate for all travelers.',
+      boton_texto: 'Explore This Tour',
+      enlace: 'guided-tours/index.html#wildlife',
+      imagen: 'wp-content/uploads/2022/10/reserved-zone.jpg',
+      imagen_alt: 'Manu National Park wildlife tour from Cusco'
+    },
+    {
+      id: 'cat-2',
+      categoria: 'roadtrip',
+      disponible: false,
+      badge_texto: 'Temporarily Unavailable',
+      titulo: 'Rainforest Road Trip',
+      duracion: '4 or 5 Days',
+      pasajeros: '1–3 Passengers',
+      transporte: 'Private 4×4',
+      descripcion: 'Our most authentic Peru Amazon tour takes you through villages along the winding road from Cusco to Manu. Spot animals in the cloud forest, taste local flavors, and visit hidden gems.',
+      boton_texto: 'View Details',
+      enlace: 'guided-tours/index.html#rainforest',
+      imagen: 'wp-content/uploads/2022/10/Hero-wildlife-cuest-3-dyas-machuwasi.jpg',
+      imagen_alt: 'Rainforest Road Trip from Cusco to Manu'
+    },
+    {
+      id: 'cat-3',
+      categoria: 'expedition',
+      disponible: false,
+      badge_texto: 'Temporarily Unavailable',
+      titulo: 'Manu Expedition',
+      duracion: '5 or 6 Days',
+      pasajeros: '2–8 Passengers',
+      transporte: 'Van, Boat & Hiking',
+      descripcion: 'Perfect for adventurous nature lovers — this expedition takes you deep into the forest. Camp, fish, hike, and learn survival skills.',
+      boton_texto: 'View Details',
+      enlace: 'guided-tours/index.html#amazon',
+      imagen: 'wp-content/uploads/2022/10/Hero-Road-trip-4-days.jpg',
+      imagen_alt: 'Manu Amazon Expedition from Cusco'
+    }
+  ];
+
   set(`
     <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-contenido"><i class="ph ph-house"></i></div><div><p class="pt" style="margin-bottom:0">Página de Inicio</p><p class="ps">Contenido principal del sitio</p></div></div>
     <div class="eform">
@@ -1072,10 +1269,27 @@ async function viewHome() {
         </div>
       </div>
 
-      <!-- 2. GUIDED TOURS (CABECERA) -->
-      <div class="esec"><div class="esec-h">Guided Tours (Cabecera)</div>
-        <div class="ff"><label>Título Principal</label><input id="h-tr-t" name="inicio_tours_title" value="${esc(d.tours_header?.title || d.guided_tours?.title || 'Guided Tours')}" placeholder="Guided Tours"></div>
-        <div class="ff"><label>Subtítulo</label><input id="h-tr-s" name="inicio_tours_subtitle" value="${esc(d.tours_header?.subtitle || d.guided_tours?.subtitle || 'Curated Jungle Expeditions')}" placeholder="Curated Jungle Expeditions"></div>
+      <!-- 2. GUIDED TOURS (CABECERA Y CATEGORÍAS) -->
+      <div class="esec full-width"><div class="esec-h">Guided Tours (Cabecera y Categorías Destacadas)</div>
+        <div class="grow2" style="margin-bottom:12px;">
+          <div class="ff"><label>Título Principal</label><input id="h-tr-t" name="inicio_tours_title" value="${esc(d.tours_header?.title || d.guided_tours?.title || 'Guided Tours')}" placeholder="Guided Tours"></div>
+          <div class="ff"><label>Subtítulo</label><input id="h-tr-s" name="inicio_tours_subtitle" value="${esc(d.tours_header?.subtitle || d.guided_tours?.subtitle || 'Curated Jungle Expeditions')}" placeholder="Curated Jungle Expeditions"></div>
+        </div>
+        <div class="ff" style="margin-bottom:18px;">
+          <label>Descripción General de la Sección</label>
+          <textarea id="h-tr-d" name="inicio_tours_description" rows="2" style="min-height:60px;">${esc(d.guided_tours?.description || 'Our itineraries are meticulously designed to cater to true nature enthusiasts. From deep-forest survival treks for the intrepid explorer, to focused wildlife spotting cruises along the riverbanks, our routes guarantee a transformative encounter with the wild.')}</textarea>
+        </div>
+
+        <div style="display:flex;align-items:center;justify-content:space-between;margin:20px 0 12px 0;padding-top:14px;border-top:1px dashed rgba(45,212,191,0.2);">
+          <label style="font-size:0.72rem;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:1px;">
+            Categorías / Tours Destacados en el Home
+          </label>
+          <button type="button" class="btn-primary" onclick="addHomeTourCat()" style="padding:6px 14px;font-size:0.78rem;">
+            <i class="ph ph-plus-circle"></i> + Añadir Categoría
+          </button>
+        </div>
+
+        <div id="home-tour-cats-container"></div>
       </div>
 
       <!-- 3. SECCIÓN SOBRE NOSOTROS -->
@@ -1139,13 +1353,21 @@ async function viewHome() {
       </div>
     </div>`);
 
+  renderHomeTourCategories();
+
   showSaveBar(async()=>{
+    saveCurrentHomeTourCats();
     const dd={...cData};
     dd.hero={...d.hero,title:v('h-t'),title_emphasis:v('h-e'),subtitle:v('h-s'),location_tag:v('h-l'),video_id:v('h-v')};
     
-    // Tours Header
-    dd.tours_header = { title: v('h-tr-t'), subtitle: v('h-tr-s') };
-    dd.guided_tours = { title: v('h-tr-t'), subtitle: v('h-tr-s') };
+    // Guided Tours Header & Categories
+    dd.tours_header = { title: v('h-tr-t'), subtitle: v('h-tr-s'), description: v('h-tr-d') };
+    dd.guided_tours = {
+      title: v('h-tr-t'),
+      subtitle: v('h-tr-s'),
+      description: v('h-tr-d'),
+      categories: homeTourCategories
+    };
 
     // About section
     const paras=document.getElementById('a-p').value.split(/\n\n+/).map(t=>({text:t.trim()})).filter(p=>p.text);
