@@ -1,29 +1,6 @@
 {
   "tours": [
     {
-      "nombre": "prueba 3 dias",
-      "estado": "activo",
-      "categoria": "wildlife",
-      "duracion_dias": 3,
-      "duracion_noches": 2,
-      "precio_desde": 250,
-      "capacidad_min": 1,
-      "capacidad_max": 12,
-      "dificultad": "Fácil",
-      "temporada": "May - October (Dry Season)",
-      "descripcion_corta": "prueba",
-      "descripcion_larga": "prueba",
-      "imagen_hero": "/media/1787018890459-letsgo.jpg",
-      "galeria": [],
-      "itinerario": [],
-      "incluye": [],
-      "no_incluye": [],
-      "destacado": true,
-      "imagen_alt": "vamos a la selva",
-      "id": "tour-1787024108177",
-      "slug": "prueba-3-dias"
-    },
-    {
       "id": "3-day-wildlife-quest-machu-wasi",
       "slug": "3-day-wildlife-quest-machu-wasi",
       "nombre": "3-Day Wildlife Quest – Machu Wasi",
