@@ -1804,38 +1804,57 @@ window.exportPaxPDF = async function(idx) {
     doc.setTextColor(15, 23, 42); // slate-900
     doc.text("MANIFIESTO DE PASAJEROS", 196, 25, { align: 'right' });
     
-    // --- INFO BLOCK ---
-    doc.setFillColor(248, 250, 252); // slate-50
-    doc.setDrawColor(226, 232, 240); // slate-200
-    doc.roundedRect(14, 40, 182, 25, 2, 2, 'FD');
+    // --- INFO BLOCK (rediseñado) ---
+    // Fondo con borde izquierdo de acento teal
+    doc.setFillColor(245, 251, 250);
+    doc.setDrawColor(210, 230, 228);
+    doc.roundedRect(14, 40, 182, 28, 3, 3, 'FD');
+    // Acento izquierdo (barra teal)
+    doc.setFillColor(13, 148, 136);
+    doc.rect(14, 40, 3, 28, 'F');
 
-    doc.setFontSize(10);
-    doc.setTextColor(15, 23, 42);
-    
-    doc.setFont(undefined, 'bold');
-    doc.text("Tour:", 18, 48);
-    doc.setFont(undefined, 'normal');
-    doc.text(s.tour_nombre || 'No especificado', 32, 48);
-    
-    doc.setFont(undefined, 'bold');
-    doc.text("Fechas:", 18, 55);
-    doc.setFont(undefined, 'normal');
-    doc.text(`${s.fecha_salida || 'TBD'} al ${s.fecha_retorno || 'TBD'}`, 36, 55);
+    doc.setFontSize(9.5);
+    doc.setTextColor(30, 41, 59); // slate-800
 
-    doc.setFont(undefined, 'bold');
-    doc.text("ID Salida:", 110, 48);
-    doc.setFont(undefined, 'normal');
-    doc.text(s.id || '', 132, 48);
-    
-    doc.setFont(undefined, 'bold');
-    doc.text("Total Pasajeros:", 110, 55);
-    doc.setFont(undefined, 'normal');
-    doc.text(pax.length.toString(), 145, 55);
+    const infoLabelColor = [13, 148, 136]; // teal
+    const infoValueColor = [30, 41, 59];   // slate-800
 
+    // Col 1
+    doc.setTextColor(...infoLabelColor);
     doc.setFont(undefined, 'bold');
-    doc.text("Guía Asignado:", 18, 62);
+    doc.text('Tour:', 21, 49);
+    doc.setTextColor(...infoValueColor);
     doc.setFont(undefined, 'normal');
-    doc.text(s.guia_asignado || 'No asignado', 48, 62);
+    doc.text(s.tour_nombre || 'No especificado', 34, 49);
+
+    doc.setTextColor(...infoLabelColor);
+    doc.setFont(undefined, 'bold');
+    doc.text('Fechas:', 21, 57);
+    doc.setTextColor(...infoValueColor);
+    doc.setFont(undefined, 'normal');
+    doc.text(`${s.fecha_salida || 'TBD'} → ${s.fecha_retorno || 'TBD'}`, 38, 57);
+
+    doc.setTextColor(...infoLabelColor);
+    doc.setFont(undefined, 'bold');
+    doc.text('Guía:', 21, 65);
+    doc.setTextColor(...infoValueColor);
+    doc.setFont(undefined, 'normal');
+    doc.text(s.guia_asignado || 'No asignado', 33, 65);
+
+    // Col 2 (derecha)
+    doc.setTextColor(...infoLabelColor);
+    doc.setFont(undefined, 'bold');
+    doc.text('ID Salida:', 118, 49);
+    doc.setTextColor(...infoValueColor);
+    doc.setFont(undefined, 'normal');
+    doc.text(s.id || '', 142, 49);
+
+    doc.setTextColor(...infoLabelColor);
+    doc.setFont(undefined, 'bold');
+    doc.text('Pasajeros:', 118, 57);
+    doc.setTextColor(...infoValueColor);
+    doc.setFont(undefined, 'normal');
+    doc.text(pax.length.toString(), 143, 57);
 
     const tableData = pax.map((p, i) => {
       let edad = '-';
@@ -1860,49 +1879,137 @@ window.exportPaxPDF = async function(idx) {
       ];
     });
 
-    // --- MAIN TABLE ---
+    // --- MAIN TABLE (rediseñada) ---
+    // Helpers para dibujar badges de colores en celdas
+    function drawBadge(doc, text, x, y, bgColor, textColor) {
+      const pad = 2;
+      doc.setFontSize(6.5);
+      const tw = doc.getTextWidth(text);
+      const bw = tw + pad * 2 + 1;
+      const bh = 4.5;
+      doc.setFillColor(...bgColor);
+      doc.roundedRect(x, y - bh + 1, bw, bh, 1, 1, 'F');
+      doc.setTextColor(...textColor);
+      doc.setFont(undefined, 'bold');
+      doc.text(text, x + pad + 0.5, y - 0.5);
+      return bw + 1.5; // advance
+    }
+
     doc.autoTable({
-      startY: 70,
-      head: [['N°', 'Foto', 'Nombre', 'Nacional/Edad', 'Doc/Pasaporte', 'Dietas / Médicas', 'Contacto']],
+      startY: 74,
+      head: [['N°', 'Foto', 'Nombre', 'Nac. / Edad', 'Pasaporte', 'Alimentación / Salud', 'Contacto']],
       body: tableData,
-      theme: 'striped',
-      headStyles: { fillColor: [13, 148, 136], textColor: 255 }, // teal-600
-      alternateRowStyles: { fillColor: [248, 250, 252] },
-      styles: { fontSize: 8, valign: 'middle', cellPadding: 3, lineColor: [226, 232, 240], lineWidth: {bottom: 0.1} },
-      columnStyles: { 1: { cellWidth: 14, minCellHeight: 14 } },
+      theme: 'plain',
+      headStyles: {
+        fillColor: [10, 46, 37],   // forest dark green
+        textColor: [255, 255, 255],
+        fontStyle: 'bold',
+        fontSize: 8,
+        cellPadding: { top: 5, bottom: 5, left: 4, right: 3 }
+      },
+      alternateRowStyles: { fillColor: [246, 251, 250] },
+      styles: {
+        fontSize: 8,
+        valign: 'middle',
+        cellPadding: { top: 4, bottom: 4, left: 4, right: 3 },
+        lineColor: [220, 235, 232],
+        lineWidth: 0.15,
+        textColor: [30, 41, 59]
+      },
+      columnStyles: {
+        0: { cellWidth: 8, halign: 'center', fontStyle: 'bold', textColor: [13, 148, 136] },
+        1: { cellWidth: 15, minCellHeight: 16, halign: 'center' },
+        2: { cellWidth: 38, fontStyle: 'bold' },
+        3: { cellWidth: 28 },
+        4: { cellWidth: 22, halign: 'center' },
+        5: { cellWidth: 42 },
+        6: { cellWidth: 33 }
+      },
       didParseCell: function(data) {
-        if (data.section === 'body') {
-           if (data.column.index === 5 || data.column.index === 6) {
-             const val = data.cell.raw || '';
-             if (val.toLowerCase() !== 'ninguna' && val !== '-' && val !== '') {
-                data.cell.styles.textColor = [220, 38, 38]; // red-600
-                data.cell.styles.fontStyle = 'bold';
-             }
-           }
+        if (data.section === 'body' && (data.column.index === 5 || data.column.index === 6)) {
+          data.cell.styles.textColor = [255, 255, 255];
+          data.cell.styles.fontSize = 0.1;
+        }
+        if (data.section === 'body' && data.row.index % 2 === 0) {
+          data.cell.styles.fillColor = [255, 255, 255];
         }
       },
       didDrawCell: function(data) {
+        // ── Foto del pasajero ──
         if (data.section === 'body' && data.column.index === 1) {
           const rowData = pax[data.row.index];
           if (rowData && rowData.foto && imgMap[rowData.foto]) {
-            const dim = 10;
+            const dim = 11;
             const x = data.cell.x + (data.cell.width - dim) / 2;
             const y = data.cell.y + (data.cell.height - dim) / 2;
+            doc.setDrawColor(13, 148, 136);
+            doc.setLineWidth(0.5);
+            doc.roundedRect(x - 0.5, y - 0.5, dim + 1, dim + 1, 1, 1, 'S');
             doc.addImage(imgMap[rowData.foto], 'JPEG', x, y, dim, dim);
           }
         }
+
+        // ── Badges Alimentación / Salud (col 5) ──
+        if (data.section === 'body' && data.column.index === 5) {
+          const raw = data.cell.raw || '';
+          const parts = raw.split('\n');
+          const dieta   = (parts[0] || '').trim();
+          const medica  = (parts[1] || '').trim();
+          let curX = data.cell.x + 3;
+          let curY = data.cell.y + data.cell.height / 2 - 1;
+          if (dieta && dieta !== '-' && dieta.toLowerCase() !== 'ninguna') {
+            drawBadge(doc, dieta, curX, curY, [251, 191, 36], [120, 53, 15]);
+          } else {
+            doc.setFontSize(7.5); doc.setTextColor(180, 190, 185); doc.setFont(undefined, 'normal');
+            doc.text('—', curX, curY);
+          }
+          if (medica && medica !== '-' && medica.toLowerCase() !== 'ninguna') {
+            drawBadge(doc, medica, curX, curY + 6, [204, 241, 236], [15, 118, 110]);
+          }
+        }
+
+        // ── Contacto con pill de color (col 6) ──
+        if (data.section === 'body' && data.column.index === 6) {
+          const raw = (data.cell.raw || '').trim();
+          if (!raw) return;
+          const isWA = raw.startsWith('WA:');
+          const isEM = raw.startsWith('E:');
+          const pillX = data.cell.x + 2;
+          const pillY = data.cell.y + data.cell.height / 2 - 3;
+          const pillW = data.cell.width - 5;
+          const pillH = 6;
+          if (isWA) { doc.setFillColor(220, 252, 231); doc.setDrawColor(134, 239, 172); }
+          else if (isEM) { doc.setFillColor(219, 234, 254); doc.setDrawColor(147, 197, 253); }
+          else { doc.setFillColor(241, 245, 249); doc.setDrawColor(203, 213, 225); }
+          doc.setLineWidth(0.3);
+          doc.roundedRect(pillX, pillY, pillW, pillH, 1.5, 1.5, 'FD');
+          const dotColor = isWA ? [22, 163, 74] : isEM ? [59, 130, 246] : [100, 116, 139];
+          doc.setFillColor(...dotColor);
+          doc.circle(pillX + 3, pillY + pillH / 2, 1.2, 'F');
+          doc.setFontSize(7); doc.setFont(undefined, 'bold'); doc.setTextColor(...dotColor);
+          doc.text(isWA ? 'WA' : isEM ? 'EM' : '', pillX + 5.5, pillY + pillH / 2 + 1);
+          doc.setFont(undefined, 'normal'); doc.setTextColor(30, 41, 59);
+          const numText = raw.replace('WA: ', '').replace('E: ', '');
+          doc.text(numText, pillX + (isWA || isEM ? 12 : 3), pillY + pillH / 2 + 1, { maxWidth: pillW - (isWA || isEM ? 12 : 3) });
+        }
       },
       didDrawPage: function(data) {
-        // FOOTER
-        doc.setFontSize(8);
-        doc.setTextColor(150);
+        // FOOTER premium
+        const pageH = doc.internal.pageSize.height;
+        const pageW = doc.internal.pageSize.width;
+        doc.setDrawColor(13, 148, 136);
+        doc.setLineWidth(0.4);
+        doc.line(data.settings.margin.left, pageH - 14, pageW - data.settings.margin.right, pageH - 14);
+        doc.setFontSize(7.5);
+        doc.setTextColor(100, 120, 115);
+        doc.setFont(undefined, 'normal');
         const now = new Date();
         const timestamp = now.toLocaleString('es-PE');
-        doc.text(`Generado: ${timestamp}`, data.settings.margin.left, doc.internal.pageSize.height - 10);
+        doc.text(`Generado: ${timestamp}`, data.settings.margin.left, pageH - 9);
         doc.text(
-          `Página ${doc.internal.getNumberOfPages()}`,
-          doc.internal.pageSize.width - data.settings.margin.right,
-          doc.internal.pageSize.height - 10,
+          `Pág. ${doc.internal.getNumberOfPages()}`,
+          pageW - data.settings.margin.right,
+          pageH - 9,
           { align: 'right' }
         );
       }

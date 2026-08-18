@@ -2114,60 +2114,156 @@ window.exportPaxPDF = function(idx) {
     doc.setTextColor(100);
     const today = new Date().toLocaleDateString('es-PE', { year: 'numeric', month: 'long', day: 'numeric' });
     doc.text(`Fecha de Emisión: ${today}`, 196, 31, { align: 'right' });
-    
-    let startY = 45;
-    doc.setFontSize(10);
-    doc.setTextColor(15, 23, 42);
-    
-    doc.setFont(undefined, 'bold');
-    doc.text("Tour:", 14, startY);
-    doc.setFont(undefined, 'normal');
-    doc.text(s.tour_nombre || 'No especificado', 28, startY);
-    
-    doc.setFont(undefined, 'bold');
-    doc.text("Fechas:", 14, startY + 7);
-    doc.setFont(undefined, 'normal');
-    doc.text(`${s.fecha_salida || 'TBD'} al ${s.fecha_retorno || 'TBD'}`, 32, startY + 7);
-    
-    doc.setFont(undefined, 'bold');
-    doc.text("ID Salida:", 110, startY);
-    doc.setFont(undefined, 'normal');
-    doc.text(s.id || '', 132, startY);
-    
-    doc.setFont(undefined, 'bold');
-    doc.text("Total Pasajeros:", 110, startY + 7);
-    doc.setFont(undefined, 'normal');
-    doc.text(pax.length.toString(), 145, startY + 7);
-    
-    doc.setFont(undefined, 'bold');
-    doc.text("Guía Asignado:", 14, startY + 14);
-    doc.setFont(undefined, 'normal');
-    doc.text(s.guia_asignado || 'No asignado', 45, startY + 14);
+
+    // --- INFO BLOCK (rediseñado) ---
+    doc.setFillColor(245, 251, 250);
+    doc.setDrawColor(210, 230, 228);
+    doc.roundedRect(14, 40, 182, 28, 3, 3, 'FD');
+    doc.setFillColor(13, 148, 136);
+    doc.rect(14, 40, 3, 28, 'F');
+
+    const infoLabelColor = [13, 148, 136];
+    const infoValueColor = [30, 41, 59];
+    doc.setFontSize(9.5);
+
+    doc.setTextColor(...infoLabelColor); doc.setFont(undefined, 'bold');
+    doc.text('Tour:', 21, 49);
+    doc.setTextColor(...infoValueColor); doc.setFont(undefined, 'normal');
+    doc.text(s.tour_nombre || 'No especificado', 34, 49);
+
+    doc.setTextColor(...infoLabelColor); doc.setFont(undefined, 'bold');
+    doc.text('Fechas:', 21, 57);
+    doc.setTextColor(...infoValueColor); doc.setFont(undefined, 'normal');
+    doc.text(`${s.fecha_salida || 'TBD'} → ${s.fecha_retorno || 'TBD'}`, 38, 57);
+
+    doc.setTextColor(...infoLabelColor); doc.setFont(undefined, 'bold');
+    doc.text('Guía:', 21, 65);
+    doc.setTextColor(...infoValueColor); doc.setFont(undefined, 'normal');
+    doc.text(s.guia_asignado || 'No asignado', 33, 65);
+
+    doc.setTextColor(...infoLabelColor); doc.setFont(undefined, 'bold');
+    doc.text('ID Salida:', 118, 49);
+    doc.setTextColor(...infoValueColor); doc.setFont(undefined, 'normal');
+    doc.text(s.id || '', 142, 49);
+
+    doc.setTextColor(...infoLabelColor); doc.setFont(undefined, 'bold');
+    doc.text('Pasajeros:', 118, 57);
+    doc.setTextColor(...infoValueColor); doc.setFont(undefined, 'normal');
+    doc.text(pax.length.toString(), 143, 57);
     
     const tableData = pax.map((p, i) => [
       i + 1,
       p.nombre_completo,
       p.nacionalidad,
       p.pasaporte,
-      p.restricciones_dieteticas || 'Ninguna',
-      p.condiciones_medicas || 'Ninguna',
+      `${p.restricciones_dieteticas || '-'}\n${p.condiciones_medicas || '-'}`,
       p.whatsapp ? `WA: ${p.whatsapp}` : (p.email ? `E: ${p.email}` : '')
     ]);
+
+    function drawBadge(doc, text, x, y, bgColor, textColor) {
+      const pad = 2;
+      doc.setFontSize(6.5);
+      const tw = doc.getTextWidth(text);
+      const bw = tw + pad * 2 + 1;
+      const bh = 4.5;
+      doc.setFillColor(...bgColor);
+      doc.roundedRect(x, y - bh + 1, bw, bh, 1, 1, 'F');
+      doc.setTextColor(...textColor);
+      doc.setFont(undefined, 'bold');
+      doc.text(text, x + pad + 0.5, y - 0.5);
+      return bw + 1.5;
+    }
     
     doc.autoTable({
-      startY: startY + 22,
-      head: [['N°', 'Nombre', 'Nacional', 'Doc/Pasaporte', 'Dietas', 'Cond. Médicas', 'Contacto']],
+      startY: 74,
+      head: [['N°', 'Nombre', 'Nacionalidad', 'Pasaporte', 'Alimentación / Salud', 'Contacto']],
       body: tableData,
-      theme: 'grid',
-      headStyles: { fillColor: [13, 148, 136] },
-      styles: { fontSize: 8 },
+      theme: 'plain',
+      headStyles: {
+        fillColor: [10, 46, 37],
+        textColor: [255, 255, 255],
+        fontStyle: 'bold',
+        fontSize: 8,
+        cellPadding: { top: 5, bottom: 5, left: 4, right: 3 }
+      },
+      alternateRowStyles: { fillColor: [246, 251, 250] },
+      styles: {
+        fontSize: 8,
+        valign: 'middle',
+        cellPadding: { top: 4, bottom: 4, left: 4, right: 3 },
+        lineColor: [220, 235, 232],
+        lineWidth: 0.15,
+        textColor: [30, 41, 59]
+      },
+      columnStyles: {
+        0: { cellWidth: 10, halign: 'center', fontStyle: 'bold', textColor: [13, 148, 136] },
+        1: { cellWidth: 42, fontStyle: 'bold' },
+        2: { cellWidth: 32 },
+        3: { cellWidth: 28, halign: 'center' },
+        4: { cellWidth: 50 },
+        5: { cellWidth: 36 }
+      },
+      didParseCell: function(data) {
+        if (data.section === 'body' && (data.column.index === 4 || data.column.index === 5)) {
+          data.cell.styles.textColor = [255, 255, 255];
+          data.cell.styles.fontSize = 0.1;
+        }
+        if (data.section === 'body' && data.row.index % 2 === 0) {
+          data.cell.styles.fillColor = [255, 255, 255];
+        }
+      },
+      didDrawCell: function(data) {
+        // Badges Alimentación / Salud (col 4)
+        if (data.section === 'body' && data.column.index === 4) {
+          const raw = data.cell.raw || '';
+          const parts = raw.split('\n');
+          const dieta  = (parts[0] || '').trim();
+          const medica = (parts[1] || '').trim();
+          let curX = data.cell.x + 3;
+          let curY = data.cell.y + data.cell.height / 2 - 1;
+          if (dieta && dieta !== '-' && dieta.toLowerCase() !== 'ninguna') {
+            drawBadge(doc, dieta, curX, curY, [251, 191, 36], [120, 53, 15]);
+          } else {
+            doc.setFontSize(7.5); doc.setTextColor(180, 190, 185); doc.setFont(undefined, 'normal');
+            doc.text('—', curX, curY);
+          }
+          if (medica && medica !== '-' && medica.toLowerCase() !== 'ninguna') {
+            drawBadge(doc, medica, curX, curY + 6, [204, 241, 236], [15, 118, 110]);
+          }
+        }
+        // Contacto pill (col 5)
+        if (data.section === 'body' && data.column.index === 5) {
+          const raw = (data.cell.raw || '').trim();
+          if (!raw) return;
+          const isWA = raw.startsWith('WA:');
+          const isEM = raw.startsWith('E:');
+          const pillX = data.cell.x + 2;
+          const pillY = data.cell.y + data.cell.height / 2 - 3;
+          const pillW = data.cell.width - 5;
+          const pillH = 6;
+          if (isWA) { doc.setFillColor(220, 252, 231); doc.setDrawColor(134, 239, 172); }
+          else if (isEM) { doc.setFillColor(219, 234, 254); doc.setDrawColor(147, 197, 253); }
+          else { doc.setFillColor(241, 245, 249); doc.setDrawColor(203, 213, 225); }
+          doc.setLineWidth(0.3);
+          doc.roundedRect(pillX, pillY, pillW, pillH, 1.5, 1.5, 'FD');
+          const dotColor = isWA ? [22, 163, 74] : isEM ? [59, 130, 246] : [100, 116, 139];
+          doc.setFillColor(...dotColor);
+          doc.circle(pillX + 3, pillY + pillH / 2, 1.2, 'F');
+          doc.setFontSize(7); doc.setFont(undefined, 'bold'); doc.setTextColor(...dotColor);
+          doc.text(isWA ? 'WA' : isEM ? 'EM' : '', pillX + 5.5, pillY + pillH / 2 + 1);
+          doc.setFont(undefined, 'normal'); doc.setTextColor(30, 41, 59);
+          const numText = raw.replace('WA: ', '').replace('E: ', '');
+          doc.text(numText, pillX + (isWA || isEM ? 12 : 3), pillY + pillH / 2 + 1, { maxWidth: pillW - (isWA || isEM ? 12 : 3) });
+        }
+      },
       didDrawPage: function(data) {
-        doc.setFontSize(8);
-        doc.text(
-          `Página ${doc.internal.getNumberOfPages()}`,
-          data.settings.margin.left,
-          doc.internal.pageSize.height - 10
-        );
+        const pageH = doc.internal.pageSize.height;
+        const pageW = doc.internal.pageSize.width;
+        doc.setDrawColor(13, 148, 136); doc.setLineWidth(0.4);
+        doc.line(data.settings.margin.left, pageH - 14, pageW - data.settings.margin.right, pageH - 14);
+        doc.setFontSize(7.5); doc.setTextColor(100, 120, 115); doc.setFont(undefined, 'normal');
+        doc.text(`Generado: ${new Date().toLocaleString('es-PE')}`, data.settings.margin.left, pageH - 9);
+        doc.text(`Pág. ${doc.internal.getNumberOfPages()}`, pageW - data.settings.margin.right, pageH - 9, { align: 'right' });
       }
     });
     
