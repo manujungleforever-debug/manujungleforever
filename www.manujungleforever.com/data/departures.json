@@ -1,6 +1,22 @@
 {
   "salidas": [
     {
+      "tour_id": "7-day-deep-amazon-wildlife-quest",
+      "tour_nombre": "7-Day Deep Amazon Wildlife Quest",
+      "id": "012",
+      "fecha_salida": "2026-08-31",
+      "fecha_regreso": "2026-09-07",
+      "precio": 980,
+      "moneda": "USD",
+      "plazas_totales": 8,
+      "plazas_minimas": 6,
+      "plazas_disponibles": 8,
+      "estado": "disponible",
+      "guia_asignado": "Jordy Llaqui",
+      "notas": "Tour especializado en animales silvestres",
+      "pasajeros": []
+    },
+    {
       "tour_id": "6-day-wildlife-quest-blanquillo",
       "tour_nombre": "6-Day Wildlife Quest – Blanquillo(rapido)",
       "id": "dep-011",
