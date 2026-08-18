@@ -5,6 +5,7 @@ pages_build_output_dir = "www.manujungleforever.com"
 binding = "DB"
 database_name = "manujungleforever-db"
 database_id = "c0765748-5818-44ee-ab40-c43607a106d6"
+migrations_dir = "drizzle/migrations"
 
 [[r2_buckets]]
 binding = "MEDIA_BUCKET"
