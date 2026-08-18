@@ -35,6 +35,30 @@
       "texto": "If you want to see untouched wilderness, this is the company to book with. No crowded tourist traps, just pure Amazon. The food was surprisingly fantastic, and seeing a jaguar resting on the riverbank is a memory I will cherish forever.",
       "foto": "",
       "activo": true
+    },
+    {
+      "id": 4,
+      "nombre": "Elena R.",
+      "pais": "Spain",
+      "bandera": "🇪🇸",
+      "tour": "Manu Reserved Zone",
+      "fecha": "2025",
+      "rating": 5,
+      "texto": "Una experiencia inolvidable. Ver a los guacamayos en la colpa de arcilla y navegar por el río Manu fue mágico. El equipo de Manu Jungle Forever nos cuidó en todo momento con una calidez excepcional.",
+      "foto": "",
+      "activo": true
+    },
+    {
+      "id": 5,
+      "nombre": "Lucas M.",
+      "pais": "Germany",
+      "bandera": "🇩🇪",
+      "tour": "Wildlife Photography",
+      "fecha": "2025",
+      "rating": 5,
+      "texto": "As a wildlife photographer, this was paradise. The guides knew exactly where to spot monkeys, toucans and river otters. Flawless organization from start to finish.",
+      "foto": "",
+      "activo": true
     }
   ]
 }
