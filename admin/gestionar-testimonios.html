@@ -27,7 +27,7 @@ body { background: var(--bg) var(--bg-grad); color: var(--fg); min-height:100vh;
 input,textarea,select,button { font-family:inherit; }
 a { color:var(--teal); }
 header { position:sticky; top:0; z-index:200; background:var(--hbg); backdrop-filter:blur(14px); border-bottom:1px solid rgba(255,255,255,0.07); box-shadow:0 4px 24px rgba(0,0,0,.4); }
-.hw { max-width:1400px; margin:0 auto; padding:10px 24px; display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+.hw { max-width:1400px; margin:0 auto; padding: 20px 30px; display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
 .logo-brand { display:flex; align-items:center; gap:10px; text-decoration:none; flex-shrink:0; }
 .logo-wrap  { position:relative; display:flex; align-items:center; }
 .logo-glow  { position:absolute; inset:-5px; background:var(--teal); filter:blur(12px); opacity:.22; border-radius:50%; transition:.3s; }
@@ -41,8 +41,8 @@ nav.mnav a { font-size:.8rem; font-weight:500; color:var(--muted); text-decorati
 nav.mnav a i { font-size:1.1rem; }
 nav.mnav a:hover, nav.mnav a.active { color:var(--teal); background:rgba(45,212,191,.09); }
 .user-sec { display:flex; align-items:center; gap:10px; margin-left:auto; }
-.btn-logout { background:rgba(239,68,68,.08); border:1px solid rgba(239,68,68,.2); color:#f87171; cursor:pointer; font-size:.8rem; font-weight:600; padding:6px 12px; border-radius:8px; transition:.25s; display:flex; align-items:center; gap:6px; }
-.btn-logout:hover { background:var(--danger); color:#fff; border-color:var(--danger); }
+
+
 main { flex-grow:1; max-width:1400px; width:100%; margin:0 auto; padding:28px 24px 100px; position:relative; z-index:1; }
 .pt { font-size:1.85rem; font-weight:700; letter-spacing:-.4px; background:linear-gradient(to right,#fff,#cbd5e1); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:4px; }
 .ps { color:var(--muted); font-size:.87rem; margin-bottom:20px; }
@@ -143,16 +143,56 @@ code { background:rgba(45,212,191,.1); color:var(--teal); padding:2px 6px; borde
     .save-bar { padding:10px 16px; flex-wrap:wrap; gap:8px; }
     .save-status { width:100%; margin-bottom:2px; }
 }
+
+        .card-icon-tours { background: linear-gradient(135deg, #f59e0b, #d97706); color: #fff; box-shadow: 0 6px 20px rgba(245,158,11,0.35); }
+        .card-icon-blog { background: linear-gradient(135deg, #14b8a6, #0d9488); color: #fff; box-shadow: 0 6px 20px rgba(20,184,166,0.35); }
+        .card-icon-testim { background: linear-gradient(135deg, #8b5cf6, #6d28d9); color: #fff; box-shadow: 0 6px 20px rgba(139,92,246,0.35); }
+        .card-icon-reclamos { background: linear-gradient(135deg, #ef4444, #b91c1c); color: #fff; box-shadow: 0 6px 20px rgba(239,68,68,0.35); }
+        .card-icon-contenido { background: linear-gradient(135deg, #3b82f6, #2563eb); color: #fff; box-shadow: 0 6px 20px rgba(59,130,246,0.35); }
+        .card-icon-salidas { background: linear-gradient(135deg, #ec4899, #be185d); color: #fff; box-shadow: 0 6px 20px rgba(236,72,153,0.35); }
+        .card-icon-medios { background: linear-gradient(135deg, #10b981, #059669); color: #fff; box-shadow: 0 6px 20px rgba(16,185,129,0.35); }
+        .btn-card-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            margin-right: 16px;
+        }
+
+.btn-logout { 
+    background: linear-gradient(135deg, #ef4444, #b91c1c); 
+    color: #fff; 
+    border: none;
+    cursor: pointer; 
+    font-size: .85rem; 
+    font-weight: 700; 
+    padding: 8px 16px; 
+    border-radius: 10px; 
+    transition: .3s; 
+    display: flex; 
+    align-items: center; 
+    gap: 8px; 
+    box-shadow: 0 4px 15px rgba(239,68,68,0.35);
+}
+.btn-logout:hover { 
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(239,68,68,0.5);
+    filter: brightness(1.1);
+}
+
 </style>
 </head>
 <body>
-<script src="js/auth.js"></script>
+<script src="js/auth.js?v=2"></script>
 <div id="pg-particles" style="position:fixed;inset:0;pointer-events:none;z-index:0;"></div>
 <header>
   <div class="hw">
-    <a href="panel.html" class="logo-brand">
-      <div class="logo-wrap"><div class="logo-glow"></div><img src="../assets/img/logo.png" alt="Logo"></div>
-      <span class="brand-name">Manu Jungle</span>
+    <a href="/" class="logo-brand" title="Ir al Home">
+      <div class="logo-wrap"><div class="logo-glow"></div><img src="../assets/img/logo.png" alt="Logo" style="height: 120px; width: auto; max-width: none;"></div>
     </a>
     <a href="panel.html" class="btn-panel"><i class="ph ph-arrow-left"></i> Volver al Panel</a>
     <nav class="mnav">
@@ -393,20 +433,84 @@ async function ghGet(path) {
   return r.json();
 }
 
-async function ghPut(path, content, sha, msg) {
-  const r = await fetch(`${API}/file`,{method:'PUT',headers:{Authorization:`Bearer ${token}`,'Content-Type':'application/json'},
-    body:JSON.stringify({path,content,sha,message:msg||`update: ${path}`})});
-  if (r.status===401){sessionStorage.clear();location.reload();}
-  const d=await r.json(); if(!r.ok)throw new Error(d.error||'Error al guardar');
-  return d;
-}
+async function ghPut(path, content, sha, msg, attempt = 1) {
+    const maxAttempts = 4;
+    try {
+      const r = await fetch(`${API}/file`, {
+        method: 'PUT',
+        headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ path, content, sha, message: msg || `update: ${path}` })
+      });
+      if (r.status === 401) { sessionStorage.clear(); location.reload(); }
+      
+      let d;
+      try { d = await r.json(); } catch(e) {
+        if (attempt < maxAttempts) {
+          await new Promise(res => setTimeout(res, 2000 * attempt));
+          return ghPut(path, content, sha, msg, attempt + 1);
+        }
+        throw new Error("Timeout de red. Verifica tu conexión y vuelve a intentarlo.");
+      }
+      
+      if (!r.ok) {
+        let errStr = d.error || 'Error al guardar';
+        if (r.status === 503 || errStr.includes('No server is currently available') || errStr.includes('503') || errStr.includes('Conflict')) {
+          if (attempt < maxAttempts) {
+            await new Promise(res => setTimeout(res, 2500 * attempt));
+            return ghPut(path, content, sha, msg, attempt + 1);
+          }
+          errStr = "Los servidores de GitHub están temporalmente fuera de servicio. Por favor, intenta de nuevo en unos minutos.";
+        }
+        throw new Error(errStr);
+      }
+      return d;
+    } catch (err) {
+      if (attempt < maxAttempts && (err.message.toLowerCase().includes('fetch') || err.message.toLowerCase().includes('network'))) {
+        await new Promise(res => setTimeout(res, 2000 * attempt));
+        return ghPut(path, content, sha, msg, attempt + 1);
+      }
+      throw err;
+    }
+  }
 
-async function ghDelete(path, sha, msg) {
-  const r = await fetch(`${API}/file`,{method:'DELETE',headers:{Authorization:`Bearer ${token}`,'Content-Type':'application/json'},
-    body:JSON.stringify({path,sha,message:msg||`delete: ${path}`})});
-  const d=await r.json(); if(!r.ok)throw new Error(d.error||'Error al eliminar');
-  return d;
-}
+async function ghDelete(path, sha, msg, attempt = 1) {
+    const maxAttempts = 4;
+    try {
+      const r = await fetch(`${API}/file`, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ path, sha, message: msg || `delete: ${path}` })
+      });
+      if (r.status === 401) { sessionStorage.clear(); location.reload(); }
+      
+      let d;
+      try { d = await r.json(); } catch(e) {
+        if (attempt < maxAttempts) {
+          await new Promise(res => setTimeout(res, 2000 * attempt));
+          return ghDelete(path, sha, msg, attempt + 1);
+        }
+        throw new Error("Timeout de red. Verifica tu conexión y vuelve a intentarlo.");
+      }
+      
+      if (!r.ok) {
+        let errStr = d.error || 'Error al eliminar';
+        if (r.status === 503 || errStr.includes('No server is currently available') || errStr.includes('503') || errStr.includes('Conflict')) {
+          if (attempt < maxAttempts) {
+            await new Promise(res => setTimeout(res, 2500 * attempt));
+            return ghDelete(path, sha, msg, attempt + 1);
+          }
+        }
+        throw new Error(errStr);
+      }
+      return d;
+    } catch (err) {
+      if (attempt < maxAttempts && (err.message.toLowerCase().includes('fetch') || err.message.toLowerCase().includes('network'))) {
+        await new Promise(res => setTimeout(res, 2000 * attempt));
+        return ghDelete(path, sha, msg, attempt + 1);
+      }
+      throw err;
+    }
+  }
 
 // R2 Media API
 async function r2GetList() {
@@ -600,7 +704,7 @@ function imgWidget(id, label, value='', hint='') {
 async function viewMedia() {
   set(`
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
-      <div><p class="pt">🖼️ Biblioteca de Medios</p><p class="ps">Gestiona todas las imágenes y videos (Cloudflare R2)</p></div>
+      <div style="display:flex;align-items:center;"><div class="btn-card-icon card-icon-medios"><i class="ph ph-image"></i></div><div><p class="pt" style="margin-bottom:0">Biblioteca de Medios</p><p class="ps">Gestiona todas las imágenes y videos (Cloudflare R2)</p></div></div>
       <div style="display:flex;gap:8px;align-items:center;">
         <span id="main-upload-prog" style="font-size:.8rem;color:var(--gold);margin-right:8px;"></span>
         <button class="btn-primary" onclick="document.getElementById('media-upload').click()">📁 Subir archivo(s)</button>
@@ -761,7 +865,7 @@ async function viewBlog() {
     let html = `
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:22px">
         <div>
-          <p class="pt">✍️ Artículos del Blog</p>
+          <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-blog"><i class="ph ph-pencil"></i></div><p class="pt" style="margin-bottom:0">Artículos del Blog</p></div>
           <p class="ps">${posts.length} artículos registrados (ordenados por fecha más reciente)</p>
         </div>
         <button class="btn-primary" onclick="newBlog()">+ Nuevo artículo</button>
@@ -905,7 +1009,7 @@ async function viewHome() {
   cFile='www.manujungleforever.com/data/home.json'; cSha=data.sha;
   const d=JSON.parse(data.content); cData=d;
   set(`
-    <p class="pt">🏠 Página de Inicio</p><p class="ps">Contenido principal del sitio</p>
+    <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-contenido"><i class="ph ph-house"></i></div><div><p class="pt" style="margin-bottom:0">Página de Inicio</p><p class="ps">Contenido principal del sitio</p></div></div>
     <div class="eform">
       <div class="esec"><div class="esec-h">Hero (Portada)</div>
         <div class="ff"><label>Título principal</label><input id="h-t" value="${esc(d.hero?.title||'')}"></div>
@@ -961,7 +1065,7 @@ async function viewAbout() {
   cFile='www.manujungleforever.com/data/about.json'; cSha=data.sha;
   const d=JSON.parse(data.content); cData=d;
   set(`
-    <p class="pt">ℹ️ Página Sobre Nosotros</p><p class="ps">Contenido de "About Us"</p>
+    <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-contenido"><i class="ph ph-info"></i></div><div><p class="pt" style="margin-bottom:0">Página Sobre Nosotros</p><p class="ps">Contenido de "About Us"</p></div></div>
     <div class="eform">
       <div class="esec"><div class="esec-h">General</div>
         <div class="ff"><label>Título de la página</label><input id="ab-t" value="${esc(d.titulo_pagina||'')}"></div>
@@ -1015,7 +1119,7 @@ async function viewContact() {
   cFile='www.manujungleforever.com/data/contact.json'; cSha=data.sha;
   const d=JSON.parse(data.content); cData=d;
   set(`
-    <p class="pt">📞 Página de Contacto</p><p class="ps">Información de contacto y datos de la empresa</p>
+    <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-contenido"><i class="ph ph-phone"></i></div><div><p class="pt" style="margin-bottom:0">Página de Contacto</p><p class="ps">Información de contacto y datos de la empresa</p></div></div>
     <div class="eform">
       <div class="esec"><div class="esec-h">Textos de la Página</div>
         <div class="ff"><label>Título</label><input id="c-tit" value="${esc(d.titulo_pagina||'')}"></div>
@@ -1069,7 +1173,7 @@ async function viewGlobal() {
   cFile='www.manujungleforever.com/data/global.json'; cSha=data.sha;
   const d=JSON.parse(data.content); cData=d;
   set(`
-    <p class="pt">⚙️ Datos Globales del Sitio</p><p class="ps">Información general del negocio</p>
+    <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-contenido"><i class="ph ph-gear"></i></div><div><p class="pt" style="margin-bottom:0">Datos Globales del Sitio</p><p class="ps">Información general del negocio</p></div></div>
     <div class="eform">
       <div class="esec"><div class="esec-h">Información del Negocio</div>
         <div class="grow2">
@@ -1134,7 +1238,7 @@ async function viewTours() {
   cData=JSON.parse(data.content);
   const ts=cData.tours||[];
   set(`
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px"><div><p class="pt">🌿 Tours</p><p class="ps">${ts.length} tours registrados</p></div><button class="btn-primary" onclick="editTour(-1)">+ Nuevo Tour</button></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px"><div style="display:flex;align-items:center;"><div class="btn-card-icon card-icon-tours"><i class="ph ph-map-trifold"></i></div><div><p class="pt" style="margin-bottom:0">Tours</p><p class="ps">${ts.length} tours registrados</p></div></div><button class="btn-primary" onclick="editTour(-1)">+ Nuevo Tour</button></div>
     <div class="list-grid">
       ${ts.map((t,i)=>{
         const stCls = t.estado==='activo'?'on':(t.estado==='inactivo'?'off':'warn');
@@ -1329,7 +1433,7 @@ async function viewDeps() {
   
   set(`
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
-      <div><p class="pt">📅 Gestión de Salidas Programadas</p><p class="ps">Control de cupos, logística y ventas</p></div>
+      <div style="display:flex;align-items:center;"><div class="btn-card-icon card-icon-salidas"><i class="ph ph-calendar"></i></div><div><p class="pt" style="margin-bottom:0">Salidas Programadas</p><p class="ps">Control de cupos, logística y ventas</p></div></div>
       <button class="btn-primary" onclick="editDep(-1)">+ Crear Nueva Salida</button>
     </div>
     
@@ -1466,18 +1570,48 @@ async function viewTestims() {
   cData=JSON.parse(data.content);
   const ts=cData.testimonials||[];
   set(`
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px"><div><p class="pt">⭐ Testimonios de Clientes</p><p class="ps">${ts.length} testimonios</p></div><button class="btn-primary" onclick="editTestim(-1)">+ Nuevo Testimonio</button></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
+      <div style="display:flex;align-items:center;">
+        <div class="btn-card-icon card-icon-testim"><i class="ph ph-chat-circle-text"></i></div>
+        <div>
+          <p class="pt" style="margin-bottom:0">Testimonios de Clientes</p>
+          <p class="ps">${ts.length} testimonios registrados</p>
+        </div>
+      </div>
+      <button class="btn-primary" onclick="editTestim(-1)">+ Nuevo Testimonio</button>
+    </div>
     <div class="list-grid">
-      ${ts.map((t,i)=>`
-        <div class="li">
-          <div class="li-info">
-            <h3>${t.nombre} ${t.bandera||''} — ${'⭐'.repeat(t.rating||5)} <span class="badge ${t.activo?'on':'off'}">${t.activo?'visible':'oculto'}</span></h3>
-            <span>${t.pais} · ${t.tour} · ${t.fecha}</span>
+      ${ts.map((t,i)=>{
+        const initial = (t.nombre||'?').charAt(0);
+        let imgSrc = (t.foto||'').trim();
+        if (imgSrc && !imgSrc.includes('placeholder.jpg')) {
+          if (imgSrc.startsWith('/')) imgSrc = '..' + imgSrc;
+        } else {
+          imgSrc = '';
+        }
+        const avatarEl = imgSrc
+          ? `<img src="${imgSrc}" alt="${esc(t.nombre)}" style="width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid var(--teal);flex-shrink:0;" onerror="this.outerHTML='<div style=\\'width:48px;height:48px;border-radius:50%;background:rgba(45,212,191,0.15);color:var(--teal);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.1rem;border:2px solid rgba(45,212,191,0.3);flex-shrink:0;\\'>${initial}</div>'">`
+          : `<div style="width:48px;height:48px;border-radius:50%;background:rgba(45,212,191,0.15);color:var(--teal);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.1rem;border:2px solid rgba(45,212,191,0.3);flex-shrink:0;">${initial}</div>`;
+
+        return `
+        <div class="li" style="display:flex;align-items:center;justify-content:space-between;gap:16px;">
+          <div style="display:flex;align-items:center;gap:14px;flex:1;min-width:0;">
+            ${avatarEl}
+            <div class="li-info" style="min-width:0;">
+              <h3 style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px;">
+                ${esc(t.nombre)} ${esc(t.bandera||'')} 
+                <span style="color:var(--gold);font-size:0.82rem;">${'★'.repeat(t.rating||5)}</span> 
+                <span class="badge ${t.activo?'on':'off'}">${t.activo?'visible':'oculto'}</span>
+              </h3>
+              <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--muted);">${esc(t.pais)} · ${esc(t.tour)} ${t.fecha ? '· ' + esc(t.fecha) : ''}</span>
+            </div>
           </div>
-          <div class="li-actions">
-            <button class="btn-edit" onclick="editTestim(${i})">Editar</button>
+          <div class="li-actions" style="flex-shrink:0;display:flex;gap:8px;">
+            <button class="btn-edit" onclick="editTestim(${i})"><i class="ph ph-pencil"></i> Editar</button>
+            <button class="btn-danger" onclick="deleteTestim(${i})" title="Eliminar testimonio"><i class="ph ph-trash"></i></button>
           </div>
-        </div>`).join('')}
+        </div>`;
+      }).join('')}
     </div>`);
 }
 
@@ -1485,32 +1619,38 @@ window.editTestim = function(idx) {
   const t= idx === -1 ? {nombre:'', pais:'', bandera:'', tour:'', fecha:'', rating:5, texto:'', foto:'', activo:true} : cData.testimonials[idx];
   set(`
     <button class="back-btn" onclick="route('testimonials')">← Volver a testimonios</button>
-    <div class="eform"><div class="esec"><div class="esec-h">Datos del Testimonio</div>
-      <div class="grow2">
-        <div class="ff"><label>Nombre del cliente</label><input id="tm-n" value="${esc(t.nombre)}"></div>
-        <div class="ff"><label>País</label><input id="tm-p" value="${esc(t.pais)}"></div>
+    <div class="eform">
+      <div class="esec">
+        <div class="esec-h">Datos del Testimonio</div>
+        <div class="grow2">
+          <div class="ff"><label>Nombre del cliente</label><input id="tm-n" value="${esc(t.nombre)}" placeholder="Ej: James W."></div>
+          <div class="ff"><label>País</label><input id="tm-p" value="${esc(t.pais)}" placeholder="Ej: United Kingdom"></div>
+        </div>
+        <div class="grow2">
+          <div class="ff"><label>Bandera emoji</label><input id="tm-fl" value="${esc(t.bandera||'')}" placeholder="Ej: 🇬🇧 🇺🇸 🇩🇪 🇮🇹"><span class="hint">Ej: 🇺🇸 🇬🇧 🇩🇪 🇮🇹 🇫🇷 🇪🇸</span></div>
+          <div class="ff"><label>Tour realizado</label><input id="tm-t" value="${esc(t.tour)}" placeholder="Ej: Amazon Expedition"></div>
+        </div>
+        <div class="grow2">
+          <div class="ff"><label>Fecha del viaje</label><input type="text" id="tm-f" value="${esc(t.fecha)}" placeholder="Ej: 2025 o Mayo 2025"></div>
+          <div class="ff"><label>Calificación (estrellas)</label><select id="tm-r"><option ${t.rating==5?'selected':''} value="5">★★★★★ (5 estrellas)</option><option ${t.rating==4?'selected':''} value="4">★★★★ (4 estrellas)</option><option ${t.rating==3?'selected':''} value="3">★★★ (3 estrellas)</option></select></div>
+        </div>
+        <div class="ff"><label>Texto del testimonio</label><textarea id="tm-tx" style="min-height:120px" placeholder="Escribe el testimonio del cliente...">${esc(t.texto)}</textarea></div>
       </div>
-      <div class="grow2">
-        <div class="ff"><label>Bandera emoji</label><input id="tm-fl" value="${esc(t.bandera||'')}"><span class="hint">Ej: 🇺🇸 🇬🇧 🇩🇪 🇦🇺</span></div>
-        <div class="ff"><label>Tour realizado</label>
-          <div style="display:flex;gap:8px;align-items:center">
-            <input id="tm-t" value="${esc(t.tour)}" style="flex:1" placeholder="Nombre del tour">
-            <button type="button" class="btn-secondary" style="white-space:nowrap" onclick="pickImage('tm-t','tm-img-prev')">🖼️ Medios</button>
+      <div class="esec">
+        <div class="esec-h">Foto de Perfil / Avatar</div>
+        ${imgWidget('tm-img','Foto del cliente (Avatar)',t.foto||'','Sube o selecciona una foto de perfil (se mostrará en formato circular en la web)')}
+        <div class="ff" style="margin-top:16px;">
+          <label>Visibilidad en el sitio</label>
+          <div class="tgl-wrap" style="margin-top:6px">
+            <label class="tgl"><input type="checkbox" id="tm-a" ${t.activo?'checked':''}><span class="tgl-s"></span></label>
+            <span id="tm-lbl">${t.activo?'✅ Visible':'🔒 Oculto'}</span>
           </div>
         </div>
       </div>
-      <div class="grow2">
-        <div class="ff"><label>Fecha del viaje</label><input type="date" id="tm-f" value="${esc(t.fecha)}"></div>
-        <div class="ff"><label>Calificación (estrellas)</label><select id="tm-r"><option ${t.rating==5?'selected':''} value="5">⭐⭐⭐⭐⭐ (5)</option><option ${t.rating==4?'selected':''} value="4">⭐⭐⭐⭐ (4)</option><option ${t.rating==3?'selected':''} value="3">⭐⭐⭐ (3)</option></select></div>
-      </div>
-      <div class="ff"><label>Texto del testimonio</label><textarea id="tm-tx" style="min-height:120px">${esc(t.texto)}</textarea></div>
-      ${imgWidget('tm-img','Foto del cliente (opcional)',t.foto||'')}
-      <div class="ff"><label>Visibilidad en el sitio</label>
-        <div class="tgl-wrap" style="margin-top:6px"><label class="tgl"><input type="checkbox" id="tm-a" ${t.activo?'checked':''}><span class="tgl-s"></span></label>
-        <span id="tm-lbl">${t.activo?'✅ Visible':'❌ Oculto'}</span></div>
-      </div>
-    </div></div>`);
-  document.getElementById('tm-a').addEventListener('change',e=>{document.getElementById('tm-lbl').textContent=e.target.checked?'✅ Visible':'❌ Oculto';});
+    </div>`);
+  document.getElementById('tm-a').addEventListener('change',e=>{
+    document.getElementById('tm-lbl').textContent=e.target.checked?'✅ Visible':'🔒 Oculto';
+  });
   showSaveBar(async()=>{
     const updated = {...t,nombre:v('tm-n'),pais:v('tm-p'),bandera:v('tm-fl'),
       tour:v('tm-t'),fecha:v('tm-f'),rating:+v('tm-r'),texto:v('tm-tx'),
@@ -1523,11 +1663,18 @@ window.editTestim = function(idx) {
     }
     const res=await ghPut(cFile,JSON.stringify(cData,null,2),cSha,`update testimonio: ${updated.nombre}`);
     cSha=res.sha;
+    document.querySelector('.back-btn').textContent='← Testimonios (guardado ✓)';
   });
 };
 
-// ─────────────────────────────────────────────────────────────────────────────
-// DELETE
+window.deleteTestim = async function(idx) {
+  const tName = cData.testimonials[idx]?.nombre || 'este testimonio';
+  if (!confirm(`¿Estás seguro de eliminar el testimonio de "${tName}"?`)) return;
+  cData.testimonials.splice(idx, 1);
+  const res = await ghPut(cFile, JSON.stringify(cData, null, 2), cSha, 'delete testimonio');
+  cSha = res.sha;
+  await viewTestims();
+};
 // ─────────────────────────────────────────────────────────────────────────────
 function confirmDelete(path, sha, label, backFn) {
   document.getElementById('del-title').textContent=`¿Eliminar este ${label}?`;
@@ -1615,7 +1762,7 @@ async function viewReclamos() {
     window.currentReclamosData = reclamos;
     
     let html = `
-    <h2 class="pt">Libro de Reclamaciones</h2>
+    <div style="display:flex;align-items:center;margin-bottom:20px;"><div class="btn-card-icon card-icon-reclamos"><i class="ph ph-scales"></i></div><h2 class="pt" style="margin-bottom:0">Libro de Reclamaciones</h2></div>
     <p class="ps">Auditoría y exportación de quejas y reclamos legales.</p>
 
     <!-- Filtros tipo Wachicargo -->
@@ -2055,3 +2202,4 @@ window.deleteTestim = async function(idx) {
 </script>
 </body>
 </html>
+

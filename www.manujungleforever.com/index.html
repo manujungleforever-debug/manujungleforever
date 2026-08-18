@@ -268,23 +268,38 @@
 </section>
 
 <script>
-  fetch('data/testimonials.json').then(r=>r.json()).then(d=>{
+  fetch('data/testimonials.json?v=' + Date.now()).then(r=>r.json()).then(d=>{
     const grid = document.getElementById('testims-grid');
-    grid.innerHTML = (d.testimonials||[]).filter(t=>t.activo).map(t => `
-        <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; padding: 32px; text-align: left; transition: transform 0.3s; cursor: default;">
-            <div style="color: #c9a84c; margin-bottom: 16px; font-size: 1.1rem;">
-                ${'<i class="fas fa-star"></i>'.repeat(t.rating||5)}
+    if (!grid) return;
+    grid.innerHTML = (d.testimonials||[]).filter(t=>t.activo).map(t => {
+      const initial = (t.nombre || '?').charAt(0);
+      let rawFoto = (t.foto || '').trim();
+      let imgSrc = '';
+      if (rawFoto && !rawFoto.includes('placeholder.jpg')) {
+        imgSrc = rawFoto.startsWith('/') ? rawFoto.slice(1) : rawFoto;
+      }
+      const avatarHtml = imgSrc 
+        ? `<img src="${imgSrc}" alt="${t.nombre}" style="width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 2px solid var(--teal, #2dd4bf); flex-shrink: 0;" onerror="this.outerHTML='<div style=\'width:44px;height:44px;border-radius:50%;background:rgba(45,212,191,0.2);color:#2dd4bf;border:2px solid rgba(45,212,191,0.3);display:flex;align-items:center;justify-content:center;font-weight:bold;flex-shrink:0;\'>${initial}</div>'">`
+        : `<div style="width: 44px; height: 44px; border-radius: 50%; background: rgba(45, 212, 191, 0.2); border: 2px solid rgba(45, 212, 191, 0.3); display: flex; align-items: center; justify-content: center; color: #2dd4bf; font-weight: bold; flex-shrink: 0;">${initial}</div>`;
+      
+      return `
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; padding: 32px; text-align: left; transition: transform 0.3s; cursor: default; display:flex; flex-direction:column; justify-content:space-between;">
+            <div>
+                <div style="color: #c9a84c; margin-bottom: 16px; font-size: 1.1rem;">
+                    ${'<i class="fas fa-star"></i>'.repeat(t.rating||5)}
+                </div>
+                <p style="color: rgba(255,255,255,0.7); font-size: 0.95rem; line-height: 1.7; margin-bottom: 24px;">"${t.texto}"</p>
             </div>
-            <p style="color: rgba(255,255,255,0.7); font-size: 0.95rem; line-height: 1.7; margin-bottom: 24px;">"${t.texto}"</p>
-            <div style="display: flex; align-items: center; gap: 12px;">
-                <div style="width: 40px; height: 40px; background: rgba(34, 211, 238, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #22d3ee; font-weight: bold;">${t.nombre.charAt(0)}</div>
+            <div style="display: flex; align-items: center; gap: 12px; margin-top: auto;">
+                ${avatarHtml}
                 <div>
                     <div style="color: #fff; font-weight: 600; font-size: 0.95rem;">${t.nombre}</div>
                     <div style="color: rgba(255,255,255,0.4); font-size: 0.8rem;">${t.pais} ${t.bandera||''}</div>
                 </div>
             </div>
-        </div>`).join('');
-  }).catch(e=>console.error('Error loading testimonials'));
+        </div>`;
+    }).join('');
+  }).catch(e=>console.error('Error loading testimonials:', e));
 </script>
 
 <section class="cs" id="plan-trip">

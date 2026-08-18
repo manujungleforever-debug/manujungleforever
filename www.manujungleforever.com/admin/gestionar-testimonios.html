@@ -1570,18 +1570,48 @@ async function viewTestims() {
   cData=JSON.parse(data.content);
   const ts=cData.testimonials||[];
   set(`
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px"><div style="display:flex;align-items:center;"><div class="btn-card-icon card-icon-testim"><i class="ph ph-chat-circle-text"></i></div><div><p class="pt" style="margin-bottom:0">Testimonios de Clientes</p><p class="ps">${ts.length} testimonios</p></div></div><button class="btn-primary" onclick="editTestim(-1)">+ Nuevo Testimonio</button></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
+      <div style="display:flex;align-items:center;">
+        <div class="btn-card-icon card-icon-testim"><i class="ph ph-chat-circle-text"></i></div>
+        <div>
+          <p class="pt" style="margin-bottom:0">Testimonios de Clientes</p>
+          <p class="ps">${ts.length} testimonios registrados</p>
+        </div>
+      </div>
+      <button class="btn-primary" onclick="editTestim(-1)">+ Nuevo Testimonio</button>
+    </div>
     <div class="list-grid">
-      ${ts.map((t,i)=>`
-        <div class="li">
-          <div class="li-info">
-            <h3>${t.nombre} ${t.bandera||''} — ${'⭐'.repeat(t.rating||5)} <span class="badge ${t.activo?'on':'off'}">${t.activo?'visible':'oculto'}</span></h3>
-            <span>${t.pais} · ${t.tour} · ${t.fecha}</span>
+      ${ts.map((t,i)=>{
+        const initial = (t.nombre||'?').charAt(0);
+        let imgSrc = (t.foto||'').trim();
+        if (imgSrc && !imgSrc.includes('placeholder.jpg')) {
+          if (imgSrc.startsWith('/')) imgSrc = '..' + imgSrc;
+        } else {
+          imgSrc = '';
+        }
+        const avatarEl = imgSrc
+          ? `<img src="${imgSrc}" alt="${esc(t.nombre)}" style="width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid var(--teal);flex-shrink:0;" onerror="this.outerHTML='<div style=\\'width:48px;height:48px;border-radius:50%;background:rgba(45,212,191,0.15);color:var(--teal);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.1rem;border:2px solid rgba(45,212,191,0.3);flex-shrink:0;\\'>${initial}</div>'">`
+          : `<div style="width:48px;height:48px;border-radius:50%;background:rgba(45,212,191,0.15);color:var(--teal);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.1rem;border:2px solid rgba(45,212,191,0.3);flex-shrink:0;">${initial}</div>`;
+
+        return `
+        <div class="li" style="display:flex;align-items:center;justify-content:space-between;gap:16px;">
+          <div style="display:flex;align-items:center;gap:14px;flex:1;min-width:0;">
+            ${avatarEl}
+            <div class="li-info" style="min-width:0;">
+              <h3 style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px;">
+                ${esc(t.nombre)} ${esc(t.bandera||'')} 
+                <span style="color:var(--gold);font-size:0.82rem;">${'★'.repeat(t.rating||5)}</span> 
+                <span class="badge ${t.activo?'on':'off'}">${t.activo?'visible':'oculto'}</span>
+              </h3>
+              <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--muted);">${esc(t.pais)} · ${esc(t.tour)} ${t.fecha ? '· ' + esc(t.fecha) : ''}</span>
+            </div>
           </div>
-          <div class="li-actions">
-            <button class="btn-edit" onclick="editTestim(${i})">Editar</button>
+          <div class="li-actions" style="flex-shrink:0;display:flex;gap:8px;">
+            <button class="btn-edit" onclick="editTestim(${i})"><i class="ph ph-pencil"></i> Editar</button>
+            <button class="btn-danger" onclick="deleteTestim(${i})" title="Eliminar testimonio"><i class="ph ph-trash"></i></button>
           </div>
-        </div>`).join('')}
+        </div>`;
+      }).join('')}
     </div>`);
 }
 
@@ -1589,32 +1619,38 @@ window.editTestim = function(idx) {
   const t= idx === -1 ? {nombre:'', pais:'', bandera:'', tour:'', fecha:'', rating:5, texto:'', foto:'', activo:true} : cData.testimonials[idx];
   set(`
     <button class="back-btn" onclick="route('testimonials')">← Volver a testimonios</button>
-    <div class="eform"><div class="esec"><div class="esec-h">Datos del Testimonio</div>
-      <div class="grow2">
-        <div class="ff"><label>Nombre del cliente</label><input id="tm-n" value="${esc(t.nombre)}"></div>
-        <div class="ff"><label>País</label><input id="tm-p" value="${esc(t.pais)}"></div>
+    <div class="eform">
+      <div class="esec">
+        <div class="esec-h">Datos del Testimonio</div>
+        <div class="grow2">
+          <div class="ff"><label>Nombre del cliente</label><input id="tm-n" value="${esc(t.nombre)}" placeholder="Ej: James W."></div>
+          <div class="ff"><label>País</label><input id="tm-p" value="${esc(t.pais)}" placeholder="Ej: United Kingdom"></div>
+        </div>
+        <div class="grow2">
+          <div class="ff"><label>Bandera emoji</label><input id="tm-fl" value="${esc(t.bandera||'')}" placeholder="Ej: 🇬🇧 🇺🇸 🇩🇪 🇮🇹"><span class="hint">Ej: 🇺🇸 🇬🇧 🇩🇪 🇮🇹 🇫🇷 🇪🇸</span></div>
+          <div class="ff"><label>Tour realizado</label><input id="tm-t" value="${esc(t.tour)}" placeholder="Ej: Amazon Expedition"></div>
+        </div>
+        <div class="grow2">
+          <div class="ff"><label>Fecha del viaje</label><input type="text" id="tm-f" value="${esc(t.fecha)}" placeholder="Ej: 2025 o Mayo 2025"></div>
+          <div class="ff"><label>Calificación (estrellas)</label><select id="tm-r"><option ${t.rating==5?'selected':''} value="5">★★★★★ (5 estrellas)</option><option ${t.rating==4?'selected':''} value="4">★★★★ (4 estrellas)</option><option ${t.rating==3?'selected':''} value="3">★★★ (3 estrellas)</option></select></div>
+        </div>
+        <div class="ff"><label>Texto del testimonio</label><textarea id="tm-tx" style="min-height:120px" placeholder="Escribe el testimonio del cliente...">${esc(t.texto)}</textarea></div>
       </div>
-      <div class="grow2">
-        <div class="ff"><label>Bandera emoji</label><input id="tm-fl" value="${esc(t.bandera||'')}"><span class="hint">Ej: 🇺🇸 🇬🇧 🇩🇪 🇦🇺</span></div>
-        <div class="ff"><label>Tour realizado</label>
-          <div style="display:flex;gap:8px;align-items:center">
-            <input id="tm-t" value="${esc(t.tour)}" style="flex:1" placeholder="Nombre del tour">
-            <button type="button" class="btn-secondary" style="white-space:nowrap" onclick="pickImage('tm-t','tm-img-prev')">🖼️ Medios</button>
+      <div class="esec">
+        <div class="esec-h">Foto de Perfil / Avatar</div>
+        ${imgWidget('tm-img','Foto del cliente (Avatar)',t.foto||'','Sube o selecciona una foto de perfil (se mostrará en formato circular en la web)')}
+        <div class="ff" style="margin-top:16px;">
+          <label>Visibilidad en el sitio</label>
+          <div class="tgl-wrap" style="margin-top:6px">
+            <label class="tgl"><input type="checkbox" id="tm-a" ${t.activo?'checked':''}><span class="tgl-s"></span></label>
+            <span id="tm-lbl">${t.activo?'✅ Visible':'🔒 Oculto'}</span>
           </div>
         </div>
       </div>
-      <div class="grow2">
-        <div class="ff"><label>Fecha del viaje</label><input type="date" id="tm-f" value="${esc(t.fecha)}"></div>
-        <div class="ff"><label>Calificación (estrellas)</label><select id="tm-r"><option ${t.rating==5?'selected':''} value="5">⭐⭐⭐⭐⭐ (5)</option><option ${t.rating==4?'selected':''} value="4">⭐⭐⭐⭐ (4)</option><option ${t.rating==3?'selected':''} value="3">⭐⭐⭐ (3)</option></select></div>
-      </div>
-      <div class="ff"><label>Texto del testimonio</label><textarea id="tm-tx" style="min-height:120px">${esc(t.texto)}</textarea></div>
-      ${imgWidget('tm-img','Foto del cliente (opcional)',t.foto||'')}
-      <div class="ff"><label>Visibilidad en el sitio</label>
-        <div class="tgl-wrap" style="margin-top:6px"><label class="tgl"><input type="checkbox" id="tm-a" ${t.activo?'checked':''}><span class="tgl-s"></span></label>
-        <span id="tm-lbl">${t.activo?'✅ Visible':'❌ Oculto'}</span></div>
-      </div>
-    </div></div>`);
-  document.getElementById('tm-a').addEventListener('change',e=>{document.getElementById('tm-lbl').textContent=e.target.checked?'✅ Visible':'❌ Oculto';});
+    </div>`);
+  document.getElementById('tm-a').addEventListener('change',e=>{
+    document.getElementById('tm-lbl').textContent=e.target.checked?'✅ Visible':'🔒 Oculto';
+  });
   showSaveBar(async()=>{
     const updated = {...t,nombre:v('tm-n'),pais:v('tm-p'),bandera:v('tm-fl'),
       tour:v('tm-t'),fecha:v('tm-f'),rating:+v('tm-r'),texto:v('tm-tx'),
@@ -1627,11 +1663,18 @@ window.editTestim = function(idx) {
     }
     const res=await ghPut(cFile,JSON.stringify(cData,null,2),cSha,`update testimonio: ${updated.nombre}`);
     cSha=res.sha;
+    document.querySelector('.back-btn').textContent='← Testimonios (guardado ✓)';
   });
 };
 
-// ─────────────────────────────────────────────────────────────────────────────
-// DELETE
+window.deleteTestim = async function(idx) {
+  const tName = cData.testimonials[idx]?.nombre || 'este testimonio';
+  if (!confirm(`¿Estás seguro de eliminar el testimonio de "${tName}"?`)) return;
+  cData.testimonials.splice(idx, 1);
+  const res = await ghPut(cFile, JSON.stringify(cData, null, 2), cSha, 'delete testimonio');
+  cSha = res.sha;
+  await viewTestims();
+};
 // ─────────────────────────────────────────────────────────────────────────────
 function confirmDelete(path, sha, label, backFn) {
   document.getElementById('del-title').textContent=`¿Eliminar este ${label}?`;
