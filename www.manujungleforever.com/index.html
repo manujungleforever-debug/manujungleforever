@@ -944,6 +944,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
       // CTA section (#plan-trip)
       const cta = hData.cta_section || {};
+      if (cta.image && !cta.image.includes('placeholder.jpg')) {
+        const ctaBg = document.querySelector('#plan-trip .ci');
+        if (ctaBg) {
+          const cleanImg = cta.image.startsWith('/') ? cta.image.slice(1) : cta.image;
+          ctaBg.style.backgroundImage = `url('${cleanImg}')`;
+        }
+      }
       if (cta.eyebrow) {
         const ctaEy = document.querySelector('#plan-trip .ey');
         if (ctaEy) ctaEy.textContent = cta.eyebrow;

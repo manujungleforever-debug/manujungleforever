@@ -1336,6 +1336,7 @@ async function viewHome() {
           <div class="ff"><label>Texto del Botón</label><input id="h-cta-bt" name="inicio_cta_btn_text" value="${esc(d.cta_section?.btn_text || 'Book a Tour')}" placeholder="Book a Tour"></div>
           <div class="ff"><label>URL / Enlace del Botón</label><input id="h-cta-bu" name="inicio_cta_btn_url" value="${esc(d.cta_section?.btn_url || 'contact/index.html')}" placeholder="contact/index.html"></div>
         </div>
+        ${imgWidget('h-cta-img','Imagen de Fondo / Lateral',d.cta_section?.image||'')}
       </div>
 
       <!-- 7. PILARES / VALORES -->
@@ -1380,7 +1381,7 @@ async function viewHome() {
     dd.wildlife_section={...d.wildlife_section,eyebrow:v('h-bio-ey'),title:v('h-bio-t'),text:v('h-bio-tx'),image:v('h-bio-img'),image_alt:v('h-bio-ia')};
 
     // CTA section
-    dd.cta_section={...d.cta_section,eyebrow:v('h-cta-t'),title:v('h-cta-s'),text:v('h-cta-s'),btn_text:v('h-cta-bt'),btn_url:v('h-cta-bu')};
+    dd.cta_section={...d.cta_section,eyebrow:v('h-cta-t'),title:v('h-cta-s'),text:v('h-cta-s'),image:v('h-cta-img'),btn_text:v('h-cta-bt'),btn_url:v('h-cta-bu')};
 
     // Pillars section
     dd.pillars_section={...d.pillars_section,title:v('p-t'),
