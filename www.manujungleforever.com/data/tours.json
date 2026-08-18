@@ -5,7 +5,7 @@
       "slug": "3-day-wildlife-quest-machu-wasi",
       "nombre": "3-Day Wildlife Quest – Machu Wasi",
       "categoria": "wildlife",
-      "estado": "inactivo",
+      "estado": "activo",
       "duracion_dias": 3,
       "duracion_noches": 2,
       "precio_desde": 450,
@@ -70,7 +70,7 @@
       "slug": "4-day-wildlife-quest-machu-wasi",
       "nombre": "4-Day Wildlife Quest – Machu Wasi",
       "categoria": "wildlife",
-      "estado": "seasonal",
+      "estado": "activo",
       "duracion_dias": 4,
       "duracion_noches": 3,
       "precio_desde": 580,
@@ -501,7 +501,7 @@
     {
       "id": "rainforest-road-trip",
       "slug": "rainforest-road-trip-from-cusco",
-      "nombre": "Rainforest Road Trip",
+      "nombre": "Rainforest Road Trip Overview",
       "categoria": "roadtrip",
       "estado": "activo",
       "duracion_dias": 4,
@@ -554,6 +554,118 @@
         "Seguro",
         "Propinas",
         "Alcohol"
+      ],
+      "url_reserva": "contact/index.html",
+      "destacado": false
+    },
+    {
+      "id": "2-day-rainforest-road-trip",
+      "slug": "2-day-rainforest-road-trip",
+      "nombre": "2-Day Road Trip",
+      "categoria": "roadtrip",
+      "estado": "activo",
+      "duracion_dias": 2,
+      "duracion_noches": 1,
+      "precio_desde": 260,
+      "moneda": "USD",
+      "capacidad_min": 1,
+      "capacidad_max": 4,
+      "dificultad": "Fácil",
+      "transporte": [
+        "4x4 privado"
+      ],
+      "temporada": "Abril a Noviembre",
+      "descripcion_corta": "Un viaje corto en 4x4 por la ruta de los Andes hacia el bosque nuboso y la entrada a la selva del Manu.",
+      "descripcion_larga": "Escápate 2 días a la selva en una emocionante travesía 4x4 desde Cusco. Ideal para quienes disponen de poco tiempo pero quieren cruzar los Andes y sentir la magia de la Amazonía.",
+      "imagen_hero": "assets/img/hero.png",
+      "imagen_alt": "2-Day Rainforest Road Trip – Manu National Park",
+      "galeria": [],
+      "itinerario": [
+        {
+          "dia": 1,
+          "titulo": "Cusco → Cloud Forest Villages",
+          "descripcion": "Salida en 4x4 desde Cusco atravesando los Andes hacia el bosque nuboso. Observación de aves y estadía en lodge local."
+        },
+        {
+          "dia": 2,
+          "titulo": "Jungle Exploration → Retorno a Cusco",
+          "descripcion": "Caminata matutina por senderos naturales y viaje de retorno a Cusco por la tarde."
+        }
+      ],
+      "incluye": [
+        "Transporte 4x4 privado",
+        "1 noche de alojamiento",
+        "Todas las comidas",
+        "Guía local bilingüe"
+      ],
+      "no_incluye": [
+        "Vuelos",
+        "Seguro",
+        "Propinas"
+      ],
+      "url_reserva": "contact/index.html",
+      "destacado": false
+    },
+    {
+      "id": "5-day-rainforest-road-trip",
+      "slug": "5-day-rainforest-road-trip",
+      "nombre": "5-Day Road Trip",
+      "categoria": "roadtrip",
+      "estado": "activo",
+      "duracion_dias": 5,
+      "duracion_noches": 4,
+      "precio_desde": 480,
+      "moneda": "USD",
+      "capacidad_min": 1,
+      "capacidad_max": 4,
+      "dificultad": "Fácil",
+      "transporte": [
+        "4x4 privado"
+      ],
+      "temporada": "Abril a Noviembre",
+      "descripcion_corta": "Travesía completa de 5 días en 4x4 recorriendo los valles andinos, el bosque nuboso y los ríos de la selva baja del Manu.",
+      "descripcion_larga": "Una aventura épica por tierra y río recorriendo las comunidades y reservas naturales entre Cusco y el Manu.",
+      "imagen_hero": "assets/img/hero.png",
+      "imagen_alt": "5-Day Rainforest Road Trip – Manu National Park",
+      "galeria": [],
+      "itinerario": [
+        {
+          "dia": 1,
+          "titulo": "Cusco → Paucartambo → Bosque Nuboso",
+          "descripcion": "Ruta panorámica andina con paradas fotográficas y avistamiento del Gallito de las Rocas."
+        },
+        {
+          "dia": 2,
+          "titulo": "Descenso a la Selva Baja",
+          "descripcion": "Exploración de cascadas naturales, comunidades locales y navegación inicial."
+        },
+        {
+          "dia": 3,
+          "titulo": "Inmersión en Selva Primaria",
+          "descripcion": "Caminatas diurnas y nocturnas para avistar monos, caimanes y vida silvestre."
+        },
+        {
+          "dia": 4,
+          "titulo": "Río y Cultura Local",
+          "descripcion": "Safari fluvial, pesca tradicional y vivencia comunitaria."
+        },
+        {
+          "dia": 5,
+          "titulo": "Retorno a Cusco",
+          "descripcion": "Desayuno y retorno en 4x4 hacia la ciudad de Cusco."
+        }
+      ],
+      "incluye": [
+        "Transporte 4x4 privado",
+        "4 noches de alojamiento",
+        "Todas las comidas",
+        "Guía local bilingüe",
+        "Actividades guiadas"
+      ],
+      "no_incluye": [
+        "Vuelos",
+        "Seguro",
+        "Propinas"
       ],
       "url_reserva": "contact/index.html",
       "destacado": false
@@ -632,7 +744,7 @@
       "slug": "6-day-amazon-expedition",
       "nombre": "6-Day Amazon Expedition",
       "categoria": "expedition",
-      "estado": "pausado",
+      "estado": "activo",
       "duracion_dias": 6,
       "duracion_noches": 5,
       "precio_desde": 860,
