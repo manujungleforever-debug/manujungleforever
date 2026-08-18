@@ -37,25 +37,33 @@
       --sidebar-grad: linear-gradient(160deg, #071f1a 0%, #0a2e25 60%, #0f3d32 100%);
     }
     html, body {
-      height: 100%;
-      font-family: 'Poppins', sans-serif;
-      background-color: var(--bg);
-      background-image: var(--bg-grad);
-      background-attachment: fixed;
-      color: var(--fg);
-      min-height: 100vh;
-    }
-    @media (max-width: 768px) {
-      body {
+    height: 100%;
+    font-family: 'Poppins', sans-serif;
+}
+body {
+    background-color: var(--bg);
+    background-image: var(--bg-grad);
+    background-attachment: fixed;
+    color: var(--fg);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    position: relative;
+    opacity: 0;
+    transition: opacity .3s;
+}
+@media (max-width: 768px) {
+    body {
         background-attachment: scroll;
-      }
     }
-    #pg-particles, #tsparticles {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-    }
+}
+#pg-particles, #tsparticles {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+}
     input,textarea,select,button{font-family:inherit;}
     a{color:var(--gold);}
 
