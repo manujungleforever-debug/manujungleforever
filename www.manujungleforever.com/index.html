@@ -795,6 +795,17 @@ document.addEventListener("DOMContentLoaded", function() {
           }
         }
       }
+      // Tours header
+      const th = hData.tours_header || hData.guided_tours || {};
+      if (th.title) {
+        const thEy = document.querySelector('#tours .tr-intro .ey');
+        if (thEy) thEy.textContent = th.title;
+      }
+      if (th.subtitle) {
+        const thSub = document.querySelector('#tours .tr-intro .h2');
+        if (thSub) thSub.textContent = th.subtitle;
+      }
+
       // About section
       const ab = hData.about_section || {};
       if (ab.eyebrow) {
@@ -824,6 +835,68 @@ document.addEventListener("DOMContentLoaded", function() {
         if (abImg) {
           abImg.src = ab.image;
           if (ab.image_alt) abImg.alt = ab.image_alt;
+        }
+      }
+
+      // Unique / Legacy of Conservation section
+      const uq = hData.unique_section || {};
+      if (uq.title || uq.eyebrow) {
+        const uqTitle = document.querySelector('#unique-content .spt h2');
+        if (uqTitle) uqTitle.textContent = uq.title || uq.eyebrow;
+      }
+      if (uq.text) {
+        const uqP = document.querySelector('#unique-content .spt p');
+        if (uqP) uqP.textContent = uq.text;
+      }
+      if (uq.image && !uq.image.includes('placeholder.jpg')) {
+        const uqImg = document.querySelector('#unique-content .spi img');
+        if (uqImg) {
+          uqImg.src = uq.image;
+          if (uq.image_alt) uqImg.alt = uq.image_alt;
+        }
+      }
+
+      // Wildlife / Biodiversity section
+      const wl = hData.wildlife_section || {};
+      if (wl.eyebrow) {
+        const wlEy = document.querySelector('#wildlife .ey');
+        if (wlEy) wlEy.textContent = wl.eyebrow;
+      }
+      if (wl.title) {
+        const wlTitle = document.querySelector('#wildlife .h2');
+        if (wlTitle) wlTitle.textContent = wl.title;
+      }
+      if (wl.text) {
+        const wlLead = document.querySelector('#wildlife .lead');
+        if (wlLead) wlLead.textContent = wl.text;
+      }
+      if (wl.image && !wl.image.includes('placeholder.jpg')) {
+        const wlImg = document.querySelector('#wildlife .wb img');
+        if (wlImg) {
+          wlImg.src = wl.image;
+          if (wl.image_alt) wlImg.alt = wl.image_alt;
+        }
+      }
+
+      // CTA section (#plan-trip)
+      const cta = hData.cta_section || {};
+      if (cta.eyebrow) {
+        const ctaEy = document.querySelector('#plan-trip .ey');
+        if (ctaEy) ctaEy.textContent = cta.eyebrow;
+      }
+      if (cta.title) {
+        const ctaTitle = document.querySelector('#plan-trip .h2');
+        if (ctaTitle) ctaTitle.textContent = cta.title;
+      }
+      if (cta.text) {
+        const ctaP = document.querySelector('#plan-trip p.ld');
+        if (ctaP) ctaP.textContent = cta.text;
+      }
+      if (cta.btn_text) {
+        const ctaBtn = document.querySelector('#plan-trip .cba a.btn.bd');
+        if (ctaBtn) {
+          ctaBtn.innerHTML = `<i class="fas fa-compass"></i> ${cta.btn_text}`;
+          if (cta.btn_url) ctaBtn.href = cta.btn_url;
         }
       }
     }

@@ -1051,6 +1051,8 @@ function readBlogFields() {
 // ─────────────────────────────────────────────────────────────────────────────
 // HOME
 // ─────────────────────────────────────────────────────────────────────────────
+// HOME
+// ─────────────────────────────────────────────────────────────────────────────
 async function viewHome() {
   const data=await ghGet('www.manujungleforever.com/data/home.json');
   cFile='www.manujungleforever.com/data/home.json'; cSha=data.sha;
@@ -1058,28 +1060,73 @@ async function viewHome() {
   set(`
     <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-contenido"><i class="ph ph-house"></i></div><div><p class="pt" style="margin-bottom:0">Página de Inicio</p><p class="ps">Contenido principal del sitio</p></div></div>
     <div class="eform">
+      <!-- 1. HERO (PORTADA) -->
       <div class="esec"><div class="esec-h">Hero (Portada)</div>
-        <div class="ff"><label>Título principal</label><input id="h-t" value="${esc(d.hero?.title||'')}"></div>
-        <div class="ff"><label>Título énfasis (parte resaltada)</label><input id="h-e" value="${esc(d.hero?.title_emphasis||'')}"></div>
-        <div class="ff"><label>Subtítulo / descripción</label><textarea id="h-s">${esc(d.hero?.subtitle||'')}</textarea></div>
+        <div class="ff"><label>Título principal</label><input id="h-t" name="inicio_hero_title" value="${esc(d.hero?.title||'')}"></div>
+        <div class="ff"><label>Título énfasis (parte resaltada)</label><input id="h-e" name="inicio_hero_emphasis" value="${esc(d.hero?.title_emphasis||'')}"></div>
+        <div class="ff"><label>Subtítulo / descripción</label><textarea id="h-s" name="inicio_hero_subtitle">${esc(d.hero?.subtitle||'')}</textarea></div>
         <div class="grow2">
-          <div class="ff"><label>Texto de ubicación</label><input id="h-l" value="${esc(d.hero?.location_tag||'')}"></div>
-          <div class="ff"><label>ID video YouTube</label><input id="h-v" value="${esc(d.hero?.video_id||'')}">
+          <div class="ff"><label>Texto de ubicación</label><input id="h-l" name="inicio_hero_location" value="${esc(d.hero?.location_tag||'')}"></div>
+          <div class="ff"><label>ID video YouTube</label><input id="h-v" name="inicio_hero_video" value="${esc(d.hero?.video_id||'')}">
             <span class="hint">Solo el ID, ej: <code>dQw4w9WgXcQ</code></span></div>
         </div>
       </div>
+
+      <!-- 2. GUIDED TOURS (CABECERA) -->
+      <div class="esec"><div class="esec-h">Guided Tours (Cabecera)</div>
+        <div class="ff"><label>Título Principal</label><input id="h-tr-t" name="inicio_tours_title" value="${esc(d.tours_header?.title || d.guided_tours?.title || 'Guided Tours')}" placeholder="Guided Tours"></div>
+        <div class="ff"><label>Subtítulo</label><input id="h-tr-s" name="inicio_tours_subtitle" value="${esc(d.tours_header?.subtitle || d.guided_tours?.subtitle || 'Curated Jungle Expeditions')}" placeholder="Curated Jungle Expeditions"></div>
+      </div>
+
+      <!-- 3. SECCIÓN SOBRE NOSOTROS -->
       <div class="esec"><div class="esec-h">Sección Sobre Nosotros</div>
         <div class="grow2">
-          <div class="ff"><label>Eyebrow (texto pequeño encima)</label><input id="a-ey" value="${esc(d.about_section?.eyebrow||'')}"></div>
-          <div class="ff"><label>Título</label><input id="a-t" value="${esc(d.about_section?.title||'')}"></div>
+          <div class="ff"><label>Eyebrow (texto pequeño encima)</label><input id="a-ey" name="inicio_about_eyebrow" value="${esc(d.about_section?.eyebrow||'')}"></div>
+          <div class="ff"><label>Título</label><input id="a-t" name="inicio_about_title" value="${esc(d.about_section?.title||'')}"></div>
         </div>
         <div class="ff"><label>Párrafos (separados por línea en blanco)</label>
-          <textarea id="a-p" style="min-height:120px">${(d.about_section?.paragraphs||[]).map(p=>p.text||p).join('\n\n')}</textarea></div>
+          <textarea id="a-p" name="inicio_about_paragraphs" style="min-height:120px">${(d.about_section?.paragraphs||[]).map(p=>p.text||p).join('\n\n')}</textarea></div>
         ${imgWidget('a-img','Imagen de la sección',d.about_section?.image||'')}
-        <div class="ff"><label>Texto alt de la imagen</label><input id="a-ia" value="${esc(d.about_section?.image_alt||'')}"></div>
+        <div class="ff"><label>Texto alt de la imagen</label><input id="a-ia" name="inicio_about_img_alt" value="${esc(d.about_section?.image_alt||'')}"></div>
       </div>
-      <div class="esec"><div class="esec-h">Pilares / Valores</div>
-        <div class="ff"><label>Título de la sección</label><input id="p-t" value="${esc(d.pillars_section?.title||'')}"></div>
+
+      <!-- 4. SECCIÓN LEGACY OF CONSERVATION -->
+      <div class="esec"><div class="esec-h">Sección Legacy of Conservation</div>
+        <div class="grow2">
+          <div class="ff"><label>Eyebrow / Texto Superior</label><input id="h-leg-ey" name="inicio_legacy_eyebrow" value="${esc(d.unique_section?.eyebrow || 'A Legacy of Conservation')}" placeholder="A Legacy of Conservation"></div>
+          <div class="ff"><label>Título</label><input id="h-leg-t" name="inicio_legacy_title" value="${esc(d.unique_section?.title || 'WHAT MAKES US UNIQUE?')}" placeholder="WHAT MAKES US UNIQUE?"></div>
+        </div>
+        <div class="ff"><label>Párrafos de Descripción</label>
+          <textarea id="h-leg-tx" name="inicio_legacy_text" rows="4" style="min-height:100px">${esc(d.unique_section?.text || '')}</textarea></div>
+        ${imgWidget('h-leg-img','Imagen de la sección',d.unique_section?.image||'')}
+        <div class="ff"><label>Texto ALT de Imagen</label><input id="h-leg-ia" name="inicio_legacy_img_alt" value="${esc(d.unique_section?.image_alt || '')}"></div>
+      </div>
+
+      <!-- 5. SECCIÓN BIODIVERSIDAD -->
+      <div class="esec"><div class="esec-h">Sección Biodiversidad</div>
+        <div class="grow2">
+          <div class="ff"><label>Eyebrow / Texto Superior</label><input id="h-bio-ey" name="inicio_bio_eyebrow" value="${esc(d.wildlife_section?.eyebrow || 'Biodiversity')}" placeholder="Biodiversity"></div>
+          <div class="ff"><label>Título</label><input id="h-bio-t" name="inicio_bio_title" value="${esc(d.wildlife_section?.title || 'Wildlife in the Peruvian Rainforest')}" placeholder="Wildlife in the Peruvian Rainforest"></div>
+        </div>
+        <div class="ff"><label>Párrafos de Descripción</label>
+          <textarea id="h-bio-tx" name="inicio_bio_text" rows="4" style="min-height:100px">${esc(d.wildlife_section?.text || '')}</textarea></div>
+        ${imgWidget('h-bio-img','Imagen de la sección',d.wildlife_section?.image||'')}
+        <div class="ff"><label>Texto ALT de Imagen</label><input id="h-bio-ia" name="inicio_bio_img_alt" value="${esc(d.wildlife_section?.image_alt || '')}"></div>
+      </div>
+
+      <!-- 6. CALL TO ACTION (PIE DE PÁGINA) -->
+      <div class="esec"><div class="esec-h">Call to Action (Pie de Página)</div>
+        <div class="ff"><label>Título Principal</label><input id="h-cta-t" name="inicio_cta_title" value="${esc(d.cta_section?.eyebrow || d.cta_section?.title || 'Ready to Explore?')}" placeholder="Ready to Explore?"></div>
+        <div class="ff"><label>Subtítulo</label><textarea id="h-cta-s" name="inicio_cta_subtitle" rows="2" style="min-height:70px">${esc(d.cta_section?.title || d.cta_section?.text || "Let's Go to the Jungle. Plan Your Trip Today.")}</textarea></div>
+        <div class="grow2">
+          <div class="ff"><label>Texto del Botón</label><input id="h-cta-bt" name="inicio_cta_btn_text" value="${esc(d.cta_section?.btn_text || 'Book a Tour')}" placeholder="Book a Tour"></div>
+          <div class="ff"><label>URL / Enlace del Botón</label><input id="h-cta-bu" name="inicio_cta_btn_url" value="${esc(d.cta_section?.btn_url || 'contact/index.html')}" placeholder="contact/index.html"></div>
+        </div>
+      </div>
+
+      <!-- 7. PILARES / VALORES -->
+      <div class="esec full-width"><div class="esec-h">Pilares / Valores</div>
+        <div class="ff"><label>Título de la sección</label><input id="p-t" name="inicio_pillars_title" value="${esc(d.pillars_section?.title||'')}"></div>
         ${(d.pillars_section?.pillars||[]).map((p,i)=>`
           <div style="background:var(--card2);border-radius:8px;padding:12px;margin-bottom:8px">
             <p style="font-size:.72rem;color:var(--gold);font-weight:600;margin-bottom:10px">PILAR ${i+1}</p>
@@ -1091,20 +1138,36 @@ async function viewHome() {
           </div>`).join('')}
       </div>
     </div>`);
+
   showSaveBar(async()=>{
     const dd={...cData};
     dd.hero={...d.hero,title:v('h-t'),title_emphasis:v('h-e'),subtitle:v('h-s'),location_tag:v('h-l'),video_id:v('h-v')};
+    
+    // Tours Header
+    dd.tours_header = { title: v('h-tr-t'), subtitle: v('h-tr-s') };
+    dd.guided_tours = { title: v('h-tr-t'), subtitle: v('h-tr-s') };
+
+    // About section
     const paras=document.getElementById('a-p').value.split(/\n\n+/).map(t=>({text:t.trim()})).filter(p=>p.text);
     dd.about_section={...d.about_section,eyebrow:v('a-ey'),title:v('a-t'),paragraphs:paras,image:v('a-img'),image_alt:v('a-ia')};
+
+    // Unique / Legacy section
+    dd.unique_section={...d.unique_section,eyebrow:v('h-leg-ey'),title:v('h-leg-t'),text:v('h-leg-tx'),image:v('h-leg-img'),image_alt:v('h-leg-ia')};
+
+    // Wildlife / Biodiversity section
+    dd.wildlife_section={...d.wildlife_section,eyebrow:v('h-bio-ey'),title:v('h-bio-t'),text:v('h-bio-tx'),image:v('h-bio-img'),image_alt:v('h-bio-ia')};
+
+    // CTA section
+    dd.cta_section={...d.cta_section,eyebrow:v('h-cta-t'),title:v('h-cta-s'),text:v('h-cta-s'),btn_text:v('h-cta-bt'),btn_url:v('h-cta-bu')};
+
+    // Pillars section
     dd.pillars_section={...d.pillars_section,title:v('p-t'),
       pillars:(d.pillars_section?.pillars||[]).map((_,i)=>({icon:v(`pi-ic${i}`),title:v(`pi-ti${i}`),text:v(`pi-tx${i}`)}))};
+
     const res=await ghPut(cFile,JSON.stringify(dd,null,2),cSha,'update: home page');
     cSha=res.sha; cData=dd;
   });
 }
-
-
-// ─────────────────────────────────────────────────────────────────────────────
 // ABOUT US
 // ─────────────────────────────────────────────────────────────────────────────
 async function viewAbout() {
