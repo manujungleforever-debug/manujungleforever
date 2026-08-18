@@ -279,22 +279,23 @@
         imgSrc = rawFoto.startsWith('/') ? rawFoto.slice(1) : rawFoto;
       }
       const avatarHtml = imgSrc 
-        ? `<img src="${imgSrc}" alt="${t.nombre}" style="width: 64px; height: 64px; border-radius: 50%; object-fit: cover; border: 2.5px solid var(--teal, #2dd4bf); box-shadow: 0 4px 16px rgba(45, 212, 191, 0.3); flex-shrink: 0;" onerror="this.outerHTML='<div style=\\'width:64px;height:64px;border-radius:50%;background:rgba(45,212,191,0.2);color:#2dd4bf;border:2.5px solid rgba(45,212,191,0.4);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.4rem;flex-shrink:0;box-shadow:0 4px 16px rgba(45,212,191,0.2);\\'>${initial}</div>'">`
-        : `<div style="width: 64px; height: 64px; border-radius: 50%; background: rgba(45, 212, 191, 0.2); border: 2.5px solid rgba(45, 212, 191, 0.4); display: flex; align-items: center; justify-content: center; color: #2dd4bf; font-weight: 700; font-size: 1.4rem; flex-shrink: 0; box-shadow: 0 4px 16px rgba(45, 212, 191, 0.2);">${initial}</div>`;
+        ? `<img src="${imgSrc}" alt="${t.nombre}" style="width: 88px; height: 88px; border-radius: 50%; object-fit: cover; border: 3px solid var(--teal, #2dd4bf); box-shadow: 0 6px 22px rgba(45, 212, 191, 0.35); flex-shrink: 0;" onerror="this.outerHTML='<div style=\\'width:88px;height:88px;border-radius:50%;background:rgba(45,212,191,0.2);color:#2dd4bf;border:3px solid rgba(45,212,191,0.45);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:2rem;flex-shrink:0;box-shadow:0 6px 22px rgba(45,212,191,0.25);\\'>${initial}</div>'">`
+        : `<div style="width: 88px; height: 88px; border-radius: 50%; background: rgba(45, 212, 191, 0.2); border: 3px solid rgba(45, 212, 191, 0.45); display: flex; align-items: center; justify-content: center; color: #2dd4bf; font-weight: 800; font-size: 2rem; flex-shrink: 0; box-shadow: 0 6px 22px rgba(45, 212, 191, 0.25);">${initial}</div>`;
       
       return `
-        <div style="background: rgba(255,255,255,0.035); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 34px 28px; text-align: left; transition: all 0.35s ease; cursor: default; display:flex; flex-direction:column; justify-content:space-between; backdrop-filter:blur(8px);" onmouseover="this.style.borderColor='rgba(45,212,191,0.4)';this.style.transform='translateY(-4px)';this.style.boxShadow='0 14px 35px rgba(0,0,0,0.45)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)';this.style.transform='none';this.style.boxShadow='none'">
+        <div style="background: rgba(255,255,255,0.035); border: 1px solid rgba(255,255,255,0.09); border-radius: 22px; padding: 36px 30px; text-align: left; transition: all 0.35s ease; cursor: default; display:flex; flex-direction:column; justify-content:space-between; backdrop-filter:blur(8px);" onmouseover="this.style.borderColor='rgba(45,212,191,0.45)';this.style.transform='translateY(-5px)';this.style.boxShadow='0 18px 40px rgba(0,0,0,0.5)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.09)';this.style.transform='none';this.style.boxShadow='none'">
             <div>
-                <div style="color: #c9a84c; margin-bottom: 18px; font-size: 1.25rem; letter-spacing: 2px;">
+                <div style="color: #c9a84c; margin-bottom: 18px; font-size: 1.3rem; letter-spacing: 3px;">
                     ${'<i class="fas fa-star"></i>'.repeat(t.rating||5)}
                 </div>
-                <p style="color: rgba(255,255,255,0.8); font-size: 1rem; line-height: 1.75; margin-bottom: 28px; font-weight: 300;">"${t.texto}"</p>
+                <p style="color: rgba(255,255,255,0.85); font-size: 1.02rem; line-height: 1.8; margin-bottom: 30px; font-weight: 300;">"${t.texto}"</p>
             </div>
-            <div style="display: flex; align-items: center; gap: 16px; margin-top: auto; padding-top: 18px; border-top: 1px solid rgba(255,255,255,0.06);">
+            <div style="display: flex; align-items: center; gap: 20px; margin-top: auto; padding-top: 22px; border-top: 1px solid rgba(255,255,255,0.08);">
                 ${avatarHtml}
                 <div>
-                    <div style="color: #fff; font-weight: 700; font-size: 1.08rem; letter-spacing: -0.01em;">${t.nombre}</div>
-                    <div style="color: rgba(255,255,255,0.6); font-size: 0.86rem; margin-top: 3px;">${t.pais} ${t.bandera||''} ${t.tour ? `· <span style="color:var(--teal, #2dd4bf); font-size:0.8rem;">${t.tour}</span>` : ''}</div>
+                    <div style="color: #fff; font-weight: 700; font-size: 1.2rem; letter-spacing: -0.01em;">${t.nombre}</div>
+                    <div style="color: rgba(255,255,255,0.7); font-size: 0.95rem; margin-top: 4px;">${t.pais} ${t.bandera||''}</div>
+                    ${t.tour ? `<div style="color:var(--teal, #2dd4bf); font-size:0.85rem; font-weight:600; margin-top:4px;"><i class="fas fa-map-pin" style="font-size:0.75rem;margin-right:5px;"></i>${t.tour}</div>` : ''}
                 </div>
             </div>
         </div>`;
