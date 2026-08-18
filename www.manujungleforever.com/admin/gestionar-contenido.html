@@ -1402,24 +1402,27 @@ async function viewAbout() {
     <div class="eform">
       <div class="esec"><div class="esec-h">General</div>
         <div class="ff"><label>Título de la página</label><input id="ab-t" value="${esc(d.titulo_pagina||'')}"></div>
-        <div class="ff"><label>Subtítulo de la página</label><textarea id="ab-s">${esc(d.subtitulo_pagina||'')}</textarea></div>
+        <div class="ff"><label>Subtítulo de la página</label><textarea id="ab-s" rows="2">${esc(d.subtitulo_pagina||'')}</textarea></div>
         ${imgWidget('ab-img','Imagen Hero',d.hero_image||'')}
       </div>
-      <div class="esec"><div class="esec-h">Historia</div>
+      
+      <div class="esec"><div class="esec-h">Sección Born in the Jungle (Historia y Carta)</div>
         <div class="grow2">
-          <div class="ff"><label>Eyebrow</label><input id="ab-he" value="${esc(d.historia?.eyebrow||'')}"></div>
-          <div class="ff"><label>Título</label><input id="ab-ht" value="${esc(d.historia?.titulo||'')}"></div>
+          <div class="ff"><label>Eyebrow (Texto Superior)</label><input id="ab-he" value="${esc(d.historia?.eyebrow||'Our Story')}" placeholder="Our Story"></div>
+          <div class="ff"><label>Título Principal</label><input id="ab-ht" value="${esc(d.historia?.titulo||'Born in the Jungle')}" placeholder="Born in the Jungle"></div>
         </div>
-        <div class="ff"><label>Párrafos (separados por línea en blanco)</label>
-          <textarea id="ab-hp" style="min-height:120px">${(d.historia?.paragrafos||[]).join('\n\n')}</textarea></div>
-        ${imgWidget('ab-himg','Imagen Historia',d.historia?.imagen||'')}
+        <div class="ff"><label>Párrafos de la Carta / Historia (separados por doble salto de línea)</label>
+          <textarea id="ab-hp" style="min-height:220px;line-height:1.6;">${(d.historia?.paragrafos||[]).join('\n\n')}</textarea></div>
+        ${imgWidget('ab-himg','Imagen de la Sección',d.historia?.imagen||'')}
+        <div class="ff"><label>Texto Alt de la Imagen</label><input id="ab-hia" value="${esc(d.historia?.imagen_alt||'')}"></div>
       </div>
-      <div class="esec"><div class="esec-h">Misión</div>
+      
+      <div class="esec full-width"><div class="esec-h">Misión y Propósito</div>
         <div class="grow2">
-          <div class="ff"><label>Eyebrow</label><input id="ab-me" value="${esc(d.mision?.eyebrow||'')}"></div>
-          <div class="ff"><label>Título</label><input id="ab-mt" value="${esc(d.mision?.titulo||'')}"></div>
+          <div class="ff"><label>Eyebrow</label><input id="ab-me" value="${esc(d.mision?.eyebrow||'Our Mission')}" placeholder="Our Mission"></div>
+          <div class="ff"><label>Título</label><input id="ab-mt" value="${esc(d.mision?.titulo||'Tourism as Conservation')}" placeholder="Tourism as Conservation"></div>
         </div>
-        <div class="ff"><label>Texto</label><textarea id="ab-mtex" style="min-height:80px">${esc(d.mision?.texto||'')}</textarea></div>
+        <div class="ff"><label>Texto de la Misión</label><textarea id="ab-mtex" style="min-height:100px">${esc(d.mision?.texto||'')}</textarea></div>
       </div>
     </div>`);
 
@@ -1431,8 +1434,9 @@ async function viewAbout() {
     if(!out.historia) out.historia = {};
     out.historia.eyebrow = v('ab-he');
     out.historia.titulo = v('ab-ht');
-    out.historia.paragrafos = v('ab-hp').split('\n\n').filter(x=>x.trim());
+    out.historia.paragrafos = v('ab-hp').split(/\n\n+/).map(x=>x.trim()).filter(Boolean);
     out.historia.imagen = v('ab-himg');
+    out.historia.imagen_alt = v('ab-hia');
     if(!out.mision) out.mision = {};
     out.mision.eyebrow = v('ab-me');
     out.mision.titulo = v('ab-mt');
