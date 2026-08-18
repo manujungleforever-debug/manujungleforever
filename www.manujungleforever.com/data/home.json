@@ -66,13 +66,14 @@
     "title": "WHAT MAKES US UNIQUE?",
     "text": "We are a family-run, local company that only operates in Manu. Our lodge and paths in Nuevo Eden are on the land where Moises (co-founder) grew up. We believe that tourism is the safest, most sustainable industry for the rainforest, and our goal is to use tourism to support the community and wildlife in the surrounding area. Without this effort, this precious land would be in danger to logging and destructive agriculture. We are passionate about the region, the wildlife, and the culture of the Manu National Park.",
     "image": "assets/media_to_upload/photos/placeholder.jpg",
-    "image_alt": "Manu Jungle Forever Family and Guides"
+    "image_alt": "Manu Jungle Forever Family and Guides",
+    "eyebrow": "A Legacy of Conservation"
   },
   "wildlife_section": {
     "eyebrow": "Biodiversity",
     "title": "Wildlife in the Peruvian Rainforest",
     "text": "The Manu National Park is the best place to see wildlife in Peru — you will always encounter animals in their natural habitats, surrounded by a complex ecosystem. When we visit the Amazon rainforest, we explore trails looking for monkeys, macaws, insects, snakes, and more. On the river banks we search for capybaras, turtles, caimans, and even the elusive jaguar.",
-    "image": "assets/media_to_upload/photos/placeholder.jpg",
+    "image": "/media/1787015599134-gayulo-animals-3524518.jpg",
     "image_alt": "Manu National Park wildlife - Jaguar",
     "animals": [
       {
@@ -120,8 +121,10 @@
   "cta_section": {
     "eyebrow": "Ready to Explore?",
     "title": "Let's Go to the Jungle. Plan Your Trip Today.",
-    "text": "Contact us and we'll build your perfect jungle adventure — whether a 3-day wildlife tour or a 6-day deep Amazon expedition. We reply within 24 hours.",
-    "image": "assets/media_to_upload/photos/placeholder.jpg"
+    "text": "Let's Go to the Jungle. Plan Your Trip Today.",
+    "image": "assets/media_to_upload/photos/placeholder.jpg",
+    "btn_text": "Book a Tour",
+    "btn_url": "contact/index.html"
   },
   "pillars_section": {
     "eyebrow": "Our Values",
@@ -149,5 +152,13 @@
     "rainforest-road-trip",
     "amazon-expedition"
   ],
-  "map_embed_url": "https://www.google.com/maps/d/embed?mid=1CkYt9KUrq9Jjp9tgxChYmOYvyNaLZnxF"
+  "map_embed_url": "https://www.google.com/maps/d/embed?mid=1CkYt9KUrq9Jjp9tgxChYmOYvyNaLZnxF",
+  "tours_header": {
+    "title": "Guided Tours",
+    "subtitle": "Curated Jungle Expeditions"
+  },
+  "guided_tours": {
+    "title": "Guided Tours",
+    "subtitle": "Curated Jungle Expeditions"
+  }
 }
