@@ -105,6 +105,21 @@
           "monto_pagado": 100,
           "saldo_pendiente": 400,
           "foto": "/media/1786948316933-313417303-5480125758731945-1337653701012931777-n.jpg"
+        },
+        {
+          "nombre_completo": "johan miro",
+          "nacionalidad": "Estadounidense (USA)",
+          "fecha_nacimiento": "1987-12-13",
+          "pasaporte": "46989140",
+          "whatsapp": "+51 958 113 016",
+          "email": "kemmesik@gmail.com",
+          "restricciones_dieteticas": "Vegetariano",
+          "condiciones_medicas": "Asma",
+          "costo": 1400,
+          "estado_pago": "reserva",
+          "monto_pagado": 200,
+          "saldo_pendiente": 1200,
+          "foto": "/media/1787074120429-fb-img-1645218643713.jpg"
         }
       ]
     },
