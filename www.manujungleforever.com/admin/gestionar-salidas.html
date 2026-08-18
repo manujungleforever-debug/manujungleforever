@@ -1634,31 +1634,40 @@ window.viewPax = function(idx) {
 window.uploadPaxPhoto = async function(input, sIdx) {
   if (!input.files || input.files.length === 0) return;
   const file = input.files[0];
-  const name = document.getElementById('p-n').value.trim();
-  const s = cData.salidas[sIdx];
+  const nameInput = document.getElementById('p-n');
+  const name = nameInput ? nameInput.value.trim() : 'pasajero';
+  const s = (cData && cData.salidas && cData.salidas[sIdx]) ? cData.salidas[sIdx] : {};
   
-  const safeTour = (s.tour_nombre || 'tour').replace(/[^a-z0-9]/gi, '-');
-  const safeName = name.replace(/[^a-z0-9]/gi, '-');
-  const ext = file.name.split('.').pop() || 'jpg';
-  const folderDate = s.fecha_salida ? s.fecha_salida : 'no-date';
+  const safeTour = (s.tour_nombre || 'tour').toLowerCase().replace(/[^a-z0-9]/gi, '-');
+  const safeName = name.toLowerCase().replace(/[^a-z0-9]/gi, '-');
+  const ext = (file.name && file.name.includes('.')) ? file.name.split('.').pop() : 'jpg';
+  const folderDate = s.fecha_salida ? s.fecha_salida.replace(/[^a-z0-9]/gi, '-') : 'no-date';
   
-  const fileName = "pasajeros/${s.id}_${safeTour}_${folderDate}/${safeName}.${ext}";
-  const renamedFile = new File([file], eval(fileName), { type: file.type });
+  const fileName = `pasajeros/${s.id || 'salida'}_${safeTour}_${folderDate}/${safeName}_${Date.now()}.${ext}`;
+  const renamedFile = new File([file], fileName, { type: file.type || 'image/jpeg' });
   
   const btn = input.previousElementSibling;
-  const oldText = btn.innerHTML;
-  btn.innerHTML = '<i class="ph ph-spinner animate-spin"></i> Subiendo...';
-  btn.disabled = true;
+  const oldText = btn ? btn.innerHTML : '';
+  if (btn) {
+    btn.innerHTML = '<i class="ph ph-spinner animate-spin"></i> Subiendo...';
+    btn.disabled = true;
+  }
   
   try {
-    const url = await window.r2Upload(renamedFile, null);
-    document.getElementById('p-foto').value = url;
-    updateImgPreview('p-foto', 'p-foto-prev');
+    const res = await r2Upload(renamedFile, null);
+    const url = (typeof res === 'object' && res && res.url) ? res.url : (res || '');
+    const fotoInput = document.getElementById('p-foto');
+    if (fotoInput) {
+      fotoInput.value = url;
+      updateImgPreview('p-foto', 'p-foto-prev');
+    }
   } catch(e) {
     alert("Error al subir foto: " + e.message);
   } finally {
-    btn.innerHTML = oldText;
-    btn.disabled = false;
+    if (btn) {
+      btn.innerHTML = oldText;
+      btn.disabled = false;
+    }
     input.value = '';
   }
 };
