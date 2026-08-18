@@ -143,17 +143,33 @@
       <div class="cx">
 
         <!-- Intro Section: Born in the Jungle -->
-        <div class="intro-block r r-up" style="max-width: 900px; margin: 0 auto 60px; text-align: center;">
-          <span class="ey" style="color:var(--a, #2dd4bf); font-weight:700; text-transform:uppercase; letter-spacing:1.5px; margin-bottom:12px; display:inline-block;">Our Story</span>
-          <h2 class="h2" style="margin-bottom: 32px; font-size: 2.2rem; line-height: 1.3;">Born in the Jungle</h2>
-          <div class="tour-rich-text" style="text-align: left; font-size: 1.05rem; line-height: 1.85; color: rgba(255,255,255,0.85);">
-            <div class="elementor-widget-container">
-              <p>Dear Curious Traveler,</p>
-              <p>Our team at Manu Jungle Forever is excited to share your jungle travel with you. We are a family business, working with local professionals to create an unforgettable experience.</p>
-              <p>The Llaqui family will welcome you and be your guides. Jordy has been a professional tour guide in the Amazon jungle for many years, and with Gloria’s dedication to conservation, they operate this project together. They have created these tours and jungle adventures to provide a unique experience in the Manu National Park.</p>
-              <p>When Gloria joined the project, she brought her deep knowledge of the region to every itinerary. The Llaqui family were welcoming and generous with their time and hospitality. They organized fishing trips, ate fresh local food, swam in the river, and more. Whereas her trip as a tourist was strictly nature-focused, this trip was a complete immersion into a totally different life. Yet, she was in the same little slice of jungle for both.</p>
-              <p>Manu Jungle Forever celebrates the whole jungle: the magnificent nature, and the local life. As a traveler, you can choose your priority and focus. We offer 3 types of guided tours that range from very nature-based to very culture-based. Or, you can customize your own adventure using our beautiful jungle bungalow as your base.</p>
-              <p>Let’s meet our team of jungle experts and family members that you’ll meet along the way.</p>
+        <div class="intro-block r r-up" style="max-width: 1100px; margin: 0 auto 60px;">
+          <div style="text-align:center; margin-bottom:36px;">
+            <span class="ey" style="color:var(--a, #2dd4bf); font-weight:700; text-transform:uppercase; letter-spacing:1.5px; margin-bottom:12px; display:inline-block;">Our Story</span>
+            <h2 class="h2" style="margin-bottom: 0; font-size: clamp(2rem, 4vw, 2.6rem); line-height: 1.25;">Born in the Jungle</h2>
+          </div>
+
+          <div class="intro-content-grid" style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; align-items: start;">
+            <div class="tour-rich-text" style="text-align: left; font-size: 1.05rem; line-height: 1.85; color: rgba(255,255,255,0.85);">
+              <div class="elementor-widget-container">
+                <p>Dear Curious Traveler,</p>
+                <p>Our team at Manu Jungle Forever is excited to share your jungle travel with you. We are a family business, working with local professionals to create an unforgettable experience.</p>
+                <p>The Llaqui family will welcome you and be your guides. Jordy has been a professional tour guide in the Amazon jungle for many years, and with Gloria’s dedication to conservation, they operate this project together. They have created these tours and jungle adventures to provide a unique experience in the Manu National Park.</p>
+                <p>When Gloria joined the project, she brought her deep knowledge of the region to every itinerary. The Llaqui family were welcoming and generous with their time and hospitality. They organized fishing trips, ate fresh local food, swam in the river, and more. Whereas her trip as a tourist was strictly nature-focused, this trip was a complete immersion into a totally different life. Yet, she was in the same little slice of jungle for both.</p>
+                <p>Manu Jungle Forever celebrates the whole jungle: the magnificent nature, and the local life. As a traveler, you can choose your priority and focus. We offer 3 types of guided tours that range from very nature-based to very culture-based. Or, you can customize your own adventure using our beautiful jungle bungalow as your base.</p>
+                <p>Let’s meet our team of jungle experts and family members that you’ll meet along the way.</p>
+              </div>
+            </div>
+
+            <div class="intro-img-col" style="position: sticky; top: 90px;">
+              <div style="position: relative; border-radius: 20px; overflow: hidden; border: 1px solid rgba(45,212,191,0.3); box-shadow: 0 15px 40px rgba(0,0,0,0.5); background: #000;">
+                <img id="dyn-about-history-img" src="../media/1787022329175-bere69-the-1865639.jpg" alt="Jordy Leonidas – Founder of Manu Jungle Forever" style="width: 100%; height: auto; min-height: 380px; max-height: 520px; object-fit: cover; display: block; transition: transform 0.4s ease;">
+                <div style="position: absolute; bottom: 0; inset-inline: 0; background: linear-gradient(to top, rgba(3,12,10,0.92), transparent); padding: 18px 20px; color: #fff;">
+                  <span id="dyn-about-history-caption" style="font-size: 0.86rem; font-weight: 600; color: rgba(255,255,255,0.95); display: flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-camera" style="color: var(--teal, #2dd4bf);"></i> Jordy Leonidas – Founder of Manu Jungle Forever
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -728,6 +744,18 @@ document.addEventListener("DOMContentLoaded", function() {
         const container = document.querySelector('.intro-block .elementor-widget-container') || document.querySelector('.intro-block .tour-rich-text');
         if (container) {
           container.innerHTML = hist.paragrafos.map(p => `<p>${p}</p>`).join('');
+        }
+      }
+      if (hist.imagen && !hist.imagen.includes('placeholder.jpg')) {
+        const histImg = document.getElementById('dyn-about-history-img') || document.querySelector('.intro-img-col img');
+        if (histImg) {
+          const cleanImg = hist.imagen.startsWith('/') ? '..' + hist.imagen : (hist.imagen.startsWith('http') ? hist.imagen : '../' + hist.imagen);
+          histImg.src = cleanImg;
+          if (hist.imagen_alt) histImg.alt = hist.imagen_alt;
+        }
+        const histCap = document.getElementById('dyn-about-history-caption');
+        if (histCap && hist.imagen_alt) {
+          histCap.innerHTML = `<i class="fas fa-camera" style="color: var(--teal, #2dd4bf);"></i> ${hist.imagen_alt}`;
         }
       }
     }
