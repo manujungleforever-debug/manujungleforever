@@ -64,19 +64,19 @@
           "foto": "/media/1786986061520-1636089372301-topaz-cgi-6x.jpg"
         },
         {
-          "id": "pax-dep-010-1",
           "nombre_completo": "Pasajero de Prueba 2",
-          "nacionalidad": "US",
+          "nacionalidad": "_custom_",
+          "fecha_nacimiento": "",
           "pasaporte": "P100001",
           "whatsapp": "+1234567890",
           "email": "test1@example.com",
-          "restricciones_dieteticas": "",
-          "condiciones_medicas": "",
-          "monto_total": 1200,
+          "restricciones_dieteticas": "Ninguna",
+          "condiciones_medicas": "Ninguna",
+          "costo": 1400,
+          "estado_pago": "pendiente",
           "monto_pagado": 200,
           "saldo_pendiente": 1000,
-          "estado_pago": "parcial",
-          "metodo_reserva": "web"
+          "foto": ""
         },
         {
           "id": "pax-dep-010-2",
