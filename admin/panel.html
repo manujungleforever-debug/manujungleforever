@@ -15,32 +15,47 @@
         }
 
         :root {
-            --bg-color: #030807;
-            --bg-gradient: radial-gradient(circle at 50% 50%, #071f1a 0%, #030807 100%);
-            --header-bg: rgba(3, 8, 7, 0.85);
-            --card-bg: rgba(11, 38, 35, 0.45);
-            --card-border: rgba(45, 212, 191, 0.12);
-            --card-hover-border: rgba(45, 212, 191, 0.45);
-            --text-main: #ffffff;
-            --text-muted: #94a3b8;
-            --accent-teal: #2dd4bf;
-            --accent-teal-glow: rgba(45, 212, 191, 0.35);
-            --accent-gold: #c9a84c;
-            --accent-gold-glow: rgba(201, 168, 76, 0.35);
-            --font-sans: 'Poppins', sans-serif;
-            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-        }
+    --bg: #030807;
+    --bg-color: #030807;
+    --bg-grad: radial-gradient(ellipse 80% 55% at 50% 0%, #0a2e25 0%, #030807 75%),
+               radial-gradient(circle 500px at 90% 90%, rgba(201, 168, 76, 0.035) 0%, transparent 70%),
+               #030807;
+    --bg-gradient: radial-gradient(ellipse 80% 55% at 50% 0%, #0a2e25 0%, #030807 75%),
+                   radial-gradient(circle 500px at 90% 90%, rgba(201, 168, 76, 0.035) 0%, transparent 70%),
+                   #030807;
+    --hbg: rgba(3, 8, 7, 0.88);
+    --header-bg: rgba(3, 8, 7, 0.88);
+    --card: rgba(11, 38, 35, 0.50);
+    --card-bg: rgba(11, 38, 35, 0.50);
+    --card-border: rgba(45, 212, 191, 0.14);
+    --card-hover-border: rgba(45, 212, 191, 0.45);
+    --text-main: #f1f5f9;
+    --text-muted: #94a3b8;
+    --accent-teal: #2dd4bf;
+    --accent-teal-glow: rgba(45, 212, 191, 0.28);
+    --accent-gold: #c9a84c;
+    --accent-gold-glow: rgba(201, 168, 76, 0.28);
+    --font-sans: 'Poppins', sans-serif;
+    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
 
         body {
             font-family: var(--font-sans);
             background-color: var(--bg-color);
             background-image: var(--bg-gradient);
+            background-attachment: fixed;
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             overflow-x: hidden;
             position: relative;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                background-attachment: scroll;
+            }
         }
 
         /* Particles canvas container */
@@ -67,7 +82,7 @@
             background: var(--header-bg);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border-b: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
         }
@@ -124,6 +139,7 @@
             text-transform: uppercase;
             background: linear-gradient(to right, var(--accent-teal), var(--accent-gold));
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
@@ -157,11 +173,7 @@
             margin-left: auto;
         }
 
-        .btn-logout:hover {
-            background: var(--danger, #ef4444) !important;
-            color: #fff !important;
-            border-color: var(--danger, #ef4444) !important;
-        }
+        
 
         /* --- Main Layout --- */
         main {
@@ -187,6 +199,7 @@
             letter-spacing: -0.5px;
             background: linear-gradient(to right, #ffffff, #cbd5e1);
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 8px;
         }
@@ -322,25 +335,33 @@
             justify-content: center;
             font-size: 1.9rem;
             flex-shrink: 0;
-            background: linear-gradient(135deg, #2dd4bf, #14b8a6);
-            color: #030807;
-            box-shadow: 0 6px 20px rgba(45,212,191,0.35);
             transition: var(--transition);
+            position: relative;
         }
 
         .menu-btn-card:hover .btn-card-icon {
             transform: scale(1.08) rotate(-3deg);
-            box-shadow: 0 8px 28px rgba(45,212,191,0.5);
+            filter: brightness(1.15);
         }
 
-        .menu-btn-card.gold-style .btn-card-icon {
-            background: linear-gradient(135deg, #ef4444, #b91c1c);
-            color: #fff;
-            box-shadow: 0 6px 20px rgba(239,68,68,0.35);
-        }
+        .card-icon-tours { background: linear-gradient(135deg, #f59e0b, #d97706); color: #fff; box-shadow: 0 6px 20px rgba(245,158,11,0.35); }
+        .card-icon-blog { background: linear-gradient(135deg, #14b8a6, #0d9488); color: #fff; box-shadow: 0 6px 20px rgba(20,184,166,0.35); }
+        .card-icon-testim { background: linear-gradient(135deg, #8b5cf6, #6d28d9); color: #fff; box-shadow: 0 6px 20px rgba(139,92,246,0.35); }
+        .card-icon-reclamos { background: linear-gradient(135deg, #ef4444, #b91c1c); color: #fff; box-shadow: 0 6px 20px rgba(239,68,68,0.35); }
+        .card-icon-contenido { background: linear-gradient(135deg, #3b82f6, #2563eb); color: #fff; box-shadow: 0 6px 20px rgba(59,130,246,0.35); }
+        .card-icon-salidas { background: linear-gradient(135deg, #ec4899, #be185d); color: #fff; box-shadow: 0 6px 20px rgba(236,72,153,0.35); }
+        .card-icon-medios { background: linear-gradient(135deg, #10b981, #059669); color: #fff; box-shadow: 0 6px 20px rgba(16,185,129,0.35); }
+        .card-icon-web { background: linear-gradient(135deg, #cbd5e1, #94a3b8); color: #030807; box-shadow: 0 6px 20px rgba(148,163,184,0.35); }
 
-        .menu-btn-card.gold-style:hover .btn-card-icon {
-            box-shadow: 0 8px 28px rgba(239,68,68,0.5);
+        .menu-btn-card.bg-home {
+            background-image: linear-gradient(to right, rgba(3,8,7,0.85), rgba(3,8,7,0.7)), url('../assets/img/tour2.webp');
+            background-size: cover;
+            background-position: center;
+            border-color: rgba(16, 185, 129, 0.4);
+        }
+        .menu-btn-card.bg-home:hover {
+            border-color: #10b981;
+            box-shadow: 0 15px 35px rgba(16, 185, 129, 0.15);
         }
 
         .btn-card-content {
@@ -425,23 +446,44 @@
                 font-size: 2rem;
             }
         }
-    </style>
+    
+.btn-logout { 
+    background: linear-gradient(135deg, #ef4444, #b91c1c); 
+    color: #fff; 
+    border: none;
+    cursor: pointer; 
+    font-size: .85rem; 
+    font-weight: 700; 
+    padding: 8px 16px; 
+    border-radius: 10px; 
+    transition: .3s; 
+    display: flex; 
+    align-items: center; 
+    gap: 8px; 
+    box-shadow: 0 4px 15px rgba(239,68,68,0.35);
+}
+.btn-logout:hover { 
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(239,68,68,0.5);
+    filter: brightness(1.1);
+}
+
+</style>
 </head>
 <body>
 
     <div class="relative-container">
         
-        <script src="js/auth.js"></script>
+        <script src="js/auth.js?v=2"></script>
 
         <!-- Header -->
         <header>
             <div class="header-wrap">
-                <a href="panel.html" class="logo-brand">
+                <a href="/" class="logo-brand" title="Ir al Home de Manu Jungle Forever">
                     <div class="logo-img-wrap">
                         <div class="logo-glow"></div>
-                        <img src="../assets/img/logo.png" alt="Manu Jungle Logo">
+                        <img src="../assets/img/logo.png" alt="Manu Jungle Logo" style="height: 120px; width: auto; max-width: none;">
                     </div>
-                    <span class="brand-text">Manu Jungle</span>
                 </a>
                 
                 <nav class="mnav" style="display:flex;align-items:center;gap:3px;flex-wrap:wrap;flex:1;margin-left:24px;">
@@ -456,7 +498,7 @@
                 </nav>
 
                 <div class="user-sec">
-                    <button onclick="logout()" class="btn-logout" style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);color:#f87171;cursor:pointer;font-size:.8rem;font-weight:600;padding:6px 12px;border-radius:8px;display:flex;align-items:center;gap:6px;">
+                    <button onclick="logout()" class="btn-logout">
                         <i class="ph ph-sign-out"></i> Salir
                     </button>
                 </div>
@@ -530,7 +572,7 @@
                 
                 <!-- Tours -->
                 <div class="menu-btn-card" onclick="window.location.href='gestionar-tours.html'">
-                    <div class="btn-card-icon"><i class="ph ph-map-trifold"></i></div>
+                    <div class="btn-card-icon card-icon-tours"><i class="ph ph-map-trifold"></i></div>
                     <div class="btn-card-content">
                         <span class="btn-card-title">Gestionar Tours</span>
                         <span class="btn-card-desc">Ver, crear, editar y eliminar tours de aventura y selva.</span>
@@ -539,7 +581,7 @@
 
                 <!-- Blog -->
                 <div class="menu-btn-card" onclick="window.location.href='gestionar-blog.html'">
-                    <div class="btn-card-icon"><i class="ph ph-pencil"></i></div>
+                    <div class="btn-card-icon card-icon-blog"><i class="ph ph-pencil"></i></div>
                     <div class="btn-card-content">
                         <span class="btn-card-title">Gestionar Blog</span>
                         <span class="btn-card-desc">Escribe artículos de interés, novedades y guías de viaje.</span>
@@ -548,7 +590,7 @@
 
                 <!-- Testimonios -->
                 <div class="menu-btn-card" onclick="window.location.href='gestionar-testimonios.html'">
-                    <div class="btn-card-icon"><i class="ph ph-chat-circle-text"></i></div>
+                    <div class="btn-card-icon card-icon-testim"><i class="ph ph-chat-circle-text"></i></div>
                     <div class="btn-card-content">
                         <span class="btn-card-title">Gestionar Testimonios</span>
                         <span class="btn-card-desc">Aprobar, editar y moderar opiniones de tus clientes.</span>
@@ -556,8 +598,11 @@
                 </div>
 
                 <!-- Reclamos -->
-                <div class="menu-btn-card gold-style" onclick="window.location.href='gestionar-reclamos.html'">
-                    <div class="btn-card-icon"><i class="ph ph-scales"></i></div>
+                <div class="menu-btn-card" onclick="window.location.href='gestionar-reclamos.html'">
+                    <div class="btn-card-icon card-icon-reclamos" style="position: relative;">
+                        <i class="ph ph-scales"></i>
+                        <span id="badge-reclamos-menu" style="display:none; position:absolute; top:-6px; right:-6px; background:#facc15; color:#030807; border-radius:50%; width:24px; height:24px; font-size:12px; font-weight:800; display:flex; align-items:center; justify-content:center; border:2px solid var(--bg-color); box-shadow:0 0 10px rgba(250,204,21,0.6); z-index:10;"></span>
+                    </div>
                     <div class="btn-card-content">
                         <span class="btn-card-title">Auditoría Reclamos</span>
                         <span class="btn-card-desc">Libro de Reclamaciones Virtual regulado por INDECOPI.</span>
@@ -566,7 +611,7 @@
 
                 <!-- Contenido -->
                 <div class="menu-btn-card" onclick="window.location.href='gestionar-contenido.html'">
-                    <div class="btn-card-icon"><i class="ph ph-file-text"></i></div>
+                    <div class="btn-card-icon card-icon-contenido"><i class="ph ph-file-text"></i></div>
                     <div class="btn-card-content">
                         <span class="btn-card-title">Gestionar Contenido</span>
                         <span class="btn-card-desc">Configura el Inicio, Nosotros y datos generales del sitio.</span>
@@ -575,7 +620,7 @@
 
                 <!-- Salidas -->
                 <div class="menu-btn-card" onclick="window.location.href='gestionar-salidas.html'">
-                    <div class="btn-card-icon"><i class="ph ph-calendar"></i></div>
+                    <div class="btn-card-icon card-icon-salidas"><i class="ph ph-calendar"></i></div>
                     <div class="btn-card-content">
                         <span class="btn-card-title">Salidas Programadas</span>
                         <span class="btn-card-desc">Monitorea fechas y plazas disponibles de salidas confirmadas.</span>
@@ -584,10 +629,19 @@
 
                 <!-- Medios -->
                 <div class="menu-btn-card" onclick="window.location.href='gestionar-medios.html'">
-                    <div class="btn-card-icon"><i class="ph ph-image"></i></div>
+                    <div class="btn-card-icon card-icon-medios"><i class="ph ph-image"></i></div>
                     <div class="btn-card-content">
                         <span class="btn-card-title">Galería Multimedia</span>
                         <span class="btn-card-desc">Sube y organiza fotos y videos de la selva en la nube R2.</span>
+                    </div>
+                </div>
+
+                <!-- Regresar a la web -->
+                <div class="menu-btn-card bg-home" onclick="window.location.href='/'">
+                    <div class="btn-card-icon card-icon-web"><i class="ph ph-globe-hemisphere-west"></i></div>
+                    <div class="btn-card-content">
+                        <span class="btn-card-title" style="color: #10b981;">Ir al Sitio Web</span>
+                        <span class="btn-card-desc">Ir a la página pública de Manu Jungle Forever.</span>
                     </div>
                 </div>
 
@@ -607,12 +661,12 @@
             tsParticles.load("tsparticles", {
                 fpsLimit: 60,
                 particles: {
-                    number: { value: 30, density: { enable: true, area: 800 } },
+                    number: { value: 24, density: { enable: true, area: 800 } },
                     color: { value: ["#c9a84c", "#2dd4bf", "#ffffff"] },
                     shape: { type: "circle" },
-                    opacity: { value: 0.5, random: true, animation: { enable: true, speed: 0.5, minimumValue: 0.1, sync: false } },
-                    size: { value: 2.5, random: true, animation: { enable: true, speed: 0.8, minimumValue: 0.5, sync: false } },
-                    move: { enable: true, speed: 0.5, direction: "top", random: true, straight: false, outModes: { default: "out" } }
+                    opacity: { value: 0.35, random: true, animation: { enable: true, speed: 0.4, minimumValue: 0.08, sync: false } },
+                    size: { value: 2.2, random: true, animation: { enable: true, speed: 0.6, minimumValue: 0.4, sync: false } },
+                    move: { enable: true, speed: 0.45, direction: "top", random: true, straight: false, outModes: { default: "out" } }
                 },
                 detectRetina: true
             });
@@ -674,6 +728,16 @@
                 document.getElementById('stat-blog').textContent = blogCount;
                 document.getElementById('stat-testim').textContent = testCount;
                 document.getElementById('stat-reclamos').textContent = pendingReclamos;
+
+                const badge = document.getElementById('badge-reclamos-menu');
+                if (badge) {
+                    if (pendingReclamos > 0) {
+                        badge.textContent = pendingReclamos > 9 ? '+9' : pendingReclamos;
+                        badge.style.display = 'flex';
+                    } else {
+                        badge.style.display = 'none';
+                    }
+                }
             } catch (e) {
                 console.error('Error cargando estadísticas:', e);
             }
@@ -681,3 +745,5 @@
     </script>
 </body>
 </html>
+
+

@@ -14,16 +14,56 @@
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* ── UNIFIED ADMIN BACKGROUND & THEME TOKENS ── */
 :root {
-    --bg: #030807; --bg-grad: radial-gradient(ellipse at 50% 0%, #0a2e25 0%, #030807 70%);
-    --hbg: rgba(3,8,7,0.9); --card: rgba(11,38,35,0.50); --bdr: rgba(45,212,191,0.14);
-    --bdr-h: rgba(45,212,191,0.45); --fg: #f1f5f9; --muted: #94a3b8; --teal: #2dd4bf;
-    --teal-g: rgba(45,212,191,0.28); --gold: #c9a84c; --gold-g: rgba(201,168,76,0.28);
-    --danger: #ef4444; --green: #10b981; --surface: rgba(11,38,35,0.6);
-    --border: rgba(45,212,191,0.14); --text: #f1f5f9; --w: #f1f5f9; --card2: rgba(20,50,40,0.5);
+    --bg: #030807;
+    --bg-grad: radial-gradient(ellipse 80% 55% at 50% 0%, #0a2e25 0%, #030807 75%),
+               radial-gradient(circle 500px at 90% 90%, rgba(201, 168, 76, 0.035) 0%, transparent 70%),
+               #030807;
+    --hbg: rgba(3, 8, 7, 0.88);
+    --card: rgba(11, 38, 35, 0.50);
+    --card-hover: rgba(14, 48, 44, 0.65);
+    --bdr: rgba(45, 212, 191, 0.14);
+    --bdr-h: rgba(45, 212, 191, 0.45);
+    --fg: #f1f5f9;
+    --muted: #94a3b8;
+    --teal: #2dd4bf;
+    --teal-g: rgba(45, 212, 191, 0.28);
+    --gold: #c9a84c;
+    --gold-g: rgba(201, 168, 76, 0.28);
+    --danger: #ef4444;
+    --green: #10b981;
+    --surface: rgba(11, 38, 35, 0.60);
+    --border: rgba(45, 212, 191, 0.14);
+    --text: #f1f5f9;
+    --w: #f1f5f9;
+    --card2: rgba(20, 50, 40, 0.50);
 }
-html,body { height:100%; font-family:'Poppins',sans-serif; }
-body { background: var(--bg) var(--bg-grad); color: var(--fg); min-height:100vh; display:flex; flex-direction:column; overflow-x:hidden; opacity:0; transition:opacity .3s; }
+html, body { height: 100%; font-family: 'Poppins', sans-serif; }
+body {
+    background-color: var(--bg);
+    background-image: var(--bg-grad);
+    background-attachment: fixed;
+    color: var(--fg);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    position: relative;
+    opacity: 0;
+    transition: opacity .3s;
+}
+@media (max-width: 768px) {
+    body {
+        background-attachment: scroll;
+    }
+}
+#pg-particles, #tsparticles {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+}
 input,textarea,select,button { font-family:inherit; }
 a { color:var(--teal); }
 header { position:sticky; top:0; z-index:200; background:var(--hbg); backdrop-filter:blur(14px); border-bottom:1px solid rgba(255,255,255,0.07); box-shadow:0 4px 24px rgba(0,0,0,.4); }
@@ -349,7 +389,20 @@ function switchSection(id){
 
 document.addEventListener('DOMContentLoaded',()=>{
   if(!token)return;
-  tsParticles.load('pg-particles',{fpsLimit:60,particles:{number:{value:22,density:{enable:true,area:800}},color:{value:['#c9a84c','#2dd4bf','#ffffff']},shape:{type:'circle'},opacity:{value:.4,random:true},size:{value:2,random:true},move:{enable:true,speed:.4,direction:'top',random:true,outModes:{default:'out'}}},detectRetina:true});
+  if (typeof tsParticles !== 'undefined') {
+    tsParticles.load('pg-particles', {
+      fpsLimit: 60,
+      particles: {
+        number: { value: 24, density: { enable: true, area: 800 } },
+        color: { value: ['#c9a84c', '#2dd4bf', '#ffffff'] },
+        shape: { type: 'circle' },
+        opacity: { value: 0.35, random: true, animation: { enable: true, speed: 0.4, minimumValue: 0.08, sync: false } },
+        size: { value: 2.2, random: true, animation: { enable: true, speed: 0.6, minimumValue: 0.4, sync: false } },
+        move: { enable: true, speed: 0.45, direction: 'top', random: true, straight: false, outModes: { default: 'out' } }
+      },
+      detectRetina: true
+    });
+  }
   switchSection('media');
 });
 
