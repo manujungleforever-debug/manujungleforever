@@ -27,7 +27,7 @@ body { background: var(--bg) var(--bg-grad); color: var(--fg); min-height:100vh;
 input,textarea,select,button { font-family:inherit; }
 a { color:var(--teal); }
 header { position:sticky; top:0; z-index:200; background:var(--hbg); backdrop-filter:blur(14px); border-bottom:1px solid rgba(255,255,255,0.07); box-shadow:0 4px 24px rgba(0,0,0,.4); }
-.hw { max-width:1400px; margin:0 auto; padding:10px 24px; display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+.hw { max-width:1400px; margin:0 auto; padding: 20px 30px; display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
 .logo-brand { display:flex; align-items:center; gap:10px; text-decoration:none; flex-shrink:0; }
 .logo-wrap  { position:relative; display:flex; align-items:center; }
 .logo-glow  { position:absolute; inset:-5px; background:var(--teal); filter:blur(12px); opacity:.22; border-radius:50%; transition:.3s; }
@@ -41,8 +41,8 @@ nav.mnav a { font-size:.8rem; font-weight:500; color:var(--muted); text-decorati
 nav.mnav a i { font-size:1.1rem; }
 nav.mnav a:hover, nav.mnav a.active { color:var(--teal); background:rgba(45,212,191,.09); }
 .user-sec { display:flex; align-items:center; gap:10px; margin-left:auto; }
-.btn-logout { background:rgba(239,68,68,.08); border:1px solid rgba(239,68,68,.2); color:#f87171; cursor:pointer; font-size:.8rem; font-weight:600; padding:6px 12px; border-radius:8px; transition:.25s; display:flex; align-items:center; gap:6px; }
-.btn-logout:hover { background:var(--danger); color:#fff; border-color:var(--danger); }
+
+
 main { flex-grow:1; max-width:1400px; width:100%; margin:0 auto; padding:28px 24px 100px; position:relative; z-index:1; }
 .pt { font-size:1.85rem; font-weight:700; letter-spacing:-.4px; background:linear-gradient(to right,#fff,#cbd5e1); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:4px; }
 .ps { color:var(--muted); font-size:.87rem; margin-bottom:20px; }
@@ -143,16 +143,56 @@ code { background:rgba(45,212,191,.1); color:var(--teal); padding:2px 6px; borde
     .save-bar { padding:10px 16px; flex-wrap:wrap; gap:8px; }
     .save-status { width:100%; margin-bottom:2px; }
 }
+
+        .card-icon-tours { background: linear-gradient(135deg, #f59e0b, #d97706); color: #fff; box-shadow: 0 6px 20px rgba(245,158,11,0.35); }
+        .card-icon-blog { background: linear-gradient(135deg, #14b8a6, #0d9488); color: #fff; box-shadow: 0 6px 20px rgba(20,184,166,0.35); }
+        .card-icon-testim { background: linear-gradient(135deg, #8b5cf6, #6d28d9); color: #fff; box-shadow: 0 6px 20px rgba(139,92,246,0.35); }
+        .card-icon-reclamos { background: linear-gradient(135deg, #ef4444, #b91c1c); color: #fff; box-shadow: 0 6px 20px rgba(239,68,68,0.35); }
+        .card-icon-contenido { background: linear-gradient(135deg, #3b82f6, #2563eb); color: #fff; box-shadow: 0 6px 20px rgba(59,130,246,0.35); }
+        .card-icon-salidas { background: linear-gradient(135deg, #ec4899, #be185d); color: #fff; box-shadow: 0 6px 20px rgba(236,72,153,0.35); }
+        .card-icon-medios { background: linear-gradient(135deg, #10b981, #059669); color: #fff; box-shadow: 0 6px 20px rgba(16,185,129,0.35); }
+        .btn-card-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            margin-right: 16px;
+        }
+
+.btn-logout { 
+    background: linear-gradient(135deg, #ef4444, #b91c1c); 
+    color: #fff; 
+    border: none;
+    cursor: pointer; 
+    font-size: .85rem; 
+    font-weight: 700; 
+    padding: 8px 16px; 
+    border-radius: 10px; 
+    transition: .3s; 
+    display: flex; 
+    align-items: center; 
+    gap: 8px; 
+    box-shadow: 0 4px 15px rgba(239,68,68,0.35);
+}
+.btn-logout:hover { 
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(239,68,68,0.5);
+    filter: brightness(1.1);
+}
+
 </style>
 </head>
 <body>
-<script src="js/auth.js"></script>
+<script src="js/auth.js?v=2"></script>
 <div id="pg-particles" style="position:fixed;inset:0;pointer-events:none;z-index:0;"></div>
 <header>
   <div class="hw">
-    <a href="panel.html" class="logo-brand">
-      <div class="logo-wrap"><div class="logo-glow"></div><img src="../assets/img/logo.png" alt="Logo"></div>
-      <span class="brand-name">Manu Jungle</span>
+    <a href="/" class="logo-brand" title="Ir al Home">
+      <div class="logo-wrap"><div class="logo-glow"></div><img src="../assets/img/logo.png" alt="Logo" style="height: 120px; width: auto; max-width: none;"></div>
     </a>
     <a href="panel.html" class="btn-panel"><i class="ph ph-arrow-left"></i> Volver al Panel</a>
     <nav class="mnav">
@@ -393,20 +433,84 @@ async function ghGet(path) {
   return r.json();
 }
 
-async function ghPut(path, content, sha, msg) {
-  const r = await fetch(`${API}/file`,{method:'PUT',headers:{Authorization:`Bearer ${token}`,'Content-Type':'application/json'},
-    body:JSON.stringify({path,content,sha,message:msg||`update: ${path}`})});
-  if (r.status===401){sessionStorage.clear();location.reload();}
-  const d=await r.json(); if(!r.ok)throw new Error(d.error||'Error al guardar');
-  return d;
-}
+async function ghPut(path, content, sha, msg, attempt = 1) {
+    const maxAttempts = 4;
+    try {
+      const r = await fetch(`${API}/file`, {
+        method: 'PUT',
+        headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ path, content, sha, message: msg || `update: ${path}` })
+      });
+      if (r.status === 401) { sessionStorage.clear(); location.reload(); }
+      
+      let d;
+      try { d = await r.json(); } catch(e) {
+        if (attempt < maxAttempts) {
+          await new Promise(res => setTimeout(res, 2000 * attempt));
+          return ghPut(path, content, sha, msg, attempt + 1);
+        }
+        throw new Error("Timeout de red. Verifica tu conexión y vuelve a intentarlo.");
+      }
+      
+      if (!r.ok) {
+        let errStr = d.error || 'Error al guardar';
+        if (r.status === 503 || errStr.includes('No server is currently available') || errStr.includes('503') || errStr.includes('Conflict')) {
+          if (attempt < maxAttempts) {
+            await new Promise(res => setTimeout(res, 2500 * attempt));
+            return ghPut(path, content, sha, msg, attempt + 1);
+          }
+          errStr = "Los servidores de GitHub están temporalmente fuera de servicio. Por favor, intenta de nuevo en unos minutos.";
+        }
+        throw new Error(errStr);
+      }
+      return d;
+    } catch (err) {
+      if (attempt < maxAttempts && (err.message.toLowerCase().includes('fetch') || err.message.toLowerCase().includes('network'))) {
+        await new Promise(res => setTimeout(res, 2000 * attempt));
+        return ghPut(path, content, sha, msg, attempt + 1);
+      }
+      throw err;
+    }
+  }
 
-async function ghDelete(path, sha, msg) {
-  const r = await fetch(`${API}/file`,{method:'DELETE',headers:{Authorization:`Bearer ${token}`,'Content-Type':'application/json'},
-    body:JSON.stringify({path,sha,message:msg||`delete: ${path}`})});
-  const d=await r.json(); if(!r.ok)throw new Error(d.error||'Error al eliminar');
-  return d;
-}
+async function ghDelete(path, sha, msg, attempt = 1) {
+    const maxAttempts = 4;
+    try {
+      const r = await fetch(`${API}/file`, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ path, sha, message: msg || `delete: ${path}` })
+      });
+      if (r.status === 401) { sessionStorage.clear(); location.reload(); }
+      
+      let d;
+      try { d = await r.json(); } catch(e) {
+        if (attempt < maxAttempts) {
+          await new Promise(res => setTimeout(res, 2000 * attempt));
+          return ghDelete(path, sha, msg, attempt + 1);
+        }
+        throw new Error("Timeout de red. Verifica tu conexión y vuelve a intentarlo.");
+      }
+      
+      if (!r.ok) {
+        let errStr = d.error || 'Error al eliminar';
+        if (r.status === 503 || errStr.includes('No server is currently available') || errStr.includes('503') || errStr.includes('Conflict')) {
+          if (attempt < maxAttempts) {
+            await new Promise(res => setTimeout(res, 2500 * attempt));
+            return ghDelete(path, sha, msg, attempt + 1);
+          }
+        }
+        throw new Error(errStr);
+      }
+      return d;
+    } catch (err) {
+      if (attempt < maxAttempts && (err.message.toLowerCase().includes('fetch') || err.message.toLowerCase().includes('network'))) {
+        await new Promise(res => setTimeout(res, 2000 * attempt));
+        return ghDelete(path, sha, msg, attempt + 1);
+      }
+      throw err;
+    }
+  }
 
 // R2 Media API
 async function r2GetList() {
@@ -600,7 +704,7 @@ function imgWidget(id, label, value='', hint='') {
 async function viewMedia() {
   set(`
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
-      <div><p class="pt">🖼️ Biblioteca de Medios</p><p class="ps">Gestiona todas las imágenes y videos (Cloudflare R2)</p></div>
+      <div style="display:flex;align-items:center;"><div class="btn-card-icon card-icon-medios"><i class="ph ph-image"></i></div><div><p class="pt" style="margin-bottom:0">Biblioteca de Medios</p><p class="ps">Gestiona todas las imágenes y videos (Cloudflare R2)</p></div></div>
       <div style="display:flex;gap:8px;align-items:center;">
         <span id="main-upload-prog" style="font-size:.8rem;color:var(--gold);margin-right:8px;"></span>
         <button class="btn-primary" onclick="document.getElementById('media-upload').click()">📁 Subir archivo(s)</button>
@@ -761,7 +865,7 @@ async function viewBlog() {
     let html = `
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:22px">
         <div>
-          <p class="pt">✍️ Artículos del Blog</p>
+          <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-blog"><i class="ph ph-pencil"></i></div><p class="pt" style="margin-bottom:0">Artículos del Blog</p></div>
           <p class="ps">${posts.length} artículos registrados (ordenados por fecha más reciente)</p>
         </div>
         <button class="btn-primary" onclick="newBlog()">+ Nuevo artículo</button>
@@ -905,7 +1009,7 @@ async function viewHome() {
   cFile='www.manujungleforever.com/data/home.json'; cSha=data.sha;
   const d=JSON.parse(data.content); cData=d;
   set(`
-    <p class="pt">🏠 Página de Inicio</p><p class="ps">Contenido principal del sitio</p>
+    <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-contenido"><i class="ph ph-house"></i></div><div><p class="pt" style="margin-bottom:0">Página de Inicio</p><p class="ps">Contenido principal del sitio</p></div></div>
     <div class="eform">
       <div class="esec"><div class="esec-h">Hero (Portada)</div>
         <div class="ff"><label>Título principal</label><input id="h-t" value="${esc(d.hero?.title||'')}"></div>
@@ -961,7 +1065,7 @@ async function viewAbout() {
   cFile='www.manujungleforever.com/data/about.json'; cSha=data.sha;
   const d=JSON.parse(data.content); cData=d;
   set(`
-    <p class="pt">ℹ️ Página Sobre Nosotros</p><p class="ps">Contenido de "About Us"</p>
+    <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-contenido"><i class="ph ph-info"></i></div><div><p class="pt" style="margin-bottom:0">Página Sobre Nosotros</p><p class="ps">Contenido de "About Us"</p></div></div>
     <div class="eform">
       <div class="esec"><div class="esec-h">General</div>
         <div class="ff"><label>Título de la página</label><input id="ab-t" value="${esc(d.titulo_pagina||'')}"></div>
@@ -1015,7 +1119,7 @@ async function viewContact() {
   cFile='www.manujungleforever.com/data/contact.json'; cSha=data.sha;
   const d=JSON.parse(data.content); cData=d;
   set(`
-    <p class="pt">📞 Página de Contacto</p><p class="ps">Información de contacto y datos de la empresa</p>
+    <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-contenido"><i class="ph ph-phone"></i></div><div><p class="pt" style="margin-bottom:0">Página de Contacto</p><p class="ps">Información de contacto y datos de la empresa</p></div></div>
     <div class="eform">
       <div class="esec"><div class="esec-h">Textos de la Página</div>
         <div class="ff"><label>Título</label><input id="c-tit" value="${esc(d.titulo_pagina||'')}"></div>
@@ -1069,7 +1173,7 @@ async function viewGlobal() {
   cFile='www.manujungleforever.com/data/global.json'; cSha=data.sha;
   const d=JSON.parse(data.content); cData=d;
   set(`
-    <p class="pt">⚙️ Datos Globales del Sitio</p><p class="ps">Información general del negocio</p>
+    <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-contenido"><i class="ph ph-gear"></i></div><div><p class="pt" style="margin-bottom:0">Datos Globales del Sitio</p><p class="ps">Información general del negocio</p></div></div>
     <div class="eform">
       <div class="esec"><div class="esec-h">Información del Negocio</div>
         <div class="grow2">
@@ -1133,102 +1237,487 @@ async function viewTours() {
   cFile='www.manujungleforever.com/data/tours.json'; cSha=data.sha;
   cData=JSON.parse(data.content);
   const ts=cData.tours||[];
-  set(`
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px"><div><p class="pt">🌿 Tours</p><p class="ps">${ts.length} tours registrados</p></div><button class="btn-primary" onclick="editTour(-1)">+ Nuevo Tour</button></div>
-    <div class="list-grid">
-      ${ts.map((t,i)=>{
-        const stCls = t.estado==='activo'?'on':(t.estado==='inactivo'?'off':'warn');
-        const stLbl = t.estado ? t.estado.toUpperCase() : 'ACTIVO';
-        return `<div class="li">
-          <div class="li-info">
-            <h3>${t.nombre} <span class="badge ${stCls}">${stLbl}</span></h3>
-            <span>${t.duracion_dias} días · $${t.precio_desde} USD · ${t.categoria} · ${t.dificultad}</span>
+  
+  // Agrupación
+  const grouped = {};
+  ts.forEach((t, i) => {
+    const cat = (t.categoria || 'Otros').toUpperCase();
+    if(!grouped[cat]) grouped[cat] = [];
+    grouped[cat].push({ t, originalIndex: i });
+  });
+
+  let htmlList = '';
+  for(const cat of Object.keys(grouped).sort()) {
+    htmlList += `<div style="margin-top: 32px; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+               <h2 style="color: #10b981; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.1em; margin: 0;">${cat}</h2>
+             </div>`;
+    htmlList += `<div style="display:flex; flex-direction:column; gap:12px;">`;
+    
+    grouped[cat].forEach((item, index) => {
+      const {t, originalIndex} = item;
+      const num = String(index + 1).padStart(2, '0');
+      const stCls = t.estado==='activo'?'on':(t.estado==='inactivo'?'off':'warn');
+      const stLbl = t.estado ? t.estado.toUpperCase() : 'ACTIVO';
+      const img = t.imagen_hero || '../assets/img/hero.png';
+      
+      htmlList += `
+      <div style="display:flex; flex-wrap:wrap; gap:16px; align-items:center; background:rgba(17,24,39,0.5); border:1px solid rgba(255,255,255,0.05); border-radius:12px; padding:12px; transition:all 0.2s;" onmouseover="this.style.borderColor='rgba(16,185,129,0.5)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.05)'">
+        
+        <div style="position:relative; width:80px; height:80px; flex-shrink:0;">
+          <img src="${img}" style="width:100%; height:100%; object-fit:cover; border-radius:8px; border:1px solid rgba(255,255,255,0.1);" onerror="this.src='../assets/img/hero.png'">
+          <div style="position:absolute; top:-6px; left:-6px; background:#10b981; color:#020617; font-size:0.65rem; font-weight:800; padding:2px 6px; border-radius:6px; box-shadow:0 2px 4px rgba(0,0,0,0.5);">${num}</div>
+        </div>
+        
+        <div style="flex: 2 1 250px; min-width:200px; overflow:hidden;">
+          <h3 style="color:#fff; font-size:1.05rem; font-weight:700; margin:0 0 4px 0; display:flex; align-items:center; gap:8px;">
+            ${t.nombre}
+            ${t.destacado ? '<i class="ph-fill ph-star" style="color:#fbbf24; font-size:1rem;" title="Destacado en portada"></i>' : ''}
+          </h3>
+          <div style="color:#9ca3af; font-size:0.85rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+            ${t.descripcion_corta || 'Sin descripción corta.'}
           </div>
-          <div class="li-actions"><button class="btn-edit" onclick="editTour(${i})">Editar</button><button class="btn-danger" onclick="deleteTour(${i})">🗑️</button></div>
-        </div>`;
-      }).join('')}
+        </div>
+        
+        <div style="flex: 2 1 300px; display:flex; gap:8px; flex-wrap:wrap; font-size:0.75rem;">
+          <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); padding:4px 8px; border-radius:6px; color:#d1d5db; display:flex; align-items:center; gap:4px;">
+            <i class="ph ph-moon"></i> ${t.duracion_dias}D / ${t.duracion_noches}N
+          </div>
+          <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); padding:4px 8px; border-radius:6px; color:#d1d5db; display:flex; align-items:center; gap:4px;">
+            <i class="ph ph-currency-dollar"></i> $${t.precio_desde}
+          </div>
+          <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); padding:4px 8px; border-radius:6px; color:#d1d5db; display:flex; align-items:center; gap:4px;">
+            <i class="ph ph-users"></i> ${t.capacidad_min}-${t.capacidad_max} pax
+          </div>
+          <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); padding:4px 8px; border-radius:6px; color:#d1d5db; display:flex; align-items:center; gap:4px;">
+            <i class="ph ph-mountains"></i> ${t.dificultad}
+          </div>
+        </div>
+        
+        <div style="flex: 1 1 150px; display:flex; align-items:center; justify-content:flex-end; gap:12px;">
+          <span class="badge ${stCls}" style="font-size:0.65rem;">${stLbl}</span>
+          <div style="display:flex; gap:6px;">
+            <button class="btn-edit" style="padding:6px 10px; border-radius:6px;" onclick="editTour(${originalIndex})" title="Editar"><i class="ph ph-pencil"></i></button>
+            <button class="btn-danger" style="padding:6px 10px; border-radius:6px;" onclick="deleteTour(${originalIndex})" title="Eliminar"><i class="ph ph-trash"></i></button>
+          </div>
+        </div>
+
+      </div>
+      `;
+    });
+    htmlList += `</div>`;
+  }
+
+  set(`
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
+      <div style="display:flex;align-items:center;">
+        <div class="btn-card-icon card-icon-tours"><i class="ph ph-map-trifold"></i></div>
+        <div>
+          <p class="pt" style="margin-bottom:0">Tours</p>
+          <p class="ps">${ts.length} tours registrados</p>
+        </div>
+      </div>
+      <button class="btn-primary" onclick="editTour(-1)">+ Nuevo Tour</button>
+    </div>
+    <div id="tours-container">
+      ${htmlList || '<div class="empty">No hay tours.</div>'}
     </div>`);
+}
+
+function buildGuidedToursMenu(tours, isSubfolder = true) {
+  const rel = isSubfolder ? '../' : '';
+  const activeTours = (tours || []).filter(t => t.estado === 'activo');
+  
+  const CAT_MAP = {
+    'wildlife': { label: 'WILDLIFE QUEST', icon: 'fas fa-binoculars' },
+    'roadtrip': { label: 'RAINFOREST ROAD TRIP', icon: 'fas fa-route' },
+    'expedition': { label: 'AMAZON EXPEDITION', icon: 'fas fa-campground' },
+    'cultural': { label: 'CULTURAL EXPEDITION', icon: 'fas fa-landmark' },
+    'birdwatching': { label: 'BIRDWATCHING QUEST', icon: 'fas fa-dove' },
+    'machu wasi': { label: 'MACHU WASI ADVENTURE', icon: 'fas fa-tree' },
+    'photography': { label: 'WILDLIFE PHOTOGRAPHY', icon: 'fas fa-camera' }
+  };
+  
+  const order = ['wildlife', 'roadtrip', 'expedition', 'cultural', 'birdwatching', 'machu wasi', 'photography'];
+  const groups = {};
+  
+  activeTours.forEach(t => {
+    const cat = (t.categoria || 'wildlife').toLowerCase().trim();
+    if (!groups[cat]) groups[cat] = [];
+    groups[cat].push(t);
+  });
+  
+  const allCats = Array.from(new Set([...order.filter(c => groups[c]), ...Object.keys(groups)]));
+  
+  let desktopHtml = '';
+  let mobileHtml = '';
+  
+  allCats.forEach(cat => {
+    const info = CAT_MAP[cat] || { label: cat.toUpperCase(), icon: 'fas fa-compass' };
+    const items = groups[cat] || [];
+    if (!items.length) return;
+    
+    desktopHtml += `\n        <span class="dh"><i class="${info.icon}"></i> ${info.label}</span>`;
+    mobileHtml += `\n        <span class="dh" style="color:var(--a);font-size:0.8rem;text-transform:uppercase;padding:10px 20px;display:block;"><i class="${info.icon}"></i> ${info.label}</span>`;
+    
+    items.forEach(t => {
+      const slug = t.slug || t.id;
+      const url = `${rel}${slug}/index.html`;
+      desktopHtml += `\n        <li><a href="${url}">${t.nombre}</a></li>`;
+      mobileHtml += `\n        <li><a href="${url}">${t.nombre}</a></li>`;
+    });
+  });
+  
+  return { desktopHtml, mobileHtml };
+}
+
+async function syncGuidedToursMenuInPages(tours, pageList = ['www.manujungleforever.com/index.html', 'www.manujungleforever.com/about/index.html', 'www.manujungleforever.com/guided-tours/index.html']) {
+  for (const pagePath of pageList) {
+    try {
+      const pageData = await ghGet(pagePath);
+      let content = pageData.content;
+      const isSub = pagePath.split('/').length > 2;
+      const { desktopHtml, mobileHtml } = buildGuidedToursMenu(tours, isSub);
+      
+      let modified = false;
+      const dmRegex = /<ul class="dm">[\s\S]*?<\/ul>/;
+      const mddRegex = /<ul class="md" id="mdd">[\s\S]*?<\/ul>/;
+      
+      if (dmRegex.test(content)) {
+        content = content.replace(dmRegex, `<ul class="dm">${desktopHtml}\n      </ul>`);
+        modified = true;
+      }
+      if (mddRegex.test(content)) {
+        content = content.replace(mddRegex, `<ul class="md" id="mdd">${mobileHtml}\n      </ul>`);
+        modified = true;
+      }
+      
+      if (modified) {
+        await ghPut(pagePath, content, pageData.sha, `update guided tours menu in ${pagePath.split('/').pop()}`);
+      }
+    } catch(e) {
+      console.warn(`Could not sync menu in ${pagePath}:`, e);
+    }
+  }
+}
+
+async function publishTourPage(slug, tourObj) {
+  const tmplData = await ghGet('www.manujungleforever.com/data/tour-template.html');
+  let tmpl = tmplData.content;
+  
+  const CAT_MAP = {
+    'wildlife': { label: 'WILDLIFE QUEST', icon: 'fas fa-binoculars' },
+    'roadtrip': { label: 'RAINFOREST ROAD TRIP', icon: 'fas fa-route' },
+    'expedition': { label: 'AMAZON EXPEDITION', icon: 'fas fa-campground' },
+    'cultural': { label: 'CULTURAL EXPEDITION', icon: 'fas fa-landmark' },
+    'birdwatching': { label: 'BIRDWATCHING QUEST', icon: 'fas fa-dove' },
+    'machu wasi': { label: 'MACHU WASI ADVENTURE', icon: 'fas fa-tree' },
+    'photography': { label: 'WILDLIFE PHOTOGRAPHY', icon: 'fas fa-camera' }
+  };
+  
+  const catKey = (tourObj.categoria || 'wildlife').toLowerCase().trim();
+  const catInfo = CAT_MAP[catKey] || { label: catKey.toUpperCase(), icon: 'fas fa-compass' };
+  
+  const htmlBody = marked.parse(tourObj.descripcion_larga || tourObj.descripcion_corta || '');
+  const replaceAll = (str, find, replace) => str.split(find).join(replace);
+  
+  let itineraryHtml = '';
+  const itinerario = Array.isArray(tourObj.itinerario) ? tourObj.itinerario : [];
+  if (itinerario.length) {
+    itinerario.forEach((it, i) => {
+      const dayNum = it.dia || (i + 1);
+      const dayTitle = it.titulo ? `Day ${dayNum}: ${it.titulo}` : `Day ${dayNum}`;
+      itineraryHtml += `
+        <div style="background:var(--f); border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:24px;">
+          <h3 style="color:var(--a, #2dd4bf); font-size:1.25rem; font-weight:700; margin-bottom:12px; display:flex; align-items:center; gap:8px;">
+            <i class="far fa-calendar-check" style="font-size:1.1rem;"></i> ${dayTitle}
+          </h3>
+          <p style="color:rgba(255,255,255,0.85); font-size:1rem; line-height:1.75; margin:0;">
+            ${(it.descripcion || '').replace(/\n/g, '<br>')}
+          </p>
+        </div>`;
+    });
+  } else {
+    itineraryHtml = `<p style="color:rgba(255,255,255,0.6); font-style:italic;">Custom day-by-day itinerary tailored upon request.</p>`;
+  }
+  
+  const { desktopHtml, mobileHtml } = buildGuidedToursMenu(cData.tours, true);
+  
+  let heroImg = tourObj.imagen_hero || '../assets/img/hero.png';
+  if (heroImg.startsWith('/')) heroImg = '..' + heroImg;
+  
+  const durStr = `${tourObj.duracion_dias || 1} Days / ${tourObj.duracion_noches || 0} Nights`;
+  const capStr = `${tourObj.capacidad_min || 1}–${tourObj.capacidad_max || 8} Travelers`;
+  
+  const metaTitle = `${tourObj.nombre || 'Tour'} | Manu Jungle Forever`;
+  let metaDesc = (tourObj.descripcion_corta || tourObj.descripcion_larga || '').replace(/\r?\n|\r/g, ' ').replace(/\s+/g, ' ').trim();
+  if (metaDesc.length > 155) {
+    metaDesc = metaDesc.substring(0, 152);
+    const lastSpace = metaDesc.lastIndexOf(' ');
+    if (lastSpace > 100) metaDesc = metaDesc.substring(0, lastSpace);
+    metaDesc += '...';
+  }
+  const publicUrl = `https://www.manujungleforever.com/${slug}/`;
+  const ogImgUrl = heroImg.startsWith('http') ? heroImg : 'https://www.manujungleforever.com/' + heroImg.replace(/^\.\.\//, '').replace(/^\//, '');
+
+  tmpl = replaceAll(tmpl, '{{META_TITLE}}', metaTitle);
+  tmpl = replaceAll(tmpl, '{{META_DESCRIPTION}}', metaDesc);
+  tmpl = replaceAll(tmpl, '{{OG_URL}}', publicUrl);
+  tmpl = replaceAll(tmpl, '{{CANONICAL_URL}}', publicUrl);
+  tmpl = replaceAll(tmpl, '{{TITLE}}', tourObj.nombre || '');
+  tmpl = replaceAll(tmpl, '{{TITLE_ENCODED}}', encodeURIComponent(tourObj.nombre || 'Tour'));
+  tmpl = replaceAll(tmpl, '{{SLUG}}', slug);
+  tmpl = replaceAll(tmpl, '{{EXCERPT}}', metaDesc);
+  tmpl = replaceAll(tmpl, '{{CATEGORIA_LABEL}}', catInfo.label);
+  tmpl = replaceAll(tmpl, '{{HERO_IMAGE}}', heroImg);
+  tmpl = replaceAll(tmpl, '{{OG_IMAGE}}', ogImgUrl);
+  tmpl = replaceAll(tmpl, '{{DURACION}}', durStr);
+  tmpl = replaceAll(tmpl, '{{PRECIO}}', String(tourObj.precio_desde || 0));
+  tmpl = replaceAll(tmpl, '{{CAPACIDAD}}', capStr);
+  tmpl = replaceAll(tmpl, '{{DIFICULTAD}}', tourObj.dificultad || 'Easy');
+  tmpl = replaceAll(tmpl, '{{TEMPORADA}}', tourObj.temporada || 'All year');
+  tmpl = replaceAll(tmpl, '{{DESCRIPCION_CORTA}}', tourObj.descripcion_corta || '');
+  tmpl = replaceAll(tmpl, '{{CONTENT}}', htmlBody);
+  tmpl = replaceAll(tmpl, '{{ITINERARIO_HTML}}', itineraryHtml);
+  tmpl = replaceAll(tmpl, '{{GUIDED_TOURS_MENU_DESKTOP}}', desktopHtml);
+  tmpl = replaceAll(tmpl, '{{GUIDED_TOURS_MENU_MOBILE}}', mobileHtml);
+  
+  const htmlPath = `www.manujungleforever.com/${slug}/index.html`;
+  try {
+    const existingHtml = await ghGet(htmlPath);
+    await ghPut(htmlPath, tmpl, existingHtml.sha, `publish tour html: ${tourObj.nombre}`);
+  } catch(e) {
+    await ghPut(htmlPath, tmpl, null, `publish new tour html: ${tourObj.nombre}`);
+  }
+}
+
+async function unpublishTourPage(slug) {
+  try {
+    const htmlFile = await ghGet(`www.manujungleforever.com/${slug}/index.html`);
+    if (htmlFile && htmlFile.sha) {
+      await ghDelete(`www.manujungleforever.com/${slug}/index.html`, htmlFile.sha, `delete tour html: ${slug}`);
+    }
+  } catch(e) {
+    console.warn(`Could not delete html for ${slug}:`, e);
+  }
 }
 
 window.editTour = function(idx) {
   const t= idx === -1 ? {nombre:'', estado:'activo', categoria:'wildlife', duracion_dias:1, duracion_noches:0, precio_desde:0, capacidad_min:1, capacidad_max:12, dificultad:'Fácil', temporada:'', descripcion_corta:'', descripcion_larga:'', imagen_hero:'', galeria:[], itinerario:[], incluye:[], no_incluye:[], destacado:false} : cData.tours[idx];
+  
+  let currentItinerary = JSON.parse(JSON.stringify(t.itinerario || []));
+  
   set(`
     <button class="back-btn" onclick="route('tours')">← Volver a tours</button>
-    <div class="eform">
-      <div class="esec"><div class="esec-h">Información General</div>
-        <div class="grow2">
-          <div class="ff"><label>Nombre del tour</label><input id="t-n" value="${esc(t.nombre)}"></div>
-          <div class="ff"><label>Estado</label><select id="t-e"><option ${t.estado==='activo'?'selected':''} value="activo">✅ Activo</option><option ${t.estado==='pausado'?'selected':''} value="pausado">⏸️ Pausado</option><option ${t.estado==='seasonal'?'selected':''} value="seasonal">🍂 De Temporada</option><option ${t.estado==='inactivo'?'selected':''} value="inactivo">❌ Inactivo</option></select></div>
-        </div>
-        <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:12px;margin-bottom:12px">
-          <div class="ff"><label>Categoría</label>
-            <select id="t-c" onchange="if(this.value==='__add_new__') addCustomItem('t-c', 'Nombre de la nueva categoría:')">
-              ${(() => {
-                const baseCats = ['wildlife', 'cultural', 'expedition', 'birdwatching', 'machu wasi'];
-                const existingCats = (cData?.tours || []).map(x => x.categoria).filter(Boolean);
-                const allCats = Array.from(new Set([...baseCats, ...existingCats, t.categoria].filter(Boolean)));
-                return allCats.map(c => `<option value="${esc(c)}" ${t.categoria === c ? 'selected' : ''}>${esc(c)}</option>`).join('') +
-                       '<option value="__add_new__" style="font-weight:bold;color:#2dd4bf;">+ Añadir categoría...</option>';
-              })()}
-            </select>
+    <style>
+      @media (min-width: 1024px) {
+        .tour-layout-grid { grid-template-columns: 2fr 1fr !important; }
+      }
+    </style>
+    <div class="eform" style="max-width: 1280px; margin: 0 auto; width: 100%; padding: 0;">
+      <div style="display: grid; gap: 32px; grid-template-columns: 1fr;" class="tour-layout-grid">
+        
+        <!-- COLUMNA IZQUIERDA -->
+        <div style="display: flex; flex-direction: column; gap: 24px;">
+          
+          <!-- TARJETA 1 -->
+          <div style="background: rgba(17,24,39,0.5); border: 1px solid rgba(255,255,255,0.05); padding: 24px; border-radius: 16px;">
+            <h3 style="color: #10b981; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">Información General</h3>
+            
+            <div class="ff" style="margin-bottom:12px"><label>Nombre del tour</label><input id="t-n" value="${esc(t.nombre)}"></div>
+            
+            <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:12px;margin-bottom:12px">
+              <div class="ff"><label>Categoría</label>
+                <select id="t-c" onchange="if(this.value==='__add_new__') addCustomItem('t-c', 'Nombre de la nueva categoría:')">
+                  ${(() => {
+                    const baseCats = ['wildlife', 'cultural', 'expedition', 'birdwatching', 'machu wasi', 'roadtrip', 'photography'];
+                    const existingCats = (cData?.tours || []).map(x => x.categoria).filter(Boolean);
+                    const allCats = Array.from(new Set([...baseCats, ...existingCats, t.categoria].filter(Boolean)));
+                    return allCats.map(c => `<option value="${esc(c)}" ${t.categoria === c ? 'selected' : ''}>${esc(c)}</option>`).join('') +
+                           '<option value="__add_new__" style="font-weight:bold;color:#2dd4bf;">+ Añadir categoría...</option>';
+                  })()}
+                </select>
+              </div>
+              <div class="ff"><label>Precio desde (USD)</label><input type="number" id="t-p" value="${t.precio_desde}" min="0"></div>
+              <div class="ff"><label>Cap. mínima</label><input type="number" id="t-cmin" value="${t.capacidad_min}" min="1"></div>
+              <div class="ff"><label>Cap. máxima</label><input type="number" id="t-cmax" value="${t.capacidad_max}" min="1"></div>
+            </div>
+            
+            <div style="display:grid;grid-template-columns:1fr 2fr 1fr 1fr;gap:12px;margin-bottom:12px">
+              <div class="ff"><label>Dificultad</label><select id="t-dif"><option value="Fácil" ${t.dificultad==='Fácil'?'selected':''}>Easy</option><option value="Moderado" ${t.dificultad==='Moderado'?'selected':''}>Moderate</option><option value="Difícil" ${t.dificultad==='Difícil'?'selected':''}>Hard</option></select></div>
+              <div class="ff"><label>Temporada</label>
+                <select id="t-tmp" onchange="if(this.value==='__add_new__') addCustomItem('t-tmp', 'Nombre de la nueva temporada:')">
+                  ${(() => {
+                    const baseSeasons = ['All year', 'May - October (Dry Season)', 'November - April (Rainy Season)', 'June - September'];
+                    const existingSeasons = (cData?.tours || []).map(x => x.temporada).filter(Boolean);
+                    const currentSeason = t.temporada || 'All year';
+                    const allSeasons = Array.from(new Set([...baseSeasons, ...existingSeasons, currentSeason].filter(Boolean)));
+                    return allSeasons.map(s => `<option value="${esc(s)}" ${currentSeason === s ? 'selected' : ''}>${esc(s)}</option>`).join('') +
+                           '<option value="__add_new__" style="font-weight:bold;color:#2dd4bf;">+ Añadir temporada...</option>';
+                  })()}
+                </select>
+              </div>
+              <div class="ff"><label>Duración (días)</label><input type="number" id="t-d" value="${t.duracion_dias||1}" min="1"></div>
+              <div class="ff"><label>Duración (noches)</label><input type="number" id="t-dn" value="${t.duracion_noches||0}" min="0"></div>
+            </div>
           </div>
-          <div class="ff"><label>Precio desde (USD)</label><input type="number" id="t-p" value="${t.precio_desde}" min="0"></div>
-          <div class="ff"><label>Cap. mínima</label><input type="number" id="t-cmin" value="${t.capacidad_min}" min="1"></div>
-          <div class="ff"><label>Cap. máxima</label><input type="number" id="t-cmax" value="${t.capacidad_max}" min="1"></div>
-        </div>
-        <div style="display:grid;grid-template-columns:1fr 2fr 1fr 1fr;gap:12px;margin-bottom:12px">
-          <div class="ff"><label>Dificultad</label><select id="t-dif"><option ${t.dificultad==='Fácil'?'selected':''}>Fácil</option><option ${t.dificultad==='Moderado'?'selected':''}>Moderado</option><option ${t.dificultad==='Difícil'?'selected':''}>Difícil</option></select></div>
-          <div class="ff"><label>Temporada</label>
-            <select id="t-tmp" onchange="if(this.value==='__add_new__') addCustomItem('t-tmp', 'Nombre de la nueva temporada:')">
-              ${(() => {
-                const baseSeasons = ['Todo el año', 'Mayo - Octubre (Temporada Seca)', 'Noviembre - Abril (Temporada de Lluvias)', 'Junio - Septiembre'];
-                const existingSeasons = (cData?.tours || []).map(x => x.temporada).filter(Boolean);
-                const currentSeason = t.temporada || 'Todo el año';
-                const allSeasons = Array.from(new Set([...baseSeasons, ...existingSeasons, currentSeason].filter(Boolean)));
-                return allSeasons.map(s => `<option value="${esc(s)}" ${currentSeason === s ? 'selected' : ''}>${esc(s)}</option>`).join('') +
-                       '<option value="__add_new__" style="font-weight:bold;color:#2dd4bf;">+ Añadir temporada...</option>';
-              })()}
-            </select>
+          
+          <!-- TARJETA 2: DESCRIPCIONES -->
+          <div style="background: rgba(17,24,39,0.5); border: 1px solid rgba(255,255,255,0.05); padding: 24px; border-radius: 16px;">
+            <h3 style="color: #10b981; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">Descripciones</h3>
+            <div class="ff" style="margin-bottom:12px"><label>Descripción corta (tarjetas)</label><textarea id="t-dc" style="min-height:80px">${esc(t.descripcion_corta||'')}</textarea></div>
+            <div class="ff"><label>Descripción completa (Markdown)</label>${mdToolbar('t-dl')}</div>
           </div>
-          <div class="ff"><label>Duración (días)</label><input type="number" id="t-d" value="${t.duracion_dias||1}" min="1"></div>
-          <div class="ff"><label>Duración (noches)</label><input type="number" id="t-dn" value="${t.duracion_noches||0}" min="0"></div>
+
+          <!-- TARJETA ITINERARIO DINÁMICO -->
+          <div style="background: rgba(17,24,39,0.5); border: 1px solid rgba(255,255,255,0.05); padding: 24px; border-radius: 16px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+              <h3 style="color: #10b981; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin: 0;">Itinerario Día a Día</h3>
+              <span id="it-days-badge" style="font-size:0.75rem; color:#d1d5db; background:rgba(255,255,255,0.05); padding:3px 8px; border-radius:6px; border:1px solid rgba(255,255,255,0.1);">${t.duracion_dias || 1} Días</span>
+            </div>
+            <div id="itinerary-days-container" style="display: flex; flex-direction: column; gap: 14px;"></div>
+          </div>
         </div>
-        <div class="ff"><label>Destacado en portada</label>
-          <div class="tgl-wrap" style="margin-top:6px"><label class="tgl"><input type="checkbox" id="t-dest" ${t.destacado?'checked':''}><span class="tgl-s"></span></label><span style="font-size:.83rem;color:var(--muted)">${t.destacado?'Sí, aparece en portada':'No aparece en portada'}</span></div>
+
+        <!-- COLUMNA DERECHA -->
+        <div style="display: flex; flex-direction: column; gap: 24px;">
+          
+          <!-- TARJETA 3 -->
+          <div style="background: rgba(17,24,39,0.5); border: 1px solid rgba(255,255,255,0.05); padding: 24px; border-radius: 16px;">
+            <h3 style="color: #10b981; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">Estado y Visibilidad</h3>
+            <div class="ff" style="margin-bottom:12px"><label>Estado</label><select id="t-e"><option ${t.estado==='activo'?'selected':''} value="activo">✅ Active</option><option ${t.estado==='pausado'?'selected':''} value="pausado">⏸️ Paused</option><option ${t.estado==='seasonal'?'selected':''} value="seasonal">🍂 Seasonal</option><option ${t.estado==='inactivo'?'selected':''} value="inactivo">❌ Inactive</option></select></div>
+            <div class="ff"><label>Destacado en portada</label>
+              <div class="tgl-wrap" style="margin-top:6px"><label class="tgl"><input type="checkbox" id="t-dest" ${t.destacado?'checked':''}><span class="tgl-s"></span></label><span style="font-size:.83rem;color:var(--muted)">${t.destacado?'Sí, aparece en portada':'No aparece en portada'}</span></div>
+            </div>
+          </div>
+          
+          <!-- TARJETA 4 -->
+          <div style="background: rgba(17,24,39,0.5); border: 1px solid rgba(255,255,255,0.05); padding: 24px; border-radius: 16px;">
+            <h3 style="color: #10b981; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">Imagen Hero / Principal</h3>
+            <div style="margin-bottom:12px">${imgWidget('t-img','Imagen hero / principal',t.imagen_hero||'')}</div>
+            <div class="ff"><label>Texto alt imagen</label><input id="t-imgalt" value="${esc(t.imagen_alt||'')}"></div>
+          </div>
+          
         </div>
-      </div>
-        ${imgWidget('t-img','Imagen hero / principal',t.imagen_hero||'')}
-        <div class="ff"><label>Texto alt imagen</label><input id="t-imgalt" value="${esc(t.imagen_alt||'')}"></div>
-      </div>
-      <div class="esec"><div class="esec-h">Descripciones</div>
-        <div class="ff"><label>Descripción corta (tarjetas)</label><textarea id="t-dc" style="min-height:80px">${esc(t.descripcion_corta||'')}</textarea></div>
-        <div class="ff"><label>Descripción completa (Markdown)</label>${mdToolbar('t-dl')}</div>
       </div>
     </div>`);
+
+  function syncItineraryFromDOM() {
+    const container = document.getElementById('itinerary-days-container');
+    if (!container) return;
+    container.querySelectorAll('.it-day-card').forEach(card => {
+      const day = parseInt(card.dataset.day);
+      const tit = card.querySelector('.it-title-inp')?.value || '';
+      const desc = card.querySelector('.it-desc-ta')?.value || '';
+      if (!currentItinerary[day - 1]) currentItinerary[day - 1] = { dia: day, titulo: '', descripcion: '' };
+      currentItinerary[day - 1].dia = day;
+      currentItinerary[day - 1].titulo = tit;
+      currentItinerary[day - 1].descripcion = desc;
+    });
+  }
+
+  function renderItineraryBlocks() {
+    const container = document.getElementById('itinerary-days-container');
+    if (!container) return;
+    const daysInput = document.getElementById('t-d');
+    const totalDays = Math.max(1, parseInt(daysInput ? daysInput.value : 1) || 1);
+    
+    syncItineraryFromDOM();
+    
+    while (currentItinerary.length < totalDays) {
+      currentItinerary.push({ dia: currentItinerary.length + 1, titulo: '', descripcion: '' });
+    }
+    
+    const badge = document.getElementById('it-days-badge');
+    if (badge) badge.textContent = `${totalDays} ${totalDays === 1 ? 'Día' : 'Días'}`;
+    
+    let html = '';
+    for (let i = 1; i <= totalDays; i++) {
+      const item = currentItinerary[i - 1] || { dia: i, titulo: '', descripcion: '' };
+      html += `
+        <div class="it-day-card" data-day="${i}" style="background: rgba(0,0,0,0.25); border: 1px solid rgba(45,212,191,0.18); border-radius: 12px; padding: 16px;">
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px;">
+            <span style="background: #10b981; color: #020617; font-size: 0.72rem; font-weight: 800; padding: 3px 8px; border-radius: 6px;">DÍA ${i}</span>
+            <span style="font-size:0.8rem; color:#9ca3af;">Actividades y ruta del día ${i}</span>
+          </div>
+          <div class="ff" style="margin-bottom:10px;">
+            <label>Título del día ${i}</label>
+            <input class="it-title-inp" id="it-t-${i}" value="${esc(item.titulo || '')}" placeholder="ej: Cusco → Bosque Nuboso → Machu Wasi Lodge">
+          </div>
+          <div class="ff">
+            <label>Descripción de actividades</label>
+            <textarea class="it-desc-ta" id="it-d-${i}" style="min-height:90px; line-height:1.5;" placeholder="Detalles de caminatas, safari en bote, comidas, avistamiento...">${esc(item.descripcion || '')}</textarea>
+          </div>
+        </div>`;
+    }
+    container.innerHTML = html;
+  }
+
+  renderItineraryBlocks();
   document.getElementById('t-dl').value=t.descripcion_larga||''; if(t.imagen_hero) updateImgPreview('t-img','t-img-prev');
+
+  const daysInput = document.getElementById('t-d');
+  if (daysInput) {
+    daysInput.addEventListener('input', () => {
+      renderItineraryBlocks();
+      const sb = document.getElementById('save-bar');
+      if (sb && saveFnRef) sb.style.display = 'flex';
+    });
+  }
+
   setTimeout(() => {
     document.querySelectorAll('.eform input, .eform select, .eform textarea').forEach(el => {
       el.addEventListener('input', () => { const sb = document.getElementById('save-bar'); if (sb && saveFnRef) sb.style.display = 'flex'; });
       el.addEventListener('change', () => { const sb = document.getElementById('save-bar'); if (sb && saveFnRef) sb.style.display = 'flex'; });
     });
   }, 100);
+
   showSaveBar(async()=>{
+    syncItineraryFromDOM();
+    const durDias = Math.max(1, +v('t-d') || 1);
+    
+    // Exact duracion_dias elements
+    const finalItinerary = [];
+    for (let i = 0; i < durDias; i++) {
+      const it = currentItinerary[i] || { dia: i + 1, titulo: '', descripcion: '' };
+      finalItinerary.push({
+        dia: i + 1,
+        titulo: (it.titulo || '').trim(),
+        descripcion: (it.descripcion || '').trim()
+      });
+    }
+
     const updated = {...t,nombre:v('t-n'),estado:v('t-e'),categoria:v('t-c'),
-      duracion_dias:+v('t-d'),duracion_noches:+v('t-dn'),precio_desde:+v('t-p'),
+      duracion_dias:durDias,duracion_noches:+v('t-dn'),precio_desde:+v('t-p'),
       capacidad_min:+v('t-cmin'),capacidad_max:+v('t-cmax'),
       dificultad:v('t-dif'),temporada:v('t-tmp'),
       destacado:document.getElementById('t-dest').checked,
       imagen_hero:v('t-img'),imagen_alt:v('t-imgalt'),
-      descripcion_corta:v('t-dc'),descripcion_larga:document.getElementById('t-dl').value};
+      descripcion_corta:v('t-dc'),descripcion_larga:document.getElementById('t-dl').value,
+      itinerario:finalItinerary};
+
     if (idx === -1) {
         if(!updated.id) updated.id = 'tour-' + Date.now();
         if(!updated.slug) updated.slug = updated.nombre.toLowerCase().replace(/[^a-z0-9-]/g,'-');
         cData.tours.unshift(updated);
     } else {
+        if(!updated.slug) updated.slug = updated.id || updated.nombre.toLowerCase().replace(/[^a-z0-9-]/g,'-');
         cData.tours[idx] = updated;
     }
+
     const res=await ghPut(cFile,JSON.stringify(cData,null,2),cSha,`update tour: ${updated.nombre}`);
     cSha=res.sha;
+
+    // Publish static HTML for this tour
+    const slug = updated.slug;
+    if (updated.estado === 'activo') {
+      await publishTourPage(slug, updated);
+    } else {
+      // If paused/inactive, remove its static page
+      await unpublishTourPage(slug);
+    }
+
+    // Synchronize navigation dropdowns in test files
+    await syncGuidedToursMenuInPages(cData.tours, ['www.manujungleforever.com/index.html', 'www.manujungleforever.com/about/index.html', 'www.manujungleforever.com/guided-tours/index.html']);
   });
 };
 
@@ -1329,7 +1818,7 @@ async function viewDeps() {
   
   set(`
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
-      <div><p class="pt">📅 Gestión de Salidas Programadas</p><p class="ps">Control de cupos, logística y ventas</p></div>
+      <div style="display:flex;align-items:center;"><div class="btn-card-icon card-icon-salidas"><i class="ph ph-calendar"></i></div><div><p class="pt" style="margin-bottom:0">Salidas Programadas</p><p class="ps">Control de cupos, logística y ventas</p></div></div>
       <button class="btn-primary" onclick="editDep(-1)">+ Crear Nueva Salida</button>
     </div>
     
@@ -1466,7 +1955,7 @@ async function viewTestims() {
   cData=JSON.parse(data.content);
   const ts=cData.testimonials||[];
   set(`
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px"><div><p class="pt">⭐ Testimonios de Clientes</p><p class="ps">${ts.length} testimonios</p></div><button class="btn-primary" onclick="editTestim(-1)">+ Nuevo Testimonio</button></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px"><div style="display:flex;align-items:center;"><div class="btn-card-icon card-icon-testim"><i class="ph ph-chat-circle-text"></i></div><div><p class="pt" style="margin-bottom:0">Testimonios de Clientes</p><p class="ps">${ts.length} testimonios</p></div></div><button class="btn-primary" onclick="editTestim(-1)">+ Nuevo Testimonio</button></div>
     <div class="list-grid">
       ${ts.map((t,i)=>`
         <div class="li">
@@ -1615,7 +2104,7 @@ async function viewReclamos() {
     window.currentReclamosData = reclamos;
     
     let html = `
-    <h2 class="pt">Libro de Reclamaciones</h2>
+    <div style="display:flex;align-items:center;margin-bottom:20px;"><div class="btn-card-icon card-icon-reclamos"><i class="ph ph-scales"></i></div><h2 class="pt" style="margin-bottom:0">Libro de Reclamaciones</h2></div>
     <p class="ps">Auditoría y exportación de quejas y reclamos legales.</p>
 
     <!-- Filtros tipo Wachicargo -->
@@ -2004,13 +2493,22 @@ window.deleteBlog = async function(path, sha, name) {
 
 window.deleteTour = async function(idx) {
   if (!cData || !cData.tours || !cData.tours[idx]) return;
-  const tourName = cData.tours[idx].nombre;
+  const tour = cData.tours[idx];
+  const tourName = tour.nombre;
+  const slug = tour.slug || tour.id;
   if (confirm(`¿Estás seguro de eliminar permanentemente el tour "${tourName}"?`)) {
     set(`<div class="loading"><div class="spinner"></div> Eliminando tour...</div>`);
     cData.tours.splice(idx, 1);
     try {
       const res = await ghPut(cFile, JSON.stringify(cData, null, 2), cSha, `delete tour: ${tourName}`);
       cSha = res.sha;
+      
+      if (slug) {
+        await unpublishTourPage(slug);
+      }
+      
+      await syncGuidedToursMenuInPages(cData.tours, ['www.manujungleforever.com/index.html', 'www.manujungleforever.com/about/index.html', 'www.manujungleforever.com/guided-tours/index.html']);
+      
       await viewTours();
     } catch(e) {
       alert(`Error al eliminar tour: ${e.message}`);
@@ -2055,3 +2553,4 @@ window.deleteTestim = async function(idx) {
 </script>
 </body>
 </html>
+

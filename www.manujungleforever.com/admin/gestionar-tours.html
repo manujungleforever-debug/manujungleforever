@@ -1323,8 +1323,189 @@ async function viewTours() {
     </div>`);
 }
 
+function buildGuidedToursMenu(tours, isSubfolder = true) {
+  const rel = isSubfolder ? '../' : '';
+  const activeTours = (tours || []).filter(t => t.estado === 'activo');
+  
+  const CAT_MAP = {
+    'wildlife': { label: 'WILDLIFE QUEST', icon: 'fas fa-binoculars' },
+    'roadtrip': { label: 'RAINFOREST ROAD TRIP', icon: 'fas fa-route' },
+    'expedition': { label: 'AMAZON EXPEDITION', icon: 'fas fa-campground' },
+    'cultural': { label: 'CULTURAL EXPEDITION', icon: 'fas fa-landmark' },
+    'birdwatching': { label: 'BIRDWATCHING QUEST', icon: 'fas fa-dove' },
+    'machu wasi': { label: 'MACHU WASI ADVENTURE', icon: 'fas fa-tree' },
+    'photography': { label: 'WILDLIFE PHOTOGRAPHY', icon: 'fas fa-camera' }
+  };
+  
+  const order = ['wildlife', 'roadtrip', 'expedition', 'cultural', 'birdwatching', 'machu wasi', 'photography'];
+  const groups = {};
+  
+  activeTours.forEach(t => {
+    const cat = (t.categoria || 'wildlife').toLowerCase().trim();
+    if (!groups[cat]) groups[cat] = [];
+    groups[cat].push(t);
+  });
+  
+  const allCats = Array.from(new Set([...order.filter(c => groups[c]), ...Object.keys(groups)]));
+  
+  let desktopHtml = '';
+  let mobileHtml = '';
+  
+  allCats.forEach(cat => {
+    const info = CAT_MAP[cat] || { label: cat.toUpperCase(), icon: 'fas fa-compass' };
+    const items = groups[cat] || [];
+    if (!items.length) return;
+    
+    desktopHtml += `\n        <span class="dh"><i class="${info.icon}"></i> ${info.label}</span>`;
+    mobileHtml += `\n        <span class="dh" style="color:var(--a);font-size:0.8rem;text-transform:uppercase;padding:10px 20px;display:block;"><i class="${info.icon}"></i> ${info.label}</span>`;
+    
+    items.forEach(t => {
+      const slug = t.slug || t.id;
+      const url = `${rel}${slug}/index.html`;
+      desktopHtml += `\n        <li><a href="${url}">${t.nombre}</a></li>`;
+      mobileHtml += `\n        <li><a href="${url}">${t.nombre}</a></li>`;
+    });
+  });
+  
+  return { desktopHtml, mobileHtml };
+}
+
+async function syncGuidedToursMenuInPages(tours, pageList = ['www.manujungleforever.com/index.html', 'www.manujungleforever.com/about/index.html', 'www.manujungleforever.com/guided-tours/index.html']) {
+  for (const pagePath of pageList) {
+    try {
+      const pageData = await ghGet(pagePath);
+      let content = pageData.content;
+      const isSub = pagePath.split('/').length > 2;
+      const { desktopHtml, mobileHtml } = buildGuidedToursMenu(tours, isSub);
+      
+      let modified = false;
+      const dmRegex = /<ul class="dm">[\s\S]*?<\/ul>/;
+      const mddRegex = /<ul class="md" id="mdd">[\s\S]*?<\/ul>/;
+      
+      if (dmRegex.test(content)) {
+        content = content.replace(dmRegex, `<ul class="dm">${desktopHtml}\n      </ul>`);
+        modified = true;
+      }
+      if (mddRegex.test(content)) {
+        content = content.replace(mddRegex, `<ul class="md" id="mdd">${mobileHtml}\n      </ul>`);
+        modified = true;
+      }
+      
+      if (modified) {
+        await ghPut(pagePath, content, pageData.sha, `update guided tours menu in ${pagePath.split('/').pop()}`);
+      }
+    } catch(e) {
+      console.warn(`Could not sync menu in ${pagePath}:`, e);
+    }
+  }
+}
+
+async function publishTourPage(slug, tourObj) {
+  const tmplData = await ghGet('www.manujungleforever.com/data/tour-template.html');
+  let tmpl = tmplData.content;
+  
+  const CAT_MAP = {
+    'wildlife': { label: 'WILDLIFE QUEST', icon: 'fas fa-binoculars' },
+    'roadtrip': { label: 'RAINFOREST ROAD TRIP', icon: 'fas fa-route' },
+    'expedition': { label: 'AMAZON EXPEDITION', icon: 'fas fa-campground' },
+    'cultural': { label: 'CULTURAL EXPEDITION', icon: 'fas fa-landmark' },
+    'birdwatching': { label: 'BIRDWATCHING QUEST', icon: 'fas fa-dove' },
+    'machu wasi': { label: 'MACHU WASI ADVENTURE', icon: 'fas fa-tree' },
+    'photography': { label: 'WILDLIFE PHOTOGRAPHY', icon: 'fas fa-camera' }
+  };
+  
+  const catKey = (tourObj.categoria || 'wildlife').toLowerCase().trim();
+  const catInfo = CAT_MAP[catKey] || { label: catKey.toUpperCase(), icon: 'fas fa-compass' };
+  
+  const htmlBody = marked.parse(tourObj.descripcion_larga || tourObj.descripcion_corta || '');
+  const replaceAll = (str, find, replace) => str.split(find).join(replace);
+  
+  let itineraryHtml = '';
+  const itinerario = Array.isArray(tourObj.itinerario) ? tourObj.itinerario : [];
+  if (itinerario.length) {
+    itinerario.forEach((it, i) => {
+      const dayNum = it.dia || (i + 1);
+      const dayTitle = it.titulo ? `Day ${dayNum}: ${it.titulo}` : `Day ${dayNum}`;
+      itineraryHtml += `
+        <div style="background:var(--f); border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:24px;">
+          <h3 style="color:var(--a, #2dd4bf); font-size:1.25rem; font-weight:700; margin-bottom:12px; display:flex; align-items:center; gap:8px;">
+            <i class="far fa-calendar-check" style="font-size:1.1rem;"></i> ${dayTitle}
+          </h3>
+          <p style="color:rgba(255,255,255,0.85); font-size:1rem; line-height:1.75; margin:0;">
+            ${(it.descripcion || '').replace(/\n/g, '<br>')}
+          </p>
+        </div>`;
+    });
+  } else {
+    itineraryHtml = `<p style="color:rgba(255,255,255,0.6); font-style:italic;">Custom day-by-day itinerary tailored upon request.</p>`;
+  }
+  
+  const { desktopHtml, mobileHtml } = buildGuidedToursMenu(cData.tours, true);
+  
+  let heroImg = tourObj.imagen_hero || '../assets/img/hero.png';
+  if (heroImg.startsWith('/')) heroImg = '..' + heroImg;
+  
+  const durStr = `${tourObj.duracion_dias || 1} Days / ${tourObj.duracion_noches || 0} Nights`;
+  const capStr = `${tourObj.capacidad_min || 1}–${tourObj.capacidad_max || 8} Travelers`;
+  
+  const metaTitle = `${tourObj.nombre || 'Tour'} | Manu Jungle Forever`;
+  let metaDesc = (tourObj.descripcion_corta || tourObj.descripcion_larga || '').replace(/\r?\n|\r/g, ' ').replace(/\s+/g, ' ').trim();
+  if (metaDesc.length > 155) {
+    metaDesc = metaDesc.substring(0, 152);
+    const lastSpace = metaDesc.lastIndexOf(' ');
+    if (lastSpace > 100) metaDesc = metaDesc.substring(0, lastSpace);
+    metaDesc += '...';
+  }
+  const publicUrl = `https://www.manujungleforever.com/${slug}/`;
+  const ogImgUrl = heroImg.startsWith('http') ? heroImg : 'https://www.manujungleforever.com/' + heroImg.replace(/^\.\.\//, '').replace(/^\//, '');
+
+  tmpl = replaceAll(tmpl, '{{META_TITLE}}', metaTitle);
+  tmpl = replaceAll(tmpl, '{{META_DESCRIPTION}}', metaDesc);
+  tmpl = replaceAll(tmpl, '{{OG_URL}}', publicUrl);
+  tmpl = replaceAll(tmpl, '{{CANONICAL_URL}}', publicUrl);
+  tmpl = replaceAll(tmpl, '{{TITLE}}', tourObj.nombre || '');
+  tmpl = replaceAll(tmpl, '{{TITLE_ENCODED}}', encodeURIComponent(tourObj.nombre || 'Tour'));
+  tmpl = replaceAll(tmpl, '{{SLUG}}', slug);
+  tmpl = replaceAll(tmpl, '{{EXCERPT}}', metaDesc);
+  tmpl = replaceAll(tmpl, '{{CATEGORIA_LABEL}}', catInfo.label);
+  tmpl = replaceAll(tmpl, '{{HERO_IMAGE}}', heroImg);
+  tmpl = replaceAll(tmpl, '{{OG_IMAGE}}', ogImgUrl);
+  tmpl = replaceAll(tmpl, '{{DURACION}}', durStr);
+  tmpl = replaceAll(tmpl, '{{PRECIO}}', String(tourObj.precio_desde || 0));
+  tmpl = replaceAll(tmpl, '{{CAPACIDAD}}', capStr);
+  tmpl = replaceAll(tmpl, '{{DIFICULTAD}}', tourObj.dificultad || 'Easy');
+  tmpl = replaceAll(tmpl, '{{TEMPORADA}}', tourObj.temporada || 'All year');
+  tmpl = replaceAll(tmpl, '{{DESCRIPCION_CORTA}}', tourObj.descripcion_corta || '');
+  tmpl = replaceAll(tmpl, '{{CONTENT}}', htmlBody);
+  tmpl = replaceAll(tmpl, '{{ITINERARIO_HTML}}', itineraryHtml);
+  tmpl = replaceAll(tmpl, '{{GUIDED_TOURS_MENU_DESKTOP}}', desktopHtml);
+  tmpl = replaceAll(tmpl, '{{GUIDED_TOURS_MENU_MOBILE}}', mobileHtml);
+  
+  const htmlPath = `www.manujungleforever.com/${slug}/index.html`;
+  try {
+    const existingHtml = await ghGet(htmlPath);
+    await ghPut(htmlPath, tmpl, existingHtml.sha, `publish tour html: ${tourObj.nombre}`);
+  } catch(e) {
+    await ghPut(htmlPath, tmpl, null, `publish new tour html: ${tourObj.nombre}`);
+  }
+}
+
+async function unpublishTourPage(slug) {
+  try {
+    const htmlFile = await ghGet(`www.manujungleforever.com/${slug}/index.html`);
+    if (htmlFile && htmlFile.sha) {
+      await ghDelete(`www.manujungleforever.com/${slug}/index.html`, htmlFile.sha, `delete tour html: ${slug}`);
+    }
+  } catch(e) {
+    console.warn(`Could not delete html for ${slug}:`, e);
+  }
+}
+
 window.editTour = function(idx) {
   const t= idx === -1 ? {nombre:'', estado:'activo', categoria:'wildlife', duracion_dias:1, duracion_noches:0, precio_desde:0, capacidad_min:1, capacidad_max:12, dificultad:'Fácil', temporada:'', descripcion_corta:'', descripcion_larga:'', imagen_hero:'', galeria:[], itinerario:[], incluye:[], no_incluye:[], destacado:false} : cData.tours[idx];
+  
+  let currentItinerary = JSON.parse(JSON.stringify(t.itinerario || []));
+  
   set(`
     <button class="back-btn" onclick="route('tours')">← Volver a tours</button>
     <style>
@@ -1348,7 +1529,7 @@ window.editTour = function(idx) {
               <div class="ff"><label>Categoría</label>
                 <select id="t-c" onchange="if(this.value==='__add_new__') addCustomItem('t-c', 'Nombre de la nueva categoría:')">
                   ${(() => {
-                    const baseCats = ['wildlife', 'cultural', 'expedition', 'birdwatching', 'machu wasi'];
+                    const baseCats = ['wildlife', 'cultural', 'expedition', 'birdwatching', 'machu wasi', 'roadtrip', 'photography'];
                     const existingCats = (cData?.tours || []).map(x => x.categoria).filter(Boolean);
                     const allCats = Array.from(new Set([...baseCats, ...existingCats, t.categoria].filter(Boolean)));
                     return allCats.map(c => `<option value="${esc(c)}" ${t.categoria === c ? 'selected' : ''}>${esc(c)}</option>`).join('') +
@@ -1380,11 +1561,20 @@ window.editTour = function(idx) {
             </div>
           </div>
           
-          <!-- TARJETA 2 -->
+          <!-- TARJETA 2: DESCRIPCIONES -->
           <div style="background: rgba(17,24,39,0.5); border: 1px solid rgba(255,255,255,0.05); padding: 24px; border-radius: 16px;">
             <h3 style="color: #10b981; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">Descripciones</h3>
             <div class="ff" style="margin-bottom:12px"><label>Descripción corta (tarjetas)</label><textarea id="t-dc" style="min-height:80px">${esc(t.descripcion_corta||'')}</textarea></div>
             <div class="ff"><label>Descripción completa (Markdown)</label>${mdToolbar('t-dl')}</div>
+          </div>
+
+          <!-- TARJETA ITINERARIO DINÁMICO -->
+          <div style="background: rgba(17,24,39,0.5); border: 1px solid rgba(255,255,255,0.05); padding: 24px; border-radius: 16px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+              <h3 style="color: #10b981; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin: 0;">Itinerario Día a Día</h3>
+              <span id="it-days-badge" style="font-size:0.75rem; color:#d1d5db; background:rgba(255,255,255,0.05); padding:3px 8px; border-radius:6px; border:1px solid rgba(255,255,255,0.1);">${t.duracion_dias || 1} Días</span>
+            </div>
+            <div id="itinerary-days-container" style="display: flex; flex-direction: column; gap: 14px;"></div>
           </div>
         </div>
 
@@ -1410,30 +1600,124 @@ window.editTour = function(idx) {
         </div>
       </div>
     </div>`);
+
+  function syncItineraryFromDOM() {
+    const container = document.getElementById('itinerary-days-container');
+    if (!container) return;
+    container.querySelectorAll('.it-day-card').forEach(card => {
+      const day = parseInt(card.dataset.day);
+      const tit = card.querySelector('.it-title-inp')?.value || '';
+      const desc = card.querySelector('.it-desc-ta')?.value || '';
+      if (!currentItinerary[day - 1]) currentItinerary[day - 1] = { dia: day, titulo: '', descripcion: '' };
+      currentItinerary[day - 1].dia = day;
+      currentItinerary[day - 1].titulo = tit;
+      currentItinerary[day - 1].descripcion = desc;
+    });
+  }
+
+  function renderItineraryBlocks() {
+    const container = document.getElementById('itinerary-days-container');
+    if (!container) return;
+    const daysInput = document.getElementById('t-d');
+    const totalDays = Math.max(1, parseInt(daysInput ? daysInput.value : 1) || 1);
+    
+    syncItineraryFromDOM();
+    
+    while (currentItinerary.length < totalDays) {
+      currentItinerary.push({ dia: currentItinerary.length + 1, titulo: '', descripcion: '' });
+    }
+    
+    const badge = document.getElementById('it-days-badge');
+    if (badge) badge.textContent = `${totalDays} ${totalDays === 1 ? 'Día' : 'Días'}`;
+    
+    let html = '';
+    for (let i = 1; i <= totalDays; i++) {
+      const item = currentItinerary[i - 1] || { dia: i, titulo: '', descripcion: '' };
+      html += `
+        <div class="it-day-card" data-day="${i}" style="background: rgba(0,0,0,0.25); border: 1px solid rgba(45,212,191,0.18); border-radius: 12px; padding: 16px;">
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px;">
+            <span style="background: #10b981; color: #020617; font-size: 0.72rem; font-weight: 800; padding: 3px 8px; border-radius: 6px;">DÍA ${i}</span>
+            <span style="font-size:0.8rem; color:#9ca3af;">Actividades y ruta del día ${i}</span>
+          </div>
+          <div class="ff" style="margin-bottom:10px;">
+            <label>Título del día ${i}</label>
+            <input class="it-title-inp" id="it-t-${i}" value="${esc(item.titulo || '')}" placeholder="ej: Cusco → Bosque Nuboso → Machu Wasi Lodge">
+          </div>
+          <div class="ff">
+            <label>Descripción de actividades</label>
+            <textarea class="it-desc-ta" id="it-d-${i}" style="min-height:90px; line-height:1.5;" placeholder="Detalles de caminatas, safari en bote, comidas, avistamiento...">${esc(item.descripcion || '')}</textarea>
+          </div>
+        </div>`;
+    }
+    container.innerHTML = html;
+  }
+
+  renderItineraryBlocks();
   document.getElementById('t-dl').value=t.descripcion_larga||''; if(t.imagen_hero) updateImgPreview('t-img','t-img-prev');
+
+  const daysInput = document.getElementById('t-d');
+  if (daysInput) {
+    daysInput.addEventListener('input', () => {
+      renderItineraryBlocks();
+      const sb = document.getElementById('save-bar');
+      if (sb && saveFnRef) sb.style.display = 'flex';
+    });
+  }
+
   setTimeout(() => {
     document.querySelectorAll('.eform input, .eform select, .eform textarea').forEach(el => {
       el.addEventListener('input', () => { const sb = document.getElementById('save-bar'); if (sb && saveFnRef) sb.style.display = 'flex'; });
       el.addEventListener('change', () => { const sb = document.getElementById('save-bar'); if (sb && saveFnRef) sb.style.display = 'flex'; });
     });
   }, 100);
+
   showSaveBar(async()=>{
+    syncItineraryFromDOM();
+    const durDias = Math.max(1, +v('t-d') || 1);
+    
+    // Exact duracion_dias elements
+    const finalItinerary = [];
+    for (let i = 0; i < durDias; i++) {
+      const it = currentItinerary[i] || { dia: i + 1, titulo: '', descripcion: '' };
+      finalItinerary.push({
+        dia: i + 1,
+        titulo: (it.titulo || '').trim(),
+        descripcion: (it.descripcion || '').trim()
+      });
+    }
+
     const updated = {...t,nombre:v('t-n'),estado:v('t-e'),categoria:v('t-c'),
-      duracion_dias:+v('t-d'),duracion_noches:+v('t-dn'),precio_desde:+v('t-p'),
+      duracion_dias:durDias,duracion_noches:+v('t-dn'),precio_desde:+v('t-p'),
       capacidad_min:+v('t-cmin'),capacidad_max:+v('t-cmax'),
       dificultad:v('t-dif'),temporada:v('t-tmp'),
       destacado:document.getElementById('t-dest').checked,
       imagen_hero:v('t-img'),imagen_alt:v('t-imgalt'),
-      descripcion_corta:v('t-dc'),descripcion_larga:document.getElementById('t-dl').value};
+      descripcion_corta:v('t-dc'),descripcion_larga:document.getElementById('t-dl').value,
+      itinerario:finalItinerary};
+
     if (idx === -1) {
         if(!updated.id) updated.id = 'tour-' + Date.now();
         if(!updated.slug) updated.slug = updated.nombre.toLowerCase().replace(/[^a-z0-9-]/g,'-');
         cData.tours.unshift(updated);
     } else {
+        if(!updated.slug) updated.slug = updated.id || updated.nombre.toLowerCase().replace(/[^a-z0-9-]/g,'-');
         cData.tours[idx] = updated;
     }
+
     const res=await ghPut(cFile,JSON.stringify(cData,null,2),cSha,`update tour: ${updated.nombre}`);
     cSha=res.sha;
+
+    // Publish static HTML for this tour
+    const slug = updated.slug;
+    if (updated.estado === 'activo') {
+      await publishTourPage(slug, updated);
+    } else {
+      // If paused/inactive, remove its static page
+      await unpublishTourPage(slug);
+    }
+
+    // Synchronize navigation dropdowns in test files
+    await syncGuidedToursMenuInPages(cData.tours, ['www.manujungleforever.com/index.html', 'www.manujungleforever.com/about/index.html', 'www.manujungleforever.com/guided-tours/index.html']);
   });
 };
 
@@ -2209,13 +2493,22 @@ window.deleteBlog = async function(path, sha, name) {
 
 window.deleteTour = async function(idx) {
   if (!cData || !cData.tours || !cData.tours[idx]) return;
-  const tourName = cData.tours[idx].nombre;
+  const tour = cData.tours[idx];
+  const tourName = tour.nombre;
+  const slug = tour.slug || tour.id;
   if (confirm(`¿Estás seguro de eliminar permanentemente el tour "${tourName}"?`)) {
     set(`<div class="loading"><div class="spinner"></div> Eliminando tour...</div>`);
     cData.tours.splice(idx, 1);
     try {
       const res = await ghPut(cFile, JSON.stringify(cData, null, 2), cSha, `delete tour: ${tourName}`);
       cSha = res.sha;
+      
+      if (slug) {
+        await unpublishTourPage(slug);
+      }
+      
+      await syncGuidedToursMenuInPages(cData.tours, ['www.manujungleforever.com/index.html', 'www.manujungleforever.com/about/index.html', 'www.manujungleforever.com/guided-tours/index.html']);
+      
       await viewTours();
     } catch(e) {
       alert(`Error al eliminar tour: ${e.message}`);
