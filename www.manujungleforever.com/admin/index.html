@@ -867,7 +867,8 @@ const SECTIONS = [
   { id:'departures',   label:'<i class="ph ph-calendar-check"></i> Salidas',    sub:[] },
   { id:'testimonials', label:'<i class="ph ph-star"></i> Testimonios', sub:[] },
   { id:'reclamos',     label:'<i class="ph ph-shield-warning"></i> Reclamos', sub:[] },
-  { id:'media',        label:'<i class="ph ph-images"></i> Medios',     sub:[] }
+  { id:'media',        label:'<i class="ph ph-images"></i> Medios',     sub:[] },
+  { id:'users',        label:'<i class="ph ph-users-three"></i> Usuarios',   sub:[] }
 ];
 
 const SECTION_PAGES = {
@@ -877,7 +878,8 @@ const SECTION_PAGES = {
   departures: 'gestionar-salidas.html',
   testimonials: 'gestionar-testimonios.html',
   reclamos: 'gestionar-reclamos.html',
-  media: 'gestionar-medios.html'
+  media: 'gestionar-medios.html',
+  users: 'gestionar-usuarios.html'
 };
 
 function buildTopNav() {
@@ -940,6 +942,10 @@ async function doLogin() {
       token=d.token; cUser=u;
       sessionStorage.setItem('cms_token',token);
       sessionStorage.setItem('cms_user',u);
+      if (d.user) {
+        sessionStorage.setItem('cms_role', d.user.role || 'normal');
+        sessionStorage.setItem('cms_name', d.user.name || u.split('@')[0]);
+      }
       bootApp();
     } catch(e) {
       err.textContent = 'Credenciales incorrectas'; 

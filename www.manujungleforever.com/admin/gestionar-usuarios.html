@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>Gestión de Usuarios - Manu Jungle Admin</title>
+<meta name="robots" content="noindex,nofollow">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="icon" href="../assets/img/logo.png">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+    --bg: #030807;
+    --bg-color: #030807;
+    --bg-grad: radial-gradient(ellipse 80% 55% at 50% 0%, #0a2e25 0%, #030807 75%),
+               radial-gradient(circle 500px at 90% 90%, rgba(201, 168, 76, 0.035) 0%, transparent 70%),
+               #030807;
+    --bg-gradient: radial-gradient(ellipse 80% 55% at 50% 0%, #0a2e25 0%, #030807 75%),
+                   radial-gradient(circle 500px at 90% 90%, rgba(201, 168, 76, 0.035) 0%, transparent 70%),
+                   #030807;
+    --hbg: rgba(3, 8, 7, 0.88);
+    --card: rgba(11, 38, 35, 0.50);
+    --card-hover: rgba(14, 48, 44, 0.65);
+    --bdr: rgba(45, 212, 191, 0.14);
+    --bdr-h: rgba(45, 212, 191, 0.45);
+    --fg: #f1f5f9;
+    --muted: #94a3b8;
+    --teal: #2dd4bf;
+    --teal-g: rgba(45, 212, 191, 0.28);
+    --gold: #c9a84c;
+    --gold-g: rgba(201, 168, 76, 0.28);
+    --danger: #ef4444;
+    --green: #10b981;
+    --font-sans: 'Poppins', sans-serif;
+    --card2: rgba(20, 50, 40, 0.50);
+}
+html, body { height: 100%; font-family: 'Poppins', sans-serif; }
+body {
+    background-color: var(--bg);
+    background-image: var(--bg-grad);
+    background-attachment: fixed;
+    color: var(--fg);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    position: relative;
+    opacity: 0;
+    transition: opacity .3s;
+}
+#pg-particles { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+input,textarea,select,button { font-family:inherit; }
+a { color:var(--teal); }
+header { position:sticky; top:0; z-index:200; background:var(--hbg); backdrop-filter:blur(14px); border-bottom:1px solid rgba(255,255,255,0.07); box-shadow:0 4px 24px rgba(0,0,0,.4); }
+.hw { max-width:1400px; margin:0 auto; padding: 20px 30px; display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+.logo-brand { display:flex; align-items:center; gap:10px; text-decoration:none; flex-shrink:0; }
+.logo-wrap  { position:relative; display:flex; align-items:center; }
+.logo-glow  { position:absolute; inset:-5px; background:var(--teal); filter:blur(12px); opacity:.22; border-radius:50%; transition:.3s; }
+.logo-wrap img { height:40px; width:auto; position:relative; z-index:2; }
+.btn-panel { display:inline-flex; align-items:center; gap:8px; background:rgba(45,212,191,0.12); border:1px solid rgba(45,212,191,0.3); color:var(--teal); padding:8px 18px; border-radius:10px; font-size:.83rem; font-weight:700; text-decoration:none; white-space:nowrap; transition:.25s; flex-shrink:0; }
+.btn-panel:hover { background:var(--teal); color:#030807; box-shadow:0 0 14px var(--teal-g); }
+nav.mnav { display:flex; align-items:center; gap:3px; flex-wrap:wrap; flex:1; }
+nav.mnav a { font-size:.8rem; font-weight:500; color:var(--muted); text-decoration:none; padding:6px 11px; border-radius:8px; transition:.25s; white-space:nowrap; display:flex; align-items:center; gap:5px; }
+nav.mnav a:hover, nav.mnav a.active { color:var(--teal); background:rgba(45,212,191,.09); }
+.user-sec { display:flex; align-items:center; gap:10px; margin-left:auto; }
+
+main { flex-grow:1; max-width:1400px; width:100%; margin:0 auto; padding:28px 24px 100px; position:relative; z-index:1; }
+.pt { font-size:1.85rem; font-weight:700; letter-spacing:-.4px; background:linear-gradient(to right,#fff,#cbd5e1); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:4px; }
+.ps { color:var(--muted); font-size:.87rem; margin-bottom:20px; }
+.back-btn { display:inline-flex; align-items:center; gap:7px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); color:var(--fg); padding:8px 16px; border-radius:9px; font-size:.82rem; font-weight:600; cursor:pointer; transition:.25s; margin-bottom:20px; }
+.back-btn:hover { background:rgba(255,255,255,.12); }
+.btn-primary { background:var(--teal); color:#030807; border:none; padding:9px 20px; border-radius:10px; font-weight:700; font-size:.83rem; cursor:pointer; display:inline-flex; align-items:center; gap:7px; transition:.25s; }
+.btn-primary:hover { background:#16c9b5; box-shadow:0 0 14px var(--teal-g); }
+.btn-secondary { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.09); color:var(--fg); padding:8px 17px; border-radius:10px; font-size:.82rem; font-weight:600; cursor:pointer; display:inline-flex; align-items:center; gap:6px; transition:.25s; }
+.btn-secondary:hover { background:rgba(255,255,255,.11); }
+.btn-danger { background:rgba(239,68,68,.08); border:1px solid rgba(239,68,68,.22); color:#f87171; padding:7px 15px; border-radius:9px; cursor:pointer; font-weight:600; font-size:.82rem; transition:.25s; }
+.btn-danger:hover { background:var(--danger); color:#030807; }
+.btn-edit { background:rgba(45,212,191,.09); border:1px solid rgba(45,212,191,.22); color:var(--teal); padding:7px 15px; border-radius:9px; cursor:pointer; font-weight:600; font-size:.82rem; transition:.25s; }
+.btn-edit:hover { background:var(--teal); color:#030807; }
+
+.list-grid { display:grid; gap:12px; width:100%; box-sizing:border-box; }
+.li { background:var(--card); backdrop-filter:blur(8px); border:1px solid var(--bdr); border-radius:14px; padding:16px 20px; display:flex; align-items:center; justify-content:space-between; gap:16px; width:100%; box-sizing:border-box; transition:all .25s ease; }
+.li:hover { border-color:var(--bdr-h); transform:translateY(-1px); box-shadow:0 8px 24px rgba(45,212,191,.06); }
+.li-info { flex:1 1 0%; min-width:0; }
+.li-info h3 { font-size:1rem; font-weight:600; color:var(--fg); display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+.li-info span { font-size:.8rem; color:var(--muted); display:block; margin-top:3px; }
+.li-actions { display:flex; gap:8px; align-items:center; flex-shrink:0; }
+
+.badge { display:inline-block; padding:3px 11px; border-radius:20px; font-size:.68rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; }
+.badge.superuser { background:rgba(201,168,76,0.18); color:#fbbf24; border:1px solid rgba(201,168,76,0.35); }
+.badge.normal { background:rgba(45,212,191,0.14); color:#34d399; border:1px solid rgba(45,212,191,0.28); }
+.badge.on { background:rgba(16,185,129,.15); color:#34d399; border:1px solid rgba(16,185,129,.25); }
+.badge.off { background:rgba(239,68,68,.18); color:#f87171; border:1px solid rgba(239,68,68,.3); }
+
+.eform { max-width:800px; display:flex; flex-direction:column; gap:17px; margin-bottom:60px; }
+.esec { background:var(--card); backdrop-filter:blur(10px); border:1px solid var(--bdr); border-radius:16px; padding:22px; }
+.esec-h { font-size:.75rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--gold); border-bottom:1px solid rgba(255,255,255,.07); padding-bottom:8px; margin-bottom:16px; }
+.grow2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.grow3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; }
+.ff { display:flex; flex-direction:column; gap:6px; margin-bottom:12px; }
+.ff label { font-size:.7rem; font-weight:600; text-transform:uppercase; letter-spacing:.8px; color:var(--muted); }
+.ff input,.ff select { background:rgba(3,8,7,.65); border:1px solid rgba(255,255,255,.1); color:var(--fg); padding:10px 13px; border-radius:10px; font-size:.85rem; outline:none; transition:.25s; width:100%; }
+.ff input:focus,.ff select:focus { border-color:var(--teal); box-shadow:0 0 10px var(--teal-g); }
+.ff select option { background:#0a1f1b; color:var(--fg); }
+.hint { font-size:.72rem; color:var(--muted); line-height:1.4; margin-top:2px; }
+
+.save-bar { position:fixed; bottom:0; left:0; right:0; background:rgba(3,8,7,.96); backdrop-filter:blur(16px); border-top:1px solid rgba(45,212,191,.3); padding:14px 28px; display:flex; align-items:center; justify-content:flex-end; gap:12px; z-index:99999; box-shadow:0 -8px 32px rgba(0,0,0,0.8); }
+.save-status { font-size:.83rem; color:var(--muted); margin-right:auto; font-weight:500; }
+.save-status.ok  { color:var(--green); }
+.save-status.err { color:var(--danger); }
+
+.card-icon-users { background: linear-gradient(135deg, #6366f1, #4338ca); color: #fff; box-shadow: 0 6px 20px rgba(99,102,241,0.35); }
+.btn-card-icon { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0; margin-right: 16px; }
+
+.btn-logout { background: linear-gradient(135deg, #ef4444, #b91c1c); color: #fff; border: none; cursor: pointer; font-size: .85rem; font-weight: 700; padding: 8px 16px; border-radius: 10px; transition: .3s; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(239,68,68,0.35); }
+.btn-logout:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(239,68,68,0.5); }
+
+.user-avatar { width:46px; height:46px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:1.1rem; flex-shrink:0; }
+.user-avatar.superuser { background:rgba(201,168,76,0.15); color:#fbbf24; border:2px solid rgba(201,168,76,0.35); }
+.user-avatar.normal { background:rgba(45,212,191,0.15); color:#2dd4bf; border:2px solid rgba(45,212,191,0.35); }
+</style>
+</head>
+<body>
+<script src="js/auth.js?v=3"></script>
+<div id="pg-particles"></div>
+<header>
+  <div class="hw">
+    <a href="/" class="logo-brand" title="Ir al Home">
+      <div class="logo-wrap"><div class="logo-glow"></div><img src="../assets/img/logo.png" alt="Logo" style="height: 120px; width: auto;"></div>
+    </a>
+    <a href="panel.html" class="btn-panel"><i class="ph ph-arrow-left"></i> Volver al Panel</a>
+    <nav class="mnav">
+      <a href="gestionar-tours.html"><i class="ph ph-map-trifold"></i> Tours</a>
+      <a href="gestionar-blog.html"><i class="ph ph-pencil"></i> Blog</a>
+      <a href="gestionar-contenido.html"><i class="ph ph-file-text"></i> Contenido</a>
+      <a href="gestionar-salidas.html"><i class="ph ph-calendar"></i> Salidas</a>
+      <a href="gestionar-testimonios.html"><i class="ph ph-star"></i> Testimonios</a>
+      <a href="gestionar-reclamos.html"><i class="ph ph-scales"></i> Reclamos</a>
+      <a href="gestionar-medios.html"><i class="ph ph-image"></i> Medios</a>
+      <a href="gestionar-usuarios.html" class="active"><i class="ph ph-users-three"></i> Usuarios</a>
+    </nav>
+    <div class="user-sec">
+      <span id="huser" style="font-size:0.85rem;font-weight:600;color:var(--muted);margin-right:8px;"></span>
+      <button onclick="logout()" class="btn-logout"><i class="ph ph-sign-out"></i> Salir</button>
+    </div>
+  </div>
+</header>
+<main id="mc"></main>
+<div class="save-bar" id="save-bar" style="display:none">
+  <span class="save-status" id="save-status"></span>
+  <button class="btn-secondary" id="btn-cancel-save">Cancelar</button>
+  <button class="btn-primary" id="btn-save"><i class="ph ph-floppy-disk"></i> Guardar cambios</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
+<script>
+const API = '/api/cms';
+let token = sessionStorage.getItem('cms_token');
+let cUser = sessionStorage.getItem('cms_user') || '';
+let cRole = sessionStorage.getItem('cms_role') || 'normal';
+var cSha=null, cFile='www.manujungleforever.com/data/users.json', cData=null, saveFnRef=null;
+
+function set(h){ document.getElementById('mc').innerHTML=h; }
+function v(id){ return document.getElementById(id)?.value??''; }
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function showSaveBar(fn,msg){
+  saveFnRef=fn;
+  document.getElementById('save-bar').style.display='flex';
+  const ss=document.getElementById('save-status');
+  ss.textContent=msg||''; ss.className='save-status';
+}
+function hideSaveBar(){
+  document.getElementById('save-bar').style.display='none';
+  saveFnRef=null;
+}
+document.getElementById('btn-save').addEventListener('click',async()=>{
+  if(!saveFnRef)return;
+  const btn=document.getElementById('btn-save');
+  const ss=document.getElementById('save-status');
+  btn.disabled=true; btn.innerHTML='<i class="ph ph-spinner ph-spin"></i> Guardando...';
+  try{
+    await saveFnRef();
+    ss.textContent='Guardado correctamente'; ss.className='save-status ok';
+    btn.innerHTML='<i class="ph ph-check-circle"></i> Guardado ✓';
+    setTimeout(()=>{btn.disabled=false;btn.innerHTML='<i class="ph ph-floppy-disk"></i> Guardar cambios';},1500);
+  }catch(e){
+    ss.textContent='Error: '+e.message; ss.className='save-status err';
+    btn.disabled=false; btn.innerHTML='<i class="ph ph-floppy-disk"></i> Guardar cambios';
+  }
+});
+document.getElementById('btn-cancel-save').addEventListener('click',()=>{hideSaveBar();viewUsers();});
+
+async function ghGet(path) {
+  const r = await fetch(`${API}/file?path=${encodeURIComponent(path)}`,{headers:{Authorization:`Bearer ${token}`}});
+  if (r.status===401){sessionStorage.clear();location.reload();}
+  if (!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e.error||'Error al cargar');}
+  return r.json();
+}
+
+async function ghPut(path, content, sha, msg) {
+  const r = await fetch(`${API}/file`, {
+    method: 'PUT',
+    headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ path, content, sha, message: msg || `update: ${path}` })
+  });
+  if (r.status === 401) { sessionStorage.clear(); location.reload(); }
+  const d = await r.json();
+  if (!r.ok) throw new Error(d.error || 'Error al guardar');
+  return d;
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  if(!token)return;
+  if (!isSuperUser()) {
+    alert('Acceso no autorizado: Solo Super Usuarios pueden gestionar usuarios.');
+    window.location.href = 'gestionar-blog.html';
+    return;
+  }
+  if (typeof tsParticles !== 'undefined') {
+    tsParticles.load('pg-particles', {
+      fpsLimit: 60,
+      particles: {
+        number: { value: 24, density: { enable: true, area: 800 } },
+        color: { value: ['#c9a84c', '#2dd4bf', '#ffffff'] },
+        shape: { type: 'circle' },
+        opacity: { value: 0.35, random: true, animation: { enable: true, speed: 0.4, minimumValue: 0.08, sync: false } },
+        size: { value: 2.2, random: true, animation: { enable: true, speed: 0.6, minimumValue: 0.4, sync: false } },
+        move: { enable: true, speed: 0.45, direction: 'top', random: true, straight: false, outModes: { default: 'out' } }
+      },
+      detectRetina: true
+    });
+  }
+  viewUsers();
+});
+
+async function viewUsers() {
+  set('<div class="loading" style="padding:40px 0;display:flex;align-items:center;gap:12px;color:var(--muted);"><div class="spinner" style="width:20px;height:20px;border-radius:50%;border:2px solid rgba(45,212,191,.2);border-top-color:var(--teal);animation:spin .8s linear infinite;"></div> Cargando usuarios...</div>');
+  try {
+    const data = await ghGet(cFile);
+    cSha = data.sha;
+    cData = JSON.parse(data.content);
+    const users = cData.users || [];
+
+    const superCount = users.filter(u => u.role === 'superuser').length;
+    const normalCount = users.filter(u => u.role === 'normal').length;
+
+    let html = `
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:14px;">
+        <div style="display:flex;align-items:center;">
+          <div class="btn-card-icon card-icon-users"><i class="ph ph-users-three"></i></div>
+          <div>
+            <p class="pt" style="margin-bottom:0">Gestión de Usuarios y Roles</p>
+            <p class="ps">${users.length} usuarios registrados en el sistema</p>
+          </div>
+        </div>
+        <button class="btn-primary" onclick="editUser(-1)">+ Nuevo Usuario</button>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px;">
+        <div class="esec" style="padding:16px;">
+          <div style="font-size:1.8rem;font-weight:700;color:var(--gold);">${superCount}</div>
+          <div style="font-size:0.8rem;color:var(--muted);">Super Usuarios (Acceso Total)</div>
+        </div>
+        <div class="esec" style="padding:16px;">
+          <div style="font-size:1.8rem;font-weight:700;color:var(--teal);">${normalCount}</div>
+          <div style="font-size:0.8rem;color:var(--muted);">Editores / Normales (Control de Posts)</div>
+        </div>
+        <div class="esec" style="padding:16px;">
+          <div style="font-size:1.8rem;font-weight:700;color:#fff;">${users.length}</div>
+          <div style="font-size:0.8rem;color:var(--muted);">Total de Cuentas</div>
+        </div>
+      </div>
+
+      <div class="list-grid">`;
+
+    users.forEach((u, i) => {
+      const isSuper = u.role === 'superuser';
+      const initial = (u.name || u.email).charAt(0).toUpperCase();
+      const isProtected = ['kemmesik@gmail.com', 'jordyleonidas@manujungleforever.com'].includes(u.email.toLowerCase());
+      const roleLabel = isSuper ? '⭐ SUPER USER' : '📝 EDITOR / NORMAL';
+      const badgeCls = isSuper ? 'superuser' : 'normal';
+
+      html += `
+        <div class="li">
+          <div style="display:flex;align-items:center;gap:16px;flex:1;min-width:0;">
+            <div class="user-avatar ${badgeCls}">${initial}</div>
+            <div class="li-info">
+              <h3>
+                ${esc(u.name)} 
+                <span class="badge ${badgeCls}">${roleLabel}</span>
+                <span class="badge ${u.activo !== false ? 'on' : 'off'}">${u.activo !== false ? 'Activo' : 'Inactivo'}</span>
+              </h3>
+              <span>📧 <strong>${esc(u.email)}</strong> · Registrado: ${u.created_at ? u.created_at.split('T')[0] : '2026-08-19'} ${isProtected ? '· 🔒 Cuenta Principal Protegida' : ''}</span>
+            </div>
+          </div>
+          <div class="li-actions">
+            <button class="btn-edit" onclick="editUser(${i})"><i class="ph ph-pencil"></i> Editar / Clave</button>
+            ${!isProtected ? `<button class="btn-danger" onclick="deleteUser(${i})" title="Eliminar usuario"><i class="ph ph-trash"></i></button>` : ''}
+          </div>
+        </div>`;
+    });
+
+    html += `</div>`;
+    set(html);
+
+  } catch(e) {
+    set(`<p style="color:var(--danger);padding:20px;">❌ Error al cargar usuarios: ${e.message}</p>`);
+  }
+}
+
+window.editUser = function(idx) {
+  const u = idx === -1 
+    ? { id: 'usr_' + Date.now(), email: '', name: '', role: 'normal', activo: true, password_hash: '' } 
+    : cData.users[idx];
+  const isSuperAccount = ['kemmesik@gmail.com', 'jordyleonidas@manujungleforever.com'].includes(u.email.toLowerCase());
+
+  set(`
+    <button class="back-btn" onclick="viewUsers()">← Volver a usuarios</button>
+    <div class="eform">
+      <div class="esec">
+        <div class="esec-h">${idx === -1 ? 'Crear Nuevo Usuario' : 'Editar Usuario y Contraseña'}</div>
+        <div class="grow2">
+          <div class="ff">
+            <label>Nombre Completo</label>
+            <input id="u-name" value="${esc(u.name)}" placeholder="Ej: Gloria">
+          </div>
+          <div class="ff">
+            <label>Correo Electrónico (Login)</label>
+            <input type="email" id="u-email" value="${esc(u.email)}" placeholder="usuario@manujungleforever.com" ${isSuperAccount ? 'readonly style="opacity:0.75;"' : ''}>
+          </div>
+        </div>
+        <div class="grow2">
+          <div class="ff">
+            <label>Rol de Usuario</label>
+            <select id="u-role" ${isSuperAccount ? 'disabled' : ''}>
+              <option value="superuser" ${u.role === 'superuser' ? 'selected' : ''}>⭐ Super User (Acceso total a todo el panel y usuarios)</option>
+              <option value="normal" ${u.role === 'normal' ? 'selected' : ''}>📝 Editor / Normal (Gestión y edición de Posts y Contenido)</option>
+            </select>
+            ${isSuperAccount ? '<span class="hint">El rol de este Super Usuario está protegido.</span>' : ''}
+          </div>
+          <div class="ff">
+            <label>Estado de Cuenta</label>
+            <select id="u-act">
+              <option value="true" ${u.activo !== false ? 'selected' : ''}>✅ Activo</option>
+              <option value="false" ${u.activo === false ? 'selected' : ''}>🔒 Inactivo / Suspendido</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="esec">
+        <div class="esec-h">Seguridad y Cambio de Contraseña</div>
+        <div class="grow2">
+          <div class="ff">
+            <label>${idx === -1 ? 'Contraseña Inicial *' : 'Nueva Contraseña (Opcional)'}</label>
+            <input type="password" id="u-pass" placeholder="${idx === -1 ? 'Mínimo 6 caracteres' : 'Dejar en blanco para mantener la actual'}">
+            <span class="hint">Por defecto: <code>123456aytana</code></span>
+          </div>
+          <div class="ff">
+            <label>Confirmar Contraseña</label>
+            <input type="password" id="u-pass-conf" placeholder="Repite la contraseña">
+          </div>
+        </div>
+      </div>
+    </div>`);
+
+  showSaveBar(async () => {
+    const name = v('u-name').trim();
+    const email = v('u-email').toLowerCase().trim();
+    const role = isSuperAccount ? 'superuser' : v('u-role');
+    const activo = v('u-act') === 'true';
+    const pass = v('u-pass').trim();
+    const passConf = v('u-pass-conf').trim();
+
+    if (!name || !email) throw new Error('Nombre y correo son obligatorios.');
+
+    let newHash = u.password_hash;
+    if (idx === -1) {
+      const finalPass = pass || '123456aytana';
+      if (pass && pass !== passConf) throw new Error('Las contraseñas no coinciden.');
+      newHash = await sha256(finalPass);
+    } else {
+      if (pass) {
+        if (pass !== passConf) throw new Error('Las contraseñas no coinciden.');
+        if (pass.length < 6) throw new Error('La contraseña debe tener al menos 6 caracteres.');
+        newHash = await sha256(pass);
+      }
+    }
+
+    const updated = {
+      id: u.id || ('usr_' + Date.now()),
+      email,
+      name,
+      role,
+      password_hash: newHash,
+      activo,
+      created_at: u.created_at || new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    };
+
+    if (idx === -1) {
+      if (cData.users.some(x => x.email.toLowerCase() === email)) {
+        throw new Error('Ya existe un usuario con este correo electrónico.');
+      }
+      cData.users.unshift(updated);
+    } else {
+      cData.users[idx] = updated;
+    }
+
+    const res = await ghPut(cFile, JSON.stringify(cData, null, 2), cSha, `update user: ${updated.email}`);
+    cSha = res.sha;
+    document.querySelector('.back-btn').textContent = '← Usuarios (guardado ✓)';
+    setTimeout(() => { viewUsers(); }, 1200);
+  });
+};
+
+window.deleteUser = async function(idx) {
+  const u = cData.users[idx];
+  if (!u) return;
+  if (['kemmesik@gmail.com', 'jordyleonidas@manujungleforever.com'].includes(u.email.toLowerCase())) {
+    return alert('No puedes eliminar este Super Usuario principal.');
+  }
+  if (!confirm(`¿Estás seguro de eliminar permanentemente al usuario "${u.name} (${u.email})"?`)) return;
+
+  cData.users.splice(idx, 1);
+  const res = await ghPut(cFile, JSON.stringify(cData, null, 2), cSha, `delete user: ${u.email}`);
+  cSha = res.sha;
+  await viewUsers();
+};
+</script>
+</body>
+</html>

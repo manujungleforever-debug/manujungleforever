@@ -1,0 +1,44 @@
+{
+  "users": [
+    {
+      "id": "usr_kemmesik",
+      "email": "kemmesik@gmail.com",
+      "name": "Kemmesik",
+      "role": "superuser",
+      "password_hash": "90fe56da9493eb43cb554725ce2814ba6f314f0b544a1e350e95ad9e9789a2e5",
+      "activo": true,
+      "created_at": "2026-08-19T00:00:00.000Z",
+      "updated_at": "2026-08-19T00:00:00.000Z"
+    },
+    {
+      "id": "usr_jordy",
+      "email": "jordyleonidas@manujungleforever.com",
+      "name": "Jordy Leonidas",
+      "role": "superuser",
+      "password_hash": "90fe56da9493eb43cb554725ce2814ba6f314f0b544a1e350e95ad9e9789a2e5",
+      "activo": true,
+      "created_at": "2026-08-19T00:00:00.000Z",
+      "updated_at": "2026-08-19T00:00:00.000Z"
+    },
+    {
+      "id": "usr_gloria",
+      "email": "gloria@manujungleforever.com",
+      "name": "Gloria",
+      "role": "normal",
+      "password_hash": "90fe56da9493eb43cb554725ce2814ba6f314f0b544a1e350e95ad9e9789a2e5",
+      "activo": true,
+      "created_at": "2026-08-19T00:00:00.000Z",
+      "updated_at": "2026-08-19T00:00:00.000Z"
+    },
+    {
+      "id": "usr_admin",
+      "email": "manujungleforever@gmail.com",
+      "name": "Manu Jungle Admin",
+      "role": "superuser",
+      "password_hash": "90fe56da9493eb43cb554725ce2814ba6f314f0b544a1e350e95ad9e9789a2e5",
+      "activo": true,
+      "created_at": "2026-08-19T00:00:00.000Z",
+      "updated_at": "2026-08-19T00:00:00.000Z"
+    }
+  ]
+}

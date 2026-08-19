@@ -867,7 +867,8 @@ const SECTIONS = [
   { id:'departures',   label:'<i class="ph ph-calendar-check"></i> Salidas',    sub:[] },
   { id:'testimonials', label:'<i class="ph ph-star"></i> Testimonios', sub:[] },
   { id:'reclamos',     label:'<i class="ph ph-shield-warning"></i> Reclamos', sub:[] },
-  { id:'media',        label:'<i class="ph ph-images"></i> Medios',     sub:[] }
+  { id:'media',        label:'<i class="ph ph-images"></i> Medios',     sub:[] },
+  { id:'users',        label:'<i class="ph ph-users-three"></i> Usuarios',   sub:[] }
 ];
 
 const SECTION_PAGES = {
@@ -877,7 +878,8 @@ const SECTION_PAGES = {
   departures: 'gestionar-salidas.html',
   testimonials: 'gestionar-testimonios.html',
   reclamos: 'gestionar-reclamos.html',
-  media: 'gestionar-medios.html'
+  media: 'gestionar-medios.html',
+  users: 'gestionar-usuarios.html'
 };
 
 function buildTopNav() {
@@ -940,6 +942,10 @@ async function doLogin() {
       token=d.token; cUser=u;
       sessionStorage.setItem('cms_token',token);
       sessionStorage.setItem('cms_user',u);
+      if (d.user) {
+        sessionStorage.setItem('cms_role', d.user.role || 'normal');
+        sessionStorage.setItem('cms_name', d.user.name || u.split('@')[0]);
+      }
       bootApp();
     } catch(e) {
       err.textContent = 'Credenciales incorrectas'; 
@@ -2114,60 +2120,171 @@ window.exportPaxPDF = function(idx) {
     doc.setTextColor(100);
     const today = new Date().toLocaleDateString('es-PE', { year: 'numeric', month: 'long', day: 'numeric' });
     doc.text(`Fecha de Emisión: ${today}`, 196, 31, { align: 'right' });
-    
-    let startY = 45;
-    doc.setFontSize(10);
-    doc.setTextColor(15, 23, 42);
-    
-    doc.setFont(undefined, 'bold');
-    doc.text("Tour:", 14, startY);
-    doc.setFont(undefined, 'normal');
-    doc.text(s.tour_nombre || 'No especificado', 28, startY);
-    
-    doc.setFont(undefined, 'bold');
-    doc.text("Fechas:", 14, startY + 7);
-    doc.setFont(undefined, 'normal');
-    doc.text(`${s.fecha_salida || 'TBD'} al ${s.fecha_retorno || 'TBD'}`, 32, startY + 7);
-    
-    doc.setFont(undefined, 'bold');
-    doc.text("ID Salida:", 110, startY);
-    doc.setFont(undefined, 'normal');
-    doc.text(s.id || '', 132, startY);
-    
-    doc.setFont(undefined, 'bold');
-    doc.text("Total Pasajeros:", 110, startY + 7);
-    doc.setFont(undefined, 'normal');
-    doc.text(pax.length.toString(), 145, startY + 7);
-    
-    doc.setFont(undefined, 'bold');
-    doc.text("Guía Asignado:", 14, startY + 14);
-    doc.setFont(undefined, 'normal');
-    doc.text(s.guia_asignado || 'No asignado', 45, startY + 14);
+
+    // --- INFO BLOCK (rediseñado compacto) ---
+    doc.setFillColor(245, 251, 250);
+    doc.setDrawColor(210, 230, 228);
+    doc.roundedRect(14, 40, 182, 23, 2, 2, 'FD');
+    doc.setFillColor(13, 148, 136);
+    doc.rect(14, 40, 3, 23, 'F');
+
+    const infoLabelColor = [13, 148, 136];
+    const infoValueColor = [30, 41, 59];
+    doc.setFontSize(9);
+
+    doc.setTextColor(...infoLabelColor); doc.setFont(undefined, 'bold');
+    doc.text('Tour:', 20, 47);
+    doc.setTextColor(...infoValueColor); doc.setFont(undefined, 'normal');
+    doc.text(s.tour_nombre || 'No especificado', 32, 47);
+
+    doc.setTextColor(...infoLabelColor); doc.setFont(undefined, 'bold');
+    doc.text('Fechas:', 20, 53.5);
+    doc.setTextColor(...infoValueColor); doc.setFont(undefined, 'normal');
+    doc.text(`${s.fecha_salida || 'TBD'} al ${s.fecha_retorno || 'TBD'}`, 35, 53.5);
+
+    doc.setTextColor(...infoLabelColor); doc.setFont(undefined, 'bold');
+    doc.text('Guía:', 20, 60);
+    doc.setTextColor(...infoValueColor); doc.setFont(undefined, 'normal');
+    doc.text(s.guia_asignado || 'No asignado', 31, 60);
+
+    doc.setTextColor(...infoLabelColor); doc.setFont(undefined, 'bold');
+    doc.text('ID Salida:', 118, 47);
+    doc.setTextColor(...infoValueColor); doc.setFont(undefined, 'normal');
+    doc.text(s.id || '', 138, 47);
+
+    doc.setTextColor(...infoLabelColor); doc.setFont(undefined, 'bold');
+    doc.text('Pasajeros:', 118, 53.5);
+    doc.setTextColor(...infoValueColor); doc.setFont(undefined, 'normal');
+    doc.text(pax.length.toString(), 138, 53.5);
     
     const tableData = pax.map((p, i) => [
       i + 1,
       p.nombre_completo,
       p.nacionalidad,
       p.pasaporte,
-      p.restricciones_dieteticas || 'Ninguna',
-      p.condiciones_medicas || 'Ninguna',
+      `${p.restricciones_dieteticas || '-'}\n${p.condiciones_medicas || '-'}`,
       p.whatsapp ? `WA: ${p.whatsapp}` : (p.email ? `E: ${p.email}` : '')
     ]);
+
+    function drawBadge(doc, text, x, y, bgColor, textColor) {
+      const pad = 1.5;
+      doc.setFontSize(6.2);
+      const tw = doc.getTextWidth(text);
+      const bw = tw + pad * 2 + 0.8;
+      const bh = 3.8;
+      doc.setFillColor(...bgColor);
+      doc.roundedRect(x, y - bh + 0.8, bw, bh, 0.8, 0.8, 'F');
+      doc.setTextColor(...textColor);
+      doc.setFont(undefined, 'bold');
+      doc.text(text, x + pad + 0.4, y - 0.4);
+      return bw + 1.2;
+    }
     
     doc.autoTable({
-      startY: startY + 22,
-      head: [['N°', 'Nombre', 'Nacional', 'Doc/Pasaporte', 'Dietas', 'Cond. Médicas', 'Contacto']],
+      startY: 67,
+      head: [['N°', 'Nombre', 'Nacionalidad', 'Pasaporte', 'Dieta / Salud', 'Contacto']],
       body: tableData,
-      theme: 'grid',
-      headStyles: { fillColor: [13, 148, 136] },
-      styles: { fontSize: 8 },
+      theme: 'plain',
+      headStyles: {
+        fillColor: [10, 46, 37],
+        textColor: [255, 255, 255],
+        fontStyle: 'bold',
+        fontSize: 7.5,
+        cellPadding: { top: 3, bottom: 3, left: 2.5, right: 2 }
+      },
+      alternateRowStyles: { fillColor: [247, 251, 250] },
+      styles: {
+        fontSize: 7.5,
+        valign: 'middle',
+        cellPadding: { top: 2, bottom: 2, left: 2.5, right: 2 },
+        lineColor: [220, 235, 232],
+        lineWidth: 0.12,
+        textColor: [30, 41, 59]
+      },
+      columnStyles: {
+        0: { cellWidth: 8, halign: 'center', fontStyle: 'bold', textColor: [13, 148, 136] },
+        1: { cellWidth: 48, fontStyle: 'bold' },
+        2: { cellWidth: 38 },
+        3: { cellWidth: 26, halign: 'center' },
+        4: { cellWidth: 24 },
+        5: { cellWidth: 38 }
+      },
+      didParseCell: function(data) {
+        if (data.section === 'body' && (data.column.index === 4 || data.column.index === 5)) {
+          data.cell.styles.textColor = [255, 255, 255];
+          data.cell.styles.fontSize = 0.1;
+        }
+        if (data.section === 'body' && data.row.index % 2 === 0) {
+          data.cell.styles.fillColor = [255, 255, 255];
+        }
+      },
+      didDrawCell: function(data) {
+        // Badges Alimentación / Salud (col 4)
+        if (data.section === 'body' && data.column.index === 4) {
+          const raw = data.cell.raw || '';
+          const parts = raw.split('\n');
+          const dieta  = (parts[0] || '').trim();
+          const medica = (parts[1] || '').trim();
+
+          const hasDieta = dieta && dieta !== '-' && dieta.toLowerCase() !== 'ninguna';
+          const hasMedica = medica && medica !== '-' && medica.toLowerCase() !== 'ninguna';
+
+          let curX = data.cell.x + 2;
+          let curY = data.cell.y + (data.cell.height / 2);
+
+          if (!hasDieta && !hasMedica) {
+            doc.setFontSize(7);
+            doc.setTextColor(180, 190, 185);
+            doc.setFont(undefined, 'normal');
+            doc.text('—', curX, curY + 1);
+          } else {
+            if (hasDieta && hasMedica) {
+              drawBadge(doc, dieta, curX, curY - 1.2, [251, 191, 36], [120, 53, 15]);
+              drawBadge(doc, medica, curX, curY + 3.4, [204, 241, 236], [15, 118, 110]);
+            } else if (hasDieta) {
+              drawBadge(doc, dieta, curX, curY + 1.2, [251, 191, 36], [120, 53, 15]);
+            } else {
+              drawBadge(doc, medica, curX, curY + 1.2, [204, 241, 236], [15, 118, 110]);
+            }
+          }
+        }
+        // Contacto pill (col 5)
+        if (data.section === 'body' && data.column.index === 5) {
+          const raw = (data.cell.raw || '').trim();
+          if (!raw) return;
+          const isWA = raw.startsWith('WA:');
+          const isEM = raw.startsWith('E:');
+          const numText = raw.replace('WA: ', '').replace('E: ', '');
+
+          const pillH = 4.8;
+          const pillW = data.cell.width - 4;
+          const pillX = data.cell.x + 2;
+          const pillY = data.cell.y + (data.cell.height - pillH) / 2;
+
+          if (isWA) { doc.setFillColor(220, 252, 231); doc.setDrawColor(134, 239, 172); }
+          else if (isEM) { doc.setFillColor(219, 234, 254); doc.setDrawColor(147, 197, 253); }
+          else { doc.setFillColor(241, 245, 249); doc.setDrawColor(203, 213, 225); }
+          doc.setLineWidth(0.25);
+          doc.roundedRect(pillX, pillY, pillW, pillH, 1.2, 1.2, 'FD');
+          const dotColor = isWA ? [22, 163, 74] : isEM ? [59, 130, 246] : [100, 116, 139];
+          doc.setFillColor(...dotColor);
+          doc.circle(pillX + 2.5, pillY + pillH / 2, 0.9, 'F');
+          doc.setFontSize(6.5); doc.setFont(undefined, 'bold'); doc.setTextColor(...dotColor);
+          doc.text(isWA ? 'WA' : isEM ? 'EM' : '', pillX + 4.5, pillY + pillH / 2 + 0.9);
+          doc.setFont(undefined, 'normal'); doc.setTextColor(30, 41, 59);
+          doc.setFontSize(6.8);
+          const numX = pillX + (isWA || isEM ? 10.5 : 3);
+          doc.text(numText, numX, pillY + pillH / 2 + 0.9);
+        }
+      },
       didDrawPage: function(data) {
-        doc.setFontSize(8);
-        doc.text(
-          `Página ${doc.internal.getNumberOfPages()}`,
-          data.settings.margin.left,
-          doc.internal.pageSize.height - 10
-        );
+        const pageH = doc.internal.pageSize.height;
+        const pageW = doc.internal.pageSize.width;
+        doc.setDrawColor(13, 148, 136); doc.setLineWidth(0.4);
+        doc.line(data.settings.margin.left, pageH - 14, pageW - data.settings.margin.right, pageH - 14);
+        doc.setFontSize(7.5); doc.setTextColor(100, 120, 115); doc.setFont(undefined, 'normal');
+        doc.text(`Generado: ${new Date().toLocaleString('es-PE')}`, data.settings.margin.left, pageH - 9);
+        doc.text(`Pág. ${doc.internal.getNumberOfPages()}`, pageW - data.settings.margin.right, pageH - 9, { align: 'right' });
       }
     });
     

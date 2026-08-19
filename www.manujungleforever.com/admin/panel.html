@@ -516,9 +516,11 @@
                     <a href="gestionar-testimonios.html"><i class="ph ph-star"></i> Testimonios</a>
                     <a href="gestionar-reclamos.html"><i class="ph ph-scales"></i> Reclamos</a>
                     <a href="gestionar-medios.html"><i class="ph ph-image"></i> Medios</a>
+                    <a href="gestionar-usuarios.html" id="nav-usuarios"><i class="ph ph-users-three"></i> Usuarios</a>
                 </nav>
 
                 <div class="user-sec">
+                    <span id="huser" style="font-size:0.85rem;font-weight:600;color:var(--muted);margin-right:8px;"></span>
                     <button onclick="logout()" class="btn-logout">
                         <i class="ph ph-sign-out"></i> Salir
                     </button>
@@ -657,6 +659,15 @@
                     </div>
                 </div>
 
+                <!-- Usuarios -->
+                <div class="menu-btn-card" id="card-usuarios" onclick="window.location.href='gestionar-usuarios.html'">
+                    <div class="btn-card-icon" style="background: linear-gradient(135deg, #6366f1, #4338ca); color: #fff; box-shadow: 0 6px 20px rgba(99,102,241,0.35);"><i class="ph ph-users-three"></i></div>
+                    <div class="btn-card-content">
+                        <span class="btn-card-title">Gestión de Usuarios</span>
+                        <span class="btn-card-desc">Control de cuentas, roles (Super Users / Editores) y contraseñas.</span>
+                    </div>
+                </div>
+
                 <!-- Regresar a la web -->
                 <div class="menu-btn-card bg-home" onclick="window.location.href='/'">
                     <div class="btn-card-icon card-icon-web"><i class="ph ph-globe-hemisphere-west"></i></div>
@@ -758,6 +769,13 @@
                     } else {
                         badge.style.display = 'none';
                     }
+                }
+
+                if (!isSuperUser()) {
+                    const cardU = document.getElementById('card-usuarios');
+                    if (cardU) cardU.style.display = 'none';
+                    const navU = document.getElementById('nav-usuarios');
+                    if (navU) navU.style.display = 'none';
                 }
             } catch (e) {
                 console.error('Error cargando estadísticas:', e);
