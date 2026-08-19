@@ -1445,7 +1445,21 @@ function buildGuidedToursMenu(tours, isSubfolder = true) {
   return { desktopHtml, mobileHtml };
 }
 
-async function syncGuidedToursMenuInPages(tours, pageList = ['www.manujungleforever.com/index.html', 'www.manujungleforever.com/about/index.html', 'www.manujungleforever.com/guided-tours/index.html']) {
+const MENU_PAGES_TO_SYNC = [
+  'www.manujungleforever.com/index.html',
+  'www.manujungleforever.com/about/index.html',
+  'www.manujungleforever.com/guided-tours/index.html',
+  'www.manujungleforever.com/blog/index.html',
+  'www.manujungleforever.com/departures/index.html',
+  'www.manujungleforever.com/contact/index.html',
+  'www.manujungleforever.com/news-and-gallery/index.html',
+  'www.manujungleforever.com/book-now/index.html',
+  'www.manujungleforever.com/faq/index.html',
+  'www.manujungleforever.com/data/post-template.html',
+  'www.manujungleforever.com/data/tour-template.html'
+];
+
+async function syncGuidedToursMenuInPages(tours, pageList = MENU_PAGES_TO_SYNC) {
   for (const pagePath of pageList) {
     try {
       const pageData = await ghGet(pagePath);
@@ -1792,7 +1806,7 @@ window.editTour = function(idx) {
     }
 
     // Synchronize navigation dropdowns in test files
-    await syncGuidedToursMenuInPages(cData.tours, ['www.manujungleforever.com/index.html', 'www.manujungleforever.com/about/index.html', 'www.manujungleforever.com/guided-tours/index.html']);
+    await syncGuidedToursMenuInPages(cData.tours, MENU_PAGES_TO_SYNC);
   });
 };
 
@@ -2582,7 +2596,7 @@ window.deleteTour = async function(idx) {
         await unpublishTourPage(slug);
       }
       
-      await syncGuidedToursMenuInPages(cData.tours, ['www.manujungleforever.com/index.html', 'www.manujungleforever.com/about/index.html', 'www.manujungleforever.com/guided-tours/index.html']);
+      await syncGuidedToursMenuInPages(cData.tours, MENU_PAGES_TO_SYNC);
       
       await viewTours();
     } catch(e) {
