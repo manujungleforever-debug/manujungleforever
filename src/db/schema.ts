@@ -100,6 +100,7 @@ export const testimonials = sqliteTable('testimonials', {
   comentario: text('comentario').notNull(),
   foto: text('foto'),
   fecha: text('fecha').notNull(),
+  origen: text('origen').default('manual'),
   estado: text('estado', { enum: ['publicado', 'oculto'] }).default('publicado').notNull(),
   createdAt: text('created_at').notNull()
 });

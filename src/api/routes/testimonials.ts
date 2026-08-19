@@ -32,6 +32,7 @@ testimonialsRoutes.post('/', async (c) => {
     comentario: body.comentario,
     foto: body.foto || null,
     fecha: body.fecha || new Date().toISOString().split('T')[0],
+    origen: body.origen || 'manual',
     estado: body.estado || 'publicado',
     createdAt: new Date().toISOString()
   });
