@@ -31,7 +31,7 @@ define('SOCIAL_TIKTOK',      'https://www.tiktok.com/@hidden.jungle.cus');
 // ─── Analytics ────────────────────────────────────────────────────
 define('GTM_ID',     'GTM-5476BC9');
 define('GA_ID',      'GT-NS9ZNKJP');
-define('GOOGLE_MAP', 'https://maps.google.com/maps?q=Manu+National+Park,+Madre+de+Dios,+Peru&t=&z=8&ie=UTF8&iwloc=&output=embed');
+define('GOOGLE_MAP', 'https://maps.google.com/maps?q=Manu+Jungle+Forever,+Nuevo+Eden,+Peru&t=&z=13&ie=UTF8&iwloc=&output=embed');
 
 // ─── Environment ──────────────────────────────────────────────────
 define('APP_ENV', 'production'); // 'development' | 'production'
