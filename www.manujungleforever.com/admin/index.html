@@ -2115,41 +2115,41 @@ window.exportPaxPDF = function(idx) {
     const today = new Date().toLocaleDateString('es-PE', { year: 'numeric', month: 'long', day: 'numeric' });
     doc.text(`Fecha de Emisión: ${today}`, 196, 31, { align: 'right' });
 
-    // --- INFO BLOCK (rediseñado) ---
+    // --- INFO BLOCK (rediseñado compacto) ---
     doc.setFillColor(245, 251, 250);
     doc.setDrawColor(210, 230, 228);
-    doc.roundedRect(14, 40, 182, 28, 3, 3, 'FD');
+    doc.roundedRect(14, 40, 182, 23, 2, 2, 'FD');
     doc.setFillColor(13, 148, 136);
-    doc.rect(14, 40, 3, 28, 'F');
+    doc.rect(14, 40, 3, 23, 'F');
 
     const infoLabelColor = [13, 148, 136];
     const infoValueColor = [30, 41, 59];
-    doc.setFontSize(9.5);
+    doc.setFontSize(9);
 
     doc.setTextColor(...infoLabelColor); doc.setFont(undefined, 'bold');
-    doc.text('Tour:', 21, 49);
+    doc.text('Tour:', 20, 47);
     doc.setTextColor(...infoValueColor); doc.setFont(undefined, 'normal');
-    doc.text(s.tour_nombre || 'No especificado', 34, 49);
+    doc.text(s.tour_nombre || 'No especificado', 32, 47);
 
     doc.setTextColor(...infoLabelColor); doc.setFont(undefined, 'bold');
-    doc.text('Fechas:', 21, 57);
+    doc.text('Fechas:', 20, 53.5);
     doc.setTextColor(...infoValueColor); doc.setFont(undefined, 'normal');
-    doc.text(`${s.fecha_salida || 'TBD'} → ${s.fecha_retorno || 'TBD'}`, 38, 57);
+    doc.text(`${s.fecha_salida || 'TBD'} al ${s.fecha_retorno || 'TBD'}`, 35, 53.5);
 
     doc.setTextColor(...infoLabelColor); doc.setFont(undefined, 'bold');
-    doc.text('Guía:', 21, 65);
+    doc.text('Guía:', 20, 60);
     doc.setTextColor(...infoValueColor); doc.setFont(undefined, 'normal');
-    doc.text(s.guia_asignado || 'No asignado', 33, 65);
+    doc.text(s.guia_asignado || 'No asignado', 31, 60);
 
     doc.setTextColor(...infoLabelColor); doc.setFont(undefined, 'bold');
-    doc.text('ID Salida:', 118, 49);
+    doc.text('ID Salida:', 118, 47);
     doc.setTextColor(...infoValueColor); doc.setFont(undefined, 'normal');
-    doc.text(s.id || '', 142, 49);
+    doc.text(s.id || '', 138, 47);
 
     doc.setTextColor(...infoLabelColor); doc.setFont(undefined, 'bold');
-    doc.text('Pasajeros:', 118, 57);
+    doc.text('Pasajeros:', 118, 53.5);
     doc.setTextColor(...infoValueColor); doc.setFont(undefined, 'normal');
-    doc.text(pax.length.toString(), 143, 57);
+    doc.text(pax.length.toString(), 138, 53.5);
     
     const tableData = pax.map((p, i) => [
       i + 1,
@@ -2161,21 +2161,21 @@ window.exportPaxPDF = function(idx) {
     ]);
 
     function drawBadge(doc, text, x, y, bgColor, textColor) {
-      const pad = 2;
-      doc.setFontSize(6.5);
+      const pad = 1.5;
+      doc.setFontSize(6.2);
       const tw = doc.getTextWidth(text);
-      const bw = tw + pad * 2 + 1;
-      const bh = 4.5;
+      const bw = tw + pad * 2 + 0.8;
+      const bh = 3.8;
       doc.setFillColor(...bgColor);
-      doc.roundedRect(x, y - bh + 1, bw, bh, 1, 1, 'F');
+      doc.roundedRect(x, y - bh + 0.8, bw, bh, 0.8, 0.8, 'F');
       doc.setTextColor(...textColor);
       doc.setFont(undefined, 'bold');
-      doc.text(text, x + pad + 0.5, y - 0.5);
-      return bw + 1.5;
+      doc.text(text, x + pad + 0.4, y - 0.4);
+      return bw + 1.2;
     }
     
     doc.autoTable({
-      startY: 74,
+      startY: 67,
       head: [['N°', 'Nombre', 'Nacionalidad', 'Pasaporte', 'Alimentación / Salud', 'Contacto']],
       body: tableData,
       theme: 'plain',
@@ -2183,25 +2183,25 @@ window.exportPaxPDF = function(idx) {
         fillColor: [10, 46, 37],
         textColor: [255, 255, 255],
         fontStyle: 'bold',
-        fontSize: 8,
-        cellPadding: { top: 5, bottom: 5, left: 4, right: 3 }
+        fontSize: 7.5,
+        cellPadding: { top: 3, bottom: 3, left: 2.5, right: 2 }
       },
-      alternateRowStyles: { fillColor: [246, 251, 250] },
+      alternateRowStyles: { fillColor: [247, 251, 250] },
       styles: {
-        fontSize: 8,
+        fontSize: 7.5,
         valign: 'middle',
-        cellPadding: { top: 4, bottom: 4, left: 4, right: 3 },
+        cellPadding: { top: 2, bottom: 2, left: 2.5, right: 2 },
         lineColor: [220, 235, 232],
-        lineWidth: 0.15,
+        lineWidth: 0.12,
         textColor: [30, 41, 59]
       },
       columnStyles: {
-        0: { cellWidth: 10, halign: 'center', fontStyle: 'bold', textColor: [13, 148, 136] },
-        1: { cellWidth: 42, fontStyle: 'bold' },
+        0: { cellWidth: 8, halign: 'center', fontStyle: 'bold', textColor: [13, 148, 136] },
+        1: { cellWidth: 46, fontStyle: 'bold' },
         2: { cellWidth: 32 },
-        3: { cellWidth: 28, halign: 'center' },
-        4: { cellWidth: 50 },
-        5: { cellWidth: 36 }
+        3: { cellWidth: 24, halign: 'center' },
+        4: { cellWidth: 32 },
+        5: { cellWidth: 40 }
       },
       didParseCell: function(data) {
         if (data.section === 'body' && (data.column.index === 4 || data.column.index === 5)) {
@@ -2219,16 +2219,27 @@ window.exportPaxPDF = function(idx) {
           const parts = raw.split('\n');
           const dieta  = (parts[0] || '').trim();
           const medica = (parts[1] || '').trim();
-          let curX = data.cell.x + 3;
-          let curY = data.cell.y + data.cell.height / 2 - 1;
-          if (dieta && dieta !== '-' && dieta.toLowerCase() !== 'ninguna') {
-            drawBadge(doc, dieta, curX, curY, [251, 191, 36], [120, 53, 15]);
+
+          const hasDieta = dieta && dieta !== '-' && dieta.toLowerCase() !== 'ninguna';
+          const hasMedica = medica && medica !== '-' && medica.toLowerCase() !== 'ninguna';
+
+          let curX = data.cell.x + 2;
+          let curY = data.cell.y + (data.cell.height / 2);
+
+          if (!hasDieta && !hasMedica) {
+            doc.setFontSize(7);
+            doc.setTextColor(180, 190, 185);
+            doc.setFont(undefined, 'normal');
+            doc.text('—', curX, curY + 1);
           } else {
-            doc.setFontSize(7.5); doc.setTextColor(180, 190, 185); doc.setFont(undefined, 'normal');
-            doc.text('—', curX, curY);
-          }
-          if (medica && medica !== '-' && medica.toLowerCase() !== 'ninguna') {
-            drawBadge(doc, medica, curX, curY + 6, [204, 241, 236], [15, 118, 110]);
+            if (hasDieta && hasMedica) {
+              drawBadge(doc, dieta, curX, curY - 1.2, [251, 191, 36], [120, 53, 15]);
+              drawBadge(doc, medica, curX, curY + 3.4, [204, 241, 236], [15, 118, 110]);
+            } else if (hasDieta) {
+              drawBadge(doc, dieta, curX, curY + 1.2, [251, 191, 36], [120, 53, 15]);
+            } else {
+              drawBadge(doc, medica, curX, curY + 1.2, [204, 241, 236], [15, 118, 110]);
+            }
           }
         }
         // Contacto pill (col 5)
@@ -2237,23 +2248,27 @@ window.exportPaxPDF = function(idx) {
           if (!raw) return;
           const isWA = raw.startsWith('WA:');
           const isEM = raw.startsWith('E:');
+          const numText = raw.replace('WA: ', '').replace('E: ', '');
+
+          const pillH = 4.8;
+          const pillW = data.cell.width - 4;
           const pillX = data.cell.x + 2;
-          const pillY = data.cell.y + data.cell.height / 2 - 3;
-          const pillW = data.cell.width - 5;
-          const pillH = 6;
+          const pillY = data.cell.y + (data.cell.height - pillH) / 2;
+
           if (isWA) { doc.setFillColor(220, 252, 231); doc.setDrawColor(134, 239, 172); }
           else if (isEM) { doc.setFillColor(219, 234, 254); doc.setDrawColor(147, 197, 253); }
           else { doc.setFillColor(241, 245, 249); doc.setDrawColor(203, 213, 225); }
-          doc.setLineWidth(0.3);
-          doc.roundedRect(pillX, pillY, pillW, pillH, 1.5, 1.5, 'FD');
+          doc.setLineWidth(0.25);
+          doc.roundedRect(pillX, pillY, pillW, pillH, 1.2, 1.2, 'FD');
           const dotColor = isWA ? [22, 163, 74] : isEM ? [59, 130, 246] : [100, 116, 139];
           doc.setFillColor(...dotColor);
-          doc.circle(pillX + 3, pillY + pillH / 2, 1.2, 'F');
-          doc.setFontSize(7); doc.setFont(undefined, 'bold'); doc.setTextColor(...dotColor);
-          doc.text(isWA ? 'WA' : isEM ? 'EM' : '', pillX + 5.5, pillY + pillH / 2 + 1);
+          doc.circle(pillX + 2.5, pillY + pillH / 2, 0.9, 'F');
+          doc.setFontSize(6.5); doc.setFont(undefined, 'bold'); doc.setTextColor(...dotColor);
+          doc.text(isWA ? 'WA' : isEM ? 'EM' : '', pillX + 4.5, pillY + pillH / 2 + 0.9);
           doc.setFont(undefined, 'normal'); doc.setTextColor(30, 41, 59);
-          const numText = raw.replace('WA: ', '').replace('E: ', '');
-          doc.text(numText, pillX + (isWA || isEM ? 12 : 3), pillY + pillH / 2 + 1, { maxWidth: pillW - (isWA || isEM ? 12 : 3) });
+          doc.setFontSize(6.8);
+          const numX = pillX + (isWA || isEM ? 10.5 : 3);
+          doc.text(numText, numX, pillY + pillH / 2 + 0.9);
         }
       },
       didDrawPage: function(data) {
