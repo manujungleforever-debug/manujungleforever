@@ -1867,22 +1867,22 @@ window.exportPaxPDF = async function(idx) {
 
     // --- MAIN TABLE (compacta y optimizada) ---
     function drawBadge(doc, text, x, y, bgColor, textColor) {
-      const pad = 1.5;
-      doc.setFontSize(6.2);
+      const pad = 1.2;
+      doc.setFontSize(6.0);
       const tw = doc.getTextWidth(text);
-      const bw = tw + pad * 2 + 0.8;
-      const bh = 3.8;
+      const bw = Math.min(tw + pad * 2 + 0.6, 21);
+      const bh = 3.6;
       doc.setFillColor(...bgColor);
       doc.roundedRect(x, y - bh + 0.8, bw, bh, 0.8, 0.8, 'F');
       doc.setTextColor(...textColor);
       doc.setFont(undefined, 'bold');
-      doc.text(text, x + pad + 0.4, y - 0.4);
-      return bw + 1.2;
+      doc.text(text, x + pad + 0.3, y - 0.4, { maxWidth: bw - 1 });
+      return bw + 1;
     }
 
     doc.autoTable({
       startY: 67,
-      head: [['N°', 'Foto', 'Nombre', 'Nac. / Edad', 'Pasaporte', 'Alimentación / Salud', 'Contacto']],
+      head: [['N°', 'Foto', 'Nombre', 'Nac. / Edad', 'Pasaporte', 'Dieta / Salud', 'Contacto']],
       body: tableData,
       theme: 'plain',
       headStyles: {
@@ -1904,11 +1904,11 @@ window.exportPaxPDF = async function(idx) {
       columnStyles: {
         0: { cellWidth: 7, halign: 'center', fontStyle: 'bold', textColor: [13, 148, 136] },
         1: { cellWidth: 14, minCellHeight: 12, halign: 'center' },
-        2: { cellWidth: 36, fontStyle: 'bold' },
-        3: { cellWidth: 25 },
-        4: { cellWidth: 20, halign: 'center' },
-        5: { cellWidth: 32 },
-        6: { cellWidth: 48 }
+        2: { cellWidth: 42, fontStyle: 'bold' },
+        3: { cellWidth: 34 },
+        4: { cellWidth: 24, halign: 'center' },
+        5: { cellWidth: 23 },
+        6: { cellWidth: 38 }
       },
       didParseCell: function(data) {
         if (data.section === 'body' && (data.column.index === 5 || data.column.index === 6)) {
@@ -1924,18 +1924,17 @@ window.exportPaxPDF = async function(idx) {
         if (data.section === 'body' && data.column.index === 1) {
           const rowData = pax[data.row.index];
           if (rowData && rowData.foto && imgMap[rowData.foto]) {
-            const dim = 11;
+            const dim = 9.5;
             const x = data.cell.x + (data.cell.width - dim) / 2;
             const y = data.cell.y + (data.cell.height - dim) / 2;
-            // Círculo de recorte (simulado con borde redondeado)
             doc.setDrawColor(13, 148, 136);
-            doc.setLineWidth(0.5);
-            doc.roundedRect(x - 0.5, y - 0.5, dim + 1, dim + 1, 1, 1, 'S');
+            doc.setLineWidth(0.35);
+            doc.roundedRect(x - 0.4, y - 0.4, dim + 0.8, dim + 0.8, 0.8, 0.8, 'S');
             doc.addImage(imgMap[rowData.foto], 'JPEG', x, y, dim, dim);
           }
         }
 
-        // ── Badges Alimentación / Salud (col 5) ──
+        // ── Badges Dieta / Salud (col 5) ──
         if (data.section === 'body' && data.column.index === 5) {
           const rowData = pax[data.row.index];
           const raw = data.cell.raw || '';
@@ -1943,27 +1942,26 @@ window.exportPaxPDF = async function(idx) {
           const dieta   = (parts[0] || '').trim();
           const medica  = (parts[1] || '').trim();
 
-          let curX = data.cell.x + 3;
-          let curY = data.cell.y + data.cell.height / 2 - 1;
-          const lineH = 6;
+          const hasDieta = dieta && dieta !== '-' && dieta.toLowerCase() !== 'ninguna';
+          const hasMedica = medica && medica !== '-' && medica.toLowerCase() !== 'ninguna';
 
-          // Badge dieta
-          if (dieta && dieta !== '-' && dieta.toLowerCase() !== 'ninguna') {
-            // Amber / naranja cálido
-            drawBadge(doc, dieta, curX, curY, [251, 191, 36], [120, 53, 15]);
-          } else {
-            doc.setFontSize(7.5);
+          let curX = data.cell.x + 1.5;
+          let curY = data.cell.y + (data.cell.height / 2);
+
+          if (!hasDieta && !hasMedica) {
+            doc.setFontSize(7);
             doc.setTextColor(180, 190, 185);
             doc.setFont(undefined, 'normal');
-            doc.text('—', curX, curY);
-          }
-          curY += lineH;
-          // Badge médica
-          if (medica && medica !== '-' && medica.toLowerCase() !== 'ninguna') {
-            // Teal suave
-            drawBadge(doc, medica, curX, curY, [204, 241, 236], [15, 118, 110]);
-          } else if (dieta && dieta !== '-') {
-            // no hay info médica adicional
+            doc.text('—', curX + 3, curY + 1);
+          } else {
+            if (hasDieta && hasMedica) {
+              drawBadge(doc, dieta, curX, curY - 1.2, [251, 191, 36], [120, 53, 15]);
+              drawBadge(doc, medica, curX, curY + 3.4, [204, 241, 236], [15, 118, 110]);
+            } else if (hasDieta) {
+              drawBadge(doc, dieta, curX, curY + 1.2, [251, 191, 36], [120, 53, 15]);
+            } else {
+              drawBadge(doc, medica, curX, curY + 1.2, [204, 241, 236], [15, 118, 110]);
+            }
           }
         }
 
@@ -1973,12 +1971,12 @@ window.exportPaxPDF = async function(idx) {
           if (!raw) return;
           const isWA = raw.startsWith('WA:');
           const isEM = raw.startsWith('E:');
-          const label = raw.replace('WA: ', '').replace('E: ', '');
+          const numText = raw.replace('WA: ', '').replace('E: ', '');
 
-          const pillX = data.cell.x + 2;
-          const pillY = data.cell.y + data.cell.height / 2 - 3;
-          const pillW = data.cell.width - 5;
-          const pillH = 6;
+          const pillH = 4.8;
+          const pillW = data.cell.width - 3;
+          const pillX = data.cell.x + 1.5;
+          const pillY = data.cell.y + (data.cell.height - pillH) / 2;
 
           if (isWA) {
             doc.setFillColor(220, 252, 231); // green-100
@@ -1990,24 +1988,24 @@ window.exportPaxPDF = async function(idx) {
             doc.setFillColor(241, 245, 249);
             doc.setDrawColor(203, 213, 225);
           }
-          doc.setLineWidth(0.3);
-          doc.roundedRect(pillX, pillY, pillW, pillH, 1.5, 1.5, 'FD');
+          doc.setLineWidth(0.25);
+          doc.roundedRect(pillX, pillY, pillW, pillH, 1.2, 1.2, 'FD');
 
           // Prefix dot
           const dotColor = isWA ? [22, 163, 74] : isEM ? [59, 130, 246] : [100, 116, 139];
           doc.setFillColor(...dotColor);
-          doc.circle(pillX + 3, pillY + pillH / 2, 1.2, 'F');
+          doc.circle(pillX + 2.5, pillY + pillH / 2, 0.9, 'F');
 
-          doc.setFontSize(7);
+          doc.setFontSize(6.3);
           doc.setFont(undefined, 'bold');
           doc.setTextColor(...dotColor);
-          doc.text(isWA ? 'WA' : isEM ? 'EM' : '', pillX + 5.5, pillY + pillH / 2 + 1);
+          doc.text(isWA ? 'WA' : isEM ? 'EM' : '', pillX + 4.2, pillY + pillH / 2 + 0.9);
 
           doc.setFont(undefined, 'normal');
           doc.setTextColor(30, 41, 59);
-          const numX = pillX + (isWA || isEM ? 12 : 3);
-          const numText = raw.replace('WA: ', '').replace('E: ', '');
-          doc.text(numText, numX, pillY + pillH / 2 + 1, { maxWidth: pillW - (isWA || isEM ? 12 : 3) });
+          doc.setFontSize(6.7);
+          const numX = pillX + (isWA || isEM ? 9.8 : 3);
+          doc.text(numText, numX, pillY + pillH / 2 + 0.9, { maxWidth: pillW - 10.5 });
         }
       },
       didDrawPage: function(data) {

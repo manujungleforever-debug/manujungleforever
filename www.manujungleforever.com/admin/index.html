@@ -2176,7 +2176,7 @@ window.exportPaxPDF = function(idx) {
     
     doc.autoTable({
       startY: 67,
-      head: [['N°', 'Nombre', 'Nacionalidad', 'Pasaporte', 'Alimentación / Salud', 'Contacto']],
+      head: [['N°', 'Nombre', 'Nacionalidad', 'Pasaporte', 'Dieta / Salud', 'Contacto']],
       body: tableData,
       theme: 'plain',
       headStyles: {
@@ -2197,11 +2197,11 @@ window.exportPaxPDF = function(idx) {
       },
       columnStyles: {
         0: { cellWidth: 8, halign: 'center', fontStyle: 'bold', textColor: [13, 148, 136] },
-        1: { cellWidth: 46, fontStyle: 'bold' },
-        2: { cellWidth: 32 },
-        3: { cellWidth: 24, halign: 'center' },
-        4: { cellWidth: 32 },
-        5: { cellWidth: 40 }
+        1: { cellWidth: 48, fontStyle: 'bold' },
+        2: { cellWidth: 38 },
+        3: { cellWidth: 26, halign: 'center' },
+        4: { cellWidth: 24 },
+        5: { cellWidth: 38 }
       },
       didParseCell: function(data) {
         if (data.section === 'body' && (data.column.index === 4 || data.column.index === 5)) {
