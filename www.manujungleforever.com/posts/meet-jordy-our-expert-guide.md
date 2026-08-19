@@ -93,9 +93,9 @@ Before starting your Peru rainforest adventure, it is important to pack properly
 
 Good preparation will help you enjoy your Amazon jungle tour comfortably.
 
-## Experience the Peruvian Amazon with Hidden Jungle Cusco
+## Experience the Peruvian Amazon with Manu Jungle Forever
 
-At [Hidden Jungle Cusco](https://www.hiddenjunglecusco.com?utm_source=chatgpt.com), travelers can discover authentic Amazon Rainforest Tours to Manu National Park from Cusco with experienced local guides passionate about wildlife and conservation.
+At [Manu Jungle Forever](https://www.manujungleforever.com), travelers can discover authentic Amazon Rainforest Tours to Manu National Park from Cusco with experienced local guides passionate about wildlife and conservation.
 
 Whether you are interested in birdwatching, photography, nature exploration, or adventure travel, Manu offers one of the most unforgettable experiences in Peru.
 

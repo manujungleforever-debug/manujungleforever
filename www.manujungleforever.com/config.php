@@ -31,7 +31,7 @@ define('SOCIAL_TIKTOK',      'https://www.tiktok.com/@hidden.jungle.cus');
 // ─── Analytics ────────────────────────────────────────────────────
 define('GTM_ID',     'GTM-5476BC9');
 define('GA_ID',      'GT-NS9ZNKJP');
-define('GOOGLE_MAP', 'https://www.google.com/maps/d/embed?mid=12fWz1M5jmQ0jd8rUJY0VUfi6KnRmvnc');
+define('GOOGLE_MAP', 'https://maps.google.com/maps?q=Manu+National+Park,+Madre+de+Dios,+Peru&t=&z=8&ie=UTF8&iwloc=&output=embed');
 
 // ─── Environment ──────────────────────────────────────────────────
 define('APP_ENV', 'production'); // 'development' | 'production'
