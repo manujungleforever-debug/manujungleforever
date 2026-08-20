@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+import shutil
+
+html_content = """<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -685,3 +687,12 @@ window.deleteUser = async function(idx) {
 <script src="js/thinking-orb.js"></script>
 </body>
 </html>
+"""
+
+with open('www.manujungleforever.com/admin/gestionar-usuarios.html', 'w', encoding='utf-8') as f:
+    f.write(html_content)
+
+with open('admin/gestionar-usuarios.html', 'w', encoding='utf-8') as f:
+    f.write(html_content)
+
+print("Saved gestionar-usuarios.html in both locations")

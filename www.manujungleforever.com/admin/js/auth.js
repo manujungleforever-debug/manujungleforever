@@ -30,6 +30,7 @@
         const u = sessionStorage.getItem('cms_user') || '';
         const role = sessionStorage.getItem('cms_role') || (isSuperUser() ? 'superuser' : 'normal');
         const name = sessionStorage.getItem('cms_name') || u.split('@')[0] || 'Admin';
+        const avatar = sessionStorage.getItem('cms_avatar') || '';
 
         const adminNameEl = document.getElementById('admin-name');
         if (adminNameEl) {
@@ -42,7 +43,10 @@
             const roleBadge = isSuper 
                 ? '<span style="font-size:0.68rem;background:rgba(201,168,76,0.2);color:#c9a84c;padding:2px 7px;border-radius:6px;margin-left:6px;border:1px solid rgba(201,168,76,0.3);">SUPER USER</span>'
                 : '<span style="font-size:0.68rem;background:rgba(45,212,191,0.15);color:#2dd4bf;padding:2px 7px;border-radius:6px;margin-left:6px;border:1px solid rgba(45,212,191,0.3);">EDITOR</span>';
-            huser.innerHTML = `👤 ${name} ${roleBadge}`;
+            const avatarHtml = avatar 
+                ? `<img src="${avatar}" style="width:26px;height:26px;border-radius:50%;object-fit:cover;border:1.5px solid ${isSuper ? '#c9a84c' : '#2dd4bf'};vertical-align:middle;margin-right:6px;display:inline-block;">`
+                : `<span style="font-size:1rem;margin-right:4px;vertical-align:middle;">👤</span>`;
+            huser.innerHTML = `${avatarHtml}<span style="vertical-align:middle;">${name}</span> ${roleBadge}`;
         }
     }
 })();

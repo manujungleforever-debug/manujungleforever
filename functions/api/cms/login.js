@@ -116,7 +116,8 @@ export async function onRequestPost(context) {
         id: found.id,
         email: found.email,
         name: found.name,
-        role: found.role
+        role: found.role,
+        foto: found.foto || found.avatar || ''
       }
     });
 
