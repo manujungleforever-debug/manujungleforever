@@ -290,7 +290,7 @@
       "moneda": "USD",
       "plazas_totales": 6,
       "plazas_disponibles": 4,
-      "estado": "disponible",
+      "estado": "cerrado",
       "notas": "Tour especializado para fotógrafos",
       "plazas_minimas": 2,
       "guia_asignado": "Alex Machaca",
