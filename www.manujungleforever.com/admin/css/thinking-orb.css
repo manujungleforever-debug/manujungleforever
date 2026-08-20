@@ -1,0 +1,88 @@
+/**
+ * Thinking Orb Component Styles
+ */
+
+.thinking-orb-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 15px;
+  width: 100%;
+}
+
+.thinking-orb-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(13, 20, 24, 0.75);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 9999px;
+  padding: 8px 24px 8px 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45), 
+              0 0 20px rgba(45, 212, 191, 0.12),
+              inset 0 1px 1px rgba(255, 255, 255, 0.15);
+  transition: all 0.3s ease;
+  user-select: none;
+}
+
+.thinking-orb-pill:hover {
+  border-color: rgba(45, 212, 191, 0.4);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.55), 0 0 25px rgba(45, 212, 191, 0.22);
+}
+
+.thinking-orb-canvas {
+  display: block;
+  flex-shrink: 0;
+  border-radius: 50%;
+  filter: drop-shadow(0 0 8px rgba(45, 212, 191, 0.45));
+}
+
+.thinking-orb-text {
+  font-family: 'Poppins', 'Outfit', system-ui, -apple-system, sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #f1f5f9;
+  letter-spacing: 0.2px;
+  display: inline-flex;
+  align-items: baseline;
+}
+
+.thinking-dots {
+  display: inline-flex;
+  margin-left: 1px;
+}
+
+.thinking-dots span {
+  display: inline-block;
+  opacity: 0.3;
+  animation: thinkingDotPulse 1.4s infinite ease-in-out both;
+}
+
+.thinking-dots span:nth-child(1) { animation-delay: 0.0s; }
+.thinking-dots span:nth-child(2) { animation-delay: 0.2s; }
+.thinking-dots span:nth-child(3) { animation-delay: 0.4s; }
+.thinking-dots span:nth-child(4) { animation-delay: 0.6s; }
+
+@keyframes thinkingDotPulse {
+  0%, 80%, 100% {
+    opacity: 0.25;
+    transform: translateY(0);
+  }
+  40% {
+    opacity: 1;
+    transform: translateY(-2px);
+    color: var(--teal, #2dd4bf);
+    text-shadow: 0 0 8px rgba(45, 212, 191, 0.7);
+  }
+}
+
+/* Modal and Inline Loading Replacements */
+.loading {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border: none !important;
+  background: transparent !important;
+}
