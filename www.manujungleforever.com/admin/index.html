@@ -2104,13 +2104,13 @@ window.exportPaxPDF = function(idx) {
   const doc = new jsPDF();
   
   const img = new Image();
-  img.src = '../assets/img/logo.png';
+  img.src = '../assets/img/logomjf.png';
   img.onload = () => { generatePDF(img); };
   img.onerror = () => { generatePDF(null); };
 
   function generatePDF(logo) {
     if (logo) {
-      doc.addImage(logo, 'PNG', 14, 10, 40, 40 * logo.height / logo.width);
+      doc.addImage(logo, 'PNG', 14, 8, 54, 27);
     }
     
     doc.setFontSize(16);

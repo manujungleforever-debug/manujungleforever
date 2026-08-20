@@ -1451,17 +1451,20 @@ window.exportPaxPDF = async function(idx) {
       return Promise.race([promise, timeoutPromise]).finally(() => clearTimeout(timeoutId));
     };
 
-    // Logo institucional de Manu Jungle Forever
-    let logoImg = document.querySelector('.logo-wrap img') || document.querySelector('.logo-brand img');
-    if (!logoImg || !logoImg.complete || logoImg.naturalWidth === 0) {
-      logoImg = await withTimeout(new Promise((resolve) => {
-        const img = new Image();
-        img.crossOrigin = 'Anonymous';
-        img.src = '../assets/img/logo.png';
-        img.onload = () => resolve(img);
-        img.onerror = () => resolve(null);
-      }), 4000).catch(() => null);
-    }
+    // Logo institucional para fondos claros (logomjf.png)
+    const logoImg = await withTimeout(new Promise((resolve) => {
+      const img = new Image();
+      img.crossOrigin = 'Anonymous';
+      img.src = '../assets/img/logomjf.png';
+      img.onload = () => resolve(img);
+      img.onerror = () => {
+        const img2 = new Image();
+        img2.crossOrigin = 'Anonymous';
+        img2.src = '/assets/img/logomjf.png';
+        img2.onload = () => resolve(img2);
+        img2.onerror = () => resolve(null);
+      };
+    }), 4000).catch(() => null);
 
     // Preload passenger photos
     const photoPs = pax.map(p => {
@@ -1482,7 +1485,7 @@ window.exportPaxPDF = async function(idx) {
     // --- HEADER ---
     if (logoImg) {
       try {
-        doc.addImage(logoImg, 'PNG', 14, 8, 56, 24);
+        doc.addImage(logoImg, 'PNG', 14, 8, 54, 27);
       } catch(e) {
         console.warn('Error adding logo to PDF:', e);
       }
