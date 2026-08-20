@@ -1637,6 +1637,126 @@ window.uploadPaxPhoto = async function(input, sIdx) {
   if (!input.files || input.files.length === 0) return;
   const file = input.files[0];
   const nameInput = document.getElementById('p-n');
+  const name = nameInput ? nameInput.value.trim() : 'pasajero';
+  const s = (cData && cData.salidas && cData.salidas[sIdx]) ? cData.salidas[sIdx] : {};
+  
+  const safeTour = (s.tour_nombre || 'tour').toLowerCase().replace(/[^a-z0-9]/gi, '-');
+  const safeName = name.toLowerCase().replace(/[^a-z0-9]/gi, '-');
+  const ext = (file.name && file.name.includes('.')) ? file.name.split('.').pop() : 'jpg';
+  const folderDate = s.fecha_salida ? s.fecha_salida.replace(/[^a-z0-9]/gi, '-') : 'no-date';
+  
+  const fileName = `pasajeros/${s.id || 'salida'}_${safeTour}_${folderDate}/${safeName}_${Date.now()}.${ext}`;
+  const renamedFile = new File([file], fileName, { type: file.type || 'image/jpeg' });
+  
+  const btn = input.previousElementSibling;
+  const oldText = btn ? btn.innerHTML : '';
+  if (btn) {
+    btn.innerHTML = '<i class="ph ph-spinner animate-spin"></i> Subiendo...';
+    btn.disabled = true;
+  }
+  
+  try {
+    const res = await r2Upload(renamedFile, null);
+    const url = (typeof res === 'object' && res && res.url) ? res.url : (res || '');
+    const fotoInput = document.getElementById('p-foto');
+    if (fotoInput) {
+      fotoInput.value = url;
+      updateImgPreview('p-foto', 'p-foto-prev');
+    }
+  } catch(e) {
+    alert("Error al subir foto: " + e.message);
+  } finally {
+    if (btn) {
+      btn.innerHTML = oldText;
+      btn.disabled = false;
+    }
+    input.value = '';
+  }
+};
+
+window.savePax = async function(sIdx, pIdx, event) {
+  const s = cData.salidas[sIdx];
+  const p = {
+    nombre_completo: v('p-n'),
+    nacionalidad: v('p-na'),
+    fecha_nacimiento: v('p-fn'),
+    pasaporte: v('p-pa'),
+    whatsapp: v('p-w'),
+    email: v('p-e'),
+    restricciones_dieteticas: v('p-rd'),
+    condiciones_medicas: v('p-cm'),
+    costo: +v('p-costo'),
+      estado_pago: v('p-ep'),
+    monto_pagado: +v('p-mp'),
+    saldo_pendiente: +v('p-sp'),
+    foto: v('p-foto')
+  };
+  
+  if (!s.pasajeros) s.pasajeros = [];
+  
+  if (pIdx === -1) {
+    s.pasajeros.push(p);
+  } else {
+    s.pasajeros[pIdx] = p;
+  }
+  
+  const btn = event.currentTarget;
+  const oldText = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
+  
+  try {
+    const res = await ghPut(cFile, JSON.stringify(cData, null, 2), null, `update pax in: ${s.id}`);
+    cSha = res.sha;
+    viewPax(sIdx);
+    if(typeof viewDeps === 'function') viewDeps(); // Update main list in background
+  } catch(e) {
+    console.error(e);
+    alert('Error: ' + e.message);
+    btn.disabled = false;
+    btn.innerHTML = oldText;
+  }
+};
+
+window.deletePax = async function(sIdx, pIdx) {
+  if (!confirm('¿Estás seguro de eliminar este pasajero? Esta acción no se puede deshacer.')) return;
+  const s = cData.salidas[sIdx];
+  s.pasajeros.splice(pIdx, 1);
+  
+  const btn = event.currentTarget;
+  const oldText = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '🗑️...';
+  
+  try {
+    const res = await ghPut(cFile, JSON.stringify(cData, null, 2), null, `delete pax in: ${s.id}`);
+    cSha = res.sha;
+    viewPax(sIdx);
+    if(typeof viewDeps === 'function') viewDeps();
+  } catch(e) {
+    console.error(e);
+    alert('Error al eliminar: ' + e.message);
+    btn.disabled = false;
+    btn.innerHTML = oldText;
+  }
+};
+
+window.exportPaxCSV = function(idx) {
+  const s = cData.salidas[idx];
+  const pax = s.pasajeros || [];
+  if(pax.length===0) return alert('No hay pasajeros');
+  let csv = "Nombre,Nacionalidad,Pasaporte,WhatsApp,Email,Dietas,Medicas,Pagado,Saldo\n";
+  pax.forEach(p => {
+    csv += `"${p.nombre_completo}","${p.nacionalidad}","${p.pasaporte}","${p.whatsapp}","${p.email}","${p.restricciones_dieteticas}","${p.condiciones_medicas}",${p.monto_pagado},${p.saldo_pendiente}\n`;
+  });
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `pasajeros-${s.id}.csv`;
+  a.click();
+};
+
 window.exportPaxPDF = async function(idx) {
   const s = cData.salidas[idx];
   const pax = s.pasajeros || [];
@@ -1660,6 +1780,22 @@ window.exportPaxPDF = async function(idx) {
       return Promise.race([promise, timeoutPromise]).finally(() => clearTimeout(timeoutId));
     };
 
+    // Logo institucional de Manu Jungle Forever
+    let logoImg = document.querySelector('.logo-wrap img') || document.querySelector('.logo-brand img');
+    if (!logoImg || !logoImg.complete || logoImg.naturalWidth === 0) {
+      logoImg = await withTimeout(new Promise((resolve) => {
+        const img = new Image();
+        img.crossOrigin = 'Anonymous';
+        img.src = '../assets/img/logo.png';
+        img.onload = () => resolve(img);
+        img.onerror = () => resolve(null);
+      }), 4000).catch(() => null);
+    }
+
+    // Preload passenger photos
+    const photoPs = pax.map(p => {
+      if (!p.foto) return Promise.resolve(null);
+      return withTimeout(new Promise(resolve => {
         const im = new Image();
         im.crossOrigin = 'Anonymous';
         im.src = p.foto;
@@ -1673,7 +1809,13 @@ window.exportPaxPDF = async function(idx) {
     loadedPhotos.forEach(im => { if(im) imgMap[im.url] = im.img; });
 
     // --- HEADER ---
-    doc.addImage('data:image/jpeg;base64,' + LOGO_B64, 'JPEG', 14, 10, 60, 30);
+    if (logoImg) {
+      try {
+        doc.addImage(logoImg, 'PNG', 14, 8, 56, 24);
+      } catch(e) {
+        console.warn('Error adding logo to PDF:', e);
+      }
+    }
 
     doc.setFontSize(16);
     doc.setTextColor(15, 23, 42); // slate-900
