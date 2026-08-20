@@ -41,10 +41,22 @@ export async function onRequestPost(context) {
     const name = decodeURIComponent(rawName);
     const contentType = request.headers.get('Content-Type') || getMimeType(name.split('.').pop().toLowerCase());
 
-    // Limpiar nombre de archivo (slugify simple manteniendo extensión)
-    const ext = name.split('.').pop().toLowerCase();
-    const slug = name.slice(0, -(ext.length + 1)).replace(/[^a-z0-9]/gi, '-').toLowerCase() + '.' + ext;
-    const finalName = `${Date.now()}-${slug}`;
+    // Limpiar nombre y carpetas de archivo
+    let cleanKey = name.replace(/^\/+/, ''); // quitar leading slash
+    const parts = cleanKey.split('/');
+    const fileName = parts.pop();
+    const ext = fileName.includes('.') ? fileName.split('.').pop().toLowerCase() : 'jpg';
+    const fileBase = fileName.includes('.') ? fileName.slice(0, -(ext.length + 1)) : fileName;
+    const cleanFileBase = fileBase.replace(/[^a-z0-9_-]/gi, '-').replace(/-+/g, '-').toLowerCase();
+
+    let finalName;
+    if (parts.length > 0) {
+      // Tiene carpetas: sanitizar cada carpeta preservando los slashes '/'
+      const cleanFolders = parts.map(p => p.replace(/[^a-z0-9_-]/gi, '-').replace(/-+/g, '-').toLowerCase()).join('/');
+      finalName = `${cleanFolders}/${cleanFileBase}.${ext}`;
+    } else {
+      finalName = `${Date.now()}-${cleanFileBase}.${ext}`;
+    }
 
     // Subir a R2 directamente como stream
     await env.MEDIA_BUCKET.put(finalName, request.body, {

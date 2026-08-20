@@ -1565,10 +1565,12 @@ window.viewPax = function(idx) {
 
       <div class="ff" style="margin-top:10px">
         <label>Fotografía del Pasajero (URL o Galería)</label>
-                  <div class="img-input-row" style="margin-bottom:10px; display:flex; gap:10px">
-            <input id="p-foto" value="${esc(p.foto||'')}" placeholder="https://..." oninput="updateImgPreview('p-foto', 'p-foto-prev')" style="flex-grow:1;">
-            <button class="btn-secondary" onclick="pickImage('p-foto', 'p-foto-prev')"><i class="ph ph-image"></i> Elegir</button>
-            <button class="btn-primary" onclick="takePaxPhoto(${sIdx})" style="background:var(--teal);color:white;border:none;white-space:nowrap;"><i class="ph ph-camera"></i> Tomar Foto</button>
+                  <div class="img-input-row" style="margin-bottom:10px; display:flex; gap:8px; flex-wrap:wrap;">
+            <input id="p-foto" value="${esc(p.foto||'')}" placeholder="https://..." oninput="updateImgPreview('p-foto', 'p-foto-prev')" style="flex:1; min-width:200px;">
+            <button class="btn-secondary" onclick="pickImage('p-foto', 'p-foto-prev')" title="Elegir de galería"><i class="ph ph-image"></i> Galería</button>
+            <button class="btn-primary" onclick="triggerPaxUpload(${sIdx})" style="background:#0284c7;color:white;border:none;white-space:nowrap;" title="Subir desde tu dispositivo"><i class="ph ph-upload-simple"></i> Subir Foto</button>
+            <button class="btn-primary" onclick="takePaxPhoto(${sIdx})" style="background:var(--teal);color:white;border:none;white-space:nowrap;" title="Tomar foto con cámara"><i class="ph ph-camera"></i> Tomar Foto</button>
+            <input type="file" id="p-upload-file" accept="image/*" style="display:none" onchange="uploadPaxPhoto(this, ${sIdx})">
             <input type="file" id="p-camera-file" accept="image/*" capture="environment" style="display:none" onchange="uploadPaxPhoto(this, ${sIdx})">
           </div>
         <img id="p-foto-prev" class="img-preview ${p.foto ? 'show' : ''}" src="${esc(p.foto||'')}">
@@ -1623,32 +1625,49 @@ window.viewPax = function(idx) {
     }
   };
 
+  window.triggerPaxUpload = function(sIdx) {
+    const name = document.getElementById('p-n') ? document.getElementById('p-n').value.trim() : '';
+    if (!name) {
+      alert("Por favor, ingrese primero el 'Nombre Completo' del pasajero para archivarlo en su carpeta correspondiente.");
+      document.getElementById('p-n').focus();
+      return;
+    }
+    const up = document.getElementById('p-upload-file');
+    if (up) up.click();
+  };
+
   window.takePaxPhoto = function(sIdx) {
-  const name = document.getElementById('p-n').value.trim();
-  if (!name) {
-    alert("Por favor, ingrese el 'Nombre Completo' del pasajero antes de tomar la fotografía para archivarlo correctamente.");
-    document.getElementById('p-n').focus();
-    return;
-  }
-  document.getElementById('p-camera-file').click();
-};
+    const name = document.getElementById('p-n') ? document.getElementById('p-n').value.trim() : '';
+    if (!name) {
+      alert("Por favor, ingrese primero el 'Nombre Completo' del pasajero antes de tomar la fotografía para archivarlo correctamente.");
+      document.getElementById('p-n').focus();
+      return;
+    }
+    const cam = document.getElementById('p-camera-file');
+    if (cam) cam.click();
+  };
 
 window.uploadPaxPhoto = async function(input, sIdx) {
   if (!input.files || input.files.length === 0) return;
   const file = input.files[0];
   const nameInput = document.getElementById('p-n');
-  const name = nameInput ? nameInput.value.trim() : 'pasajero';
-  const s = (cData && cData.salidas && cData.salidas[sIdx]) ? cData.salidas[sIdx] : {};
+  const name = nameInput ? nameInput.value.trim() : '';
+  const s = (cData && cData.salidas && (cData.salidas[sIdx] || cData.salidas.find(x => x.id === sIdx))) || {};
   
-  const safeTour = (s.tour_nombre || 'tour').toLowerCase().replace(/[^a-z0-9]/gi, '-');
-  const safeName = name.toLowerCase().replace(/[^a-z0-9]/gi, '-');
-  const ext = (file.name && file.name.includes('.')) ? file.name.split('.').pop() : 'jpg';
-  const folderDate = s.fecha_salida ? s.fecha_salida.replace(/[^a-z0-9]/gi, '-') : 'no-date';
+  // Carpeta personalizada con el nombre e identificador de la salida
+  const safeSalida = (s.id || 'salida').toLowerCase().replace(/[^a-z0-9_-]/gi, '-');
+  const safeTour = (s.tour_nombre || 'tour').toLowerCase().replace(/[^a-z0-9_-]/gi, '-').replace(/-+/g, '-');
+  const folderDate = s.fecha_salida ? s.fecha_salida.replace(/[^a-z0-9_-]/gi, '-') : '';
+  const folderName = folderDate ? `${safeSalida}_${safeTour}_${folderDate}` : `${safeSalida}_${safeTour}`;
   
-  const fileName = `pasajeros/${s.id || 'salida'}_${safeTour}_${folderDate}/${safeName}_${Date.now()}.${ext}`;
+  // Nombre del archivo con el nombre respectivo del pasajero
+  const safeName = name ? name.toLowerCase().replace(/[^a-z0-9_-]/gi, '-').replace(/-+/g, '-') : ('pasajero_' + Date.now());
+  const ext = (file.name && file.name.includes('.')) ? file.name.split('.').pop().toLowerCase() : 'jpg';
+  
+  const fileName = `pasajeros/${folderName}/${safeName}.${ext}`;
   const renamedFile = new File([file], fileName, { type: file.type || 'image/jpeg' });
   
-  const btn = input.previousElementSibling;
+  const btn = input.previousElementSibling || document.querySelector('#pax-modal button');
   const oldText = btn ? btn.innerHTML : '';
   if (btn) {
     btn.innerHTML = '<i class="ph ph-spinner animate-spin"></i> Subiendo...';
@@ -1657,14 +1676,14 @@ window.uploadPaxPhoto = async function(input, sIdx) {
   
   try {
     const res = await r2Upload(renamedFile, null);
-    const url = (typeof res === 'object' && res && res.url) ? res.url : (res || '');
+    const url = (typeof res === 'object' && res && res.url) ? res.url : (res || `/media/${fileName}`);
     const fotoInput = document.getElementById('p-foto');
     if (fotoInput) {
       fotoInput.value = url;
       updateImgPreview('p-foto', 'p-foto-prev');
     }
   } catch(e) {
-    alert("Error al subir foto: " + e.message);
+    alert("Error al subir foto a la carpeta de la salida: " + e.message);
   } finally {
     if (btn) {
       btn.innerHTML = oldText;
