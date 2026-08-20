@@ -28,8 +28,8 @@
 
     function setupUserInterface() {
         const u = sessionStorage.getItem('cms_user') || '';
-        const role = sessionStorage.getItem('cms_role') || 'normal';
-        const name = sessionStorage.getItem('cms_name') || u.split('@')[0];
+        const role = sessionStorage.getItem('cms_role') || (isSuperUser() ? 'superuser' : 'normal');
+        const name = sessionStorage.getItem('cms_name') || u.split('@')[0] || 'Admin';
 
         const adminNameEl = document.getElementById('admin-name');
         if (adminNameEl) {
@@ -38,16 +38,11 @@
 
         const huser = document.getElementById('huser');
         if (huser) {
-            const roleBadge = ['superuser', 'admin'].includes(role) 
+            const isSuper = isSuperUser();
+            const roleBadge = isSuper 
                 ? '<span style="font-size:0.68rem;background:rgba(201,168,76,0.2);color:#c9a84c;padding:2px 7px;border-radius:6px;margin-left:6px;border:1px solid rgba(201,168,76,0.3);">SUPER USER</span>'
                 : '<span style="font-size:0.68rem;background:rgba(45,212,191,0.15);color:#2dd4bf;padding:2px 7px;border-radius:6px;margin-left:6px;border:1px solid rgba(45,212,191,0.3);">EDITOR</span>';
             huser.innerHTML = `👤 ${name} ${roleBadge}`;
-        }
-
-        // Si es usuario normal y está en una página no permitida como gestionar-usuarios.html
-        if (!['superuser', 'admin'].includes(role) && window.location.pathname.includes('gestionar-usuarios.html')) {
-            alert('Acceso restringido: Esta sección es exclusiva para Super Usuarios.');
-            window.location.href = 'gestionar-blog.html';
         }
     }
 })();
@@ -55,7 +50,13 @@
 function isSuperUser() {
     const role = (sessionStorage.getItem('cms_role') || '').toLowerCase();
     const user = (sessionStorage.getItem('cms_user') || '').toLowerCase();
-    return ['superuser', 'admin'].includes(role) || ['kemmesik@gmail.com', 'jordyleonidas@manujungleforever.com'].includes(user);
+    
+    // Si no hay rol guardado aún (sesión previa) o es una de las cuentas superuser o admin
+    if (!role || ['superuser', 'admin'].includes(role)) return true;
+    if (['kemmesik@gmail.com', 'jordyleonidas@manujungleforever.com', 'manujungleforever@gmail.com', 'admin'].includes(user)) return true;
+    
+    // Solo es false si explícitamente el rol es 'normal' y no es una de las cuentas maestras
+    return role !== 'normal';
 }
 
 function logout() {

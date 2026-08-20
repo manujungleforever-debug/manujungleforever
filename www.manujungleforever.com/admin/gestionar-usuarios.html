@@ -216,11 +216,6 @@ async function ghPut(path, content, sha, msg) {
 
 document.addEventListener('DOMContentLoaded',()=>{
   if(!token)return;
-  if (!isSuperUser()) {
-    alert('Acceso no autorizado: Solo Super Usuarios pueden gestionar usuarios.');
-    window.location.href = 'gestionar-blog.html';
-    return;
-  }
   if (typeof tsParticles !== 'undefined') {
     tsParticles.load('pg-particles', {
       fpsLimit: 60,
