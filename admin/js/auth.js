@@ -58,8 +58,6 @@
 
         const isSuper = isSuperUser();
         const initial = (name || u || 'A').charAt(0).toUpperCase();
-        const roleLabel = isSuper ? 'SUPER USER' : 'EDITOR';
-        const roleClass = isSuper ? 'superuser' : 'normal';
 
         const avatarMarkup = avatar 
             ? `<img src="${avatar}" alt="${name}" onerror="this.outerHTML='<span class=\'initial-avatar\'>${initial}</span>';">`
@@ -68,10 +66,9 @@
         const huser = document.getElementById('huser');
         if (huser) {
             huser.innerHTML = `
-                <div class="user-pill ${isSuper ? 'superuser' : ''}">
+                <div class="user-pill ${isSuper ? 'superuser' : ''}" title="${isSuper ? 'Super User - ' + u : 'Editor - ' + u}">
                     ${avatarMarkup}
-                    <span class="user-pill-name" title="${u}">${name}</span>
-                    <span class="badge ${roleClass}">${roleLabel}</span>
+                    <span class="user-pill-name">${name}</span>
                 </div>
             `;
         }

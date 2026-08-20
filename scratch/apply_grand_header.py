@@ -1,6 +1,125 @@
 import glob, os, re
 
-# Grand single-line header CSS with large 110px logo
+# 1. Update auth.js without the role badge in the topbar pill
+auth_js_content = """(function () {
+    const token = sessionStorage.getItem('cms_token');
+    const isLoginScreen = window.location.href.includes('index.html') || window.location.pathname === '/admin/' || window.location.pathname.endsWith('/admin');
+
+    if (!token) { 
+        if (!isLoginScreen) {
+            window.location.href = 'index.html'; 
+        } else {
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', () => { document.body.style.opacity = '1'; });
+            } else {
+                if (document.body) document.body.style.opacity = '1';
+            }
+        }
+        return; 
+    }
+    
+    // Auth success - show body
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => { 
+            document.body.style.opacity = '1';
+            setupUserInterface();
+        });
+    } else {
+        if (document.body) document.body.style.opacity = '1';
+        setupUserInterface();
+    }
+
+    async function setupUserInterface() {
+        const u = (sessionStorage.getItem('cms_user') || '').toLowerCase().trim();
+        const role = sessionStorage.getItem('cms_role') || (isSuperUser() ? 'superuser' : 'normal');
+        let name = sessionStorage.getItem('cms_name') || u.split('@')[0] || 'Admin';
+        let avatar = sessionStorage.getItem('cms_avatar') || '';
+
+        // Siempre sincronizar con la foto más reciente de data/users.json
+        if (u) {
+            try {
+                const r = await fetch('/data/users.json?t=' + Date.now());
+                if (r.ok) {
+                    const data = await r.json();
+                    const found = (data.users || []).find(x => (x.email || '').toLowerCase().trim() === u);
+                    if (found) {
+                        if (found.foto) {
+                            avatar = found.foto;
+                            sessionStorage.setItem('cms_avatar', avatar);
+                        }
+                        if (found.name) {
+                            name = found.name;
+                            sessionStorage.setItem('cms_name', name);
+                        }
+                        if (found.role) {
+                            sessionStorage.setItem('cms_role', found.role);
+                        }
+                    }
+                }
+            } catch(e) {}
+        }
+
+        const isSuper = isSuperUser();
+        const initial = (name || u || 'A').charAt(0).toUpperCase();
+
+        const avatarMarkup = avatar 
+            ? `<img src="${avatar}" alt="${name}" onerror="this.outerHTML='<span class=\\'initial-avatar\\'>${initial}</span>';">`
+            : `<span class="initial-avatar">${initial}</span>`;
+
+        const huser = document.getElementById('huser');
+        if (huser) {
+            huser.innerHTML = `
+                <div class="user-pill ${isSuper ? 'superuser' : ''}" title="${isSuper ? 'Super User - ' + u : 'Editor - ' + u}">
+                    ${avatarMarkup}
+                    <span class="user-pill-name">${name}</span>
+                </div>
+            `;
+        }
+
+        const adminNameEl = document.getElementById('admin-name');
+        if (adminNameEl) {
+            adminNameEl.textContent = name;
+        }
+    }
+
+    window.setupUserInterface = setupUserInterface;
+})();
+
+function isSuperUser() {
+    const role = (sessionStorage.getItem('cms_role') || '').toLowerCase();
+    const user = (sessionStorage.getItem('cms_user') || '').toLowerCase();
+    
+    if (!role || ['superuser', 'admin'].includes(role)) return true;
+    if (['kemmesik@gmail.com', 'jordyleonidas@manujungleforever.com', 'manujungleforever@gmail.com', 'admin'].includes(user)) return true;
+    
+    return role !== 'normal';
+}
+
+function logout() {
+    sessionStorage.clear();
+    window.location.href = 'index.html';
+}
+
+async function sha256(str) {
+    const enc = new TextEncoder();
+    const data = enc.encode(str + 'mjf_salt_2026');
+    const hash = await crypto.subtle.digest('SHA-256', data);
+    return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+window.isSuperUser = isSuperUser;
+window.logout = logout;
+window.sha256 = sha256;
+"""
+
+with open('admin/js/auth.js', 'w', encoding='utf-8') as f:
+    f.write(auth_js_content)
+with open('www.manujungleforever.com/admin/js/auth.js', 'w', encoding='utf-8') as f:
+    f.write(auth_js_content)
+
+print("Updated auth.js")
+
+# 2. Grand single-line header CSS with extra breathing room
 grand_header_css = """
 /* Grand single-line header styles with large logo */
 header {
@@ -21,7 +140,7 @@ header .hw, header .header-wrap {
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
-    gap: 24px !important;
+    gap: 20px !important;
     flex-wrap: nowrap !important;
     box-sizing: border-box !important;
     min-height: 115px !important;
@@ -107,7 +226,7 @@ nav.mnav a:hover, nav.mnav a.active {
 .user-sec {
     display: flex !important;
     align-items: center !important;
-    gap: 14px !important;
+    gap: 12px !important;
     margin-left: auto !important;
     flex-shrink: 0 !important;
     white-space: nowrap !important;
@@ -115,10 +234,10 @@ nav.mnav a:hover, nav.mnav a.active {
 .user-pill {
     display: inline-flex !important;
     align-items: center !important;
-    gap: 12px !important;
+    gap: 10px !important;
     background: rgba(11, 38, 35, 0.75) !important;
     border: 1.5px solid rgba(45, 212, 191, 0.3) !important;
-    padding: 6px 16px 6px 6px !important;
+    padding: 4px 16px 4px 4px !important;
     border-radius: 40px !important;
     font-size: 0.96rem !important;
     font-weight: 600 !important;
@@ -130,8 +249,8 @@ nav.mnav a:hover, nav.mnav a.active {
     box-shadow: 0 4px 22px rgba(201, 168, 76, 0.22) !important;
 }
 .user-pill img {
-    width: 46px !important;
-    height: 46px !important;
+    width: 44px !important;
+    height: 44px !important;
     border-radius: 50% !important;
     object-fit: cover !important;
     border: 2px solid #2dd4bf !important;
@@ -143,8 +262,8 @@ nav.mnav a:hover, nav.mnav a.active {
     box-shadow: 0 0 14px rgba(201, 168, 76, 0.5) !important;
 }
 .user-pill .initial-avatar {
-    width: 46px !important;
-    height: 46px !important;
+    width: 44px !important;
+    height: 44px !important;
     border-radius: 50% !important;
     background: rgba(45, 212, 191, 0.2) !important;
     color: #2dd4bf !important;
@@ -152,7 +271,7 @@ nav.mnav a:hover, nav.mnav a.active {
     align-items: center !important;
     justify-content: center !important;
     font-weight: 700 !important;
-    font-size: 1.2rem !important;
+    font-size: 1.15rem !important;
     border: 2px solid #2dd4bf !important;
 }
 .user-pill.superuser .initial-avatar {
@@ -164,26 +283,7 @@ nav.mnav a:hover, nav.mnav a.active {
     font-size: 0.98rem !important;
     font-weight: 600 !important;
     color: #fff !important;
-    max-width: 160px !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
     white-space: nowrap !important;
-}
-.badge.superuser {
-    background: rgba(201, 168, 76, 0.25) !important;
-    color: #fbbf24 !important;
-    border: 1px solid rgba(201, 168, 76, 0.5) !important;
-    font-size: 0.74rem !important;
-    padding: 4px 10px !important;
-    border-radius: 14px !important;
-}
-.badge.normal {
-    background: rgba(45, 212, 191, 0.2) !important;
-    color: #2dd4bf !important;
-    border: 1px solid rgba(45, 212, 191, 0.4) !important;
-    font-size: 0.74rem !important;
-    padding: 4px 10px !important;
-    border-radius: 14px !important;
 }
 .btn-logout {
     background: linear-gradient(135deg, #ef4444, #b91c1c) !important;
@@ -198,7 +298,7 @@ nav.mnav a:hover, nav.mnav a.active {
     display: inline-flex !important;
     align-items: center !important;
     gap: 8px !important;
-    box-shadow: 0 4px 16px rgba(239, 68, 68, 0.4) !important;
+    box-shadow: 0 4px 16px rgba(239, 68, 68, 0.35) !important;
     white-space: nowrap !important;
 }
 .btn-logout:hover {
@@ -223,7 +323,10 @@ for d in admin_dirs:
         # Inject CSS before </head>
         content = content.replace('</head>', f'<style>\n{grand_header_css}\n</style>\n</head>')
         
+        # Ensure auth.js has cache bust v=6
+        content = re.sub(r'src="js/auth\.js(\?v=\d+)?"', 'src="js/auth.js?v=6"', content)
+        
         with open(fpath, 'w', encoding='utf-8') as f:
             f.write(content)
-        print(f"Applied 110px logo and grand header in {fpath}")
+        print(f"Updated header in {fpath}")
 
