@@ -491,6 +491,108 @@
 
 </style>
   <link rel="stylesheet" href="css/thinking-orb.css">
+<style>
+
+/* Single-line header styles */
+header .hw, header .header-wrap {
+    max-width: 1560px !important;
+    margin: 0 auto !important;
+    padding: 10px 24px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+    flex-wrap: nowrap !important;
+}
+.logo-wrap img, .logo-img-wrap img {
+    height: 42px !important;
+    width: auto !important;
+    max-width: none !important;
+    display: block !important;
+}
+.logo-brand {
+    flex-shrink: 0 !important;
+}
+nav.mnav {
+    display: flex !important;
+    align-items: center !important;
+    gap: 3px !important;
+    flex-wrap: nowrap !important;
+    flex: 1 1 auto !important;
+    justify-content: center !important;
+    overflow-x: auto !important;
+    scrollbar-width: none !important;
+    margin: 0 8px !important;
+}
+nav.mnav::-webkit-scrollbar { display: none; }
+nav.mnav a {
+    font-size: 0.78rem !important;
+    font-weight: 500 !important;
+    padding: 6px 9px !important;
+    border-radius: 8px !important;
+    white-space: nowrap !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+    flex-shrink: 0 !important;
+}
+.user-sec {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    margin-left: auto !important;
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+}
+.user-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 3px 10px 3px 4px;
+    border-radius: 24px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #f1f5f9;
+}
+.user-pill img {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1.5px solid var(--teal, #2dd4bf);
+    display: block;
+}
+.user-pill .initial-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(45, 212, 191, 0.2);
+    color: var(--teal, #2dd4bf);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.8rem;
+    border: 1.5px solid var(--teal, #2dd4bf);
+}
+.user-pill.superuser .initial-avatar {
+    background: rgba(201, 168, 76, 0.2);
+    color: #fbbf24;
+    border-color: #c9a84c;
+}
+.user-pill.superuser img {
+    border-color: #c9a84c;
+}
+.user-pill-name {
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+</style>
 </head>
 <body>
 
@@ -504,11 +606,11 @@
                 <a href="/" class="logo-brand" title="Ir al Home de Manu Jungle Forever">
                     <div class="logo-img-wrap">
                         <div class="logo-glow"></div>
-                        <img src="../assets/img/logo.png" alt="Manu Jungle Logo" style="height: 120px; width: auto; max-width: none;">
+                        <img src="../assets/img/logo.png" alt="Manu Jungle Logo" style="height: 42px; width: auto;">
                     </div>
                 </a>
                 
-                <nav class="mnav" style="display:flex;align-items:center;gap:3px;flex-wrap:wrap;flex:1;margin-left:24px;">
+                <nav class="mnav" style="display:flex;align-items:center;gap:3px;flex-wrap:nowrap;flex:1;margin-left:24px;">
                     <a href="panel.html" class="active"><i class="ph ph-house"></i> Panel</a>
                     <a href="gestionar-tours.html"><i class="ph ph-map-trifold"></i> Tours</a>
                     <a href="gestionar-blog.html"><i class="ph ph-pencil"></i> Blog</a>

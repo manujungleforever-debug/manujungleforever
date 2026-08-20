@@ -56,14 +56,14 @@ body {
 input,textarea,select,button { font-family:inherit; }
 a { color:var(--teal); }
 header { position:sticky; top:0; z-index:200; background:var(--hbg); backdrop-filter:blur(14px); border-bottom:1px solid rgba(255,255,255,0.07); box-shadow:0 4px 24px rgba(0,0,0,.4); }
-.hw { max-width:1400px; margin:0 auto; padding: 20px 30px; display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+.hw { max-width:1400px; margin:0 auto; padding: 20px 30px; display:flex; align-items:center; gap:14px; flex-wrap:nowrap; }
 .logo-brand { display:flex; align-items:center; gap:10px; text-decoration:none; flex-shrink:0; }
 .logo-wrap  { position:relative; display:flex; align-items:center; }
 .logo-glow  { position:absolute; inset:-5px; background:var(--teal); filter:blur(12px); opacity:.22; border-radius:50%; transition:.3s; }
 .logo-wrap img { height:40px; width:auto; position:relative; z-index:2; }
 .btn-panel { display:inline-flex; align-items:center; gap:8px; background:rgba(45,212,191,0.12); border:1px solid rgba(45,212,191,0.3); color:var(--teal); padding:8px 18px; border-radius:10px; font-size:.83rem; font-weight:700; text-decoration:none; white-space:nowrap; transition:.25s; flex-shrink:0; }
 .btn-panel:hover { background:var(--teal); color:#030807; box-shadow:0 0 14px var(--teal-g); }
-nav.mnav { display:flex; align-items:center; gap:3px; flex-wrap:wrap; flex:1; }
+nav.mnav { display:flex; align-items:center; gap:3px; flex-wrap:nowrap; flex:1; }
 nav.mnav a { font-size:.8rem; font-weight:500; color:var(--muted); text-decoration:none; padding:6px 11px; border-radius:8px; transition:.25s; white-space:nowrap; display:flex; align-items:center; gap:5px; }
 nav.mnav a:hover, nav.mnav a.active { color:var(--teal); background:rgba(45,212,191,.09); }
 .user-sec { display:flex; align-items:center; gap:10px; margin-left:auto; }
@@ -86,7 +86,7 @@ main { flex-grow:1; max-width:1400px; width:100%; margin:0 auto; padding:28px 24
 .li { background:var(--card); backdrop-filter:blur(8px); border:1px solid var(--bdr); border-radius:14px; padding:16px 20px; display:flex; align-items:center; justify-content:space-between; gap:16px; width:100%; box-sizing:border-box; transition:all .25s ease; }
 .li:hover { border-color:var(--bdr-h); transform:translateY(-1px); box-shadow:0 8px 24px rgba(45,212,191,.06); }
 .li-info { flex:1 1 0%; min-width:0; }
-.li-info h3 { font-size:1rem; font-weight:600; color:var(--fg); display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+.li-info h3 { font-size:1rem; font-weight:600; color:var(--fg); display:flex; align-items:center; gap:10px; flex-wrap:nowrap; }
 .li-info span { font-size:.8rem; color:var(--muted); display:block; margin-top:3px; }
 .li-actions { display:flex; gap:8px; align-items:center; flex-shrink:0; }
 
@@ -108,7 +108,7 @@ main { flex-grow:1; max-width:1400px; width:100%; margin:0 auto; padding:28px 24
 .ff select option { background:#0a1f1b; color:var(--fg); }
 .hint { font-size:.72rem; color:var(--muted); line-height:1.4; margin-top:2px; }
 
-.avatar-upload-card { display:flex; align-items:center; gap:20px; flex-wrap:wrap; background:rgba(0,0,0,0.25); border:1px solid rgba(255,255,255,0.06); padding:16px; border-radius:14px; }
+.avatar-upload-card { display:flex; align-items:center; gap:20px; flex-wrap:nowrap; background:rgba(0,0,0,0.25); border:1px solid rgba(255,255,255,0.06); padding:16px; border-radius:14px; }
 .avatar-preview-wrap { position:relative; width:88px; height:88px; border-radius:50%; flex-shrink:0; overflow:hidden; border:2px solid var(--teal); box-shadow:0 0 20px var(--teal-g); background:#061a15; display:flex; align-items:center; justify-content:center; }
 .avatar-preview-wrap.superuser { border-color:var(--gold); box-shadow:0 0 20px var(--gold-g); }
 .avatar-preview-img { width:100%; height:100%; object-fit:cover; display:none; }
@@ -146,6 +146,108 @@ main { flex-grow:1; max-width:1400px; width:100%; margin:0 auto; padding:28px 24
 .gallery-item img { width:100%; height:100%; object-fit:cover; }
 </style>
 <link rel="stylesheet" href="css/thinking-orb.css">
+<style>
+
+/* Single-line header styles */
+header .hw, header .header-wrap {
+    max-width: 1560px !important;
+    margin: 0 auto !important;
+    padding: 10px 24px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+    flex-wrap: nowrap !important;
+}
+.logo-wrap img, .logo-img-wrap img {
+    height: 42px !important;
+    width: auto !important;
+    max-width: none !important;
+    display: block !important;
+}
+.logo-brand {
+    flex-shrink: 0 !important;
+}
+nav.mnav {
+    display: flex !important;
+    align-items: center !important;
+    gap: 3px !important;
+    flex-wrap: nowrap !important;
+    flex: 1 1 auto !important;
+    justify-content: center !important;
+    overflow-x: auto !important;
+    scrollbar-width: none !important;
+    margin: 0 8px !important;
+}
+nav.mnav::-webkit-scrollbar { display: none; }
+nav.mnav a {
+    font-size: 0.78rem !important;
+    font-weight: 500 !important;
+    padding: 6px 9px !important;
+    border-radius: 8px !important;
+    white-space: nowrap !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+    flex-shrink: 0 !important;
+}
+.user-sec {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    margin-left: auto !important;
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+}
+.user-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 3px 10px 3px 4px;
+    border-radius: 24px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #f1f5f9;
+}
+.user-pill img {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1.5px solid var(--teal, #2dd4bf);
+    display: block;
+}
+.user-pill .initial-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(45, 212, 191, 0.2);
+    color: var(--teal, #2dd4bf);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.8rem;
+    border: 1.5px solid var(--teal, #2dd4bf);
+}
+.user-pill.superuser .initial-avatar {
+    background: rgba(201, 168, 76, 0.2);
+    color: #fbbf24;
+    border-color: #c9a84c;
+}
+.user-pill.superuser img {
+    border-color: #c9a84c;
+}
+.user-pill-name {
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+</style>
 </head>
 <body>
 <script src="js/auth.js?v=3"></script>
@@ -153,7 +255,7 @@ main { flex-grow:1; max-width:1400px; width:100%; margin:0 auto; padding:28px 24
 <header>
   <div class="hw">
     <a href="/" class="logo-brand" title="Ir al Home">
-      <div class="logo-wrap"><div class="logo-glow"></div><img src="../assets/img/logo.png" alt="Logo" style="height: 120px; width: auto;"></div>
+      <div class="logo-wrap"><div class="logo-glow"></div><img src="../assets/img/logo.png" alt="Logo" style="height: 42px; width: auto;"></div>
     </a>
     <a href="panel.html" class="btn-panel"><i class="ph ph-arrow-left"></i> Volver al Panel</a>
     <nav class="mnav">
@@ -378,7 +480,7 @@ async function viewUsers() {
     const normalCount = users.filter(u => u.role === 'normal').length;
 
     let html = `
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:14px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:nowrap;gap:14px;">
         <div style="display:flex;align-items:center;">
           <div class="btn-card-icon card-icon-users"><i class="ph ph-users-three"></i></div>
           <div>
@@ -537,7 +639,7 @@ window.editUser = function(idx) {
               <label>Ruta o URL de Imagen</label>
               <input id="u-foto" value="${esc(foto)}" placeholder="https://... o sube una imagen" oninput="updateAvatarPreview('u-foto', 'u-foto-prev')">
             </div>
-            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <div style="display:flex;gap:8px;flex-wrap:nowrap;">
               <button type="button" class="btn-primary" id="btn-upload-avatar" onclick="triggerUserAvatarUpload()" style="background:#0284c7;color:white;border:none;" title="Subir desde tu dispositivo"><i class="ph ph-upload-simple"></i> Subir Foto</button>
               <button type="button" class="btn-primary" onclick="takeUserAvatarPhoto()" style="background:var(--teal);color:#030807;border:none;" title="Tomar foto con la cámara"><i class="ph ph-camera"></i> Tomar Foto</button>
               <button type="button" class="btn-secondary" onclick="pickImage('u-foto', 'u-foto-prev')" title="Elegir de galería R2"><i class="ph ph-image"></i> Galería</button>

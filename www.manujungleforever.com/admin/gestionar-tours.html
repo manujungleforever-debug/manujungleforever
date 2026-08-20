@@ -89,7 +89,7 @@ body {
 input,textarea,select,button { font-family:inherit; }
 a { color:var(--teal); }
 header { position:sticky; top:0; z-index:200; background:var(--hbg); backdrop-filter:blur(14px); border-bottom:1px solid rgba(255,255,255,0.07); box-shadow:0 4px 24px rgba(0,0,0,.4); }
-.hw { max-width:1400px; margin:0 auto; padding: 20px 30px; display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+.hw { max-width:1400px; margin:0 auto; padding: 20px 30px; display:flex; align-items:center; gap:14px; flex-wrap:nowrap; }
 .logo-brand { display:flex; align-items:center; gap:10px; text-decoration:none; flex-shrink:0; }
 .logo-wrap  { position:relative; display:flex; align-items:center; }
 .logo-glow  { position:absolute; inset:-5px; background:var(--teal); filter:blur(12px); opacity:.22; border-radius:50%; transition:.3s; }
@@ -98,7 +98,7 @@ header { position:sticky; top:0; z-index:200; background:var(--hbg); backdrop-fi
 .brand-name { font-weight:700; font-size:.9rem; letter-spacing:2px; text-transform:uppercase; background:linear-gradient(to right,var(--teal),var(--gold)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
 .btn-panel { display:inline-flex; align-items:center; gap:8px; background:rgba(45,212,191,0.12); border:1px solid rgba(45,212,191,0.3); color:var(--teal); padding:8px 18px; border-radius:10px; font-size:.83rem; font-weight:700; text-decoration:none; white-space:nowrap; transition:.25s; flex-shrink:0; }
 .btn-panel:hover { background:var(--teal); color:#030807; box-shadow:0 0 14px var(--teal-g); }
-nav.mnav { display:flex; align-items:center; gap:3px; flex-wrap:wrap; flex:1; }
+nav.mnav { display:flex; align-items:center; gap:3px; flex-wrap:nowrap; flex:1; }
 nav.mnav a { font-size:.8rem; font-weight:500; color:var(--muted); text-decoration:none; padding:6px 11px; border-radius:8px; transition:.25s; white-space:nowrap; display:flex; align-items:center; gap:5px; }
 nav.mnav a i { font-size:1.1rem; }
 nav.mnav a:hover, nav.mnav a.active { color:var(--teal); background:rgba(45,212,191,.09); }
@@ -148,7 +148,7 @@ main { flex-grow:1; max-width:1400px; width:100%; margin:0 auto; padding:28px 24
 .save-status.ok  { color:var(--green); }
 .save-status.err { color:var(--danger); }
 .md-wrap { border:1px solid rgba(255,255,255,.1); border-radius:10px; overflow:hidden; }
-.md-toolbar { background:rgba(0,0,0,.22); border-bottom:1px solid rgba(255,255,255,.07); padding:6px; display:flex; gap:5px; flex-wrap:wrap; }
+.md-toolbar { background:rgba(0,0,0,.22); border-bottom:1px solid rgba(255,255,255,.07); padding:6px; display:flex; gap:5px; flex-wrap:nowrap; }
 .md-toolbar button { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08); color:var(--fg); padding:5px 10px; border-radius:5px; cursor:pointer; font-size:.76rem; transition:.25s; }
 .md-toolbar button:hover { background:var(--teal); color:#030807; }
 .tgl-wrap { display:flex; align-items:center; gap:10px; }
@@ -197,12 +197,12 @@ code { background:rgba(45,212,191,.1); color:var(--teal); padding:2px 6px; borde
     nav.mnav { overflow-x:auto; white-space:nowrap; padding-bottom:4px; -webkit-overflow-scrolling:touch; }
     nav.mnav::-webkit-scrollbar { display:none; }
     main { padding:16px 12px 100px; }
-    .li,.blog-card-li { flex-wrap:wrap; padding:12px 14px; gap:10px; }
+    .li,.blog-card-li { flex-wrap:nowrap; padding:12px 14px; gap:10px; }
     .blog-thumb { width:70px; height:52px; }
     .li-info { flex:1 1 50%; min-width:0; }
     .li-actions { width:100%; justify-content:flex-end; border-top:1px solid rgba(255,255,255,0.06); padding-top:8px; margin-top:4px; }
     .grow2,.grow3 { grid-template-columns:1fr; }
-    .save-bar { padding:10px 16px; flex-wrap:wrap; gap:8px; }
+    .save-bar { padding:10px 16px; flex-wrap:nowrap; gap:8px; }
     .save-status { width:100%; margin-bottom:2px; }
 }
 
@@ -248,6 +248,108 @@ code { background:rgba(45,212,191,.1); color:var(--teal); padding:2px 6px; borde
 
 </style>
   <link rel="stylesheet" href="css/thinking-orb.css">
+<style>
+
+/* Single-line header styles */
+header .hw, header .header-wrap {
+    max-width: 1560px !important;
+    margin: 0 auto !important;
+    padding: 10px 24px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+    flex-wrap: nowrap !important;
+}
+.logo-wrap img, .logo-img-wrap img {
+    height: 42px !important;
+    width: auto !important;
+    max-width: none !important;
+    display: block !important;
+}
+.logo-brand {
+    flex-shrink: 0 !important;
+}
+nav.mnav {
+    display: flex !important;
+    align-items: center !important;
+    gap: 3px !important;
+    flex-wrap: nowrap !important;
+    flex: 1 1 auto !important;
+    justify-content: center !important;
+    overflow-x: auto !important;
+    scrollbar-width: none !important;
+    margin: 0 8px !important;
+}
+nav.mnav::-webkit-scrollbar { display: none; }
+nav.mnav a {
+    font-size: 0.78rem !important;
+    font-weight: 500 !important;
+    padding: 6px 9px !important;
+    border-radius: 8px !important;
+    white-space: nowrap !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+    flex-shrink: 0 !important;
+}
+.user-sec {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    margin-left: auto !important;
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+}
+.user-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 3px 10px 3px 4px;
+    border-radius: 24px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #f1f5f9;
+}
+.user-pill img {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1.5px solid var(--teal, #2dd4bf);
+    display: block;
+}
+.user-pill .initial-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(45, 212, 191, 0.2);
+    color: var(--teal, #2dd4bf);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.8rem;
+    border: 1.5px solid var(--teal, #2dd4bf);
+}
+.user-pill.superuser .initial-avatar {
+    background: rgba(201, 168, 76, 0.2);
+    color: #fbbf24;
+    border-color: #c9a84c;
+}
+.user-pill.superuser img {
+    border-color: #c9a84c;
+}
+.user-pill-name {
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+</style>
 </head>
 <body>
 <script src="js/auth.js?v=2"></script>
@@ -255,7 +357,7 @@ code { background:rgba(45,212,191,.1); color:var(--teal); padding:2px 6px; borde
 <header>
   <div class="hw">
     <a href="/" class="logo-brand" title="Ir al Home">
-      <div class="logo-wrap"><div class="logo-glow"></div><img src="../assets/img/logo.png" alt="Logo" style="height: 120px; width: auto; max-width: none;"></div>
+      <div class="logo-wrap"><div class="logo-glow"></div><img src="../assets/img/logo.png" alt="Logo" style="height: 42px; width: auto;"></div>
     </a>
     <a href="panel.html" class="btn-panel"><i class="ph ph-arrow-left"></i> Volver al Panel</a>
     <nav class="mnav">
@@ -961,7 +1063,7 @@ async function viewBlog() {
             <img src="${imgSrc}" alt="${esc(p.title)}" onerror="this.src='../assets/img/hero.png'">
           </div>
           <div class="li-info">
-            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;flex-wrap:wrap;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;flex-wrap:nowrap;">
               <span class="badge ${isPub ? 'on' : 'warn'}">${isPub ? '✅ PUBLICADO' : '📝 BORRADOR'}</span>
               <span class="badge" style="background:rgba(45,212,191,0.12);color:var(--teal);border:1px solid rgba(45,212,191,0.25);">🏷️ ${esc(p.category || 'Wildlife')}</span>
               <span style="font-size:0.75rem;color:var(--muted);display:inline-flex;align-items:center;gap:4px;"><i class="ph ph-calendar"></i> ${p.date || '2026-08-16'}</span>
@@ -1338,7 +1440,7 @@ async function viewTours() {
       const img = t.imagen_hero || '../assets/img/hero.png';
       
       htmlList += `
-      <div style="display:flex; flex-wrap:wrap; gap:16px; align-items:center; background:rgba(17,24,39,0.5); border:1px solid rgba(255,255,255,0.05); border-radius:12px; padding:12px; transition:all 0.2s;" onmouseover="this.style.borderColor='rgba(16,185,129,0.5)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.05)'">
+      <div style="display:flex; flex-wrap:nowrap; gap:16px; align-items:center; background:rgba(17,24,39,0.5); border:1px solid rgba(255,255,255,0.05); border-radius:12px; padding:12px; transition:all 0.2s;" onmouseover="this.style.borderColor='rgba(16,185,129,0.5)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.05)'">
         
         <div style="position:relative; width:80px; height:80px; flex-shrink:0;">
           <img src="${img}" style="width:100%; height:100%; object-fit:cover; border-radius:8px; border:1px solid rgba(255,255,255,0.1);" onerror="this.src='../assets/img/hero.png'">
@@ -1355,7 +1457,7 @@ async function viewTours() {
           </div>
         </div>
         
-        <div style="flex: 2 1 300px; display:flex; gap:8px; flex-wrap:wrap; font-size:0.75rem;">
+        <div style="flex: 2 1 300px; display:flex; gap:8px; flex-wrap:nowrap; font-size:0.75rem;">
           <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); padding:4px 8px; border-radius:6px; color:#d1d5db; display:flex; align-items:center; gap:4px;">
             <i class="ph ph-moon"></i> ${t.duracion_dias}D / ${t.duracion_noches}N
           </div>
@@ -2199,7 +2301,7 @@ async function viewReclamos() {
     <p class="ps">Auditoría y exportación de quejas y reclamos legales.</p>
 
     <!-- Filtros tipo Wachicargo -->
-    <div style="background:var(--card);border:1px solid var(--bdr);border-radius:14px;padding:20px;margin-bottom:20px;display:flex;gap:15px;align-items:flex-end;flex-wrap:wrap;">
+    <div style="background:var(--card);border:1px solid var(--bdr);border-radius:14px;padding:20px;margin-bottom:20px;display:flex;gap:15px;align-items:flex-end;flex-wrap:nowrap;">
       <div style="flex:2;min-width:200px;">
         <label style="font-size:0.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;margin-bottom:6px;display:block;">Buscar</label>
         <div style="position:relative;">

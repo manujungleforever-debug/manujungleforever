@@ -26,40 +26,69 @@
         setupUserInterface();
     }
 
-    function setupUserInterface() {
+    async function setupUserInterface() {
         const u = sessionStorage.getItem('cms_user') || '';
         const role = sessionStorage.getItem('cms_role') || (isSuperUser() ? 'superuser' : 'normal');
-        const name = sessionStorage.getItem('cms_name') || u.split('@')[0] || 'Admin';
-        const avatar = sessionStorage.getItem('cms_avatar') || '';
+        let name = sessionStorage.getItem('cms_name') || u.split('@')[0] || 'Admin';
+        let avatar = sessionStorage.getItem('cms_avatar') || '';
+
+        // Si no tiene avatar en session, buscarlo en data/users.json
+        if (!avatar && u) {
+            try {
+                const r = await fetch('/data/users.json');
+                if (r.ok) {
+                    const data = await r.json();
+                    const found = (data.users || []).find(x => (x.email || '').toLowerCase() === u.toLowerCase());
+                    if (found) {
+                        if (found.foto) {
+                            avatar = found.foto;
+                            sessionStorage.setItem('cms_avatar', avatar);
+                        }
+                        if (found.name) {
+                            name = found.name;
+                            sessionStorage.setItem('cms_name', name);
+                        }
+                    }
+                }
+            } catch(e) {}
+        }
+
+        const isSuper = isSuperUser();
+        const initial = (name || u || 'A').charAt(0).toUpperCase();
+        const roleLabel = isSuper ? 'SUPER USER' : 'EDITOR';
+        const roleClass = isSuper ? 'superuser' : 'normal';
+
+        const avatarMarkup = avatar 
+            ? `<img src="${avatar}" alt="${name}" onerror="this.outerHTML='<span class=\'initial-avatar\'>${initial}</span>';">`
+            : `<span class="initial-avatar">${initial}</span>`;
+
+        const huser = document.getElementById('huser');
+        if (huser) {
+            huser.innerHTML = `
+                <div class="user-pill ${isSuper ? 'superuser' : ''}">
+                    ${avatarMarkup}
+                    <span class="user-pill-name" title="${u}">${name}</span>
+                    <span class="badge ${roleClass}">${roleLabel}</span>
+                </div>
+            `;
+        }
 
         const adminNameEl = document.getElementById('admin-name');
         if (adminNameEl) {
             adminNameEl.textContent = name;
         }
-
-        const huser = document.getElementById('huser');
-        if (huser) {
-            const isSuper = isSuperUser();
-            const roleBadge = isSuper 
-                ? '<span style="font-size:0.68rem;background:rgba(201,168,76,0.2);color:#c9a84c;padding:2px 7px;border-radius:6px;margin-left:6px;border:1px solid rgba(201,168,76,0.3);">SUPER USER</span>'
-                : '<span style="font-size:0.68rem;background:rgba(45,212,191,0.15);color:#2dd4bf;padding:2px 7px;border-radius:6px;margin-left:6px;border:1px solid rgba(45,212,191,0.3);">EDITOR</span>';
-            const avatarHtml = avatar 
-                ? `<img src="${avatar}" style="width:26px;height:26px;border-radius:50%;object-fit:cover;border:1.5px solid ${isSuper ? '#c9a84c' : '#2dd4bf'};vertical-align:middle;margin-right:6px;display:inline-block;">`
-                : `<span style="font-size:1rem;margin-right:4px;vertical-align:middle;">👤</span>`;
-            huser.innerHTML = `${avatarHtml}<span style="vertical-align:middle;">${name}</span> ${roleBadge}`;
-        }
     }
+
+    window.setupUserInterface = setupUserInterface;
 })();
 
 function isSuperUser() {
     const role = (sessionStorage.getItem('cms_role') || '').toLowerCase();
     const user = (sessionStorage.getItem('cms_user') || '').toLowerCase();
     
-    // Si no hay rol guardado aún (sesión previa) o es una de las cuentas superuser o admin
     if (!role || ['superuser', 'admin'].includes(role)) return true;
     if (['kemmesik@gmail.com', 'jordyleonidas@manujungleforever.com', 'manujungleforever@gmail.com', 'admin'].includes(user)) return true;
     
-    // Solo es false si explícitamente el rol es 'normal' y no es una de las cuentas maestras
     return role !== 'normal';
 }
 
