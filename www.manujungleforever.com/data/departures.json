@@ -14,7 +14,23 @@
       "estado": "disponible",
       "guia_asignado": "Jordy Llaqui",
       "notas": "Tour especializado en animales silvestres",
-      "pasajeros": []
+      "pasajeros": [
+        {
+          "nombre_completo": "Pablo Neruda",
+          "nacionalidad": "Chilena (CHI)",
+          "fecha_nacimiento": "1989-12-13",
+          "pasaporte": "46989140",
+          "whatsapp": "+51958113016",
+          "email": "manujungleforever@gmail.com",
+          "restricciones_dieteticas": "Vegano",
+          "condiciones_medicas": "Problemas Cardíacos",
+          "costo": 980,
+          "estado_pago": "reserva",
+          "monto_pagado": 600,
+          "saldo_pendiente": 380,
+          "foto": "/media/pasajeros/dep-012_7-day-deep-amazon-wildlife-quest_2026-08-31/pablo-neruda.jpg"
+        }
+      ]
     },
     {
       "tour_id": "6-day-wildlife-quest-blanquillo",
