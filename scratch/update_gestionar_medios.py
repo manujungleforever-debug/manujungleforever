@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+import shutil
+
+html_content = """<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -780,7 +782,7 @@ function updateGlobalStats() {
 
 // ── PARSEO DE CARPETAS Y ARCHIVOS ──
 function getFolderContents(path) {
-  const cleanPath = path.replace(/^\/+|\/+$/g, '');
+  const cleanPath = path.replace(/^\\/+|\\/+$/g, '');
   const folderMap = new Map();
   const files = [];
 
@@ -838,11 +840,11 @@ function filterAndSortFiles(files) {
   // Tipo
   const typeFilter = document.getElementById('filter-type')?.value || 'all';
   if (typeFilter === 'images') {
-    list = list.filter(f => /\.(jpe?g|png|webp|gif|svg)$/i.test(f.key));
+    list = list.filter(f => /\\.(jpe?g|png|webp|gif|svg)$/i.test(f.key));
   } else if (typeFilter === 'videos') {
-    list = list.filter(f => /\.(mp4|webm|mov)$/i.test(f.key));
+    list = list.filter(f => /\\.(mp4|webm|mov)$/i.test(f.key));
   } else if (typeFilter === 'docs') {
-    list = list.filter(f => /\.(pdf|docx?|xlsx?)$/i.test(f.key));
+    list = list.filter(f => /\\.(pdf|docx?|xlsx?)$/i.test(f.key));
   }
 
   // Ordenación
@@ -1052,7 +1054,7 @@ function renderTable(files) {
 function updateBreadcrumbs() {
   const container = document.getElementById('breadcrumbs-container');
   const btnUp = document.getElementById('btn-up-level');
-  const clean = currentPath.replace(/^\/+|\/+$/g, '');
+  const clean = currentPath.replace(/^\\/+|\\/+$/g, '');
 
   if (!clean) {
     btnUp.style.display = 'none';
@@ -1090,7 +1092,7 @@ window.navigateToFolder = function(path) {
 
 window.goUpOneLevel = function() {
   if (!currentPath) return;
-  const parts = currentPath.replace(/^\/+|\/+$/g, '').split('/');
+  const parts = currentPath.replace(/^\\/+|\\/+$/g, '').split('/');
   parts.pop();
   currentPath = parts.join('/');
   renderCurrentView();
@@ -1323,3 +1325,12 @@ document.addEventListener('DOMContentLoaded', () => {
 <script src="js/thinking-orb.js"></script>
 </body>
 </html>
+"""
+
+with open('www.manujungleforever.com/admin/gestionar-medios.html', 'w', encoding='utf-8') as f:
+    f.write(html_content)
+
+with open('admin/gestionar-medios.html', 'w', encoding='utf-8') as f:
+    f.write(html_content)
+
+print("Saved new gestionar-medios.html in both locations")
