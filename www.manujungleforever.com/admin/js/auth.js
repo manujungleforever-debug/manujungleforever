@@ -27,18 +27,18 @@
     }
 
     async function setupUserInterface() {
-        const u = sessionStorage.getItem('cms_user') || '';
+        const u = (sessionStorage.getItem('cms_user') || '').toLowerCase().trim();
         const role = sessionStorage.getItem('cms_role') || (isSuperUser() ? 'superuser' : 'normal');
         let name = sessionStorage.getItem('cms_name') || u.split('@')[0] || 'Admin';
         let avatar = sessionStorage.getItem('cms_avatar') || '';
 
-        // Si no tiene avatar en session, buscarlo en data/users.json
-        if (!avatar && u) {
+        // Siempre sincronizar con la foto más reciente de data/users.json
+        if (u) {
             try {
-                const r = await fetch('/data/users.json');
+                const r = await fetch('/data/users.json?t=' + Date.now());
                 if (r.ok) {
                     const data = await r.json();
-                    const found = (data.users || []).find(x => (x.email || '').toLowerCase() === u.toLowerCase());
+                    const found = (data.users || []).find(x => (x.email || '').toLowerCase().trim() === u);
                     if (found) {
                         if (found.foto) {
                             avatar = found.foto;
@@ -47,6 +47,9 @@
                         if (found.name) {
                             name = found.name;
                             sessionStorage.setItem('cms_name', name);
+                        }
+                        if (found.role) {
+                            sessionStorage.setItem('cms_role', found.role);
                         }
                     }
                 }
