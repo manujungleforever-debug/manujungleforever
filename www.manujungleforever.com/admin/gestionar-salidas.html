@@ -2406,7 +2406,7 @@ window.editDep = async function(idx) {
         nextNum = Math.max(...existingNums) + 1;
       }
     }
-    newId = String(nextNum).padStart(3, '0');
+    newId = `DEP-${String(nextNum).padStart(4, '0')}`;
   }
 
   const s= idx === -1 ? {tour_id:'', tour_nombre:'', id:newId, fecha_salida:'', fecha_regreso:'', precio:0, moneda:'USD', plazas_totales:8, plazas_minimas:2, plazas_disponibles:8, estado:'disponible', guia_asignado:'', notas:'', pasajeros:[]} : cData.salidas[idx];
