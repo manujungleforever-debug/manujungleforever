@@ -1929,10 +1929,13 @@ async function viewGlobal() {
       </div>
     </div>`);
   showSaveBar(async()=>{
+    const waNum = v('g-wa').replace(/[^0-9]/g,'');
+    const waFull = waNum ? `https://wa.me/${waNum}` : (d.redes_sociales?.whatsapp || d.social?.whatsapp || '#');
     const dd={...d,site_name:v('g-n'),slogan:v('g-sl'),tagline:v('g-tg'),email:v('g-em'),
-      whatsapp_number:v('g-wa'),phone_primary:v('g-t1'),phone_secondary:v('g-t2'),
+      whatsapp_number:waNum,phone_primary:v('g-t1'),phone_secondary:v('g-t2'),
       address:v('g-ad'),logo_main:v('g-logo'),favicon:v('g-fav'),copyright:v('g-cp'),
-      social:{...d.social,facebook:v('g-fb'),instagram:v('g-ig'),tripadvisor:v('g-ta'),youtube:v('g-yt'),tiktok:v('g-tt'),airbnb:v('g-ab')},
+      social:{...d.social,facebook:v('g-fb'),instagram:v('g-ig'),tripadvisor:v('g-ta'),youtube:v('g-yt'),tiktok:v('g-tt'),airbnb:v('g-ab'),whatsapp:waFull},
+      redes_sociales:{facebook:v('g-fb'),instagram:v('g-ig'),tripadvisor:v('g-ta'),airbnb:v('g-ab'),whatsapp:waFull,tiktok:v('g-tt')},
       seo:{...d.seo,default_title_suffix:v('g-ts'),default_description:v('g-td'),default_og_image:v('g-og')}};
     const res=await ghPut(cFile,JSON.stringify(dd,null,2),cSha,'update: global');
     cSha=res.sha; cData=dd;
