@@ -238,15 +238,15 @@ window.renderPage = function(page) {
     const sold = (s.plazas_totales||0) - (s.plazas_disponibles||0);
     const pct = s.plazas_totales ? Math.round((sold/s.plazas_totales)*100) : 0;
     
-    let badgeHtml = `<span style="background:var(--a);color:#fff;padding:5px 10px;border-radius:6px;font-size:.7rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;display:inline-block">Guaranteed</span>`;
+    let badgeHtml = `<span style="background:rgba(45,212,191,0.15);color:#0f766e;border:1px solid rgba(45,212,191,0.4);padding:4px 12px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;display:inline-flex;align-items:center;gap:5px"><i class="fas fa-check-circle" style="color:var(--a)"></i> Guaranteed</span>`;
     let barColor = `var(--a)`;
     
     if (s.estado === 'limitado' || pct >= 75) {
-      badgeHtml = `<span style="background:#f59e0b;color:#fff;padding:5px 10px;border-radius:6px;font-size:.7rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;display:inline-block">Last Spots</span>`;
+      badgeHtml = `<span style="background:rgba(245,158,11,0.15);color:#b45309;border:1px solid rgba(245,158,11,0.4);padding:4px 12px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;display:inline-flex;align-items:center;gap:5px"><i class="fas fa-fire" style="color:#f59e0b"></i> Last Spots</span>`;
       barColor = `#f59e0b`;
     }
     if (s.estado === 'completo' || pct >= 100) {
-      badgeHtml = `<span style="background:#ef4444;color:#fff;padding:5px 10px;border-radius:6px;font-size:.7rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;display:inline-block">Sold Out</span>`;
+      badgeHtml = `<span style="background:rgba(239,68,68,0.15);color:#b91c1c;border:1px solid rgba(239,68,68,0.4);padding:4px 12px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;display:inline-flex;align-items:center;gap:5px"><i class="fas fa-ban" style="color:#ef4444"></i> Sold Out</span>`;
       barColor = `#ef4444`;
     }
     
@@ -310,15 +310,15 @@ window.renderPage = function(page) {
         ${fomoAlertBadge}
         <div class="dep-c" style="height:100%;">
           <div style="padding:25px;flex:1;background:transparent;display:flex;flex-direction:column;">
-          <div style="display:flex;align-items:flex-start;margin-bottom:20px;position:relative;">
-            <div style="position:absolute; left:50%; transform:translateX(-50%); top:0;">${badgeHtml}</div>
-            <div style="margin-left:auto;text-align:right;margin-right:25px;position:relative;z-index:2;">
+          <div style="display:flex;justify-content:flex-end;margin-bottom:12px;position:relative;z-index:2;">
+            <div style="text-align:right;margin-right:25px;">
               <div style="font-size:1.5rem;font-weight:800;color:var(--g);line-height:1">$${s.precio} <span translate="no" style="font-size:.8rem;font-weight:600;color:var(--c)">${s.moneda||'USD'}</span></div>
               <div style="font-size:.7rem;color:var(--c);text-transform:uppercase;margin-top:4px">per person</div>
             </div>
           </div>
           
-          <h3 style="font-size:1.3rem;margin-bottom:12px;line-height:1.4;color:var(--g);font-weight:700"><a href="${tourSlug}" style="color:inherit;text-decoration:none">${s.tour_nombre}</a></h3>
+          <h3 style="font-size:1.3rem;margin-bottom:8px;line-height:1.4;color:var(--g);font-weight:700"><a href="${tourSlug}" style="color:inherit;text-decoration:none">${s.tour_nombre}</a></h3>
+          <div style="margin-bottom:18px;">${badgeHtml}</div>
           
           <div style="color:var(--g);font-size:1.05rem;font-weight:600;margin-bottom:20px;display:flex;align-items:center;gap:10px;background:rgba(0,46,36,0.04);padding:10px 14px;border-radius:8px">
             <i class="far fa-calendar-alt" style="color:var(--a)"></i> ${dateText}
