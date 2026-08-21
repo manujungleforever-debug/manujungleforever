@@ -653,19 +653,28 @@ function hideSaveBar(){
   const btn=document.getElementById('btn-save');
   if(btn){btn.disabled=false;btn.innerHTML='<i class="ph ph-floppy-disk"></i> Guardar cambios';}
 }
-document.getElementById('btn-save').addEventListener('click',async()=>{
-  if(!saveFnRef)return;
-  const btn=document.getElementById('btn-save');
-  const ss=document.getElementById('save-status');
-  btn.disabled=true;btn.innerHTML='<i class="ph ph-spinner ph-spin"></i> Guardando...';
-  try{
+document.getElementById('btn-save').addEventListener('click', async () => {
+  if (!saveFnRef) return;
+  const btn = document.getElementById('btn-save');
+  const ss = document.getElementById('save-status');
+  btn.disabled = true;
+  if (window.showThinkingOverlay) window.showThinkingOverlay('Guardando cambios....');
+  try {
     await saveFnRef();
-    ss.textContent='Guardado correctamente';ss.className='save-status ok';
-    btn.innerHTML='<i class="ph ph-check-circle"></i> Guardado ✓';
-    setTimeout(()=>{btn.disabled=false;btn.innerHTML='<i class="ph ph-floppy-disk"></i> Guardar cambios';},1500);
-  }catch(e){
-    ss.textContent='Error: '+e.message;ss.className='save-status err';
-    btn.disabled=false;btn.innerHTML='<i class="ph ph-floppy-disk"></i> Guardar cambios';
+    if (window.hideThinkingOverlay) window.hideThinkingOverlay();
+    ss.textContent = 'Guardado correctamente';
+    ss.className = 'save-status ok';
+    btn.innerHTML = '<i class="ph ph-check-circle"></i> Guardado ✓';
+    setTimeout(() => {
+      btn.disabled = false;
+      btn.innerHTML = '<i class="ph ph-floppy-disk"></i> Guardar cambios';
+    }, 1500);
+  } catch(e) {
+    if (window.hideThinkingOverlay) window.hideThinkingOverlay();
+    ss.textContent = 'Error: ' + e.message;
+    ss.className = 'save-status err';
+    btn.disabled = false;
+    btn.innerHTML = '<i class="ph ph-floppy-disk"></i> Guardar cambios';
   }
 });
 document.getElementById('btn-cancel-save').addEventListener('click',()=>{hideSaveBar();switchSection(cSection);});

@@ -51,7 +51,8 @@
 
       const label = document.createElement('span');
       label.className = 'thinking-orb-text';
-      label.innerHTML = `Thinking<span class="thinking-dots"><span>.</span><span>.</span><span>.</span><span>.</span></span>`;
+      const baseText = this.text.replace(/\.+$/, '');
+      label.innerHTML = `${baseText}<span class="thinking-dots"><span>.</span><span>.</span><span>.</span><span>.</span></span>`;
 
       pill.appendChild(canvas);
       pill.appendChild(label);
@@ -138,22 +139,55 @@
   }
 
   // Global HTML template generator that mounts automatically
-  window.getThinkingLoaderHTML = function() {
+  window.getThinkingLoaderHTML = function(text) {
     const id = 'orb_' + Math.random().toString(36).substr(2, 9);
     setTimeout(() => {
       const el = document.getElementById(id);
-      if (el) window.renderThinkingOrb(el);
+      if (el) window.renderThinkingOrb(el, text);
     }, 15);
     return `<div class="thinking-orb-container"><div id="${id}"></div></div>`;
   };
 
   // Helper to mount and auto-animate in any container
-  window.renderThinkingOrb = function(targetEl) {
+  window.renderThinkingOrb = function(targetEl, text) {
     if (typeof targetEl === 'string') targetEl = document.querySelector(targetEl);
     if (!targetEl) return null;
-    const orb = new ThinkingOrb({ size: 34 });
+    const orb = new ThinkingOrb({ size: 34, text: text || 'Thinking....' });
     orb.renderTo(targetEl);
     return orb;
+  };
+
+  // Global Fullscreen Overlay for Saving & Background Actions
+  window.showThinkingOverlay = function(text = 'Thinking....') {
+    let overlay = document.getElementById('thinking-global-overlay');
+    if (!overlay) {
+      overlay = document.createElement('div');
+      overlay.id = 'thinking-global-overlay';
+      overlay.style.cssText = 'position:fixed;inset:0;background:rgba(2,6,5,0.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:999999;display:flex;align-items:center;justify-content:center;transition:opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);opacity:0;pointer-events:all;';
+      document.body.appendChild(overlay);
+    }
+    overlay.innerHTML = '';
+    const orb = new ThinkingOrb({ size: 48, text: text });
+    orb.renderTo(overlay);
+    overlay.style.display = 'flex';
+    requestAnimationFrame(() => {
+      overlay.style.opacity = '1';
+    });
+    window._activeThinkingOrb = orb;
+  };
+
+  window.hideThinkingOverlay = function() {
+    const overlay = document.getElementById('thinking-global-overlay');
+    if (overlay) {
+      overlay.style.opacity = '0';
+      setTimeout(() => {
+        overlay.style.display = 'none';
+        if (window._activeThinkingOrb) {
+          window._activeThinkingOrb.stop();
+          window._activeThinkingOrb = null;
+        }
+      }, 250);
+    }
   };
 
   // MutationObserver to auto-upgrade any dynamic `.loading` container into Thinking Orb

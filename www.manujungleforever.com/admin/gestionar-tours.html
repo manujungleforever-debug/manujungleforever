@@ -653,19 +653,28 @@ function hideSaveBar(){
   const btn=document.getElementById('btn-save');
   if(btn){btn.disabled=false;btn.innerHTML='<i class="ph ph-floppy-disk"></i> Guardar cambios';}
 }
-document.getElementById('btn-save').addEventListener('click',async()=>{
-  if(!saveFnRef)return;
-  const btn=document.getElementById('btn-save');
-  const ss=document.getElementById('save-status');
-  btn.disabled=true;btn.innerHTML='<i class="ph ph-spinner ph-spin"></i> Guardando...';
-  try{
+document.getElementById('btn-save').addEventListener('click', async () => {
+  if (!saveFnRef) return;
+  const btn = document.getElementById('btn-save');
+  const ss = document.getElementById('save-status');
+  btn.disabled = true;
+  if (window.showThinkingOverlay) window.showThinkingOverlay('Guardando cambios....');
+  try {
     await saveFnRef();
-    ss.textContent='Guardado correctamente';ss.className='save-status ok';
-    btn.innerHTML='<i class="ph ph-check-circle"></i> Guardado ✓';
-    setTimeout(()=>{btn.disabled=false;btn.innerHTML='<i class="ph ph-floppy-disk"></i> Guardar cambios';},1500);
-  }catch(e){
-    ss.textContent='Error: '+e.message;ss.className='save-status err';
-    btn.disabled=false;btn.innerHTML='<i class="ph ph-floppy-disk"></i> Guardar cambios';
+    if (window.hideThinkingOverlay) window.hideThinkingOverlay();
+    ss.textContent = 'Guardado correctamente';
+    ss.className = 'save-status ok';
+    btn.innerHTML = '<i class="ph ph-check-circle"></i> Guardado ✓';
+    setTimeout(() => {
+      btn.disabled = false;
+      btn.innerHTML = '<i class="ph ph-floppy-disk"></i> Guardar cambios';
+    }, 1500);
+  } catch(e) {
+    if (window.hideThinkingOverlay) window.hideThinkingOverlay();
+    ss.textContent = 'Error: ' + e.message;
+    ss.className = 'save-status err';
+    btn.disabled = false;
+    btn.innerHTML = '<i class="ph ph-floppy-disk"></i> Guardar cambios';
   }
 });
 document.getElementById('btn-cancel-save').addEventListener('click',()=>{hideSaveBar();switchSection(cSection);});
@@ -1749,7 +1758,7 @@ const MENU_PAGES_TO_SYNC = [
 ];
 
 async function syncGuidedToursMenuInPages(tours, pageList = MENU_PAGES_TO_SYNC) {
-  for (const pagePath of pageList) {
+  const promises = pageList.map(async (pagePath) => {
     try {
       const pageData = await ghGet(pagePath);
       let content = pageData.content;
@@ -1775,7 +1784,8 @@ async function syncGuidedToursMenuInPages(tours, pageList = MENU_PAGES_TO_SYNC) 
     } catch(e) {
       console.warn(`Could not sync menu in ${pagePath}:`, e);
     }
-  }
+  });
+  await Promise.allSettled(promises);
 }
 
 async function publishTourPage(slug, tourObj) {
@@ -2082,20 +2092,38 @@ window.editTour = function(idx) {
         cData.tours[idx] = updated;
     }
 
-    const res=await ghPut(cFile,JSON.stringify(cData,null,2),cSha,`update tour: ${updated.nombre}`);
-    cSha=res.sha;
+        const res = await ghPut(cFile, JSON.stringify(cData, null, 2), cSha, `update tour: ${updated.nombre}`);
+    cSha = res.sha;
 
     // Publish static HTML for this tour
     const slug = updated.slug;
     if (updated.estado === 'activo') {
       await publishTourPage(slug, updated);
     } else {
-      // If paused/inactive, remove its static page
       await unpublishTourPage(slug);
     }
 
-    // Synchronize navigation dropdowns in test files
-    await syncGuidedToursMenuInPages(cData.tours, MENU_PAGES_TO_SYNC);
+    // Synchronize departures linked to this tour in departures.json
+    try {
+      const depData = await ghGet('www.manujungleforever.com/data/departures.json');
+      if (depData && depData.content) {
+        const dJson = JSON.parse(depData.content);
+        let depModified = false;
+        (dJson.salidas || []).forEach(sal => {
+          if (sal.tour_id === updated.id || sal.tour_id === updated.slug) {
+            sal.tour_nombre = updated.nombre;
+            sal.moneda = 'USD';
+            sal.precio = updated.precio_desde;
+            depModified = true;
+          }
+        });
+        if (depModified) {
+          await ghPut('www.manujungleforever.com/data/departures.json', JSON.stringify(dJson, null, 2), depData.sha, `sync departures price with tour: ${updated.nombre}`);
+        }
+      }
+    } catch(err) {
+      console.warn('Could not sync departures with tour price:', err);
+    }
     // Synchronize departure prices linked to this tour in departures.json
     try {
       const depData = await ghGet('www.manujungleforever.com/data/departures.json');

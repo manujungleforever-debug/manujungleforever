@@ -6,6 +6,7 @@
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Cache-Control: public, max-age=0, must-revalidate
 
 # ─── Headers especiales para el panel CMS ────────────────────────────────────
 # El panel admin necesita poder cargar el CMS desde unpkg.com (CDN)
