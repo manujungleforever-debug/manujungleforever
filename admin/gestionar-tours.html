@@ -1,0 +1,3008 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>Gestionar Tours - Manu Jungle Admin</title>
+<meta name="robots" content="noindex,nofollow">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="icon" href="../assets/img/logo.png">
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* ── UNIFIED ADMIN BACKGROUND & THEME TOKENS ── */
+/* ── UNIFIED ADMIN BACKGROUND & THEME TOKENS ── */
+/* ── UNIFIED ADMIN BACKGROUND & THEME TOKENS ── */
+:root {
+    --bg: #030807;
+    --bg-color: #030807;
+    --bg-grad: radial-gradient(ellipse 80% 55% at 50% 0%, #0a2e25 0%, #030807 75%),
+               radial-gradient(circle 500px at 90% 90%, rgba(201, 168, 76, 0.035) 0%, transparent 70%),
+               #030807;
+    --bg-gradient: radial-gradient(ellipse 80% 55% at 50% 0%, #0a2e25 0%, #030807 75%),
+                   radial-gradient(circle 500px at 90% 90%, rgba(201, 168, 76, 0.035) 0%, transparent 70%),
+                   #030807;
+    --hbg: rgba(3, 8, 7, 0.88);
+    --header-bg: rgba(3, 8, 7, 0.88);
+    --card: rgba(11, 38, 35, 0.50);
+    --card-bg: rgba(11, 38, 35, 0.50);
+    --card-hover: rgba(14, 48, 44, 0.65);
+    --bdr: rgba(45, 212, 191, 0.14);
+    --card-border: rgba(45, 212, 191, 0.14);
+    --bdr-h: rgba(45, 212, 191, 0.45);
+    --card-hover-border: rgba(45, 212, 191, 0.45);
+    --fg: #f1f5f9;
+    --text: #f1f5f9;
+    --text-main: #f1f5f9;
+    --muted: #94a3b8;
+    --text-muted: #94a3b8;
+    --teal: #2dd4bf;
+    --accent-teal: #2dd4bf;
+    --teal-g: rgba(45, 212, 191, 0.28);
+    --accent-teal-glow: rgba(45, 212, 191, 0.28);
+    --gold: #c9a84c;
+    --accent-gold: #c9a84c;
+    --gold-g: rgba(201, 168, 76, 0.28);
+    --accent-gold-glow: rgba(201, 168, 76, 0.28);
+    --gold-dim: #0f766e;
+    --danger: #ef4444;
+    --green: #10b981;
+    --success: #10b981;
+    --surface: rgba(11, 38, 35, 0.60);
+    --border: rgba(45, 212, 191, 0.14);
+    --w: #f1f5f9;
+    --card2: rgba(20, 50, 40, 0.50);
+    --r: 12px;
+    --font-sans: 'Poppins', sans-serif;
+    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    --sidebar-grad: linear-gradient(160deg, #071f1a 0%, #0a2e25 60%, #0f3d32 100%);
+}
+html, body { height: 100%; font-family: 'Poppins', sans-serif; }
+body {
+    background-color: var(--bg);
+    background-image: var(--bg-grad);
+    background-attachment: fixed;
+    color: var(--fg);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    position: relative;
+    opacity: 0;
+    transition: opacity .3s;
+}
+@media (max-width: 768px) {
+    body {
+        background-attachment: scroll;
+    }
+}
+#pg-particles, #tsparticles {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+}
+input,textarea,select,button { font-family:inherit; }
+a { color:var(--teal); }
+header { position:sticky; top:0; z-index:200; background:var(--hbg); backdrop-filter:blur(14px); border-bottom:1px solid rgba(255,255,255,0.07); box-shadow:0 4px 24px rgba(0,0,0,.4); }
+.hw { max-width:1400px; margin:0 auto; padding: 20px 30px; display:flex; align-items:center; gap:14px; flex-wrap:nowrap; }
+.logo-brand { display:flex; align-items:center; gap:10px; text-decoration:none; flex-shrink:0; }
+.logo-wrap  { position:relative; display:flex; align-items:center; }
+.logo-glow  { position:absolute; inset:-5px; background:var(--teal); filter:blur(12px); opacity:.22; border-radius:50%; transition:.3s; }
+.logo-brand:hover .logo-glow { opacity:.5; filter:blur(18px); }
+.logo-wrap img { height:40px; width:auto; position:relative; z-index:2; }
+.brand-name { font-weight:700; font-size:.9rem; letter-spacing:2px; text-transform:uppercase; background:linear-gradient(to right,var(--teal),var(--gold)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.btn-panel { display:inline-flex; align-items:center; gap:8px; background:rgba(45,212,191,0.12); border:1px solid rgba(45,212,191,0.3); color:var(--teal); padding:8px 18px; border-radius:10px; font-size:.83rem; font-weight:700; text-decoration:none; white-space:nowrap; transition:.25s; flex-shrink:0; }
+.btn-panel:hover { background:var(--teal); color:#030807; box-shadow:0 0 14px var(--teal-g); }
+nav.mnav { display:flex; align-items:center; gap:3px; flex-wrap:nowrap; flex:1; }
+nav.mnav a { font-size:.8rem; font-weight:500; color:var(--muted); text-decoration:none; padding:6px 11px; border-radius:8px; transition:.25s; white-space:nowrap; display:flex; align-items:center; gap:5px; }
+nav.mnav a i { font-size:1.1rem; }
+nav.mnav a:hover, nav.mnav a.active { color:var(--teal); background:rgba(45,212,191,.09); }
+.user-sec { display:flex; align-items:center; gap:10px; margin-left:auto; }
+
+
+main { flex-grow:1; max-width:1200px !important; width:100% !important; margin:0 auto !important; padding:28px 20px 100px !important; position:relative; z-index:1; box-sizing:border-box; }
+.pt { font-size:1.85rem; font-weight:700; letter-spacing:-.4px; background:linear-gradient(to right,#fff,#cbd5e1); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:4px; }
+.ps { color:var(--muted); font-size:.87rem; margin-bottom:20px; }
+.back-btn { display:inline-flex; align-items:center; gap:7px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); color:var(--fg); padding:8px 16px; border-radius:9px; font-size:.82rem; font-weight:600; cursor:pointer; transition:.25s; margin-bottom:20px; }
+.back-btn:hover { background:rgba(255,255,255,.12); }
+.btn-primary { background:var(--teal); color:#030807; border:none; padding:9px 20px; border-radius:10px; font-weight:700; font-size:.83rem; cursor:pointer; display:inline-flex; align-items:center; gap:7px; transition:.25s; }
+.btn-primary:hover { background:#16c9b5; box-shadow:0 0 14px var(--teal-g); }
+.btn-primary:disabled { opacity:.5; cursor:not-allowed; }
+.btn-secondary { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.09); color:var(--fg); padding:8px 17px; border-radius:10px; font-size:.82rem; font-weight:600; cursor:pointer; display:inline-flex; align-items:center; gap:6px; transition:.25s; }
+.btn-secondary:hover { background:rgba(255,255,255,.11); }
+.btn-danger { background:rgba(239,68,68,.08); border:1px solid rgba(239,68,68,.22); color:#f87171; padding:7px 15px; border-radius:9px; cursor:pointer; font-weight:600; font-size:.82rem; transition:.25s; }
+.btn-danger:hover { background:var(--danger); color:#030807; border-color:var(--danger); }
+.btn-edit { background:rgba(45,212,191,.09); border:1px solid rgba(45,212,191,.22); color:var(--teal); padding:7px 15px; border-radius:9px; cursor:pointer; font-weight:600; font-size:.82rem; transition:.25s; }
+.btn-edit:hover { background:var(--teal); color:#030807; }
+.list-grid, .blog-grid { display:grid; gap:14px; width:100%; max-width:1200px; margin:0 auto; box-sizing:border-box; }
+.li, .blog-card-li { background:var(--card); backdrop-filter:blur(8px); border:1px solid var(--bdr); border-radius:14px; padding:14px 18px; display:flex; align-items:center; justify-content:space-between; gap:14px; width:100%; box-sizing:border-box; transition:all .25s ease; overflow:hidden; }
+.li:hover, .blog-card-li:hover { border-color:var(--bdr-h); transform:translateY(-1px); box-shadow:0 8px 24px rgba(45,212,191,.06); }
+.blog-thumb { width:96px; height:66px; flex-shrink:0; border-radius:10px; overflow:hidden; background:#000; border:1px solid rgba(45,212,191,.25); }
+.blog-thumb img { width:100%; height:100%; object-fit:cover; display:block; }
+.li-info { flex:1 1 0%; min-width:0; overflow:hidden; }
+.li-info h3 { font-size:.95rem; font-weight:600; color:var(--fg); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.li-info span { font-size:.76rem; color:var(--muted); display:block; margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.li-actions { display:flex; gap:8px; align-items:center; flex-shrink:0; }
+.badge { display:inline-block; padding:3px 11px; border-radius:20px; font-size:.68rem; font-weight:700; margin-left:6px; text-transform:uppercase; }
+.badge.on  { background:rgba(16,185,129,.15); color:#34d399; border:1px solid rgba(16,185,129,.25); }
+.badge.off { background:rgba(239,68,68,.18);  color:#f87171; border:1px solid rgba(239,68,68,.3); }
+.badge.warn{ background:rgba(245,158,11,.18); color:#fbbf24; border:1px solid rgba(245,158,11,.3); }
+.eform { max-width:1200px; width:100%; margin:0 auto 60px auto; display:flex; flex-direction:column; gap:18px; box-sizing:border-box; }
+.esec { background:var(--card); backdrop-filter:blur(10px); border:1px solid var(--bdr); border-radius:16px; padding:22px; }
+.esec-h { font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--gold); border-bottom:1px solid rgba(255,255,255,.07); padding-bottom:8px; margin-bottom:16px; }
+.grow2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.grow3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; }
+.ff { display:flex; flex-direction:column; gap:6px; margin-bottom:12px; }
+.ff label { font-size:.7rem; font-weight:600; text-transform:uppercase; letter-spacing:.8px; color:var(--muted); }
+.ff input,.ff textarea,.ff select { background:rgba(3,8,7,.65); border:1px solid rgba(255,255,255,.1); color:var(--fg); padding:10px 13px; border-radius:10px; font-size:.85rem; outline:none; transition:.25s; width:100%; }
+.ff input:focus,.ff textarea:focus,.ff select:focus { border-color:var(--teal); box-shadow:0 0 10px var(--teal-g); }
+.ff select option { background:#0a1f1b; color:var(--fg); }
+.hint { font-size:.7rem; color:var(--muted); }
+.save-bar { position:fixed; bottom:0; left:0; right:0; background:rgba(3,8,7,.96); backdrop-filter:blur(16px); border-top:1px solid rgba(45,212,191,.3); padding:14px 28px; display:flex; align-items:center; justify-content:flex-end; gap:12px; z-index:99999; box-shadow:0 -8px 32px rgba(0,0,0,0.8); }
+.save-status { font-size:.83rem; color:var(--muted); margin-right:auto; font-weight:500; }
+.save-status.ok  { color:var(--green); }
+.save-status.err { color:var(--danger); }
+.md-wrap { border:1px solid rgba(255,255,255,.1); border-radius:10px; overflow:hidden; }
+.md-toolbar { background:rgba(0,0,0,.22); border-bottom:1px solid rgba(255,255,255,.07); padding:6px; display:flex; gap:5px; flex-wrap:nowrap; }
+.md-toolbar button { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08); color:var(--fg); padding:5px 10px; border-radius:5px; cursor:pointer; font-size:.76rem; transition:.25s; }
+.md-toolbar button:hover { background:var(--teal); color:#030807; }
+.tgl-wrap { display:flex; align-items:center; gap:10px; }
+.tgl { position:relative; display:inline-block; width:44px; height:24px; }
+.tgl input { opacity:0; width:0; height:0; }
+.tgl-s { position:absolute; inset:0; background:rgba(255,255,255,.1); border-radius:24px; transition:.3s; cursor:pointer; }
+.tgl-s:before { content:''; position:absolute; height:18px; width:18px; left:3px; bottom:3px; background:#fff; border-radius:50%; transition:.3s; }
+.tgl input:checked+.tgl-s { background:var(--teal); }
+.tgl input:checked+.tgl-s:before { transform:translateX(20px); }
+.img-field-wrap { display:flex; flex-direction:column; gap:6px; }
+.img-input-row { display:flex; gap:8px; }
+.img-input-row input { flex:1; }
+.img-preview { width:100%; max-height:420px; min-height:200px; object-fit:contain; background:rgba(0,0,0,.45); border-radius:12px; margin-top:10px; padding:8px; border:1px dashed rgba(45,212,191,0.3); box-shadow:inset 0 0 20px rgba(0,0,0,0.5); display:none; }
+.img-preview.show { display:block; }
+.avatar-preview { width:120px; height:120px; object-fit:cover; object-position:center; border-radius:50%; margin-top:10px; border:2px solid var(--teal); box-shadow:0 4px 14px rgba(45,212,191,0.25); display:none; }
+.avatar-preview.show { display:block; }
+.sub-nav-tabs { display:flex; gap:7px; margin-bottom:22px; background:var(--card); padding:6px; border-radius:11px; border:1px solid var(--bdr); width:fit-content; }
+.sub-nav-tabs button { background:none; border:none; color:var(--muted); padding:7px 15px; border-radius:8px; font-size:.82rem; font-weight:600; cursor:pointer; transition:.25s; }
+.sub-nav-tabs button:hover,.sub-nav-tabs button.active { background:rgba(45,212,191,.12); color:var(--teal); }
+.modal-bg { position:fixed; inset:0; background:rgba(2,6,5,.9); backdrop-filter:blur(7px); align-items:center; justify-content:center; z-index:400; display:none; padding:20px; }
+.modal-bg.open { display:flex !important; }
+.modal { background:rgba(11,38,35,.8); backdrop-filter:blur(16px); border:1px solid rgba(255,255,255,.12); border-radius:18px; width:100%; max-width:600px; max-height:88vh; display:flex; flex-direction:column; box-shadow:0 24px 56px rgba(0,0,0,.6); }
+.modal.lg { max-width:920px; }
+.modal-h { padding:16px 22px; border-bottom:1px solid rgba(255,255,255,.08); display:flex; align-items:center; justify-content:space-between; background:rgba(0,0,0,.14); border-radius:18px 18px 0 0; }
+.modal-h h3 { font-size:.98rem; font-weight:700; color:var(--teal); }
+.modal-body { padding:20px 22px; overflow-y:auto; display:flex; flex-direction:column; gap:13px; }
+.modal-actions { padding:12px 22px; border-top:1px solid rgba(255,255,255,.08); background:rgba(0,0,0,.14); display:flex; justify-content:flex-end; gap:10px; align-items:center; border-radius:0 0 18px 18px; }
+.loading { display:flex; align-items:center; gap:11px; color:var(--muted); font-size:.87rem; padding:28px 0; }
+.spinner { width:20px; height:20px; border-radius:50%; border:2px solid rgba(45,212,191,.2); border-top-color:var(--teal); animation:spin .8s linear infinite; flex-shrink:0; }
+@keyframes spin { to { transform:rotate(360deg); } }
+.media-grid,.m-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(118px,1fr)); gap:8px; }
+.media-item,.m-item { background:var(--card); border:2px solid var(--bdr); border-radius:9px; overflow:hidden; cursor:pointer; transition:.25s; position:relative; }
+.media-item:hover,.m-item:hover { border-color:var(--teal); }
+.media-item.selected,.m-item.selected { border-color:var(--teal); box-shadow:0 0 12px var(--teal-g); }
+.media-item img,.media-item video,.m-item img,.m-item video { width:100%; height:84px; object-fit:cover; display:block; }
+.media-item-name,.m-name { font-size:.62rem; color:var(--muted); padding:3px 6px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.media-item-del,.btn-del { position:absolute; top:4px; right:4px; background:rgba(239,68,68,.85); color:#fff; border:none; border-radius:50%; width:20px; height:20px; cursor:pointer; font-size:.68rem; display:none; align-items:center; justify-content:center; }
+.media-item:hover .media-item-del,.m-item:hover .btn-del { display:flex; }
+.empty { color:var(--muted); text-align:center; padding:40px; font-size:.88rem; }
+code { background:rgba(45,212,191,.1); color:var(--teal); padding:2px 6px; border-radius:4px; font-size:.8em; }
+.err-msg { color:#f87171; font-size:.82rem; margin-top:4px; display:none; }
+.err-msg.show { display:block; }
+@media (max-width:768px) {
+    header .hw { padding:10px 14px; gap:10px; }
+    .brand-name { font-size:.8rem; }
+    nav.mnav { overflow-x:auto; white-space:nowrap; padding-bottom:4px; -webkit-overflow-scrolling:touch; }
+    nav.mnav::-webkit-scrollbar { display:none; }
+    main { flex-grow:1; max-width:1200px !important; width:100% !important; margin:0 auto !important; padding:28px 20px 100px !important; position:relative; z-index:1; box-sizing:border-box; }
+    .li,.blog-card-li { flex-wrap:nowrap; padding:12px 14px; gap:10px; }
+    .blog-thumb { width:70px; height:52px; }
+    .li-info { flex:1 1 50%; min-width:0; }
+    .li-actions { width:100%; justify-content:flex-end; border-top:1px solid rgba(255,255,255,0.06); padding-top:8px; margin-top:4px; }
+    .grow2,.grow3 { grid-template-columns:1fr; }
+    .save-bar { padding:10px 16px; flex-wrap:nowrap; gap:8px; }
+    .save-status { width:100%; margin-bottom:2px; }
+}
+
+        .card-icon-tours { background: linear-gradient(135deg, #f59e0b, #d97706); color: #fff; box-shadow: 0 6px 20px rgba(245,158,11,0.35); }
+        .card-icon-blog { background: linear-gradient(135deg, #14b8a6, #0d9488); color: #fff; box-shadow: 0 6px 20px rgba(20,184,166,0.35); }
+        .card-icon-testim { background: linear-gradient(135deg, #8b5cf6, #6d28d9); color: #fff; box-shadow: 0 6px 20px rgba(139,92,246,0.35); }
+        .card-icon-reclamos { background: linear-gradient(135deg, #ef4444, #b91c1c); color: #fff; box-shadow: 0 6px 20px rgba(239,68,68,0.35); }
+        .card-icon-contenido { background: linear-gradient(135deg, #3b82f6, #2563eb); color: #fff; box-shadow: 0 6px 20px rgba(59,130,246,0.35); }
+        .card-icon-salidas { background: linear-gradient(135deg, #ec4899, #be185d); color: #fff; box-shadow: 0 6px 20px rgba(236,72,153,0.35); }
+        .card-icon-medios { background: linear-gradient(135deg, #10b981, #059669); color: #fff; box-shadow: 0 6px 20px rgba(16,185,129,0.35); }
+        .btn-card-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            margin-right: 16px;
+        }
+
+.btn-logout { 
+    background: linear-gradient(135deg, #ef4444, #b91c1c); 
+    color: #fff; 
+    border: none;
+    cursor: pointer; 
+    font-size: .85rem; 
+    font-weight: 700; 
+    padding: 8px 16px; 
+    border-radius: 10px; 
+    transition: .3s; 
+    display: flex; 
+    align-items: center; 
+    gap: 8px; 
+    box-shadow: 0 4px 15px rgba(239,68,68,0.35);
+}
+.btn-logout:hover { 
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(239,68,68,0.5);
+    filter: brightness(1.1);
+}
+
+</style>
+  <link rel="stylesheet" href="css/thinking-orb.css?v=9">
+
+
+
+
+
+
+
+
+
+<style>
+
+/* ─── 2-ROW CENTERED ADMIN HEADER ─── */
+header {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 200 !important;
+    background: rgba(3, 8, 7, 0.95) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    border-bottom: 1.5px solid rgba(45, 212, 191, 0.22) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6) !important;
+    width: 100% !important;
+}
+
+.header-container, .header-wrap, .hw {
+    max-width: 1200px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    padding: 12px 20px 14px !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+}
+
+.header-top-row {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+}
+
+.logo-brand, .logo-wrap, .logo-img-wrap {
+    display: inline-flex !important;
+    align-items: center !important;
+    position: relative !important;
+    text-decoration: none !important;
+}
+
+.admin-main-logo, .logo-wrap img, .logo-img-wrap img {
+    height: 110px !important;
+    width: auto !important;
+    max-width: none !important;
+    display: block !important;
+    filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.65)) !important;
+    transition: transform 0.25s ease, filter 0.25s ease !important;
+}
+
+.logo-brand:hover .admin-main-logo,
+.logo-brand:hover .logo-wrap img,
+.logo-brand:hover .logo-img-wrap img {
+    transform: scale(1.02) !important;
+    filter: drop-shadow(0 6px 20px rgba(45, 212, 191, 0.35)) !important;
+}
+
+.logo-glow {
+    position: absolute !important;
+    inset: -6px !important;
+    background: radial-gradient(circle, rgba(45, 212, 191, 0.35) 0%, transparent 70%) !important;
+    filter: blur(14px) !important;
+    opacity: 0.4 !important;
+    border-radius: 50% !important;
+    pointer-events: none !important;
+}
+
+.user-sec {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    margin: 0 !important;
+    flex-shrink: 0 !important;
+}
+
+.user-pill {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    background: rgba(11, 38, 35, 0.8) !important;
+    border: 1.5px solid rgba(45, 212, 191, 0.35) !important;
+    padding: 4px 14px 4px 4px !important;
+    border-radius: 36px !important;
+    font-size: 0.90rem !important;
+    font-weight: 600 !important;
+    color: #f8fafc !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
+    backdrop-filter: blur(8px) !important;
+}
+
+.user-pill.superuser {
+    border-color: rgba(201, 168, 76, 0.55) !important;
+    box-shadow: 0 4px 18px rgba(201, 168, 76, 0.25) !important;
+}
+
+.user-pill img {
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 50% !important;
+    object-fit: cover !important;
+    border: 2px solid #2dd4bf !important;
+    display: block !important;
+    box-shadow: 0 0 12px rgba(45, 212, 191, 0.45) !important;
+}
+
+.user-pill.superuser img {
+    border-color: #c9a84c !important;
+    box-shadow: 0 0 12px rgba(201, 168, 76, 0.45) !important;
+}
+
+.user-pill .initial-avatar {
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 50% !important;
+    background: rgba(45, 212, 191, 0.2) !important;
+    color: #2dd4bf !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-weight: 700 !important;
+    font-size: 1.1rem !important;
+    border: 2px solid #2dd4bf !important;
+}
+
+.user-pill.superuser .initial-avatar {
+    background: rgba(201, 168, 76, 0.2) !important;
+    color: #fbbf24 !important;
+    border-color: #c9a84c !important;
+}
+
+.user-pill-info {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+
+.user-pill-name {
+    font-size: 0.90rem !important;
+    font-weight: 600 !important;
+    color: #fff !important;
+    max-width: 150px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+}
+
+.user-pill-badge {
+    font-size: 0.66rem !important;
+    font-weight: 700 !important;
+    padding: 2px 8px !important;
+    border-radius: 6px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    white-space: nowrap !important;
+    display: inline-flex !important;
+    align-items: center !important;
+}
+
+.user-pill-badge.superuser {
+    background: rgba(201, 168, 76, 0.22) !important;
+    color: #fbbf24 !important;
+    border: 1px solid rgba(201, 168, 76, 0.45) !important;
+    box-shadow: 0 0 10px rgba(201, 168, 76, 0.2) !important;
+}
+
+.user-pill-badge.normal, .user-pill-badge.editor {
+    background: rgba(45, 212, 191, 0.18) !important;
+    color: #2dd4bf !important;
+    border: 1px solid rgba(45, 212, 191, 0.35) !important;
+    box-shadow: 0 0 10px rgba(45, 212, 191, 0.15) !important;
+}
+
+.btn-logout {
+    background: linear-gradient(135deg, #ef4444, #b91c1c) !important;
+    color: #fff !important;
+    border: none !important;
+    cursor: pointer !important;
+    font-size: 0.88rem !important;
+    font-weight: 700 !important;
+    padding: 9px 18px !important;
+    border-radius: 10px !important;
+    transition: all 0.25s ease !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 7px !important;
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.35) !important;
+    white-space: nowrap !important;
+}
+
+.btn-logout:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 22px rgba(239, 68, 68, 0.55) !important;
+    filter: brightness(1.1) !important;
+}
+
+/* Fila 2: Barra de Navegación */
+.header-nav-row {
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+nav.mnav {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    flex-wrap: wrap !important;
+    background: rgba(11, 38, 35, 0.55) !important;
+    border: 1px solid rgba(45, 212, 191, 0.22) !important;
+    border-radius: 14px !important;
+    padding: 6px 12px !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35) !important;
+    backdrop-filter: blur(8px) !important;
+    margin: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+nav.mnav a {
+    font-size: 0.88rem !important;
+    font-weight: 600 !important;
+    color: #94a3b8 !important;
+    padding: 7px 13px !important;
+    border-radius: 9px !important;
+    white-space: nowrap !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+    text-decoration: none !important;
+}
+
+nav.mnav a i {
+    font-size: 1.1rem !important;
+}
+
+nav.mnav a:hover {
+    color: #2dd4bf !important;
+    background: rgba(45, 212, 191, 0.12) !important;
+}
+
+nav.mnav a.active {
+    color: #030807 !important;
+    background: #2dd4bf !important;
+    box-shadow: 0 0 16px rgba(45, 212, 191, 0.45) !important;
+    font-weight: 700 !important;
+}
+
+nav.mnav a.active i {
+    color: #030807 !important;
+}
+
+nav.mnav a.btn-panel-link {
+    background: rgba(45, 212, 191, 0.15) !important;
+    border: 1px solid rgba(45, 212, 191, 0.35) !important;
+    color: #2dd4bf !important;
+}
+
+nav.mnav a.btn-panel-link:hover {
+    background: #2dd4bf !important;
+    color: #030807 !important;
+}
+
+</style>
+</head>
+<body>
+<script src="js/auth.js?v=9"></script>
+<div id="pg-particles" style="position:fixed;inset:0;pointer-events:none;z-index:0;"></div>
+<header>
+  <div class="header-container">
+    <!-- Fila 1: Logo grande y grueso a la izquierda, Usuario y Salir a la derecha -->
+    <div class="header-top-row">
+      <a href="/" class="logo-brand" title="Ir al Home de Manu Jungle Forever">
+        <div class="logo-wrap">
+          <div class="logo-glow"></div>
+          <img src="../assets/img/logo.png" alt="Manu Jungle Forever Logo" class="admin-main-logo">
+        </div>
+      </a>
+      <div class="user-sec">
+        <span id="huser"></span>
+        <button onclick="logout()" class="btn-logout" title="Cerrar sesión">
+          <i class="ph ph-sign-out"></i> Salir
+        </button>
+      </div>
+    </div>
+
+    <!-- Fila 2: Menú de Navegación dedicado -->
+    <div class="header-nav-row">
+      <nav class="mnav">
+        <a href="panel.html" class=""><i class="ph ph-house"></i> Panel</a>
+        <a href="gestionar-tours.html" class="active"><i class="ph ph-map-trifold"></i> Tours</a>
+        <a href="gestionar-blog.html" class=""><i class="ph ph-pencil"></i> Blog</a>
+        <a href="gestionar-contenido.html" class=""><i class="ph ph-file-text"></i> Contenido</a>
+        <a href="gestionar-salidas.html" class=""><i class="ph ph-calendar"></i> Salidas</a>
+        <a href="gestionar-testimonios.html" class=""><i class="ph ph-star"></i> Testimonios</a>
+        <a href="gestionar-reclamos.html" class=""><i class="ph ph-scales"></i> Reclamos</a>
+        <a href="gestionar-medios.html" class=""><i class="ph ph-image"></i> Medios</a>
+        <a href="gestionar-usuarios.html" class="" id="nav-usuarios"><i class="ph ph-users-three"></i> Usuarios</a>
+      </nav>
+    </div>
+  </div>
+</header>
+<main id="mc"></main>
+<div class="save-bar" id="save-bar" style="display:none">
+  <span class="save-status" id="save-status"></span>
+  <button class="btn-secondary" id="btn-cancel-save">Cancelar</button>
+  <button class="btn-primary" id="btn-save"><i class="ph ph-floppy-disk"></i> Guardar cambios</button>
+</div>
+<div class="modal-bg" id="del-modal">
+  <div class="modal">
+    <div class="modal-h"><h3 id="del-title">Eliminar elemento</h3></div>
+    <div class="modal-body"><p style="color:var(--muted);font-size:.85rem" id="del-msg">Esta accion no se puede deshacer.</p></div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeModal('del-modal')">Cancelar</button>
+      <button class="btn-danger" id="del-confirm">Si, eliminar</button>
+    </div>
+  </div>
+</div>
+<div class="modal-bg" id="media-modal">
+  <div class="modal lg">
+    <div class="modal-h">
+      <h3><i class="ph ph-image"></i> Galeria de Medios</h3>
+      <div style="display:flex;gap:8px;">
+        <button class="btn-primary" onclick="document.getElementById('media-upload').click()"><i class="ph ph-upload"></i> Subir</button>
+        <button class="btn-secondary" onclick="document.getElementById('media-upload-folder').click()">Carpeta</button>
+      </div>
+      <input type="file" id="media-upload" accept="image/*,video/*" multiple style="display:none">
+      <input type="file" id="media-upload-folder" accept="image/*,video/*" webkitdirectory directory style="display:none">
+    </div>
+    <div class="modal-body" id="media-modal-body"><div class="loading"><div class="spinner"></div> Cargando...</div></div>
+    <div class="modal-actions">
+      <span id="media-upload-prog" style="margin-right:auto;font-size:.77rem;color:var(--muted);"></span>
+      <button class="btn-secondary" onclick="closeModal('media-modal')">Cancelar</button>
+      <button class="btn-primary" id="media-confirm" onclick="confirmMediaSelect()" disabled>Insertar</button>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
+<script>
+window.addEventListener('error', function(e) {
+  const mc = document.getElementById('mc') || document.body;
+  if(mc) {
+    mc.innerHTML = '<div style="padding:40px;max-width:600px;margin:40px auto;background:#fff;border-radius:12px;box-shadow:0 10px 25px rgba(0,0,0,0.1);text-align:center"><h2 style="color:#ef4444;margin-bottom:10px">❌ Error Crítico del Panel</h2><p style="color:#64748b;margin-bottom:20px">El sistema no pudo renderizar esta vista debido a un error interno.</p><div style="text-align:left;background:#0f172a;color:#cbd5e1;padding:15px;border-radius:8px;font-family:monospace;font-size:12px;overflow-x:auto;margin-bottom:20px">' + (e.error ? e.error.stack : e.message) + '</div><button onclick="location.reload()" style="background:#0d9488;color:#fff;border:none;padding:10px 20px;border-radius:8px;cursor:pointer;font-weight:600">Recargar Panel</button></div>';
+  }
+});
+</script>
+<script>
+const API = '/api/cms';
+const MEDIA_API = '/api/media';
+let token = sessionStorage.getItem('cms_token');
+let cUser = sessionStorage.getItem('cms_user') || '';
+let cSection = 'tours';
+var cSha=null,cFile=null,cData=null,saveFnRef=null;
+var currentMediaFiles=[],selectedMediaUrl=null,mediaSelectCallback=null;
+var currentReclamosData=[],currentReclamoId=null;
+window.sidebarItems=[];
+window.activeSubSection=null;
+
+window.addCustomItem = function(selectId, promptMsg) {
+  const sel = document.getElementById(selectId);
+  if (!sel) return;
+  setTimeout(function() {
+    const val = prompt(promptMsg || 'Ingrese el nuevo elemento:');
+    if (val && val.trim()) {
+      const cleanVal = val.trim();
+      let opt = Array.from(sel.options).find(o => o.value.toLowerCase() === cleanVal.toLowerCase());
+      if (!opt) {
+        opt = document.createElement('option');
+        opt.value = cleanVal;
+        opt.textContent = cleanVal;
+        const addOpt = Array.from(sel.options).find(o => o.value === '__add_new__');
+        if (addOpt) { sel.insertBefore(opt, addOpt); } else { sel.appendChild(opt); }
+      }
+      sel.value = cleanVal;
+      const saveBar = document.getElementById('save-bar');
+      if (saveBar && saveFnRef) saveBar.style.display = 'flex';
+    } else {
+      const firstReal = Array.from(sel.options).find(o => o.value !== '__add_new__');
+      if (firstReal) sel.value = firstReal.value;
+    }
+  }, 10);
+};
+
+function showSaveBar(fn,msg){
+  saveFnRef=fn;
+  document.getElementById('save-bar').style.display='flex';
+  const ss=document.getElementById('save-status');
+  ss.textContent=msg||'';ss.className='save-status';
+}
+function hideSaveBar(){
+  document.getElementById('save-bar').style.display='none';
+  saveFnRef=null;
+  const btn=document.getElementById('btn-save');
+  if(btn){btn.disabled=false;btn.innerHTML='<i class="ph ph-floppy-disk"></i> Guardar cambios';}
+}
+document.getElementById('btn-save').addEventListener('click', async () => {
+  if (!saveFnRef) return;
+  const btn = document.getElementById('btn-save');
+  const ss = document.getElementById('save-status');
+  btn.disabled = true;
+  if (window.showThinkingOverlay) window.showThinkingOverlay('Guardando cambios....');
+  try {
+    await saveFnRef();
+    if (window.hideThinkingOverlay) window.hideThinkingOverlay();
+    ss.textContent = 'Guardado correctamente';
+    ss.className = 'save-status ok';
+    btn.innerHTML = '<i class="ph ph-check-circle"></i> Guardado ✓';
+    setTimeout(() => {
+      btn.disabled = false;
+      btn.innerHTML = '<i class="ph ph-floppy-disk"></i> Guardar cambios';
+    }, 1500);
+  } catch(e) {
+    if (window.hideThinkingOverlay) window.hideThinkingOverlay();
+    ss.textContent = 'Error: ' + e.message;
+    ss.className = 'save-status err';
+    btn.disabled = false;
+    btn.innerHTML = '<i class="ph ph-floppy-disk"></i> Guardar cambios';
+  }
+});
+document.getElementById('btn-cancel-save').addEventListener('click',()=>{hideSaveBar();switchSection(cSection);});
+
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');document.getElementById(id).style.display='none';}
+
+function set(h){
+  let tabs='';
+  if(window.sidebarItems&&window.sidebarItems.length){
+    tabs='<div class="sub-nav-tabs">'+
+      window.sidebarItems.map(function(s){
+        var ac=s.id===window.activeSubSection?' class="active"':'';
+        return '<button'+ac+' onclick="switchSubSection(this.dataset.id)" data-id="'+s.id+'">'+(s.label||s.id)+'</button>';
+      }).join('')+'</div>';
+  }
+  document.getElementById('mc').innerHTML=tabs+h;
+}
+window.switchSubSection=function(id){window.activeSubSection=id;route(id);};
+
+const SEC_MAP=[
+  {id:'blog',sub:[]},
+  {id:'content',sub:[{id:'home',label:'Inicio'},{id:'about',label:'Nosotros'},{id:'contact',label:'Contacto'},{id:'global',label:'Globales'}]},
+  {id:'tours',sub:[]},{id:'departures',sub:[]},{id:'testimonials',sub:[]},{id:'media',sub:[]},
+];
+function switchSection(id){
+  cSection=id;hideSaveBar();
+  const sec=SEC_MAP.find(s=>s.id===id);
+  if(sec&&sec.sub.length){window.sidebarItems=sec.sub;window.activeSubSection=sec.sub[0].id;route(sec.sub[0].id);}
+  else{window.sidebarItems=[];window.activeSubSection=null;route(id);}
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  if(!token)return;
+  if (typeof tsParticles !== 'undefined') {
+    tsParticles.load('pg-particles', {
+      fpsLimit: 60,
+      particles: {
+        number: { value: 24, density: { enable: true, area: 800 } },
+        color: { value: ['#c9a84c', '#2dd4bf', '#ffffff'] },
+        shape: { type: 'circle' },
+        opacity: { value: 0.35, random: true, animation: { enable: true, speed: 0.4, minimumValue: 0.08, sync: false } },
+        size: { value: 2.2, random: true, animation: { enable: true, speed: 0.6, minimumValue: 0.4, sync: false } },
+        move: { enable: true, speed: 0.45, direction: 'top', random: true, straight: false, outModes: { default: 'out' } }
+      },
+      detectRetina: true
+    });
+  }
+  switchSection('tours');
+});
+
+// ── CMS Logic ────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────────────────
+// NAV
+// ─────────────────────────────────────────────────────────────────────────────
+const SECTIONS = [
+  { id:'blog',    label:'<i class="ph ph-pencil-line"></i> Blog',       sub:[] },
+  { id:'content', label:'<i class="ph ph-files"></i> Contenido',  sub:[
+    {id:'home',    label:'<i class="ph ph-house"></i> Inicio'},
+    {id:'about',   label:'<i class="ph ph-users"></i> Nosotros'},
+    {id:'contact', label:'<i class="ph ph-phone"></i> Contacto'},
+    {id:'global',  label:'<i class="ph ph-globe"></i> Globales'},
+  ]},
+  { id:'tours',        label:'<i class="ph ph-tree-palm"></i> Tours',      sub:[] },
+  { id:'departures',   label:'<i class="ph ph-calendar-check"></i> Salidas',    sub:[] },
+  { id:'testimonials', label:'<i class="ph ph-star"></i> Testimonios', sub:[] },
+  { id:'reclamos',     label:'<i class="ph ph-shield-warning"></i> Reclamos', sub:[] },
+  { id:'media',        label:'<i class="ph ph-images"></i> Medios',     sub:[] }
+];
+
+const SECTION_PAGES = {
+  blog: 'gestionar-blog.html',
+  content: 'gestionar-contenido.html',
+  tours: 'gestionar-tours.html',
+  departures: 'gestionar-salidas.html',
+  testimonials: 'gestionar-testimonios.html',
+  reclamos: 'gestionar-reclamos.html',
+  media: 'gestionar-medios.html'
+};
+
+function buildTopNav_DIS() {
+  const nav = document.getElementById('top-nav');
+  nav.innerHTML = SECTIONS.map(s =>
+    `<button data-s="${s.id}">${s.label}</button>`
+  ).join('');
+  nav.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+    const page = SECTION_PAGES[b.dataset.s];
+    if (page) {
+      window.location.href = page;
+    }
+  }));
+  nav.querySelector(`[data-s="${cSection}"]`)?.classList.add('active');
+}
+
+function buildSidebar_DIS(items) {
+  const aside = document.getElementById('sidebar');
+  aside.innerHTML = items.map(s =>
+    `<button data-sub="${s.id}">${s.label}</button>`
+  ).join('');
+  aside.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+    aside.querySelectorAll('button').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    route(b.dataset.sub);
+  }));
+}
+
+function switchSection_DIS(id) {
+  cSection = id;
+  hideSaveBar();
+  const sec = SECTIONS.find(s=>s.id===id);
+  if (sec?.sub?.length) {
+    buildSidebar(sec.sub);
+    document.getElementById('sidebar').querySelector('button')?.classList.add('active');
+    route(sec.sub[0].id);
+  } else {
+    buildSidebar([]);
+    route(id);
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// API WRAPPERS (GITHUB & R2)
+// ─────────────────────────────────────────────────────────────────────────────
+async function ghGet(path) {
+  const r = await fetch(`${API}/file?path=${encodeURIComponent(path)}`,{headers:{Authorization:`Bearer ${token}`}});
+  if (r.status===401){sessionStorage.clear();location.reload();}
+  if (r.status===404){return {files:[]};}
+  if (!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e.error||'Error al cargar');}
+  return r.json();
+}
+
+async function ghPut(path, content, sha, msg, attempt = 1) {
+    const maxAttempts = 4;
+    try {
+      const r = await fetch(`${API}/file`, {
+        method: 'PUT',
+        headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ path, content, sha, message: msg || `update: ${path}` })
+      });
+      if (r.status === 401) { sessionStorage.clear(); location.reload(); }
+      
+      let d;
+      try { d = await r.json(); } catch(e) {
+        if (attempt < maxAttempts) {
+          await new Promise(res => setTimeout(res, 2000 * attempt));
+          return ghPut(path, content, sha, msg, attempt + 1);
+        }
+        throw new Error("Timeout de red. Verifica tu conexión y vuelve a intentarlo.");
+      }
+      
+      if (!r.ok) {
+        let errStr = d.error || 'Error al guardar';
+        if (r.status === 503 || errStr.includes('No server is currently available') || errStr.includes('503') || errStr.includes('Conflict')) {
+          if (attempt < maxAttempts) {
+            await new Promise(res => setTimeout(res, 2500 * attempt));
+            return ghPut(path, content, sha, msg, attempt + 1);
+          }
+          errStr = "Los servidores de GitHub están temporalmente fuera de servicio. Por favor, intenta de nuevo en unos minutos.";
+        }
+        throw new Error(errStr);
+      }
+      return d;
+    } catch (err) {
+      if (attempt < maxAttempts && (err.message.toLowerCase().includes('fetch') || err.message.toLowerCase().includes('network'))) {
+        await new Promise(res => setTimeout(res, 2000 * attempt));
+        return ghPut(path, content, sha, msg, attempt + 1);
+      }
+      throw err;
+    }
+  }
+
+async function ghDelete(path, sha, msg, attempt = 1) {
+    const maxAttempts = 4;
+    try {
+      const r = await fetch(`${API}/file`, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ path, sha, message: msg || `delete: ${path}` })
+      });
+      if (r.status === 401) { sessionStorage.clear(); location.reload(); }
+      
+      let d;
+      try { d = await r.json(); } catch(e) {
+        if (attempt < maxAttempts) {
+          await new Promise(res => setTimeout(res, 2000 * attempt));
+          return ghDelete(path, sha, msg, attempt + 1);
+        }
+        throw new Error("Timeout de red. Verifica tu conexión y vuelve a intentarlo.");
+      }
+      
+      if (!r.ok) {
+        let errStr = d.error || 'Error al eliminar';
+        if (r.status === 503 || errStr.includes('No server is currently available') || errStr.includes('503') || errStr.includes('Conflict')) {
+          if (attempt < maxAttempts) {
+            await new Promise(res => setTimeout(res, 2500 * attempt));
+            return ghDelete(path, sha, msg, attempt + 1);
+          }
+        }
+        throw new Error(errStr);
+      }
+      return d;
+    } catch (err) {
+      if (attempt < maxAttempts && (err.message.toLowerCase().includes('fetch') || err.message.toLowerCase().includes('network'))) {
+        await new Promise(res => setTimeout(res, 2000 * attempt));
+        return ghDelete(path, sha, msg, attempt + 1);
+      }
+      throw err;
+    }
+  }
+
+// R2 Media API
+async function r2GetList() {
+  const r = await fetch(`${MEDIA_API}`,{headers:{Authorization:`Bearer ${token}`}});
+  if (r.status===401){sessionStorage.clear();location.reload();}
+  const d=await r.json(); if(!r.ok)throw new Error(d.error||'Error al cargar galería');
+  return d.files || [];
+}
+
+async function r2Upload(file, progressEl) {
+  if (progressEl) progressEl.textContent = 'Subiendo a R2...';
+  const r = await fetch(`${MEDIA_API}`, {
+    method: 'POST',
+    headers: { 
+      Authorization: `Bearer ${token}`, 
+      'X-File-Name': encodeURIComponent(file.name),
+      'Content-Type': file.type || 'application/octet-stream'
+    },
+    body: file
+  });
+  if (r.status===401){sessionStorage.clear();location.reload();}
+  
+  // Tratar de parsear JSON, si falla es porque Cloudflare devolvió HTML (ej. error 500)
+  let d;
+  try {
+    d = await r.json();
+  } catch(e) {
+    throw new Error(`Error del servidor (HTTP ${r.status}). Verifica que MEDIA_BUCKET esté configurado.`);
+  }
+  
+  if(!r.ok) throw new Error(d.error||'Error subiendo archivo');
+  
+  if (progressEl) { progressEl.textContent = '✓ Completado'; setTimeout(()=>progressEl.textContent='', 2000); }
+  return d.file;
+}
+
+async function r2Delete(key) {
+  const r = await fetch(`${MEDIA_API}/${encodeURIComponent(key)}`, {
+    method: 'DELETE', headers: { Authorization: `Bearer ${token}` }
+  });
+  const d=await r.json(); if(!r.ok)throw new Error(d.error||'Error eliminando archivo');
+  return true;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// MEDIA LIBRARY MODAL & IMAGE WIDGET
+// ─────────────────────────────────────────────────────────────────────────────
+var mediaSelectCallback = null;
+var currentMediaFiles = [];
+var selectedMediaUrl = null;
+
+async function openMediaModal(callback) {
+  mediaSelectCallback = callback;
+  selectedMediaUrl = null;
+  document.getElementById('media-confirm').disabled = true;
+  document.getElementById('media-modal').classList.add('open');
+  
+  const body = document.getElementById('media-modal-body');
+  body.innerHTML = `<div class="loading"><div class="spinner"></div> Cargando galería...</div>`;
+  
+  try {
+    currentMediaFiles = await r2GetList();
+    renderMediaGrid(body, currentMediaFiles, true);
+  } catch(e) {
+    body.innerHTML = `<div class="err-msg" style="display:block">❌ ${e.message}</div>`;
+  }
+}
+
+function renderMediaGrid(container, files, isModal) {
+  if (!files.length) {
+    container.innerHTML = `<div class="empty">La galería está vacía.</div>`;
+    return;
+  }
+  
+  container.innerHTML = `<div class="media-grid">
+    ${files.map((f, i) => {
+      const isVideo = f.key.match(/\.(mp4|webm)$/i);
+      return `
+      <div class="m-item" onclick="selectMediaItem(${i}, this, ${isModal})">
+        ${isVideo 
+          ? `<video src="${f.url}" preload="metadata"></video>` 
+          : `<img src="${f.url}" loading="lazy" alt="${f.key}">`}
+        <div class="m-name">${f.key}</div>
+        ${!isModal ? `<button class="btn-del" onclick="event.stopPropagation(); deleteMedia('${f.key}')">×</button>` : ''}
+      </div>`;
+    }).join('')}
+  </div>`;
+}
+
+function selectMediaItem(idx, el, isModal) {
+  if (!isModal) return; // Solo selección en modal
+  const parent = el.parentElement;
+  parent.querySelectorAll('.m-item').forEach(e => e.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedMediaUrl = currentMediaFiles[idx].url;
+  document.getElementById('media-confirm').disabled = false;
+}
+
+document.getElementById('media-confirm').onclick = () => {
+  if (selectedMediaUrl && mediaSelectCallback) {
+    mediaSelectCallback(selectedMediaUrl);
+  }
+  closeModal('media-modal');
+};
+
+async function handleMediaUploadEvent(e) {
+  const files = Array.from(e.target.files);
+  if (!files.length) return;
+  e.target.value = '';
+  
+  const inModal = document.getElementById('media-modal').classList.contains('open');
+  const progEl = document.getElementById(inModal ? 'media-upload-prog' : 'main-upload-prog');
+  const body = document.getElementById('media-modal-body');
+  
+  let successCount = 0, errorCount = 0, lastError = '';
+  
+  for (let i=0; i<files.length; i++) {
+    const file = files[i];
+    if (!file.type.startsWith('image/') && !file.type.startsWith('video/')) continue;
+    try {
+      if (progEl) progEl.textContent = `Subiendo ${i+1}/${files.length}... (${file.name})`;
+      await r2Upload(file, null);
+      successCount++;
+    } catch(err) {
+      console.error(err); errorCount++; lastError = err.message;
+    }
+  }
+  
+  if (progEl) {
+     progEl.textContent = `✓ Subidos: ${successCount}` + (errorCount ? `, ✗ Errores: ${errorCount}` : '');
+     setTimeout(()=> { if(progEl) progEl.textContent=''; }, 5000);
+  }
+  
+  if (errorCount > 0) {
+    alert(`Ocurrieron ${errorCount} errores al subir.\\nÚltimo error: ${lastError}\\nSi es un error 500 o 503, revisa que Cloudflare tenga configurada la variable MEDIA_BUCKET correctamente o intenta en un par de minutos.`);
+  }
+  
+  if (inModal) {
+    body.innerHTML = `<div class="loading"><div class="spinner"></div> Actualizando...</div>`;
+    currentMediaFiles = await r2GetList();
+    renderMediaGrid(body, currentMediaFiles, true);
+  } else {
+    route('media'); // Si está en la vista principal
+  }
+}
+
+document.getElementById('media-upload').addEventListener('change', handleMediaUploadEvent);
+document.getElementById('media-upload-folder').addEventListener('change', handleMediaUploadEvent);
+
+function pickImage(inputId, previewId) {
+  openMediaModal((url) => {
+    const inp = document.getElementById(inputId);
+    if (inp) inp.value = url;
+    updateImgPreview(inputId, previewId);
+  });
+}
+
+function fileToBase64(file) {
+  return new Promise((resolve,reject) => {
+    const r = new FileReader();
+    r.onload = e => resolve(e.target.result.split(',')[1]);
+    r.onerror = reject;
+    r.readAsDataURL(file);
+  });
+}
+
+function updateImgPreview(inputId, previewId) {
+  const val = document.getElementById(inputId)?.value;
+  const prev = document.getElementById(previewId);
+  if (!prev) return;
+  if (val) { prev.src=val; prev.classList.add('show'); }
+  else { prev.classList.remove('show'); }
+}
+
+function imgWidget(id, label, value='', hint='') {
+  const pid=id+'-prev';
+  return `<div class="ff"><label>${label}</label>
+    <div class="img-field-wrap">
+      <div class="img-input-row">
+        <input id="${id}" value="${esc(value)}" placeholder="URL o ruta de imagen" oninput="updateImgPreview('${id}','${pid}')">
+        <button type="button" class="btn-secondary" onclick="pickImage('${id}','${pid}')">🖼️ Seleccionar</button>
+      </div>
+      ${value ? `<img class="img-preview show" id="${pid}" src="${esc(value)}" alt="">` : `<img class="img-preview" id="${pid}" alt="">`}
+      ${hint?`<span class="hint">${hint}</span>`:''}
+    </div></div>`;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// VIEW: MEDIA GALLERY (MAIN)
+// ─────────────────────────────────────────────────────────────────────────────
+async function viewMedia() {
+  set(`
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
+      <div style="display:flex;align-items:center;"><div class="btn-card-icon card-icon-medios"><i class="ph ph-image"></i></div><div><p class="pt" style="margin-bottom:0">Biblioteca de Medios</p><p class="ps">Gestiona todas las imágenes y videos (Cloudflare R2)</p></div></div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <span id="main-upload-prog" style="font-size:.8rem;color:var(--gold);margin-right:8px;"></span>
+        <button class="btn-primary" onclick="document.getElementById('media-upload').click()">📁 Subir archivo(s)</button>
+        <button class="btn-secondary" onclick="document.getElementById('media-upload-folder').click()">📂 Subir carpeta</button>
+      </div>
+    </div>
+    <div id="media-main-grid"><div class="loading"><div class="spinner"></div> Cargando...</div></div>
+  `);
+  
+  try {
+    currentMediaFiles = await r2GetList();
+    renderMediaGrid(document.getElementById('media-main-grid'), currentMediaFiles, false);
+  } catch(e) {
+    document.getElementById('media-main-grid').innerHTML = `<p style="color:var(--danger)">❌ ${e.message}</p>`;
+  }
+}
+
+async function deleteMedia(key) {
+  if (confirm(`¿Estás seguro de eliminar el archivo "${key}" permanentemente?`)) {
+    try {
+      await r2Delete(key);
+      route('media');
+    } catch(e) { alert('Error: ' + e.message); }
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// MARKDOWN EDITOR TOOLBAR
+// ─────────────────────────────────────────────────────────────────────────────
+function mdToolbar(textareaId) {
+  const cmds = [
+    ['**B**','**','**'],['*I*','*','*'],['~~S~~','~~','~~'],
+    ['# H1','# ',''],['## H2','## ',''],['### H3','### ',''],
+    ['🔗 Link','[','](url)'],['> Cita','> ',''],['- Lista','- ',''],
+    ['1. Lista','1. ',''],['```Código','```\n','\n```'],
+  ];
+  return `<div class="md-wrap">
+      <div class="md-toolbar">${cmds.map(([l,b,a])=>`<button type="button" onclick="mdWrap('${textareaId}','${b.replace(/\n/g,'\\n').replace(/'/g,"\\'")}','${a.replace(/\n/g,'\\n').replace(/'/g,"\\'")}')" title="${l}">${l}</button>`).join('')} <button type="button" onclick="openMediaModal((url) => { mdWrap('${textareaId}', '![alt](', url + ')') })" title="Insertar Imagen de R2">🖼️ R2</button></div>
+    <textarea id="${textareaId}" style="width:100%; box-sizing:border-box; resize:vertical; min-height:320px; font-family:monospace; font-size:.83rem; line-height:1.6; border:none; border-radius:0; background:rgba(255,255,255,.03); padding:12px; color:var(--fg); outline:none;"></textarea>
+  </div>`;
+}
+
+function mdWrap(id, before, after) {
+  const ta = document.getElementById(id);
+  if (!ta) return;
+  const s=ta.selectionStart, e=ta.selectionEnd;
+  const sel=ta.value.substring(s,e);
+  ta.value=ta.value.substring(0,s)+before+sel+after+ta.value.substring(e);
+  ta.focus(); ta.selectionStart=s+before.length; ta.selectionEnd=s+before.length+sel.length;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// ROUTER
+// ─────────────────────────────────────────────────────────────────────────────
+async function route(id) {
+  hideSaveBar(); cFile=null; cSha=null; cData=null;
+  set(`<div class="loading"><div class="spinner"></div> Cargando…</div>`);
+  try {
+    const views = {blog:viewBlog,home:viewHome,about:viewAbout,contact:viewContact,global:viewGlobal,
+      tours:viewTours,departures:viewDeps,testimonials:viewTestims, media:viewMedia, reclamos:viewReclamos};
+    if (views[id]) await views[id]();
+    else set(`<p>Sección no encontrada.</p>`);
+  } catch(e) {
+    set(`<p style="color:var(--danger);padding:20px">❌ ${e.message}</p>`);
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// BLOG
+// ─────────────────────────────────────────────────────────────────────────────
+async function publishBlogPost(slug, fm, mdBody) {
+  const tmplData = await ghGet('www.manujungleforever.com/data/post-template.html');
+  let tmpl = tmplData.content;
+  
+  const htmlBody = marked.parse(mdBody);
+  const dateStr = fm.date ? new Date(fm.date + 'T12:00:00').toLocaleDateString('en-US', {year:'numeric', month:'long', day:'numeric'}) : '';
+  const replaceAll = (str, find, replace) => str.split(find).join(replace);
+  
+  tmpl = replaceAll(tmpl, '{{TITLE}}', fm.title || '');
+  tmpl = replaceAll(tmpl, '{{EXCERPT}}', fm.extracto || '');
+  tmpl = replaceAll(tmpl, '{{IMAGE}}', fm.imagen || '');
+  tmpl = replaceAll(tmpl, '{{DATE}}', dateStr);
+  tmpl = replaceAll(tmpl, '{{CONTENT}}', htmlBody);
+             
+  const htmlPath = `www.manujungleforever.com/${slug}/index.html`;
+  try {
+    const existingHtml = await ghGet(htmlPath);
+    await ghPut(htmlPath, tmpl, existingHtml.sha, `publish html: ${fm.title}`);
+  } catch(e) {
+    await ghPut(htmlPath, tmpl, null, `publish new html: ${fm.title}`);
+  }
+  
+  const idxData = await ghGet('www.manujungleforever.com/data/posts-index.json');
+  let idx = JSON.parse(idxData.content);
+  const postEntry = {
+    title: fm.title,
+    date: fm.date,
+    category: fm.categoria || 'Blog',
+    excerpt: fm.extracto,
+    image: fm.imagen,
+    imagen_alt: fm.imagen_alt,
+    publicado: fm.publicado,
+    slug: slug,
+    url: `${slug}/index.html`
+  };
+  
+  const existingIdx = idx.posts.findIndex(p => p.slug === slug);
+  if (existingIdx >= 0) {
+    idx.posts[existingIdx] = postEntry;
+  } else {
+    idx.posts.unshift(postEntry);
+  }
+  await ghPut('www.manujungleforever.com/data/posts-index.json', JSON.stringify(idx, null, 2), idxData.sha, `update index: ${fm.title}`);
+}
+
+async function viewBlog() {
+  set('<div class="loading"><div class="spinner"></div> Cargando artículos del blog...</div>');
+  try {
+    let posts = [];
+    let idxSha = null;
+
+    try {
+      const idxRes = await ghGet('www.manujungleforever.com/data/posts-index.json');
+      if (idxRes && idxRes.content) {
+        idxSha = idxRes.sha;
+        const idxData = JSON.parse(idxRes.content);
+        posts = idxData.posts || [];
+      }
+    } catch(e) {
+      console.warn('posts-index.json not loaded:', e);
+    }
+
+    const dirRes = await ghGet('www.manujungleforever.com/posts');
+    const files = (dirRes.files || []).filter(f => f.name.endsWith('.md'));
+    const fileMap = {};
+    files.forEach(f => {
+      const slug = f.name.replace('.md', '');
+      fileMap[slug] = f;
+    });
+
+    files.forEach(f => {
+      const slug = f.name.replace('.md', '');
+      if (!posts.some(p => p.slug === slug)) {
+        const prettyTitle = slug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+        posts.push({
+          title: prettyTitle,
+          date: '2026-08-16',
+          category: 'Wildlife',
+          publicado: true,
+          slug: slug,
+          image: '../assets/img/hero.png'
+        });
+      }
+    });
+
+    posts.sort((a, b) => new Date(b.date || '2000-01-01') - new Date(a.date || '2000-01-01'));
+
+    let html = `
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:22px">
+        <div>
+          <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-blog"><i class="ph ph-pencil"></i></div><p class="pt" style="margin-bottom:0">Artículos del Blog</p></div>
+          <p class="ps">${posts.length} artículos registrados (ordenados por fecha más reciente)</p>
+        </div>
+        <button class="btn-primary" onclick="newBlog()">+ Nuevo artículo</button>
+      </div>
+      <div class="blog-grid" style="display:grid;gap:14px;">`;
+
+    posts.forEach(p => {
+      const file = fileMap[p.slug] || { path: `www.manujungleforever.com/posts/${p.slug}.md`, sha: null, name: `${p.slug}.md` };
+      let imgSrc = p.image || '../assets/img/hero.png';
+      if (imgSrc.startsWith('/')) imgSrc = '..' + imgSrc;
+      const isPub = p.publicado !== false;
+
+      html += `
+        <div class="li blog-card-li">
+          <div class="blog-thumb">
+            <img src="${imgSrc}" alt="${esc(p.title)}" onerror="this.src='../assets/img/hero.png'">
+          </div>
+          <div class="li-info">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;flex-wrap:nowrap;">
+              <span class="badge ${isPub ? 'on' : 'warn'}">${isPub ? '✅ PUBLICADO' : '📝 BORRADOR'}</span>
+              <span class="badge" style="background:rgba(45,212,191,0.12);color:var(--teal);border:1px solid rgba(45,212,191,0.25);">🏷️ ${esc(p.category || 'Wildlife')}</span>
+              <span style="font-size:0.75rem;color:var(--muted);display:inline-flex;align-items:center;gap:4px;"><i class="ph ph-calendar"></i> ${p.date || '2026-08-16'}</span>
+            </div>
+            <h3>${esc(p.title)}</h3>
+            <span>/${p.slug}.md ${p.excerpt ? '— ' + esc(p.excerpt) : ''}</span>
+          </div>
+          <div class="li-actions">
+            <button class="btn-edit" onclick="editBlog('${file.path}','${file.sha}')"><i class="ph ph-pencil"></i> Editar</button>
+            <button class="btn-danger" onclick="deleteBlog('${file.path}','${file.sha}','${file.name.replace(/'/g, "\\'")}')">🗑️</button>
+          </div>
+        </div>`;
+    });
+
+    html += '</div>';
+    set(html);
+  } catch(e) {
+    set('<div class="empty">Error al cargar artículos del blog: ' + e.message + '</div>');
+  }
+}
+
+function newBlog() {
+  cFile=null; cSha=null;
+  set(`
+    <button class="back-btn" onclick="route('blog')">← Volver al blog</button>
+    <div class="eform">
+      <div class="esec">
+        <div class="esec-h">Nuevo Artículo</div>
+        <div class="ff"><label>Slug URL (sin espacios, solo guiones)</label>
+          <input id="f-slug" placeholder="mi-nuevo-articulo" oninput="this.value=this.value.toLowerCase().replace(/[^a-z0-9-]/g,'-')">
+          <span class="hint">El archivo se guardará como: <code id="slug-preview">mi-nuevo-articulo.md</code></span>
+        </div>
+        ${blogFields({title:'',date:new Date().toISOString().split('T')[0],categoria:'Wildlife',publicado:true,extracto:'',imagen:'',imagen_alt:''})}
+      </div>
+      <div class="esec"><div class="esec-h">Contenido (Markdown)</div>${mdToolbar('f-body')}</div>
+    </div>`);
+  document.getElementById('f-slug').addEventListener('input', e=>{
+    document.getElementById('slug-preview').textContent=e.target.value+'.md';
+  });
+  showSaveBar(async()=>{
+    const slug=document.getElementById('f-slug').value.trim();
+    if(!slug)throw new Error('El slug es obligatorio');
+    const path=`www.manujungleforever.com/posts/${slug}.md`;
+    const fm=readBlogFields();
+    const content=buildFM(fm,document.getElementById('f-body').value);
+    const res=await ghPut(path,content,null,`new post: ${fm.title}`);
+    cFile=path; cSha=res.sha;
+    await publishBlogPost(slug, fm, document.getElementById('f-body').value);
+    document.querySelector('.back-btn').textContent='← Blog (guardado ✓)';
+  });
+}
+
+async function editBlog(path, sha) {
+  set(`<div class="loading"><div class="spinner"></div></div>`);
+  const data=await ghGet(path);
+  cFile=path; cSha=data.sha;
+  const fm=parseFM(data.content);
+  set(`
+    <button class="back-btn" onclick="route('blog')">← Volver al blog</button>
+    <div class="eform">
+      <div class="esec">
+        <div class="esec-h">Información del Artículo</div>
+        ${blogFields(fm)}
+      </div>
+      <div class="esec"><div class="esec-h">Contenido (Markdown)</div>${mdToolbar('f-body')}</div>
+    </div>`);
+  document.getElementById('f-body').value=fm.body||'';
+  showSaveBar(async()=>{
+    const fm2=readBlogFields();
+    const content=buildFM(fm2,document.getElementById('f-body').value);
+    const res=await ghPut(cFile,content,cSha,`update: ${fm2.title}`);
+    cSha=res.sha;
+    const slug = cFile.split('/').pop().replace('.md', '');
+    await publishBlogPost(slug, fm2, document.getElementById('f-body').value);
+  });
+}
+
+function blogFields(fm) {
+  return `
+    <div class="grow2">
+      <div class="ff"><label>Título del artículo</label><input id="f-title" value="${esc(fm.title||'')}"></div>
+      <div class="ff"><label>Fecha de publicación</label><input type="date" id="f-date" value="${esc(fm.date||'')}"></div>
+    </div>
+    <div class="grow2">
+      <div class="ff"><label>Categoría</label>
+        <select id="f-cat" onchange="if(this.value==='__add_new__') addCustomItem('f-cat', 'Nombre de la nueva categoría del blog:')">
+        ${(() => {
+          const baseCats = ['Wildlife', 'Conservation', 'Sustainability', 'Manu Park', 'Travel Tips'];
+          const currentCat = fm.categoria || 'Wildlife';
+          const allCats = Array.from(new Set([...baseCats, currentCat].filter(Boolean)));
+          return allCats.map(c => `<option value="${esc(c)}" ${currentCat === c ? 'selected' : ''}>${esc(c)}</option>`).join('') +
+                 '<option value="__add_new__" style="font-weight:bold;color:var(--teal);">+ Añadir nueva categoría...</option>';
+        })()}
+      </select>
+      </div>
+      <div class="ff"><label>Estado</label>
+        <div class="tgl-wrap" style="margin-top:6px">
+          <label class="tgl"><input type="checkbox" id="f-pub" ${fm.publicado!==false?'checked':''}><span class="tgl-s"></span></label>
+          <span id="pub-lbl">${fm.publicado!==false?'✅ Publicado':'📝 Borrador'}</span>
+        </div>
+      </div>
+    </div>
+    <div class="ff"><label>Extracto (resumen para el listado)</label><textarea id="f-ext" style="min-height:70px">${esc(fm.extracto||'')}</textarea></div>
+    ${imgWidget('f-img','Imagen de portada',fm.imagen||'','Recomendado: 1200×600px')}
+    <div class="ff"><label>Texto alternativo de la imagen</label><input id="f-imgalt" value="${esc(fm.imagen_alt||'')}"></div>
+    <script>document.getElementById('f-pub').addEventListener('change',e=>{document.getElementById('pub-lbl').textContent=e.target.checked?'✅ Publicado':'📝 Borrador';})<\/script>`;
+}
+
+function readBlogFields() {
+  return {
+    title:v('f-title'),date:v('f-date'),categoria:v('f-cat'),
+    publicado:document.getElementById('f-pub')?.checked!==false,
+    extracto:v('f-ext'),imagen:v('f-img'),imagen_alt:v('f-imgalt')
+  };
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// HOME
+// ─────────────────────────────────────────────────────────────────────────────
+async function viewHome() {
+  const data=await ghGet('www.manujungleforever.com/data/home.json');
+  cFile='www.manujungleforever.com/data/home.json'; cSha=data.sha;
+  const d=JSON.parse(data.content); cData=d;
+  set(`
+    <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-contenido"><i class="ph ph-house"></i></div><div><p class="pt" style="margin-bottom:0">Página de Inicio</p><p class="ps">Contenido principal del sitio</p></div></div>
+    <div class="eform">
+      <div class="esec"><div class="esec-h">Hero (Portada)</div>
+        <div class="ff"><label>Título principal</label><input id="h-t" value="${esc(d.hero?.title||'')}"></div>
+        <div class="ff"><label>Título énfasis (parte resaltada)</label><input id="h-e" value="${esc(d.hero?.title_emphasis||'')}"></div>
+        <div class="ff"><label>Subtítulo / descripción</label><textarea id="h-s">${esc(d.hero?.subtitle||'')}</textarea></div>
+        <div class="grow2">
+          <div class="ff"><label>Texto de ubicación</label><input id="h-l" value="${esc(d.hero?.location_tag||'')}"></div>
+          <div class="ff"><label>ID video YouTube</label><input id="h-v" value="${esc(d.hero?.video_id||'')}">
+            <span class="hint">Solo el ID, ej: <code>dQw4w9WgXcQ</code></span></div>
+        </div>
+      </div>
+      <div class="esec"><div class="esec-h">Sección Sobre Nosotros</div>
+        <div class="grow2">
+          <div class="ff"><label>Eyebrow (texto pequeño encima)</label><input id="a-ey" value="${esc(d.about_section?.eyebrow||'')}"></div>
+          <div class="ff"><label>Título</label><input id="a-t" value="${esc(d.about_section?.title||'')}"></div>
+        </div>
+        <div class="ff"><label>Párrafos (separados por línea en blanco)</label>
+          <textarea id="a-p" style="min-height:120px">${(d.about_section?.paragraphs||[]).map(p=>p.text||p).join('\n\n')}</textarea></div>
+        ${imgWidget('a-img','Imagen de la sección',d.about_section?.image||'')}
+        <div class="ff"><label>Texto alt de la imagen</label><input id="a-ia" value="${esc(d.about_section?.image_alt||'')}"></div>
+      </div>
+      <div class="esec"><div class="esec-h">Pilares / Valores</div>
+        <div class="ff"><label>Título de la sección</label><input id="p-t" value="${esc(d.pillars_section?.title||'')}"></div>
+        ${(d.pillars_section?.pillars||[]).map((p,i)=>`
+          <div style="background:var(--card2);border-radius:8px;padding:12px;margin-bottom:8px">
+            <p style="font-size:.72rem;color:var(--gold);font-weight:600;margin-bottom:10px">PILAR ${i+1}</p>
+            <div class="grow3">
+              <div class="ff"><label>Ícono (FontAwesome)</label><input id="pi-ic${i}" value="${esc(p.icon||'')}"><span class="hint">ej: fas fa-leaf</span></div>
+              <div class="ff"><label>Título</label><input id="pi-ti${i}" value="${esc(p.title||'')}"></div>
+              <div class="ff"><label>Descripción</label><input id="pi-tx${i}" value="${esc(p.text||'')}"></div>
+            </div>
+          </div>`).join('')}
+      </div>
+    </div>`);
+  showSaveBar(async()=>{
+    const dd={...cData};
+    dd.hero={...d.hero,title:v('h-t'),title_emphasis:v('h-e'),subtitle:v('h-s'),location_tag:v('h-l'),video_id:v('h-v')};
+    const paras=document.getElementById('a-p').value.split(/\n\n+/).map(t=>({text:t.trim()})).filter(p=>p.text);
+    dd.about_section={...d.about_section,eyebrow:v('a-ey'),title:v('a-t'),paragraphs:paras,image:v('a-img'),image_alt:v('a-ia')};
+    dd.pillars_section={...d.pillars_section,title:v('p-t'),
+      pillars:(d.pillars_section?.pillars||[]).map((_,i)=>({icon:v(`pi-ic${i}`),title:v(`pi-ti${i}`),text:v(`pi-tx${i}`)}))};
+    const res=await ghPut(cFile,JSON.stringify(dd,null,2),cSha,'update: home page');
+    cSha=res.sha; cData=dd;
+  });
+}
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// ABOUT US
+// ─────────────────────────────────────────────────────────────────────────────
+async function viewAbout() {
+  const data=await ghGet('www.manujungleforever.com/data/about.json');
+  cFile='www.manujungleforever.com/data/about.json'; cSha=data.sha;
+  const d=JSON.parse(data.content); cData=d;
+  set(`
+    <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-contenido"><i class="ph ph-info"></i></div><div><p class="pt" style="margin-bottom:0">Página Sobre Nosotros</p><p class="ps">Contenido de "About Us"</p></div></div>
+    <div class="eform">
+      <div class="esec"><div class="esec-h">General</div>
+        <div class="ff"><label>Título de la página</label><input id="ab-t" value="${esc(d.titulo_pagina||'')}"></div>
+        <div class="ff"><label>Subtítulo de la página</label><textarea id="ab-s">${esc(d.subtitulo_pagina||'')}</textarea></div>
+        ${imgWidget('ab-img','Imagen Hero',d.hero_image||'')}
+      </div>
+      <div class="esec"><div class="esec-h">Historia</div>
+        <div class="grow2">
+          <div class="ff"><label>Eyebrow</label><input id="ab-he" value="${esc(d.historia?.eyebrow||'')}"></div>
+          <div class="ff"><label>Título</label><input id="ab-ht" value="${esc(d.historia?.titulo||'')}"></div>
+        </div>
+        <div class="ff"><label>Párrafos (separados por línea en blanco)</label>
+          <textarea id="ab-hp" style="min-height:120px">${(d.historia?.paragrafos||[]).join('\n\n')}</textarea></div>
+        ${imgWidget('ab-himg','Imagen Historia',d.historia?.imagen||'')}
+      </div>
+      <div class="esec"><div class="esec-h">Misión</div>
+        <div class="grow2">
+          <div class="ff"><label>Eyebrow</label><input id="ab-me" value="${esc(d.mision?.eyebrow||'')}"></div>
+          <div class="ff"><label>Título</label><input id="ab-mt" value="${esc(d.mision?.titulo||'')}"></div>
+        </div>
+        <div class="ff"><label>Texto</label><textarea id="ab-mtex" style="min-height:80px">${esc(d.mision?.texto||'')}</textarea></div>
+      </div>
+    </div>`);
+
+  showSaveBar(async()=>{
+    const out = JSON.parse(JSON.stringify(cData));
+    out.titulo_pagina = v('ab-t');
+    out.subtitulo_pagina = v('ab-s');
+    out.hero_image = v('ab-img');
+    if(!out.historia) out.historia = {};
+    out.historia.eyebrow = v('ab-he');
+    out.historia.titulo = v('ab-ht');
+    out.historia.paragrafos = v('ab-hp').split('\n\n').filter(x=>x.trim());
+    out.historia.imagen = v('ab-himg');
+    if(!out.mision) out.mision = {};
+    out.mision.eyebrow = v('ab-me');
+    out.mision.titulo = v('ab-mt');
+    out.mision.texto = v('ab-mtex');
+    
+    const res=await ghPut(cFile,JSON.stringify(out,null,2),cSha,`update about.json`);
+    cSha=res.sha;
+    cData=out;
+  });
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CONTACT
+// ─────────────────────────────────────────────────────────────────────────────
+async function viewContact() {
+  const data=await ghGet('www.manujungleforever.com/data/contact.json');
+  cFile='www.manujungleforever.com/data/contact.json'; cSha=data.sha;
+  const d=JSON.parse(data.content); cData=d;
+  set(`
+    <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-contenido"><i class="ph ph-phone"></i></div><div><p class="pt" style="margin-bottom:0">Página de Contacto</p><p class="ps">Información de contacto y datos de la empresa</p></div></div>
+    <div class="eform">
+      <div class="esec"><div class="esec-h">Textos de la Página</div>
+        <div class="ff"><label>Título</label><input id="c-tit" value="${esc(d.titulo_pagina||'')}"></div>
+        <div class="ff"><label>Subtítulo</label><input id="c-sub" value="${esc(d.subtitulo_pagina||'')}"></div>
+        ${imgWidget('c-hero','Imagen hero',d.hero_image||'')}
+      </div>
+      <div class="esec"><div class="esec-h">Datos de Contacto</div>
+        <div class="grow2">
+          <div class="ff"><label>Email principal</label><input id="c-em" value="${esc(d.contacto_principal?.email||'')}"></div>
+          <div class="ff"><label>WhatsApp (solo números)</label><input id="c-wa" value="${esc(d.contacto_principal?.whatsapp||'')}"><span class="hint">Ej: 51901525679</span></div>
+        </div>
+        <div class="grow2">
+          <div class="ff"><label>Teléfono 1</label><input id="c-t1" value="${esc(d.contacto_principal?.telefono_1||'')}"></div>
+          <div class="ff"><label>Teléfono 2</label><input id="c-t2" value="${esc(d.contacto_principal?.telefono_2||'')}"></div>
+        </div>
+        <div class="ff"><label>Mensaje WhatsApp por defecto</label><input id="c-wam" value="${esc(d.contacto_principal?.whatsapp_texto||'')}"></div>
+      </div>
+      <div class="esec"><div class="esec-h">Dirección</div>
+        <div class="grow2">
+          <div class="ff"><label>Nombre del lugar</label><input id="c-pn" value="${esc(d.direccion?.nombre||'')}"></div>
+          <div class="ff"><label>Localidad / Ciudad</label><input id="c-pc" value="${esc(d.direccion?.localidad||'')}"></div>
+        </div>
+        <div class="grow2">
+          <div class="ff"><label>País</label><input id="c-py" value="${esc(d.direccion?.pais||'')}"></div>
+          <div class="ff"><label>URL Google Maps</label><input id="c-maps" value="${esc(d.direccion?.maps_url||'')}"></div>
+        </div>
+      </div>
+      <div class="esec"><div class="esec-h">Horario de Atención</div>
+        <div class="grow2">
+          <div class="ff"><label>Días</label><input id="c-hd" value="${esc(d.horario?.dias||'')}"><span class="hint">Ej: Lunes – Domingo</span></div>
+          <div class="ff"><label>Horas</label><input id="c-hh" value="${esc(d.horario?.horas||'')}"><span class="hint">Ej: 7:00 AM – 8:00 PM</span></div>
+        </div>
+        <div class="ff"><label>Nota adicional</label><input id="c-hn" value="${esc(d.horario?.nota||'')}"></div>
+      </div>
+    </div>`);
+  showSaveBar(async()=>{
+    const dd={...d,titulo_pagina:v('c-tit'),subtitulo_pagina:v('c-sub'),hero_image:v('c-hero'),
+      contacto_principal:{...d.contacto_principal,email:v('c-em'),whatsapp:v('c-wa'),telefono_1:v('c-t1'),telefono_2:v('c-t2'),whatsapp_texto:v('c-wam')},
+      direccion:{...d.direccion,nombre:v('c-pn'),localidad:v('c-pc'),pais:v('c-py'),maps_url:v('c-maps')},
+      horario:{...d.horario,dias:v('c-hd'),horas:v('c-hh'),nota:v('c-hn')}};
+    const res=await ghPut(cFile,JSON.stringify(dd,null,2),cSha,'update: contact');
+    cSha=res.sha; cData=dd;
+  });
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// GLOBAL
+// ─────────────────────────────────────────────────────────────────────────────
+async function viewGlobal() {
+  const data=await ghGet('www.manujungleforever.com/data/global.json');
+  cFile='www.manujungleforever.com/data/global.json'; cSha=data.sha;
+  const d=JSON.parse(data.content); cData=d;
+  set(`
+    <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-contenido"><i class="ph ph-gear"></i></div><div><p class="pt" style="margin-bottom:0">Datos Globales del Sitio</p><p class="ps">Información general del negocio</p></div></div>
+    <div class="eform">
+      <div class="esec"><div class="esec-h">Información del Negocio</div>
+        <div class="grow2">
+          <div class="ff"><label>Nombre del negocio</label><input id="g-n" value="${esc(d.site_name||'')}"></div>
+          <div class="ff"><label>Eslogan</label><input id="g-sl" value="${esc(d.slogan||'')}"></div>
+        </div>
+        <div class="ff"><label>Tagline (descripción breve)</label><textarea id="g-tg">${esc(d.tagline||'')}</textarea></div>
+        <div class="grow2">
+          <div class="ff"><label>Email</label><input id="g-em" value="${esc(d.email||'')}"></div>
+          <div class="ff"><label>WhatsApp (solo números)</label><input id="g-wa" value="${esc(d.whatsapp_number||'')}"></div>
+        </div>
+        <div class="grow2">
+          <div class="ff"><label>Teléfono principal</label><input id="g-t1" value="${esc(d.phone_primary||'')}"></div>
+          <div class="ff"><label>Teléfono secundario</label><input id="g-t2" value="${esc(d.phone_secondary||'')}"></div>
+        </div>
+        <div class="ff"><label>Dirección física</label><input id="g-ad" value="${esc(d.address||'')}"></div>
+      </div>
+      <div class="esec"><div class="esec-h">Imágenes del Sitio</div>
+        ${imgWidget('g-logo','Logo principal',d.logo_main||'')}
+        ${imgWidget('g-fav','Favicon',d.favicon||'')}
+      </div>
+      <div class="esec"><div class="esec-h">Redes Sociales</div>
+        <div class="grow2">
+          <div class="ff"><label>Facebook</label><input id="g-fb" value="${esc(d.social?.facebook||'')}"></div>
+          <div class="ff"><label>Instagram</label><input id="g-ig" value="${esc(d.social?.instagram||'')}"></div>
+        </div>
+        <div class="grow2">
+          <div class="ff"><label>TripAdvisor</label><input id="g-ta" value="${esc(d.social?.tripadvisor||'')}"></div>
+          <div class="ff"><label>YouTube</label><input id="g-yt" value="${esc(d.social?.youtube||'')}"></div>
+        </div>
+        <div class="grow2">
+          <div class="ff"><label>TikTok</label><input id="g-tt" value="${esc(d.social?.tiktok||'')}"></div>
+          <div class="ff"><label>Airbnb</label><input id="g-ab" value="${esc(d.social?.airbnb||'')}"></div>
+        </div>
+      </div>
+      <div class="esec"><div class="esec-h">SEO por Defecto</div>
+        <div class="ff"><label>Sufijo del título</label><input id="g-ts" value="${esc(d.seo?.default_title_suffix||'')}"><span class="hint">Ej: | Manu Jungle Forever</span></div>
+        <div class="ff"><label>Descripción por defecto</label><textarea id="g-td">${esc(d.seo?.default_description||'')}</textarea></div>
+        ${imgWidget('g-og','Imagen OG por defecto',d.seo?.default_og_image||'')}
+      </div>
+      <div class="esec"><div class="esec-h">Copyright</div>
+        <div class="ff"><label>Texto de copyright</label><input id="g-cp" value="${esc(d.copyright||'')}"></div>
+      </div>
+    </div>`);
+  showSaveBar(async()=>{
+    const dd={...d,site_name:v('g-n'),slogan:v('g-sl'),tagline:v('g-tg'),email:v('g-em'),
+      whatsapp_number:v('g-wa'),phone_primary:v('g-t1'),phone_secondary:v('g-t2'),
+      address:v('g-ad'),logo_main:v('g-logo'),favicon:v('g-fav'),copyright:v('g-cp'),
+      social:{...d.social,facebook:v('g-fb'),instagram:v('g-ig'),tripadvisor:v('g-ta'),youtube:v('g-yt'),tiktok:v('g-tt'),airbnb:v('g-ab')},
+      seo:{...d.seo,default_title_suffix:v('g-ts'),default_description:v('g-td'),default_og_image:v('g-og')}};
+    const res=await ghPut(cFile,JSON.stringify(dd,null,2),cSha,'update: global');
+    cSha=res.sha; cData=dd;
+  });
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// TOURS
+// ─────────────────────────────────────────────────────────────────────────────
+async function viewTours() {
+  const data=await ghGet('www.manujungleforever.com/data/tours.json');
+  cFile='www.manujungleforever.com/data/tours.json'; cSha=data.sha;
+  cData=JSON.parse(data.content);
+  const ts=cData.tours||[];
+  
+  // Agrupación
+  const grouped = {};
+  ts.forEach((t, i) => {
+    const cat = (t.categoria || 'Otros').toUpperCase();
+    if(!grouped[cat]) grouped[cat] = [];
+    grouped[cat].push({ t, originalIndex: i });
+  });
+
+  let htmlList = '';
+  for(const cat of Object.keys(grouped).sort()) {
+    htmlList += `<div style="margin-top: 32px; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+               <h2 style="color: #10b981; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.1em; margin: 0;">${cat}</h2>
+             </div>`;
+    htmlList += `<div style="display:flex; flex-direction:column; gap:12px;">`;
+    
+    grouped[cat].forEach((item, index) => {
+      const {t, originalIndex} = item;
+      const num = String(index + 1).padStart(2, '0');
+      const stCls = t.estado==='activo'?'on':(t.estado==='inactivo'?'off':'warn');
+      const stLbl = t.estado ? t.estado.toUpperCase() : 'ACTIVO';
+      const img = t.imagen_hero || '../assets/img/hero.png';
+      
+      htmlList += `
+      <div style="display:flex; flex-wrap:nowrap; gap:16px; align-items:center; background:rgba(17,24,39,0.5); border:1px solid rgba(255,255,255,0.05); border-radius:12px; padding:12px; transition:all 0.2s;" onmouseover="this.style.borderColor='rgba(16,185,129,0.5)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.05)'">
+        
+        <div style="position:relative; width:80px; height:80px; flex-shrink:0;">
+          <img src="${img}" style="width:100%; height:100%; object-fit:cover; border-radius:8px; border:1px solid rgba(255,255,255,0.1);" onerror="this.src='../assets/img/hero.png'">
+          <div style="position:absolute; top:-6px; left:-6px; background:#10b981; color:#020617; font-size:0.65rem; font-weight:800; padding:2px 6px; border-radius:6px; box-shadow:0 2px 4px rgba(0,0,0,0.5);">${num}</div>
+        </div>
+        
+        <div style="flex: 2 1 250px; min-width:200px; overflow:hidden;">
+          <h3 style="color:#fff; font-size:1.05rem; font-weight:700; margin:0 0 4px 0; display:flex; align-items:center; gap:8px;">
+            ${t.nombre}
+            ${t.destacado ? '<i class="ph-fill ph-star" style="color:#fbbf24; font-size:1rem;" title="Destacado en portada"></i>' : ''}
+          </h3>
+          <div style="color:#9ca3af; font-size:0.85rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+            ${t.descripcion_corta || 'Sin descripción corta.'}
+          </div>
+        </div>
+        
+        <div style="flex: 2 1 300px; display:flex; gap:8px; flex-wrap:nowrap; font-size:0.75rem;">
+          <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); padding:4px 8px; border-radius:6px; color:#d1d5db; display:flex; align-items:center; gap:4px;">
+            <i class="ph ph-moon"></i> ${t.duracion_dias}D / ${t.duracion_noches}N
+          </div>
+          <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); padding:4px 8px; border-radius:6px; color:#d1d5db; display:flex; align-items:center; gap:4px;">
+            <i class="ph ph-currency-dollar"></i> $${t.precio_desde}
+          </div>
+          <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); padding:4px 8px; border-radius:6px; color:#d1d5db; display:flex; align-items:center; gap:4px;">
+            <i class="ph ph-users"></i> ${t.capacidad_min}-${t.capacidad_max} pax
+          </div>
+          <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); padding:4px 8px; border-radius:6px; color:#d1d5db; display:flex; align-items:center; gap:4px;">
+            <i class="ph ph-mountains"></i> ${t.dificultad}
+          </div>
+        </div>
+        
+        <div style="flex: 1 1 150px; display:flex; align-items:center; justify-content:flex-end; gap:12px;">
+          <span class="badge ${stCls}" style="font-size:0.65rem;">${stLbl}</span>
+          <div style="display:flex; gap:6px;">
+            <button class="btn-edit" style="padding:6px 10px; border-radius:6px;" onclick="editTour(${originalIndex})" title="Editar"><i class="ph ph-pencil"></i></button>
+            <button class="btn-danger" style="padding:6px 10px; border-radius:6px;" onclick="deleteTour(${originalIndex})" title="Eliminar"><i class="ph ph-trash"></i></button>
+          </div>
+        </div>
+
+      </div>
+      `;
+    });
+    htmlList += `</div>`;
+  }
+
+  set(`
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
+      <div style="display:flex;align-items:center;">
+        <div class="btn-card-icon card-icon-tours"><i class="ph ph-map-trifold"></i></div>
+        <div>
+          <p class="pt" style="margin-bottom:0">Tours</p>
+          <p class="ps">${ts.length} tours registrados</p>
+        </div>
+      </div>
+      <button class="btn-primary" onclick="editTour(-1)">+ Nuevo Tour</button>
+    </div>
+    <div id="tours-container">
+      ${htmlList || '<div class="empty">No hay tours.</div>'}
+    </div>`);
+}
+
+function buildGuidedToursMenu(tours, isSubfolder = true) {
+  const rel = isSubfolder ? '../' : '';
+  const activeTours = (tours || []).filter(t => t.estado === 'activo');
+  
+  const CAT_MAP = {
+    'wildlife': { label: 'WILDLIFE QUEST', icon: 'fas fa-binoculars' },
+    'roadtrip': { label: 'RAINFOREST ROAD TRIP', icon: 'fas fa-route' },
+    'expedition': { label: 'AMAZON EXPEDITION', icon: 'fas fa-campground' },
+    'cultural': { label: 'CULTURAL EXPEDITION', icon: 'fas fa-landmark' },
+    'birdwatching': { label: 'BIRDWATCHING QUEST', icon: 'fas fa-dove' },
+    'machu wasi': { label: 'MACHU WASI ADVENTURE', icon: 'fas fa-tree' },
+    'photography': { label: 'WILDLIFE PHOTOGRAPHY', icon: 'fas fa-camera' }
+  };
+  
+  const order = ['wildlife', 'roadtrip', 'expedition', 'cultural', 'birdwatching', 'machu wasi', 'photography'];
+  const groups = {};
+  
+  activeTours.forEach(t => {
+    const cat = (t.categoria || 'wildlife').toLowerCase().trim();
+    if (!groups[cat]) groups[cat] = [];
+    groups[cat].push(t);
+  });
+  
+  const allCats = Array.from(new Set([...order.filter(c => groups[c]), ...Object.keys(groups)]));
+  
+  let desktopHtml = '';
+  let mobileHtml = '';
+  
+  allCats.forEach(cat => {
+    const info = CAT_MAP[cat] || { label: cat.toUpperCase(), icon: 'fas fa-compass' };
+    const items = groups[cat] || [];
+    if (!items.length) return;
+    
+    desktopHtml += `\n        <span class="dh"><i class="${info.icon}"></i> ${info.label}</span>`;
+    mobileHtml += `\n        <span class="dh" style="color:var(--a);font-size:0.8rem;text-transform:uppercase;padding:10px 20px;display:block;"><i class="${info.icon}"></i> ${info.label}</span>`;
+    
+    items.forEach(t => {
+      const slug = t.slug || t.id;
+      const url = `${rel}${slug}/index.html`;
+      desktopHtml += `\n        <li><a href="${url}">${t.nombre}</a></li>`;
+      mobileHtml += `\n        <li><a href="${url}">${t.nombre}</a></li>`;
+    });
+  });
+  
+  return { desktopHtml, mobileHtml };
+}
+
+const MENU_PAGES_TO_SYNC = [
+  'www.manujungleforever.com/index.html',
+  'www.manujungleforever.com/about/index.html',
+  'www.manujungleforever.com/guided-tours/index.html',
+  'www.manujungleforever.com/blog/index.html',
+  'www.manujungleforever.com/departures/index.html',
+  'www.manujungleforever.com/contact/index.html',
+  'www.manujungleforever.com/news-and-gallery/index.html',
+  'www.manujungleforever.com/book-now/index.html',
+  'www.manujungleforever.com/faq/index.html',
+  'www.manujungleforever.com/data/post-template.html',
+  'www.manujungleforever.com/data/tour-template.html'
+];
+
+async function syncGuidedToursMenuInPages(tours, pageList = MENU_PAGES_TO_SYNC) {
+  const promises = pageList.map(async (pagePath) => {
+    try {
+      const pageData = await ghGet(pagePath);
+      let content = pageData.content;
+      const isSub = pagePath.split('/').length > 2;
+      const { desktopHtml, mobileHtml } = buildGuidedToursMenu(tours, isSub);
+      
+      let modified = false;
+      const dmRegex = /<ul class="dm">[\s\S]*?<\/ul>/;
+      const mddRegex = /<ul class="md" id="mdd">[\s\S]*?<\/ul>/;
+      
+      if (dmRegex.test(content)) {
+        content = content.replace(dmRegex, `<ul class="dm">${desktopHtml}\n      </ul>`);
+        modified = true;
+      }
+      if (mddRegex.test(content)) {
+        content = content.replace(mddRegex, `<ul class="md" id="mdd">${mobileHtml}\n      </ul>`);
+        modified = true;
+      }
+      
+      if (modified) {
+        await ghPut(pagePath, content, pageData.sha, `update guided tours menu in ${pagePath.split('/').pop()}`);
+      }
+    } catch(e) {
+      console.warn(`Could not sync menu in ${pagePath}:`, e);
+    }
+  });
+  await Promise.allSettled(promises);
+}
+
+async function publishTourPage(slug, tourObj) {
+  const tmplData = await ghGet('www.manujungleforever.com/data/tour-template.html');
+  let tmpl = tmplData.content;
+  
+  const CAT_MAP = {
+    'wildlife': { label: 'WILDLIFE QUEST', icon: 'fas fa-binoculars' },
+    'roadtrip': { label: 'RAINFOREST ROAD TRIP', icon: 'fas fa-route' },
+    'expedition': { label: 'AMAZON EXPEDITION', icon: 'fas fa-campground' },
+    'cultural': { label: 'CULTURAL EXPEDITION', icon: 'fas fa-landmark' },
+    'birdwatching': { label: 'BIRDWATCHING QUEST', icon: 'fas fa-dove' },
+    'machu wasi': { label: 'MACHU WASI ADVENTURE', icon: 'fas fa-tree' },
+    'photography': { label: 'WILDLIFE PHOTOGRAPHY', icon: 'fas fa-camera' }
+  };
+  
+  const catKey = (tourObj.categoria || 'wildlife').toLowerCase().trim();
+  const catInfo = CAT_MAP[catKey] || { label: catKey.toUpperCase(), icon: 'fas fa-compass' };
+  
+  const htmlBody = marked.parse(tourObj.descripcion_larga || tourObj.descripcion_corta || '');
+  const replaceAll = (str, find, replace) => str.split(find).join(replace);
+  
+  let itineraryHtml = '';
+  const itinerario = Array.isArray(tourObj.itinerario) ? tourObj.itinerario : [];
+  if (itinerario.length) {
+    itinerario.forEach((it, i) => {
+      const dayNum = it.dia || (i + 1);
+      const dayTitle = it.titulo ? `Day ${dayNum}: ${it.titulo}` : `Day ${dayNum}`;
+      itineraryHtml += `
+        <div style="background:var(--f); border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:24px;">
+          <h3 style="color:var(--a, #2dd4bf); font-size:1.25rem; font-weight:700; margin-bottom:12px; display:flex; align-items:center; gap:8px;">
+            <i class="far fa-calendar-check" style="font-size:1.1rem;"></i> ${dayTitle}
+          </h3>
+          <p style="color:rgba(255,255,255,0.85); font-size:1rem; line-height:1.75; margin:0;">
+            ${(it.descripcion || '').replace(/\n/g, '<br>')}
+          </p>
+        </div>`;
+    });
+  } else {
+    itineraryHtml = `<p style="color:rgba(255,255,255,0.6); font-style:italic;">Custom day-by-day itinerary tailored upon request.</p>`;
+  }
+  
+  const { desktopHtml, mobileHtml } = buildGuidedToursMenu(cData.tours, true);
+  
+  let heroImg = tourObj.imagen_hero || '../assets/img/hero.png';
+  if (heroImg.startsWith('/')) heroImg = '..' + heroImg;
+  
+  const durStr = `${tourObj.duracion_dias || 1} Days / ${tourObj.duracion_noches || 0} Nights`;
+  const capStr = `${tourObj.capacidad_min || 1}–${tourObj.capacidad_max || 8} Travelers`;
+  
+  const metaTitle = `${tourObj.nombre || 'Tour'} | Manu Jungle Forever`;
+  let metaDesc = (tourObj.descripcion_corta || tourObj.descripcion_larga || '').replace(/\r?\n|\r/g, ' ').replace(/\s+/g, ' ').trim();
+  if (metaDesc.length > 155) {
+    metaDesc = metaDesc.substring(0, 152);
+    const lastSpace = metaDesc.lastIndexOf(' ');
+    if (lastSpace > 100) metaDesc = metaDesc.substring(0, lastSpace);
+    metaDesc += '...';
+  }
+  const publicUrl = `https://www.manujungleforever.com/${slug}/`;
+  const ogImgUrl = heroImg.startsWith('http') ? heroImg : 'https://www.manujungleforever.com/' + heroImg.replace(/^\.\.\//, '').replace(/^\//, '');
+
+  tmpl = replaceAll(tmpl, '{{META_TITLE}}', metaTitle);
+  tmpl = replaceAll(tmpl, '{{META_DESCRIPTION}}', metaDesc);
+  tmpl = replaceAll(tmpl, '{{OG_URL}}', publicUrl);
+  tmpl = replaceAll(tmpl, '{{CANONICAL_URL}}', publicUrl);
+  tmpl = replaceAll(tmpl, '{{TITLE}}', tourObj.nombre || '');
+  tmpl = replaceAll(tmpl, '{{TITLE_ENCODED}}', encodeURIComponent(tourObj.nombre || 'Tour'));
+  tmpl = replaceAll(tmpl, '{{SLUG}}', slug);
+  tmpl = replaceAll(tmpl, '{{EXCERPT}}', metaDesc);
+  tmpl = replaceAll(tmpl, '{{CATEGORIA_LABEL}}', catInfo.label);
+  tmpl = replaceAll(tmpl, '{{HERO_IMAGE}}', heroImg);
+  tmpl = replaceAll(tmpl, '{{OG_IMAGE}}', ogImgUrl);
+  tmpl = replaceAll(tmpl, '{{DURACION}}', durStr);
+  tmpl = replaceAll(tmpl, '{{PRECIO}}', String(tourObj.precio_desde || 0));
+  tmpl = replaceAll(tmpl, '{{CAPACIDAD}}', capStr);
+  tmpl = replaceAll(tmpl, '{{DIFICULTAD}}', tourObj.dificultad || 'Easy');
+  tmpl = replaceAll(tmpl, '{{TEMPORADA}}', tourObj.temporada || 'All year');
+  tmpl = replaceAll(tmpl, '{{DESCRIPCION_CORTA}}', tourObj.descripcion_corta || '');
+  tmpl = replaceAll(tmpl, '{{CONTENT}}', htmlBody);
+  tmpl = replaceAll(tmpl, '{{ITINERARIO_HTML}}', itineraryHtml);
+  tmpl = replaceAll(tmpl, '{{GUIDED_TOURS_MENU_DESKTOP}}', desktopHtml);
+  tmpl = replaceAll(tmpl, '{{GUIDED_TOURS_MENU_MOBILE}}', mobileHtml);
+  
+  const htmlPath = `www.manujungleforever.com/${slug}/index.html`;
+  try {
+    const existingHtml = await ghGet(htmlPath);
+    await ghPut(htmlPath, tmpl, existingHtml.sha, `publish tour html: ${tourObj.nombre}`);
+  } catch(e) {
+    await ghPut(htmlPath, tmpl, null, `publish new tour html: ${tourObj.nombre}`);
+  }
+}
+
+async function unpublishTourPage(slug) {
+  try {
+    const htmlFile = await ghGet(`www.manujungleforever.com/${slug}/index.html`);
+    if (htmlFile && htmlFile.sha) {
+      await ghDelete(`www.manujungleforever.com/${slug}/index.html`, htmlFile.sha, `delete tour html: ${slug}`);
+    }
+  } catch(e) {
+    console.warn(`Could not delete html for ${slug}:`, e);
+  }
+}
+
+window.editTour = function(idx) {
+  const t= idx === -1 ? {nombre:'', estado:'activo', categoria:'wildlife', duracion_dias:1, duracion_noches:0, precio_desde:0, capacidad_min:1, capacidad_max:12, dificultad:'Fácil', temporada:'', descripcion_corta:'', descripcion_larga:'', imagen_hero:'', galeria:[], itinerario:[], incluye:[], no_incluye:[], destacado:false} : cData.tours[idx];
+  
+  let currentItinerary = JSON.parse(JSON.stringify(t.itinerario || []));
+  
+  set(`
+    <button class="back-btn" onclick="route('tours')">← Volver a tours</button>
+    <style>
+      @media (min-width: 1024px) {
+        .tour-layout-grid { grid-template-columns: 2fr 1fr !important; }
+      }
+    </style>
+    <div class="eform">
+      <div style="display: grid; gap: 32px; grid-template-columns: 1fr;" class="tour-layout-grid">
+        
+        <!-- COLUMNA IZQUIERDA -->
+        <div style="display: flex; flex-direction: column; gap: 24px;">
+          
+          <!-- TARJETA 1 -->
+          <div style="background: rgba(17,24,39,0.5); border: 1px solid rgba(255,255,255,0.05); padding: 24px; border-radius: 16px;">
+            <h3 style="color: #10b981; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">Información General</h3>
+            
+            <div class="ff" style="margin-bottom:12px"><label>Nombre del tour</label><input id="t-n" value="${esc(t.nombre)}"></div>
+            
+            <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:12px;margin-bottom:12px">
+              <div class="ff"><label>Categoría</label>
+                <select id="t-c" onchange="if(this.value==='__add_new__') addCustomItem('t-c', 'Nombre de la nueva categoría:')">
+                  ${(() => {
+                    const baseCats = ['wildlife', 'cultural', 'expedition', 'birdwatching', 'machu wasi', 'roadtrip', 'photography'];
+                    const existingCats = (cData?.tours || []).map(x => x.categoria).filter(Boolean);
+                    const allCats = Array.from(new Set([...baseCats, ...existingCats, t.categoria].filter(Boolean)));
+                    return allCats.map(c => `<option value="${esc(c)}" ${t.categoria === c ? 'selected' : ''}>${esc(c)}</option>`).join('') +
+                           '<option value="__add_new__" style="font-weight:bold;color:#2dd4bf;">+ Añadir categoría...</option>';
+                  })()}
+                </select>
+              </div>
+              <div class="ff"><label>Precio desde ($ USD)</label><input type="number" id="t-p" value="${t.precio_desde}" min="0"></div>
+              <div class="ff"><label>Cap. mínima</label><input type="number" id="t-cmin" value="${t.capacidad_min}" min="1"></div>
+              <div class="ff"><label>Cap. máxima</label><input type="number" id="t-cmax" value="${t.capacidad_max}" min="1"></div>
+            </div>
+            
+            <div style="display:grid;grid-template-columns:1fr 2fr 1fr 1fr;gap:12px;margin-bottom:12px">
+              <div class="ff"><label>Dificultad</label><select id="t-dif"><option value="Fácil" ${t.dificultad==='Fácil'?'selected':''}>Easy</option><option value="Moderado" ${t.dificultad==='Moderado'?'selected':''}>Moderate</option><option value="Difícil" ${t.dificultad==='Difícil'?'selected':''}>Hard</option></select></div>
+              <div class="ff"><label>Temporada</label>
+                <select id="t-tmp" onchange="if(this.value==='__add_new__') addCustomItem('t-tmp', 'Nombre de la nueva temporada:')">
+                  ${(() => {
+                    const baseSeasons = ['All year', 'May - October (Dry Season)', 'November - April (Rainy Season)', 'June - September'];
+                    const existingSeasons = (cData?.tours || []).map(x => x.temporada).filter(Boolean);
+                    const currentSeason = t.temporada || 'All year';
+                    const allSeasons = Array.from(new Set([...baseSeasons, ...existingSeasons, currentSeason].filter(Boolean)));
+                    return allSeasons.map(s => `<option value="${esc(s)}" ${currentSeason === s ? 'selected' : ''}>${esc(s)}</option>`).join('') +
+                           '<option value="__add_new__" style="font-weight:bold;color:#2dd4bf;">+ Añadir temporada...</option>';
+                  })()}
+                </select>
+              </div>
+              <div class="ff"><label>Duración (días)</label><input type="number" id="t-d" value="${t.duracion_dias||1}" min="1"></div>
+              <div class="ff"><label>Duración (noches)</label><input type="number" id="t-dn" value="${t.duracion_noches||0}" min="0"></div>
+            </div>
+          </div>
+          
+          <!-- TARJETA 2: DESCRIPCIONES -->
+          <div style="background: rgba(17,24,39,0.5); border: 1px solid rgba(255,255,255,0.05); padding: 24px; border-radius: 16px;">
+            <h3 style="color: #10b981; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">Descripciones</h3>
+            <div class="ff" style="margin-bottom:12px"><label>Descripción corta (tarjetas)</label><textarea id="t-dc" style="min-height:80px">${esc(t.descripcion_corta||'')}</textarea></div>
+            <div class="ff"><label>Descripción completa (Markdown)</label>${mdToolbar('t-dl')}</div>
+          </div>
+
+          <!-- TARJETA ITINERARIO DINÁMICO -->
+          <div style="background: rgba(17,24,39,0.5); border: 1px solid rgba(255,255,255,0.05); padding: 24px; border-radius: 16px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+              <h3 style="color: #10b981; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin: 0;">Itinerario Día a Día</h3>
+              <span id="it-days-badge" style="font-size:0.75rem; color:#d1d5db; background:rgba(255,255,255,0.05); padding:3px 8px; border-radius:6px; border:1px solid rgba(255,255,255,0.1);">${t.duracion_dias || 1} Días</span>
+            </div>
+            <div id="itinerary-days-container" style="display: flex; flex-direction: column; gap: 14px;"></div>
+          </div>
+        </div>
+
+        <!-- COLUMNA DERECHA -->
+        <div style="display: flex; flex-direction: column; gap: 24px;">
+          
+          <!-- TARJETA 3 -->
+          <div style="background: rgba(17,24,39,0.5); border: 1px solid rgba(255,255,255,0.05); padding: 24px; border-radius: 16px;">
+            <h3 style="color: #10b981; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">Estado y Visibilidad</h3>
+            <div class="ff" style="margin-bottom:12px"><label>Estado</label><select id="t-e"><option ${t.estado==='activo'?'selected':''} value="activo">✅ Active</option><option ${t.estado==='pausado'?'selected':''} value="pausado">⏸️ Paused</option><option ${t.estado==='seasonal'?'selected':''} value="seasonal">🍂 Seasonal</option><option ${t.estado==='inactivo'?'selected':''} value="inactivo">❌ Inactive</option></select></div>
+            <div class="ff"><label>Destacado en portada</label>
+              <div class="tgl-wrap" style="margin-top:6px"><label class="tgl"><input type="checkbox" id="t-dest" ${t.destacado?'checked':''}><span class="tgl-s"></span></label><span style="font-size:.83rem;color:var(--muted)">${t.destacado?'Sí, aparece en portada':'No aparece en portada'}</span></div>
+            </div>
+          </div>
+          
+          <!-- TARJETA 4 -->
+          <div style="background: rgba(17,24,39,0.5); border: 1px solid rgba(255,255,255,0.05); padding: 24px; border-radius: 16px;">
+            <h3 style="color: #10b981; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">Imagen Hero / Principal</h3>
+            <div style="margin-bottom:12px">${imgWidget('t-img','Imagen hero / principal',t.imagen_hero||'')}</div>
+            <div class="ff"><label>Texto alt imagen</label><input id="t-imgalt" value="${esc(t.imagen_alt||'')}"></div>
+          </div>
+          
+        </div>
+      </div>
+    </div>`);
+
+  function syncItineraryFromDOM() {
+    const container = document.getElementById('itinerary-days-container');
+    if (!container) return;
+    container.querySelectorAll('.it-day-card').forEach(card => {
+      const day = parseInt(card.dataset.day);
+      const tit = card.querySelector('.it-title-inp')?.value || '';
+      const desc = card.querySelector('.it-desc-ta')?.value || '';
+      if (!currentItinerary[day - 1]) currentItinerary[day - 1] = { dia: day, titulo: '', descripcion: '' };
+      currentItinerary[day - 1].dia = day;
+      currentItinerary[day - 1].titulo = tit;
+      currentItinerary[day - 1].descripcion = desc;
+    });
+  }
+
+  function renderItineraryBlocks() {
+    const container = document.getElementById('itinerary-days-container');
+    if (!container) return;
+    const daysInput = document.getElementById('t-d');
+    const totalDays = Math.max(1, parseInt(daysInput ? daysInput.value : 1) || 1);
+    
+    syncItineraryFromDOM();
+    
+    while (currentItinerary.length < totalDays) {
+      currentItinerary.push({ dia: currentItinerary.length + 1, titulo: '', descripcion: '' });
+    }
+    
+    const badge = document.getElementById('it-days-badge');
+    if (badge) badge.textContent = `${totalDays} ${totalDays === 1 ? 'Día' : 'Días'}`;
+    
+    let html = '';
+    for (let i = 1; i <= totalDays; i++) {
+      const item = currentItinerary[i - 1] || { dia: i, titulo: '', descripcion: '' };
+      html += `
+        <div class="it-day-card" data-day="${i}" style="background: rgba(0,0,0,0.25); border: 1px solid rgba(45,212,191,0.18); border-radius: 12px; padding: 16px;">
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px;">
+            <span style="background: #10b981; color: #020617; font-size: 0.72rem; font-weight: 800; padding: 3px 8px; border-radius: 6px;">DÍA ${i}</span>
+            <span style="font-size:0.8rem; color:#9ca3af;">Actividades y ruta del día ${i}</span>
+          </div>
+          <div class="ff" style="margin-bottom:10px;">
+            <label>Título del día ${i}</label>
+            <input class="it-title-inp" id="it-t-${i}" value="${esc(item.titulo || '')}" placeholder="ej: Cusco → Bosque Nuboso → Machu Wasi Lodge">
+          </div>
+          <div class="ff">
+            <label>Descripción de actividades</label>
+            <textarea class="it-desc-ta" id="it-d-${i}" style="min-height:90px; line-height:1.5;" placeholder="Detalles de caminatas, safari en bote, comidas, avistamiento...">${esc(item.descripcion || '')}</textarea>
+          </div>
+        </div>`;
+    }
+    container.innerHTML = html;
+  }
+
+  renderItineraryBlocks();
+  document.getElementById('t-dl').value=t.descripcion_larga||''; if(t.imagen_hero) updateImgPreview('t-img','t-img-prev');
+
+  const daysInput = document.getElementById('t-d');
+  if (daysInput) {
+    daysInput.addEventListener('input', () => {
+      renderItineraryBlocks();
+      const sb = document.getElementById('save-bar');
+      if (sb && saveFnRef) sb.style.display = 'flex';
+    });
+  }
+
+  setTimeout(() => {
+    document.querySelectorAll('.eform input, .eform select, .eform textarea').forEach(el => {
+      el.addEventListener('input', () => { const sb = document.getElementById('save-bar'); if (sb && saveFnRef) sb.style.display = 'flex'; });
+      el.addEventListener('change', () => { const sb = document.getElementById('save-bar'); if (sb && saveFnRef) sb.style.display = 'flex'; });
+    });
+  }, 100);
+
+  showSaveBar(async()=>{
+    syncItineraryFromDOM();
+    const durDias = Math.max(1, +v('t-d') || 1);
+    
+    // Exact duracion_dias elements
+    const finalItinerary = [];
+    for (let i = 0; i < durDias; i++) {
+      const it = currentItinerary[i] || { dia: i + 1, titulo: '', descripcion: '' };
+      finalItinerary.push({
+        dia: i + 1,
+        titulo: (it.titulo || '').trim(),
+        descripcion: (it.descripcion || '').trim()
+      });
+    }
+
+    const updated = {...t,nombre:v('t-n'),estado:v('t-e'),categoria:v('t-c'),
+      duracion_dias:durDias,duracion_noches:+v('t-dn'),precio_desde:+v('t-p'),
+      capacidad_min:+v('t-cmin'),capacidad_max:+v('t-cmax'),
+      dificultad:v('t-dif'),temporada:v('t-tmp'),
+      destacado:document.getElementById('t-dest').checked,
+      imagen_hero:v('t-img'),imagen_alt:v('t-imgalt'),
+      descripcion_corta:v('t-dc'),descripcion_larga:document.getElementById('t-dl').value,
+      itinerario:finalItinerary};
+
+    if (idx === -1) {
+        if(!updated.id) updated.id = 'tour-' + Date.now();
+        if(!updated.slug) updated.slug = updated.nombre.toLowerCase().replace(/[^a-z0-9-]/g,'-');
+        cData.tours.unshift(updated);
+    } else {
+        if(!updated.slug) updated.slug = updated.id || updated.nombre.toLowerCase().replace(/[^a-z0-9-]/g,'-');
+        cData.tours[idx] = updated;
+    }
+
+        const res = await ghPut(cFile, JSON.stringify(cData, null, 2), cSha, `update tour: ${updated.nombre}`);
+    cSha = res.sha;
+
+    // Publish static HTML for this tour
+    const slug = updated.slug;
+    if (updated.estado === 'activo') {
+      await publishTourPage(slug, updated);
+    } else {
+      await unpublishTourPage(slug);
+    }
+
+    // Synchronize departures linked to this tour in departures.json
+    try {
+      const depData = await ghGet('www.manujungleforever.com/data/departures.json');
+      if (depData && depData.content) {
+        const dJson = JSON.parse(depData.content);
+        let depModified = false;
+        (dJson.salidas || []).forEach(sal => {
+          if (sal.tour_id === updated.id || sal.tour_id === updated.slug) {
+            sal.tour_nombre = updated.nombre;
+            sal.moneda = 'USD';
+            sal.precio = updated.precio_desde;
+            depModified = true;
+          }
+        });
+        if (depModified) {
+          await ghPut('www.manujungleforever.com/data/departures.json', JSON.stringify(dJson, null, 2), depData.sha, `sync departures price with tour: ${updated.nombre}`);
+        }
+      }
+    } catch(err) {
+      console.warn('Could not sync departures with tour price:', err);
+    }
+    // Synchronize departure prices linked to this tour in departures.json
+    try {
+      const depData = await ghGet('www.manujungleforever.com/data/departures.json');
+      if (depData && depData.content) {
+        const dJson = JSON.parse(depData.content);
+        let depModified = false;
+        (dJson.salidas || []).forEach(sal => {
+          if (sal.tour_id === updated.id || sal.tour_id === updated.slug) {
+            sal.tour_nombre = updated.nombre;
+            sal.moneda = 'USD';
+            sal.precio = updated.precio_desde;
+            depModified = true;
+          }
+        });
+        if (depModified) {
+          await ghPut('www.manujungleforever.com/data/departures.json', JSON.stringify(dJson, null, 2), depData.sha, `sync departures price with tour: ${updated.nombre}`);
+        }
+      }
+    } catch(err) {
+      console.warn('Could not sync departures with tour price:', err);
+    }
+
+  });
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+// DEPARTURES
+// ─────────────────────────────────────────────────────────────────────────────
+window.filterDeps = function() {
+  const q = document.getElementById('dep-search').value.toLowerCase();
+  const st = document.getElementById('dep-filter-status').value;
+  document.querySelectorAll('.dep-card').forEach(el => {
+    const matchQ = el.dataset.tour.includes(q) || el.dataset.id.includes(q);
+    const matchS = st === '' || el.dataset.status === st;
+    el.style.display = (matchQ && matchS) ? 'flex' : 'none';
+  });
+};
+
+window.adjPlaza = async function(idx, diff) {
+  const s = cData.salidas[idx];
+  const newVal = (s.plazas_disponibles||0) + diff;
+  if (newVal < 0 || newVal > (s.plazas_totales||0)) return;
+  s.plazas_disponibles = newVal;
+  if (newVal === 0) s.estado = 'completo';
+  else if (newVal <= 2) s.estado = 'limitado';
+  else s.estado = 'disponible';
+  
+  set(`<div class="loading"><div class="spinner"></div> Actualizando plazas...</div>`);
+  const res = await ghPut(cFile, JSON.stringify(cData, null, 2), cSha, `adj plaza: ${s.id}`);
+  cSha = res.sha;
+  await viewDeps();
+};
+
+window.viewPax = function(idx) {
+  const s = cData.salidas[idx];
+  const pax = s.pasajeros || [];
+  
+  let html = `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px">
+    <h3 style="margin:0">Pasajeros: ${s.tour_nombre} (${s.fecha_salida})</h3>
+    <button class="btn-secondary" onclick="exportPaxCSV(${idx})">⬇️ Exportar CSV</button>
+  </div>`;
+  
+  if (pax.length === 0) {
+    html += `<div style="padding:20px;text-align:center;color:var(--muted)">No hay pasajeros registrados para esta salida.</div>`;
+  } else {
+    html += `<table style="width:100%;text-align:left;border-collapse:collapse;font-size:.85rem;">
+      <tr style="border-bottom:1px solid rgba(255,255,255,.1);color:var(--muted)">
+        <th style="padding:8px">Nombre / Pasaporte</th>
+        <th style="padding:8px">Contacto</th>
+        <th style="padding:8px">Dietas / Médicas</th>
+        <th style="padding:8px">Pago</th>
+      </tr>`;
+    pax.forEach(p => {
+      html += `<tr style="border-bottom:1px solid rgba(255,255,255,.05)">
+        <td style="padding:8px"><strong>${p.nombre_completo}</strong><br><span style="color:var(--muted)">${p.nacionalidad} - ${p.pasaporte}</span></td>
+        <td style="padding:8px"><a href="https://wa.me/${p.whatsapp.replace(/[^0-9]/g,'')}" target="_blank" style="color:var(--teal)">${p.whatsapp}</a><br><span style="color:var(--muted)">${p.email}</span></td>
+        <td style="padding:8px;color:#fbbf24">${p.restricciones_dieteticas || '-'}<br>${p.condiciones_medicas || '-'}</td>
+        <td style="padding:8px">
+          <span class="badge ${p.estado_pago==='pagado'?'on':'warn'}">${p.estado_pago}</span><br>
+          <span style="color:var(--muted)">Pagado: $${p.monto_pagado} / Saldo: $${p.saldo_pendiente}</span>
+        </td>
+      </tr>`;
+    });
+    html += `</table>`;
+  }
+  
+  document.getElementById('media-modal-body').innerHTML = html;
+  const headerTitle = document.getElementById('media-modal-body').parentElement.querySelector('.modal-h h3');
+  if (headerTitle) headerTitle.innerHTML = '👥 Gestión de Pasajeros';
+  
+  const confirmBtn = document.getElementById('media-confirm');
+  if (confirmBtn) confirmBtn.style.display = 'none';
+  openModal('media-modal');
+};
+
+window.exportPaxCSV = function(idx) {
+  const s = cData.salidas[idx];
+  const pax = s.pasajeros || [];
+  if(pax.length===0) return alert('No hay pasajeros');
+  let csv = "Nombre,Nacionalidad,Pasaporte,WhatsApp,Email,Dietas,Medicas,Pagado,Saldo\n";
+  pax.forEach(p => {
+    csv += `"${p.nombre_completo}","${p.nacionalidad}","${p.pasaporte}","${p.whatsapp}","${p.email}","${p.restricciones_dieteticas}","${p.condiciones_medicas}",${p.monto_pagado},${p.saldo_pendiente}\n`;
+  });
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `pasajeros-${s.id}.csv`;
+  a.click();
+};
+
+async function viewDeps() {
+  const data=await ghGet('www.manujungleforever.com/data/departures.json');
+  cFile='www.manujungleforever.com/data/departures.json'; cSha=data.sha;
+  cData=JSON.parse(data.content);
+  const sal=cData.salidas||[];
+  
+  const activas = sal.filter(s => ['disponible', 'limitado'].includes(s.estado)).length;
+  const vendidas = sal.reduce((acc, s) => acc + ((s.plazas_totales||0) - (s.plazas_disponibles||0)), 0);
+  
+  set(`
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
+      <div style="display:flex;align-items:center;"><div class="btn-card-icon card-icon-salidas"><i class="ph ph-calendar"></i></div><div><p class="pt" style="margin-bottom:0">Salidas Programadas</p><p class="ps">Control de cupos, logística y ventas</p></div></div>
+      <button class="btn-primary" onclick="editDep(-1)">+ Crear Nueva Salida</button>
+    </div>
+    
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:15px;margin-bottom:20px;">
+      <div class="esec" style="padding:15px;"><div style="font-size:2rem;font-weight:bold;color:var(--teal)">${activas}</div><div style="font-size:.8rem;color:var(--muted)">Salidas Activas</div></div>
+      <div class="esec" style="padding:15px;"><div style="font-size:2rem;font-weight:bold;color:#34d399">${vendidas}</div><div style="font-size:.8rem;color:var(--muted)">Plazas Vendidas Totales</div></div>
+      <div class="esec" style="padding:15px;"><div style="font-size:2rem;font-weight:bold;color:var(--gold)">${sal.length}</div><div style="font-size:.8rem;color:var(--muted)">Salidas Históricas</div></div>
+    </div>
+    
+    <div style="display:flex;gap:10px;margin-bottom:20px;align-items:center">
+      <input type="text" id="dep-search" placeholder="Buscar por Tour o ID..." style="flex:1;background:rgba(3,8,7,.65);border:1px solid rgba(255,255,255,.1);color:var(--fg);padding:10px;border-radius:8px;outline:none;" onkeyup="filterDeps()">
+      <select id="dep-filter-status" style="background:rgba(3,8,7,.65);border:1px solid rgba(255,255,255,.1);color:var(--fg);padding:10px;border-radius:8px;outline:none;" onchange="filterDeps()">
+        <option value="">Todos los Estados</option>
+        <option value="disponible">Disponible</option>
+        <option value="limitado">Limitado</option>
+        <option value="completo">Agotado / Completo</option>
+        <option value="cancelado">Cancelado</option>
+      </select>
+    </div>
+
+    <div class="list-grid" id="dep-list">
+      ${sal.map((s,i)=>{
+        const sold = (s.plazas_totales||0) - (s.plazas_disponibles||0);
+        const pct = s.plazas_totales ? Math.round((sold/s.plazas_totales)*100) : 0;
+        let stCls = 'on'; let pColor = '#34d399';
+        if (s.estado === 'limitado' || pct >= 75) { stCls = 'warn'; pColor = '#fbbf24'; }
+        if (s.estado === 'completo' || pct >= 100) { stCls = 'off'; pColor = '#f87171'; }
+        if (s.estado === 'cancelado' || s.estado === 'cerrado') { stCls = 'off'; pColor = '#9ca3af'; }
+        
+        return `<div class="li dep-card" data-tour="${(s.tour_nombre||'').toLowerCase()}" data-id="${(s.id||'').toLowerCase()}" data-status="${s.estado}" style="flex-direction:row;align-items:stretch">
+          <div style="flex:1">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
+              <div>
+                <h3 style="margin-bottom:4px;font-size:1.05rem">${s.tour_nombre} <span class="badge ${stCls}" style="vertical-align:middle;font-size:0.6rem">${s.estado.toUpperCase()}</span></h3>
+                <span style="font-size:.8rem;color:var(--muted)">${s.fecha_salida} ➔ ${s.fecha_regreso} &nbsp;|&nbsp; ID: ${s.id}</span>
+              </div>
+              <div style="text-align:right">
+                <div style="font-weight:bold;color:var(--gold);font-size:1.1rem">$${s.precio} ${s.moneda||'USD'}</div>
+                <div style="font-size:.75rem;color:var(--muted)">por pax</div>
+              </div>
+            </div>
+            
+            <div style="margin-bottom:12px">
+              <div style="display:flex;justify-content:space-between;font-size:.75rem;margin-bottom:4px;">
+                <span>Ocupación: ${sold} / ${s.plazas_totales} (${s.plazas_disponibles} disp.)</span>
+                <span>${pct}%</span>
+              </div>
+              <div style="width:100%;height:8px;background:rgba(255,255,255,.1);border-radius:4px;overflow:hidden">
+                <div style="width:${pct}%;height:100%;background:${pColor};border-radius:4px"></div>
+              </div>
+            </div>
+            
+            <div style="display:flex;gap:15px;font-size:.78rem;color:var(--muted);border-top:1px solid rgba(255,255,255,.06);padding-top:10px">
+              <div><span style="color:var(--fg)">Guía:</span> ${s.guia_asignado || 'Sin asignar'}</div>
+              <div><span style="color:var(--fg)">Mínimo:</span> ${s.plazas_minimas||2} pax (${sold >= (s.plazas_minimas||2) ? '<span style="color:#34d399">Alcanzado ✓</span>' : '<span style="color:#f87171">Faltan '+( (s.plazas_minimas||2) - sold )+'</span>'})</div>
+            </div>
+          </div>
+          
+          <div class="li-actions" style="flex-direction:column;border-left:1px solid rgba(255,255,255,.06);padding-left:15px;margin-left:15px;width:140px;gap:8px;justify-content:center">
+            <button class="btn-primary" style="width:100%;justify-content:center;padding:7px 10px;font-size:.85rem" onclick="viewPax(${i})">👥 Pasajeros (${(s.pasajeros||[]).length})</button>
+            <button class="btn-secondary" style="width:100%;justify-content:center;padding:7px 10px;font-size:.85rem" onclick="editDep(${i})">✏️ Editar Salida</button>
+            <div style="display:flex;gap:5px;width:100%">
+              <button class="btn-secondary" style="flex:1;padding:5px;font-size:.9rem;justify-content:center" title="Reducir plaza disponible" onclick="adjPlaza(${i},-1)">-1 Disp.</button>
+              <button class="btn-secondary" style="flex:1;padding:5px;font-size:.9rem;justify-content:center" title="Aumentar plaza disponible" onclick="adjPlaza(${i},1)">+1 Disp.</button>
+            </div>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>`);
+}
+
+window.editDep = async function(idx) {
+  let toursList = [];
+  try {
+    const toursData = await ghGet('www.manujungleforever.com/data/tours.json');
+    toursList = JSON.parse(toursData.content).tours || [];
+  } catch(e) { console.error('Error load tours', e); }
+
+  const s= idx === -1 ? {tour_id:'', tour_nombre:'', id:'dep-'+Date.now(), fecha_salida:'', fecha_regreso:'', precio:0, moneda:'USD', plazas_totales:8, plazas_minimas:2, plazas_disponibles:8, estado:'disponible', guia_asignado:'', notas:'', pasajeros:[]} : cData.salidas[idx];
+  
+  set(`
+    <button class="back-btn" onclick="route('departures')">← Volver a salidas</button>
+    <div class="eform"><div class="esec"><div class="esec-h">Datos de la Salida</div>
+      <div class="grow2">
+        <div class="ff"><label>Seleccionar Tour Base</label>
+          <select id="d-tid" onchange="document.getElementById('d-n').value = this.options[this.selectedIndex].text">
+            <option value="">-- Seleccionar Tour --</option>
+            ${toursList.map(t => `<option value="${t.id||t.slug}" ${s.tour_id===(t.id||t.slug)?'selected':''}>${t.nombre}</option>`).join('')}
+          </select>
+        </div>
+        <div class="ff"><label>Nombre del tour (Sobreescribir)</label><input id="d-n" value="${esc(s.tour_nombre)}"></div>
+      </div>
+      <div class="grow3">
+        <div class="ff"><label>ID único</label><input id="d-id" value="${esc(s.id)}"></div>
+        <div class="ff"><label>Fecha de salida</label><input type="date" id="d-s" value="${esc(s.fecha_salida)}"></div>
+        <div class="ff"><label>Fecha de regreso</label><input type="date" id="d-r" value="${esc(s.fecha_regreso)}"></div>
+      </div>
+      <div class="grow3">
+        <div class="ff"><label>Precio (${s.moneda||'USD'})</label><input type="number" id="d-p" value="${s.precio}"></div>
+        <div class="ff"><label>Plazas totales</label><input type="number" id="d-t" value="${s.plazas_totales}"></div>
+        <div class="ff"><label>Mínimo de pasajeros</label><input type="number" id="d-min" value="${s.plazas_minimas||2}"></div>
+      </div>
+      <div class="grow3">
+        <div class="ff"><label>Plazas disponibles</label><input type="number" id="d-d" value="${s.plazas_disponibles}"></div>
+        <div class="ff"><label>Estado</label><select id="d-e">${['disponible','limitado','completo','cancelado','cerrado'].map(e=>`<option ${s.estado===e?'selected':''} value="${e}">${e}</option>`).join('')}</select></div>
+        <div class="ff"><label>Guía Asignado</label><input id="d-g" value="${esc(s.guia_asignado||'')}"></div>
+      </div>
+      <div class="ff"><label>Notas adicionales / Internas</label><textarea id="d-no" style="min-height:80px">${esc(s.notas||'')}</textarea></div>
+      <div style="margin-top:20px;padding-top:15px;border-top:1px solid rgba(255,255,255,.06);display:flex;justify-content:flex-end">
+        <button class="btn-danger" type="button" onclick="deleteDep(${idx})" ${idx===-1?'style="display:none"':''}>🗑️ Eliminar Salida</button>
+      </div>
+    </div></div>`);
+  
+  showSaveBar(async()=>{
+    const updated = {...s,
+      tour_id:v('d-tid'),tour_nombre:v('d-n'),id:v('d-id'),
+      fecha_salida:v('d-s'),fecha_regreso:v('d-r'),precio:+v('d-p'),
+      plazas_totales:+v('d-t'),plazas_minimas:+v('d-min'),plazas_disponibles:+v('d-d'),
+      estado:v('d-e'),guia_asignado:v('d-g'),notas:document.getElementById('d-no').value
+    };
+    if (idx === -1) cData.salidas.unshift(updated);
+    else cData.salidas[idx] = updated;
+    const res=await ghPut(cFile,JSON.stringify(cData,null,2),cSha,`update salida: ${updated.id}`);
+    cSha=res.sha;
+  });
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+// TESTIMONIALS
+// ─────────────────────────────────────────────────────────────────────────────
+async function viewTestims() {
+  const data=await ghGet('www.manujungleforever.com/data/testimonials.json');
+  cFile='www.manujungleforever.com/data/testimonials.json'; cSha=data.sha;
+  cData=JSON.parse(data.content);
+  const ts=cData.testimonials||[];
+  set(`
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px"><div style="display:flex;align-items:center;"><div class="btn-card-icon card-icon-testim"><i class="ph ph-chat-circle-text"></i></div><div><p class="pt" style="margin-bottom:0">Testimonios de Clientes</p><p class="ps">${ts.length} testimonios</p></div></div><button class="btn-primary" onclick="editTestim(-1)">+ Nuevo Testimonio</button></div>
+    <div class="list-grid">
+      ${ts.map((t,i)=>`
+        <div class="li">
+          <div class="li-info">
+            <h3>${t.nombre} ${t.bandera||''} — ${'⭐'.repeat(t.rating||5)} <span class="badge ${t.activo?'on':'off'}">${t.activo?'visible':'oculto'}</span></h3>
+            <span>${t.pais} · ${t.tour} · ${t.fecha}</span>
+          </div>
+          <div class="li-actions">
+            <button class="btn-edit" onclick="editTestim(${i})">Editar</button>
+          </div>
+        </div>`).join('')}
+    </div>`);
+}
+
+window.editTestim = function(idx) {
+  const t= idx === -1 ? {nombre:'', pais:'', bandera:'', tour:'', fecha:'', rating:5, texto:'', foto:'', activo:true} : cData.testimonials[idx];
+  set(`
+    <button class="back-btn" onclick="route('testimonials')">← Volver a testimonios</button>
+    <div class="eform"><div class="esec"><div class="esec-h">Datos del Testimonio</div>
+      <div class="grow2">
+        <div class="ff"><label>Nombre del cliente</label><input id="tm-n" value="${esc(t.nombre)}"></div>
+        <div class="ff"><label>País</label><input id="tm-p" value="${esc(t.pais)}"></div>
+      </div>
+      <div class="grow2">
+        <div class="ff"><label>Bandera emoji</label><input id="tm-fl" value="${esc(t.bandera||'')}"><span class="hint">Ej: 🇺🇸 🇬🇧 🇩🇪 🇦🇺</span></div>
+        <div class="ff"><label>Tour realizado</label>
+          <div style="display:flex;gap:8px;align-items:center">
+            <input id="tm-t" value="${esc(t.tour)}" style="flex:1" placeholder="Nombre del tour">
+            <button type="button" class="btn-secondary" style="white-space:nowrap" onclick="pickImage('tm-t','tm-img-prev')">🖼️ Medios</button>
+          </div>
+        </div>
+      </div>
+      <div class="grow2">
+        <div class="ff"><label>Fecha del viaje</label><input type="date" id="tm-f" value="${esc(t.fecha)}"></div>
+        <div class="ff"><label>Calificación (estrellas)</label><select id="tm-r"><option ${t.rating==5?'selected':''} value="5">⭐⭐⭐⭐⭐ (5)</option><option ${t.rating==4?'selected':''} value="4">⭐⭐⭐⭐ (4)</option><option ${t.rating==3?'selected':''} value="3">⭐⭐⭐ (3)</option></select></div>
+      </div>
+      <div class="ff"><label>Texto del testimonio</label><textarea id="tm-tx" style="min-height:120px">${esc(t.texto)}</textarea></div>
+      ${imgWidget('tm-img','Foto del cliente (opcional)',t.foto||'')}
+      <div class="ff"><label>Visibilidad en el sitio</label>
+        <div class="tgl-wrap" style="margin-top:6px"><label class="tgl"><input type="checkbox" id="tm-a" ${t.activo?'checked':''}><span class="tgl-s"></span></label>
+        <span id="tm-lbl">${t.activo?'✅ Visible':'❌ Oculto'}</span></div>
+      </div>
+    </div></div>`);
+  document.getElementById('tm-a').addEventListener('change',e=>{document.getElementById('tm-lbl').textContent=e.target.checked?'✅ Visible':'❌ Oculto';});
+  showSaveBar(async()=>{
+    const updated = {...t,nombre:v('tm-n'),pais:v('tm-p'),bandera:v('tm-fl'),
+      tour:v('tm-t'),fecha:v('tm-f'),rating:+v('tm-r'),texto:v('tm-tx'),
+      foto:v('tm-img'),activo:document.getElementById('tm-a').checked};
+    if(idx===-1){
+      if(!updated.id) updated.id = Date.now();
+      cData.testimonials.unshift(updated);
+    } else {
+      cData.testimonials[idx] = updated;
+    }
+    const res=await ghPut(cFile,JSON.stringify(cData,null,2),cSha,`update testimonio: ${updated.nombre}`);
+    cSha=res.sha;
+  });
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+// DELETE
+// ─────────────────────────────────────────────────────────────────────────────
+function confirmDelete(path, sha, label, backFn) {
+  document.getElementById('del-title').textContent=`¿Eliminar este ${label}?`;
+  document.getElementById('del-msg').textContent=`"${path.split('/').pop()}" — Esta acción no se puede deshacer.`;
+  document.getElementById('del-modal').classList.add('open');
+  document.getElementById('del-confirm').onclick = async () => {
+    try {
+      await ghDelete(path,sha,`delete: ${path}`);
+      closeModal('del-modal');
+      eval(backFn+'()');
+    } catch(e) { alert('Error: '+e.message); }
+  };
+}
+function closeModal_DIS(id) { document.getElementById(id).classList.remove('open'); }
+function openModal_DIS(id) { document.getElementById(id).classList.add('open'); }
+window.confirmDelete=confirmDelete; window.closeModal=closeModal;
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SAVE BAR
+// ─────────────────────────────────────────────────────────────────────────────
+function showSaveBar_DIS(fn) {
+  saveFnRef=fn;
+  const bar=document.getElementById('save-bar');
+  const btn=document.getElementById('btn-save');
+  const st=document.getElementById('save-status');
+  bar.style.display='flex'; st.textContent=''; st.className='save-status';
+  btn.onclick=async()=>{
+    btn.disabled=true; st.textContent='Guardando…'; st.className='save-status';
+    try { await fn(); st.textContent='✓ Guardado correctamente'; st.className='save-status ok'; }
+    catch(e) { st.textContent='✗ '+e.message; st.className='save-status err'; }
+    finally { btn.disabled=false; }
+  };
+  document.getElementById('btn-cancel-save').onclick=()=>{
+    if(confirm('¿Descartar cambios?')){ hideSaveBar(); route(cSection); }
+  };
+}
+function hideSaveBar_DIS() { document.getElementById('save-bar').style.display='none'; saveFnRef=null; }
+
+// ─────────────────────────────────────────────────────────────────────────────
+// UTILS
+// ─────────────────────────────────────────────────────────────────────────────
+function set_DIS(h){ document.getElementById('mc').innerHTML=h; }
+function v(id){ return document.getElementById(id)?.value??''; }
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function parseFM(raw) {
+  const m=raw.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);
+  if(!m) return {body:raw};
+  const fm={};
+  m[1].split('\n').forEach(line=>{
+    const i=line.indexOf(':');
+    if(i<0)return;
+    const k=line.slice(0,i).trim();
+    const val=line.slice(i+1).trim().replace(/^["']|["']$/g,'');
+    fm[k]=val;
+  });
+  if(fm.publicado!==undefined) fm.publicado=fm.publicado!=='false';
+  fm.body=m[2].trim();
+  return fm;
+}
+function buildFM(fm,body) {
+  const skip=['body'];
+  let out='---\n';
+  for(const [k,vv] of Object.entries(fm)){
+    if(skip.includes(k))continue;
+    const s=String(vv);
+    const quoted=s.includes(':')||s.includes('"')||s.includes("'")?`"${s.replace(/"/g,'\\"')}"`:s;
+    out+=`${k}: ${quoted}\n`;
+  }
+  return out+`---\n\n${body}`;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// RECLAMOS
+// ─────────────────────────────────────────────────────────────────────────────
+async function viewReclamos() {
+  set(`<div class="loading"><div class="spinner"></div> Cargando reclamos...</div>`);
+  try {
+    const r = await fetch('/api/admin/reclamos', {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    if (r.status === 401) { sessionStorage.clear(); location.reload(); }
+    if (!r.ok) throw new Error('Error al cargar');
+    const reclamos = await r.json();
+    window.currentReclamosData = reclamos;
+    
+    let html = `
+    <div style="display:flex;align-items:center;margin-bottom:20px;"><div class="btn-card-icon card-icon-reclamos"><i class="ph ph-scales"></i></div><h2 class="pt" style="margin-bottom:0">Libro de Reclamaciones</h2></div>
+    <p class="ps">Auditoría y exportación de quejas y reclamos legales.</p>
+
+    <!-- Filtros tipo Wachicargo -->
+    <div style="background:var(--card);border:1px solid var(--bdr);border-radius:14px;padding:20px;margin-bottom:20px;display:flex;gap:15px;align-items:flex-end;flex-wrap:nowrap;">
+      <div style="flex:2;min-width:200px;">
+        <label style="font-size:0.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;margin-bottom:6px;display:block;">Buscar</label>
+        <div style="position:relative;">
+          <i class="ph ph-magnifying-glass" style="position:absolute;left:12px;top:10px;color:var(--muted);"></i>
+          <input type="text" id="r-search" placeholder="Código, nombre o documento..." style="width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:var(--fg);padding:9px 12px 9px 36px;border-radius:10px;font-size:0.85rem;outline:none;">
+        </div>
+      </div>
+      <div style="flex:1;min-width:120px;">
+        <label style="font-size:0.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;margin-bottom:6px;display:block;">Tipo</label>
+        <select id="r-type" style="width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:var(--fg);padding:9px 12px;border-radius:10px;font-size:0.85rem;outline:none;">
+          <option value="Todos" style="background:#0a1f1b;">Todos</option>
+          <option value="Reclamo" style="background:#0a1f1b;">Reclamo</option>
+          <option value="Queja" style="background:#0a1f1b;">Queja</option>
+        </select>
+      </div>
+      <div style="flex:1;min-width:120px;">
+        <label style="font-size:0.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;margin-bottom:6px;display:block;">Desde</label>
+        <input type="date" id="r-from" style="width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:var(--muted);padding:8px 12px;border-radius:10px;font-size:0.85rem;outline:none;">
+      </div>
+      <div style="flex:1;min-width:120px;">
+        <label style="font-size:0.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;margin-bottom:6px;display:block;">Hasta</label>
+        <input type="date" id="r-to" style="width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:var(--muted);padding:8px 12px;border-radius:10px;font-size:0.85rem;outline:none;">
+      </div>
+      <div style="display:flex;gap:10px;">
+        <button class="btn-primary" onclick="filterReclamos()" style="background:#38bdf8;color:#0f172a;border:none;box-shadow:0 0 14px rgba(56,189,248,.3);"><i class="ph ph-funnel"></i> Filtrar</button>
+        <button class="btn-primary" onclick="exportReclamos()" style="background:#10b981;color:#022c22;border:none;box-shadow:0 0 14px rgba(16,185,129,.3);"><i class="ph ph-file-csv"></i> Exportar</button>
+      </div>
+    </div>
+    
+    <div style="background:var(--card);border:1px solid var(--bdr);border-radius:14px;overflow-x:auto;">
+      <table style="width:100%;border-collapse:collapse;text-align:left;">
+        <thead>
+          <tr style="border-bottom:1px solid var(--bdr);font-size:0.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">
+            <th style="padding:16px 20px;">Código</th>
+            <th style="padding:16px 20px;">Fecha</th>
+            <th style="padding:16px 20px;">Cliente</th>
+            <th style="padding:16px 20px;">Tipo</th>
+            <th style="padding:16px 20px;">Estado</th>
+            <th style="padding:16px 20px;text-align:right;">Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="r-tbody">
+          <!-- rows -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Modal Reclamo -->
+    <div id="modal-reclamo" class="modal-bg">
+      <div class="modal lg">
+        <div class="modal-h">
+          <h3 id="mr-title" style="color:var(--teal)"></h3>
+          <span id="mr-subtitle" style="font-size:0.8rem;color:var(--muted)"></span>
+        </div>
+        
+        <div class="modal-body">
+          <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:15px;margin-bottom:15px;display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:0.85rem;">
+            <div><strong style="color:var(--muted)">Cliente:</strong> <span id="mr-cliente"></span></div>
+            <div><strong style="color:var(--muted)">Doc/DNI:</strong> <span id="mr-dni"></span></div>
+            <div><strong style="color:var(--muted)">Teléfono:</strong> <span id="mr-tel"></span></div>
+            <div><strong style="color:var(--muted)">Correo:</strong> <span id="mr-email"></span></div>
+            <div style="grid-column:1/-1;"><strong style="color:var(--muted)">Domicilio:</strong> <span id="mr-domicilio"></span></div>
+          </div>
+          
+          <div style="margin-bottom:15px;">
+            <h4 style="font-size:0.85rem;margin-bottom:6px;color:var(--gold);text-transform:uppercase;">Detalle:</h4>
+            <div id="mr-detalle" style="background:rgba(201,168,76,0.06);padding:14px;border-radius:10px;font-size:0.9rem;white-space:pre-wrap;border-left:3px solid var(--gold);"></div>
+          </div>
+          
+          <div style="margin-bottom:15px;">
+            <h4 style="font-size:0.85rem;margin-bottom:6px;color:var(--danger);text-transform:uppercase;">Pedido:</h4>
+            <div id="mr-pedido" style="background:rgba(239,68,68,0.06);padding:14px;border-radius:10px;font-size:0.9rem;white-space:pre-wrap;border-left:3px solid var(--danger);"></div>
+          </div>
+          
+          <div id="mr-respuesta-box" style="margin-top:20px;border-top:1px solid rgba(255,255,255,.08);padding-top:20px;">
+            <h4 style="font-size:0.95rem;margin-bottom:8px;color:var(--teal);">Respuesta Oficial</h4>
+            <p style="font-size:0.75rem;color:var(--muted);margin-bottom:12px;">Escriba la respuesta que se enviará automáticamente al correo del cliente. Este texto será el contenido principal del correo oficial.</p>
+            <textarea id="mr-reply" style="width:100%;padding:12px;border:1px solid rgba(255,255,255,.1);border-radius:10px;background:rgba(0,0,0,.3);color:var(--fg);font-family:inherit;font-size:0.85rem;min-height:120px;outline:none;" placeholder="Estimado cliente, en relación a su reclamo..."></textarea>
+            
+            <div id="mr-status" style="margin-top:10px;display:none;padding:10px;border-radius:8px;font-size:0.8rem;"></div>
+          </div>
+          
+          <div id="mr-atendido-box" style="display:none;margin-top:20px;border-top:1px solid rgba(255,255,255,.08);padding-top:20px;">
+            <h4 style="font-size:0.95rem;margin-bottom:8px;color:var(--green);"><i class="ph ph-check-circle"></i> Reclamo Atendido</h4>
+            <p style="font-size:0.75rem;color:var(--muted);margin-bottom:10px;">Respondido el: <span id="mr-fecha-res"></span></p>
+            <div id="mr-respuesta-texto" style="background:rgba(16,185,129,0.06);padding:14px;border-radius:10px;font-size:0.9rem;white-space:pre-wrap;border-left:3px solid var(--green);"></div>
+          </div>
+          
+        </div>
+        <div class="modal-actions">
+          <button class="btn-secondary" onclick="closeModal('modal-reclamo')">Cerrar</button>
+          <button id="mr-btn-send" class="btn-primary" onclick="submitReclamoReply()"><i class="ph ph-paper-plane-tilt"></i> Enviar Respuesta</button>
+        </div>
+      </div>
+    </div>
+    `;
+    
+    set(html);
+    window.currentReclamosData = reclamos;
+    renderReclamosRows(reclamos);
+    
+  } catch(e) {
+    set(`<p style="color:var(--danger);padding:20px;">❌ Error cargando reclamos: ${e.message}</p>`);
+  }
+}
+
+function renderReclamosRows(list) {
+  const tbody = document.getElementById('r-tbody');
+  if (!tbody) return;
+  if (!list || list.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="6" style="padding:40px;text-align:center;color:var(--muted);">No se encontraron reclamos que coincidan con la búsqueda.</td></tr>`;
+    return;
+  }
+  
+  tbody.innerHTML = list.map(r => {
+    const isAtendido = (r.estado === 'Atendido');
+    return `
+    <tr style="border-bottom:1px solid rgba(255,255,255,.05);transition:.2s;" onmouseover="this.style.background='rgba(255,255,255,.02)'" onmouseout="this.style.background='transparent'">
+      <td style="padding:16px 20px;color:#38bdf8;font-weight:600;font-size:0.9rem;">${r.codigo_reclamo}</td>
+      <td style="padding:16px 20px;color:var(--muted);font-size:0.85rem;">${r.fecha}</td>
+      <td style="padding:16px 20px;">
+        <div style="font-weight:600;font-size:0.88rem;color:var(--fg);">${r.nombres}</div>
+        <div style="font-size:0.75rem;color:var(--muted);">${r.documento}</div>
+      </td>
+      <td style="padding:16px 20px;">
+        <span style="display:inline-block;padding:3px 10px;border-radius:20px;font-size:0.7rem;font-weight:600;background:rgba(239,68,68,.1);color:#fca5a5;border:1px solid rgba(239,68,68,.2);">${r.tipo}</span>
+      </td>
+      <td style="padding:16px 20px;">
+        <span style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:0.7rem;font-weight:600;${isAtendido ? 'background:rgba(16,185,129,.1);color:#6ee7b7;border:1px solid rgba(16,185,129,.2);' : 'background:rgba(245,158,11,.1);color:#fcd34d;border:1px solid rgba(245,158,11,.2);'}">
+          ${isAtendido ? '<i class="ph ph-check-circle"></i> Atendido' : '<i class="ph ph-clock"></i> Pendiente'}
+        </span>
+      </td>
+      <td style="padding:16px 20px;text-align:right;">
+        <button class="btn-secondary" style="padding:5px 12px;font-size:0.75rem;" onclick="openReclamoModal(${r.id})"><i class="ph ph-eye"></i> Ver</button>
+      </td>
+    </tr>
+  `}).join('');
+}
+
+function filterReclamos() {
+  const q = document.getElementById('r-search').value.toLowerCase();
+  const t = document.getElementById('r-type').value;
+  const f = document.getElementById('r-from').value;
+  const to = document.getElementById('r-to').value;
+  
+  let list = window.currentReclamosData || [];
+  
+  if (q) {
+    list = list.filter(x => 
+      (x.codigo_reclamo||'').toLowerCase().includes(q) || 
+      (x.nombres||'').toLowerCase().includes(q) || 
+      (x.documento||'').includes(q)
+    );
+  }
+  
+  if (t !== 'Todos') {
+    list = list.filter(x => x.tipo === t);
+  }
+  
+  if (f) {
+    const fd = new Date(f);
+    list = list.filter(x => new Date(x.fecha.split(' ')[0]) >= fd);
+  }
+  
+  if (to) {
+    const td = new Date(to);
+    list = list.filter(x => new Date(x.fecha.split(' ')[0]) <= td);
+  }
+  
+  renderReclamosRows(list);
+}
+
+function exportReclamos() {
+  const list = window.currentReclamosData || [];
+  if (!list.length) return alert('No hay datos para exportar.');
+  
+  let csv = 'Código,Fecha,Cliente,Documento,Teléfono,Correo,Tipo,Estado\n';
+  list.forEach(r => {
+    csv += `"${r.codigo_reclamo}","${r.fecha}","${r.nombres}","${r.documento}","${r.telefono}","${r.correo}","${r.tipo}","${r.estado}"\n`;
+  });
+  
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `Reclamos_ManuJungle_${new Date().toISOString().split('T')[0]}.csv`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+
+function openReclamoModal(id) {
+  const r = window.currentReclamosData.find(x => String(x.id) === String(id));
+  if (!r) return;
+  
+  window.currentReclamoId = id;
+  
+  document.getElementById('mr-title').textContent = `${r.tipo.toUpperCase()} N° ${r.codigo_reclamo}`;
+  document.getElementById('mr-subtitle').textContent = `Registrado el: ${r.fecha}`;
+  document.getElementById('mr-cliente').textContent = r.nombres;
+  document.getElementById('mr-dni').textContent = r.documento;
+  document.getElementById('mr-tel').textContent = r.telefono;
+  document.getElementById('mr-email').textContent = r.correo;
+  document.getElementById('mr-domicilio').textContent = r.domicilio;
+  
+  document.getElementById('mr-detalle').textContent = r.detalle;
+  document.getElementById('mr-pedido').textContent = r.pedido;
+  
+  if (r.estado === 'Atendido') {
+    document.getElementById('mr-respuesta-box').style.display = 'none';
+    document.getElementById('mr-atendido-box').style.display = 'block';
+    document.getElementById('mr-fecha-res').textContent = r.fecha_respuesta || 'Desconocida';
+    document.getElementById('mr-respuesta-texto').textContent = r.detalle_respuesta || '';
+    document.getElementById('mr-btn-send').style.display = 'none';
+  } else {
+    document.getElementById('mr-atendido-box').style.display = 'none';
+    document.getElementById('mr-respuesta-box').style.display = 'block';
+    document.getElementById('mr-reply').value = '';
+    document.getElementById('mr-status').style.display = 'none';
+    document.getElementById('mr-btn-send').style.display = 'inline-flex';
+    document.getElementById('mr-btn-send').disabled = false;
+    document.getElementById('mr-btn-send').innerHTML = '<i class="ph ph-paper-plane-tilt"></i> Enviar Respuesta';
+  }
+  
+  openModal('modal-reclamo');
+}
+
+async function submitReclamoReply() {
+  const id = window.currentReclamoId;
+  const reply = document.getElementById('mr-reply').value.trim();
+  const statusDiv = document.getElementById('mr-status');
+  const btn = document.getElementById('mr-btn-send');
+  
+  if (!reply) {
+    statusDiv.style.display = 'block';
+    statusDiv.style.background = 'rgba(239,68,68,0.1)';
+    statusDiv.style.color = 'var(--danger)';
+    statusDiv.innerHTML = '⚠️ Debe escribir una respuesta oficial.';
+    return;
+  }
+  
+  btn.disabled = true;
+  btn.innerHTML = '<i class="ph ph-spinner ph-spin"></i> Enviando...';
+  statusDiv.style.display = 'none';
+  
+  try {
+    const r = await fetch('/api/admin/responder-reclamo', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${sessionStorage.getItem('cms_token')}`
+      },
+      body: JSON.stringify({ id: id, detalle_respuesta: reply })
+    });
+    
+    const d = await r.json();
+    if (!r.ok) throw new Error(d.error || 'Error enviando respuesta');
+    
+    statusDiv.style.display = 'block';
+    statusDiv.style.background = 'rgba(16,185,129,0.1)';
+    statusDiv.style.color = 'var(--green)';
+    statusDiv.innerHTML = '✅ Respuesta enviada y reclamo actualizado exitosamente.';
+    
+    setTimeout(() => {
+      closeModal('modal-reclamo');
+      viewReclamos(); // Recargar vista
+    }, 2000);
+    
+  } catch(e) {
+    btn.disabled = false;
+    btn.innerHTML = '<i class="ph ph-paper-plane-tilt"></i> Enviar Respuesta';
+    statusDiv.style.display = 'block';
+    statusDiv.style.background = 'rgba(239,68,68,0.1)';
+    statusDiv.style.color = 'var(--danger)';
+    statusDiv.textContent = `Error: ${e.message}`;
+  }
+}
+
+window.renderReclamosRows = renderReclamosRows;
+window.filterReclamos = filterReclamos;
+window.exportReclamos = exportReclamos;
+window.openReclamoModal = openReclamoModal;
+window.submitReclamoReply = submitReclamoReply;
+
+
+
+
+window.selectMediaItem = function(idx, el, isModal) {
+  if (!isModal) return;
+  const parent = el.parentElement;
+  if (parent) {
+    parent.querySelectorAll('.m-item').forEach(e => e.classList.remove('selected'));
+  }
+  el.classList.add('selected');
+  if (window.currentMediaFiles && window.currentMediaFiles[idx]) {
+    window.selectedMediaUrl = window.currentMediaFiles[idx].url;
+  }
+  const btn = document.getElementById('media-confirm');
+  if (btn) btn.disabled = false;
+};
+
+window.confirmMediaSelect = function() {
+  if (window.selectedMediaUrl && window.mediaSelectCallback) {
+    try {
+      window.mediaSelectCallback(window.selectedMediaUrl);
+    } catch(e) {
+      console.error('Error executing media callback:', e);
+    }
+  }
+  closeModal('media-modal');
+};
+
+window.openMediaModal = async function(callback) {
+  window.mediaSelectCallback = callback;
+  window.selectedMediaUrl = null;
+  const btn = document.getElementById('media-confirm');
+  if (btn) btn.disabled = true;
+  openModal('media-modal');
+  
+  const body = document.getElementById('media-modal-body');
+  body.innerHTML = `<div class="loading"><div class="spinner"></div> Cargando galería...</div>`;
+  
+  try {
+    window.currentMediaFiles = await r2GetList();
+    renderMediaGrid(body, window.currentMediaFiles, true);
+  } catch(e) {
+    body.innerHTML = `<div class="err-msg" style="display:block">❌ ${e.message}</div>`;
+  }
+};
+
+window.pickImage = function(inputId, previewId) {
+  openMediaModal((url) => {
+    const inp = document.getElementById(inputId);
+    if (inp) inp.value = url;
+    updateImgPreview(inputId, previewId);
+  });
+};
+
+window.updateImgPreview = function(inputId, previewId) {
+  const inp = document.getElementById(inputId);
+  const prev = document.getElementById(previewId);
+  if (!inp || !prev) return;
+  if (inp.value && inp.value.trim()) {
+    prev.src = inp.value.trim();
+    prev.classList.add('show');
+  } else {
+    prev.classList.remove('show');
+  }
+  const saveBar = document.getElementById('save-bar');
+  if (saveBar && saveFnRef) {
+    saveBar.style.display = 'flex';
+  }
+};
+
+window.deleteBlog = async function(path, sha, name) {
+  if (confirm(`¿Estás seguro de eliminar permanentemente el artículo "${name}"?`)) {
+    set(`<div class="loading"><div class="spinner"></div> Eliminando artículo...</div>`);
+    try {
+      await ghDelete(path, sha, `delete post: ${name}`);
+      const slug = path.split('/').pop().replace('.md', '');
+      try {
+        const htmlFile = await ghGet(`www.manujungleforever.com/${slug}/index.html`);
+        if (htmlFile && htmlFile.sha) {
+          await ghDelete(`www.manujungleforever.com/${slug}/index.html`, htmlFile.sha, `delete post html: ${slug}`);
+        }
+      } catch(e){}
+      
+      try {
+        const idxData = await ghGet('www.manujungleforever.com/data/posts-index.json');
+        let idx = JSON.parse(idxData.content);
+        idx.posts = (idx.posts || []).filter(p => p.slug !== slug);
+        await ghPut('www.manujungleforever.com/data/posts-index.json', JSON.stringify(idx, null, 2), idxData.sha, `remove from index: ${slug}`);
+      } catch(e){}
+
+      await viewBlog();
+    } catch(e) {
+      alert(`Error al eliminar artículo: ${e.message}`);
+      await viewBlog();
+    }
+  }
+};
+
+window.deleteTour = async function(idx) {
+  if (!cData || !cData.tours || !cData.tours[idx]) return;
+  const tour = cData.tours[idx];
+  const tourName = tour.nombre;
+  const slug = tour.slug || tour.id;
+  if (confirm(`¿Estás seguro de eliminar permanentemente el tour "${tourName}"?`)) {
+    set(`<div class="loading"><div class="spinner"></div> Eliminando tour...</div>`);
+    cData.tours.splice(idx, 1);
+    try {
+      const res = await ghPut(cFile, JSON.stringify(cData, null, 2), cSha, `delete tour: ${tourName}`);
+      cSha = res.sha;
+      
+      if (slug) {
+        await unpublishTourPage(slug);
+      }
+      
+      await syncGuidedToursMenuInPages(cData.tours, MENU_PAGES_TO_SYNC);
+    // Synchronize departure prices linked to this tour in departures.json
+    try {
+      const depData = await ghGet('www.manujungleforever.com/data/departures.json');
+      if (depData && depData.content) {
+        const dJson = JSON.parse(depData.content);
+        let depModified = false;
+        (dJson.salidas || []).forEach(sal => {
+          if (sal.tour_id === updated.id || sal.tour_id === updated.slug) {
+            sal.tour_nombre = updated.nombre;
+            sal.moneda = 'USD';
+            sal.precio = updated.precio_desde;
+            depModified = true;
+          }
+        });
+        if (depModified) {
+          await ghPut('www.manujungleforever.com/data/departures.json', JSON.stringify(dJson, null, 2), depData.sha, `sync departures price with tour: ${updated.nombre}`);
+        }
+      }
+    } catch(err) {
+      console.warn('Could not sync departures with tour price:', err);
+    }
+
+      
+      await viewTours();
+    } catch(e) {
+      alert(`Error al eliminar tour: ${e.message}`);
+      await viewTours();
+    }
+  }
+};
+
+window.deleteDep = async function(idx) {
+  if (!cData || !cData.salidas || !cData.salidas[idx]) return;
+  const depId = cData.salidas[idx].id;
+  if (confirm(`¿Estás seguro de eliminar permanentemente la salida "${depId}"?`)) {
+    set(`<div class="loading"><div class="spinner"></div> Eliminando salida...</div>`);
+    cData.salidas.splice(idx, 1);
+    try {
+      const res = await ghPut(cFile, JSON.stringify(cData, null, 2), cSha, `delete salida: ${depId}`);
+      cSha = res.sha;
+      await viewDeps();
+    } catch(e) {
+      alert(`Error al eliminar salida: ${e.message}`);
+      await viewDeps();
+    }
+  }
+};
+
+window.deleteTestim = async function(idx) {
+  if (!cData || !cData.testimonials || !cData.testimonials[idx]) return;
+  const name = cData.testimonials[idx].nombre;
+  if (confirm(`¿Estás seguro de eliminar permanentemente el testimonio de "${name}"?`)) {
+    set(`<div class="loading"><div class="spinner"></div> Eliminando testimonio...</div>`);
+    cData.testimonials.splice(idx, 1);
+    try {
+      const res = await ghPut(cFile, JSON.stringify(cData, null, 2), cSha, `delete testimonio: ${name}`);
+      cSha = res.sha;
+      await viewTestims();
+    } catch(e) {
+      alert(`Error al eliminar testimonio: ${e.message}`);
+      await viewTestims();
+    }
+  }
+};
+</script>
+  <script src="js/auto-correct.js"></script>
+  <script src="js/thinking-orb.js?v=9"></script>
+</body>
+</html>
+
