@@ -1,42 +1,92 @@
 /**
- * Thinking Orb Component Styles
+ * Thinking Orb Component Styles - Premium 3D Point-Cloud Loader
  */
+
+#thinking-global-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  background: rgba(2, 6, 5, 0.85) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  z-index: 99999999 !important;
+  display: none;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 16px !important;
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  opacity: 0;
+  pointer-events: all !important;
+}
+
+#thinking-global-overlay.active {
+  display: flex !important;
+  opacity: 1 !important;
+}
+
+.thinking-modal-card {
+  background: rgba(13, 20, 24, 0.92) !important;
+  border: 1px solid rgba(45, 212, 191, 0.35) !important;
+  border-radius: 24px !important;
+  padding: 28px 36px !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.75),
+              0 0 35px rgba(45, 212, 191, 0.22) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  animation: orbModalPop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards !important;
+}
+
+@keyframes orbModalPop {
+  0% { transform: scale(0.85); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.thinking-modal-subtext {
+  color: rgba(255, 255, 255, 0.65) !important;
+  font-size: 0.82rem !important;
+  font-weight: 400 !important;
+  margin-top: 12px !important;
+  letter-spacing: 0.3px !important;
+}
 
 .thinking-orb-container {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 30px 15px;
+  padding: 10px 15px;
   width: 100%;
 }
 
 .thinking-orb-pill {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
-  background: rgba(13, 20, 24, 0.75);
+  gap: 14px;
+  background: rgba(13, 20, 24, 0.8);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(45, 212, 191, 0.3);
   border-radius: 9999px;
   padding: 8px 24px 8px 12px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45), 
-              0 0 20px rgba(45, 212, 191, 0.12),
+              0 0 20px rgba(45, 212, 191, 0.15),
               inset 0 1px 1px rgba(255, 255, 255, 0.15);
   transition: all 0.3s ease;
   user-select: none;
 }
 
 .thinking-orb-pill:hover {
-  border-color: rgba(45, 212, 191, 0.4);
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.55), 0 0 25px rgba(45, 212, 191, 0.22);
+  border-color: rgba(45, 212, 191, 0.5);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.55), 0 0 25px rgba(45, 212, 191, 0.25);
 }
 
 .thinking-orb-canvas {
   display: block;
   flex-shrink: 0;
   border-radius: 50%;
-  filter: drop-shadow(0 0 8px rgba(45, 212, 191, 0.45));
+  filter: drop-shadow(0 0 8px rgba(45, 212, 191, 0.55));
 }
 
 .thinking-orb-text {
@@ -74,11 +124,10 @@
     opacity: 1;
     transform: translateY(-2px);
     color: var(--teal, #2dd4bf);
-    text-shadow: 0 0 8px rgba(45, 212, 191, 0.7);
+    text-shadow: 0 0 8px rgba(45, 212, 191, 0.8);
   }
 }
 
-/* Modal and Inline Loading Replacements */
 .loading {
   display: flex !important;
   align-items: center !important;

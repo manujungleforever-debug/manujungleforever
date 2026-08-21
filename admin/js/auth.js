@@ -15,54 +15,18 @@
         return; 
     }
     
-    // Auth success - show body
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => { 
-            document.body.style.opacity = '1';
-            setupUserInterface();
-        });
-    } else {
-        if (document.body) document.body.style.opacity = '1';
-        setupUserInterface();
-    }
-
-    async function setupUserInterface() {
+    // Auth success - show body and render User Capsule immediately
+    function renderUserCapsule() {
         const u = (sessionStorage.getItem('cms_user') || '').toLowerCase().trim();
-        const role = sessionStorage.getItem('cms_role') || (isSuperUser() ? 'superuser' : 'normal');
         let name = sessionStorage.getItem('cms_name') || u.split('@')[0] || 'Admin';
         let avatar = sessionStorage.getItem('cms_avatar') || '';
-
-        // Siempre sincronizar con la foto más reciente de data/users.json
-        if (u) {
-            try {
-                const r = await fetch('/data/users.json?t=' + Date.now());
-                if (r.ok) {
-                    const data = await r.json();
-                    const found = (data.users || []).find(x => (x.email || '').toLowerCase().trim() === u);
-                    if (found) {
-                        if (found.foto) {
-                            avatar = found.foto;
-                            sessionStorage.setItem('cms_avatar', avatar);
-                        }
-                        if (found.name) {
-                            name = found.name;
-                            sessionStorage.setItem('cms_name', name);
-                        }
-                        if (found.role) {
-                            sessionStorage.setItem('cms_role', found.role);
-                        }
-                    }
-                }
-            } catch(e) {}
-        }
-
         const isSuper = isSuperUser();
         const initial = (name || u || 'A').charAt(0).toUpperCase();
         const roleLabel = isSuper ? 'SUPER USER' : 'EDITOR';
         const roleClass = isSuper ? 'superuser' : 'normal';
 
         const avatarMarkup = avatar 
-            ? `<img src="${avatar}" alt="${name}" onerror="this.outerHTML='<span class=\\'initial-avatar\\'>${initial}</span>';">`
+            ? `<img src="${avatar}" alt="${name}" onerror="this.outerHTML='<span class=\'initial-avatar\'>${initial}</span>';">`
             : `<span class="initial-avatar">${initial}</span>`;
 
         const huser = document.getElementById('huser');
@@ -84,17 +48,58 @@
         }
     }
 
-    window.setupUserInterface = setupUserInterface;
+    async function syncUserData() {
+        const u = (sessionStorage.getItem('cms_user') || '').toLowerCase().trim();
+        if (u) {
+            try {
+                const r = await fetch('/data/users.json?t=' + Date.now());
+                if (r.ok) {
+                    const data = await r.json();
+                    const found = (data.users || []).find(x => (x.email || '').toLowerCase().trim() === u);
+                    if (found) {
+                        if (found.foto) {
+                            sessionStorage.setItem('cms_avatar', found.foto);
+                        }
+                        if (found.name) {
+                            sessionStorage.setItem('cms_name', found.name);
+                        }
+                        if (found.role) {
+                            sessionStorage.setItem('cms_role', found.role);
+                        }
+                        renderUserCapsule();
+                    }
+                }
+            } catch(e) {}
+        }
+    }
+
+    // Run render immediately and on DOMContentLoaded
+    renderUserCapsule();
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => { 
+            document.body.style.opacity = '1';
+            renderUserCapsule();
+            syncUserData();
+        });
+    } else {
+        if (document.body) document.body.style.opacity = '1';
+        renderUserCapsule();
+        syncUserData();
+    }
+
+    window.renderUserCapsule = renderUserCapsule;
+    window.setupUserInterface = renderUserCapsule;
 })();
 
 function isSuperUser() {
     const role = (sessionStorage.getItem('cms_role') || '').toLowerCase();
     const user = (sessionStorage.getItem('cms_user') || '').toLowerCase();
     
-    if (!role || ['superuser', 'admin'].includes(role)) return true;
+    if (!role || ['superuser', 'admin', 'super user'].includes(role)) return true;
     if (['kemmesik@gmail.com', 'jordyleonidas@manujungleforever.com', 'manujungleforever@gmail.com', 'admin'].includes(user)) return true;
     
-    return role !== 'normal';
+    return role !== 'normal' && role !== 'editor';
 }
 
 function logout() {

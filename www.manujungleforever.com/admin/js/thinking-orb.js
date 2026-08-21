@@ -7,7 +7,7 @@
   class ThinkingOrb {
     constructor(options = {}) {
       this.text = options.text || 'Thinking....';
-      this.size = options.size || 34; // canvas diameter in px
+      this.size = options.size || 36; // canvas diameter in px
       this.pointsCount = options.pointsCount || 140;
       this.speed = options.speed || 0.024;
       this.radius = this.size * 0.42;
@@ -20,10 +20,9 @@
     }
 
     initPoints() {
-      // Golden Spiral / Fibonacci sphere distribution
       const phi = Math.PI * (3 - Math.sqrt(5));
       for (let i = 0; i < this.pointsCount; i++) {
-        const y = 1 - (i / (this.pointsCount - 1)) * 2; // y from 1 to -1
+        const y = 1 - (i / (this.pointsCount - 1)) * 2;
         const radiusAtY = Math.sqrt(1 - y * y);
         const theta = phi * i;
         const x = Math.cos(theta) * radiusAtY;
@@ -104,10 +103,8 @@
       const projected = [];
       for (let i = 0; i < this.points.length; i++) {
         const p = this.points[i];
-        
         let x1 = p.x * cosY - p.z * sinY;
         let z1 = p.z * cosY + p.x * sinY;
-        
         let y1 = p.y * cosX - z1 * sinX;
         let z2 = z1 * cosX + p.y * sinX;
 
@@ -138,7 +135,7 @@
     }
   }
 
-  // Global HTML template generator that mounts automatically
+  // Global HTML template generator
   window.getThinkingLoaderHTML = function(text) {
     const id = 'orb_' + Math.random().toString(36).substr(2, 9);
     setTimeout(() => {
@@ -152,41 +149,42 @@
   window.renderThinkingOrb = function(targetEl, text) {
     if (typeof targetEl === 'string') targetEl = document.querySelector(targetEl);
     if (!targetEl) return null;
-    const orb = new ThinkingOrb({ size: 34, text: text || 'Thinking....' });
+    const orb = new ThinkingOrb({ size: 36, text: text || 'Thinking....' });
     orb.renderTo(targetEl);
     return orb;
   };
 
   // Global Fullscreen Overlay for Saving & Background Actions
-  window.showThinkingOverlay = function(text = 'Thinking....') {
+  window.showThinkingOverlay = function(title = 'Guardando cambios....', subtext = 'Sincronizando datos con GitHub y Cloudflare Pages') {
     let overlay = document.getElementById('thinking-global-overlay');
     if (!overlay) {
       overlay = document.createElement('div');
       overlay.id = 'thinking-global-overlay';
-      overlay.style.cssText = 'position:fixed;inset:0;background:rgba(2,6,5,0.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:999999;display:flex;align-items:center;justify-content:center;transition:opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);opacity:0;pointer-events:all;';
       document.body.appendChild(overlay);
     }
-    overlay.innerHTML = '';
-    const orb = new ThinkingOrb({ size: 48, text: text });
-    orb.renderTo(overlay);
-    overlay.style.display = 'flex';
-    requestAnimationFrame(() => {
-      overlay.style.opacity = '1';
-    });
+    overlay.innerHTML = `
+      <div class="thinking-modal-card">
+        <div id="thinking-orb-mount"></div>
+        <div class="thinking-modal-subtext">${subtext}</div>
+      </div>
+    `;
+    const mount = document.getElementById('thinking-orb-mount');
+    const orb = new ThinkingOrb({ size: 48, text: title });
+    orb.renderTo(mount);
+    overlay.classList.add('active');
     window._activeThinkingOrb = orb;
   };
 
   window.hideThinkingOverlay = function() {
     const overlay = document.getElementById('thinking-global-overlay');
     if (overlay) {
-      overlay.style.opacity = '0';
+      overlay.classList.remove('active');
       setTimeout(() => {
-        overlay.style.display = 'none';
         if (window._activeThinkingOrb) {
           window._activeThinkingOrb.stop();
           window._activeThinkingOrb = null;
         }
-      }, 250);
+      }, 300);
     }
   };
 

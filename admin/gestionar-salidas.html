@@ -248,7 +248,7 @@ code { background:rgba(45,212,191,.1); color:var(--teal); padding:2px 6px; borde
 </style>
   <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.5.28/dist/jspdf.plugin.autotable.min.js"></script>
-  <link rel="stylesheet" href="css/thinking-orb.css">
+  <link rel="stylesheet" href="css/thinking-orb.css?v=9">
 
 
 
@@ -525,7 +525,7 @@ nav.mnav a.btn-panel-link:hover {
 </style>
 </head>
 <body>
-<script src="js/auth.js?v=6"></script>
+<script src="js/auth.js?v=9"></script>
 <div id="pg-particles" style="position:fixed;inset:0;pointer-events:none;z-index:0;"></div>
 <header>
   <div class="header-container">
@@ -1741,10 +1741,17 @@ window.adjPlaza = async function(idx, diff) {
   else if (newVal <= 2) s.estado = 'limitado';
   else s.estado = 'disponible';
   
-  set(`<div class="loading"><div class="spinner"></div> Actualizando plazas...</div>`);
-  const res = await ghPut(cFile, JSON.stringify(cData, null, 2), cSha, `adj plaza: ${s.id}`);
-  cSha = res.sha;
-  await viewDeps();
+  if (window.showThinkingOverlay) window.showThinkingOverlay('Actualizando plazas....');
+  try {
+    const res = await ghPut(cFile, JSON.stringify(cData, null, 2), cSha, `adj plaza: ${s.id}`);
+    cSha = res.sha;
+    await viewDeps();
+  } catch(e) {
+    console.error(e);
+    alert('Error: ' + e.message);
+  } finally {
+    if (window.hideThinkingOverlay) window.hideThinkingOverlay();
+  }
 };
 
 window.viewPax = function(idx) {
@@ -2001,35 +2008,31 @@ window.savePax = async function(sIdx, pIdx, event) {
     restricciones_dieteticas: v('p-rd'),
     condiciones_medicas: v('p-cm'),
     costo: +v('p-costo'),
-      estado_pago: v('p-ep'),
+    estado_pago: v('p-ep'),
     monto_pagado: +v('p-mp'),
     saldo_pendiente: +v('p-sp'),
     foto: v('p-foto')
   };
   
   if (!s.pasajeros) s.pasajeros = [];
-  
   if (pIdx === -1) {
     s.pasajeros.push(p);
   } else {
     s.pasajeros[pIdx] = p;
   }
   
-  const btn = event.currentTarget;
-  const oldText = btn.innerHTML;
-  btn.disabled = true;
-  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
+  if (window.showThinkingOverlay) window.showThinkingOverlay('Guardando pasajero....', 'Sincronizando manifiesto con GitHub y Cloudflare');
   
   try {
     const res = await ghPut(cFile, JSON.stringify(cData, null, 2), null, `update pax in: ${s.id}`);
     cSha = res.sha;
     viewPax(sIdx);
-    if(typeof viewDeps === 'function') viewDeps(); // Update main list in background
+    if(typeof viewDeps === 'function') viewDeps();
   } catch(e) {
     console.error(e);
     alert('Error: ' + e.message);
-    btn.disabled = false;
-    btn.innerHTML = oldText;
+  } finally {
+    if (window.hideThinkingOverlay) window.hideThinkingOverlay();
   }
 };
 
@@ -2038,10 +2041,7 @@ window.deletePax = async function(sIdx, pIdx) {
   const s = cData.salidas[sIdx];
   s.pasajeros.splice(pIdx, 1);
   
-  const btn = event.currentTarget;
-  const oldText = btn.innerHTML;
-  btn.disabled = true;
-  btn.innerHTML = '🗑️...';
+  if (window.showThinkingOverlay) window.showThinkingOverlay('Eliminando pasajero....');
   
   try {
     const res = await ghPut(cFile, JSON.stringify(cData, null, 2), null, `delete pax in: ${s.id}`);
@@ -2051,8 +2051,8 @@ window.deletePax = async function(sIdx, pIdx) {
   } catch(e) {
     console.error(e);
     alert('Error al eliminar: ' + e.message);
-    btn.disabled = false;
-    btn.innerHTML = oldText;
+  } finally {
+    if (window.hideThinkingOverlay) window.hideThinkingOverlay();
   }
 };
 
@@ -3165,7 +3165,7 @@ window.deleteTestim = async function(idx) {
 };
 </script>
   <script src="js/auto-correct.js"></script>
-  <script src="js/thinking-orb.js"></script>
+  <script src="js/thinking-orb.js?v=9"></script>
 </body>
 </html>
 
