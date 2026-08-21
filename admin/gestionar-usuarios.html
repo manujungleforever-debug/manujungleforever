@@ -153,153 +153,119 @@ main { flex-grow:1; max-width:1400px; width:100%; margin:0 auto; padding:28px 24
 
 
 
+
 <style>
 
-/* Compact Unified Admin Header with Large Logo */
+/* ─── 2-ROW CENTERED ADMIN HEADER ─── */
 header {
     position: sticky !important;
     top: 0 !important;
     z-index: 200 !important;
-    background: rgba(3, 8, 7, 0.96) !important;
-    backdrop-filter: blur(18px) !important;
-    -webkit-backdrop-filter: blur(18px) !important;
+    background: rgba(3, 8, 7, 0.95) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
     border-bottom: 1.5px solid rgba(45, 212, 191, 0.22) !important;
-    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.55) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6) !important;
+    width: 100% !important;
 }
-header .hw, header .header-wrap {
-    max-width: 100% !important;
+
+.header-container, .header-wrap, .hw {
+    max-width: 1200px !important;
     width: 100% !important;
     margin: 0 auto !important;
-    padding: 6px 20px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 14px !important;
-    flex-wrap: nowrap !important;
+    padding: 12px 20px 14px !important;
     box-sizing: border-box !important;
-    min-height: 112px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
 }
-.logo-wrap, .logo-img-wrap {
-    position: relative !important;
+
+.header-top-row {
     display: flex !important;
     align-items: center !important;
-    flex-shrink: 0 !important;
+    justify-content: space-between !important;
+    width: 100% !important;
 }
-.logo-wrap img, .logo-img-wrap img {
-    height: 100px !important;
+
+.logo-brand, .logo-wrap, .logo-img-wrap {
+    display: inline-flex !important;
+    align-items: center !important;
+    position: relative !important;
+    text-decoration: none !important;
+}
+
+.admin-main-logo, .logo-wrap img, .logo-img-wrap img {
+    height: 110px !important;
     width: auto !important;
     max-width: none !important;
     display: block !important;
-    filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.6)) !important;
-    transition: transform 0.25s ease !important;
+    filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.65)) !important;
+    transition: transform 0.25s ease, filter 0.25s ease !important;
 }
-.logo-wrap img:hover, .logo-img-wrap img:hover {
-    transform: scale(1.03) !important;
+
+.logo-brand:hover .admin-main-logo,
+.logo-brand:hover .logo-wrap img,
+.logo-brand:hover .logo-img-wrap img {
+    transform: scale(1.02) !important;
+    filter: drop-shadow(0 6px 20px rgba(45, 212, 191, 0.35)) !important;
 }
-.logo-brand {
-    flex-shrink: 0 !important;
-    display: flex !important;
-    align-items: center !important;
-    text-decoration: none !important;
+
+.logo-glow {
+    position: absolute !important;
+    inset: -6px !important;
+    background: radial-gradient(circle, rgba(45, 212, 191, 0.35) 0%, transparent 70%) !important;
+    filter: blur(14px) !important;
+    opacity: 0.4 !important;
+    border-radius: 50% !important;
+    pointer-events: none !important;
 }
-.btn-panel {
-    display: inline-flex !important;
-    align-items: center !important;
-    gap: 6px !important;
-    background: rgba(45, 212, 191, 0.12) !important;
-    border: 1.5px solid rgba(45, 212, 191, 0.35) !important;
-    color: var(--teal, #2dd4bf) !important;
-    padding: 7px 12px !important;
-    border-radius: 9px !important;
-    font-size: 0.85rem !important;
-    font-weight: 700 !important;
-    text-decoration: none !important;
-    white-space: nowrap !important;
-    transition: .25s !important;
-    flex-shrink: 0 !important;
-}
-.btn-panel:hover {
-    background: var(--teal, #2dd4bf) !important;
-    color: #030807 !important;
-    box-shadow: 0 0 16px rgba(45, 212, 191, 0.4) !important;
-}
-nav.mnav {
-    display: flex !important;
-    align-items: center !important;
-    gap: 3px !important;
-    flex-wrap: nowrap !important;
-    flex: 0 0 auto !important;
-    justify-content: flex-start !important;
-    overflow-x: auto !important;
-    scrollbar-width: none !important;
-    margin: 0 !important;
-    padding: 0 !important;
-}
-nav.mnav::-webkit-scrollbar { display: none; }
-nav.mnav a {
-    font-size: 0.88rem !important;
-    font-weight: 600 !important;
-    color: #94a3b8 !important;
-    padding: 7px 11px !important;
-    border-radius: 8px !important;
-    white-space: nowrap !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    gap: 5px !important;
-    flex-shrink: 0 !important;
-    letter-spacing: -0.2px !important;
-    transition: all 0.2s ease !important;
-    text-decoration: none !important;
-}
-nav.mnav a i {
-    font-size: 1.05rem !important;
-}
-nav.mnav a:hover, nav.mnav a.active {
-    color: #2dd4bf !important;
-    background: rgba(45, 212, 191, 0.14) !important;
-    box-shadow: 0 0 14px rgba(45, 212, 191, 0.15) !important;
-}
+
 .user-sec {
     display: flex !important;
     align-items: center !important;
-    gap: 8px !important;
-    margin-left: 0 !important;
+    gap: 12px !important;
+    margin: 0 !important;
     flex-shrink: 0 !important;
-    white-space: nowrap !important;
 }
+
 .user-pill {
     display: inline-flex !important;
     align-items: center !important;
-    gap: 8px !important;
-    background: rgba(11, 38, 35, 0.75) !important;
-    border: 1.5px solid rgba(45, 212, 191, 0.3) !important;
-    padding: 3px 12px 3px 3px !important;
+    gap: 10px !important;
+    background: rgba(11, 38, 35, 0.8) !important;
+    border: 1.5px solid rgba(45, 212, 191, 0.35) !important;
+    padding: 4px 14px 4px 4px !important;
     border-radius: 36px !important;
-    font-size: 0.88rem !important;
+    font-size: 0.90rem !important;
     font-weight: 600 !important;
     color: #f8fafc !important;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35) !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
+    backdrop-filter: blur(8px) !important;
 }
+
 .user-pill.superuser {
-    border-color: rgba(201, 168, 76, 0.5) !important;
-    box-shadow: 0 4px 18px rgba(201, 168, 76, 0.2) !important;
+    border-color: rgba(201, 168, 76, 0.55) !important;
+    box-shadow: 0 4px 18px rgba(201, 168, 76, 0.25) !important;
 }
+
 .user-pill img {
-    width: 38px !important;
-    height: 38px !important;
+    width: 40px !important;
+    height: 40px !important;
     border-radius: 50% !important;
     object-fit: cover !important;
     border: 2px solid #2dd4bf !important;
     display: block !important;
-    box-shadow: 0 0 12px rgba(45, 212, 191, 0.4) !important;
+    box-shadow: 0 0 12px rgba(45, 212, 191, 0.45) !important;
 }
+
 .user-pill.superuser img {
     border-color: #c9a84c !important;
-    box-shadow: 0 0 12px rgba(201, 168, 76, 0.4) !important;
+    box-shadow: 0 0 12px rgba(201, 168, 76, 0.45) !important;
 }
+
 .user-pill .initial-avatar {
-    width: 38px !important;
-    height: 38px !important;
+    width: 40px !important;
+    height: 40px !important;
     border-radius: 50% !important;
     background: rgba(45, 212, 191, 0.2) !important;
     color: #2dd4bf !important;
@@ -307,42 +273,117 @@ nav.mnav a:hover, nav.mnav a.active {
     align-items: center !important;
     justify-content: center !important;
     font-weight: 700 !important;
-    font-size: 1.05rem !important;
+    font-size: 1.1rem !important;
     border: 2px solid #2dd4bf !important;
 }
+
 .user-pill.superuser .initial-avatar {
     background: rgba(201, 168, 76, 0.2) !important;
     color: #fbbf24 !important;
     border-color: #c9a84c !important;
 }
+
 .user-pill-name {
-    font-size: 0.90rem !important;
+    font-size: 0.92rem !important;
     font-weight: 600 !important;
     color: #fff !important;
-    max-width: 140px !important;
+    max-width: 160px !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
     white-space: nowrap !important;
 }
+
 .btn-logout {
     background: linear-gradient(135deg, #ef4444, #b91c1c) !important;
     color: #fff !important;
     border: none !important;
     cursor: pointer !important;
-    font-size: 0.85rem !important;
+    font-size: 0.88rem !important;
     font-weight: 700 !important;
-    padding: 8px 16px !important;
+    padding: 9px 18px !important;
     border-radius: 10px !important;
-    transition: .25s !important;
+    transition: all 0.25s ease !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 7px !important;
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.35) !important;
+    white-space: nowrap !important;
+}
+
+.btn-logout:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 22px rgba(239, 68, 68, 0.55) !important;
+    filter: brightness(1.1) !important;
+}
+
+/* Fila 2: Barra de Navegación */
+.header-nav-row {
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+nav.mnav {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    flex-wrap: wrap !important;
+    background: rgba(11, 38, 35, 0.55) !important;
+    border: 1px solid rgba(45, 212, 191, 0.22) !important;
+    border-radius: 14px !important;
+    padding: 6px 12px !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35) !important;
+    backdrop-filter: blur(8px) !important;
+    margin: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+nav.mnav a {
+    font-size: 0.88rem !important;
+    font-weight: 600 !important;
+    color: #94a3b8 !important;
+    padding: 7px 13px !important;
+    border-radius: 9px !important;
+    white-space: nowrap !important;
     display: inline-flex !important;
     align-items: center !important;
     gap: 6px !important;
-    box-shadow: 0 4px 14px rgba(239, 68, 68, 0.35) !important;
-    white-space: nowrap !important;
+    transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+    text-decoration: none !important;
 }
-.btn-logout:hover {
-    transform: translateY(-1px) !important;
-    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.55) !important;
+
+nav.mnav a i {
+    font-size: 1.1rem !important;
+}
+
+nav.mnav a:hover {
+    color: #2dd4bf !important;
+    background: rgba(45, 212, 191, 0.12) !important;
+}
+
+nav.mnav a.active {
+    color: #030807 !important;
+    background: #2dd4bf !important;
+    box-shadow: 0 0 16px rgba(45, 212, 191, 0.45) !important;
+    font-weight: 700 !important;
+}
+
+nav.mnav a.active i {
+    color: #030807 !important;
+}
+
+nav.mnav a.btn-panel-link {
+    background: rgba(45, 212, 191, 0.15) !important;
+    border: 1px solid rgba(45, 212, 191, 0.35) !important;
+    color: #2dd4bf !important;
+}
+
+nav.mnav a.btn-panel-link:hover {
+    background: #2dd4bf !important;
+    color: #030807 !important;
 }
 
 </style>
@@ -351,24 +392,36 @@ nav.mnav a:hover, nav.mnav a.active {
 <script src="js/auth.js?v=6"></script>
 <div id="pg-particles"></div>
 <header>
-  <div class="hw">
-    <a href="/" class="logo-brand" title="Ir al Home">
-      <div class="logo-wrap"><div class="logo-glow"></div><img src="../assets/img/logo.png" alt="Logo" style="height: 100px; width: auto;"></div>
-    </a>
-    <a href="panel.html" class="btn-panel"><i class="ph ph-arrow-left"></i> Volver al Panel</a>
-    <nav class="mnav">
-      <a href="gestionar-tours.html"><i class="ph ph-map-trifold"></i> Tours</a>
-      <a href="gestionar-blog.html"><i class="ph ph-pencil"></i> Blog</a>
-      <a href="gestionar-contenido.html"><i class="ph ph-file-text"></i> Contenido</a>
-      <a href="gestionar-salidas.html"><i class="ph ph-calendar"></i> Salidas</a>
-      <a href="gestionar-testimonios.html"><i class="ph ph-star"></i> Testimonios</a>
-      <a href="gestionar-reclamos.html"><i class="ph ph-scales"></i> Reclamos</a>
-      <a href="gestionar-medios.html"><i class="ph ph-image"></i> Medios</a>
-      <a href="gestionar-usuarios.html" class="active"><i class="ph ph-users-three"></i> Usuarios</a>
-    </nav>
-    <div class="user-sec">
-      <span id="huser" style="font-size:0.85rem;font-weight:600;color:var(--muted);margin-right:8px;display:flex;align-items:center;"></span>
-      <button onclick="logout()" class="btn-logout"><i class="ph ph-sign-out"></i> Salir</button>
+  <div class="header-container">
+    <!-- Fila 1: Logo grande y grueso a la izquierda, Usuario y Salir a la derecha -->
+    <div class="header-top-row">
+      <a href="/" class="logo-brand" title="Ir al Home de Manu Jungle Forever">
+        <div class="logo-wrap">
+          <div class="logo-glow"></div>
+          <img src="../assets/img/logo.png" alt="Manu Jungle Forever Logo" class="admin-main-logo">
+        </div>
+      </a>
+      <div class="user-sec">
+        <span id="huser"></span>
+        <button onclick="logout()" class="btn-logout" title="Cerrar sesión">
+          <i class="ph ph-sign-out"></i> Salir
+        </button>
+      </div>
+    </div>
+
+    <!-- Fila 2: Menú de Navegación dedicado -->
+    <div class="header-nav-row">
+      <nav class="mnav">
+        <a href="panel.html" class=""><i class="ph ph-house"></i> Panel</a>
+        <a href="gestionar-tours.html" class=""><i class="ph ph-map-trifold"></i> Tours</a>
+        <a href="gestionar-blog.html" class=""><i class="ph ph-pencil"></i> Blog</a>
+        <a href="gestionar-contenido.html" class=""><i class="ph ph-file-text"></i> Contenido</a>
+        <a href="gestionar-salidas.html" class=""><i class="ph ph-calendar"></i> Salidas</a>
+        <a href="gestionar-testimonios.html" class=""><i class="ph ph-star"></i> Testimonios</a>
+        <a href="gestionar-reclamos.html" class=""><i class="ph ph-scales"></i> Reclamos</a>
+        <a href="gestionar-medios.html" class=""><i class="ph ph-image"></i> Medios</a>
+        <a href="gestionar-usuarios.html" class="active" id="nav-usuarios"><i class="ph ph-users-three"></i> Usuarios</a>
+      </nav>
     </div>
   </div>
 </header>
