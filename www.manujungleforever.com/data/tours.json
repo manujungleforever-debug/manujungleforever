@@ -820,11 +820,11 @@
       "estado": "activo",
       "duracion_dias": 7,
       "duracion_noches": 6,
-      "precio_desde": 980,
+      "precio_desde": 1000,
       "moneda": "USD",
       "capacidad_min": 2,
       "capacidad_max": 8,
-      "dificultad": "Moderada",
+      "dificultad": "Fácil",
       "transporte": [
         "Van privada",
         "Bote a motor"
@@ -876,7 +876,8 @@
           "titulo": "Upriver Return Boat Trip → Cusco",
           "descripcion": "Early morning upriver boat ride back to Atalaya port. Transfer to our private van for the scenic return journey through the Andes, arriving in Cusco around 7:00 PM."
         }
-      ]
+      ],
+      "destacado": false
     }
   ]
 }
