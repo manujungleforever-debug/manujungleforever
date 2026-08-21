@@ -270,7 +270,7 @@ body {
       color:#6ee7b7;
     }
 
-    main { flex: 1; overflow-y: auto; padding: 32px 40px 90px; background: transparent; }
+    main { flex-grow:1; max-width:1200px !important; width:100% !important; margin:0 auto !important; padding:28px 20px 100px !important; position:relative; z-index:1; box-sizing:border-box; }
 
     /* ── COMMON ────────────────────────────────────────── */
     .pt{font-size:1.5rem;font-weight:700;margin-bottom:4px;color:var(--text);letter-spacing:-0.02em;}
@@ -313,7 +313,7 @@ body {
     /* ── EDITOR ──────────────────────────────────────── */
     .back-btn{background:none;border:none;color:var(--muted);cursor:pointer;font-size:.85rem;margin-bottom:20px;padding:0;display:flex;align-items:center;gap:5px;transition:color .15s;font-weight:500;}
     .back-btn:hover{color:var(--text);}
-    .eform{max-width:920px;}
+    .eform { max-width:1200px; width:100%; margin:0 auto 60px auto; display:flex; flex-direction:column; gap:18px; box-sizing:border-box; }
     .esec{background:#ffffff;border:1px solid rgba(226,232,240,0.7);border-radius:16px;padding:24px;margin-bottom:16px;box-shadow:0 4px 16px rgba(0,0,0,0.05),0 1px 3px rgba(0,0,0,0.03);}
     .esec-h{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-bottom:18px;display:flex;align-items:center;gap:8px;}
     .grow2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
@@ -398,7 +398,7 @@ body {
       aside button{width:auto;white-space:nowrap;border-left:none;border-bottom:3px solid transparent;padding:12px 16px;}
       aside button.active{border-left-color:transparent;border-bottom-color:#10b981;}
       aside button i{font-size:1.2rem;}
-      main{padding:20px 16px 90px;}
+      main { flex-grow:1; max-width:1200px !important; width:100% !important; margin:0 auto !important; padding:28px 20px 100px !important; position:relative; z-index:1; box-sizing:border-box; }
       .save-bar{left:0;justify-content:center;flex-wrap:nowrap;}
       .grow2,.grow3{grid-template-columns:1fr;}
     }
@@ -2177,7 +2177,7 @@ window.editPax = function(sIdx, pIdx) {
     <button style="margin-bottom:15px;background:none;border:none;color:var(--a);cursor:pointer;font-weight:600;display:flex;align-items:center;gap:5px" onclick="viewPax(${sIdx})">
       <i class="fas fa-arrow-left"></i> Volver a la lista
     </button>
-    <div class="eform" style="margin:0;background:rgba(255,255,255,0.02);padding:20px;border-radius:12px;border:1px solid rgba(255,255,255,0.05)">
+    <div class="eform">
       <div class="esec" style="border:none;padding:0;margin:0">
       <div class="esec-h" style="margin-top:0">${pIdx === -1 ? '✨ Nuevo Pasajero' : '✏️ Editar Pasajero'}</div>
       
