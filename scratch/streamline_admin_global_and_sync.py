@@ -1,4 +1,7 @@
-(function() {
+import glob, json, os, re
+
+# 1. Update assets/js/global-sync.js
+global_sync_code = """(function() {
   async function syncSiteData() {
     try {
       const isContactPage = window.location.pathname.includes('/contact/') || window.location.pathname.endsWith('/contact');
@@ -141,3 +144,69 @@
     syncSiteData();
   }
 })();
+"""
+
+with open('www.manujungleforever.com/assets/js/global-sync.js', 'w', encoding='utf-8') as f:
+    f.write(global_sync_code)
+print("Updated assets/js/global-sync.js with contact.json single source of truth")
+
+# 2. Clean viewGlobal in admin files
+clean_view_global = """async function viewGlobal() {
+  const data=await ghGet('www.manujungleforever.com/data/global.json');
+  cFile='www.manujungleforever.com/data/global.json'; cSha=data.sha;
+  const d=JSON.parse(data.content); cData=d;
+  set(`
+    <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-contenido"><i class="ph ph-gear"></i></div><div><p class="pt" style="margin-bottom:0">Datos Globales del Sitio</p><p class="ps">Información general de marca, redes sociales y SEO</p></div></div>
+    <div class="eform">
+      <div class="esec"><div class="esec-h">Identidad de Marca</div>
+        <div class="grow2">
+          <div class="ff"><label>Nombre del negocio</label><input id="g-n" value="${esc(d.site_name||'')}"></div>
+          <div class="ff"><label>Eslogan</label><input id="g-sl" value="${esc(d.slogan||'')}"></div>
+        </div>
+        <div class="ff"><label>Tagline (descripción breve)</label><textarea id="g-tg">${esc(d.tagline||'')}</textarea></div>
+      </div>
+      <div class="esec"><div class="esec-h">Imágenes del Sitio</div>
+        ${imgWidget('g-logo','Logo principal',d.logo_main||'')}
+        ${imgWidget('g-fav','Favicon',d.favicon||'')}
+      </div>
+      <div class="esec"><div class="esec-h">Redes Sociales</div>
+        <div class="grow2">
+          <div class="ff"><label>Facebook</label><input id="g-fb" value="${esc(d.social?.facebook||d.redes_sociales?.facebook||'')}"></div>
+          <div class="ff"><label>Instagram</label><input id="g-ig" value="${esc(d.social?.instagram||d.redes_sociales?.instagram||'')}"></div>
+        </div>
+        <div class="grow2">
+          <div class="ff"><label>TripAdvisor</label><input id="g-ta" value="${esc(d.social?.tripadvisor||d.redes_sociales?.tripadvisor||'')}"></div>
+          <div class="ff"><label>YouTube</label><input id="g-yt" value="${esc(d.social?.youtube||'')}"></div>
+        </div>
+        <div class="grow2">
+          <div class="ff"><label>TikTok</label><input id="g-tt" value="${esc(d.social?.tiktok||d.redes_sociales?.tiktok||'')}"></div>
+          <div class="ff"><label>Airbnb</label><input id="g-ab" value="${esc(d.social?.airbnb||d.redes_sociales?.airbnb||'')}"></div>
+        </div>
+      </div>
+      <div class="esec"><div class="esec-h">SEO por Defecto</div>
+        <div class="ff"><label>Sufijo del título</label><input id="g-ts" value="${esc(d.seo?.default_title_suffix||'')}"><span class="hint">Ej: | Manu Jungle Forever</span></div>
+        <div class="ff"><label>Descripción por defecto</label><textarea id="g-td">${esc(d.seo?.default_description||'')}</textarea></div>
+        ${imgWidget('g-og','Imagen OG por defecto',d.seo?.default_og_image||'')}
+      </div>
+      <div class="esec"><div class="esec-h">Copyright</div>
+        <div class="ff"><label>Texto de copyright</label><input id="g-cp" value="${esc(d.copyright||'')}"></div>
+      </div>
+    </div>`);
+  showSaveBar(async()=>{
+    const dd={...d,site_name:v('g-n'),slogan:v('g-sl'),tagline:v('g-tg'),logo_main:v('g-logo'),favicon:v('g-fav'),copyright:v('g-cp'),
+      social:{...d.social,facebook:v('g-fb'),instagram:v('g-ig'),tripadvisor:v('g-ta'),youtube:v('g-yt'),tiktok:v('g-tt'),airbnb:v('g-ab')},
+      redes_sociales:{facebook:v('g-fb'),instagram:v('g-ig'),tripadvisor:v('g-ta'),airbnb:v('g-ab'),whatsapp:d.redes_sociales?.whatsapp||'https://wa.me/51901525679',tiktok:v('g-tt')},
+      seo:{...d.seo,default_title_suffix:v('g-ts'),default_description:v('g-td'),default_og_image:v('g-og')}};
+    const res=await ghPut(cFile,JSON.stringify(dd,null,2),cSha,'update: global');
+    cSha=res.sha; cData=dd;
+  });
+}"""
+
+for f in glob.glob('admin/*.html') + glob.glob('www.manujungleforever.com/admin/*.html'):
+    with open(f, 'r', encoding='utf-8') as fh:
+        content = fh.read()
+    if 'async function viewGlobal()' in content:
+        content = re.sub(r'async function viewGlobal\(\) \{[\s\S]*?\n\}', clean_view_global, content)
+        with open(f, 'w', encoding='utf-8') as fh:
+            fh.write(content)
+        print(f"Streamlined viewGlobal in {f}")
