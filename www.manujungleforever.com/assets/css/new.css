@@ -239,8 +239,8 @@ img{max-width:100%;height:auto;display:block}a{color:inherit;text-decoration:non
 /* MODAL */
 .modal{position:fixed;inset:0;z-index:1000;background:rgba(3,10,5,.88);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;visibility:hidden;transition:var(--t)}
 .modal.o{opacity:1;visibility:visible}
-.mb{background:var(--d);border:1px solid rgba(255,255,255,.09);border-radius:20px;width:100%;max-width:580px;max-height:90vh;overflow-y:auto;padding:44px;position:relative;transform:translateY(20px);transition:transform var(--t)}
-.modal.o .mb{transform:none}
+.modal-box{background:var(--d);border:1px solid rgba(255,255,255,.09);border-radius:20px;width:100%;max-width:580px;max-height:90vh;overflow-y:auto;padding:44px;position:relative;transform:translateY(20px);transition:transform var(--t)}
+.modal.o .modal-box{transform:none}
 .mc{position:absolute;top:16px;right:18px;font-size:1.7rem;color:rgba(255,255,255,.3);transition:var(--t)}.mc:hover{color:var(--w)}
 .fr{display:flex;flex-direction:column;gap:6px;margin-bottom:18px}
 .fr label{font-size:.78rem;font-weight:700;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.08em}
@@ -2017,4 +2017,86 @@ font, font > font, font[style], font > font[style] {
   font-size: 0.9rem !important;
   margin-left: auto !important;
   transition: transform 0.3s ease !important;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   MOBILE DRAWER NAVIGATION - SEAMLESS MENU ITEMS
+   ───────────────────────────────────────────────────────────── */
+.mo .ml {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.mo .ml > li {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.mo .ml > li > a,
+.mo .ml > li > button,
+.mo .ml > li > .m-toggle-btn,
+.mo .ml > li > .mb,
+.mo .ml > li > .m-btn,
+#mbt {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  padding: 16px 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  color: #ffffff !important;
+  font-family: inherit !important;
+  font-size: 1.1rem !important;
+  font-weight: 500 !important;
+  text-decoration: none !important;
+  text-align: left !important;
+  box-shadow: none !important;
+  transform: none !important;
+  cursor: pointer !important;
+  outline: none !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  box-sizing: border-box !important;
+}
+
+.mo .ml > li > a:hover,
+.mo .ml > li > button:hover,
+.mo .ml > li > .m-toggle-btn:hover,
+#mbt:hover {
+  color: var(--a, #2dd4bf) !important;
+  background: transparent !important;
+}
+
+.mo .ml > li > button i,
+.mo .ml > li > .m-toggle-btn i,
+#mbt i {
+  color: var(--a, #2dd4bf) !important;
+  font-size: 0.95rem !important;
+  margin-left: auto !important;
+  transition: transform 0.3s ease !important;
+}
+
+.mo .ml > li > button.active i,
+.mo .ml > li > .m-toggle-btn.active i,
+#mbt.active i {
+  transform: rotate(180deg) !important;
+}
+
+.md {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+  padding-left: 10px;
+}
+.md.o {
+  max-height: 850px;
+  overflow-y: auto;
 }
