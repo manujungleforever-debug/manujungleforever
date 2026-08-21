@@ -1,6 +1,22 @@
 {
   "salidas": [
     {
+      "tour_id": "5-day-amazon-expedition",
+      "tour_nombre": "5-Day Amazon Expedition",
+      "id": "DEP-0013",
+      "fecha_salida": "2026-08-26",
+      "fecha_regreso": "2026-08-28",
+      "precio": 1000,
+      "moneda": "USD",
+      "plazas_totales": 12,
+      "plazas_minimas": 5,
+      "plazas_disponibles": 12,
+      "estado": "disponible",
+      "guia_asignado": "Jordy Lonidas Llaqui Chusi",
+      "notas": "Acceso a fotos de animales silvestres",
+      "pasajeros": []
+    },
+    {
       "tour_id": "7-day-deep-amazon-wildlife-quest",
       "tour_nombre": "7-Day Deep Amazon Wildlife Quest",
       "id": "DEP-012",
