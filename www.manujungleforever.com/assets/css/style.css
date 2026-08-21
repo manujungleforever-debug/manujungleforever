@@ -319,3 +319,42 @@ img{max-width:100%;height:auto;display:block}a{color:inherit;text-decoration:non
     gap: 30px !important;
   }
 }
+
+
+/* Mobile Menu Guided Tours Dropdown Button */
+.ml > li > button,
+.ml > li > button.mb,
+.ml > li > .m-btn,
+#mbt {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  padding: 14px 0 !important;
+  font-size: 1.05rem !important;
+  font-weight: 500 !important;
+  color: var(--w, #ffffff) !important;
+  background: transparent !important;
+  border: none !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07) !important;
+  border-radius: 0 !important;
+  text-align: left !important;
+  cursor: pointer !important;
+  transform: none !important;
+  margin: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.ml > li > button:hover,
+#mbt:hover {
+  color: var(--a, #2dd4bf) !important;
+}
+
+.ml > li > button i,
+#mbt i {
+  font-size: 0.9rem !important;
+  margin-left: auto !important;
+  transition: transform 0.3s ease !important;
+}
