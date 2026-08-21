@@ -112,17 +112,17 @@
         },
         {
           "nombre_completo": "Idel Everardo Maza Maza",
-          "nacionalidad": "_custom_",
-          "fecha_nacimiento": "",
+          "nacionalidad": "Peruana (PER)",
+          "fecha_nacimiento": "1989-12-13",
           "pasaporte": "46989140",
           "whatsapp": "958113016",
           "email": "kemmesik@gmail.com",
-          "restricciones_dieteticas": "_custom_",
-          "condiciones_medicas": "_custom_",
-          "costo": 1400,
+          "restricciones_dieteticas": "Ninguna",
+          "condiciones_medicas": "Ninguna",
+          "costo": 1200,
           "estado_pago": "reserva",
           "monto_pagado": 100,
-          "saldo_pendiente": 400,
+          "saldo_pendiente": 1100,
           "foto": "/media/1786948316933-313417303-5480125758731945-1337653701012931777-n.jpg"
         },
         {
