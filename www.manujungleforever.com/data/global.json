@@ -34,5 +34,13 @@
     "default_og_image": "assets/media_to_upload/photos/placeholder.jpg"
   },
   "copyright": "Copyright © 2026 Manu Jungle Forever. All rights reserved.",
-  "copyright_design": "Site design: Meyer Consulting and Management"
+  "copyright_design": "Site design: Meyer Consulting and Management",
+  "redes_sociales": {
+    "facebook": "https://www.facebook.com/manujungleforever",
+    "instagram": "https://www.instagram.com/manujungleforever/",
+    "tripadvisor": "#",
+    "airbnb": "#",
+    "whatsapp": "https://wa.me/51901525679",
+    "tiktok": "#"
+  }
 }
