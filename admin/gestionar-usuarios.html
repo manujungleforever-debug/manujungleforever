@@ -154,6 +154,7 @@ main { flex-grow:1; max-width:1400px; width:100%; margin:0 auto; padding:28px 24
 
 
 
+
 <style>
 
 /* ─── 2-ROW CENTERED ADMIN HEADER ─── */
@@ -283,14 +284,46 @@ header {
     border-color: #c9a84c !important;
 }
 
+.user-pill-info {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+
 .user-pill-name {
-    font-size: 0.92rem !important;
+    font-size: 0.90rem !important;
     font-weight: 600 !important;
     color: #fff !important;
-    max-width: 160px !important;
+    max-width: 150px !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
     white-space: nowrap !important;
+}
+
+.user-pill-badge {
+    font-size: 0.66rem !important;
+    font-weight: 700 !important;
+    padding: 2px 8px !important;
+    border-radius: 6px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    white-space: nowrap !important;
+    display: inline-flex !important;
+    align-items: center !important;
+}
+
+.user-pill-badge.superuser {
+    background: rgba(201, 168, 76, 0.22) !important;
+    color: #fbbf24 !important;
+    border: 1px solid rgba(201, 168, 76, 0.45) !important;
+    box-shadow: 0 0 10px rgba(201, 168, 76, 0.2) !important;
+}
+
+.user-pill-badge.normal, .user-pill-badge.editor {
+    background: rgba(45, 212, 191, 0.18) !important;
+    color: #2dd4bf !important;
+    border: 1px solid rgba(45, 212, 191, 0.35) !important;
+    box-shadow: 0 0 10px rgba(45, 212, 191, 0.15) !important;
 }
 
 .btn-logout {

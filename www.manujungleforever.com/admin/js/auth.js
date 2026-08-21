@@ -58,17 +58,22 @@
 
         const isSuper = isSuperUser();
         const initial = (name || u || 'A').charAt(0).toUpperCase();
+        const roleLabel = isSuper ? 'SUPER USER' : 'EDITOR';
+        const roleClass = isSuper ? 'superuser' : 'normal';
 
         const avatarMarkup = avatar 
-            ? `<img src="${avatar}" alt="${name}" onerror="this.outerHTML='<span class=\'initial-avatar\'>${initial}</span>';">`
+            ? `<img src="${avatar}" alt="${name}" onerror="this.outerHTML='<span class=\\'initial-avatar\\'>${initial}</span>';">`
             : `<span class="initial-avatar">${initial}</span>`;
 
         const huser = document.getElementById('huser');
         if (huser) {
             huser.innerHTML = `
-                <div class="user-pill ${isSuper ? 'superuser' : ''}" title="${isSuper ? 'Super User - ' + u : 'Editor - ' + u}">
+                <div class="user-pill ${isSuper ? 'superuser' : ''}" title="${u}">
                     ${avatarMarkup}
-                    <span class="user-pill-name">${name}</span>
+                    <div class="user-pill-info">
+                        <span class="user-pill-name">${name}</span>
+                        <span class="user-pill-badge ${roleClass}">${roleLabel}</span>
+                    </div>
                 </div>
             `;
         }
@@ -98,12 +103,6 @@ function logout() {
 }
 
 async function sha256(str) {
-    const enc = new TextEncoder();
-    const data = enc.encode(str + 'mjf_salt_2026');
-    const hash = await crypto.subtle.digest('SHA-256', data);
-    return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
+    const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
 }
-
-window.isSuperUser = isSuperUser;
-window.logout = logout;
-window.sha256 = sha256;
