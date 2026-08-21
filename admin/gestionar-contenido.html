@@ -1900,6 +1900,7 @@ async function viewGlobal() {
           <div class="ff"><label>Teléfono secundario</label><input id="g-t2" value="${esc(d.phone_secondary||'')}"></div>
         </div>
         <div class="ff"><label>Dirección física</label><input id="g-ad" value="${esc(d.address||'')}"></div>
+        <div class="ff"><label>URL Google Maps (Enlace del mapa)</label><input id="g-map" value="${esc(d.address_maps_url||'')}"><span class="hint">Ej: https://www.google.com/maps/d/viewer?mid=12fWz1M5jmQ0jd8rUJY0VUfi6KnRmvnc</span></div>
       </div>
       <div class="esec"><div class="esec-h">Imágenes del Sitio</div>
         ${imgWidget('g-logo','Logo principal',d.logo_main||'')}
@@ -1933,7 +1934,7 @@ async function viewGlobal() {
     const waFull = waNum ? `https://wa.me/${waNum}` : (d.redes_sociales?.whatsapp || d.social?.whatsapp || '#');
     const dd={...d,site_name:v('g-n'),slogan:v('g-sl'),tagline:v('g-tg'),email:v('g-em'),
       whatsapp_number:waNum,phone_primary:v('g-t1'),phone_secondary:v('g-t2'),
-      address:v('g-ad'),logo_main:v('g-logo'),favicon:v('g-fav'),copyright:v('g-cp'),
+      address:v('g-ad'),address_maps_url:v('g-map')||d.address_maps_url,logo_main:v('g-logo'),favicon:v('g-fav'),copyright:v('g-cp'),
       social:{...d.social,facebook:v('g-fb'),instagram:v('g-ig'),tripadvisor:v('g-ta'),youtube:v('g-yt'),tiktok:v('g-tt'),airbnb:v('g-ab'),whatsapp:waFull},
       redes_sociales:{facebook:v('g-fb'),instagram:v('g-ig'),tripadvisor:v('g-ta'),airbnb:v('g-ab'),whatsapp:waFull,tiktok:v('g-tt')},
       seo:{...d.seo,default_title_suffix:v('g-ts'),default_description:v('g-td'),default_og_image:v('g-og')}};

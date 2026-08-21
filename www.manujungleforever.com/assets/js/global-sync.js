@@ -3,29 +3,24 @@
     try {
       const isContactPage = window.location.pathname.includes('/contact/') || window.location.pathname.endsWith('/contact');
 
-      // 1. Fetch global data (no cache)
+      // 1. Fetch global data
       const gRes = await fetch('/data/global.json?v=' + Date.now());
       if (!gRes.ok) return;
       const gData = await gRes.json();
 
-      const phone1 = gData.phone_primary || '+51 931 022 183';
-      const phone2 = gData.phone_secondary || '+51 901 525 679';
+      const phone1 = gData.phone_primary || '+51 901 525 679';
+      const phone2 = gData.phone_secondary || '';
       const email = gData.email || 'discover@manujungleforever.com';
       const address = gData.address || 'Manu Jungle Forever 17800, Nuevo Eden, Peru';
-      const addressMaps = gData.address_maps_url || 'https://goo.gl/maps/B8NjhLZizA6YKwKD6';
+      const addressMaps = gData.address_maps_url || 'https://www.google.com/maps/d/viewer?mid=12fWz1M5jmQ0jd8rUJY0VUfi6KnRmvnc';
       const waNum = (gData.whatsapp_number || '51901525679').replace(/[^0-9]/g, '');
       const waTxt = encodeURIComponent(gData.whatsapp_text || 'Hello! I would like to learn more about your jungle trips');
       const waLink = `https://api.whatsapp.com/send?phone=${waNum}&text=${waTxt}`;
       const waDirect = `https://wa.me/${waNum}`;
 
       const soc = gData.social || gData.redes_sociales || {};
-      const socFb = soc.facebook || '#';
-      const socIg = soc.instagram || '#';
-      const socTa = soc.tripadvisor || '#';
-      const socAb = soc.airbnb || '#';
-      const socTt = soc.tiktok || '#';
 
-      // 2. Floating WhatsApp button (class="wa" or id="wa-float")
+      // 2. Floating WhatsApp button
       document.querySelectorAll('a.wa, #wa-float, a[id="wa-btn"]').forEach(el => {
         el.href = waLink;
       });
@@ -33,10 +28,8 @@
       // 3. Sync all WhatsApp links
       document.querySelectorAll('a[href*="api.whatsapp.com"], a[href*="wa.me"]').forEach(el => {
         if (el.classList.contains('sc') || el.classList.contains('soc-btn')) {
-          // footer/social icon → use direct wa.me link
           el.href = waDirect;
         } else {
-          // inline or button → use full link with message text
           el.href = waLink;
         }
       });
@@ -44,41 +37,41 @@
       // 4. Sync footer contacts
       const footer = document.querySelector('footer.ft');
       if (footer) {
-        // Address
-        const addrIcon = footer.querySelector('address.fc i.fa-map-marker-alt, address.fc i.fa-location-dot');
-        if (addrIcon) {
-          const a = addrIcon.parentElement.querySelector('a');
-          if (a) { a.textContent = address; if (addressMaps) a.href = addressMaps; }
+        // Address link & text
+        const addrA = footer.querySelector('address.fc a[href*="maps"]');
+        if (addrA) {
+          addrA.textContent = address;
+          if (addressMaps) addrA.href = addressMaps;
         }
         // Phone
-        const phoneIcon = footer.querySelector('address.fc i.fa-phone');
-        if (phoneIcon) {
-          const a = phoneIcon.parentElement.querySelector('a');
-          if (a) { a.textContent = phone1; a.href = `tel:${phone1.replace(/[^0-9+]/g, '')}`; }
+        const phoneA = footer.querySelector('address.fc a[href^="tel:"]');
+        if (phoneA) {
+          phoneA.textContent = phone1;
+          phoneA.href = `tel:${phone1.replace(/[^0-9+]/g, '')}`;
         }
         // Email
-        const emailIcon = footer.querySelector('address.fc i.fa-envelope');
-        if (emailIcon) {
-          const a = emailIcon.parentElement.querySelector('a');
-          if (a) { a.textContent = email; a.href = `mailto:${email}`; }
+        const emailA = footer.querySelector('address.fc a[href^="mailto:"]');
+        if (emailA) {
+          emailA.textContent = email;
+          emailA.href = `mailto:${email}`;
         }
 
-        // Social Links (.so)
+        // Social Links
         const elFb = footer.querySelector('.so a[aria-label="Facebook"]');
-        if (elFb) elFb.href = socFb;
+        if (elFb && soc.facebook) elFb.href = soc.facebook;
         const elIg = footer.querySelector('.so a[aria-label="Instagram"]');
-        if (elIg) elIg.href = socIg;
+        if (elIg && soc.instagram) elIg.href = soc.instagram;
         const elTa = footer.querySelector('.so a[aria-label="TripAdvisor"]');
-        if (elTa) elTa.href = socTa;
+        if (elTa) elTa.href = soc.tripadvisor || '#';
         const elAb = footer.querySelector('.so a[aria-label="Airbnb"]');
-        if (elAb) elAb.href = socAb;
+        if (elAb) elAb.href = soc.airbnb || '#';
         const elWa = footer.querySelector('.so a[aria-label="WhatsApp"]');
         if (elWa) elWa.href = waDirect;
         const elTt = footer.querySelector('.so a[aria-label="TikTok"]');
-        if (elTt) elTt.href = socTt;
+        if (elTt) elTt.href = soc.tiktok || '#';
       }
 
-      // 5. Contact page: also sync from contact.json
+      // 5. Contact page
       if (isContactPage) {
         try {
           const cRes = await fetch('/data/contact.json?v=' + Date.now());
@@ -108,38 +101,23 @@
 
             const dir = cData.direccion || {};
             const dynLoc = document.getElementById('dyn-contact-location');
-            if (dynLoc && (dir.nombre || dir.localidad || dir.pais)) {
-              if (dir.maps_url) dynLoc.href = dir.maps_url;
+            if (dynLoc) {
+              const mapsUrl = dir.maps_url || addressMaps;
+              if (mapsUrl) dynLoc.href = mapsUrl;
               const parts = [];
               if (dir.nombre) parts.push(dir.nombre);
               const sub = [dir.calle, dir.localidad, dir.pais].filter(Boolean).join(', ');
               if (sub) parts.push(sub);
-              dynLoc.innerHTML = parts.join('<br>');
+              dynLoc.innerHTML = parts.join('<br>') || address;
             }
 
-            const hor = cData.horario || {};
-            const dynHours = document.getElementById('dyn-contact-hours');
-            if (dynHours && (hor.dias || hor.horas || hor.nota)) {
-              let hParts = [];
-              if (hor.dias || hor.horas) hParts.push(`<strong>${hor.dias || 'Monday – Sunday'}</strong>: ${hor.horas || '8:00 AM – 8:00 PM (Peru Time)'}`);
-              if (hor.nota) hParts.push(`<span style="font-size:0.82rem;color:rgba(255,255,255,0.6)">${hor.nota}</span>`);
-              dynHours.innerHTML = hParts.join('<br>');
-            }
-
-            // Sync social row in contact page
-            const sr = document.querySelector('.social-row');
-            if (sr) {
-              const elFbc = sr.querySelector('a[aria-label="Facebook"]'); if (elFbc) elFbc.href = socFb;
-              const elIgc = sr.querySelector('a[aria-label="Instagram"]'); if (elIgc) elIgc.href = socIg;
-              const elTac = sr.querySelector('a[aria-label="TripAdvisor"]'); if (elTac) elTac.href = socTa;
-              const elAbc = sr.querySelector('a[aria-label="Airbnb"]'); if (elAbc) elAbc.href = socAb;
-              const elWac = sr.querySelector('a[aria-label="WhatsApp"]'); if (elWac) elWac.href = `https://api.whatsapp.com/send?phone=${cWaNum}&text=${cWaTxt}`;
-              const elTtc = sr.querySelector('a[aria-label="TikTok"]'); if (elTtc) elTtc.href = socTt;
+            const mapIframe = document.querySelector('.map-container iframe');
+            if (mapIframe && dir.maps_embed) {
+              mapIframe.src = dir.maps_embed;
             }
           }
-        } catch(e) { console.warn('Contact sync:', e); }
+        } catch(e) {}
       }
-
     } catch(err) {
       console.warn('Global sync error:', err);
     }
