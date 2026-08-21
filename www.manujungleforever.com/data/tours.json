@@ -678,7 +678,7 @@
       "estado": "activo",
       "duracion_dias": 5,
       "duracion_noches": 4,
-      "precio_desde": 720,
+      "precio_desde": 725,
       "moneda": "USD",
       "capacidad_min": 2,
       "capacidad_max": 8,
