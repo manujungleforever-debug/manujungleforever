@@ -1,6 +1,22 @@
 {
   "salidas": [
     {
+      "tour_id": "5-day-wildlife-quest-nuevo-eden",
+      "tour_nombre": "5-Day Wildlife Quest – Nuevo Eden",
+      "id": "DEP-0014",
+      "fecha_salida": "2026-08-28",
+      "fecha_regreso": "2026-08-25",
+      "precio": 1200,
+      "moneda": "USD",
+      "plazas_totales": 12,
+      "plazas_minimas": 8,
+      "plazas_disponibles": 8,
+      "estado": "disponible",
+      "guia_asignado": "Jordy Lonidas Llaqui Chusi",
+      "notas": "Tour disponible para veganos.",
+      "pasajeros": []
+    },
+    {
       "tour_id": "5-day-amazon-expedition",
       "tour_nombre": "5-Day Amazon Expedition",
       "id": "DEP-0013",
