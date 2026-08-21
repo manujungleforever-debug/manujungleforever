@@ -77,7 +77,7 @@
       "estado": "disponible",
       "notas": "Permisos especiales para zona reservada incluidos",
       "plazas_minimas": 5,
-      "guia_asignado": "Alex Machaca",
+      "guia_asignado": "",
       "chofer_asignado": null,
       "pasajeros": [
         {
@@ -185,7 +185,7 @@
       "estado": "disponible",
       "notas": "",
       "plazas_minimas": 2,
-      "guia_asignado": "Alex Machaca",
+      "guia_asignado": "",
       "chofer_asignado": null,
       "pasajeros": []
     },
@@ -340,7 +340,7 @@
       "estado": "cerrado",
       "notas": "Tour especializado para fotógrafos",
       "plazas_minimas": 2,
-      "guia_asignado": "Alex Machaca",
+      "guia_asignado": "",
       "chofer_asignado": null,
       "pasajeros": [
         {
@@ -388,7 +388,7 @@
       "estado": "disponible",
       "notas": "",
       "plazas_minimas": 2,
-      "guia_asignado": "Alex Machaca",
+      "guia_asignado": "",
       "chofer_asignado": null,
       "pasajeros": [
         {
@@ -421,7 +421,7 @@
       "estado": "disponible",
       "notas": "",
       "plazas_minimas": 2,
-      "guia_asignado": "Alex Machaca",
+      "guia_asignado": "",
       "chofer_asignado": null,
       "pasajeros": []
     },
@@ -438,7 +438,7 @@
       "estado": "cerrado",
       "notas": "¡Últimas 2 plazas!",
       "plazas_minimas": 2,
-      "guia_asignado": "Alex Machaca",
+      "guia_asignado": "",
       "chofer_asignado": null,
       "pasajeros": [
         {
@@ -546,7 +546,7 @@
       "estado": "cerrado",
       "notas": "",
       "plazas_minimas": 2,
-      "guia_asignado": "Alex Machaca",
+      "guia_asignado": "",
       "chofer_asignado": null,
       "pasajeros": [
         {
@@ -594,7 +594,7 @@
       "estado": "cerrado",
       "notas": "¡Solo 3 plazas disponibles!",
       "plazas_minimas": 2,
-      "guia_asignado": "Alex Machaca",
+      "guia_asignado": "",
       "chofer_asignado": null,
       "pasajeros": [
         {
@@ -687,7 +687,7 @@
       "estado": "cerrado",
       "notas": "",
       "plazas_minimas": 2,
-      "guia_asignado": "Alex Machaca",
+      "guia_asignado": "",
       "chofer_asignado": null,
       "pasajeros": [
         {
