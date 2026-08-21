@@ -11,7 +11,7 @@ define('SITE_URL',   'https://www.manujungleforever.com');
 define('SITE_EMAIL', 'discover@manujungleforever.com');
 define('SITE_PHONE', '+51 901 525 679');
 define('WHATSAPP_NUMBER', '51901525679');
-define('SITE_ADDRESS', 'Fitzcarrald 17800, Nuevo Eden, Peru');
+define('SITE_ADDRESS', 'Manu Jungle Forever 17800, Nuevo Eden, Peru');
 
 // ─── SMTP (Hostinger → hPanel → Email → SMTP) ─────────────────────
 define('SMTP_HOST',     'smtp.hostinger.com');     // Hostinger SMTP
@@ -23,10 +23,10 @@ define('SMTP_PASS',     'YOUR_EMAIL_PASSWORD_HERE');        // set before deploy
 // ─── Social Links ─────────────────────────────────────────────────
 define('SOCIAL_FACEBOOK',    'https://www.facebook.com/manujungleforever');
 define('SOCIAL_INSTAGRAM',   'https://www.instagram.com/manujungleforever/?hl=en');
-define('SOCIAL_TRIPADVISOR', 'https://www.tripadvisor.com/Attraction_Review-g294314-d17476586-Reviews-Hidden_Jungle_Cusco-Cusco_Cusco_Region.html?m=19905');
+define('SOCIAL_TRIPADVISOR', '#');
 define('SOCIAL_AIRBNB',      'https://abnb.me/Ri8XQWoA19');
 define('SOCIAL_WHATSAPP',    'https://wa.me/51901525679');
-define('SOCIAL_TIKTOK',      'https://www.tiktok.com/@hidden.jungle.cus');
+define('SOCIAL_TIKTOK',      '#');
 
 // ─── Analytics ────────────────────────────────────────────────────
 define('GTM_ID',     'GTM-5476BC9');

@@ -7,10 +7,10 @@
  *   GITHUB_CLIENT_SECRET — Client Secret de tu GitHub OAuth App
  *
  * La GitHub OAuth App debe tener como Authorization callback URL:
- *   https://hiddenjunglecusco-2jc.pages.dev/api/auth/callback
+ *   https://manujungleforever.pages.dev/api/auth/callback
  *
  * NOTA: Al pasar al dominio definitivo, cambiar también en config.yml:
- *   base_url: https://www.hiddenjunglecusco.com
+ *   base_url: https://www.manujungleforever.com
  *   Y actualizar el callback URL en la GitHub OAuth App.
  */
 export async function onRequest(context) {

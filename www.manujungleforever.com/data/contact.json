@@ -6,16 +6,16 @@
     "email": "discover@manujungleforever.com",
     "telefono_1": "+51 931 022 183",
     "telefono_2": "+51 901 525 679",
-    "whatsapp": "51 901 525 679",
+    "whatsapp": "51901525679",
     "whatsapp_texto": "Hello! I would like to learn more about your jungle trips"
   },
   "direccion": {
-    "nombre": "Manu Jungle Forever ",
+    "nombre": "Manu Jungle Forever",
     "calle": "17800",
     "localidad": "Nuevo Eden",
     "pais": "Peru",
-    "maps_url": "https://goo.gl/maps/B8NjhLZizA6YKwKD6",
-    "maps_embed": "https://www.google.com/maps/d/embed?mid=12fWz1M5jmQ0jd8rUJY0VUfi6KnRmvnc"
+    "maps_url": "https://maps.google.com/?q=Nuevo+Eden,+Madre+de+Dios,+Peru",
+    "maps_embed": "https://www.google.com/maps?q=Nuevo+Eden,+Madre+de+Dios,+Peru&output=embed"
   },
   "horario": {
     "dias": "Monday – Sunday",
