@@ -74,7 +74,7 @@
           "restricciones_dieteticas": "Ninguna",
           "condiciones_medicas": "Ninguna",
           "costo": 1400,
-          "estado_pago": "pendiente",
+          "estado_pago": "reserva",
           "monto_pagado": 200,
           "saldo_pendiente": 1000,
           "foto": "/media/1787048487504-pasajeros-dep-010-manu-reserved-zone---6-days-2026-09-10-pasajero-de-prueba-2-1787048484532.jpg"
@@ -88,11 +88,11 @@
           "email": "test2@example.com",
           "restricciones_dieteticas": "",
           "condiciones_medicas": "",
-          "monto_total": 1200,
           "monto_pagado": 1200,
           "saldo_pendiente": 0,
           "estado_pago": "pagado",
-          "metodo_reserva": "web"
+          "metodo_reserva": "web",
+          "costo": 1200
         },
         {
           "nombre_completo": "Idel Everardo Maza Maza",
@@ -198,11 +198,11 @@
           "email": "test0@example.com",
           "restricciones_dieteticas": "Vegetariano",
           "condiciones_medicas": "",
-          "monto_total": 680,
           "monto_pagado": 680,
           "saldo_pendiente": 0,
           "estado_pago": "pagado",
-          "metodo_reserva": "web"
+          "metodo_reserva": "web",
+          "costo": 680
         },
         {
           "id": "pax-dep-008-1",
@@ -213,11 +213,11 @@
           "email": "test1@example.com",
           "restricciones_dieteticas": "",
           "condiciones_medicas": "",
-          "monto_total": 680,
           "monto_pagado": 200,
           "saldo_pendiente": 480,
-          "estado_pago": "parcial",
-          "metodo_reserva": "web"
+          "estado_pago": "reserva",
+          "metodo_reserva": "web",
+          "costo": 680
         },
         {
           "id": "pax-dep-008-2",
@@ -228,11 +228,11 @@
           "email": "test2@example.com",
           "restricciones_dieteticas": "",
           "condiciones_medicas": "",
-          "monto_total": 680,
           "monto_pagado": 680,
           "saldo_pendiente": 0,
           "estado_pago": "pagado",
-          "metodo_reserva": "web"
+          "metodo_reserva": "web",
+          "costo": 680
         },
         {
           "id": "pax-dep-008-3",
@@ -243,11 +243,11 @@
           "email": "test3@example.com",
           "restricciones_dieteticas": "",
           "condiciones_medicas": "",
-          "monto_total": 680,
           "monto_pagado": 200,
           "saldo_pendiente": 480,
-          "estado_pago": "parcial",
-          "metodo_reserva": "web"
+          "estado_pago": "reserva",
+          "metodo_reserva": "web",
+          "costo": 680
         },
         {
           "id": "pax-dep-008-4",
@@ -258,11 +258,11 @@
           "email": "test4@example.com",
           "restricciones_dieteticas": "",
           "condiciones_medicas": "",
-          "monto_total": 680,
           "monto_pagado": 680,
           "saldo_pendiente": 0,
           "estado_pago": "pagado",
-          "metodo_reserva": "web"
+          "metodo_reserva": "web",
+          "costo": 680
         },
         {
           "id": "pax-dep-008-5",
@@ -273,11 +273,11 @@
           "email": "test5@example.com",
           "restricciones_dieteticas": "",
           "condiciones_medicas": "",
-          "monto_total": 680,
           "monto_pagado": 200,
           "saldo_pendiente": 480,
-          "estado_pago": "parcial",
-          "metodo_reserva": "web"
+          "estado_pago": "reserva",
+          "metodo_reserva": "web",
+          "costo": 680
         },
         {
           "id": "pax-dep-008-6",
@@ -288,11 +288,11 @@
           "email": "test6@example.com",
           "restricciones_dieteticas": "",
           "condiciones_medicas": "",
-          "monto_total": 680,
           "monto_pagado": 680,
           "saldo_pendiente": 0,
           "estado_pago": "pagado",
-          "metodo_reserva": "web"
+          "metodo_reserva": "web",
+          "costo": 680
         },
         {
           "id": "pax-dep-008-7",
@@ -303,11 +303,11 @@
           "email": "test7@example.com",
           "restricciones_dieteticas": "",
           "condiciones_medicas": "",
-          "monto_total": 680,
           "monto_pagado": 200,
           "saldo_pendiente": 480,
-          "estado_pago": "parcial",
-          "metodo_reserva": "web"
+          "estado_pago": "reserva",
+          "metodo_reserva": "web",
+          "costo": 680
         }
       ]
     },
@@ -336,11 +336,11 @@
           "email": "test0@example.com",
           "restricciones_dieteticas": "Vegetariano",
           "condiciones_medicas": "",
-          "monto_total": 1450,
           "monto_pagado": 1450,
           "saldo_pendiente": 0,
           "estado_pago": "pagado",
-          "metodo_reserva": "web"
+          "metodo_reserva": "web",
+          "costo": 1450
         },
         {
           "id": "pax-dep-007-1",
@@ -351,11 +351,11 @@
           "email": "test1@example.com",
           "restricciones_dieteticas": "",
           "condiciones_medicas": "",
-          "monto_total": 1450,
           "monto_pagado": 200,
           "saldo_pendiente": 1250,
-          "estado_pago": "parcial",
-          "metodo_reserva": "web"
+          "estado_pago": "reserva",
+          "metodo_reserva": "web",
+          "costo": 1450
         }
       ]
     },
@@ -384,11 +384,11 @@
           "email": "test0@example.com",
           "restricciones_dieteticas": "Vegetariano",
           "condiciones_medicas": "",
-          "monto_total": 560,
           "monto_pagado": 560,
           "saldo_pendiente": 0,
           "estado_pago": "pagado",
-          "metodo_reserva": "web"
+          "metodo_reserva": "web",
+          "costo": 560
         }
       ]
     },
@@ -434,11 +434,11 @@
           "email": "test0@example.com",
           "restricciones_dieteticas": "Vegetariano",
           "condiciones_medicas": "",
-          "monto_total": 890,
           "monto_pagado": 890,
           "saldo_pendiente": 0,
           "estado_pago": "pagado",
-          "metodo_reserva": "web"
+          "metodo_reserva": "web",
+          "costo": 890
         },
         {
           "id": "pax-dep-004-1",
@@ -449,11 +449,11 @@
           "email": "test1@example.com",
           "restricciones_dieteticas": "",
           "condiciones_medicas": "",
-          "monto_total": 890,
           "monto_pagado": 200,
           "saldo_pendiente": 690,
-          "estado_pago": "parcial",
-          "metodo_reserva": "web"
+          "estado_pago": "reserva",
+          "metodo_reserva": "web",
+          "costo": 890
         },
         {
           "id": "pax-dep-004-2",
@@ -464,11 +464,11 @@
           "email": "test2@example.com",
           "restricciones_dieteticas": "",
           "condiciones_medicas": "",
-          "monto_total": 890,
           "monto_pagado": 890,
           "saldo_pendiente": 0,
           "estado_pago": "pagado",
-          "metodo_reserva": "web"
+          "metodo_reserva": "web",
+          "costo": 890
         },
         {
           "id": "pax-dep-004-3",
@@ -479,11 +479,11 @@
           "email": "test3@example.com",
           "restricciones_dieteticas": "",
           "condiciones_medicas": "",
-          "monto_total": 890,
           "monto_pagado": 200,
           "saldo_pendiente": 690,
-          "estado_pago": "parcial",
-          "metodo_reserva": "web"
+          "estado_pago": "reserva",
+          "metodo_reserva": "web",
+          "costo": 890
         },
         {
           "id": "pax-dep-004-4",
@@ -494,11 +494,11 @@
           "email": "test4@example.com",
           "restricciones_dieteticas": "",
           "condiciones_medicas": "",
-          "monto_total": 890,
           "monto_pagado": 890,
           "saldo_pendiente": 0,
           "estado_pago": "pagado",
-          "metodo_reserva": "web"
+          "metodo_reserva": "web",
+          "costo": 890
         },
         {
           "id": "pax-dep-004-5",
@@ -509,11 +509,11 @@
           "email": "test5@example.com",
           "restricciones_dieteticas": "",
           "condiciones_medicas": "",
-          "monto_total": 890,
           "monto_pagado": 200,
           "saldo_pendiente": 690,
-          "estado_pago": "parcial",
-          "metodo_reserva": "web"
+          "estado_pago": "reserva",
+          "metodo_reserva": "web",
+          "costo": 890
         }
       ]
     },
@@ -542,11 +542,11 @@
           "email": "test0@example.com",
           "restricciones_dieteticas": "Vegetariano",
           "condiciones_medicas": "",
-          "monto_total": 680,
           "monto_pagado": 680,
           "saldo_pendiente": 0,
           "estado_pago": "pagado",
-          "metodo_reserva": "web"
+          "metodo_reserva": "web",
+          "costo": 680
         },
         {
           "id": "pax-dep-003-1",
@@ -557,11 +557,11 @@
           "email": "test1@example.com",
           "restricciones_dieteticas": "",
           "condiciones_medicas": "",
-          "monto_total": 680,
           "monto_pagado": 200,
           "saldo_pendiente": 480,
-          "estado_pago": "parcial",
-          "metodo_reserva": "web"
+          "estado_pago": "reserva",
+          "metodo_reserva": "web",
+          "costo": 680
         }
       ]
     },
@@ -590,11 +590,11 @@
           "email": "test0@example.com",
           "restricciones_dieteticas": "Vegetariano",
           "condiciones_medicas": "",
-          "monto_total": 580,
           "monto_pagado": 580,
           "saldo_pendiente": 0,
           "estado_pago": "pagado",
-          "metodo_reserva": "web"
+          "metodo_reserva": "web",
+          "costo": 580
         },
         {
           "id": "pax-dep-002-1",
@@ -605,11 +605,11 @@
           "email": "test1@example.com",
           "restricciones_dieteticas": "",
           "condiciones_medicas": "",
-          "monto_total": 580,
           "monto_pagado": 200,
           "saldo_pendiente": 380,
-          "estado_pago": "parcial",
-          "metodo_reserva": "web"
+          "estado_pago": "reserva",
+          "metodo_reserva": "web",
+          "costo": 580
         },
         {
           "id": "pax-dep-002-2",
@@ -620,11 +620,11 @@
           "email": "test2@example.com",
           "restricciones_dieteticas": "",
           "condiciones_medicas": "",
-          "monto_total": 580,
           "monto_pagado": 580,
           "saldo_pendiente": 0,
           "estado_pago": "pagado",
-          "metodo_reserva": "web"
+          "metodo_reserva": "web",
+          "costo": 580
         },
         {
           "id": "pax-dep-002-3",
@@ -635,11 +635,11 @@
           "email": "test3@example.com",
           "restricciones_dieteticas": "",
           "condiciones_medicas": "",
-          "monto_total": 580,
           "monto_pagado": 200,
           "saldo_pendiente": 380,
-          "estado_pago": "parcial",
-          "metodo_reserva": "web"
+          "estado_pago": "reserva",
+          "metodo_reserva": "web",
+          "costo": 580
         },
         {
           "id": "pax-dep-002-4",
@@ -650,11 +650,11 @@
           "email": "test4@example.com",
           "restricciones_dieteticas": "",
           "condiciones_medicas": "",
-          "monto_total": 580,
           "monto_pagado": 580,
           "saldo_pendiente": 0,
           "estado_pago": "pagado",
-          "metodo_reserva": "web"
+          "metodo_reserva": "web",
+          "costo": 580
         }
       ]
     },
@@ -683,11 +683,11 @@
           "email": "test0@example.com",
           "restricciones_dieteticas": "Vegetariano",
           "condiciones_medicas": "",
-          "monto_total": 450,
           "monto_pagado": 450,
           "saldo_pendiente": 0,
           "estado_pago": "pagado",
-          "metodo_reserva": "web"
+          "metodo_reserva": "web",
+          "costo": 450
         },
         {
           "id": "pax-dep-001-1",
@@ -698,11 +698,11 @@
           "email": "test1@example.com",
           "restricciones_dieteticas": "",
           "condiciones_medicas": "",
-          "monto_total": 450,
           "monto_pagado": 200,
           "saldo_pendiente": 250,
-          "estado_pago": "parcial",
-          "metodo_reserva": "web"
+          "estado_pago": "reserva",
+          "metodo_reserva": "web",
+          "costo": 450
         },
         {
           "id": "pax-dep-001-2",
@@ -713,11 +713,11 @@
           "email": "test2@example.com",
           "restricciones_dieteticas": "",
           "condiciones_medicas": "",
-          "monto_total": 450,
           "monto_pagado": 450,
           "saldo_pendiente": 0,
           "estado_pago": "pagado",
-          "metodo_reserva": "web"
+          "metodo_reserva": "web",
+          "costo": 450
         }
       ]
     }

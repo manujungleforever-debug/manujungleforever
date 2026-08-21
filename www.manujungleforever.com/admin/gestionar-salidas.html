@@ -1744,7 +1744,7 @@ window.viewPax = function(idx) {
   
           let html = `<div style="text-align:center;margin-bottom:30px;padding:24px 20px;background:linear-gradient(180deg, rgba(45,212,191,0.08) 0%, rgba(2,6,5,0) 100%);border-radius:18px;border:1px solid rgba(45,212,191,0.1);">
         <h2 style="margin:0;color:transparent;background-clip:text;-webkit-background-clip:text;background-image:linear-gradient(90deg, #2dd4bf, #3b82f6);text-transform:uppercase;letter-spacing:2.5px;font-size:1.9rem;font-weight:800;text-shadow: 0 4px 12px rgba(45,212,191,0.2);">PASAJEROS</h2>
-        <h4 style="margin:10px 0 0 0;color:var(--muted);font-weight:400;font-size:1.05rem;letter-spacing:0.5px;">Tour: <span style="color:#e2e8f0;font-weight:500;">${s.tour_nombre}</span> <span style="opacity:0.6">(${s.fecha_salida || 'TBD'})</span> <span style="color:#2dd4bf; margin-left:10px; font-weight:600;">| Costo Base: ${s.precio || 0}</span></h4>
+        <h4 style="margin:10px 0 0 0;color:var(--muted);font-weight:400;font-size:1.05rem;letter-spacing:0.5px;">Tour: <span style="color:#e2e8f0;font-weight:500;">${s.tour_nombre}</span> <span style="opacity:0.6">(${s.fecha_salida || 'TBD'})</span> <span style="color:#2dd4bf; margin-left:10px; font-weight:600;">| Costo Base: $${s.precio || 0} USD</span></h4>
       </div>
     <div style="display:flex;justify-content:flex-end;margin-bottom:15px">
       <div style="display:flex;gap:10px">
@@ -1777,7 +1777,7 @@ window.viewPax = function(idx) {
           <td style="padding:15px;color:#fbbf24;vertical-align:middle;">${p.restricciones_dieteticas || '-'}<br>${p.condiciones_medicas || '-'}</td>
           <td style="padding:15px;vertical-align:middle;">
             <span class="badge ${p.estado_pago==='pagado'?'on':(p.estado_pago==='pendiente'?'err':'warn')}">${p.estado_pago||'pendiente'}</span><br>
-            <span style="color:var(--muted)">Pagado: ${p.monto_pagado||0} / Saldo: ${p.saldo_pendiente||0}</span>
+            <span style="color:var(--muted)">Pagado: $${p.monto_pagado||0} USD / Saldo: $${p.saldo_pendiente||0} USD</span>
           </td>
           <td style="padding:15px;border-radius:0 12px 12px 0;vertical-align:middle;display:flex;flex-direction:column;gap:8px;align-items:flex-end">
             <button style="background:rgba(16,185,129,0.1);color:#34d399;border:1px solid rgba(16,185,129,0.3);border-radius:8px;width:110px;font-size:0.85rem;padding:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:background 0.2s;" onmouseover="this.style.background='rgba(16,185,129,0.2)'" onmouseout="this.style.background='rgba(16,185,129,0.1)'" onclick="editPax(${idx}, ${pIdx})">✏️ Editar</button>
@@ -1838,7 +1838,7 @@ window.viewPax = function(idx) {
           <div class="ff"><label>Condiciones Médicas</label>${makeSelect('p-cm', meds, p.condiciones_medicas)}</div>
         </div>
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:18px;">
-          <div class="ff"><label>Costo del Tour ($)</label><input type="number" id="p-costo" value="${p.costo || cData.salidas[sIdx].precio || 0}" oninput="calcPaxPrice('costo')"></div>
+          <div class="ff"><label>Costo del Tour ($ USD)</label><input type="number" id="p-costo" value="${p.costo || cData.salidas[sIdx].precio || 0}" oninput="calcPaxPrice('costo')"></div>
           <div class="ff"><label>Estado de Pago</label>
               <select id="p-ep" onchange="calcPaxPrice()">
                 <option ${p.estado_pago==='pendiente'?'selected':''} value="pendiente">Pendiente</option>
@@ -1846,8 +1846,8 @@ window.viewPax = function(idx) {
                 <option ${p.estado_pago==='pagado'?'selected':''} value="pagado">Pagado 100%</option>
               </select>
           </div>
-          <div class="ff"><label>Monto Pagado ($)</label><input type="number" id="p-mp" value="${p.monto_pagado||0}" oninput="calcPaxPrice('mp')"></div>
-          <div class="ff"><label>Saldo Pendiente ($)</label><input type="number" id="p-sp" value="${p.saldo_pendiente||0}" oninput="calcPaxPrice('sp')"></div>
+          <div class="ff"><label>Monto Pagado ($ USD)</label><input type="number" id="p-mp" value="${p.monto_pagado||0}" oninput="calcPaxPrice('mp')"></div>
+          <div class="ff"><label>Saldo Pendiente ($ USD)</label><input type="number" id="p-sp" value="${p.saldo_pendiente||0}" oninput="calcPaxPrice('sp')"></div>
         </div>
 
       <div class="ff" style="margin-top:10px">
@@ -2051,7 +2051,7 @@ window.exportPaxCSV = function(idx) {
   const s = cData.salidas[idx];
   const pax = s.pasajeros || [];
   if(pax.length===0) return alert('No hay pasajeros');
-  let csv = "Nombre,Nacionalidad,Pasaporte,WhatsApp,Email,Dietas,Medicas,Pagado,Saldo\n";
+  let csv = "Nombre,Nacionalidad,Pasaporte,WhatsApp,Email,Dietas,Medicas,Costo ($ USD),Pagado ($ USD),Saldo ($ USD)\n";
   pax.forEach(p => {
     csv += `"${p.nombre_completo}","${p.nacionalidad}","${p.pasaporte}","${p.whatsapp}","${p.email}","${p.restricciones_dieteticas}","${p.condiciones_medicas}",${p.monto_pagado},${p.saldo_pendiente}\n`;
   });
@@ -2485,9 +2485,14 @@ async function viewDeps() {
 
 window.editDep = async function(idx) {
   let toursList = [];
+  window._toursMap = {};
   try {
     const toursData = await ghGet('www.manujungleforever.com/data/tours.json');
     toursList = JSON.parse(toursData.content).tours || [];
+    toursList.forEach(t => {
+      if(t.id) window._toursMap[t.id] = t;
+      if(t.slug) window._toursMap[t.slug] = t;
+    });
   } catch(e) { console.error('Error load tours', e); }
 
   let newId = '';
@@ -2512,7 +2517,7 @@ window.editDep = async function(idx) {
     <div class="eform"><div class="esec"><div class="esec-h">Datos de la Salida</div>
       <div class="grow2">
         <div class="ff"><label>Seleccionar Tour Base</label>
-          <select id="d-tid" onchange="document.getElementById('d-n').value = this.options[this.selectedIndex].text">
+          <select id="d-tid" onchange="const t = window._toursMap && (window._toursMap[this.value] || window._toursMap[this.options[this.selectedIndex].value]); if(t) { document.getElementById('d-n').value = t.nombre; if(t.precio_desde) document.getElementById('d-p').value = t.precio_desde; } else { document.getElementById('d-n').value = this.options[this.selectedIndex].text; }">
             <option value="">-- Seleccionar Tour --</option>
             ${toursList.map(t => `<option value="${t.id||t.slug}" ${s.tour_id===(t.id||t.slug)?'selected':''}>${t.nombre}</option>`).join('')}
           </select>
@@ -2525,7 +2530,7 @@ window.editDep = async function(idx) {
         <div class="ff"><label>Fecha de regreso</label><input type="date" id="d-r" value="${esc(s.fecha_regreso)}"></div>
       </div>
       <div class="grow3">
-        <div class="ff"><label>Precio (${s.moneda||'USD'})</label><input type="number" id="d-p" value="${s.precio}"></div>
+        <div class="ff"><label>Precio por persona ($ USD)</label><input type="number" id="d-p" value="${s.precio}"></div>
         <div class="ff"><label>Plazas totales</label><input type="number" id="d-t" value="${s.plazas_totales}"></div>
         <div class="ff"><label>Mínimo de pasajeros</label><input type="number" id="d-min" value="${s.plazas_minimas||2}"></div>
       </div>

@@ -441,7 +441,7 @@ document.addEventListener("DOMContentLoaded", function() {
           <div class="tc-specs">
             <span class="tc-spec"><i class="fas fa-users"></i> ${t.capacidad_min}–${t.capacidad_max} people</span>
             <span class="tc-spec"><i class="fas fa-clock"></i> ${t.duracion_dias}D / ${t.duracion_noches}N</span>
-            <span class="tc-spec"><i class="fas fa-map-marker-alt"></i> ${t.categoria}</span>
+            <span class="tc-spec"><i class="fas fa-tag"></i> From $${t.precio_desde || 0} USD</span>
           </div>
           <p class="tc-desc" style="display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;">${t.descripcion_corta || ''}</p>
           <div class="tc-footer">

@@ -1915,7 +1915,7 @@ window.editTour = function(idx) {
                   })()}
                 </select>
               </div>
-              <div class="ff"><label>Precio desde (USD)</label><input type="number" id="t-p" value="${t.precio_desde}" min="0"></div>
+              <div class="ff"><label>Precio desde ($ USD)</label><input type="number" id="t-p" value="${t.precio_desde}" min="0"></div>
               <div class="ff"><label>Cap. mínima</label><input type="number" id="t-cmin" value="${t.capacidad_min}" min="1"></div>
               <div class="ff"><label>Cap. máxima</label><input type="number" id="t-cmax" value="${t.capacidad_max}" min="1"></div>
             </div>
@@ -2096,6 +2096,28 @@ window.editTour = function(idx) {
 
     // Synchronize navigation dropdowns in test files
     await syncGuidedToursMenuInPages(cData.tours, MENU_PAGES_TO_SYNC);
+    // Synchronize departure prices linked to this tour in departures.json
+    try {
+      const depData = await ghGet('www.manujungleforever.com/data/departures.json');
+      if (depData && depData.content) {
+        const dJson = JSON.parse(depData.content);
+        let depModified = false;
+        (dJson.salidas || []).forEach(sal => {
+          if (sal.tour_id === updated.id || sal.tour_id === updated.slug) {
+            sal.tour_nombre = updated.nombre;
+            sal.moneda = 'USD';
+            sal.precio = updated.precio_desde;
+            depModified = true;
+          }
+        });
+        if (depModified) {
+          await ghPut('www.manujungleforever.com/data/departures.json', JSON.stringify(dJson, null, 2), depData.sha, `sync departures price with tour: ${updated.nombre}`);
+        }
+      }
+    } catch(err) {
+      console.warn('Could not sync departures with tour price:', err);
+    }
+
   });
 };
 
@@ -2886,6 +2908,28 @@ window.deleteTour = async function(idx) {
       }
       
       await syncGuidedToursMenuInPages(cData.tours, MENU_PAGES_TO_SYNC);
+    // Synchronize departure prices linked to this tour in departures.json
+    try {
+      const depData = await ghGet('www.manujungleforever.com/data/departures.json');
+      if (depData && depData.content) {
+        const dJson = JSON.parse(depData.content);
+        let depModified = false;
+        (dJson.salidas || []).forEach(sal => {
+          if (sal.tour_id === updated.id || sal.tour_id === updated.slug) {
+            sal.tour_nombre = updated.nombre;
+            sal.moneda = 'USD';
+            sal.precio = updated.precio_desde;
+            depModified = true;
+          }
+        });
+        if (depModified) {
+          await ghPut('www.manujungleforever.com/data/departures.json', JSON.stringify(dJson, null, 2), depData.sha, `sync departures price with tour: ${updated.nombre}`);
+        }
+      }
+    } catch(err) {
+      console.warn('Could not sync departures with tour price:', err);
+    }
+
       
       await viewTours();
     } catch(e) {
