@@ -276,6 +276,13 @@
             }
 
             let publishedPosts = (data.posts || []).filter(p => p.publicado !== false);
+            
+            // Dynamically update total articles count in subtitle
+            const subTitleEl = document.querySelector('section.sec .r p.ld');
+            if (subTitleEl) {
+                subTitleEl.textContent = `${publishedPosts.length} articles — tips, guides & stories from the Peruvian Amazon`;
+            }
+
             const totalPages = Math.ceil(publishedPosts.length / POSTS_PER_PAGE);
             
             if (currentPage < 1) currentPage = 1;
@@ -290,14 +297,14 @@
                 const formattedDate = rawDate ? new Date(rawDate + 'T12:00:00').toLocaleDateString('en-US', dateOptions) : '';
                 const title = p.title || p.titulo || '';
                 const excerpt = p.extracto || p.excerpt || '';
-                const cat = p.categoria || p.category || 'Blog';
+                const cat = p.categoria || p.category || 'Wildlife';
                 const img = p.imagen || p.image || '';
                 const imgAlt = p.imagen_alt || title;
                 
                 html += `
                 <a href="../${p.url}" class="ref-card" aria-label="${title}">
                     <div class="ref-img-wrap">
-                        <img src="${fixImgPath(img)}" alt="${imgAlt}" loading="lazy" class="ref-img" onerror="this.src='../assets/img/hero.png'">
+                        <img src="${fixImgPath(img)}" alt="${imgAlt}" loading="lazy" class="ref-img" onerror="this.onerror=null;this.src='../assets/img/hero.png';">
                         <div class="ref-badge"><i class="fas fa-tag" style="font-size:0.7rem"></i> ${cat}</div>
                     </div>
                     <div class="ref-body">

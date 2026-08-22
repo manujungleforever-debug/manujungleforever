@@ -1,6 +1,5 @@
 const REPO   = 'manujungleforever-debug/manujungleforever';
 const BRANCH = 'main';
-const GH     = 'https://api.github.com';
 
 export async function onRequestGet(context) {
   const { request, env, params } = context;
@@ -9,39 +8,32 @@ export async function onRequestGet(context) {
     return new Response('File not found', { status: 404 });
   }
 
-  const token = env.GH_TOKEN || env.GITHUB_TOKEN;
-  const fullRepoPath = `www.manujungleforever.com/data/${filePath}`;
-  const ghUrl = `${GH}/repos/${REPO}/contents/${encodeURIComponent(fullRepoPath).replace(/%2F/g,'/')}?ref=${BRANCH}`;
-
+  // 1. Try raw.githubusercontent.com (fast, no rate-limits)
+  const rawUrl = `https://raw.githubusercontent.com/${REPO}/${BRANCH}/www.manujungleforever.com/data/${filePath}?v=${Date.now()}`;
   try {
-    const ghRes = await fetch(ghUrl, {
+    const rawRes = await fetch(rawUrl, {
       headers: {
-        ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
-        'Accept': 'application/vnd.github+json',
-        'User-Agent': 'HJC-CMS/1.0'
+        'User-Agent': 'MJF-CMS/1.0',
+        'Cache-Control': 'no-cache'
       }
     });
 
-    if (ghRes.ok) {
-      const data = await ghRes.json();
-      if (data.content) {
-        const bytes = Uint8Array.from(atob(data.content.replace(/\n/g, '')), c => c.charCodeAt(0));
-        const content = new TextDecoder('utf-8').decode(bytes);
-        return new Response(content, {
-          status: 200,
-          headers: {
-            'Content-Type': 'application/json; charset=utf-8',
-            'Cache-Control': 'no-cache, no-store, must-revalidate',
-            'Access-Control-Allow-Origin': '*'
-          }
-        });
-      }
+    if (rawRes.ok) {
+      const content = await rawRes.text();
+      return new Response(content, {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Access-Control-Allow-Origin': '*'
+        }
+      });
     }
   } catch (e) {
-    // fallback
+    // continue to fallback
   }
 
-  // Fallback to static asset if GitHub request fails
+  // 2. Fallback to static asset if raw request fails
   if (env.ASSETS) {
     return env.ASSETS.fetch(request);
   }
