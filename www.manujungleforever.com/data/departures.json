@@ -417,7 +417,7 @@
       "moneda": "USD",
       "plazas_totales": 8,
       "plazas_disponibles": 7,
-      "estado": "disponible",
+      "estado": "cerrado",
       "notas": "",
       "plazas_minimas": 2,
       "guia_asignado": "",
