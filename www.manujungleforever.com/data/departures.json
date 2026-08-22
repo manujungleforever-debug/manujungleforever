@@ -90,8 +90,8 @@
       "moneda": "USD",
       "plazas_totales": 6,
       "plazas_minimas": 4,
-      "plazas_disponibles": 1,
-      "estado": "limitado",
+      "plazas_disponibles": 0,
+      "estado": "completo",
       "guia_asignado": "Jordy Lonidas Llaqui Chusi",
       "notas": "prueba1",
       "pasajeros": []
