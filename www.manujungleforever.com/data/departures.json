@@ -14,7 +14,23 @@
       "estado": "disponible",
       "guia_asignado": "Jordy Lonidas Llaqui Chusi",
       "notas": "Tour disponible para veganos.",
-      "pasajeros": []
+      "pasajeros": [
+        {
+          "nombre_completo": "Marcelo Viera",
+          "nacionalidad": "Francesa (FRA)",
+          "fecha_nacimiento": "1985-01-15",
+          "pasaporte": "46989140",
+          "whatsapp": "51958113016",
+          "email": "manujungleforever@gmail.com",
+          "restricciones_dieteticas": "Intolerante a la Lactosa",
+          "condiciones_medicas": "Alergia a Picaduras (Abejas)",
+          "costo": 1200,
+          "estado_pago": "reserva",
+          "monto_pagado": 700,
+          "saldo_pendiente": 500,
+          "foto": "/media/usuarios/kemmesik-gmail-com/avatar_1787257830305.jpg"
+        }
+      ]
     },
     {
       "tour_id": "5-day-amazon-expedition",
