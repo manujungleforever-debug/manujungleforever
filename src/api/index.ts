@@ -11,6 +11,7 @@ import { testimonialsRoutes } from './routes/testimonials';
 import { reclamosRoutes } from './routes/reclamos';
 import { mediaRoutes } from './routes/media';
 import { usersRoutes } from './routes/users';
+import { contentRoutes } from './routes/content';
 
 export const app = new Hono<{ Bindings: Bindings }>().basePath('/api');
 
@@ -29,8 +30,10 @@ app.route('/tours', toursRoutes);
 app.route('/salidas', salidasRoutes);
 app.route('/blog', blogRoutes);
 app.route('/testimonios', testimonialsRoutes);
+app.route('/testimonials', testimonialsRoutes);
 app.route('/reclamos', reclamosRoutes);
 app.route('/media', mediaRoutes);
+app.route('/content', contentRoutes);
 
 // Healthcheck
 app.get('/health', (c) => c.json({ status: 'ok', engine: 'Hono + Drizzle + Cloudflare D1', timestamp: new Date().toISOString() }));

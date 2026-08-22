@@ -105,7 +105,14 @@ export const testimonials = sqliteTable('testimonials', {
   createdAt: text('created_at').notNull()
 });
 
-// ── 7. RECLAMOS (LIBRO DE RECLAMACIONES) ──
+// ── 7. SITE CONTENT (home, about, contact, global) ──
+export const siteContent = sqliteTable('site_content', {
+  key: text('key').primaryKey(),          // e.g. 'home', 'about', 'contact', 'global'
+  value: text('value').notNull(),         // JSON string
+  updatedAt: text('updated_at').notNull()
+});
+
+// ── 8. RECLAMOS (LIBRO DE RECLAMACIONES) ──
 export const reclamos = sqliteTable('reclamos', {
   id: integer('id').primaryKey({ autoIncrement: true }),
   codigoReclamo: text('codigo_reclamo').notNull().unique(),

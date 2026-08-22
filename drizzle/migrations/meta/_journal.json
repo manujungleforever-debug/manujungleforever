@@ -8,6 +8,13 @@
       "when": 1787074261305,
       "tag": "0000_nebulous_deathbird",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1787441572741,
+      "tag": "0001_abnormal_living_lightning",
+      "breakpoints": true
     }
   ]
 }

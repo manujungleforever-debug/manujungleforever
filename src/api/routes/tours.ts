@@ -72,61 +72,68 @@ toursRoutes.get('/:slug', async (c) => {
   });
 });
 
-// ── CREATE OR UPDATE TOUR ──
+// ── CREATE OR UPDATE TOUR (SINGLE OR BATCH) ──
 toursRoutes.post('/', async (c) => {
   const db = getDb(c.env.DB);
   const body = await c.req.json();
 
-  const id = body.id || body.slug;
-  await db.insert(schema.tours).values({
-    id,
-    slug: body.slug,
-    nombre: body.nombre,
-    categoria: body.categoria,
-    estado: body.estado || 'activo',
-    duracionDias: body.duracion_dias || 1,
-    duracionNoches: body.duracion_noches || 0,
-    precioDesde: body.precio_desde || 0,
-    moneda: body.moneda || 'USD',
-    capacidadMin: body.capacidad_min || 1,
-    capacidadMax: body.capacidad_max || 8,
-    dificultad: body.dificultad || null,
-    temporada: body.temporada || null,
-    descripcionCorta: body.descripcion_corta || null,
-    descripcionLarga: body.descripcion_larga || null,
-    imagenHero: body.imagen_hero || null,
-    imagenAlt: body.imagen_alt || null,
-    galeriaJson: body.galeria ? JSON.stringify(body.galeria) : null,
-    itinerarioJson: body.itinerario ? JSON.stringify(body.itinerario) : null,
-    transporteJson: body.transporte ? JSON.stringify(body.transporte) : null,
-    createdAt: new Date().toISOString()
-  }).onConflictDoUpdate({
-    target: schema.tours.id,
-    set: {
-      slug: body.slug,
-      nombre: body.nombre,
-      categoria: body.categoria,
-      estado: body.estado,
-      duracionDias: body.duracion_dias,
-      duracionNoches: body.duracion_noches,
-      precioDesde: body.precio_desde,
-      moneda: body.moneda,
-      capacidadMin: body.capacidad_min,
-      capacidadMax: body.capacidad_max,
-      dificultad: body.dificultad,
-      temporada: body.temporada,
-      descripcionCorta: body.descripcion_corta,
-      descripcionLarga: body.descripcion_larga,
-      imagenHero: body.imagen_hero,
-      imagenAlt: body.imagen_alt,
-      galeriaJson: body.galeria ? JSON.stringify(body.galeria) : null,
-      itinerarioJson: body.itinerario ? JSON.stringify(body.itinerario) : null,
-      transporteJson: body.transporte ? JSON.stringify(body.transporte) : null,
-      updatedAt: new Date().toISOString()
-    }
-  });
+  const tourList = Array.isArray(body.tours) ? body.tours : [body];
+  const now = new Date().toISOString();
 
-  return c.json({ ok: true, id }, 201);
+  for (const t of tourList) {
+    if (!t.slug && !t.nombre) continue;
+    const id = t.id || t.slug;
+    await db.insert(schema.tours).values({
+      id,
+      slug: t.slug,
+      nombre: t.nombre,
+      categoria: t.categoria || 'General',
+      estado: t.estado || 'activo',
+      duracionDias: t.duracion_dias || 1,
+      duracionNoches: t.duracion_noches || 0,
+      precioDesde: t.precio_desde || 0,
+      moneda: t.moneda || 'USD',
+      capacidadMin: t.capacidad_min || 1,
+      capacidadMax: t.capacidad_max || 8,
+      dificultad: t.dificultad || null,
+      temporada: t.temporada || null,
+      descripcionCorta: t.descripcion_corta || null,
+      descripcionLarga: t.descripcion_larga || null,
+      imagenHero: t.imagen_hero || null,
+      imagenAlt: t.imagen_alt || null,
+      galeriaJson: t.galeria ? JSON.stringify(t.galeria) : null,
+      itinerarioJson: t.itinerario ? JSON.stringify(t.itinerario) : null,
+      transporteJson: t.transporte ? JSON.stringify(t.transporte) : null,
+      createdAt: t.created_at || now,
+      updatedAt: now
+    }).onConflictDoUpdate({
+      target: schema.tours.id,
+      set: {
+        slug: t.slug,
+        nombre: t.nombre,
+        categoria: t.categoria || 'General',
+        estado: t.estado,
+        duracionDias: t.duracion_dias,
+        duracionNoches: t.duracion_noches,
+        precioDesde: t.precio_desde,
+        moneda: t.moneda,
+        capacidadMin: t.capacidad_min,
+        capacidadMax: t.capacidad_max,
+        dificultad: t.dificultad,
+        temporada: t.temporada,
+        descripcionCorta: t.descripcion_corta,
+        descripcionLarga: t.descripcion_larga,
+        imagenHero: t.imagen_hero,
+        imagenAlt: t.imagen_alt,
+        galeriaJson: t.galeria ? JSON.stringify(t.galeria) : null,
+        itinerarioJson: t.itinerario ? JSON.stringify(t.itinerario) : null,
+        transporteJson: t.transporte ? JSON.stringify(t.transporte) : null,
+        updatedAt: now
+      }
+    });
+  }
+
+  return c.json({ ok: true, count: tourList.length }, 201);
 });
 
 // ── DELETE TOUR ──

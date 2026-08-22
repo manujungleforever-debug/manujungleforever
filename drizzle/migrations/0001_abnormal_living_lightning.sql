@@ -1,0 +1,7 @@
+CREATE TABLE `site_content` (
+	`key` text PRIMARY KEY NOT NULL,
+	`value` text NOT NULL,
+	`updated_at` text NOT NULL
+);
+--> statement-breakpoint
+ALTER TABLE `testimonials` ADD `origen` text DEFAULT 'manual';

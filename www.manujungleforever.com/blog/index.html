@@ -258,7 +258,8 @@
     <script>
     document.addEventListener('DOMContentLoaded', async () => {
         try {
-            const res = await fetch('../data/posts-index.json?v=' + new Date().getTime());
+            let res = await fetch('/api/blog?public=true').catch(() => null);
+            if (!res || !res.ok) res = await fetch('../data/posts-index.json?v=' + new Date().getTime());
             const data = await res.json();
             
             const grid = document.getElementById('blog-grid-override');

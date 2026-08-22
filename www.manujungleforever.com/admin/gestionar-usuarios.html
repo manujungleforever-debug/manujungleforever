@@ -11,6 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
 <link rel="icon" href="../assets/img/logo.png">
+<script src="js/api.js"></script>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
@@ -528,24 +529,8 @@ document.getElementById('btn-save').addEventListener('click', async () => {
 });
 document.getElementById('btn-cancel-save').addEventListener('click',()=>{hideSaveBar();viewUsers();});
 
-async function ghGet(path) {
-  const r = await fetch(`${API}/file?path=${encodeURIComponent(path)}`,{headers:{Authorization:`Bearer ${token}`}});
-  if (r.status===401){sessionStorage.clear();location.reload();}
-  if (!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e.error||'Error al cargar');}
-  return r.json();
-}
-
-async function ghPut(path, content, sha, msg) {
-  const r = await fetch(`${API}/file`, {
-    method: 'PUT',
-    headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ path, content, sha, message: msg || `update: ${path}` })
-  });
-  if (r.status === 401) { sessionStorage.clear(); location.reload(); }
-  const d = await r.json();
-  if (!r.ok) throw new Error(d.error || 'Error al guardar');
-  return d;
-}
+// API WRAPPERS (CENTRALIZED IN js/api.js)
+// ─────────────────────────────────────────────────────────────────────────────
 
 // ── R2 UPLOAD HELPER ──
 async function r2Upload(file, progressEl) {

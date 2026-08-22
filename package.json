@@ -3,11 +3,13 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "wrangler pages dev www.manujungleforever.com --d1=DB=manujungleforever-db --r2=MEDIA_BUCKET=mjf-media",
+    "dev": "wrangler pages dev www.manujungleforever.com --d1=DB=c0765748-5818-44ee-ab40-c43607a106d6 --r2=MEDIA_BUCKET=mjf-media --persist-to=.wrangler/state/v3",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
-    "db:migrate:local": "wrangler d1 execute manujungleforever-db --local --file=drizzle/migrations/0000_nebulous_deathbird.sql && wrangler d1 execute manujungleforever-db --local --file=drizzle/migrations/0001_create_all_tables.sql",
-    "db:migrate:remote": "wrangler d1 execute manujungleforever-db --remote --file=drizzle/migrations/0000_nebulous_deathbird.sql && wrangler d1 execute manujungleforever-db --remote --file=drizzle/migrations/0001_create_all_tables.sql",
+    "db:migrate:local": "wrangler d1 execute manujungleforever-db --local --file=drizzle/migrations/0000_nebulous_deathbird.sql && wrangler d1 execute manujungleforever-db --local --file=drizzle/migrations/0001_abnormal_living_lightning.sql && wrangler d1 execute manujungleforever-db --local --file=drizzle/migrations/seed_data.sql",
+    "db:migrate:remote": "wrangler d1 execute manujungleforever-db --remote --file=drizzle/migrations/0000_nebulous_deathbird.sql && wrangler d1 execute manujungleforever-db --remote --file=drizzle/migrations/0001_abnormal_living_lightning.sql && wrangler d1 execute manujungleforever-db --remote --file=drizzle/migrations/seed_data.sql",
+    "db:seed:local": "wrangler d1 execute manujungleforever-db --local --file=drizzle/migrations/seed_data.sql",
+    "db:seed:remote": "wrangler d1 execute manujungleforever-db --remote --file=drizzle/migrations/seed_data.sql",
     "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
