@@ -19,15 +19,35 @@ export async function onRequestGet(context) {
   const token = env.GH_TOKEN || env.GITHUB_TOKEN;
   
   try {
-    const res = await fetch(url, {
-      headers: {
-        'User-Agent': 'Cloudflare-Worker',
-        'Authorization': `Bearer ${token}`,
-        'Accept': 'application/vnd.github.v3+json'
-      }
-    });
+    const headers = {
+      'User-Agent': 'Cloudflare-Worker',
+      'Accept': 'application/vnd.github.v3+json'
+    };
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+
+    let res = await fetch(url, { headers });
 
     if (!res.ok) {
+      const rawUrl = `https://raw.githubusercontent.com/manujungleforever-debug/manujungleforever/main/www.manujungleforever.com/data/departures.json`;
+      const rawRes = await fetch(rawUrl, {
+        headers: { 'User-Agent': 'Cloudflare-Worker' }
+      });
+      if (rawRes.ok) {
+        const rawData = await rawRes.json();
+        if (rawData.salidas && Array.isArray(rawData.salidas)) {
+          rawData.salidas = rawData.salidas.map(s => {
+            const { pasajeros, ...publicFields } = s;
+            return publicFields;
+          });
+        }
+        return new Response(JSON.stringify(rawData), { 
+          status: 200, 
+          headers: CORS_HEADERS 
+        });
+      }
+
       const errText = await res.text();
       console.error('GitHub API error:', errText);
       return new Response(JSON.stringify({ error: 'Failed to fetch departures' }), { 

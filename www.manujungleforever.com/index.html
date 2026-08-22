@@ -841,7 +841,7 @@ document.addEventListener("DOMContentLoaded", function() {
           const c0 = tourCats[0];
           const imgEl = xlCard.querySelector('img');
           if (imgEl && c0.imagen && !c0.imagen.includes('placeholder.jpg')) {
-            imgEl.src = c0.imagen;
+            imgEl.src = fixImgPath(c0.imagen);
             if (c0.imagen_alt || c0.titulo) imgEl.alt = c0.imagen_alt || c0.titulo;
           }
           const badgeEl = xlCard.querySelector('.tbg');
@@ -871,7 +871,7 @@ document.addEventListener("DOMContentLoaded", function() {
           if (!cat) return;
           const imgEl = mdCard.querySelector('img');
           if (imgEl && cat.imagen && !cat.imagen.includes('placeholder.jpg')) {
-            imgEl.src = cat.imagen;
+            imgEl.src = fixImgPath(cat.imagen);
             if (cat.imagen_alt || cat.titulo) imgEl.alt = cat.imagen_alt || cat.titulo;
           }
           const badgeEl = mdCard.querySelector('.tbg');
@@ -920,8 +920,7 @@ document.addEventListener("DOMContentLoaded", function() {
       if (ab.image && !ab.image.includes('placeholder.jpg')) {
         const abImg = document.querySelector('#about .spi img');
         if (abImg) {
-          const cleanImg = ab.image.startsWith('/') ? ab.image.slice(1) : ab.image;
-          abImg.src = cleanImg;
+          abImg.src = fixImgPath(ab.image);
         }
       }
       if (ab.image_alt) {
@@ -949,8 +948,7 @@ document.addEventListener("DOMContentLoaded", function() {
       if (uq.image && !uq.image.includes('placeholder.jpg')) {
         const uqImg = document.querySelector('#unique-content .spi img');
         if (uqImg) {
-          const cleanImg = uq.image.startsWith('/') ? uq.image.slice(1) : uq.image;
-          uqImg.src = cleanImg;
+          uqImg.src = fixImgPath(uq.image);
         }
       }
       if (uq.image_alt) {
@@ -982,7 +980,7 @@ document.addEventListener("DOMContentLoaded", function() {
       if (wl.image && !wl.image.includes('placeholder.jpg')) {
         const wlImg = document.querySelector('#wildlife .wb img');
         if (wlImg) {
-          wlImg.src = wl.image;
+          wlImg.src = fixImgPath(wl.image);
           if (wl.image_alt) wlImg.alt = wl.image_alt;
         }
       }
@@ -992,8 +990,7 @@ document.addEventListener("DOMContentLoaded", function() {
       if (cta.image && !cta.image.includes('placeholder.jpg')) {
         const ctaBg = document.querySelector('#plan-trip .ci');
         if (ctaBg) {
-          const cleanImg = cta.image.startsWith('/') ? cta.image.slice(1) : cta.image;
-          ctaBg.style.backgroundImage = `url('${cleanImg}')`;
+          ctaBg.style.backgroundImage = `url('${fixImgPath(cta.image)}')`;
         }
       }
       if (cta.eyebrow) {
@@ -1013,6 +1010,25 @@ document.addEventListener("DOMContentLoaded", function() {
         if (ctaBtn) {
           ctaBtn.innerHTML = `<i class="fas fa-compass"></i> ${cta.btn_text}`;
           if (cta.btn_url) ctaBtn.href = cta.btn_url;
+        }
+      }
+
+      // Pillars section (#why-us)
+      const pil = hData.pillars_section || {};
+      if (pil.title) {
+        const pilTitle = document.querySelector('#why-us .h2');
+        if (pilTitle) pilTitle.textContent = pil.title;
+      }
+      if (Array.isArray(pil.pillars) && pil.pillars.length > 0) {
+        const pilContainer = document.querySelector('#why-us .pg');
+        if (pilContainer) {
+          pilContainer.innerHTML = pil.pillars.map(p => `
+            <div class="pl r">
+              <div class="pi"><i class="${p.icon || 'fas fa-leaf'}"></i></div>
+              <h3>${p.title || ''}</h3>
+              <p>${p.text || ''}</p>
+            </div>
+          `).join('');
         }
       }
     }

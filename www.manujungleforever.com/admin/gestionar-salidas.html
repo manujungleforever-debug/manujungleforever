@@ -137,9 +137,10 @@ main { flex-grow:1; max-width:1200px !important; width:100% !important; margin:0
 .esec-h { font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--gold); border-bottom:1px solid rgba(255,255,255,.07); padding-bottom:8px; margin-bottom:16px; }
 .grow2 { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
 .grow3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:18px; }
-.ff { display:flex; flex-direction:column; gap:8px; margin-bottom:20px; }
-.ff label { font-size:.7rem; font-weight:600; text-transform:uppercase; letter-spacing:.8px; color:var(--muted); }
-.ff input,.ff textarea,.ff select { background:rgba(3,8,7,.65); border:1px solid rgba(255,255,255,.1); color:var(--fg); padding:12px 14px; border-radius:10px; font-size:.9rem; outline:none; transition:.25s; width:100%; }
+.ff { display:flex; flex-direction:column; gap:6px; margin-bottom:14px; width:100%; box-sizing:border-box; }
+.ff label { font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.8px; color:var(--muted); min-height:18px; display:flex; align-items:flex-end; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-bottom:0; }
+.ff input,.ff select { height:42px; min-height:42px; line-height:1.4; background:rgba(3,8,7,.65); border:1px solid rgba(255,255,255,.1); color:var(--fg); padding:8px 12px; border-radius:10px; font-size:.85rem; outline:none; transition:.25s; width:100%; box-sizing:border-box; }
+.ff textarea { background:rgba(3,8,7,.65); border:1px solid rgba(255,255,255,.1); color:var(--fg); padding:10px 13px; border-radius:10px; font-size:.85rem; outline:none; transition:.25s; width:100%; box-sizing:border-box; }
 .ff input:focus,.ff textarea:focus,.ff select:focus { border-color:var(--teal); box-shadow:0 0 10px var(--teal-g); }
 .ff select option { background:#0a1f1b; color:var(--fg); }
 .hint { font-size:.7rem; color:var(--muted); }
@@ -1674,58 +1675,78 @@ async function viewTours() {
 }
 
 window.editTour = function(idx) {
-  const t= idx === -1 ? {nombre:'', estado:'activo', categoria:'wildlife', duracion_dias:1, duracion_noches:0, precio_desde:0, capacidad_min:1, capacidad_max:12, dificultad:'Fácil', temporada:'', descripcion_corta:'', descripcion_larga:'', imagen_hero:'', galeria:[], itinerario:[], incluye:[], no_incluye:[], destacado:false} : cData.tours[idx];
+  const t = idx === -1 ? {nombre:'', estado:'activo', categoria:'wildlife', duracion_dias:1, duracion_noches:0, precio_desde:0, capacidad_min:1, capacidad_max:12, dificultad:'Fácil', temporada:'', descripcion_corta:'', descripcion_larga:'', imagen_hero:'', galeria:[], itinerario:[], incluye:[], no_incluye:[], destacado:false} : cData.tours[idx];
   set(`
-    <button class="back-btn" onclick="route('tours')">← Volver a tours</button>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+      <button class="back-btn" onclick="route('tours')" style="margin-bottom:0">← Volver a tours</button>
+      <span style="font-size: 0.85rem; color: var(--muted);">${idx === -1 ? 'Creando Nuevo Tour' : 'Editando: ' + esc(t.nombre)}</span>
+    </div>
     <div class="eform">
-      <div class="esec"><div class="esec-h">Información General</div>
-        <div class="grow2">
-          <div class="ff"><label>Nombre del tour</label><input id="t-n" value="${esc(t.nombre)}"></div>
-          <div class="ff"><label>Estado</label><select id="t-e"><option ${t.estado==='activo'?'selected':''} value="activo">✅ Activo</option><option ${t.estado==='pausado'?'selected':''} value="pausado">⏸️ Pausado</option><option ${t.estado==='seasonal'?'selected':''} value="seasonal">🍂 De Temporada</option><option ${t.estado==='inactivo'?'selected':''} value="inactivo">❌ Inactivo</option></select></div>
-        </div>
-        <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:12px;margin-bottom:12px">
-          <div class="ff"><label>Categoría</label>
-            <select id="t-c" onchange="if(this.value==='__add_new__') addCustomItem('t-c', 'Nombre de la nueva categoría:')">
-              ${(() => {
-                const baseCats = ['wildlife', 'cultural', 'expedition', 'birdwatching', 'machu wasi'];
-                const existingCats = (cData?.tours || []).map(x => x.categoria).filter(Boolean);
-                const allCats = Array.from(new Set([...baseCats, ...existingCats, t.categoria].filter(Boolean)));
-                return allCats.map(c => `<option value="${esc(c)}" ${t.categoria === c ? 'selected' : ''}>${esc(c)}</option>`).join('') +
-                       '<option value="__add_new__" style="font-weight:bold;color:#2dd4bf;">+ Añadir categoría...</option>';
-              })()}
-            </select>
+      <div style="display: grid; gap: 32px; grid-template-columns: 2fr 1fr;" class="tour-layout-grid">
+        <div style="display: flex; flex-direction: column; gap: 24px;">
+          <div style="background: rgba(17,24,39,0.5); border: 1px solid rgba(255,255,255,0.05); padding: 24px; border-radius: 16px;">
+            <h3 style="color: #10b981; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">Información General</h3>
+            
+            <div class="ff" style="margin-bottom:14px"><label>Nombre del tour</label><input id="t-n" value="${esc(t.nombre)}"></div>
+            
+            <div style="display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:14px;align-items:start;margin-bottom:14px">
+              <div class="ff"><label>Categoría</label>
+                <select id="t-c" onchange="if(this.value==='__add_new__') addCustomItem('t-c', 'Nombre de la nueva categoría:')">
+                  ${(() => {
+                    const baseCats = ['wildlife', 'cultural', 'expedition', 'birdwatching', 'machu wasi', 'roadtrip', 'photography'];
+                    const existingCats = (cData?.tours || []).map(x => x.categoria).filter(Boolean);
+                    const allCats = Array.from(new Set([...baseCats, ...existingCats, t.categoria].filter(Boolean)));
+                    return allCats.map(c => `<option value="${esc(c)}" ${t.categoria === c ? 'selected' : ''}>${esc(c)}</option>`).join('') +
+                           '<option value="__add_new__" style="font-weight:bold;color:#2dd4bf;">+ Añadir categoría...</option>';
+                  })()}
+                </select>
+              </div>
+              <div class="ff"><label>Precio ($ USD)</label><input type="number" id="t-p" value="${t.precio_desde}" min="0"></div>
+              <div class="ff"><label>Cap. Mínima</label><input type="number" id="t-cmin" value="${t.capacidad_min}" min="1"></div>
+              <div class="ff"><label>Cap. Máxima</label><input type="number" id="t-cmax" value="${t.capacidad_max}" min="1"></div>
+            </div>
+            
+            <div style="display:grid;grid-template-columns:1.2fr 1.5fr 1fr 1fr;gap:14px;align-items:start;margin-bottom:14px">
+              <div class="ff"><label>Dificultad</label><select id="t-dif"><option value="Fácil" ${t.dificultad==='Fácil'?'selected':''}>Easy</option><option value="Moderado" ${t.dificultad==='Moderado'?'selected':''}>Moderate</option><option value="Difícil" ${t.dificultad==='Difícil'?'selected':''}>Hard</option></select></div>
+              <div class="ff"><label>Temporada</label>
+                <select id="t-tmp" onchange="if(this.value==='__add_new__') addCustomItem('t-tmp', 'Nombre de la nueva temporada:')">
+                  ${(() => {
+                    const baseSeasons = ['All year', 'May - October (Dry Season)', 'November - April (Rainy Season)', 'June - September'];
+                    const existingSeasons = (cData?.tours || []).map(x => x.temporada).filter(Boolean);
+                    const currentSeason = t.temporada || 'All year';
+                    const allSeasons = Array.from(new Set([...baseSeasons, ...existingSeasons, currentSeason].filter(Boolean)));
+                    return allSeasons.map(s => `<option value="${esc(s)}" ${currentSeason === s ? 'selected' : ''}>${esc(s)}</option>`).join('') +
+                           '<option value="__add_new__" style="font-weight:bold;color:#2dd4bf;">+ Añadir temporada...</option>';
+                  })()}
+                </select>
+              </div>
+              <div class="ff"><label>Días</label><input type="number" id="t-d" value="${t.duracion_dias||1}" min="1"></div>
+              <div class="ff"><label>Noches</label><input type="number" id="t-dn" value="${t.duracion_noches||0}" min="0"></div>
+            </div>
           </div>
-          <div class="ff"><label>Precio desde (USD)</label><input type="number" id="t-p" value="${t.precio_desde}" min="0"></div>
-          <div class="ff"><label>Cap. mínima</label><input type="number" id="t-cmin" value="${t.capacidad_min}" min="1"></div>
-          <div class="ff"><label>Cap. máxima</label><input type="number" id="t-cmax" value="${t.capacidad_max}" min="1"></div>
-        </div>
-        <div style="display:grid;grid-template-columns:1fr 2fr 1fr 1fr;gap:12px;margin-bottom:12px">
-          <div class="ff"><label>Dificultad</label><select id="t-dif"><option ${t.dificultad==='Fácil'?'selected':''}>Fácil</option><option ${t.dificultad==='Moderado'?'selected':''}>Moderado</option><option ${t.dificultad==='Difícil'?'selected':''}>Difícil</option></select></div>
-          <div class="ff"><label>Temporada</label>
-            <select id="t-tmp" onchange="if(this.value==='__add_new__') addCustomItem('t-tmp', 'Nombre de la nueva temporada:')">
-              ${(() => {
-                const baseSeasons = ['Todo el año', 'Mayo - Octubre (Temporada Seca)', 'Noviembre - Abril (Temporada de Lluvias)', 'Junio - Septiembre'];
-                const existingSeasons = (cData?.tours || []).map(x => x.temporada).filter(Boolean);
-                const currentSeason = t.temporada || 'Todo el año';
-                const allSeasons = Array.from(new Set([...baseSeasons, ...existingSeasons, currentSeason].filter(Boolean)));
-                return allSeasons.map(s => `<option value="${esc(s)}" ${currentSeason === s ? 'selected' : ''}>${esc(s)}</option>`).join('') +
-                       '<option value="__add_new__" style="font-weight:bold;color:#2dd4bf;">+ Añadir temporada...</option>';
-              })()}
-            </select>
+          
+          <div style="background: rgba(17,24,39,0.5); border: 1px solid rgba(255,255,255,0.05); padding: 24px; border-radius: 16px;">
+            <h3 style="color: #10b981; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">Descripciones</h3>
+            <div class="ff" style="margin-bottom:12px"><label>Descripción corta (tarjetas)</label><textarea id="t-dc" style="min-height:80px">${esc(t.descripcion_corta||'')}</textarea></div>
+            <div class="ff"><label>Descripción completa (Markdown)</label>${mdToolbar('t-dl')}</div>
           </div>
-          <div class="ff"><label>Duración (días)</label><input type="number" id="t-d" value="${t.duracion_dias||1}" min="1"></div>
-          <div class="ff"><label>Duración (noches)</label><input type="number" id="t-dn" value="${t.duracion_noches||0}" min="0"></div>
         </div>
-        <div class="ff"><label>Destacado en portada</label>
-          <div class="tgl-wrap" style="margin-top:6px"><label class="tgl"><input type="checkbox" id="t-dest" ${t.destacado?'checked':''}><span class="tgl-s"></span></label><span style="font-size:.83rem;color:var(--muted)">${t.destacado?'Sí, aparece en portada':'No aparece en portada'}</span></div>
+
+        <div style="display: flex; flex-direction: column; gap: 24px;">
+          <div style="background: rgba(17,24,39,0.5); border: 1px solid rgba(255,255,255,0.05); padding: 24px; border-radius: 16px;">
+            <h3 style="color: #10b981; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">Estado y Visibilidad</h3>
+            <div class="ff"><label>Estado</label><select id="t-e"><option ${t.estado==='activo'?'selected':''} value="activo">✅ Activo</option><option ${t.estado==='pausado'?'selected':''} value="pausado">⏸️ Pausado</option><option ${t.estado==='seasonal'?'selected':''} value="seasonal">🍂 Seasonal</option><option ${t.estado==='inactivo'?'selected':''} value="inactivo">❌ Inactivo</option></select></div>
+            <div class="ff" style="margin-top:16px"><label>Destacado en portada</label>
+              <div class="tgl-wrap" style="margin-top:8px"><label class="tgl"><input type="checkbox" id="t-dest" ${t.destacado?'checked':''}><span class="tgl-s"></span></label><span style="font-size:.83rem;color:var(--muted)">${t.destacado?'Destacado':'No aparece en portada'}</span></div>
+            </div>
+          </div>
+
+          <div style="background: rgba(17,24,39,0.5); border: 1px solid rgba(255,255,255,0.05); padding: 24px; border-radius: 16px;">
+            <h3 style="color: #10b981; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">Imagen Hero / Principal</h3>
+            ${imgWidget('t-img','Imagen Hero / Principal',t.imagen_hero||'')}
+            <div class="ff" style="margin-top:12px"><label>Texto Alt Imagen</label><input id="t-imgalt" value="${esc(t.imagen_alt||'')}"></div>
+          </div>
         </div>
-      </div>
-        ${imgWidget('t-img','Imagen hero / principal',t.imagen_hero||'')}
-        <div class="ff"><label>Texto alt imagen</label><input id="t-imgalt" value="${esc(t.imagen_alt||'')}"></div>
-      </div>
-      <div class="esec"><div class="esec-h">Descripciones</div>
-        <div class="ff"><label>Descripción corta (tarjetas)</label><textarea id="t-dc" style="min-height:80px">${esc(t.descripcion_corta||'')}</textarea></div>
-        <div class="ff"><label>Descripción completa (Markdown)</label>${mdToolbar('t-dl')}</div>
       </div>
     </div>`);
   document.getElementById('t-dl').value=t.descripcion_larga||''; if(t.imagen_hero) updateImgPreview('t-img','t-img-prev');
@@ -2060,7 +2081,7 @@ window.savePax = async function(sIdx, pIdx, event) {
   if (window.showThinkingOverlay) window.showThinkingOverlay('Guardando pasajero....', 'Sincronizando manifiesto con GitHub y Cloudflare');
   
   try {
-    const res = await ghPut(cFile, JSON.stringify(cData, null, 2), null, `update pax in: ${s.id}`);
+    const res = await ghPut(cFile, JSON.stringify(cData, null, 2), cSha, `update pax in: ${s.id}`);
     cSha = res.sha;
     viewPax(sIdx);
     if(typeof viewDeps === 'function') viewDeps();
@@ -2080,7 +2101,7 @@ window.deletePax = async function(sIdx, pIdx) {
   if (window.showThinkingOverlay) window.showThinkingOverlay('Eliminando pasajero....');
   
   try {
-    const res = await ghPut(cFile, JSON.stringify(cData, null, 2), null, `delete pax in: ${s.id}`);
+    const res = await ghPut(cFile, JSON.stringify(cData, null, 2), cSha, `delete pax in: ${s.id}`);
     cSha = res.sha;
     viewPax(sIdx);
     if(typeof viewDeps === 'function') viewDeps();
@@ -2439,7 +2460,7 @@ async function viewDeps() {
 
   if (modified) {
     try {
-      const updatedData = await ghPut(cFile, JSON.stringify(cData, null, 2), null, 'auto-close: expired departures');
+      const updatedData = await ghPut(cFile, JSON.stringify(cData, null, 2), cSha, 'auto-close: expired departures');
       if (updatedData && updatedData.sha) {
         cSha = updatedData.sha;
       }
@@ -2575,7 +2596,7 @@ window.editDep = async function(idx) {
         <div class="ff"><label>Fecha de regreso</label><input type="date" id="d-r" value="${esc(s.fecha_regreso)}"></div>
       </div>
       <div class="grow3">
-        <div class="ff"><label>Precio por persona ($ USD)</label><input type="number" id="d-p" value="${s.precio}"></div>
+        <div class="ff"><label>Precio ($ USD)</label><input type="number" id="d-p" value="${s.precio}"></div>
         <div class="ff"><label>Plazas totales</label><input type="number" id="d-t" value="${s.plazas_totales}"></div>
         <div class="ff"><label>Mínimo de pasajeros</label><input type="number" id="d-min" value="${s.plazas_minimas||2}"></div>
       </div>

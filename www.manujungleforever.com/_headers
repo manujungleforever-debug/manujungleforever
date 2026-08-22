@@ -15,10 +15,13 @@
   X-Frame-Options: SAMEORIGIN
   Cache-Control: no-cache, no-store, must-revalidate
 
-# ─── Cacheo de archivos de datos JSON del CMS ────────────────────────────────
-# Los JSON deben actualizarse siempre que el cliente edite desde el panel
+# ─── Cacheo de archivos de datos JSON del CMS y API ────────────────────────────
+# Los JSON y respuestas de API deben actualizarse siempre que el cliente edite desde el panel
 /data/*
-  Cache-Control: no-cache, must-revalidate
+  Cache-Control: no-cache, no-store, must-revalidate
+
+/api/*
+  Cache-Control: no-cache, no-store, must-revalidate
 
 # ─── Control de caché para HTML ────────────────────────────────────────────────
 # Los archivos HTML se deben validar siempre para obtener versión actualizada
@@ -36,4 +39,4 @@
   Cache-Control: public, max-age=86400
 /wp-content/*
   Cache-Control: public, max-age=31536000, immutable
-<!-- Cloudflare cache purge 2026-08-13 02:21:13Z -->
+# Cloudflare cache purge 2026-08-13 02:21:13Z

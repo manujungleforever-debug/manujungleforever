@@ -725,11 +725,17 @@ document.addEventListener("DOMContentLoaded", function() {
         }
         if (hs) hs.textContent = aData.subtitulo_pagina;
       }
+      function fixImgPath(p) {
+        if (!p) return '';
+        if (p.startsWith('http://') || p.startsWith('https://') || p.startsWith('data:')) return p;
+        if (p.startsWith('/')) return p;
+        return '/' + p;
+      }
+
       if (aData.hero_image && !aData.hero_image.includes('placeholder.jpg')) {
         const hero = document.querySelector('.in-hero');
         if (hero) {
-          const cleanImg = aData.hero_image.startsWith('/') ? '..' + aData.hero_image : (aData.hero_image.startsWith('http') ? aData.hero_image : '../' + aData.hero_image);
-          hero.style.backgroundImage = `url('${cleanImg}')`;
+          hero.style.backgroundImage = `url('${fixImgPath(aData.hero_image)}')`;
         }
       }
       const hist = aData.historia || {};
@@ -750,8 +756,7 @@ document.addEventListener("DOMContentLoaded", function() {
       if (hist.imagen && !hist.imagen.includes('placeholder.jpg')) {
         const histImg = document.getElementById('dyn-about-history-img') || document.querySelector('.intro-img-col img');
         if (histImg) {
-          const cleanImg = hist.imagen.startsWith('/') ? '..' + hist.imagen : (hist.imagen.startsWith('http') ? hist.imagen : '../' + hist.imagen);
-          histImg.src = cleanImg;
+          histImg.src = fixImgPath(hist.imagen);
           if (hist.imagen_alt) histImg.alt = hist.imagen_alt;
         }
         const histCap = document.getElementById('dyn-about-history-caption');

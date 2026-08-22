@@ -490,9 +490,15 @@ document.addEventListener("DOMContentLoaded", function() {
         const hs = document.querySelector('.in-hero .hs');
         if (hs) hs.textContent = cData.subtitulo_pagina;
       }
+      function fixImgPath(p) {
+        if (!p) return '';
+        if (p.startsWith('http://') || p.startsWith('https://') || p.startsWith('data:')) return p;
+        if (p.startsWith('/')) return p;
+        return '/' + p;
+      }
       if (cData.hero_image && !cData.hero_image.includes('placeholder.jpg')) {
         const hero = document.querySelector('.in-hero');
-        if (hero) hero.style.backgroundImage = `url('../${cData.hero_image}')`;
+        if (hero) hero.style.backgroundImage = `url('${fixImgPath(cData.hero_image)}')`;
       }
       const cp = cData.contacto_principal || {};
       const t1 = cp.telefono_1 || '';

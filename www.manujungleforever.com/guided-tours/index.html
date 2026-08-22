@@ -361,7 +361,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <script>
   document.addEventListener('DOMContentLoaded', async () => {
     try {
-      const res = await fetch('../data/tours.json');
+      const res = await fetch('../data/tours.json?v=' + Date.now());
       const data = await res.json();
       const tours = data.tours;
       
@@ -429,10 +429,17 @@ document.addEventListener("DOMContentLoaded", function() {
         bookBtn = `<button class="tc-btn tc-btn-ghost" disabled style="opacity: 0.5; cursor: not-allowed;"><i class="fas fa-times-circle"></i> No disponible</button>`;
       }
 
+      function fixImgPath(p) {
+        if (!p) return '../assets/img/hero.png';
+        if (p.startsWith('http://') || p.startsWith('https://') || p.startsWith('data:')) return p;
+        if (p.startsWith('/')) return p;
+        return '/' + p;
+      }
+
       html += `
       <div class="tour-card r v" data-cat="${t.categoria}" style="${(t.estado==='pausado'||t.estado==='inactivo')?'opacity:0.85;':''}">
         <div class="tc-img">
-          <img src="${t.imagen_hero ? '../' + t.imagen_hero : '../assets/img/hero.png'}" alt="${t.nombre}" loading="lazy" onerror="this.src='../assets/img/hero.png'">
+          <img src="${fixImgPath(t.imagen_hero)}" alt="${t.nombre}" loading="lazy" onerror="this.src='../assets/img/hero.png'">
           <div class="tc-badges">
             <span class="badge ${meta.class}">${meta.name}</span>
             <span class="badge badge-days">${t.duracion_dias} Days</span>

@@ -268,7 +268,14 @@
             let currentPage = parseInt(urlParams.get('page')) || 1;
             const POSTS_PER_PAGE = 8; // 8 posts for 2 columns looks nice
             
-            let publishedPosts = data.posts.filter(p => p.publicado);
+            function fixImgPath(p) {
+                if (!p) return '../assets/img/hero.png';
+                if (p.startsWith('http://') || p.startsWith('https://') || p.startsWith('data:')) return p;
+                if (p.startsWith('/')) return p;
+                return '/' + p;
+            }
+
+            let publishedPosts = (data.posts || []).filter(p => p.publicado !== false);
             const totalPages = Math.ceil(publishedPosts.length / POSTS_PER_PAGE);
             
             if (currentPage < 1) currentPage = 1;
@@ -290,8 +297,8 @@
                 html += `
                 <a href="../${p.url}" class="ref-card" aria-label="${title}">
                     <div class="ref-img-wrap">
-                        <img src="..${img}" alt="${imgAlt}" loading="lazy" class="ref-img">
-                        <div class="ref-badge"><i class="fas fa-lock" style="font-size:0.7rem"></i> ${cat}</div>
+                        <img src="${fixImgPath(img)}" alt="${imgAlt}" loading="lazy" class="ref-img" onerror="this.src='../assets/img/hero.png'">
+                        <div class="ref-badge"><i class="fas fa-tag" style="font-size:0.7rem"></i> ${cat}</div>
                     </div>
                     <div class="ref-body">
                         <div class="ref-date"><i class="far fa-calendar-alt"></i> ${formattedDate}</div>

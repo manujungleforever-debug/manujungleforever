@@ -6,6 +6,8 @@
     "dev": "wrangler pages dev www.manujungleforever.com --d1=DB=manujungleforever-db --r2=MEDIA_BUCKET=mjf-media",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
+    "db:migrate:local": "wrangler d1 execute manujungleforever-db --local --file=drizzle/migrations/0000_nebulous_deathbird.sql && wrangler d1 execute manujungleforever-db --local --file=drizzle/migrations/0001_create_all_tables.sql",
+    "db:migrate:remote": "wrangler d1 execute manujungleforever-db --remote --file=drizzle/migrations/0000_nebulous_deathbird.sql && wrangler d1 execute manujungleforever-db --remote --file=drizzle/migrations/0001_create_all_tables.sql",
     "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
