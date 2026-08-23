@@ -792,15 +792,12 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   try {
-    let [hRes, gRes] = await Promise.all([
-      fetch('/api/content/home').catch(() => null),
-      fetch('/api/content/global').catch(() => null)
+    const [hRes, gRes] = await Promise.all([
+      fetch('data/home.json?nc=' + Date.now()).catch(() => null),
+      fetch('data/global.json?nc=' + Date.now()).catch(() => null)
     ]);
-    if (!hRes || !hRes.ok) hRes = await fetch('data/home.json?v=' + Date.now()).catch(() => null);
-    if (!gRes || !gRes.ok) gRes = await fetch('data/global.json?v=' + Date.now()).catch(() => null);
     if (hRes && hRes.ok) {
-      const resJson = await hRes.json();
-      const hData = resJson.data || resJson;
+      const hData = await hRes.json();
       // Hero
       const hero = hData.hero || {};
       if (hero.location_tag) {

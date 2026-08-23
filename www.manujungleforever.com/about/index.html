@@ -720,16 +720,13 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   try {
-    let [aRes, gRes] = await Promise.all([
-      fetch('/api/content/about').catch(() => null),
-      fetch('/api/content/global').catch(() => null)
+    const [aRes, gRes] = await Promise.all([
+      fetch('../data/about.json?nc=' + Date.now()).catch(() => null),
+      fetch('../data/global.json?nc=' + Date.now()).catch(() => null)
     ]);
-    if (!aRes || !aRes.ok) aRes = await fetch('../data/about.json?v=' + Date.now()).catch(() => null);
-    if (!gRes || !gRes.ok) gRes = await fetch('../data/global.json?v=' + Date.now()).catch(() => null);
 
     if (aRes && aRes.ok) {
-      const resJson = await aRes.json();
-      const aData = resJson.data || resJson;
+      const aData = await aRes.json();
 
       if (aData.titulo_pagina) {
         const h1 = document.querySelector('.in-hero .h1');
