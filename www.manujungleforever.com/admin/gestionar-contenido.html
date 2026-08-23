@@ -1589,8 +1589,15 @@ async function viewHome() {
           <div style="background:rgba(3,18,14,0.6);border:1px solid rgba(45,212,191,0.15);border-radius:10px;padding:10px;">
             <p style="font-size:0.75rem;font-weight:700;color:var(--teal);margin-bottom:6px;">PUNTUACIÓN / RANKING GENERAL</p>
             <div class="grow2">
-              <div class="ff"><label>Calificación (Rating)</label><input id="st-v-3" value="${esc(d.stats?.[3]?.value ?? '4.9★')}" placeholder="4.9★"></div>
-              <div class="ff"><label>Etiqueta</label><input id="st-l-3" value="${esc(d.stats?.[3]?.label ?? 'Average Rating')}" placeholder="Average Rating"></div>
+              <div class="ff">
+                <label>Calificación (Rating)</label>
+                <input id="st-v-3" value="${esc(String(d.stats?.[3]?.value ?? '4.9').replace(/[★*]/g, '').trim())}" placeholder="4.9">
+                <span class="hint">Solo el número (ej: <code>4.9</code>). El icono de estrella es fijo.</span>
+              </div>
+              <div class="ff">
+                <label>Etiqueta</label>
+                <input id="st-l-3" value="${esc(d.stats?.[3]?.label ?? 'Average Rating')}" placeholder="Average Rating">
+              </div>
             </div>
           </div>
         </div>
@@ -1689,11 +1696,12 @@ async function viewHome() {
     dd.hero={...d.hero,title:v('h-t'),title_emphasis:v('h-e'),subtitle:v('h-s'),location_tag:v('h-l'),video_id:v('h-v')};
     
     // Stats & Rankings
+    const cleanRating = String(v('st-v-3') || '4.9').replace(/[★*]/g, '').trim();
     dd.stats = [
-      { value: isNaN(Number(v('st-v-0'))) ? (v('st-v-0') || 500) : Number(v('st-v-0')), suffix: v('st-s-0'), label: v('st-l-0') || 'Travelers Guided', type: 'counter' },
-      { value: isNaN(Number(v('st-v-1'))) ? (v('st-v-1') || 10) : Number(v('st-v-1')), suffix: v('st-s-1'), label: v('st-l-1') || 'Years Experience', type: 'counter' },
-      { value: isNaN(Number(v('st-v-2'))) ? (v('st-v-2') || 12) : Number(v('st-v-2')), suffix: v('st-s-2'), label: v('st-l-2') || 'Tour Options', type: 'counter' },
-      { value: v('st-v-3') || '4.9★', label: v('st-l-3') || 'Average Rating', type: 'static' }
+      { value: isNaN(Number(v('st-v-0'))) ? (v('st-v-0') || 500) : Number(v('st-v-0')), suffix: v('st-s-0') !== undefined ? v('st-s-0') : '+', label: v('st-l-0') || 'Travelers Guided', type: 'counter' },
+      { value: isNaN(Number(v('st-v-1'))) ? (v('st-v-1') || 10) : Number(v('st-v-1')), suffix: v('st-s-1') !== undefined ? v('st-s-1') : '+', label: v('st-l-1') || 'Years Experience', type: 'counter' },
+      { value: isNaN(Number(v('st-v-2'))) ? (v('st-v-2') || 12) : Number(v('st-v-2')), suffix: v('st-s-2') !== undefined ? v('st-s-2') : '', label: v('st-l-2') || 'Tour Options', type: 'counter' },
+      { value: cleanRating || '4.9', label: v('st-l-3') || 'Average Rating', type: 'static' }
     ];
 
     // Guided Tours Header & Categories
