@@ -289,26 +289,10 @@ async function ghPut(path, content, sha, msg) {
     return { ok: true, sha: 'd1:testimonials:' + Date.now() };
   }
 
-  // ── departures — full replace (save entire salidas array) ──
+  // ── departures — batch upsert ──
   if (ds === 'departures') {
     const list = parsed?.salidas || (Array.isArray(parsed) ? parsed : [parsed]);
-    // Upsert each departure
-    for (const dep of list) {
-      if (!dep || !dep.id) continue;
-      // Try PUT first, if 404/405 do POST
-      try {
-        const r = await fetch('/api/salidas/' + encodeURIComponent(dep.id), {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(dep)
-        });
-        if (r.status === 404 || r.status === 405) {
-          await _d1('POST', '/api/salidas', dep);
-        }
-      } catch {
-        await _d1('POST', '/api/salidas', dep);
-      }
-    }
+    await _d1('PUT', '/api/salidas', list);
     return { ok: true, sha: 'd1:salidas:' + Date.now() };
   }
 

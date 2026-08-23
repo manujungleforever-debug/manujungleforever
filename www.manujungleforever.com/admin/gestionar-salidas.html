@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -1706,17 +1706,24 @@ window.filterDeps = function() {
 
 window.adjPlaza = async function(idx, diff) {
   const s = cData.salidas[idx];
-  const newVal = (s.plazas_disponibles||0) + diff;
-  if (newVal < 0 || newVal > (s.plazas_totales||0)) return;
+  const newVal = (s.plazas_disponibles !== undefined ? s.plazas_disponibles : s.cupos_disponibles ?? s.plazas_totales ?? 8) + diff;
+  if (newVal < 0 || newVal > (s.plazas_totales||8)) return;
   s.plazas_disponibles = newVal;
+  s.cupos_disponibles = newVal;
   if (newVal === 0) s.estado = 'completo';
   else if (newVal <= 2) s.estado = 'limitado';
   else s.estado = 'disponible';
   
-  if (window.showThinkingOverlay) window.showThinkingOverlay('Actualizando plazas....');
+  if (window.showThinkingOverlay) window.showThinkingOverlay('Actualizando plazas...');
   try {
-    const res = await ghPut(cFile, JSON.stringify(cData, null, 2), cSha, `adj plaza: ${s.id}`);
-    cSha = res.sha;
+    const r = await fetch('/api/salidas/' + encodeURIComponent(s.id), {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(s)
+    });
+    if (!r.ok) {
+      await ghPut(cFile, JSON.stringify(cData, null, 2), cSha, `adj plaza: ${s.id}`);
+    }
     await viewDeps();
   } catch(e) {
     console.error(e);
