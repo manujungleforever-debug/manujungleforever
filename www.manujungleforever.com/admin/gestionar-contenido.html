@@ -1558,6 +1558,44 @@ async function viewHome() {
         </div>
       </div>
 
+      <!-- 1.1 PUNTUACIONES Y ESTADÍSTICAS (STATS & RANKING DEL SITIO) -->
+      <div class="esec"><div class="esec-h">Puntuaciones y Estadísticas (Stats & Rankings)</div>
+        <p class="hint" style="margin-bottom:12px;">Métricas mostradas en la barra superior bajo el Hero</p>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="background:rgba(3,18,14,0.6);border:1px solid rgba(45,212,191,0.15);border-radius:10px;padding:10px;">
+            <p style="font-size:0.75rem;font-weight:700;color:var(--teal);margin-bottom:6px;">ESTADÍSTICA 1 (VIAJEROS)</p>
+            <div class="grow3">
+              <div class="ff"><label>Valor</label><input id="st-v-0" value="${esc(d.stats?.[0]?.value ?? 500)}" placeholder="500"></div>
+              <div class="ff"><label>Sufijo</label><input id="st-s-0" value="${esc(d.stats?.[0]?.suffix ?? '+')}" placeholder="+"></div>
+              <div class="ff"><label>Etiqueta</label><input id="st-l-0" value="${esc(d.stats?.[0]?.label ?? 'Travelers Guided')}" placeholder="Travelers Guided"></div>
+            </div>
+          </div>
+          <div style="background:rgba(3,18,14,0.6);border:1px solid rgba(45,212,191,0.15);border-radius:10px;padding:10px;">
+            <p style="font-size:0.75rem;font-weight:700;color:var(--teal);margin-bottom:6px;">ESTADÍSTICA 2 (AÑOS)</p>
+            <div class="grow3">
+              <div class="ff"><label>Valor</label><input id="st-v-1" value="${esc(d.stats?.[1]?.value ?? 10)}" placeholder="10"></div>
+              <div class="ff"><label>Sufijo</label><input id="st-s-1" value="${esc(d.stats?.[1]?.suffix ?? '+')}" placeholder="+"></div>
+              <div class="ff"><label>Etiqueta</label><input id="st-l-1" value="${esc(d.stats?.[1]?.label ?? 'Years Experience')}" placeholder="Years Experience"></div>
+            </div>
+          </div>
+          <div style="background:rgba(3,18,14,0.6);border:1px solid rgba(45,212,191,0.15);border-radius:10px;padding:10px;">
+            <p style="font-size:0.75rem;font-weight:700;color:var(--teal);margin-bottom:6px;">ESTADÍSTICA 3 (OPCIONES DE TOUR)</p>
+            <div class="grow3">
+              <div class="ff"><label>Valor</label><input id="st-v-2" value="${esc(d.stats?.[2]?.value ?? 12)}" placeholder="12"></div>
+              <div class="ff"><label>Sufijo</label><input id="st-s-2" value="${esc(d.stats?.[2]?.suffix ?? '')}" placeholder=""></div>
+              <div class="ff"><label>Etiqueta</label><input id="st-l-2" value="${esc(d.stats?.[2]?.label ?? 'Tour Options')}" placeholder="Tour Options"></div>
+            </div>
+          </div>
+          <div style="background:rgba(3,18,14,0.6);border:1px solid rgba(45,212,191,0.15);border-radius:10px;padding:10px;">
+            <p style="font-size:0.75rem;font-weight:700;color:var(--teal);margin-bottom:6px;">PUNTUACIÓN / RANKING GENERAL</p>
+            <div class="grow2">
+              <div class="ff"><label>Calificación (Rating)</label><input id="st-v-3" value="${esc(d.stats?.[3]?.value ?? '4.9★')}" placeholder="4.9★"></div>
+              <div class="ff"><label>Etiqueta</label><input id="st-l-3" value="${esc(d.stats?.[3]?.label ?? 'Average Rating')}" placeholder="Average Rating"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- 2. GUIDED TOURS (CABECERA Y CATEGORÍAS) -->
       <div class="esec full-width"><div class="esec-h">Guided Tours (Cabecera y Categorías Destacadas)</div>
         <div class="grow2" style="margin-bottom:12px;">
@@ -1650,6 +1688,14 @@ async function viewHome() {
     const dd={...cData};
     dd.hero={...d.hero,title:v('h-t'),title_emphasis:v('h-e'),subtitle:v('h-s'),location_tag:v('h-l'),video_id:v('h-v')};
     
+    // Stats & Rankings
+    dd.stats = [
+      { value: isNaN(Number(v('st-v-0'))) ? (v('st-v-0') || 500) : Number(v('st-v-0')), suffix: v('st-s-0'), label: v('st-l-0') || 'Travelers Guided', type: 'counter' },
+      { value: isNaN(Number(v('st-v-1'))) ? (v('st-v-1') || 10) : Number(v('st-v-1')), suffix: v('st-s-1'), label: v('st-l-1') || 'Years Experience', type: 'counter' },
+      { value: isNaN(Number(v('st-v-2'))) ? (v('st-v-2') || 12) : Number(v('st-v-2')), suffix: v('st-s-2'), label: v('st-l-2') || 'Tour Options', type: 'counter' },
+      { value: v('st-v-3') || '4.9★', label: v('st-l-3') || 'Average Rating', type: 'static' }
+    ];
+
     // Guided Tours Header & Categories
     dd.tours_header = { title: v('h-tr-t'), subtitle: v('h-tr-s'), description: v('h-tr-d') };
     dd.guided_tours = {

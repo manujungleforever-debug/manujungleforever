@@ -851,6 +851,30 @@ document.addEventListener("DOMContentLoaded", function() {
           }
         }
       }
+
+      // Stats Bar & Rankings
+      const statsList = hData.stats || [];
+      if (Array.isArray(statsList) && statsList.length > 0) {
+        const statEls = document.querySelectorAll('.st .si');
+        statsList.forEach((st, idx) => {
+          const el = statEls[idx];
+          if (!el) return;
+          const sn = el.querySelector('.sn');
+          const sl = el.querySelector('.sl');
+          if (sl && st.label) sl.textContent = st.label;
+          if (sn) {
+            if (st.type === 'static' || (typeof st.value === 'string' && st.value.includes('★'))) {
+              sn.removeAttribute('data-target');
+              sn.textContent = String(st.value);
+            } else {
+              const numVal = parseInt(st.value) || 0;
+              sn.setAttribute('data-target', numVal);
+              sn.textContent = numVal + (st.suffix || '');
+            }
+          }
+        });
+      }
+
       // Tours header & categories
       const th = hData.tours_header || hData.guided_tours || {};
       if (th.title) {
@@ -1054,6 +1078,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
       // Pillars section (#why-us)
       const pil = hData.pillars_section || {};
+      if (pil.eyebrow) {
+        const pilEy = document.querySelector('#why-us .ey');
+        if (pilEy) pilEy.textContent = pil.eyebrow;
+      }
       if (pil.title) {
         const pilTitle = document.querySelector('#why-us .h2');
         if (pilTitle) pilTitle.textContent = pil.title;
@@ -1062,7 +1090,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const pilContainer = document.querySelector('#why-us .pg');
         if (pilContainer) {
           pilContainer.innerHTML = pil.pillars.map(p => `
-            <div class="pl r">
+            <div class="pl r v">
               <div class="pi"><i class="${p.icon || 'fas fa-leaf'}"></i></div>
               <h3>${p.title || ''}</h3>
               <p>${p.text || ''}</p>
