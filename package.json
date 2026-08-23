@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "wrangler pages dev www.manujungleforever.com --d1=DB=c0765748-5818-44ee-ab40-c43607a106d6 --r2=MEDIA_BUCKET=mjf-media --persist-to=.wrangler/state/v3",
+    "deploy": "wrangler pages deploy www.manujungleforever.com --project-name=manujungleforever --branch=main",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:migrate:local": "wrangler d1 execute manujungleforever-db --local --file=drizzle/migrations/0000_nebulous_deathbird.sql && wrangler d1 execute manujungleforever-db --local --file=drizzle/migrations/0001_abnormal_living_lightning.sql && wrangler d1 execute manujungleforever-db --local --file=drizzle/migrations/seed_data.sql",
