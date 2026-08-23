@@ -195,7 +195,7 @@
   </div>
   <div class="tr-main r">
     <div class="tc tc-xl">
-      <img src="wp-content/uploads/2022/10/reserved-zone.jpg" alt="Manu National Park wildlife tour from Cusco" loading="lazy" width="900" height="600">
+      <img src="/media/1787018009678-willife.jpeg" alt="Manu National Park wildlife tour from Cusco" loading="lazy" width="900" height="600">
       <div class="tov">
         <span class="tbg ton"><i class="fas fa-circle" style="font-size:.5rem"></i> Available Now</span>
         <h2 class="tt">Jungle Wildlife Tour</h2>
@@ -206,18 +206,18 @@
     </div>
     <div class="tr-right-col">
       <div class="tc tc-md">
-        <img src="wp-content/uploads/2022/10/Hero-wildlife-cuest-3-dyas-machuwasi.jpg" alt="Rainforest Road Trip from Cusco to Manu" loading="lazy" width="600" height="290">
+        <img src="/media/1787019022145-mohamed-hassan-sunset-3754082.jpg" alt="Rainforest Road Trip from Cusco to Manu" loading="lazy" width="600" height="290">
         <div class="tov">
-          <span class="tbg tof"><i class="fas fa-pause-circle"></i> Temporarily Unavailable</span>
+          <span class="tbg ton"><i class="fas fa-circle" style="font-size:.5rem"></i> Available Now</span>
           <h2 class="tt">Rainforest Road Trip</h2>
           <div class="tm"><span><i class="far fa-calendar-alt"></i> 4 or 5 Days</span><span><i class="fas fa-users"></i> 1–3 Passengers</span><span><i class="fas fa-truck"></i> Private 4×4</span></div>
           <a href="guided-tours/index.html#rainforest" class="tbtn">View Details <i class="fas fa-arrow-right"></i></a>
         </div>
       </div>
       <div class="tc tc-md">
-        <img src="wp-content/uploads/2022/10/Hero-Road-trip-4-days.jpg" alt="Manu Amazon Expedition from Cusco" loading="lazy" width="600" height="290">
+        <img src="/media/1787015599134-gayulo-animals-3524518.jpg" alt="Manu Amazon Expedition from Cusco" loading="lazy" width="600" height="290">
         <div class="tov">
-          <span class="tbg tof"><i class="fas fa-pause-circle"></i> Temporarily Unavailable</span>
+          <span class="tbg ton"><i class="fas fa-circle" style="font-size:.5rem"></i> Available Now</span>
           <h2 class="tt">Manu Expedition</h2>
           <div class="tm"><span><i class="far fa-calendar-alt"></i> 5 or 6 Days</span><span><i class="fas fa-users"></i> 2–8 Passengers</span><span><i class="fas fa-hiking"></i> Van, Boat &amp; Hiking</span></div>
           <a href="guided-tours/index.html#amazon" class="tbtn">View Details <i class="fas fa-arrow-right"></i></a>
@@ -784,13 +784,23 @@ document.addEventListener("DOMContentLoaded", function() {
 <script>
 // Dynamic Home & Global Data Hydration
 (async function() {
+  function fixImgPath(p) {
+    if (!p) return '';
+    if (p.startsWith('http://') || p.startsWith('https://') || p.startsWith('data:')) return p;
+    if (p.startsWith('/')) return p;
+    return '/' + p;
+  }
+
   try {
-    const [hRes, gRes] = await Promise.all([
-      fetch('data/home.json?v=' + Date.now()).catch(() => null),
-      fetch('data/global.json?v=' + Date.now()).catch(() => null)
+    let [hRes, gRes] = await Promise.all([
+      fetch('/api/content/home').catch(() => null),
+      fetch('/api/content/global').catch(() => null)
     ]);
+    if (!hRes || !hRes.ok) hRes = await fetch('data/home.json?v=' + Date.now()).catch(() => null);
+    if (!gRes || !gRes.ok) gRes = await fetch('data/global.json?v=' + Date.now()).catch(() => null);
     if (hRes && hRes.ok) {
-      const hData = await hRes.json();
+      const resJson = await hRes.json();
+      const hData = resJson.data || resJson;
       // Hero
       const hero = hData.hero || {};
       if (hero.location_tag) {
