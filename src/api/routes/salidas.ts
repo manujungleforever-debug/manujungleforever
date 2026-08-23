@@ -22,8 +22,9 @@ salidasRoutes.get('/', async (c) => {
   const result = departuresList.map(dep => {
     const paxs = paxMap[dep.id] || [];
     const cuposOcupados = paxs.length;
-    const cuposDisponibles = (dep.cuposDisponibles !== null && dep.cuposDisponibles !== undefined)
-      ? dep.cuposDisponibles
+    const rawDisp = (dep as any).cuposDisponibles ?? (dep as any).cupos_disponibles;
+    const cuposDisponibles = (rawDisp !== null && rawDisp !== undefined)
+      ? Number(rawDisp)
       : Math.max(0, dep.cuposTotales - cuposOcupados);
 
     if (isPublic) {
