@@ -31,7 +31,7 @@
       "type": "counter"
     },
     {
-      "value": "4.5",
+      "value": "4.6",
       "label": "Average Rating",
       "type": "static"
     }
