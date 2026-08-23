@@ -1,5 +1,5 @@
 import { Hono } from 'hono';
-import { eq, desc } from 'drizzle-orm';
+import { eq, desc, or } from 'drizzle-orm';
 import { getDb, schema, Bindings } from '../../db';
 
 export const salidasRoutes = new Hono<{ Bindings: Bindings }>();
@@ -212,7 +212,14 @@ salidasRoutes.put('/:id', async (c) => {
   if (body.notas !== undefined) updates.notas = body.notas || null;
   if (body.estado) updates.estado = body.estado;
 
-  await db.update(schema.departures).set(updates).where(eq(schema.departures.id, id));
+  // Case-insensitive ID update
+  await db.update(schema.departures)
+    .set(updates)
+    .where(or(
+      eq(schema.departures.id, id),
+      eq(schema.departures.id, id.toLowerCase()),
+      eq(schema.departures.id, id.toUpperCase())
+    ));
 
   return c.json({ ok: true });
 });
@@ -222,7 +229,11 @@ salidasRoutes.delete('/:id', async (c) => {
   const db = getDb(c.env.DB);
   const id = c.req.param('id');
 
-  await db.delete(schema.departures).where(eq(schema.departures.id, id));
+  await db.delete(schema.departures).where(or(
+    eq(schema.departures.id, id),
+    eq(schema.departures.id, id.toLowerCase()),
+    eq(schema.departures.id, id.toUpperCase())
+  ));
   return c.json({ ok: true });
 });
 
