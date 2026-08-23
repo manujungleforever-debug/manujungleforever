@@ -617,8 +617,8 @@ window.addEventListener('error', function(e) {
 });
 </script>
 <script>
-const API = '/api/cms';
-const MEDIA_API = '/api/media';
+var API = window.API || '/api/cms';
+var MEDIA_API = window.MEDIA_API || '/api/media';
 let token = sessionStorage.getItem('cms_token');
 let cUser = sessionStorage.getItem('cms_user') || '';
 let cSection = 'departures';

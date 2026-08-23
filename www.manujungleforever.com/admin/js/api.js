@@ -1,6 +1,8 @@
 // ── Universal D1/Hono API Client for Manu Jungle Forever Admin ──
-const API = '/api/cms';
-const MEDIA_API = '/api/media';
+window.API = window.API || '/api/cms';
+window.MEDIA_API = window.MEDIA_API || '/api/media';
+var API = window.API;
+var MEDIA_API = window.MEDIA_API;
 
 function getAuthHeader() {
   const token = sessionStorage.getItem('cms_token');
