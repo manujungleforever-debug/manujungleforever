@@ -695,19 +695,28 @@
   const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('v');obs.unobserve(e.target);}}),{threshold:.1});
   document.querySelectorAll('.r,.rl,.rr').forEach(el=>obs.observe(el));
   // Animated counters
-  const cobs=new IntersectionObserver(es=>es.forEach(e=>{
-    if(!e.isIntersecting)return;
-    const el=e.target,target=parseInt(el.dataset.target),sfx=el.dataset.suffix !== undefined ? el.dataset.suffix : '+';
-    if(isNaN(target))return;
-    let n=0;const step=Math.max(1, Math.ceil(target/50));
-    const t=setInterval(()=>{
-      n=Math.min(n+step,target);
-      el.textContent=n+sfx;
-      if(n>=target)clearInterval(t);
-    },40);
-    cobs.unobserve(el);
-  }),{threshold:.5});
-  document.querySelectorAll('[data-target]').forEach(el=>cobs.observe(el));
+  window.animateCounter = function(el) {
+    if (el._counterTimer) clearInterval(el._counterTimer);
+    const target = parseInt(el.dataset.target);
+    const sfx = el.dataset.suffix !== undefined ? el.dataset.suffix : '+';
+    if (isNaN(target)) return;
+    let n = 0;
+    const step = Math.max(1, Math.ceil(target / 40));
+    el._counterTimer = setInterval(() => {
+      n = Math.min(n + step, target);
+      el.textContent = n + sfx;
+      if (n >= target) {
+        clearInterval(el._counterTimer);
+        el._counterTimer = null;
+      }
+    }, 30);
+  };
+  const cobs = new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting) return;
+    window.animateCounter(e.target);
+    cobs.unobserve(e.target);
+  }), { threshold: .3 });
+  document.querySelectorAll('[data-target]').forEach(el => cobs.observe(el));
 })();
 
 // Modal
@@ -884,6 +893,10 @@ document.addEventListener("DOMContentLoaded", function() {
           const sl = el.querySelector('.sl');
           if (sl && st.label) sl.textContent = st.label;
           if (sn) {
+            if (sn._counterTimer) {
+              clearInterval(sn._counterTimer);
+              sn._counterTimer = null;
+            }
             if (idx === 3 || st.type === 'static') {
               sn.removeAttribute('data-target');
               const cleanRating = String(st.value || '4.9').replace(/[★*]/g, '').trim();
@@ -893,7 +906,11 @@ document.addEventListener("DOMContentLoaded", function() {
               const sfx = st.suffix !== undefined ? st.suffix : '+';
               sn.setAttribute('data-target', numVal);
               sn.setAttribute('data-suffix', sfx);
-              sn.textContent = numVal + sfx;
+              if (window.animateCounter) {
+                window.animateCounter(sn);
+              } else {
+                sn.textContent = numVal + sfx;
+              }
             }
           }
         });
