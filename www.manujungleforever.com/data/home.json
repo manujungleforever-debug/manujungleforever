@@ -13,7 +13,7 @@
   },
   "stats": [
     {
-      "value": 500,
+      "value": 1000,
       "suffix": "+",
       "label": "Travelers Guided",
       "type": "counter"
