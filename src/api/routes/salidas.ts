@@ -22,7 +22,9 @@ salidasRoutes.get('/', async (c) => {
   const result = departuresList.map(dep => {
     const paxs = paxMap[dep.id] || [];
     const cuposOcupados = paxs.length;
-    const cuposDisponibles = Math.max(0, dep.cuposTotales - cuposOcupados);
+    const cuposDisponibles = (dep.cuposDisponibles !== null && dep.cuposDisponibles !== undefined)
+      ? dep.cuposDisponibles
+      : Math.max(0, dep.cuposTotales - cuposOcupados);
 
     if (isPublic) {
       return {
@@ -54,6 +56,7 @@ salidasRoutes.get('/', async (c) => {
       precio: dep.precio,
       moneda: dep.moneda,
       guia_asignado: dep.guiaAsignado || '',
+      notas: dep.notas || '',
       estado: dep.estado,
       pasajeros: paxs.map(p => ({
         id: p.id,
@@ -136,10 +139,14 @@ salidasRoutes.put('/:id', async (c) => {
     updates.fechaRetorno = body.fecha_retorno || body.fecha_regreso || null;
   }
   if (body.cupos_totales !== undefined || body.plazas_totales !== undefined) {
-    updates.cuposTotales = Number(body.cupos_totales || body.plazas_totales);
+    updates.cuposTotales = Number(body.cupos_totales ?? body.plazas_totales);
+  }
+  if (body.cupos_disponibles !== undefined || body.plazas_disponibles !== undefined) {
+    updates.cuposDisponibles = Number(body.cupos_disponibles ?? body.plazas_disponibles);
   }
   if (body.precio !== undefined) updates.precio = Number(body.precio);
   if (body.guia_asignado !== undefined) updates.guiaAsignado = body.guia_asignado || null;
+  if (body.notas !== undefined) updates.notas = body.notas || null;
   if (body.estado) updates.estado = body.estado;
 
   await db.update(schema.departures).set(updates).where(eq(schema.departures.id, id));

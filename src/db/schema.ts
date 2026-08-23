@@ -45,10 +45,12 @@ export const departures = sqliteTable('departures', {
   fechaSalida: text('fecha_salida').notNull(),
   fechaRetorno: text('fecha_retorno'),
   cuposTotales: integer('cupos_totales').default(8).notNull(),
+  cuposDisponibles: integer('cupos_disponibles'),
   precio: real('precio').notNull(),
   moneda: text('moneda').default('USD').notNull(),
   guiaAsignado: text('guia_asignado'),
-  estado: text('estado', { enum: ['programada', 'confirmada', 'completada', 'cancelada'] }).default('confirmada').notNull(),
+  notas: text('notas'),
+  estado: text('estado', { enum: ['programada', 'confirmada', 'completada', 'cancelada', 'disponible', 'limitado', 'completo', 'cerrado'] }).default('confirmada').notNull(),
   createdAt: text('created_at').notNull(),
   updatedAt: text('updated_at')
 });

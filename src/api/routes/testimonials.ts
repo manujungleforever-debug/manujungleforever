@@ -49,10 +49,10 @@ testimonialsRoutes.post('/', async (c) => {
 
   for (const item of list) {
     if (!item.nombre && !item.comentario && !item.texto) continue;
-    const id = item.id || 'test_' + Date.now() + '_' + Math.random().toString(36).substring(2, 6);
+    const id = String(item.id || ('test_' + Date.now() + '_' + Math.random().toString(36).substring(2, 6)));
     const estado = item.estado || (item.activo === false ? 'oculto' : 'publicado');
-    const comentario = item.comentario || item.texto || '';
-    const tourNombre = item.tour_nombre || item.tour || null;
+    const comentario = item.texto !== undefined ? item.texto : (item.comentario || '');
+    const tourNombre = item.tour || item.tour_nombre || null;
     const pais = item.pais || null;
     const rating = typeof item.rating === 'number' ? item.rating : 5;
     const foto = item.foto || null;
