@@ -23,7 +23,25 @@ contentRoutes.get('/:key', async (c) => {
   let parsed;
   try { parsed = JSON.parse(row.value); } catch { parsed = row.value; }
 
-  return c.json({ key, data: parsed, ...(typeof parsed === 'object' && parsed !== null ? parsed : {}), updatedAt: row.updatedAt });
+  // If parsed has an accidental nested 'data' wrapper from previous saves, unwrap it
+  if (parsed && typeof parsed === 'object' && parsed.data && typeof parsed.data === 'object' && !Array.isArray(parsed.data)) {
+    const { data: nestedData, key: _k, updatedAt: _u, ...rest } = parsed;
+    parsed = { ...nestedData, ...rest };
+  }
+
+  // Remove top-level meta keys from payload so it's clean
+  if (parsed && typeof parsed === 'object') {
+    delete parsed.key;
+    delete parsed.updatedAt;
+    delete parsed.data;
+  }
+
+  return c.json({
+    key,
+    data: parsed,
+    ...(typeof parsed === 'object' && parsed !== null ? parsed : {}),
+    updatedAt: row.updatedAt
+  });
 });
 
 // ── PUT CONTENT BY KEY (upsert) ──
@@ -34,7 +52,18 @@ contentRoutes.put('/:key', async (c) => {
   }
 
   const db = getDb(c.env.DB);
-  const body = await c.req.json();
+  let body = await c.req.json();
+
+  // If body is wrapped with meta fields, unwrap and clean
+  if (body && typeof body === 'object' && !Array.isArray(body)) {
+    if (body.data && typeof body.data === 'object' && !Array.isArray(body.data)) {
+      const { data: nestedData, key: _k, updatedAt: _u, ...rest } = body;
+      body = { ...nestedData, ...rest };
+    }
+    delete body.key;
+    delete body.updatedAt;
+    delete body.data;
+  }
 
   const value = typeof body === 'string' ? body : JSON.stringify(body);
   const updatedAt = new Date().toISOString();

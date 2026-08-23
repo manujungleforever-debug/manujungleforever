@@ -79,13 +79,15 @@ async function ghGet(path) {
   if (ds.startsWith('content:')) {
     const key = ds.split(':')[1];
     const d = await _d1('GET', '/api/content/' + key);
-    // d = { key, data, ...spread, updatedAt }  — return data object directly
-    const content = d.data || d;
+    let content = d.data || d;
+    if (content && typeof content === 'object' && content.data && typeof content.data === 'object' && !Array.isArray(content.data)) {
+      content = { ...content.data, ...content };
+    }
     // strip meta fields injected by the API
-    const { key: _k, updatedAt: _u, ...clean } = content;
+    const { key: _k, updatedAt: _u, data: _d, ...clean } = (typeof content === 'object' && content ? content : {});
     return {
       content: JSON.stringify(clean, null, 2),
-      sha: 'd1:' + key   // used by panels to track version; irrelevant for D1 but kept for compat
+      sha: 'd1:' + key
     };
   }
 
@@ -208,7 +210,17 @@ async function ghPut(path, content, sha, msg) {
   // ── site_content pages ──
   if (ds.startsWith('content:')) {
     const key = ds.split(':')[1];
-    const d = await _d1('PUT', '/api/content/' + key, parsed);
+    let clean = parsed;
+    if (clean && typeof clean === 'object' && clean.data && typeof clean.data === 'object' && !Array.isArray(clean.data)) {
+      const { data: nd, key: _k, updatedAt: _u, ...rest } = clean;
+      clean = { ...nd, ...rest };
+    }
+    if (clean && typeof clean === 'object') {
+      delete clean.key;
+      delete clean.updatedAt;
+      delete clean.data;
+    }
+    const d = await _d1('PUT', '/api/content/' + key, clean);
     return { ok: true, sha: 'd1:' + key + ':' + Date.now() };
   }
 
