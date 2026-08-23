@@ -1,5 +1,5 @@
-const API = '/api/cms';
-const MEDIA_API = '/api/media';
+var API = window.API || '/api/cms';
+var MEDIA_API = window.MEDIA_API || '/api/media';
 
 function getAuthHeader() {
     const token = sessionStorage.getItem('cms_token');
