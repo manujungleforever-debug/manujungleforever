@@ -10,28 +10,58 @@ export async function onRequestGet(context) {
   }
 
   try {
+    // 1. Intentar cargar desde el bucket R2
     if (env.MEDIA_BUCKET) {
       const object = await env.MEDIA_BUCKET.get(fileKey);
       if (object !== null) {
         const headers = new Headers();
         object.writeHttpMetadata(headers);
         headers.set('etag', object.httpEtag);
-        headers.set('Cache-Control', 'public, max-age=31536000, immutable'); // Cache por 1 año
+        headers.set('Cache-Control', 'public, max-age=31536000, immutable');
         return new Response(object.body, { headers });
       }
     }
 
-    // Fallback: proxy a producción si no existe en el bucket local dev
-    const prodUrl = `https://manujungleforever.pages.dev/media/${encodeURIComponent(fileKey).replace(/%2F/g, '/')}`;
-    const prodRes = await fetch(prodUrl).catch(() => null);
-    if (prodRes && prodRes.ok) {
-      return new Response(prodRes.body, {
-        status: 200,
-        headers: {
-          'Content-Type': prodRes.headers.get('Content-Type') || 'image/jpeg',
-          'Cache-Control': 'public, max-age=86400',
+    // 2. Intentar buscar en assets estáticos si existe
+    if (env.ASSETS) {
+      const assetRes = await env.ASSETS.fetch(new URL(`/assets/img/${fileKey.split('/').pop()}`, request.url)).catch(() => null);
+      if (assetRes && assetRes.ok) {
+        return assetRes;
+      }
+    }
+
+    // 3. Fallback inteligente a GitHub raw si el archivo fue commiteado en el repositorio
+    const REPO = 'manujungleforever-debug/manujungleforever';
+    const BRANCH = 'main';
+    const rawPaths = [
+      `https://raw.githubusercontent.com/${REPO}/${BRANCH}/www.manujungleforever.com/media/${fileKey}`,
+      `https://raw.githubusercontent.com/${REPO}/${BRANCH}/www.manujungleforever.com/assets/img/${fileKey.split('/').pop()}`,
+      `https://raw.githubusercontent.com/${REPO}/${BRANCH}/www.manujungleforever.com/assets/img/hero.png`
+    ];
+
+    for (const rawUrl of rawPaths) {
+      try {
+        const rawRes = await fetch(rawUrl).catch(() => null);
+        if (rawRes && rawRes.ok) {
+          const contentType = rawRes.headers.get('Content-Type') || (fileKey.endsWith('.png') ? 'image/png' : 'image/jpeg');
+          return new Response(rawRes.body, {
+            status: 200,
+            headers: {
+              'Content-Type': contentType,
+              'Cache-Control': 'public, max-age=86400',
+              'Access-Control-Allow-Origin': '*'
+            }
+          });
         }
-      });
+      } catch {}
+    }
+
+    // 4. Fallback final: Si env.ASSETS está disponible, retornar hero.png por defecto
+    if (env.ASSETS) {
+      const fallbackHero = await env.ASSETS.fetch(new URL('/assets/img/hero.png', request.url)).catch(() => null);
+      if (fallbackHero && fallbackHero.ok) {
+        return fallbackHero;
+      }
     }
 
     return new Response('Archivo no encontrado', { status: 404 });
