@@ -846,11 +846,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const xlCard = document.querySelector('#tours .tc-xl');
         if (xlCard && tourCats[0]) {
           const c0 = tourCats[0];
-          const imgEl = xlCard.querySelector('img');
-          if (imgEl && c0.imagen && !c0.imagen.includes('placeholder.jpg')) {
-            imgEl.src = fixImgPath(c0.imagen);
-            if (c0.imagen_alt || c0.titulo) imgEl.alt = c0.imagen_alt || c0.titulo;
-          }
+          // NOTE: imagen NO se sobreescribe - el HTML estatico ya tiene la imagen correcta
           const badgeEl = xlCard.querySelector('.tbg');
           if (badgeEl) {
             badgeEl.className = `tbg ${c0.disponible !== false ? 'ton' : 'tof'}`;
@@ -876,11 +872,7 @@ document.addEventListener("DOMContentLoaded", function() {
         mdCards.forEach((mdCard, idx) => {
           const cat = tourCats[idx + 1];
           if (!cat) return;
-          const imgEl = mdCard.querySelector('img');
-          if (imgEl && cat.imagen && !cat.imagen.includes('placeholder.jpg')) {
-            imgEl.src = fixImgPath(cat.imagen);
-            if (cat.imagen_alt || cat.titulo) imgEl.alt = cat.imagen_alt || cat.titulo;
-          }
+          // NOTE: imagen NO se sobreescribe - el HTML estatico ya tiene la imagen correcta
           const badgeEl = mdCard.querySelector('.tbg');
           if (badgeEl) {
             badgeEl.className = `tbg ${cat.disponible !== false ? 'ton' : 'tof'}`;
