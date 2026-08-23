@@ -701,13 +701,36 @@ document.addEventListener("DOMContentLoaded", function() {
 <script>
 // Dynamic About & Global Data Hydration
 (async function() {
+  function fixImgPath(p) {
+    if (!p) return '';
+    if (p.startsWith('http://') || p.startsWith('https://') || p.startsWith('data:')) return p;
+    if (p.startsWith('/')) return p;
+    return '/' + p;
+  }
+
+  function setImgWithFallback(imgEl, primarySrc, fallbackSrc) {
+    if (!imgEl) return;
+    imgEl.src = fixImgPath(primarySrc);
+    imgEl.onerror = function() {
+      if (fallbackSrc && imgEl.src !== fixImgPath(fallbackSrc)) {
+        imgEl.src = fixImgPath(fallbackSrc);
+      }
+      imgEl.onerror = null;
+    };
+  }
+
   try {
-    const [aRes, gRes] = await Promise.all([
-      fetch('../data/about.json?v=' + Date.now()).catch(() => null),
-      fetch('../data/global.json?v=' + Date.now()).catch(() => null)
+    let [aRes, gRes] = await Promise.all([
+      fetch('/api/content/about').catch(() => null),
+      fetch('/api/content/global').catch(() => null)
     ]);
+    if (!aRes || !aRes.ok) aRes = await fetch('../data/about.json?v=' + Date.now()).catch(() => null);
+    if (!gRes || !gRes.ok) gRes = await fetch('../data/global.json?v=' + Date.now()).catch(() => null);
+
     if (aRes && aRes.ok) {
-      const aData = await aRes.json();
+      const resJson = await aRes.json();
+      const aData = resJson.data || resJson;
+
       if (aData.titulo_pagina) {
         const h1 = document.querySelector('.in-hero .h1');
         if (h1) h1.textContent = aData.titulo_pagina;
@@ -725,19 +748,20 @@ document.addEventListener("DOMContentLoaded", function() {
         }
         if (hs) hs.textContent = aData.subtitulo_pagina;
       }
-      function fixImgPath(p) {
-        if (!p) return '';
-        if (p.startsWith('http://') || p.startsWith('https://') || p.startsWith('data:')) return p;
-        if (p.startsWith('/')) return p;
-        return '/' + p;
-      }
 
-      if (aData.hero_image && !aData.hero_image.includes('placeholder.jpg')) {
-        const hero = document.querySelector('.in-hero');
-        if (hero) {
-          hero.style.backgroundImage = `url('${fixImgPath(aData.hero_image)}')`;
+      // Hero background image with fallback
+      if (aData.hero_image) {
+        const heroEl = document.querySelector('.in-hero');
+        if (heroEl) {
+          const primary = fixImgPath(aData.hero_image);
+          const fallback = aData.hero_image_fallback || '../wp-content/uploads/2022/10/Hero-About-Us.jpg';
+          const testImg = new Image();
+          testImg.onload = () => { heroEl.style.backgroundImage = `url('${primary}')`; };
+          testImg.onerror = () => { heroEl.style.backgroundImage = `url('${fallback}')`; };
+          testImg.src = primary;
         }
       }
+
       const hist = aData.historia || {};
       if (hist.eyebrow) {
         const histEy = document.querySelector('.intro-block .ey');
@@ -753,17 +777,47 @@ document.addEventListener("DOMContentLoaded", function() {
           container.innerHTML = hist.paragrafos.map(p => `<p>${p}</p>`).join('');
         }
       }
-      if (hist.imagen && !hist.imagen.includes('placeholder.jpg')) {
-        const histImg = document.getElementById('dyn-about-history-img') || document.querySelector('.intro-img-col img');
-        if (histImg) {
-          histImg.src = fixImgPath(hist.imagen);
-          if (hist.imagen_alt) histImg.alt = hist.imagen_alt;
-        }
+      if (hist.imagen) {
+        const histImg = document.getElementById('dyn-about-history-img') || document.querySelector('.intro-img-centered img');
+        const fallbackHistImg = '../wp-content/uploads/2022/10/Hero-About-Us.jpg';
+        setImgWithFallback(histImg, hist.imagen, fallbackHistImg);
+        if (histImg && hist.imagen_alt) histImg.alt = hist.imagen_alt;
         const histCap = document.getElementById('dyn-about-history-caption');
         if (histCap && hist.imagen_alt) {
           histCap.innerHTML = `<i class="fas fa-camera" style="color: var(--teal, #2dd4bf);"></i> ${hist.imagen_alt}`;
         }
       }
+
+      // Mission section
+      const mision = aData.mision || {};
+      if (mision.eyebrow) {
+        const mEy = document.querySelector('.mision-block .ey');
+        if (mEy) mEy.textContent = mision.eyebrow;
+      }
+      if (mision.titulo) {
+        const mTitle = document.querySelector('.mision-block .h2, .mision-block h2');
+        if (mTitle) mTitle.textContent = mision.titulo;
+      }
+      if (mision.texto) {
+        const mText = document.querySelector('.mision-block .mision-text, .mision-block p');
+        if (mText) mText.textContent = mision.texto;
+      }
+    }
+
+    // Global: redes sociales links
+    if (gRes && gRes.ok) {
+      const gJson = await gRes.json();
+      const gData = gJson.data || gJson;
+      const social = gData.social || gData.redes_sociales || {};
+      const links = {
+        fb: social.facebook, ig: social.instagram, ta: social.tripadvisor,
+        tt: social.tiktok, yt: social.youtube, wa: social.whatsapp
+      };
+      Object.entries(links).forEach(([id, url]) => {
+        if (!url) return;
+        const el = document.getElementById(`social-${id}`);
+        if (el) el.href = url;
+      });
     }
   } catch (e) {
     console.warn('About hydration error:', e);
