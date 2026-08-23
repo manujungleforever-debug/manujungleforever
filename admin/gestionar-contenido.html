@@ -2363,9 +2363,26 @@ function hideSaveBar_DIS() { document.getElementById('save-bar').style.display='
 // ─────────────────────────────────────────────────────────────────────────────
 // UTILS
 // ─────────────────────────────────────────────────────────────────────────────
+function cleanMojibake(str) {
+  if (!str || typeof str !== 'string') return str;
+  return str
+    .replace(/┬À/g, '·')
+    .replace(/ÔÇö/g, '—')
+    .replace(/ÔÇô/g, '–')
+    .replace(/4├ù4/g, '4×4')
+    .replace(/├ù/g, '×')
+    .replace(/├®/g, 'é')
+    .replace(/├í/g, 'á')
+    .replace(/├¡/g, 'í')
+    .replace(/├│/g, 'ó')
+    .replace(/├║/g, 'ú')
+    .replace(/├▒/g, 'ñ')
+    .replace(/Ôÿà/g, '★');
+}
+
 function set_DIS(h){ document.getElementById('mc').innerHTML=h; }
-function v(id){ return document.getElementById(id)?.value??''; }
-function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function v(id){ return cleanMojibake(document.getElementById(id)?.value??''); }
+function esc(s){ return String(cleanMojibake(s)).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
 function parseFM(raw) {
   const m=raw.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);

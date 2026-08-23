@@ -828,19 +828,36 @@ document.addEventListener("DOMContentLoaded", function() {
         hData = hData.data;
       }
 
+      function cleanMojibake(str) {
+        if (!str || typeof str !== 'string') return str;
+        return str
+          .replace(/┬À/g, '·')
+          .replace(/ÔÇö/g, '—')
+          .replace(/ÔÇô/g, '–')
+          .replace(/4├ù4/g, '4×4')
+          .replace(/├ù/g, '×')
+          .replace(/├®/g, 'é')
+          .replace(/├í/g, 'á')
+          .replace(/├¡/g, 'í')
+          .replace(/├│/g, 'ó')
+          .replace(/├║/g, 'ú')
+          .replace(/├▒/g, 'ñ')
+          .replace(/Ôÿà/g, '★');
+      }
+
       // Hero
       const hero = hData.hero || {};
       if (hero.location_tag) {
         const ht = document.querySelector('.hero .ht');
-        if (ht) ht.innerHTML = `<i class="fas fa-map-marker-alt"></i> ${hero.location_tag}`;
+        if (ht) ht.innerHTML = `<i class="fas fa-map-marker-alt"></i> ${cleanMojibake(hero.location_tag)}`;
       }
       if (hero.title || hero.title_emphasis) {
         const h1 = document.querySelector('.hero .h1');
-        if (h1) h1.innerHTML = `${hero.title || ''}<br>${hero.title_emphasis ? `<em>${hero.title_emphasis}</em>` : ''}`;
+        if (h1) h1.innerHTML = `${cleanMojibake(hero.title || '')}<br>${hero.title_emphasis ? `<em>${cleanMojibake(hero.title_emphasis)}</em>` : ''}`;
       }
       if (hero.subtitle) {
         const hs = document.querySelector('.hero .hs');
-        if (hs) hs.textContent = hero.subtitle;
+        if (hs) hs.textContent = cleanMojibake(hero.subtitle);
       }
       if (hero.video_id) {
         const cleanId = hero.video_id.trim();
@@ -886,15 +903,15 @@ document.addEventListener("DOMContentLoaded", function() {
       const th = hData.tours_header || hData.guided_tours || {};
       if (th.title) {
         const thEy = document.querySelector('#tours .tr-intro .ey');
-        if (thEy) thEy.textContent = th.title;
+        if (thEy) thEy.textContent = cleanMojibake(th.title);
       }
       if (th.subtitle) {
         const thSub = document.querySelector('#tours .tr-intro .h2');
-        if (thSub) thSub.textContent = th.subtitle;
+        if (thSub) thSub.textContent = cleanMojibake(th.subtitle);
       }
       if (th.description) {
         const thDesc = document.querySelector('#tours .tr-intro .ld');
-        if (thDesc) thDesc.textContent = th.description;
+        if (thDesc) thDesc.textContent = cleanMojibake(th.description);
       }
 
       const tourCats = hData.guided_tours?.categories || [];
@@ -908,25 +925,25 @@ document.addEventListener("DOMContentLoaded", function() {
             const imgEl = xlCard.querySelector('img');
             if (imgEl) {
               imgEl.src = fixImgPath(c0.imagen);
-              if (c0.imagen_alt || c0.titulo) imgEl.alt = c0.imagen_alt || c0.titulo;
+              if (c0.imagen_alt || c0.titulo) imgEl.alt = cleanMojibake(c0.imagen_alt || c0.titulo);
             }
           }
           const badgeEl = xlCard.querySelector('.tbg');
           if (badgeEl) {
             badgeEl.className = `tbg ${c0.disponible !== false ? 'ton' : 'tof'}`;
-            badgeEl.innerHTML = `<i class="fas fa-${c0.disponible !== false ? 'circle' : 'pause-circle'}" style="font-size:.5rem"></i> ${c0.badge_texto || (c0.disponible !== false ? 'Available Now' : 'Temporarily Unavailable')}`;
+            badgeEl.innerHTML = `<i class="fas fa-${c0.disponible !== false ? 'circle' : 'pause-circle'}" style="font-size:.5rem"></i> ${cleanMojibake(c0.badge_texto || (c0.disponible !== false ? 'Available Now' : 'Temporarily Unavailable'))}`;
           }
           const titleEl = xlCard.querySelector('.tt');
-          if (titleEl && c0.titulo) titleEl.textContent = c0.titulo;
+          if (titleEl && c0.titulo) titleEl.textContent = cleanMojibake(c0.titulo);
           const metaEl = xlCard.querySelector('.tm');
           if (metaEl) {
-            metaEl.innerHTML = `<span><i class="far fa-calendar-alt"></i> ${c0.duracion || ''}</span><span><i class="fas fa-users"></i> ${c0.pasajeros || ''}</span><span><i class="fas fa-ship"></i> ${c0.transporte || ''}</span>`;
+            metaEl.innerHTML = `<span><i class="far fa-calendar-alt"></i> ${cleanMojibake(c0.duracion || '')}</span><span><i class="fas fa-users"></i> ${cleanMojibake(c0.pasajeros || '')}</span><span><i class="fas fa-ship"></i> ${cleanMojibake(c0.transporte || '')}</span>`;
           }
           const descEl = xlCard.querySelector('.tp');
-          if (descEl && c0.descripcion) descEl.textContent = c0.descripcion;
+          if (descEl && c0.descripcion) descEl.textContent = cleanMojibake(c0.descripcion);
           const btnEl = xlCard.querySelector('.tbtn');
           if (btnEl) {
-            if (c0.boton_texto) btnEl.innerHTML = `${c0.boton_texto} <i class="fas fa-arrow-right"></i>`;
+            if (c0.boton_texto) btnEl.innerHTML = `${cleanMojibake(c0.boton_texto)} <i class="fas fa-arrow-right"></i>`;
             if (c0.enlace) btnEl.href = c0.enlace;
           }
         }
@@ -941,23 +958,23 @@ document.addEventListener("DOMContentLoaded", function() {
             const imgEl = mdCard.querySelector('img');
             if (imgEl) {
               imgEl.src = fixImgPath(cat.imagen);
-              if (cat.imagen_alt || cat.titulo) imgEl.alt = cat.imagen_alt || cat.titulo;
+              if (cat.imagen_alt || cat.titulo) imgEl.alt = cleanMojibake(cat.imagen_alt || cat.titulo);
             }
           }
           const badgeEl = mdCard.querySelector('.tbg');
           if (badgeEl) {
             badgeEl.className = `tbg ${cat.disponible !== false ? 'ton' : 'tof'}`;
-            badgeEl.innerHTML = `<i class="fas fa-${cat.disponible !== false ? 'circle' : 'pause-circle'}" style="font-size:.5rem"></i> ${cat.badge_texto || (cat.disponible !== false ? 'Available Now' : 'Temporarily Unavailable')}`;
+            badgeEl.innerHTML = `<i class="fas fa-${cat.disponible !== false ? 'circle' : 'pause-circle'}" style="font-size:.5rem"></i> ${cleanMojibake(cat.badge_texto || (cat.disponible !== false ? 'Available Now' : 'Temporarily Unavailable'))}`;
           }
           const titleEl = mdCard.querySelector('.tt');
-          if (titleEl && cat.titulo) titleEl.textContent = cat.titulo;
+          if (titleEl && cat.titulo) titleEl.textContent = cleanMojibake(cat.titulo);
           const metaEl = mdCard.querySelector('.tm');
           if (metaEl) {
-            metaEl.innerHTML = `<span><i class="far fa-calendar-alt"></i> ${cat.duracion || ''}</span><span><i class="fas fa-users"></i> ${cat.pasajeros || ''}</span><span><i class="fas fa-${cat.transporte?.includes('4×4') ? 'truck' : 'hiking'}"></i> ${cat.transporte || ''}</span>`;
+            metaEl.innerHTML = `<span><i class="far fa-calendar-alt"></i> ${cleanMojibake(cat.duracion || '')}</span><span><i class="fas fa-users"></i> ${cleanMojibake(cat.pasajeros || '')}</span><span><i class="fas fa-${cat.transporte?.includes('4×4') || cat.transporte?.includes('4') ? 'truck' : 'hiking'}"></i> ${cleanMojibake(cat.transporte || '')}</span>`;
           }
           const btnEl = mdCard.querySelector('.tbtn');
           if (btnEl) {
-            if (cat.boton_texto) btnEl.innerHTML = `${cat.boton_texto} <i class="fas fa-arrow-right"></i>`;
+            if (cat.boton_texto) btnEl.innerHTML = `${cleanMojibake(cat.boton_texto)} <i class="fas fa-arrow-right"></i>`;
             if (cat.enlace) btnEl.href = cat.enlace;
           }
         });
@@ -967,11 +984,11 @@ document.addEventListener("DOMContentLoaded", function() {
       const ab = hData.about_section || {};
       if (ab.eyebrow) {
         const ey = document.querySelector('#about .ey');
-        if (ey) ey.textContent = ab.eyebrow;
+        if (ey) ey.textContent = cleanMojibake(ab.eyebrow);
       }
       if (ab.title) {
         const abTitle = document.querySelector('#about .h2');
-        if (abTitle) abTitle.textContent = ab.title;
+        if (abTitle) abTitle.textContent = cleanMojibake(ab.title);
       }
       if (ab.paragraphs && ab.paragraphs.length) {
         const abTextContainer = document.querySelector('#about .spt');
@@ -981,7 +998,7 @@ document.addEventListener("DOMContentLoaded", function() {
           const chips = abTextContainer.querySelector('.chips');
           ab.paragraphs.forEach(p => {
             const pEl = document.createElement('p');
-            pEl.textContent = p.text || p;
+            pEl.textContent = cleanMojibake(p.text || p);
             if (chips) abTextContainer.insertBefore(pEl, chips);
             else abTextContainer.appendChild(pEl);
           });
@@ -996,12 +1013,12 @@ document.addEventListener("DOMContentLoaded", function() {
       if (ab.image_alt) {
         const abImg = document.querySelector('#about .spi img');
         if (abImg) {
-          abImg.alt = ab.image_alt;
-          abImg.title = ab.image_alt;
+          abImg.alt = cleanMojibake(ab.image_alt);
+          abImg.title = cleanMojibake(ab.image_alt);
         }
         const abCap = document.querySelector('#about .spi .caption-text');
         if (abCap) {
-          abCap.textContent = ab.image_alt;
+          abCap.textContent = cleanMojibake(ab.image_alt);
         }
       }
 
@@ -1009,11 +1026,11 @@ document.addEventListener("DOMContentLoaded", function() {
       const uq = hData.unique_section || {};
       if (uq.title || uq.eyebrow) {
         const uqTitle = document.querySelector('#unique-content .spt h2');
-        if (uqTitle) uqTitle.textContent = uq.title || uq.eyebrow;
+        if (uqTitle) uqTitle.textContent = cleanMojibake(uq.title || uq.eyebrow);
       }
       if (uq.text) {
         const uqP = document.querySelector('#unique-content .spt p');
-        if (uqP) uqP.textContent = uq.text;
+        if (uqP) uqP.textContent = cleanMojibake(uq.text);
       }
       if (uq.image && !uq.image.includes('placeholder.jpg')) {
         const uqImg = document.querySelector('#unique-content .spi img');
@@ -1024,12 +1041,12 @@ document.addEventListener("DOMContentLoaded", function() {
       if (uq.image_alt) {
         const uqImg = document.querySelector('#unique-content .spi img');
         if (uqImg) {
-          uqImg.alt = uq.image_alt;
-          uqImg.title = uq.image_alt;
+          uqImg.alt = cleanMojibake(uq.image_alt);
+          uqImg.title = cleanMojibake(uq.image_alt);
         }
         const uqCap = document.querySelector('#unique-content .spi .caption-text');
         if (uqCap) {
-          uqCap.textContent = uq.image_alt;
+          uqCap.textContent = cleanMojibake(uq.image_alt);
         }
       }
 
@@ -1037,21 +1054,21 @@ document.addEventListener("DOMContentLoaded", function() {
       const wl = hData.wildlife_section || {};
       if (wl.eyebrow) {
         const wlEy = document.querySelector('#wildlife .ey');
-        if (wlEy) wlEy.textContent = wl.eyebrow;
+        if (wlEy) wlEy.textContent = cleanMojibake(wl.eyebrow);
       }
       if (wl.title) {
         const wlTitle = document.querySelector('#wildlife .h2');
-        if (wlTitle) wlTitle.textContent = wl.title;
+        if (wlTitle) wlTitle.textContent = cleanMojibake(wl.title);
       }
       if (wl.text) {
         const wlLead = document.querySelector('#wildlife .lead');
-        if (wlLead) wlLead.textContent = wl.text;
+        if (wlLead) wlLead.textContent = cleanMojibake(wl.text);
       }
       if (wl.image && !wl.image.includes('placeholder.jpg')) {
         const wlImg = document.querySelector('#wildlife .wb img');
         if (wlImg) {
           wlImg.src = fixImgPath(wl.image);
-          if (wl.image_alt) wlImg.alt = wl.image_alt;
+          if (wl.image_alt) wlImg.alt = cleanMojibake(wl.image_alt);
         }
       }
 
@@ -1065,20 +1082,20 @@ document.addEventListener("DOMContentLoaded", function() {
       }
       if (cta.eyebrow) {
         const ctaEy = document.querySelector('#plan-trip .ey');
-        if (ctaEy) ctaEy.textContent = cta.eyebrow;
+        if (ctaEy) ctaEy.textContent = cleanMojibake(cta.eyebrow);
       }
       if (cta.title) {
         const ctaTitle = document.querySelector('#plan-trip .h2');
-        if (ctaTitle) ctaTitle.textContent = cta.title;
+        if (ctaTitle) ctaTitle.textContent = cleanMojibake(cta.title);
       }
       if (cta.text) {
         const ctaP = document.querySelector('#plan-trip p.ld');
-        if (ctaP) ctaP.textContent = cta.text;
+        if (ctaP) ctaP.textContent = cleanMojibake(cta.text);
       }
       if (cta.btn_text) {
         const ctaBtn = document.querySelector('#plan-trip .cba a.btn.bd');
         if (ctaBtn) {
-          ctaBtn.innerHTML = `<i class="fas fa-compass"></i> ${cta.btn_text}`;
+          ctaBtn.innerHTML = `<i class="fas fa-compass"></i> ${cleanMojibake(cta.btn_text)}`;
           if (cta.btn_url) ctaBtn.href = cta.btn_url;
         }
       }
@@ -1087,11 +1104,11 @@ document.addEventListener("DOMContentLoaded", function() {
       const pil = hData.pillars_section || {};
       if (pil.eyebrow) {
         const pilEy = document.querySelector('#why-us .ey');
-        if (pilEy) pilEy.textContent = pil.eyebrow;
+        if (pilEy) pilEy.textContent = cleanMojibake(pil.eyebrow);
       }
       if (pil.title) {
         const pilTitle = document.querySelector('#why-us .h2');
-        if (pilTitle) pilTitle.textContent = pil.title;
+        if (pilTitle) pilTitle.textContent = cleanMojibake(pil.title);
       }
       if (Array.isArray(pil.pillars) && pil.pillars.length > 0) {
         const pilContainer = document.querySelector('#why-us .pg');
@@ -1099,8 +1116,8 @@ document.addEventListener("DOMContentLoaded", function() {
           pilContainer.innerHTML = pil.pillars.map(p => `
             <div class="pl r v">
               <div class="pi"><i class="${p.icon || 'fas fa-leaf'}"></i></div>
-              <h3>${p.title || ''}</h3>
-              <p>${p.text || ''}</p>
+              <h3>${cleanMojibake(p.title || '')}</h3>
+              <p>${cleanMojibake(p.text || '')}</p>
             </div>
           `).join('');
         }

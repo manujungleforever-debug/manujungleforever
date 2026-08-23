@@ -1,9 +1,9 @@
 {
   "hero": {
-    "location_tag": "Cusco, Peru ┬À Manu National Park",
+    "location_tag": "Cusco, Peru · Manu National Park",
     "title": "What Will",
     "title_emphasis": "Discover?",
-    "subtitle": "Visit Manu National Park from Cusco ÔÇö guided jungle tours deep into the Peruvian Amazon. Local. Wild. Authentic.",
+    "subtitle": "Visit Manu National Park from Cusco — guided jungle tours deep into the Peruvian Amazon. Local. Wild. Authentic.",
     "video_id": "mwFesIvZ5Zc",
     "video_start": 4,
     "video_end": 56,
@@ -13,25 +13,25 @@
   },
   "stats": [
     {
-      "value": 100,
+      "value": 500,
       "suffix": "+",
       "label": "Travelers Guided",
       "type": "counter"
     },
     {
-      "value": 5,
+      "value": 10,
       "suffix": "+",
       "label": "Years Experience",
       "type": "counter"
     },
     {
-      "value": 8,
+      "value": 12,
       "suffix": "",
       "label": "Tour Options",
       "type": "counter"
     },
     {
-      "value": "4.8 ",
+      "value": "4.8",
       "label": "Average Rating",
       "type": "static"
     }
@@ -48,9 +48,9 @@
         "badge_texto": "Available Now",
         "titulo": "Jungle Wildlife Tour",
         "duracion": "3, 4, 5, 6 or 8 Days",
-        "pasajeros": "2ÔÇô8 Passengers",
+        "pasajeros": "2–8 Passengers",
         "transporte": "Van & Boat",
-        "descripcion": "Manu National Park tours from Cusco where you travel by van through the cloud forest, then search for Peruvian Amazon animals by boat. See caimans, macaws, capybaras, and the elusive jaguar. Beautiful scenery, local food, incredible nature ÔÇö appropriate for all travelers.",
+        "descripcion": "Manu National Park tours from Cusco where you travel by van through the cloud forest, then search for Peruvian Amazon animals by boat. See caimans, macaws, capybaras, and the elusive jaguar. Beautiful scenery, local food, incredible nature — appropriate for all travelers.",
         "boton_texto": "Explore This Tour",
         "enlace": "guided-tours/index.html#wildlife",
         "imagen": "/media/1787018009678-willife.jpeg",
@@ -63,8 +63,8 @@
         "badge_texto": "Available Now",
         "titulo": "Rainforest Road Trip",
         "duracion": "4 or 5 Days",
-        "pasajeros": "1ÔÇô3 Passengers",
-        "transporte": "Private 4├ù4",
+        "pasajeros": "1–3 Passengers",
+        "transporte": "Private 4×4",
         "descripcion": "Our most authentic Peru Amazon tour takes you through villages along the winding road from Cusco to Manu. Spot animals in the cloud forest, taste local flavors, and visit hidden gems.",
         "boton_texto": "View Details",
         "enlace": "guided-tours/index.html#rainforest",
@@ -78,12 +78,12 @@
         "badge_texto": "Available Now",
         "titulo": "Manu Expedition",
         "duracion": "5 or 6 Days",
-        "pasajeros": "2ÔÇô8 Passengers",
+        "pasajeros": "2–8 Passengers",
         "transporte": "Van, Boat & Hiking",
-        "descripcion": "Perfect for adventurous nature lovers ÔÇö this expedition takes you deep into the forest. Camp, fish, hike, and learn survival skills.",
+        "descripcion": "Perfect for adventurous nature lovers — this expedition takes you deep into the forest. Camp, fish, hike, and learn survival skills.",
         "boton_texto": "View Details",
         "enlace": "guided-tours/index.html#amazon",
-        "imagen": "/media/1787019267046-3071145-sure-2677608.jpg",
+        "imagen": "/media/usuarios/kemmesik-gmail-com/avatar_1787257830305.jpg",
         "imagen_alt": "Manu Expedition"
       }
     ]
@@ -96,27 +96,27 @@
         "text": "Going to the Amazon rainforest is a dream for many travelers planning their South American adventure. If you're looking for an amazing jungle trip near Cusco, Peru, you're in the right place."
       },
       {
-        "text": "The Manu National Park is accessible by road and river from Cusco, located on the Madre de Dios and Manu rivers ÔÇö tributaries to the Amazon itself. Our founder grew up in the small village of Nuevo Eden that we use as our base; the rainforest is his home."
+        "text": "The Manu National Park is accessible by road and river from Cusco, located on the Madre de Dios and Manu rivers — tributaries to the Amazon itself. Our founder grew up in the small village of Nuevo Eden that we use as our base; the rainforest is his home."
       },
       {
         "text": "We offer multi-day guided small-group tours and can also organize independent trips to Manu. All our jungle tours can be added onto your Cusco trip while visiting Machu Picchu and the Sacred Valley. You will get a taste of local life and opportunities to see amazing creatures in their natural habitat."
       }
     ],
     "chips": [
-      "Small Groups (2ÔÇô8)",
+      "Small Groups (2–8)",
       "Born-Local Guides",
       "All-Inclusive Tours",
       "Flexible Departures",
       "Guided or Independent"
     ],
     "image": "/media/1787016658101-puesta-de-sol.jpeg",
-    "image_alt": "Wildlife quest at Machu Wasi ÔÇô Manu National Park",
+    "image_alt": "Wildlife quest at Machu Wasi – Manu National Park",
     "cta_text": "Our Full Story",
     "cta_url": "about/index.html"
   },
   "unique_section": {
     "title": "WHAT MAKES US UNIQUE?",
-    "text": "Born in the heart of Manu, we are a proudly local, family-owned company. Our lodge and trail network in Nuevo Ed├®n are not just a tourist destination, but the childhood home of our co-founder, Jordy. We firmly believe that ecotourism is the strongest and most sustainable shield to preserve the Amazon. Through our work, we aim to uplift the community and protect the species that inhabit the jungle. Without responsible tourism, this paradise would face the constant threat of deforestation and destructive agriculture. We are driven by a deep passion to share the culture, biodiversity, and spirit of Manu National Park with you.",
+    "text": "Born in the heart of Manu, we are a proudly local, family-owned company. Our lodge and trail network in Nuevo Edén are not just a tourist destination, but the childhood home of our co-founder, Jordy. We firmly believe that ecotourism is the strongest and most sustainable shield to preserve the Amazon. Through our work, we aim to uplift the community and protect the species that inhabit the jungle. Without responsible tourism, this paradise would face the constant threat of deforestation and destructive agriculture. We are driven by a deep passion to share the culture, biodiversity, and spirit of Manu National Park with you.",
     "image": "/media/1787017112075-eden.jpeg",
     "image_alt": "Manu Jungle Forever Family and Guides",
     "eyebrow": "A Legacy of Conservation"
@@ -124,48 +124,48 @@
   "wildlife_section": {
     "eyebrow": "Biodiversity",
     "title": "Wildlife in the Peruvian Rainforest",
-    "text": "The Manu National Park is the best place to see wildlife in Peru ÔÇö you will always encounter animals in their natural habitats, surrounded by a complex ecosystem. When we visit the Amazon rainforest, we explore trails looking for monkeys, macaws, insects, snakes, and more. On the river banks we search for capybaras, turtles, caimans, and even the elusive jaguar.",
+    "text": "The Manu National Park is the best place to see wildlife in Peru — you will always encounter animals in their natural habitats, surrounded by a complex ecosystem. When we visit the Amazon rainforest, we explore trails looking for monkeys, macaws, insects, snakes, and more. On the river banks we search for capybaras, turtles, caimans, and even the elusive jaguar.",
     "image": "/media/1787015599134-gayulo-animals-3524518.jpg",
     "image_alt": "Manu National Park wildlife - Jaguar",
     "animals": [
       {
-        "emoji": "­ƒÉå",
+        "emoji": "🐆",
         "name": "Jaguar"
       },
       {
-        "emoji": "­ƒª£",
+        "emoji": "🦜",
         "name": "Macaws"
       },
       {
-        "emoji": "­ƒÉè",
+        "emoji": "🐊",
         "name": "Caimans"
       },
       {
-        "emoji": "­ƒÉÆ",
+        "emoji": "🐒",
         "name": "Monkeys"
       },
       {
-        "emoji": "­ƒªª",
+        "emoji": "🦦",
         "name": "Giant Otters"
       },
       {
-        "emoji": "­ƒÉó",
+        "emoji": "🐢",
         "name": "River Turtles"
       },
       {
-        "emoji": "­ƒª½",
+        "emoji": "🦫",
         "name": "Capybaras"
       },
       {
-        "emoji": "­ƒÉì",
+        "emoji": "🐍",
         "name": "Anaconda"
       },
       {
-        "emoji": "­ƒªï",
+        "emoji": "🦋",
         "name": "Butterflies"
       },
       {
-        "emoji": "­ƒÉª",
+        "emoji": "🐦",
         "name": "Cock-of-the-Rock"
       }
     ]
