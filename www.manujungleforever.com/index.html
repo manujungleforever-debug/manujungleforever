@@ -992,9 +992,20 @@ document.addEventListener("DOMContentLoaded", function() {
           const btnEl = mdCard.querySelector('.tbtn');
           if (btnEl) {
             if (cat.boton_texto) btnEl.innerHTML = `${cleanMojibake(cat.boton_texto)} <i class="fas fa-arrow-right"></i>`;
-            if (cat.enlace) btnEl.href = cat.enlace;
-          }
-        });
+        // Bottom row tour details
+        const smCards = document.querySelectorAll('#tours .tr-row .tc-sm');
+        if (smCards[0] && tourCats[1]) {
+          const h3 = smCards[0].querySelector('h3');
+          const p = smCards[0].querySelector('p');
+          if (h3 && tourCats[1].titulo) h3.textContent = cleanMojibake(tourCats[1].titulo + ' · Details');
+          if (p && tourCats[1].descripcion) p.textContent = cleanMojibake(tourCats[1].descripcion);
+        }
+        if (smCards[1] && tourCats[2]) {
+          const h3 = smCards[1].querySelector('h3');
+          const p = smCards[1].querySelector('p');
+          if (h3 && tourCats[2].titulo) h3.textContent = cleanMojibake(tourCats[2].titulo + ' · Details');
+          if (p && tourCats[2].descripcion) p.textContent = cleanMojibake(tourCats[2].descripcion);
+        }
       }
 
       // About section
