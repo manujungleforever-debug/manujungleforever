@@ -70,10 +70,43 @@ export function generateMigrationSql(): string {
         const estadoPago = p.estado_pago || 'pendiente';
         const foto = (p.foto || '').replace(/'/g, "''");
 
-        sql += `INSERT OR REPLACE INTO passengers (id, departure_id, nombre_completo, nacionalidad, fecha_nacimiento, pasaporte, whatsapp, email, restricciones_dieteticas, condiciones_medicas, costo, monto_pagado, saldo_pendiente, estado_pago, foto, created_at) VALUES ('${pId}', '${id}', '${nombreCompleto}', '${nacionalidad}', '${fechaNac}', '${pasaporte}', '${whatsapp}', '${email}', '${diet}', '${med}', ${costo}, ${montoPagado}, ${saldoPendiente}', '${estadoPago}', '${foto}', '${now}');\n`;
+        sql += `INSERT OR REPLACE INTO passengers (id, departure_id, nombre_completo, nacionalidad, fecha_nacimiento, pasaporte, whatsapp, email, restricciones_dieteticas, condiciones_medicas, costo, monto_pagado, saldo_pendiente, estado_pago, foto, created_at) VALUES ('${pId}', '${id}', '${nombreCompleto}', '${nacionalidad}', '${fechaNac}', '${pasaporte}', '${whatsapp}', '${email}', '${diet}', '${med}', ${costo}, ${montoPagado}, ${saldoPendiente}, '${estadoPago}', '${foto}', '${now}');\n`;
       });
     });
   }
+
+  // 3. Testimonials
+  const testPath = path.join(__dirname, '../www.manujungleforever.com/data/testimonials.json');
+  if (fs.existsSync(testPath)) {
+    const testData = JSON.parse(fs.readFileSync(testPath, 'utf8'));
+    (testData.testimonials || testData.testimonios || []).forEach((t: any, idx: number) => {
+      const id = t.id || `test_${idx + 1}`;
+      const nombre = (t.nombre || 'Anónimo').replace(/'/g, "''");
+      const pais = (t.pais || '').replace(/'/g, "''");
+      const tourNombre = (t.tour_nombre || t.tour || '').replace(/'/g, "''");
+      const rating = t.rating || 5;
+      const comentario = (t.comentario || t.texto || '').replace(/'/g, "''");
+      const foto = (t.foto || '').replace(/'/g, "''");
+      const fecha = t.fecha || '2026-08-01';
+      const origen = t.origen || 'manual';
+      const estado = t.estado || (t.activo === false ? 'oculto' : 'publicado');
+      const now = new Date().toISOString();
+
+      sql += `INSERT OR REPLACE INTO testimonials (id, nombre, pais, tour_nombre, rating, comentario, foto, fecha, origen, estado, created_at) VALUES ('${id}', '${nombre}', '${pais}', '${tourNombre}', ${rating}, '${comentario}', '${foto}', '${fecha}', '${origen}', '${estado}', '${now}');\n`;
+    });
+  }
+
+  // 4. Site Content (home, about, contact, global)
+  const contentKeys = ['home', 'about', 'contact', 'global'];
+  contentKeys.forEach(key => {
+    const fPath = path.join(__dirname, `../www.manujungleforever.com/data/${key}.json`);
+    if (fs.existsSync(fPath)) {
+      const raw = fs.readFileSync(fPath, 'utf8');
+      const escaped = raw.replace(/'/g, "''");
+      const now = new Date().toISOString();
+      sql += `INSERT OR REPLACE INTO site_content (key, value, updated_at) VALUES ('${key}', '${escaped}', '${now}');\n`;
+    }
+  });
 
   return sql;
 }

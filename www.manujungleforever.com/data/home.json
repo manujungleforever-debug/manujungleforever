@@ -48,12 +48,12 @@
         "badge_texto": "Available Now",
         "titulo": "Jungle Wildlife Tour",
         "duracion": "3, 4, 5, 6 or 8 Days",
-        "pasajeros": "2\u20138 Passengers",
+        "pasajeros": "2–8 Passengers",
         "transporte": "Van & Boat",
-        "descripcion": "Manu National Park tours from Cusco where you travel by van through the cloud forest, then search for Peruvian Amazon animals by boat. See caimans, macaws, capybaras, and the elusive jaguar. Beautiful scenery, local food, incredible nature \u2014 appropriate for all travelers.",
+        "descripcion": "Manu National Park tours from Cusco where you travel by van through the cloud forest, then search for Peruvian Amazon animals by boat. See caimans, macaws, capybaras, and the elusive jaguar. Beautiful scenery, local food, incredible nature — appropriate for all travelers.",
         "boton_texto": "Explore This Tour",
         "enlace": "guided-tours/index.html#wildlife",
-        "imagen": "/media/1787015599134-gayulo-animals-3524518.jpg",
+        "imagen": "/media/1787018009678-willife.jpeg",
         "imagen_alt": "Jungle Wildlife Tour"
       },
       {
@@ -63,12 +63,12 @@
         "badge_texto": "Available Now",
         "titulo": "Rainforest Road Trip",
         "duracion": "4 or 5 Days",
-        "pasajeros": "1\u20133 Passengers",
-        "transporte": "Private 4\u00d74",
+        "pasajeros": "1–3 Passengers",
+        "transporte": "Private 4×4",
         "descripcion": "Our most authentic Peru Amazon tour takes you through villages along the winding road from Cusco to Manu. Spot animals in the cloud forest, taste local flavors, and visit hidden gems.",
         "boton_texto": "View Details",
         "enlace": "guided-tours/index.html#rainforest",
-        "imagen": "/media/1787015599134-gayulo-animals-3524518.jpg",
+        "imagen": "/media/1787019022145-mohamed-hassan-sunset-3754082.jpg",
         "imagen_alt": "Rainforest Road Trip"
       },
       {
@@ -78,12 +78,12 @@
         "badge_texto": "Available Now",
         "titulo": "Manu Expedition",
         "duracion": "5 or 6 Days",
-        "pasajeros": "2\u20138 Passengers",
+        "pasajeros": "2–8 Passengers",
         "transporte": "Van, Boat & Hiking",
-        "descripcion": "Perfect for adventurous nature lovers \u2014 this expedition takes you deep into the forest. Camp, fish, hike, and learn survival skills.",
+        "descripcion": "Perfect for adventurous nature lovers — this expedition takes you deep into the forest. Camp, fish, hike, and learn survival skills.",
         "boton_texto": "View Details",
         "enlace": "guided-tours/index.html#amazon",
-        "imagen": "/media/1787015599134-gayulo-animals-3524518.jpg",
+        "imagen": "/media/usuarios/kemmesik-gmail-com/avatar_1787257830305.jpg",
         "imagen_alt": "Manu Expedition"
       }
     ]

@@ -195,7 +195,7 @@
   </div>
   <div class="tr-main r">
     <div class="tc tc-xl">
-      <img src="/media/1787015599134-gayulo-animals-3524518.jpg" alt="Manu National Park wildlife tour from Cusco" loading="lazy" width="900" height="600">
+      <img src="/media/1787018009678-willife.jpeg" alt="Manu National Park wildlife tour from Cusco" loading="lazy" width="900" height="600">
       <div class="tov">
         <span class="tbg ton"><i class="fas fa-circle" style="font-size:.5rem"></i> Available Now</span>
         <h2 class="tt">Jungle Wildlife Tour</h2>
@@ -206,7 +206,7 @@
     </div>
     <div class="tr-right-col">
       <div class="tc tc-md">
-        <img src="/media/1787015599134-gayulo-animals-3524518.jpg" alt="Rainforest Road Trip from Cusco to Manu" loading="lazy" width="600" height="290">
+        <img src="/media/1787019022145-mohamed-hassan-sunset-3754082.jpg" alt="Rainforest Road Trip from Cusco to Manu" loading="lazy" width="600" height="290">
         <div class="tov">
           <span class="tbg ton"><i class="fas fa-circle" style="font-size:.5rem"></i> Available Now</span>
           <h2 class="tt">Rainforest Road Trip</h2>
@@ -215,7 +215,7 @@
         </div>
       </div>
       <div class="tc tc-md">
-        <img src="/media/1787015599134-gayulo-animals-3524518.jpg" alt="Manu Amazon Expedition from Cusco" loading="lazy" width="600" height="290">
+        <img src="/media/usuarios/kemmesik-gmail-com/avatar_1787257830305.jpg" alt="Manu Amazon Expedition from Cusco" loading="lazy" width="600" height="290">
         <div class="tov">
           <span class="tbg ton"><i class="fas fa-circle" style="font-size:.5rem"></i> Available Now</span>
           <h2 class="tt">Manu Expedition</h2>
@@ -567,11 +567,22 @@
     }
   };
 
-  fetch('data/testimonials.json?v=' + Date.now()).then(r=>r.json()).then(d=>{
-    allTestimonials = (d.testimonials||[]).filter(t=>t.activo);
-    renderTestimonials(1);
-  }).catch(e=>console.error('Error loading testimonials:', e));
-})();
+    fetch('/api/testimonios?public=true&v=' + Date.now())
+      .then(r => { if (!r.ok) throw new Error('API'); return r.json(); })
+      .then(d => {
+        allTestimonials = (d.testimonials || d.testimonios || []).filter(t => t.activo !== false && t.estado !== 'oculto');
+        renderTestimonials(1);
+      })
+      .catch(() => {
+        fetch('data/testimonials.json?v=' + Date.now())
+          .then(r => r.json())
+          .then(d => {
+            allTestimonials = (d.testimonials || []).filter(t => t.activo !== false);
+            renderTestimonials(1);
+          })
+          .catch(e => console.error('Error loading testimonials:', e));
+      });
+  })();
 </script>
 
 <section class="cs" id="plan-trip">
@@ -792,12 +803,27 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   try {
-    const [hRes, gRes] = await Promise.all([
-      fetch('data/home.json?nc=' + Date.now()).catch(() => null),
-      fetch('data/global.json?nc=' + Date.now()).catch(() => null)
+    let [hData, gData] = await Promise.all([
+      fetch('/api/content/home?nc=' + Date.now()).then(r => r.ok ? r.json() : null).catch(() => null),
+      fetch('/api/content/global?nc=' + Date.now()).then(r => r.ok ? r.json() : null).catch(() => null)
     ]);
-    if (hRes && hRes.ok) {
-      const hData = await hRes.json();
+
+    // Fallback to static JSON if API fails
+    if (!hData || !hData.hero) {
+      const fallbackH = await fetch('data/home.json?nc=' + Date.now()).then(r => r.ok ? r.json() : null).catch(() => null);
+      if (fallbackH) hData = fallbackH;
+    }
+    if (!gData || !gData.site_name) {
+      const fallbackG = await fetch('data/global.json?nc=' + Date.now()).then(r => r.ok ? r.json() : null).catch(() => null);
+      if (fallbackG) gData = fallbackG;
+    }
+
+    if (hData) {
+      // If response wrapped in data property
+      if (hData.data && typeof hData.data === 'object') {
+        hData = hData.data;
+      }
+
       // Hero
       const hero = hData.hero || {};
       if (hero.location_tag) {
@@ -846,7 +872,14 @@ document.addEventListener("DOMContentLoaded", function() {
         const xlCard = document.querySelector('#tours .tc-xl');
         if (xlCard && tourCats[0]) {
           const c0 = tourCats[0];
-          // NOTE: imagen NO se sobreescribe - el HTML estatico ya tiene la imagen correcta
+          // Hydrate Image dynamically
+          if (c0.imagen) {
+            const imgEl = xlCard.querySelector('img');
+            if (imgEl) {
+              imgEl.src = fixImgPath(c0.imagen);
+              if (c0.imagen_alt || c0.titulo) imgEl.alt = c0.imagen_alt || c0.titulo;
+            }
+          }
           const badgeEl = xlCard.querySelector('.tbg');
           if (badgeEl) {
             badgeEl.className = `tbg ${c0.disponible !== false ? 'ton' : 'tof'}`;
@@ -872,7 +905,14 @@ document.addEventListener("DOMContentLoaded", function() {
         mdCards.forEach((mdCard, idx) => {
           const cat = tourCats[idx + 1];
           if (!cat) return;
-          // NOTE: imagen NO se sobreescribe - el HTML estatico ya tiene la imagen correcta
+          // Hydrate Image dynamically
+          if (cat.imagen) {
+            const imgEl = mdCard.querySelector('img');
+            if (imgEl) {
+              imgEl.src = fixImgPath(cat.imagen);
+              if (cat.imagen_alt || cat.titulo) imgEl.alt = cat.imagen_alt || cat.titulo;
+            }
+          }
           const badgeEl = mdCard.querySelector('.tbg');
           if (badgeEl) {
             badgeEl.className = `tbg ${cat.disponible !== false ? 'ton' : 'tof'}`;

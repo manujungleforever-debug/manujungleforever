@@ -112,24 +112,66 @@ async function ghPut(path, content, sha, msg) {
 
   if (dataset === 'testimonials') {
     const testList = parsedContent?.testimonials || parsedContent?.testimonios || (Array.isArray(parsedContent) ? parsedContent : [parsedContent]);
-    for (const t of testList) {
-      await fetch('/api/testimonios', {
+    const r = await fetch('/api/testimonios', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(testList)
+    });
+    if (!r.ok) { const e = await r.json().catch(()=>({})); throw new Error(e.error || 'Error al guardar testimonios'); }
+    return { ok: true, sha: 'd1_testimonials_' + Date.now() };
+  }
+
+  if (dataset === 'departures') {
+    const depList = parsedContent?.salidas || (Array.isArray(parsedContent) ? parsedContent : [parsedContent]);
+    for (const s of depList) {
+      await fetch('/api/salidas', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(t)
+        body: JSON.stringify(s)
       });
     }
-    return { ok: true, sha: 'd1_testimonials_' + Date.now() };
+    return { ok: true, sha: 'd1_salidas_' + Date.now() };
+  }
+
+  if (dataset === 'reclamos') {
+    const recList = parsedContent?.reclamos || (Array.isArray(parsedContent) ? parsedContent : [parsedContent]);
+    for (const rec of recList) {
+      await fetch('/api/reclamos', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(rec)
+      });
+    }
+    return { ok: true, sha: 'd1_reclamos_' + Date.now() };
   }
 
   if (dataset.startsWith('content_')) {
     const key = dataset.replace('content_', '');
-    const r = await fetch(`/api/content/${key}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(parsedContent)
-    });
-    if (!r.ok) { const e = await r.json().catch(()=>({})); throw new Error(e.error || `Error al guardar ${key}`); }
+    let d1Saved = false;
+    try {
+      const r = await fetch(`/api/content/${key}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(parsedContent)
+      });
+      if (r.ok) d1Saved = true;
+    } catch (e) {
+      console.warn('D1 PUT warning:', e);
+    }
+
+    // Also sync to GitHub repo file if token present to keep repo in sync
+    const token = sessionStorage.getItem('cms_token');
+    if (token) {
+      try {
+        await fetch(`${API}/file`, {
+          method: 'PUT',
+          headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ path, content: typeof content === 'string' ? content : JSON.stringify(content, null, 2), sha, message: msg || `update: ${path}` })
+        });
+      } catch (e) {
+        console.warn('Git sync warning:', e);
+      }
+    }
     return { ok: true, sha: 'd1_' + key + '_' + Date.now() };
   }
 

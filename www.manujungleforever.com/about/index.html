@@ -720,13 +720,24 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   try {
-    const [aRes, gRes] = await Promise.all([
-      fetch('../data/about.json?nc=' + Date.now()).catch(() => null),
-      fetch('../data/global.json?nc=' + Date.now()).catch(() => null)
+    let [aData, gData] = await Promise.all([
+      fetch('/api/content/about?nc=' + Date.now()).then(r => r.ok ? r.json() : null).catch(() => null),
+      fetch('/api/content/global?nc=' + Date.now()).then(r => r.ok ? r.json() : null).catch(() => null)
     ]);
 
-    if (aRes && aRes.ok) {
-      const aData = await aRes.json();
+    if (!aData || !aData.titulo_pagina) {
+      const fallbackA = await fetch('../data/about.json?nc=' + Date.now()).then(r => r.ok ? r.json() : null).catch(() => null);
+      if (fallbackA) aData = fallbackA;
+    }
+    if (!gData || !gData.site_name) {
+      const fallbackG = await fetch('../data/global.json?nc=' + Date.now()).then(r => r.ok ? r.json() : null).catch(() => null);
+      if (fallbackG) gData = fallbackG;
+    }
+
+    if (aData) {
+      if (aData.data && typeof aData.data === 'object') {
+        aData = aData.data;
+      }
 
       if (aData.titulo_pagina) {
         const h1 = document.querySelector('.in-hero .h1');

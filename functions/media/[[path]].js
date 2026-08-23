@@ -30,10 +30,11 @@ export async function onRequestGet(context) {
       }
     }
 
-    // 3. Fallback inteligente a GitHub raw si el archivo fue commiteado en el repositorio
+    // 3. Fallback inteligente a producción R2 y GitHub raw si el archivo no está en R2 local
     const REPO = 'manujungleforever-debug/manujungleforever';
     const BRANCH = 'main';
     const rawPaths = [
+      `https://www.manujungleforever.com/media/${fileKey}`,
       `https://raw.githubusercontent.com/${REPO}/${BRANCH}/www.manujungleforever.com/media/${fileKey}`,
       `https://raw.githubusercontent.com/${REPO}/${BRANCH}/www.manujungleforever.com/assets/img/${fileKey.split('/').pop()}`,
       `https://raw.githubusercontent.com/${REPO}/${BRANCH}/www.manujungleforever.com/assets/img/hero.png`
@@ -69,3 +70,7 @@ export async function onRequestGet(context) {
     return new Response('Error interno del servidor: ' + e.message, { status: 500 });
   }
 }
+
+export const onRequest = onRequestGet;
+export const onRequestHead = onRequestGet;
+

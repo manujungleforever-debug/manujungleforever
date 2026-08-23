@@ -38,27 +38,59 @@ testimonialsRoutes.get('/', async (c) => {
   }
 });
 
-// ── CREATE TESTIMONIAL ──
+// ── CREATE OR UPDATE TESTIMONIAL(S) ──
 testimonialsRoutes.post('/', async (c) => {
   const db = getDb(c.env.DB);
   const body = await c.req.json();
 
-  const id = body.id || 'test_' + Date.now();
-  await db.insert(schema.testimonials).values({
-    id,
-    nombre: body.nombre,
-    pais: body.pais || null,
-    tourNombre: body.tour_nombre || null,
-    rating: body.rating || 5,
-    comentario: body.comentario,
-    foto: body.foto || null,
-    fecha: body.fecha || new Date().toISOString().split('T')[0],
-    origen: body.origen || 'manual',
-    estado: body.estado || 'publicado',
-    createdAt: new Date().toISOString()
-  });
+  const list = Array.isArray(body) ? body : (Array.isArray(body.testimonials || body.testimonios) ? (body.testimonials || body.testimonios) : [body]);
+  const now = new Date().toISOString();
+  const createdIds: string[] = [];
 
-  return c.json({ ok: true, id }, 201);
+  for (const item of list) {
+    if (!item.nombre && !item.comentario && !item.texto) continue;
+    const id = item.id || 'test_' + Date.now() + '_' + Math.random().toString(36).substring(2, 6);
+    const estado = item.estado || (item.activo === false ? 'oculto' : 'publicado');
+    const comentario = item.comentario || item.texto || '';
+    const tourNombre = item.tour_nombre || item.tour || null;
+    const pais = item.pais || null;
+    const rating = typeof item.rating === 'number' ? item.rating : 5;
+    const foto = item.foto || null;
+    const fecha = item.fecha || now.split('T')[0];
+    const origen = item.origen || 'manual';
+
+    await db.insert(schema.testimonials).values({
+      id,
+      nombre: item.nombre || 'Anónimo',
+      pais,
+      tourNombre,
+      rating,
+      comentario,
+      foto,
+      fecha,
+      origen,
+      estado,
+      createdAt: item.createdAt || item.created_at || now
+    }).onConflictDoUpdate({
+      target: schema.testimonials.id,
+      set: {
+        nombre: item.nombre || 'Anónimo',
+        pais,
+        tourNombre,
+        rating,
+        comentario,
+        foto,
+        fecha,
+        origen,
+        estado
+      }
+    });
+
+    createdIds.push(id);
+  }
+
+  c.header('Cache-Control', 'no-cache, no-store, must-revalidate');
+  return c.json({ ok: true, count: createdIds.length, ids: createdIds }, 201);
 });
 
 // ── UPDATE TESTIMONIAL ──

@@ -16,12 +16,14 @@ contentRoutes.get('/:key', async (c) => {
   const db = getDb(c.env.DB);
   const row = await db.select().from(schema.siteContent).where(eq(schema.siteContent.key, key)).get();
 
-  if (!row) return c.json({ error: 'Contenido no encontrado' }, 404);
+  c.header('Cache-Control', 'no-cache, no-store, must-revalidate');
+
+  if (!row) return c.json({ error: 'Contenido no encontrado', key, data: null }, 404);
 
   let parsed;
   try { parsed = JSON.parse(row.value); } catch { parsed = row.value; }
 
-  return c.json({ key, data: parsed, updatedAt: row.updatedAt });
+  return c.json({ key, data: parsed, ...(typeof parsed === 'object' && parsed !== null ? parsed : {}), updatedAt: row.updatedAt });
 });
 
 // ── PUT CONTENT BY KEY (upsert) ──
@@ -43,5 +45,6 @@ contentRoutes.put('/:key', async (c) => {
       set: { value, updatedAt }
     });
 
-  return c.json({ ok: true, key });
+  c.header('Cache-Control', 'no-cache, no-store, must-revalidate');
+  return c.json({ ok: true, key, updatedAt });
 });
