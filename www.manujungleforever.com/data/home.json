@@ -19,13 +19,13 @@
       "type": "counter"
     },
     {
-      "value": 10,
+      "value": 5,
       "suffix": "+",
       "label": "Years Experience",
       "type": "counter"
     },
     {
-      "value": 12,
+      "value": 6,
       "suffix": "",
       "label": "Tour Options",
       "type": "counter"
