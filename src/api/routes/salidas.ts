@@ -45,11 +45,15 @@ salidasRoutes.get('/', async (c) => {
       tour_nombre: dep.tourNombre,
       fecha_salida: dep.fechaSalida,
       fecha_retorno: dep.fechaRetorno,
+      fecha_regreso: dep.fechaRetorno,
       cupos_totales: dep.cuposTotales,
+      plazas_totales: dep.cuposTotales,
+      plazas_minimas: 2,
       cupos_disponibles: cuposDisponibles,
+      plazas_disponibles: cuposDisponibles,
       precio: dep.precio,
       moneda: dep.moneda,
-      guia_asignado: dep.guiaAsignado,
+      guia_asignado: dep.guiaAsignado || '',
       estado: dep.estado,
       pasajeros: paxs.map(p => ({
         id: p.id,
@@ -70,7 +74,7 @@ salidasRoutes.get('/', async (c) => {
     };
   });
 
-  return c.json({ salidas: result });
+  return c.json({ salidas: result, departures: result });
 });
 
 // ── CREATE DEPARTURE ──
@@ -78,19 +82,39 @@ salidasRoutes.post('/', async (c) => {
   const db = getDb(c.env.DB);
   const body = await c.req.json();
 
-  const id = body.id || 'dep_' + Date.now();
+  const id = body.id || ('DEP-' + String(Date.now()).slice(-4));
+  const tourNombre = body.tour_nombre || body.nombre || 'Tour';
+  const fechaSalida = body.fecha_salida || new Date().toISOString().split('T')[0];
+  const fechaRetorno = body.fecha_retorno || body.fecha_regreso || null;
+  const cuposTotales = Number(body.cupos_totales || body.plazas_totales || 8);
+  const precio = Number(body.precio || 0);
+  const guiaAsignado = body.guia_asignado || null;
+  const estado = body.estado || 'confirmada';
+
   await db.insert(schema.departures).values({
     id,
     tourId: body.tour_id || null,
-    tourNombre: body.tour_nombre,
-    fechaSalida: body.fecha_salida,
-    fechaRetorno: body.fecha_retorno || null,
-    cuposTotales: body.cupos_totales || 8,
-    precio: body.precio || 0,
+    tourNombre,
+    fechaSalida,
+    fechaRetorno,
+    cuposTotales,
+    precio,
     moneda: body.moneda || 'USD',
-    guiaAsignado: body.guia_asignado || null,
-    estado: body.estado || 'confirmada',
+    guiaAsignado,
+    estado,
     createdAt: new Date().toISOString()
+  }).onConflictDoUpdate({
+    target: schema.departures.id,
+    set: {
+      tourNombre,
+      fechaSalida,
+      fechaRetorno,
+      cuposTotales,
+      precio,
+      guiaAsignado,
+      estado,
+      updatedAt: new Date().toISOString()
+    }
   });
 
   return c.json({ ok: true, id }, 201);
@@ -102,16 +126,23 @@ salidasRoutes.put('/:id', async (c) => {
   const id = c.req.param('id');
   const body = await c.req.json();
 
-  await db.update(schema.departures).set({
-    tourNombre: body.tour_nombre,
-    fechaSalida: body.fecha_salida,
-    fechaRetorno: body.fecha_retorno,
-    cuposTotales: body.cupos_totales,
-    precio: body.precio,
-    guiaAsignado: body.guia_asignado,
-    estado: body.estado,
+  const updates: Partial<typeof schema.departures.$inferInsert> = {
     updatedAt: new Date().toISOString()
-  }).where(eq(schema.departures.id, id));
+  };
+
+  if (body.tour_nombre || body.nombre) updates.tourNombre = body.tour_nombre || body.nombre;
+  if (body.fecha_salida) updates.fechaSalida = body.fecha_salida;
+  if (body.fecha_retorno !== undefined || body.fecha_regreso !== undefined) {
+    updates.fechaRetorno = body.fecha_retorno || body.fecha_regreso || null;
+  }
+  if (body.cupos_totales !== undefined || body.plazas_totales !== undefined) {
+    updates.cuposTotales = Number(body.cupos_totales || body.plazas_totales);
+  }
+  if (body.precio !== undefined) updates.precio = Number(body.precio);
+  if (body.guia_asignado !== undefined) updates.guiaAsignado = body.guia_asignado || null;
+  if (body.estado) updates.estado = body.estado;
+
+  await db.update(schema.departures).set(updates).where(eq(schema.departures.id, id));
 
   return c.json({ ok: true });
 });

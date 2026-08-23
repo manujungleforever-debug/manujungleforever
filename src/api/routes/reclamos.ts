@@ -8,7 +8,34 @@ export const reclamosRoutes = new Hono<{ Bindings: Bindings }>();
 reclamosRoutes.get('/', async (c) => {
   const db = getDb(c.env.DB);
   const list = await db.select().from(schema.reclamos).orderBy(desc(schema.reclamos.id)).all();
-  return c.json({ reclamos: list });
+  const formatted = list.map(r => ({
+    id: r.id,
+    codigo_reclamo: r.codigoReclamo,
+    codigoReclamo: r.codigoReclamo,
+    fecha: r.fecha,
+    nombres: r.nombres,
+    documento: r.documento,
+    domicilio: r.domicilio,
+    telefono: r.telefono,
+    correo: r.correo,
+    email: r.correo,
+    apoderado: r.apoderado,
+    bien_tipo: r.bienTipo,
+    bienTipo: r.bienTipo,
+    bien_monto: r.bienMonto,
+    bienMonto: r.bienMonto,
+    bien_descripcion: r.bienDescripcion,
+    bienDescripcion: r.bienDescripcion,
+    tipo: r.tipo,
+    detalle: r.detalle,
+    pedido: r.pedido,
+    estado: r.estado || 'Pendiente',
+    detalle_respuesta: r.detalleRespuesta,
+    detalleRespuesta: r.detalleRespuesta,
+    fecha_respuesta: r.fechaRespuesta,
+    fechaRespuesta: r.fechaRespuesta
+  }));
+  return c.json({ reclamos: formatted, list: formatted });
 });
 
 // ── SUBMIT NEW RECLAMO (PUBLIC) ──
