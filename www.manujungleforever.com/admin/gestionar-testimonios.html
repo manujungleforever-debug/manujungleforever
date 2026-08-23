@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -2049,7 +2049,7 @@ function buildFM(fm,body) {
 async function viewReclamos() {
   set(`<div class="loading"><div class="spinner"></div> Cargando reclamos...</div>`);
   try {
-    const r = await fetch('/api/admin/reclamos', {
+    const r = await fetch('/api/reclamos', {
       headers: { Authorization: `Bearer ${token}` }
     });
     if (r.status === 401) { sessionStorage.clear(); location.reload(); }
@@ -2309,13 +2309,13 @@ async function submitReclamoReply() {
   statusDiv.style.display = 'none';
   
   try {
-    const r = await fetch('/api/admin/responder-reclamo', {
+    const r = await fetch('/api/reclamos/' + id + '/responder', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${sessionStorage.getItem('cms_token')}`
       },
-      body: JSON.stringify({ id: id, detalle_respuesta: reply })
+      body: JSON.stringify({ detalle_respuesta: reply })
     });
     
     const d = await r.json();

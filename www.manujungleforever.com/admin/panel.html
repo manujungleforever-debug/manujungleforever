@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -984,7 +984,7 @@ nav.mnav a.btn-panel-link:hover {
             try {
                 // Fetch Reclamos from D1 API
                 const token = sessionStorage.getItem('cms_token');
-                const recRes = await fetch('/api/admin/reclamos', {
+                const recRes = await fetch('/api/reclamos', {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 let pendingReclamos = 0;

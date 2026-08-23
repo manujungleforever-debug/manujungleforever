@@ -912,8 +912,11 @@ window.editUser = function(idx) {
       password_hash: newHash,
       activo,
       created_at: u.created_at || new Date().toISOString(),
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
+      // For new users, pass plain password so D1 can hash with its own method
+      ...(idx === -1 ? { _new_password: pass || '123456aytana' } : {})
     };
+
 
     if (idx === -1) {
       if (cData.users.some(x => x.email.toLowerCase() === email)) {

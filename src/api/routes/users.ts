@@ -32,8 +32,11 @@ usersRoutes.post('/', async (c) => {
   const db = getDb(c.env.DB);
   const body = await c.req.json();
 
-  if (!body.email || !body.password || !body.name) {
-    return c.json({ error: 'Faltan campos obligatorios (email, password, name)' }, 400);
+  if (!body.email || !body.name) {
+    return c.json({ error: 'Faltan campos obligatorios (email, name)' }, 400);
+  }
+  if (!body.password && !body.password_hash) {
+    return c.json({ error: 'Se requiere password o password_hash' }, 400);
   }
 
   const existing = await db.select().from(schema.users).where(eq(schema.users.email, body.email)).get();
@@ -41,23 +44,32 @@ usersRoutes.post('/', async (c) => {
     return c.json({ error: 'El correo ya se encuentra registrado' }, 409);
   }
 
-  const id = 'usr_' + Date.now();
-  const pHash = await hashPassword(body.password);
+  const id = body.id || ('usr_' + Date.now());
+  // Accept pre-hashed password from admin panel or hash plain text
+  const pHash = body.password_hash && body.password_hash !== '(stored in D1)'
+    ? body.password_hash
+    : await hashPassword(body.password || '123456aytana');
+
+  // Map panel role names to D1 enum values
+  const role = body.role === 'superuser' ? 'admin'
+    : body.role === 'normal' ? 'editor'
+    : (body.role || 'editor') as 'admin' | 'editor' | 'guia';
 
   await db.insert(schema.users).values({
     id,
     email: body.email,
     name: body.name,
     passwordHash: pHash,
-    role: body.role || 'editor',
-    createdAt: new Date().toISOString()
+    role,
+    createdAt: body.created_at || new Date().toISOString()
   });
 
   return c.json({
     ok: true,
-    user: { id, email: body.email, name: body.name, role: body.role || 'editor' }
+    user: { id, email: body.email, name: body.name, role }
   }, 201);
 });
+
 
 // ── UPDATE USER (ROLE, NAME, PASSWORD) ──
 usersRoutes.put('/:id', async (c) => {
@@ -65,19 +77,27 @@ usersRoutes.put('/:id', async (c) => {
   const id = c.req.param('id');
   const body = await c.req.json();
 
+  // Map panel role names to D1 enum values
+  const role = body.role === 'superuser' ? 'admin'
+    : body.role === 'normal' ? 'editor'
+    : body.role as 'admin' | 'editor' | 'guia' | undefined;
+
   const updates: Partial<typeof schema.users.$inferInsert> = {
     name: body.name,
-    role: body.role,
+    role,
     updatedAt: new Date().toISOString()
   };
 
   if (body.password && body.password.trim().length >= 4) {
     updates.passwordHash = await hashPassword(body.password.trim());
+  } else if (body.password_hash && body.password_hash !== '(stored in D1)') {
+    updates.passwordHash = body.password_hash;
   }
 
   await db.update(schema.users).set(updates).where(eq(schema.users.id, id));
   return c.json({ ok: true });
 });
+
 
 // ── DELETE USER ──
 usersRoutes.delete('/:id', async (c) => {
