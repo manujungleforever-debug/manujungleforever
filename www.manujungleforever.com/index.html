@@ -1296,7 +1296,18 @@ document.addEventListener("DOMContentLoaded", function() {
       }
       if (hero.title || hero.title_emphasis) {
         const h1 = document.querySelector('.hero .h1');
-        if (h1) h1.innerHTML = `${cleanMojibake(hero.title || '')}<br>${hero.title_emphasis ? `<em>${cleanMojibake(hero.title_emphasis)}</em>` : ''}`;
+        if (h1) {
+          let t = cleanMojibake(hero.title || '');
+          let e = cleanMojibake(hero.title_emphasis || '');
+          if (t.trim().toLowerCase() === 'what will' && !e.toLowerCase().includes('you')) {
+            t = 'What Will You';
+          }
+          if (e) {
+            h1.innerHTML = `${t}<br><em>${e}</em>`;
+          } else {
+            h1.innerHTML = t;
+          }
+        }
       }
       if (hero.subtitle) {
         const hs = document.querySelector('.hero .hs');

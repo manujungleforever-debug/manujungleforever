@@ -1545,8 +1545,8 @@ async function viewHome() {
       <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(400px, 1fr));gap:20px;align-items:start;">
         <!-- 1. HERO (PORTADA) -->
         <div class="esec" style="margin-bottom:0;"><div class="esec-h">Hero (Portada)</div>
-          <div class="ff"><label>Título principal</label><input id="h-t" name="inicio_hero_title" value="${esc(d.hero?.title||'')}"></div>
-          <div class="ff"><label>Título énfasis (parte resaltada)</label><input id="h-e" name="inicio_hero_emphasis" value="${esc(d.hero?.title_emphasis||'')}"></div>
+          <div class="ff"><label>Título principal</label><input id="h-t" name="inicio_hero_title" value="${esc(d.hero?.title === 'What Will' ? 'What Will You' : (d.hero?.title || 'What Will You'))}"></div>
+          <div class="ff"><label>Título énfasis (parte resaltada)</label><input id="h-e" name="inicio_hero_emphasis" value="${esc(d.hero?.title_emphasis||'Discover?')}"></div>
           <div class="ff"><label>Subtítulo / descripción</label><textarea id="h-s" name="inicio_hero_subtitle" style="min-height:90px;">${esc(d.hero?.subtitle||'')}</textarea></div>
           <div class="grow2">
             <div class="ff"><label>Texto de ubicación</label><input id="h-l" name="inicio_hero_location" value="${esc(d.hero?.location_tag||'')}"></div>
