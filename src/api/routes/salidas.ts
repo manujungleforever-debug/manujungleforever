@@ -12,15 +12,17 @@ salidasRoutes.get('/', async (c) => {
   const departuresList = await db.select().from(schema.departures).orderBy(desc(schema.departures.fechaSalida)).all();
   const passengersList = isPublic ? [] : await db.select().from(schema.passengers).all();
 
-  // Group passengers by departureId
+  // Group passengers by departureId (case-insensitive)
   const paxMap: Record<string, typeof passengersList> = {};
   passengersList.forEach(p => {
-    if (!paxMap[p.departureId]) paxMap[p.departureId] = [];
-    paxMap[p.departureId].push(p);
+    const k = (p.departureId || '').toUpperCase();
+    if (!paxMap[k]) paxMap[k] = [];
+    paxMap[k].push(p);
   });
 
   const result = departuresList.map(dep => {
-    const paxs = paxMap[dep.id] || [];
+    const depId = (dep.id || '').toUpperCase();
+    const paxs = paxMap[depId] || paxMap[dep.id] || [];
     const cuposOcupados = paxs.length;
     const rawDisp = (dep as any).cuposDisponibles ?? (dep as any).cupos_disponibles;
     const cuposDisponibles = (rawDisp !== null && rawDisp !== undefined)
@@ -30,7 +32,7 @@ salidasRoutes.get('/', async (c) => {
 
     if (isPublic) {
       return {
-        id: dep.id,
+        id: depId,
         tour_id: dep.tourId,
         tour_nombre: dep.tourNombre,
         fecha_salida: dep.fechaSalida,
@@ -45,7 +47,7 @@ salidasRoutes.get('/', async (c) => {
     }
 
     return {
-      id: dep.id,
+      id: depId,
       tour_id: dep.tourId,
       tour_nombre: dep.tourNombre,
       fecha_salida: dep.fechaSalida,

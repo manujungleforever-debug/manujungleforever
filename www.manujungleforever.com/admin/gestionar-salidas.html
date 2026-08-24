@@ -2197,7 +2197,7 @@ window.exportPaxPDF = async function(idx) {
     doc.setTextColor(...infoLabelColor); doc.setFont(undefined, 'bold');
     doc.text('ID Salida:', 118, 47);
     doc.setTextColor(...infoValueColor); doc.setFont(undefined, 'normal');
-    doc.text(s.id || '', 138, 47);
+    doc.text((s.id || '').toUpperCase(), 138, 47);
 
     doc.setTextColor(...infoLabelColor); doc.setFont(undefined, 'bold');
     doc.text('Pasajeros:', 118, 53.5);
@@ -2393,7 +2393,7 @@ window.exportPaxPDF = async function(idx) {
       }
     });
 
-    doc.save(`Manifiesto-${s.id}.pdf`);
+    doc.save(`Manifiesto-${(s.id || '').toUpperCase()}.pdf`);
   } catch(e) {
     console.error(e);
     alert('Error al generar PDF: ' + e.message);
@@ -2561,7 +2561,7 @@ window.editDep = async function(idx) {
         <div class="ff"><label>Nombre del tour (Sobreescribir)</label><input id="d-n" value="${esc(s.tour_nombre)}"></div>
       </div>
       <div class="grow3">
-        <div class="ff"><label>ID único</label><input id="d-id" value="${esc(s.id)}"></div>
+        <div class="ff"><label>ID único</label><input id="d-id" value="${esc((s.id || '').toUpperCase())}"></div>
         <div class="ff"><label>Fecha de salida</label><input type="date" id="d-s" value="${esc(s.fecha_salida)}"></div>
         <div class="ff"><label>Fecha de regreso</label><input type="date" id="d-r" value="${esc(s.fecha_regreso)}"></div>
       </div>
@@ -2604,7 +2604,7 @@ window.editDep = async function(idx) {
       ...s,
       tour_id: v('d-tid'),
       tour_nombre: v('d-n'),
-      id: v('d-id') || s.id,
+      id: (v('d-id') || s.id || '').toUpperCase(),
       fecha_salida: v('d-s'),
       fecha_regreso: v('d-r'),
       fecha_retorno: v('d-r'),
