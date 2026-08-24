@@ -1904,93 +1904,63 @@ async function viewTestims() {
     </div>`);
 }
 
-const COUNTRY_FLAGS = {
-  'United States': '🇺🇸', 'Estados Unidos': '🇺🇸', 'USA': '🇺🇸', 'US': '🇺🇸',
-  'United Kingdom': '🇬🇧', 'Reino Unido': '🇬🇧', 'UK': '🇬🇧', 'Great Britain': '🇬🇧', 'England': '🇬🇧', 'Inglaterra': '🇬🇧', 'Scotland': '🏴󠁧󠁢󠁳󠁣󠁴󠁿', 'Wales': '🏴󠁧󠁢󠁷󠁬󠁳󠁿',
-  'Germany': '🇩🇪', 'Alemania': '🇩🇪',
-  'France': '🇫🇷', 'Francia': '🇫🇷',
-  'Italy': '🇮🇹', 'Italia': '🇮🇹',
-  'Spain': '🇪🇸', 'España': '🇪🇸',
-  'Canada': '🇨🇦', 'Canadá': '🇨🇦',
-  'Australia': '🇦🇺',
-  'Netherlands': '🇳🇱', 'Países Bajos': '🇳🇱', 'Holland': '🇳🇱', 'Holanda': '🇳🇱',
-  'Switzerland': '🇨🇭', 'Suiza': '🇨🇭',
-  'Austria': '🇦🇹',
-  'Belgium': '🇧🇪', 'Bélgica': '🇧🇪',
-  'Brazil': '🇧🇷', 'Brasil': '🇧🇷',
-  'Argentina': '🇦🇷',
-  'Chile': '🇨🇱',
-  'Colombia': '🇨🇴',
-  'Mexico': '🇲🇽', 'México': '🇲🇽',
-  'Peru': '🇵🇪', 'Perú': '🇵🇪',
-  'Japan': '🇯🇵', 'Japón': '🇯🇵',
-  'China': '🇨🇳',
-  'South Africa': '🇿🇦', 'Sudáfrica': '🇿🇦',
-  'New Zealand': '🇳🇿', 'Nueva Zelanda': '🇳🇿',
-  'Sweden': '🇸🇪', 'Suecia': '🇸🇪',
-  'Norway': '🇳🇴', 'Noruega': '🇳🇴',
-  'Denmark': '🇩🇰', 'Dinamarca': '🇩🇰',
-  'Finland': '🇫🇮', 'Finlandia': '🇫🇮',
-  'Ireland': '🇮🇪', 'Irlanda': '🇮🇪',
-  'Portugal': '🇵🇹',
-  'Poland': '🇵🇱', 'Polonia': '🇵🇱',
-  'Czech Republic': '🇨🇿', 'República Checa': '🇨🇿',
-  'Israel': '🇮🇱',
-  'India': '🇮🇳',
-  'South Korea': '🇰🇷', 'Corea del Sur': '🇰🇷',
-  'Singapore': '🇸🇬', 'Singapur': '🇸🇬',
-  'Costa Rica': '🇨🇷',
-  'Ecuador': '🇪🇨',
-  'Bolivia': '🇧🇴',
-  'Uruguay': '🇺🇾',
-  'Paraguay': '🇵🇾',
-  'Guatemala': '🇬🇹',
-  'Panama': '🇵🇦', 'Panamá': '🇵🇦'
-};
+const COUNTRIES_LIST = [
+  { name: 'United Kingdom', flag: '🇬🇧', label: '🇬🇧 United Kingdom (Reino Unido)' },
+  { name: 'United States', flag: '🇺🇸', label: '🇺🇸 United States (Estados Unidos)' },
+  { name: 'Germany', flag: '🇩🇪', label: '🇩🇪 Germany (Alemania)' },
+  { name: 'France', flag: '🇫🇷', label: '🇫🇷 France (Francia)' },
+  { name: 'Italy', flag: '🇮🇹', label: '🇮🇹 Italy (Italia)' },
+  { name: 'Spain', flag: '🇪🇸', label: '🇪🇸 Spain (España)' },
+  { name: 'Canada', flag: '🇨🇦', label: '🇨🇦 Canada (Canadá)' },
+  { name: 'Australia', flag: '🇦🇺', label: '🇦🇺 Australia' },
+  { name: 'Netherlands', flag: '🇳🇱', label: '🇳🇱 Netherlands (Países Bajos)' },
+  { name: 'Switzerland', flag: '🇨🇭', label: '🇨🇭 Switzerland (Suiza)' },
+  { name: 'Austria', flag: '🇦🇹', label: '🇦🇹 Austria' },
+  { name: 'Belgium', flag: '🇧🇪', label: '🇧🇪 Belgium (Bélgica)' },
+  { name: 'Brazil', flag: '🇧🇷', label: '🇧🇷 Brazil (Brasil)' },
+  { name: 'Argentina', flag: '🇦🇷', label: '🇦🇷 Argentina' },
+  { name: 'Chile', flag: '🇨🇱', label: '🇨🇱 Chile' },
+  { name: 'Colombia', flag: '🇨🇴', label: '🇨🇴 Colombia' },
+  { name: 'Mexico', flag: '🇲🇽', label: '🇲🇽 Mexico (México)' },
+  { name: 'Peru', flag: '🇵🇪', label: '🇵🇪 Peru (Perú)' },
+  { name: 'Japan', flag: '🇯🇵', label: '🇯🇵 Japan (Japón)' },
+  { name: 'China', flag: '🇨🇳', label: '🇨🇳 China' },
+  { name: 'South Africa', flag: '🇿🇦', label: '🇿🇦 South Africa (Sudáfrica)' },
+  { name: 'New Zealand', flag: '🇳🇿', label: '🇳🇿 New Zealand (Nueva Zelanda)' },
+  { name: 'Sweden', flag: '🇸🇪', label: '🇸🇪 Sweden (Suecia)' },
+  { name: 'Norway', flag: '🇳🇴', label: '🇳🇴 Norway (Noruega)' },
+  { name: 'Denmark', flag: '🇩🇰', label: '🇩🇰 Denmark (Dinamarca)' },
+  { name: 'Finland', flag: '🇫🇮', label: '🇫🇮 Finland (Finlandia)' },
+  { name: 'Ireland', flag: '🇮🇪', label: '🇮🇪 Ireland (Irlanda)' },
+  { name: 'Portugal', flag: '🇵🇹', label: '🇵🇹 Portugal' },
+  { name: 'Poland', flag: '🇵🇱', label: '🇵🇱 Poland (Polonia)' },
+  { name: 'Czech Republic', flag: '🇨🇿', label: '🇨🇿 Czech Republic (República Checa)' },
+  { name: 'Israel', flag: '🇮🇱', label: '🇮🇱 Israel' },
+  { name: 'India', flag: '🇮🇳', label: '🇮🇳 India' },
+  { name: 'South Korea', flag: '🇰🇷', label: '🇰🇷 South Korea (Corea del Sur)' },
+  { name: 'Singapore', flag: '🇸🇬', label: '🇸🇬 Singapore (Singapur)' },
+  { name: 'Costa Rica', flag: '🇨🇷', label: '🇨🇷 Costa Rica' },
+  { name: 'Ecuador', flag: '🇪🇨', label: '🇪🇨 Ecuador' },
+  { name: 'Bolivia', flag: '🇧🇴', label: '🇧🇴 Bolivia' },
+  { name: 'Uruguay', flag: '🇺🇾', label: '🇺🇾 Uruguay' },
+  { name: 'Paraguay', flag: '🇵🇾', label: '🇵🇾 Paraguay' },
+  { name: 'Guatemala', flag: '🇬🇹', label: '🇬🇹 Guatemala' },
+  { name: 'Panama', flag: '🇵🇦', label: '🇵🇦 Panama (Panamá)' }
+];
 
 window.setFlagQuick = function(flag, country) {
-  const pInput = document.getElementById('tm-p');
+  const pSelect = document.getElementById('tm-p');
   const flInput = document.getElementById('tm-fl');
-  const flPreview = document.getElementById('tm-p-flag');
-  if (pInput && (!pInput.value || pInput.value.trim() === '')) pInput.value = country;
-  if (flInput) flInput.value = flag;
-  if (flPreview) flPreview.textContent = flag;
-};
-
-let cachedToursList = [];
-async function loadToursForTestims() {
-  if (cachedToursList.length > 0) return cachedToursList;
-  try {
-    const res = await fetch('/api/tours');
-    if (res.ok) {
-      const data = await res.json();
-      cachedToursList = (data.tours || [])
-        .map(tr => (tr.nombre || tr.titulo || tr.id || '').replace(/ÔÇô/g, ' - ').replace(/–/g, ' - ').replace(/\s+-\s+/g, ' - ').trim())
-        .filter(Boolean);
+  if (pSelect && country) {
+    for (let opt of pSelect.options) {
+      if (opt.value.toLowerCase() === country.toLowerCase()) {
+        opt.selected = true;
+        break;
+      }
     }
-  } catch (e) {
-    console.warn('Could not load tours list:', e);
   }
-  if (!cachedToursList.length) {
-    cachedToursList = [
-      '3-Day Wildlife Quest - Machu Wasi',
-      '4-Day Wildlife Quest - Machu Wasi',
-      '4-Day Wildlife Quest - Nuevo Eden',
-      '5-Day Wildlife Quest - Nuevo Eden',
-      '6-Day Wildlife Quest - Blanquillo',
-      'Manu Reserved Zone - 6 Days',
-      'Wildlife Photography Tour - 8 Days',
-      '5-Day Amazon Expedition',
-      '6-Day Amazon Expedition',
-      '2-Day Road Trip',
-      '5-Day Road Trip',
-      '7-Day Deep Amazon Wildlife Quest',
-      'Live Like a Local - 4D/3N',
-      'Live Like a Local - 5D/4N'
-    ];
-  }
-  return cachedToursList;
-}
+  if (flInput) flInput.value = flag;
+};
 
 window.editTestim = async function(idx) {
   const t= idx === -1 ? {nombre:'', pais:'', bandera:'', tour:'', fecha:'', rating:5, origen:'web', texto:'', foto:'', activo:true} : cData.testimonials[idx];
@@ -2012,6 +1982,22 @@ window.editTestim = async function(idx) {
     toursOptionsHtml = `<option value="${esc(currentTour)}" selected>${esc(currentTour)}</option>` + toursOptionsHtml;
   }
 
+  const currentPais = (t.pais || '').trim();
+  let hasCountryMatch = false;
+  let countriesOptionsHtml = COUNTRIES_LIST.map(c => {
+    const isSel = currentPais && (
+      c.name.toLowerCase() === currentPais.toLowerCase() ||
+      c.label.toLowerCase().includes(currentPais.toLowerCase()) ||
+      currentPais.toLowerCase().includes(c.name.toLowerCase())
+    );
+    if (isSel) hasCountryMatch = true;
+    return `<option value="${esc(c.name)}" data-flag="${c.flag}" ${isSel ? 'selected' : ''}>${esc(c.label)}</option>`;
+  }).join('');
+
+  if (currentPais && !hasCountryMatch) {
+    countriesOptionsHtml = `<option value="${esc(currentPais)}" selected>${esc(currentPais)}</option>` + countriesOptionsHtml;
+  }
+
   set(`
     <button class="back-btn" onclick="route('testimonials')">← Volver a testimonios</button>
     <div class="eform">
@@ -2020,59 +2006,16 @@ window.editTestim = async function(idx) {
         <div class="grow2">
           <div class="ff"><label>Nombre del cliente</label><input id="tm-n" value="${esc(t.nombre)}" placeholder="Ej: James W."></div>
           <div class="ff">
-            <label>País <span style="font-weight:400;color:var(--muted);font-size:0.8rem;">(Selecciona o escribe uno nuevo)</span></label>
-            <div style="position:relative;display:flex;align-items:center;">
-              <input id="tm-p" list="country-list" value="${esc(t.pais)}" placeholder="Buscar o escribir país..." autocomplete="off" style="width:100%;padding-right:42px;">
-              <span id="tm-p-flag" style="position:absolute;right:12px;font-size:1.4rem;pointer-events:none;">${esc(t.bandera||'')}</span>
-            </div>
-            <datalist id="country-list">
-              <option value="United Kingdom">🇬🇧 United Kingdom (Reino Unido)</option>
-              <option value="United States">🇺🇸 United States (Estados Unidos)</option>
-              <option value="Germany">🇩🇪 Germany (Alemania)</option>
-              <option value="France">🇫🇷 France (Francia)</option>
-              <option value="Italy">🇮🇹 Italy (Italia)</option>
-              <option value="Spain">🇪🇸 Spain (España)</option>
-              <option value="Canada">🇨🇦 Canada (Canadá)</option>
-              <option value="Australia">🇦🇺 Australia</option>
-              <option value="Netherlands">🇳🇱 Netherlands (Países Bajos)</option>
-              <option value="Switzerland">🇨🇭 Switzerland (Suiza)</option>
-              <option value="Austria">🇦🇹 Austria</option>
-              <option value="Belgium">🇧🇪 Belgium (Bélgica)</option>
-              <option value="Brazil">🇧🇷 Brazil (Brasil)</option>
-              <option value="Argentina">🇦🇷 Argentina</option>
-              <option value="Chile">🇨🇱 Chile</option>
-              <option value="Colombia">🇨🇴 Colombia</option>
-              <option value="Mexico">🇲🇽 Mexico (México)</option>
-              <option value="Peru">🇵🇪 Peru (Perú)</option>
-              <option value="Japan">🇯🇵 Japan (Japón)</option>
-              <option value="China">🇨🇳 China</option>
-              <option value="South Africa">🇿🇦 South Africa (Sudáfrica)</option>
-              <option value="New Zealand">🇳🇿 New Zealand (Nueva Zelanda)</option>
-              <option value="Sweden">🇸🇪 Sweden (Suecia)</option>
-              <option value="Norway">🇳🇴 Norway (Noruega)</option>
-              <option value="Denmark">🇩🇰 Denmark (Dinamarca)</option>
-              <option value="Finland">🇫🇮 Finland (Finlandia)</option>
-              <option value="Ireland">🇮🇪 Ireland (Irlanda)</option>
-              <option value="Portugal">🇵🇹 Portugal</option>
-              <option value="Poland">🇵🇱 Poland (Polonia)</option>
-              <option value="Czech Republic">🇨🇿 Czech Republic (República Checa)</option>
-              <option value="Israel">🇮🇱 Israel</option>
-              <option value="India">🇮🇳 India</option>
-              <option value="South Korea">🇰🇷 South Korea (Corea del Sur)</option>
-              <option value="Singapore">🇸🇬 Singapore (Singapur)</option>
-              <option value="Costa Rica">🇨🇷 Costa Rica</option>
-              <option value="Ecuador">🇪🇨 Ecuador</option>
-              <option value="Bolivia">🇧🇴 Bolivia</option>
-              <option value="Uruguay">🇺🇾 Uruguay</option>
-              <option value="Paraguay">🇵🇾 Paraguay</option>
-              <option value="Guatemala">🇬🇹 Guatemala</option>
-              <option value="Panama">🇵🇦 Panama (Panamá)</option>
-            </datalist>
+            <label>País del cliente</label>
+            <select id="tm-p">
+              <option value="">-- Seleccionar País --</option>
+              ${countriesOptionsHtml}
+            </select>
           </div>
         </div>
         <div class="grow2">
           <div class="ff">
-            <label>Bandera emoji <span style="font-weight:400;color:var(--teal);font-size:0.8rem;">(Auto-asignada según país)</span></label>
+            <label>Bandera emoji <span style="font-weight:400;color:var(--teal);font-size:0.8rem;">(Auto-asignada)</span></label>
             <div style="display:flex;align-items:center;gap:10px;">
               <input id="tm-fl" value="${esc(t.bandera||'')}" placeholder="Auto (ej: 🇬🇧)" style="max-width:110px;font-size:1.2rem;text-align:center;">
               <div style="display:flex;gap:5px;flex-wrap:wrap;align-items:center;">
@@ -2120,36 +2063,19 @@ window.editTestim = async function(idx) {
       </div>
     </div>`);
 
-  const pInput = document.getElementById('tm-p');
-  const flInput = document.getElementById('tm-fl');
-  const flPreview = document.getElementById('tm-p-flag');
-
-  function autoUpdateFlag() {
-    const query = (pInput.value || '').trim();
-    if (!query) {
-      if (flPreview) flPreview.textContent = flInput.value || '';
-      return;
-    }
-    const lower = query.toLowerCase();
-    for (const [k, v] of Object.entries(COUNTRY_FLAGS)) {
-      if (k.toLowerCase() === lower) {
-        flInput.value = v;
-        if (flPreview) flPreview.textContent = v;
-        return;
+  const pSelect = document.getElementById('tm-p');
+  if (pSelect) {
+    pSelect.addEventListener('change', e => {
+      const opt = e.target.selectedOptions[0];
+      const flag = opt?.dataset?.flag;
+      if (flag) {
+        document.getElementById('tm-fl').value = flag;
+      } else {
+        const match = COUNTRIES_LIST.find(c => c.name.toLowerCase() === e.target.value.toLowerCase());
+        if (match) document.getElementById('tm-fl').value = match.flag;
       }
-    }
-    for (const [k, v] of Object.entries(COUNTRY_FLAGS)) {
-      if (lower.includes(k.toLowerCase())) {
-        flInput.value = v;
-        if (flPreview) flPreview.textContent = v;
-        return;
-      }
-    }
-    if (flPreview) flPreview.textContent = flInput.value || '';
+    });
   }
-
-  pInput.addEventListener('input', autoUpdateFlag);
-  pInput.addEventListener('change', autoUpdateFlag);
   flInput.addEventListener('input', () => {
     if (flPreview) flPreview.textContent = flInput.value || '';
   });
