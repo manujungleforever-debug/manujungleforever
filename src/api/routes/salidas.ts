@@ -137,6 +137,38 @@ salidasRoutes.put('/', async (c) => {
         updatedAt: new Date().toISOString()
       }
     });
+
+    if (Array.isArray(dep.pasajeros) || Array.isArray(dep.passengers)) {
+      const paxs = dep.pasajeros || dep.passengers || [];
+      await db.delete(schema.passengers).where(or(
+        eq(schema.passengers.departureId, dep.id),
+        eq(schema.passengers.departureId, dep.id.toLowerCase()),
+        eq(schema.passengers.departureId, dep.id.toUpperCase())
+      ));
+
+      for (const p of paxs) {
+        if (!p || (!p.nombre_completo && !p.nombreCompleto)) continue;
+        const paxId = p.id || ('PAX-' + String(Date.now()).slice(-6) + '-' + Math.floor(Math.random() * 10000));
+        await db.insert(schema.passengers).values({
+          id: paxId,
+          departureId: dep.id,
+          nombreCompleto: p.nombre_completo || p.nombreCompleto,
+          nacionalidad: p.nacionalidad || null,
+          fechaNacimiento: p.fecha_nacimiento || p.fechaNacimiento || null,
+          pasaporte: p.pasaporte || null,
+          whatsapp: p.whatsapp || null,
+          email: p.email || null,
+          restriccionesDieteticas: p.restricciones_dieteticas || p.restriccionesDieteticas || null,
+          condicionesMedicas: p.condiciones_medicas || p.condicionesMedicas || null,
+          costo: Number(p.costo || 0),
+          montoPagado: Number(p.monto_pagado || p.montoPagado || 0),
+          saldoPendiente: Number(p.saldo_pendiente || p.saldoPendiente || 0),
+          estadoPago: p.estado_pago || p.estadoPago || 'pendiente',
+          foto: p.foto || null,
+          createdAt: p.created_at || new Date().toISOString()
+        });
+      }
+    }
   }));
 
   return c.json({ ok: true });
