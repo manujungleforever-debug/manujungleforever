@@ -513,7 +513,7 @@
                         ${'<i class="fas fa-star"></i>'.repeat(t.rating||5)}
                     </div>
                 </div>
-                <p style="color: rgba(255,255,255,0.85); font-size: 1.02rem; line-height: 1.8; margin-bottom: 20px; font-weight: 300; position:relative; z-index:1;">"${t.texto}"</p>
+                <p style="color: rgba(255,255,255,0.85); font-size: 1.02rem; line-height: 1.8; margin-bottom: 20px; font-weight: 300; position:relative; z-index:1;">"${t.texto || t.comentario || ''}"</p>
             </div>
             
             <div class="testim-verified-mid">
@@ -524,8 +524,8 @@
                 ${avatarHtml}
                 <div>
                     <div style="color: #fff; font-weight: 700; font-size: 1.2rem; letter-spacing: -0.01em;">${t.nombre}</div>
-                    <div style="color: rgba(255,255,255,0.7); font-size: 0.95rem; margin-top: 4px;">${t.pais} ${t.bandera||''}</div>
-                    ${t.tour ? `<div style="color:var(--teal, #2dd4bf); font-size:0.85rem; font-weight:600; margin-top:5px;"><i class="fas fa-compass" style="font-size:0.78rem;margin-right:5px;"></i>${t.tour}</div>` : ''}
+                    <div style="color: rgba(255,255,255,0.7); font-size: 0.95rem; margin-top: 4px;">${t.pais || ''} ${t.bandera || ''}</div>
+                    ${(t.tour || t.tour_nombre) ? `<div style="color:var(--teal, #2dd4bf); font-size:0.85rem; font-weight:600; margin-top:5px;"><i class="fas fa-compass" style="font-size:0.78rem;margin-right:5px;"></i>${t.tour || t.tour_nombre}</div>` : ''}
                 </div>
             </div>
         </div>`;

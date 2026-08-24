@@ -19,6 +19,7 @@ testimonialsRoutes.get('/', async (c) => {
       id: t.id,
       nombre: t.nombre,
       pais: t.pais,
+      bandera: t.bandera || '',
       tour: t.tourNombre,
       tour_nombre: t.tourNombre,
       rating: t.rating,
@@ -59,10 +60,13 @@ testimonialsRoutes.post('/', async (c) => {
     const fecha = item.fecha || now.split('T')[0];
     const origen = item.origen || 'manual';
 
+    const bandera = item.bandera || null;
+
     await db.insert(schema.testimonials).values({
       id,
       nombre: item.nombre || 'Anónimo',
       pais,
+      bandera,
       tourNombre,
       rating,
       comentario,
@@ -76,6 +80,7 @@ testimonialsRoutes.post('/', async (c) => {
       set: {
         nombre: item.nombre || 'Anónimo',
         pais,
+        bandera,
         tourNombre,
         rating,
         comentario,
@@ -99,18 +104,21 @@ testimonialsRoutes.put('/:id', async (c) => {
   const id = c.req.param('id');
   const body = await c.req.json();
 
-  await db.update(schema.testimonials).set({
-    nombre: body.nombre,
-    pais: body.pais || null,
-    tourNombre: body.tour_nombre || null,
-    rating: body.rating || 5,
-    comentario: body.comentario,
-    foto: body.foto || null,
-    fecha: body.fecha,
-    origen: body.origen || 'manual',
-    estado: body.estado || 'publicado'
-  }).where(eq(schema.testimonials.id, id));
+  const updates: Partial<typeof schema.testimonials.$inferInsert> = {};
+  if (body.nombre) updates.nombre = body.nombre;
+  if (body.pais !== undefined) updates.pais = body.pais;
+  if (body.bandera !== undefined) updates.bandera = body.bandera;
+  if (body.tour !== undefined || body.tour_nombre !== undefined) updates.tourNombre = body.tour || body.tour_nombre;
+  if (body.rating !== undefined) updates.rating = Number(body.rating);
+  if (body.texto !== undefined || body.comentario !== undefined) updates.comentario = body.texto ?? body.comentario;
+  if (body.foto !== undefined) updates.foto = body.foto;
+  if (body.fecha) updates.fecha = body.fecha;
+  if (body.origen) updates.origen = body.origen;
+  if (body.estado) updates.estado = body.estado;
+  else if (body.activo !== undefined) updates.estado = body.activo ? 'publicado' : 'oculto';
 
+  await db.update(schema.testimonials).set(updates).where(eq(schema.testimonials.id, id));
+  c.header('Cache-Control', 'no-cache, no-store, must-revalidate');
   return c.json({ ok: true });
 });
 

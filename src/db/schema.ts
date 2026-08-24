@@ -97,6 +97,7 @@ export const testimonials = sqliteTable('testimonials', {
   id: text('id').primaryKey(),
   nombre: text('nombre').notNull(),
   pais: text('pais'),
+  bandera: text('bandera'),
   tourNombre: text('tour_nombre'),
   rating: integer('rating').default(5),
   comentario: text('comentario').notNull(),

@@ -1904,6 +1904,59 @@ async function viewTestims() {
     </div>`);
 }
 
+const COUNTRY_FLAGS = {
+  'United States': '🇺🇸', 'Estados Unidos': '🇺🇸', 'USA': '🇺🇸', 'US': '🇺🇸',
+  'United Kingdom': '🇬🇧', 'Reino Unido': '🇬🇧', 'UK': '🇬🇧', 'Great Britain': '🇬🇧', 'England': '🇬🇧', 'Inglaterra': '🇬🇧', 'Scotland': '🏴󠁧󠁢󠁳󠁣󠁴󠁿', 'Wales': '🏴󠁧󠁢󠁷󠁬󠁳󠁿',
+  'Germany': '🇩🇪', 'Alemania': '🇩🇪',
+  'France': '🇫🇷', 'Francia': '🇫🇷',
+  'Italy': '🇮🇹', 'Italia': '🇮🇹',
+  'Spain': '🇪🇸', 'España': '🇪🇸',
+  'Canada': '🇨🇦', 'Canadá': '🇨🇦',
+  'Australia': '🇦🇺',
+  'Netherlands': '🇳🇱', 'Países Bajos': '🇳🇱', 'Holland': '🇳🇱', 'Holanda': '🇳🇱',
+  'Switzerland': '🇨🇭', 'Suiza': '🇨🇭',
+  'Austria': '🇦🇹',
+  'Belgium': '🇧🇪', 'Bélgica': '🇧🇪',
+  'Brazil': '🇧🇷', 'Brasil': '🇧🇷',
+  'Argentina': '🇦🇷',
+  'Chile': '🇨🇱',
+  'Colombia': '🇨🇴',
+  'Mexico': '🇲🇽', 'México': '🇲🇽',
+  'Peru': '🇵🇪', 'Perú': '🇵🇪',
+  'Japan': '🇯🇵', 'Japón': '🇯🇵',
+  'China': '🇨🇳',
+  'South Africa': '🇿🇦', 'Sudáfrica': '🇿🇦',
+  'New Zealand': '🇳🇿', 'Nueva Zelanda': '🇳🇿',
+  'Sweden': '🇸🇪', 'Suecia': '🇸🇪',
+  'Norway': '🇳🇴', 'Noruega': '🇳🇴',
+  'Denmark': '🇩🇰', 'Dinamarca': '🇩🇰',
+  'Finland': '🇫🇮', 'Finlandia': '🇫🇮',
+  'Ireland': '🇮🇪', 'Irlanda': '🇮🇪',
+  'Portugal': '🇵🇹',
+  'Poland': '🇵🇱', 'Polonia': '🇵🇱',
+  'Czech Republic': '🇨🇿', 'República Checa': '🇨🇿',
+  'Israel': '🇮🇱',
+  'India': '🇮🇳',
+  'South Korea': '🇰🇷', 'Corea del Sur': '🇰🇷',
+  'Singapore': '🇸🇬', 'Singapur': '🇸🇬',
+  'Costa Rica': '🇨🇷',
+  'Ecuador': '🇪🇨',
+  'Bolivia': '🇧🇴',
+  'Uruguay': '🇺🇾',
+  'Paraguay': '🇵🇾',
+  'Guatemala': '🇬🇹',
+  'Panama': '🇵🇦', 'Panamá': '🇵🇦'
+};
+
+window.setFlagQuick = function(flag, country) {
+  const pInput = document.getElementById('tm-p');
+  const flInput = document.getElementById('tm-fl');
+  const flPreview = document.getElementById('tm-p-flag');
+  if (pInput && (!pInput.value || pInput.value.trim() === '')) pInput.value = country;
+  if (flInput) flInput.value = flag;
+  if (flPreview) flPreview.textContent = flag;
+};
+
 window.editTestim = function(idx) {
   const t= idx === -1 ? {nombre:'', pais:'', bandera:'', tour:'', fecha:'', rating:5, origen:'web', texto:'', foto:'', activo:true} : cData.testimonials[idx];
   set(`
@@ -1913,10 +1966,73 @@ window.editTestim = function(idx) {
         <div class="esec-h">Datos del Testimonio</div>
         <div class="grow2">
           <div class="ff"><label>Nombre del cliente</label><input id="tm-n" value="${esc(t.nombre)}" placeholder="Ej: James W."></div>
-          <div class="ff"><label>País</label><input id="tm-p" value="${esc(t.pais)}" placeholder="Ej: United Kingdom"></div>
+          <div class="ff">
+            <label>País <span style="font-weight:400;color:var(--muted);font-size:0.8rem;">(Selecciona o escribe uno nuevo)</span></label>
+            <div style="position:relative;display:flex;align-items:center;">
+              <input id="tm-p" list="country-list" value="${esc(t.pais)}" placeholder="Buscar o escribir país..." autocomplete="off" style="width:100%;padding-right:42px;">
+              <span id="tm-p-flag" style="position:absolute;right:12px;font-size:1.4rem;pointer-events:none;">${esc(t.bandera||'')}</span>
+            </div>
+            <datalist id="country-list">
+              <option value="United Kingdom">🇬🇧 United Kingdom (Reino Unido)</option>
+              <option value="United States">🇺🇸 United States (Estados Unidos)</option>
+              <option value="Germany">🇩🇪 Germany (Alemania)</option>
+              <option value="France">🇫🇷 France (Francia)</option>
+              <option value="Italy">🇮🇹 Italy (Italia)</option>
+              <option value="Spain">🇪🇸 Spain (España)</option>
+              <option value="Canada">🇨🇦 Canada (Canadá)</option>
+              <option value="Australia">🇦🇺 Australia</option>
+              <option value="Netherlands">🇳🇱 Netherlands (Países Bajos)</option>
+              <option value="Switzerland">🇨🇭 Switzerland (Suiza)</option>
+              <option value="Austria">🇦🇹 Austria</option>
+              <option value="Belgium">🇧🇪 Belgium (Bélgica)</option>
+              <option value="Brazil">🇧🇷 Brazil (Brasil)</option>
+              <option value="Argentina">🇦🇷 Argentina</option>
+              <option value="Chile">🇨🇱 Chile</option>
+              <option value="Colombia">🇨🇴 Colombia</option>
+              <option value="Mexico">🇲🇽 Mexico (México)</option>
+              <option value="Peru">🇵🇪 Peru (Perú)</option>
+              <option value="Japan">🇯🇵 Japan (Japón)</option>
+              <option value="China">🇨🇳 China</option>
+              <option value="South Africa">🇿🇦 South Africa (Sudáfrica)</option>
+              <option value="New Zealand">🇳🇿 New Zealand (Nueva Zelanda)</option>
+              <option value="Sweden">🇸🇪 Sweden (Suecia)</option>
+              <option value="Norway">🇳🇴 Norway (Noruega)</option>
+              <option value="Denmark">🇩🇰 Denmark (Dinamarca)</option>
+              <option value="Finland">🇫🇮 Finland (Finlandia)</option>
+              <option value="Ireland">🇮🇪 Ireland (Irlanda)</option>
+              <option value="Portugal">🇵🇹 Portugal</option>
+              <option value="Poland">🇵🇱 Poland (Polonia)</option>
+              <option value="Czech Republic">🇨🇿 Czech Republic (República Checa)</option>
+              <option value="Israel">🇮🇱 Israel</option>
+              <option value="India">🇮🇳 India</option>
+              <option value="South Korea">🇰🇷 South Korea (Corea del Sur)</option>
+              <option value="Singapore">🇸🇬 Singapore (Singapur)</option>
+              <option value="Costa Rica">🇨🇷 Costa Rica</option>
+              <option value="Ecuador">🇪🇨 Ecuador</option>
+              <option value="Bolivia">🇧🇴 Bolivia</option>
+              <option value="Uruguay">🇺🇾 Uruguay</option>
+              <option value="Paraguay">🇵🇾 Paraguay</option>
+              <option value="Guatemala">🇬🇹 Guatemala</option>
+              <option value="Panama">🇵🇦 Panama (Panamá)</option>
+            </datalist>
+          </div>
         </div>
         <div class="grow2">
-          <div class="ff"><label>Bandera emoji</label><input id="tm-fl" value="${esc(t.bandera||'')}" placeholder="Ej: 🇬🇧 🇺🇸 🇩🇪 🇮🇹"><span class="hint">Ej: 🇺🇸 🇬🇧 🇩🇪 🇮🇹 🇫🇷 🇪🇸</span></div>
+          <div class="ff">
+            <label>Bandera emoji <span style="font-weight:400;color:var(--teal);font-size:0.8rem;">(Auto-asignada según país)</span></label>
+            <div style="display:flex;align-items:center;gap:10px;">
+              <input id="tm-fl" value="${esc(t.bandera||'')}" placeholder="Auto (ej: 🇬🇧)" style="max-width:110px;font-size:1.2rem;text-align:center;">
+              <div style="display:flex;gap:5px;flex-wrap:wrap;align-items:center;">
+                <button type="button" class="btn-sm" style="padding:4px 8px;font-size:1.05rem;cursor:pointer;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:6px;" onclick="setFlagQuick('🇬🇧','United Kingdom')">🇬🇧</button>
+                <button type="button" class="btn-sm" style="padding:4px 8px;font-size:1.05rem;cursor:pointer;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:6px;" onclick="setFlagQuick('🇺🇸','United States')">🇺🇸</button>
+                <button type="button" class="btn-sm" style="padding:4px 8px;font-size:1.05rem;cursor:pointer;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:6px;" onclick="setFlagQuick('🇩🇪','Germany')">🇩🇪</button>
+                <button type="button" class="btn-sm" style="padding:4px 8px;font-size:1.05rem;cursor:pointer;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:6px;" onclick="setFlagQuick('🇮🇹','Italy')">🇮🇹</button>
+                <button type="button" class="btn-sm" style="padding:4px 8px;font-size:1.05rem;cursor:pointer;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:6px;" onclick="setFlagQuick('🇫🇷','France')">🇫🇷</button>
+                <button type="button" class="btn-sm" style="padding:4px 8px;font-size:1.05rem;cursor:pointer;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:6px;" onclick="setFlagQuick('🇪🇸','Spain')">🇪🇸</button>
+                <button type="button" class="btn-sm" style="padding:4px 8px;font-size:1.05rem;cursor:pointer;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:6px;" onclick="setFlagQuick('🇵🇪','Peru')">🇵🇪</button>
+              </div>
+            </div>
+          </div>
           <div class="ff"><label>Tour realizado</label><input id="tm-t" value="${esc(t.tour)}" placeholder="Ej: Amazon Expedition"></div>
         </div>
         <div class="grow3">
@@ -1944,12 +2060,48 @@ window.editTestim = function(idx) {
         </div>
       </div>
     </div>`);
+
+  const pInput = document.getElementById('tm-p');
+  const flInput = document.getElementById('tm-fl');
+  const flPreview = document.getElementById('tm-p-flag');
+
+  function autoUpdateFlag() {
+    const query = (pInput.value || '').trim();
+    if (!query) {
+      if (flPreview) flPreview.textContent = flInput.value || '';
+      return;
+    }
+    const lower = query.toLowerCase();
+    for (const [k, v] of Object.entries(COUNTRY_FLAGS)) {
+      if (k.toLowerCase() === lower) {
+        flInput.value = v;
+        if (flPreview) flPreview.textContent = v;
+        return;
+      }
+    }
+    for (const [k, v] of Object.entries(COUNTRY_FLAGS)) {
+      if (lower.includes(k.toLowerCase())) {
+        flInput.value = v;
+        if (flPreview) flPreview.textContent = v;
+        return;
+      }
+    }
+    if (flPreview) flPreview.textContent = flInput.value || '';
+  }
+
+  pInput.addEventListener('input', autoUpdateFlag);
+  pInput.addEventListener('change', autoUpdateFlag);
+  flInput.addEventListener('input', () => {
+    if (flPreview) flPreview.textContent = flInput.value || '';
+  });
+
   document.getElementById('tm-a').addEventListener('change',e=>{
     document.getElementById('tm-lbl').textContent=e.target.checked?'✅ Visible':'🔒 Oculto';
   });
+
   showSaveBar(async()=>{
     const updated = {...t,nombre:v('tm-n'),pais:v('tm-p'),bandera:v('tm-fl'),
-      tour:v('tm-t'),fecha:v('tm-f'),origen:v('tm-orig')||'web',rating:+v('tm-r'),texto:v('tm-tx'),
+      tour:v('tm-t'),fecha:v('tm-f'),origen:v('tm-orig')||'web',rating:+v('tm-r'),texto:v('tm-tx'),comentario:v('tm-tx'),
       foto:v('tm-img'),activo:document.getElementById('tm-a').checked};
     if(idx===-1){
       if(!updated.id) updated.id = Date.now();
