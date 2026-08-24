@@ -2518,12 +2518,12 @@ window.editDep = async function(idx) {
         <div class="ff"><label>Fecha de regreso</label><input type="date" id="d-r" value="${esc(s.fecha_regreso)}"></div>
       </div>
       <div class="grow3">
-        <div class="ff"><label>Precio ($ USD)</label><input type="number" id="d-p" value="${s.precio}"></div>
-        <div class="ff"><label>Plazas totales</label><input type="number" id="d-t" value="${s.plazas_totales}"></div>
-        <div class="ff"><label>Mínimo de pasajeros</label><input type="number" id="d-min" value="${s.plazas_minimas||2}"></div>
+        <div class="ff"><label>Precio ($ USD)</label><input type="number" id="d-p" value="${s.precio ?? 0}"></div>
+        <div class="ff"><label>Plazas totales</label><input type="number" id="d-t" value="${s.plazas_totales ?? s.cupos_totales ?? 8}"></div>
+        <div class="ff"><label>Mínimo de pasajeros</label><input type="number" id="d-min" value="${s.plazas_minimas ?? s.cupos_minimos ?? 2}"></div>
       </div>
       <div class="grow3">
-        <div class="ff"><label>Plazas disponibles</label><input type="number" id="d-d" value="${s.plazas_disponibles}"></div>
+        <div class="ff"><label>Plazas disponibles</label><input type="number" id="d-d" value="${s.plazas_disponibles ?? s.cupos_disponibles ?? 8}"></div>
         <div class="ff"><label>Estado</label><select id="d-e">${['disponible','limitado','completo','cancelado','cerrado'].map(e=>`<option ${s.estado===e?'selected':''} value="${e}">${e}</option>`).join('')}</select></div>
         <div class="ff"><label>Guía Asignado</label>
           <select id="d-g" onchange="if(this.value==='__add_new__') addCustomItem('d-g', 'Nombre completo del nuevo guía:'); else if(this.value==='__remove_guide__') removeCustomGuide('d-g');">
@@ -2547,6 +2547,11 @@ window.editDep = async function(idx) {
     </div></div>`);
 
   showSaveBar(async()=>{
+    const dMinVal = parseInt(v('d-min'), 10);
+    const dTotVal = parseInt(v('d-t'), 10);
+    const dDispVal = parseInt(v('d-d'), 10);
+    const dPriceVal = parseFloat(v('d-p'));
+
     const updated = {
       ...s,
       tour_id: v('d-tid'),
@@ -2555,13 +2560,13 @@ window.editDep = async function(idx) {
       fecha_salida: v('d-s'),
       fecha_regreso: v('d-r'),
       fecha_retorno: v('d-r'),
-      precio: +v('d-p') || 0,
-      plazas_totales: +v('d-t') || 8,
-      cupos_totales: +v('d-t') || 8,
-      plazas_minimas: +v('d-min') || 2,
-      cupos_minimos: +v('d-min') || 2,
-      plazas_disponibles: +v('d-d'),
-      cupos_disponibles: +v('d-d'),
+      precio: isNaN(dPriceVal) ? 0 : dPriceVal,
+      plazas_totales: isNaN(dTotVal) ? 8 : dTotVal,
+      cupos_totales: isNaN(dTotVal) ? 8 : dTotVal,
+      plazas_minimas: isNaN(dMinVal) ? 2 : dMinVal,
+      cupos_minimos: isNaN(dMinVal) ? 2 : dMinVal,
+      plazas_disponibles: isNaN(dDispVal) ? 0 : dDispVal,
+      cupos_disponibles: isNaN(dDispVal) ? 0 : dDispVal,
       estado: v('d-e') || 'disponible',
       guia_asignado: v('d-g') === '__add_new__' ? '' : v('d-g'),
       notas: document.getElementById('d-no')?.value || ''
