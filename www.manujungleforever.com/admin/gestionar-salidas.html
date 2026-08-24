@@ -2520,6 +2520,7 @@ async function viewDeps() {
 }
 
 window.editDep = async function(idx) {
+  window.scrollTo(0, 0);
   let toursList = [];
   window._toursMap = {};
   try {
@@ -2549,8 +2550,8 @@ window.editDep = async function(idx) {
   const s= idx === -1 ? {tour_id:'', tour_nombre:'', id:newId, fecha_salida:'', fecha_regreso:'', precio:0, moneda:'USD', plazas_totales:8, plazas_minimas:2, plazas_disponibles:8, estado:'disponible', guia_asignado:'', notas:'', pasajeros:[]} : cData.salidas[idx];
   
   set(`
-    <button class="back-btn" onclick="route('departures')">← Volver a salidas</button>
-    <div class="eform"><div class="esec"><div class="esec-h">Datos de la Salida</div>
+    <button class="back-btn" onclick="viewDeps()">← Volver a salidas</button>
+    <div class="eform" style="margin-bottom:20px"><div class="esec" style="padding-bottom:18px"><div class="esec-h">Datos de la Salida</div>
       <div class="grow2">
         <div class="ff"><label>Seleccionar Tour Base</label>
           <select id="d-tid" onchange="const t = window._toursMap && (window._toursMap[this.value] || window._toursMap[this.options[this.selectedIndex].value]); if(t) { document.getElementById('d-n').value = t.nombre; if(t.precio_desde) document.getElementById('d-p').value = t.precio_desde; } else { document.getElementById('d-n').value = this.options[this.selectedIndex].text; }">
@@ -2588,8 +2589,8 @@ window.editDep = async function(idx) {
           </select>
         </div>
       </div>
-      <div class="ff"><label>Notas adicionales / Internas</label><textarea id="d-no" style="min-height:80px">${esc(s.notas||'')}</textarea></div>
-      <div style="margin-top:20px;padding-top:15px;border-top:1px solid rgba(255,255,255,.06);display:flex;justify-content:flex-end">
+      <div class="ff" style="margin-bottom:0"><label>Notas adicionales / Internas</label><textarea id="d-no" style="min-height:80px">${esc(s.notas||'')}</textarea></div>
+      <div style="margin-top:16px;display:flex;justify-content:flex-end">
         <button class="btn-danger" type="button" onclick="deleteDep(${idx})" ${idx===-1?'style="display:none"':''}>🗑️ Eliminar Salida</button>
       </div>
     </div></div>`);
