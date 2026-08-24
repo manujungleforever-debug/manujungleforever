@@ -1962,6 +1962,41 @@ window.setFlagQuick = function(flag, country) {
   if (flInput) flInput.value = flag;
 };
 
+let cachedToursList = [];
+async function loadToursForTestims() {
+  if (cachedToursList.length > 0) return cachedToursList;
+  try {
+    const res = await fetch('/api/tours');
+    if (res.ok) {
+      const data = await res.json();
+      cachedToursList = (data.tours || [])
+        .map(tr => (tr.nombre || tr.titulo || tr.id || '').replace(/ÔÇô/g, ' - ').replace(/–/g, ' - ').replace(/\s+-\s+/g, ' - ').trim())
+        .filter(Boolean);
+    }
+  } catch (e) {
+    console.warn('Could not load tours list:', e);
+  }
+  if (!cachedToursList.length) {
+    cachedToursList = [
+      '3-Day Wildlife Quest - Machu Wasi',
+      '4-Day Wildlife Quest - Machu Wasi',
+      '4-Day Wildlife Quest - Nuevo Eden',
+      '5-Day Wildlife Quest - Nuevo Eden',
+      '6-Day Wildlife Quest - Blanquillo',
+      'Manu Reserved Zone - 6 Days',
+      'Wildlife Photography Tour - 8 Days',
+      '5-Day Amazon Expedition',
+      '6-Day Amazon Expedition',
+      '2-Day Road Trip',
+      '5-Day Road Trip',
+      '7-Day Deep Amazon Wildlife Quest',
+      'Live Like a Local - 4D/3N',
+      'Live Like a Local - 5D/4N'
+    ];
+  }
+  return cachedToursList;
+}
+
 window.editTestim = async function(idx) {
   const t= idx === -1 ? {nombre:'', pais:'', bandera:'', tour:'', fecha:'', rating:5, origen:'web', texto:'', foto:'', activo:true} : cData.testimonials[idx];
   const toursList = await loadToursForTestims();
@@ -2063,26 +2098,28 @@ window.editTestim = async function(idx) {
       </div>
     </div>`);
 
+  const flInput = document.getElementById('tm-fl');
   const pSelect = document.getElementById('tm-p');
   if (pSelect) {
     pSelect.addEventListener('change', e => {
       const opt = e.target.selectedOptions[0];
       const flag = opt?.dataset?.flag;
-      if (flag) {
-        document.getElementById('tm-fl').value = flag;
-      } else {
+      if (flag && flInput) {
+        flInput.value = flag;
+      } else if (flInput) {
         const match = COUNTRIES_LIST.find(c => c.name.toLowerCase() === e.target.value.toLowerCase());
-        if (match) document.getElementById('tm-fl').value = match.flag;
+        if (match) flInput.value = match.flag;
       }
     });
   }
-  flInput.addEventListener('input', () => {
-    if (flPreview) flPreview.textContent = flInput.value || '';
-  });
 
-  document.getElementById('tm-a').addEventListener('change',e=>{
-    document.getElementById('tm-lbl').textContent=e.target.checked?'✅ Visible':'🔒 Oculto';
-  });
+  const tmA = document.getElementById('tm-a');
+  if (tmA) {
+    tmA.addEventListener('change', e => {
+      const lbl = document.getElementById('tm-lbl');
+      if (lbl) lbl.textContent = e.target.checked ? '✅ Visible' : '🔒 Oculto';
+    });
+  }
 
   showSaveBar(async()=>{
     const updated = {...t,nombre:v('tm-n'),pais:v('tm-p'),bandera:v('tm-fl'),
