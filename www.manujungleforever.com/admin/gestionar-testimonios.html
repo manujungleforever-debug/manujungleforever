@@ -1957,6 +1957,19 @@ window.setFlagQuick = function(flag, country) {
   if (flPreview) flPreview.textContent = flag;
 };
 
+window.setTestimDateQuick = function(val) {
+  const fInput = document.getElementById('tm-f');
+  const fPicker = document.getElementById('tm-f-picker');
+  if (val === 'today') {
+    const today = new Date().toISOString().split('T')[0];
+    if (fInput) fInput.value = today;
+    if (fPicker) fPicker.value = today;
+  } else {
+    if (fInput) fInput.value = val;
+    if (fPicker && val.length === 10) fPicker.value = val;
+  }
+};
+
 window.editTestim = function(idx) {
   const t= idx === -1 ? {nombre:'', pais:'', bandera:'', tour:'', fecha:'', rating:5, origen:'web', texto:'', foto:'', activo:true} : cData.testimonials[idx];
   set(`
@@ -2036,7 +2049,19 @@ window.editTestim = function(idx) {
           <div class="ff"><label>Tour realizado</label><input id="tm-t" value="${esc(t.tour)}" placeholder="Ej: Amazon Expedition"></div>
         </div>
         <div class="grow3">
-          <div class="ff"><label>Fecha del viaje</label><input type="text" id="tm-f" value="${esc(t.fecha)}" placeholder="Ej: 2025 o Mayo 2025"></div>
+          <div class="ff">
+            <label>Fecha del viaje <span style="font-weight:400;color:var(--muted);font-size:0.8rem;">(Escribe o selecciona)</span></label>
+            <div style="display:flex;gap:6px;align-items:center;">
+              <input type="text" id="tm-f" value="${esc(t.fecha)}" placeholder="Ej: 2026-08-23 o 2025" style="flex:1;">
+              <input type="date" id="tm-f-picker" value="${t.fecha && t.fecha.length===10 ? esc(t.fecha) : ''}" style="width:42px;padding:6px;cursor:pointer;" title="Abrir selector de calendario">
+            </div>
+            <div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:6px;">
+              <button type="button" class="btn-sm" style="padding:2px 8px;font-size:0.75rem;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:4px;color:var(--teal);cursor:pointer;" onclick="setTestimDateQuick('today')">Hoy</button>
+              <button type="button" class="btn-sm" style="padding:2px 8px;font-size:0.75rem;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:4px;color:#e2e8f0;cursor:pointer;" onclick="setTestimDateQuick('2026')">2026</button>
+              <button type="button" class="btn-sm" style="padding:2px 8px;font-size:0.75rem;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:4px;color:#e2e8f0;cursor:pointer;" onclick="setTestimDateQuick('2025')">2025</button>
+              <button type="button" class="btn-sm" style="padding:2px 8px;font-size:0.75rem;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:4px;color:#e2e8f0;cursor:pointer;" onclick="setTestimDateQuick('2024')">2024</button>
+            </div>
+          </div>
           <div class="ff"><label>Origen / Plataforma</label>
             <select id="tm-orig">
               <option value="web" ${(!t.origen || t.origen==='web')?'selected':''}>🌐 Web Directa</option>
@@ -2094,6 +2119,14 @@ window.editTestim = function(idx) {
   flInput.addEventListener('input', () => {
     if (flPreview) flPreview.textContent = flInput.value || '';
   });
+
+  const fPicker = document.getElementById('tm-f-picker');
+  if (fPicker) {
+    fPicker.addEventListener('change', e => {
+      const fInput = document.getElementById('tm-f');
+      if (fInput && e.target.value) fInput.value = e.target.value;
+    });
+  }
 
   document.getElementById('tm-a').addEventListener('change',e=>{
     document.getElementById('tm-lbl').textContent=e.target.checked?'✅ Visible':'🔒 Oculto';

@@ -518,17 +518,14 @@
         badgeHtml = `<span class="testim-verified-badge"><i class="fas fa-check-circle"></i> Verified Traveler</span>`;
       }
       
-      const dateHtml = t.fecha ? `<span style="font-size:0.82rem; color:rgba(255,255,255,0.45); font-weight:500; display:inline-flex; align-items:center; gap:5px; background:rgba(255,255,255,0.04); padding:3px 10px; border-radius:12px; border:1px solid rgba(255,255,255,0.06);"><i class="far fa-calendar-alt" style="font-size:0.78rem; color:var(--teal,#2dd4bf);"></i> ${formatTestimDate(t.fecha)}</span>` : '';
-
       return `
         <div class="testim-card">
             <i class="fas fa-quote-right testim-quote-icon"></i>
             <div>
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; position:relative; z-index:1; gap:10px;">
+                <div style="margin-bottom:18px; position:relative; z-index:1;">
                     <div style="color: #c9a84c; font-size: 1.25rem; letter-spacing: 3px;">
                         ${'<i class="fas fa-star"></i>'.repeat(t.rating||5)}
                     </div>
-                    ${dateHtml}
                 </div>
                 <p style="color: rgba(255,255,255,0.85); font-size: 1.02rem; line-height: 1.8; margin-bottom: 20px; font-weight: 300; position:relative; z-index:1;">"${t.texto || t.comentario || ''}"</p>
             </div>
@@ -541,7 +538,10 @@
                 ${avatarHtml}
                 <div>
                     <div style="color: #fff; font-weight: 700; font-size: 1.2rem; letter-spacing: -0.01em;">${t.nombre}</div>
-                    <div style="color: rgba(255,255,255,0.7); font-size: 0.95rem; margin-top: 4px;">${t.pais || ''} ${t.bandera || ''}</div>
+                    <div style="color: rgba(255,255,255,0.7); font-size: 0.95rem; margin-top: 4px; display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                        <span>${t.pais || ''} ${t.bandera || ''}</span>
+                        ${t.fecha ? `<span style="opacity:0.65; font-size:0.85rem;">· <i class="far fa-calendar-alt" style="font-size:0.75rem; margin-right:3px; color:var(--teal,#2dd4bf);"></i>${formatTestimDate(t.fecha)}</span>` : ''}
+                    </div>
                     ${(t.tour || t.tour_nombre) ? `<div style="color:var(--teal, #2dd4bf); font-size:0.85rem; font-weight:600; margin-top:5px;"><i class="fas fa-compass" style="font-size:0.78rem;margin-right:5px;"></i>${t.tour || t.tour_nombre}</div>` : ''}
                 </div>
             </div>
