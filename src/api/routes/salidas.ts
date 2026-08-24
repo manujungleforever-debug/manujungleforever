@@ -276,6 +276,12 @@ salidasRoutes.delete('/:id', async (c) => {
   const db = getDb(c.env.DB);
   const id = c.req.param('id');
 
+  await db.delete(schema.passengers).where(or(
+    eq(schema.passengers.departureId, id),
+    eq(schema.passengers.departureId, id.toLowerCase()),
+    eq(schema.passengers.departureId, id.toUpperCase())
+  ));
+
   await db.delete(schema.departures).where(or(
     eq(schema.departures.id, id),
     eq(schema.departures.id, id.toLowerCase()),
