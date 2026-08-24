@@ -2501,7 +2501,10 @@ window.editDep = async function(idx) {
   const s= idx === -1 ? {tour_id:'', tour_nombre:'', id:newId, fecha_salida:'', fecha_regreso:'', precio:0, moneda:'USD', plazas_totales:8, plazas_minimas:2, plazas_disponibles:8, estado:'disponible', guia_asignado:'', notas:'', pasajeros:[]} : cData.salidas[idx];
   
   set(`
-    <button class="back-btn" onclick="route('departures')">← Volver a salidas</button>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px;">
+      <button class="back-btn" style="margin-bottom:0;" onclick="route('departures')">← Volver a salidas</button>
+      <button class="btn-primary" type="button" onclick="saveDep(${idx})" style="padding:8px 20px;font-size:0.95rem;font-weight:600;">💾 Guardar Salida</button>
+    </div>
     <div class="eform"><div class="esec"><div class="esec-h">Datos de la Salida</div>
       <div class="grow2">
         <div class="ff"><label>Seleccionar Tour Base</label>
@@ -2541,23 +2544,61 @@ window.editDep = async function(idx) {
         </div>
       </div>
       <div class="ff"><label>Notas adicionales / Internas</label><textarea id="d-no" style="min-height:80px">${esc(s.notas||'')}</textarea></div>
-      <div style="margin-top:20px;padding-top:15px;border-top:1px solid rgba(255,255,255,.06);display:flex;justify-content:flex-end">
+      <div style="margin-top:24px;padding-top:18px;border-top:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
         <button class="btn-danger" type="button" onclick="deleteDep(${idx})" ${idx===-1?'style="display:none"':''}>🗑️ Eliminar Salida</button>
+        <div style="display:flex;gap:10px;margin-left:auto;">
+          <button class="btn-secondary" type="button" onclick="route('departures')">Cancelar</button>
+          <button class="btn-primary" type="button" id="btn-save-dep" onclick="saveDep(${idx})" style="padding:10px 24px;font-size:1rem;font-weight:600;">💾 Guardar Salida</button>
+        </div>
       </div>
     </div></div>`);
-  
+
   showSaveBar(async()=>{
-    const updated = {...s,
-      tour_id:v('d-tid'),tour_nombre:v('d-n'),id:v('d-id'),
-      fecha_salida:v('d-s'),fecha_regreso:v('d-r'),precio:+v('d-p'),
-      plazas_totales:+v('d-t'),plazas_minimas:+v('d-min'),plazas_disponibles:+v('d-d'),
-      estado:v('d-e'),guia_asignado: v('d-g') === '__add_new__' ? '' : v('d-g'),notas:document.getElementById('d-no').value
+    await window.saveDep(idx);
+  });
+};
+
+window.saveDep = async function(idx) {
+  const btn = document.getElementById('btn-save-dep');
+  if (btn) { btn.disabled = true; btn.textContent = 'Guardando...'; }
+  try {
+    const s = idx === -1 ? {} : (cData.salidas[idx] || {});
+    const updated = {
+      ...s,
+      tour_id: v('d-tid'),
+      tour_nombre: v('d-n'),
+      id: v('d-id') || s.id,
+      fecha_salida: v('d-s'),
+      fecha_regreso: v('d-r'),
+      fecha_retorno: v('d-r'),
+      precio: +v('d-p') || 0,
+      plazas_totales: +v('d-t') || 8,
+      cupos_totales: +v('d-t') || 8,
+      plazas_minimas: +v('d-min') || 2,
+      plazas_disponibles: +v('d-d'),
+      cupos_disponibles: +v('d-d'),
+      estado: v('d-e') || 'disponible',
+      guia_asignado: v('d-g') === '__add_new__' ? '' : v('d-g'),
+      notas: document.getElementById('d-no')?.value || ''
     };
+
     if (idx === -1) cData.salidas.unshift(updated);
     else cData.salidas[idx] = updated;
-    const res=await ghPut(cFile,JSON.stringify(cData,null,2),cSha,`update salida: ${updated.id}`);
-    cSha=res.sha;
-  });
+
+    const res = await ghPut(cFile, JSON.stringify(cData, null, 2), cSha, `update salida: ${updated.id}`);
+    cSha = res.sha;
+
+    if (btn) {
+      btn.textContent = '✓ ¡Guardado con éxito!';
+      btn.style.background = '#059669';
+    }
+    setTimeout(() => {
+      route('departures');
+    }, 800);
+  } catch(err) {
+    alert('Error al guardar: ' + err.message);
+    if (btn) { btn.disabled = false; btn.textContent = '💾 Guardar Salida'; }
+  }
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
