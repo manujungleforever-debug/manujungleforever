@@ -484,6 +484,20 @@
     const pageItems = allTestimonials.slice(start, end);
     const totalPages = Math.ceil(allTestimonials.length / itemsPerPage);
 
+    function formatTestimDate(d) {
+      if (!d) return '';
+      d = String(d).trim();
+      if (/^\d{4}$/.test(d)) return d;
+      if (/^\d{4}-\d{2}/.test(d)) {
+        const parts = d.split('-');
+        const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        const mIdx = parseInt(parts[1], 10) - 1;
+        const mStr = (mIdx >= 0 && mIdx < 12) ? months[mIdx] : parts[1];
+        return `${mStr} ${parts[0]}`;
+      }
+      return d;
+    }
+
     grid.innerHTML = pageItems.map(t => {
       const initial = (t.nombre || '?').charAt(0);
       let rawFoto = (t.foto || '').trim();
@@ -504,14 +518,17 @@
         badgeHtml = `<span class="testim-verified-badge"><i class="fas fa-check-circle"></i> Verified Traveler</span>`;
       }
       
+      const dateHtml = t.fecha ? `<span style="font-size:0.82rem; color:rgba(255,255,255,0.45); font-weight:500; display:inline-flex; align-items:center; gap:5px; background:rgba(255,255,255,0.04); padding:3px 10px; border-radius:12px; border:1px solid rgba(255,255,255,0.06);"><i class="far fa-calendar-alt" style="font-size:0.78rem; color:var(--teal,#2dd4bf);"></i> ${formatTestimDate(t.fecha)}</span>` : '';
+
       return `
         <div class="testim-card">
             <i class="fas fa-quote-right testim-quote-icon"></i>
             <div>
-                <div style="margin-bottom:18px; position:relative; z-index:1;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; position:relative; z-index:1; gap:10px;">
                     <div style="color: #c9a84c; font-size: 1.25rem; letter-spacing: 3px;">
                         ${'<i class="fas fa-star"></i>'.repeat(t.rating||5)}
                     </div>
+                    ${dateHtml}
                 </div>
                 <p style="color: rgba(255,255,255,0.85); font-size: 1.02rem; line-height: 1.8; margin-bottom: 20px; font-weight: 300; position:relative; z-index:1;">"${t.texto || t.comentario || ''}"</p>
             </div>
