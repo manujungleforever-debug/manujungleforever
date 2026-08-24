@@ -45,6 +45,7 @@ export const departures = sqliteTable('departures', {
   fechaSalida: text('fecha_salida').notNull(),
   fechaRetorno: text('fecha_retorno'),
   cuposTotales: integer('cupos_totales').default(8).notNull(),
+  cuposMinimos: integer('cupos_minimos').default(2),
   cuposDisponibles: integer('cupos_disponibles'),
   precio: real('precio').notNull(),
   moneda: text('moneda').default('USD').notNull(),

@@ -1,0 +1,1 @@
+ALTER TABLE departures ADD COLUMN cupos_minimos INTEGER DEFAULT 2;

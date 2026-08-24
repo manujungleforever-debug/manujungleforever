@@ -26,6 +26,7 @@ salidasRoutes.get('/', async (c) => {
     const cuposDisponibles = (rawDisp !== null && rawDisp !== undefined)
       ? Number(rawDisp)
       : Math.max(0, dep.cuposTotales - cuposOcupados);
+    const cuposMinimos = (dep as any).cuposMinimos ?? (dep as any).cupos_minimos ?? 2;
 
     if (isPublic) {
       return {
@@ -35,6 +36,7 @@ salidasRoutes.get('/', async (c) => {
         fecha_salida: dep.fechaSalida,
         fecha_retorno: dep.fechaRetorno,
         cupos_totales: dep.cuposTotales,
+        cupos_minimos: cuposMinimos,
         cupos_disponibles: cuposDisponibles,
         precio: dep.precio,
         moneda: dep.moneda,
@@ -51,7 +53,8 @@ salidasRoutes.get('/', async (c) => {
       fecha_regreso: dep.fechaRetorno,
       cupos_totales: dep.cuposTotales,
       plazas_totales: dep.cuposTotales,
-      plazas_minimas: 2,
+      cupos_minimos: cuposMinimos,
+      plazas_minimas: cuposMinimos,
       cupos_disponibles: cuposDisponibles,
       plazas_disponibles: cuposDisponibles,
       precio: dep.precio,
@@ -93,6 +96,7 @@ salidasRoutes.put('/', async (c) => {
     const fechaSalida = dep.fecha_salida || new Date().toISOString().split('T')[0];
     const fechaRetorno = dep.fecha_retorno || dep.fecha_regreso || null;
     const cuposTotales = Number(dep.cupos_totales ?? dep.plazas_totales ?? 8);
+    const cuposMinimos = Number(dep.cupos_minimos ?? dep.plazas_minimas ?? 2);
     const cuposDisponibles = (dep.cupos_disponibles !== undefined || dep.plazas_disponibles !== undefined)
       ? Number(dep.cupos_disponibles ?? dep.plazas_disponibles)
       : null;
@@ -108,6 +112,7 @@ salidasRoutes.put('/', async (c) => {
       fechaSalida,
       fechaRetorno,
       cuposTotales,
+      cuposMinimos,
       cuposDisponibles,
       precio,
       moneda: dep.moneda || 'USD',
@@ -123,6 +128,7 @@ salidasRoutes.put('/', async (c) => {
         fechaSalida,
         fechaRetorno,
         cuposTotales,
+        cuposMinimos,
         cuposDisponibles,
         precio,
         guiaAsignado,
@@ -146,6 +152,7 @@ salidasRoutes.post('/', async (c) => {
   const fechaSalida = body.fecha_salida || new Date().toISOString().split('T')[0];
   const fechaRetorno = body.fecha_retorno || body.fecha_regreso || null;
   const cuposTotales = Number(body.cupos_totales || body.plazas_totales || 8);
+  const cuposMinimos = Number(body.cupos_minimos || body.plazas_minimas || 2);
   const cuposDisponibles = (body.cupos_disponibles !== undefined || body.plazas_disponibles !== undefined)
     ? Number(body.cupos_disponibles ?? body.plazas_disponibles)
     : null;
@@ -161,6 +168,7 @@ salidasRoutes.post('/', async (c) => {
     fechaSalida,
     fechaRetorno,
     cuposTotales,
+    cuposMinimos,
     cuposDisponibles,
     precio,
     moneda: body.moneda || 'USD',
@@ -175,6 +183,7 @@ salidasRoutes.post('/', async (c) => {
       fechaSalida,
       fechaRetorno,
       cuposTotales,
+      cuposMinimos,
       cuposDisponibles,
       precio,
       guiaAsignado,
@@ -204,6 +213,9 @@ salidasRoutes.put('/:id', async (c) => {
   }
   if (body.cupos_totales !== undefined || body.plazas_totales !== undefined) {
     updates.cuposTotales = Number(body.cupos_totales ?? body.plazas_totales);
+  }
+  if (body.cupos_minimos !== undefined || body.plazas_minimas !== undefined) {
+    updates.cuposMinimos = Number(body.cupos_minimos ?? body.plazas_minimas);
   }
   if (body.cupos_disponibles !== undefined || body.plazas_disponibles !== undefined) {
     updates.cuposDisponibles = Number(body.cupos_disponibles ?? body.plazas_disponibles);
