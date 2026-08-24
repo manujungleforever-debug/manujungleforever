@@ -136,6 +136,8 @@
           const elWac = sr.querySelector('a[aria-label="WhatsApp"]'); if (elWac) elWac.href = waLink;
           const elTtc = sr.querySelector('a[aria-label="TikTok"]'); if (elTtc) elTtc.href = soc.tiktok || '#';
         }
+      }
+
       // 5. Individual Tour Page dynamic hydration from D1
       await syncTourPage();
     } catch(err) {
