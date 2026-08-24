@@ -370,6 +370,198 @@
   line-height: 1.4 !important;
   display: block !important;
 }
+
+/* ══ OUR PILLARS SECTION (WHY-US) REDESIGN ══════════════════ */
+#why-us {
+  background: radial-gradient(circle at 50% 0%, rgba(45, 212, 191, 0.08) 0%, #030806 75%) !important;
+  padding: 85px 0 !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.06) !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+#why-us .cx {
+  max-width: 1480px !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+  padding: 0 36px !important;
+  box-sizing: border-box !important;
+}
+
+.pillars-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 26px !important;
+  width: 100% !important;
+}
+
+@media (max-width: 960px) {
+  .pillars-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+}
+
+.pillar-card {
+  position: relative !important;
+  background: rgba(8, 20, 16, 0.65) !important;
+  backdrop-filter: blur(14px) !important;
+  border-radius: 22px !important;
+  padding: 38px 32px 34px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  overflow: hidden !important;
+}
+
+.pillar-card::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 3px !important;
+  opacity: 0.8 !important;
+  transition: all 0.3s ease !important;
+}
+
+.pillar-card:hover {
+  transform: translateY(-8px) !important;
+}
+
+/* Pillar 1: Emerald / Local */
+.pillar-local {
+  border: 1px solid rgba(16, 185, 129, 0.22) !important;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5), 0 0 20px rgba(16, 185, 129, 0.06) !important;
+}
+.pillar-local::before {
+  background: linear-gradient(90deg, transparent, #10b981, #2dd4bf, transparent) !important;
+}
+.pillar-local:hover {
+  border-color: rgba(16, 185, 129, 0.5) !important;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.7), 0 0 35px rgba(16, 185, 129, 0.18) !important;
+}
+.pillar-local .pillar-icon {
+  background: rgba(16, 185, 129, 0.14) !important;
+  border: 1px solid rgba(16, 185, 129, 0.35) !important;
+  color: #34d399 !important;
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.2) !important;
+}
+.pillar-local .pillar-tag {
+  background: rgba(16, 185, 129, 0.12) !important;
+  color: #34d399 !important;
+  border: 1px solid rgba(16, 185, 129, 0.25) !important;
+}
+
+/* Pillar 2: Sky Cyan / Flexible */
+.pillar-flexible {
+  border: 1px solid rgba(56, 189, 248, 0.22) !important;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5), 0 0 20px rgba(56, 189, 248, 0.06) !important;
+}
+.pillar-flexible::before {
+  background: linear-gradient(90deg, transparent, #38bdf8, #818cf8, transparent) !important;
+}
+.pillar-flexible:hover {
+  border-color: rgba(56, 189, 248, 0.5) !important;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.7), 0 0 35px rgba(56, 189, 248, 0.18) !important;
+}
+.pillar-flexible .pillar-icon {
+  background: rgba(56, 189, 248, 0.14) !important;
+  border: 1px solid rgba(56, 189, 248, 0.35) !important;
+  color: #38bdf8 !important;
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.2) !important;
+}
+.pillar-flexible .pillar-tag {
+  background: rgba(56, 189, 248, 0.12) !important;
+  color: #38bdf8 !important;
+  border: 1px solid rgba(56, 189, 248, 0.25) !important;
+}
+
+/* Pillar 3: Gold Amber / Eco */
+.pillar-eco {
+  border: 1px solid rgba(245, 158, 11, 0.22) !important;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5), 0 0 20px rgba(245, 158, 11, 0.06) !important;
+}
+.pillar-eco::before {
+  background: linear-gradient(90deg, transparent, #f59e0b, #fbbf24, transparent) !important;
+}
+.pillar-eco:hover {
+  border-color: rgba(245, 158, 11, 0.5) !important;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.7), 0 0 35px rgba(245, 158, 11, 0.18) !important;
+}
+.pillar-eco .pillar-icon {
+  background: rgba(245, 158, 11, 0.14) !important;
+  border: 1px solid rgba(245, 158, 11, 0.35) !important;
+  color: #fbbf24 !important;
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.2) !important;
+}
+.pillar-eco .pillar-tag {
+  background: rgba(245, 158, 11, 0.12) !important;
+  color: #fbbf24 !important;
+  border: 1px solid rgba(245, 158, 11, 0.25) !important;
+}
+
+.pillar-top-row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  margin-bottom: 22px !important;
+}
+
+.pillar-icon {
+  width: 54px !important;
+  height: 54px !important;
+  border-radius: 16px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 1.45rem !important;
+  transition: transform 0.3s ease !important;
+}
+
+.pillar-card:hover .pillar-icon {
+  transform: scale(1.1) rotate(4deg) !important;
+}
+
+.pillar-tag {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  font-size: 0.72rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  padding: 5px 12px !important;
+  border-radius: 20px !important;
+}
+
+.pillar-card h3 {
+  font-family: 'Outfit', sans-serif !important;
+  font-size: 1.25rem !important;
+  font-weight: 700 !important;
+  color: #ffffff !important;
+  line-height: 1.3 !important;
+  margin-bottom: 14px !important;
+}
+
+.pillar-card p {
+  font-size: 0.94rem !important;
+  color: rgba(226, 232, 240, 0.78) !important;
+  line-height: 1.75 !important;
+  margin: 0 0 20px 0 !important;
+  flex-grow: 1 !important;
+}
+
+.pillar-footer-feature {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  font-size: 0.78rem !important;
+  font-weight: 600 !important;
+  color: rgba(255, 255, 255, 0.65) !important;
+  padding-top: 14px !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.07) !important;
+}
 </style>
 </head><body>
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5476BC9" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -1039,16 +1231,52 @@
   </div>
 </section>
 
-<section class="sec" id="why-us" style="background:var(--f); border-top:1px solid rgba(255,255,255,.05)">
+<section class="sec" id="why-us">
   <div class="cx">
-    <div class="r" style="text-align:center;margin-bottom:56px">
-      <span class="ey">Our Values</span>
-      <h2 class="h2">Our Pillars</h2>
+    <div class="r" style="text-align:center; margin-bottom:48px;">
+      <span class="ey" style="color:var(--teal,#2dd4bf);"><i class="fas fa-gem"></i> Our Values</span>
+      <h2 class="h2" style="font-size:clamp(2rem, 3.5vw, 2.8rem); margin-bottom:12px;">Our <span style="background:linear-gradient(135deg, #22d3ee, #2dd4bf); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">Pillars</span></h2>
+      <p style="color:rgba(226,232,240,0.72); max-width:620px; margin:0 auto; font-size:1rem;">The foundational principles that guide every expedition we operate into Manu National Park.</p>
     </div>
-    <div class="pg" style="border:1px solid rgba(255,255,255,.05); border-radius:16px; overflow:hidden">
-      <div class="pl r"><div class="pi"><i class="fas fa-home"></i></div><h3>Family Business Supporting Locals</h3><p>We live in Peru, we love Peru. We work with our family and local professionals to operate our tours to Manu National Park. Every trip you take directly supports the local community of Nuevo Eden, Peru.</p></div>
-      <div class="pl r"><div class="pi"><i class="fas fa-compass"></i></div><h3>Guided Tours or Independent Trips</h3><p>We offer both guided tours and can also help organize independent trips for travelers who want to visit Manu with more flexibility. Whatever your style, we tailor the experience to fit you perfectly.</p></div>
-      <div class="pl r"><div class="pi"><i class="fas fa-leaf"></i></div><h3>Sustainable Tourism</h3><p>The Amazon Rainforest is one of our planet's most important ecosystems, and it's in danger. We are passionate about using tourism as a positive force to care for the jungle and its inhabitants.</p></div>
+    <div class="pillars-grid">
+      <!-- Card 1 -->
+      <div class="pillar-card pillar-local">
+        <div class="pillar-top-row">
+          <div class="pillar-icon"><i class="fas fa-people-roof"></i></div>
+          <span class="pillar-tag"><i class="fas fa-check-circle"></i> Local Roots</span>
+        </div>
+        <h3>Family Business Supporting Locals</h3>
+        <p>We live in Peru, we love Peru. We work with our native family and local professionals to operate our tours to Manu National Park. Every trip you take directly supports the local community of Nuevo Edén.</p>
+        <div class="pillar-footer-feature">
+          <i class="fas fa-heart" style="color:#34d399;"></i> 100% Locally Owned &amp; Reinvested
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="pillar-card pillar-flexible">
+        <div class="pillar-top-row">
+          <div class="pillar-icon"><i class="fas fa-compass"></i></div>
+          <span class="pillar-tag"><i class="fas fa-route"></i> Flexible Travel</span>
+        </div>
+        <h3>Guided Tours or Independent Trips</h3>
+        <p>We offer expert-led guided expeditions as well as tailored independent journeys for travelers who want flexibility. Whatever your style, we craft the experience to fit you perfectly.</p>
+        <div class="pillar-footer-feature">
+          <i class="fas fa-sliders" style="color:#38bdf8;"></i> Customized &amp; Private Itineraries
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="pillar-card pillar-eco">
+        <div class="pillar-top-row">
+          <div class="pillar-icon"><i class="fas fa-seedling"></i></div>
+          <span class="pillar-tag"><i class="fas fa-shield-halved"></i> Eco-Shield</span>
+        </div>
+        <h3>Sustainable Tourism</h3>
+        <p>The Amazon Rainforest is one of our planet's most critical ecosystems under constant threat. We are passionate about using low-impact eco-tourism as an active shield to protect the jungle and its wildlife.</p>
+        <div class="pillar-footer-feature">
+          <i class="fas fa-tree" style="color:#fbbf24;"></i> Anti-Deforestation &amp; Conservation
+        </div>
+      </div>
     </div>
   </div>
 </section>
