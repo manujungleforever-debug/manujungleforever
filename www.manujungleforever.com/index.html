@@ -209,6 +209,125 @@
   border-color: rgba(245, 158, 11, 0.45) !important;
   transform: translateY(-2px) !important;
 }
+
+/* ══ UNIQUE CONTENT SECTION (SEPARATED & FLOATING FRAMED IMAGE) ══ */
+.unique-section {
+  background: linear-gradient(180deg, #030806 0%, #051410 50%, #030806 100%) !important;
+  padding: 85px 0 !important;
+  border-top: 1px solid rgba(45, 212, 191, 0.12) !important;
+  border-bottom: 1px solid rgba(45, 212, 191, 0.12) !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.unique-grid {
+  display: grid !important;
+  grid-template-columns: 1.05fr 1.15fr !important;
+  gap: 48px !important;
+  align-items: center !important;
+}
+
+@media (max-width: 960px) {
+  .unique-grid {
+    grid-template-columns: 1fr !important;
+    gap: 36px !important;
+  }
+}
+
+.unique-media-wrap {
+  position: relative !important;
+}
+
+.unique-media-wrap:hover .spi img {
+  transform: scale(1.04) !important;
+}
+
+.unique-badge {
+  position: absolute !important;
+  top: 16px !important;
+  left: 16px !important;
+  z-index: 5 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 7px !important;
+  padding: 6px 14px !important;
+  background: rgba(3, 12, 10, 0.85) !important;
+  backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(45, 212, 191, 0.4) !important;
+  border-radius: 30px !important;
+  color: var(--teal, #2dd4bf) !important;
+  font-size: 0.75rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.05em !important;
+  text-transform: uppercase !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
+}
+
+.unique-text-wrap {
+  background: transparent !important;
+  padding: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+}
+
+.unique-features-grid {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 16px !important;
+  margin-top: 10px !important;
+}
+
+@media (max-width: 600px) {
+  .unique-features-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+.uf-item {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 12px !important;
+  background: rgba(45, 212, 191, 0.06) !important;
+  border: 1px solid rgba(45, 212, 191, 0.16) !important;
+  border-radius: 14px !important;
+  padding: 14px 16px !important;
+  transition: all 0.3s ease !important;
+}
+
+.uf-item:hover {
+  background: rgba(45, 212, 191, 0.12) !important;
+  border-color: rgba(45, 212, 191, 0.35) !important;
+  transform: translateY(-2px) !important;
+}
+
+.uf-icon {
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 10px !important;
+  background: rgba(45, 212, 191, 0.15) !important;
+  border: 1px solid rgba(45, 212, 191, 0.3) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: var(--teal, #2dd4bf) !important;
+  font-size: 1rem !important;
+  flex-shrink: 0 !important;
+}
+
+.uf-item h4 {
+  font-size: 0.85rem !important;
+  font-weight: 700 !important;
+  color: #ffffff !important;
+  margin: 0 0 3px 0 !important;
+}
+
+.uf-item span {
+  font-size: 0.76rem !important;
+  color: rgba(226, 232, 240, 0.72) !important;
+  line-height: 1.4 !important;
+  display: block !important;
+}
 </style>
 </head><body>
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5476BC9" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -458,20 +577,50 @@
   </div>
 </section>
 
-<section class="sp" id="unique-content" style="background:var(--k); border-top:1px solid rgba(255,255,255,.05)">
-  <div class="spi rl" style="position:relative; overflow:hidden; border-radius:18px;">
-    <img src="wp-content/uploads/2022/10/Hero-About-Us.jpg" alt="Manu Jungle Forever Family and Guides" loading="lazy">
-    <div class="spi-caption" style="position: absolute; bottom: 0; inset-inline: 0; background: linear-gradient(to top, rgba(3,12,10,0.88) 0%, rgba(3,12,10,0.3) 60%, transparent 100%); padding: 18px 22px; color: #fff;">
-      <span style="font-size: 0.88rem; font-weight: 600; color: rgba(255,255,255,0.95); display: flex; align-items: center; gap: 8px;">
-        <i class="fas fa-camera" style="color: var(--teal, #2dd4bf);"></i> <span class="caption-text">Manu Jungle Forever Family and Guides</span>
-      </span>
+<section id="unique-content" class="unique-section">
+  <div class="cx">
+    <div class="unique-grid">
+      <!-- Left Column: Floating Reduced Framed Image -->
+      <div class="unique-media-wrap rl">
+        <div class="spi" style="position:relative; overflow:hidden; border-radius:22px; max-height:460px; height:100%; border:1px solid rgba(45,212,191,0.25); box-shadow:0 20px 48px rgba(0,0,0,0.6), 0 0 30px rgba(45,212,191,0.12);">
+          <div class="unique-badge">
+            <i class="fas fa-leaf"></i> 100% Local Conservation
+          </div>
+          <img src="wp-content/uploads/2022/10/Hero-About-Us.jpg" alt="Manu Jungle Forever Family and Guides" loading="lazy" style="width:100%; height:100%; object-fit:cover; display:block; transition:transform 0.8s cubic-bezier(0.2,0.8,0.2,1);">
+          <div class="spi-caption" style="position: absolute; bottom: 0; inset-inline: 0; background: linear-gradient(to top, rgba(3,12,10,0.92) 0%, rgba(3,12,10,0.4) 60%, transparent 100%); padding: 16px 20px; color: #fff;">
+            <span style="font-size: 0.85rem; font-weight: 600; color: rgba(255,255,255,0.95); display: flex; align-items: center; gap: 8px;">
+              <i class="fas fa-camera" style="color: var(--teal, #2dd4bf);"></i> <span class="caption-text">Manu Jungle Forever Family and Guides</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Content & Pillars -->
+      <div class="spt rr unique-text-wrap">
+        <span class="ey" style="color:var(--teal,#2dd4bf); margin-bottom:12px;"><i class="fas fa-seedling"></i> Heritage &amp; Purpose</span>
+        <h2 class="h2" style="font-size:clamp(1.8rem,3vw,2.5rem); margin-bottom:18px; line-height:1.15; color:#ffffff;">
+          A LEGACY OF <span style="background:linear-gradient(135deg, #22d3ee, #2dd4bf); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">CONSERVATION</span>
+        </h2>
+        <p style="font-size:1rem; color:rgba(226,232,240,0.88); line-height:1.8; margin-bottom:24px;">Our deep connection to the land sets us apart. We don't just visit the Amazon; we protect it. By choosing our expeditions, you directly contribute to anti-logging efforts and the empowerment of local indigenous communities. We believe responsible eco-tourism is the most powerful tool against deforestation. Join us, and become part of a legacy that ensures the jungle thrives forever.</p>
+        
+        <div class="unique-features-grid">
+          <div class="uf-item">
+            <div class="uf-icon"><i class="fas fa-tree"></i></div>
+            <div>
+              <h4>Anti-Logging Shield</h4>
+              <span>Direct protection against illegal rainforest extraction</span>
+            </div>
+          </div>
+          <div class="uf-item">
+            <div class="uf-icon"><i class="fas fa-people-roof"></i></div>
+            <div>
+              <h4>Native Community Roots</h4>
+              <span>Born, raised &amp; operating in the heart of Nuevo Edén</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="spt rr" style="background:var(--k); justify-content:center; padding:80px 72px;">
-    <div style="margin-bottom:28px">
-      <h2 style="background:#22d3ee; color:#070B14; display:inline-block; padding:6px 16px; font-family:'Syne',sans-serif; font-size:1.4rem; letter-spacing:0.05em; font-weight:800; text-transform:uppercase">A LEGACY OF CONSERVATION</h2>
-    </div>
-    <p style="font-size:1.05rem;color:rgba(255,255,255,.75);line-height:1.85">Our deep connection to the land sets us apart. We don't just visit the Amazon; we protect it. By choosing our expeditions, you directly contribute to anti-logging efforts and the empowerment of local indigenous communities. We believe responsible eco-tourism is the most powerful tool against deforestation. Join us, and become part of a legacy that ensures the jungle thrives forever.</p>
   </div>
 </section>
 
