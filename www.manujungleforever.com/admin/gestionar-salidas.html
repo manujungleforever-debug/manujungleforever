@@ -2630,26 +2630,28 @@ window.editDep = async function(idx) {
 };
 
 window.deleteDep = async function(idx) {
-  if (idx === -1 || idx === undefined) return;
-  const s = cData.salidas[idx];
+  const numericIdx = parseInt(idx, 10);
+  if (isNaN(numericIdx) || numericIdx === -1) return;
+  const s = (cData && cData.salidas) ? cData.salidas[numericIdx] : null;
   if (!s) return;
 
-  const confirmMsg = `¿Estás seguro de que deseas eliminar la salida "${(s.id || '').toUpperCase()} - ${s.tour_nombre}"?\n\nEsta acción eliminará permanentemente la salida y todos sus datos asociados.`;
+  const depId = (s.id || '').toUpperCase();
+  const confirmMsg = `¿Estás seguro de que deseas eliminar la salida "${depId} - ${s.tour_nombre || 'Tour'}"?\n\nEsta acción eliminará permanentemente la salida y todos sus datos asociados.`;
   if (!confirm(confirmMsg)) return;
 
   if (window.showThinkingOverlay) window.showThinkingOverlay('Eliminando salida...', 'Sincronizando con Cloudflare D1');
 
   try {
-    if (s.id) {
-      await fetch('/api/salidas/' + encodeURIComponent(s.id), {
+    if (depId) {
+      await fetch('/api/salidas/' + encodeURIComponent(depId), {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' }
       }).catch(e => console.warn('API delete warning:', e));
     }
 
-    cData.salidas.splice(idx, 1);
+    cData.salidas.splice(numericIdx, 1);
 
-    const res = await ghPut(cFile, JSON.stringify(cData, null, 2), cSha, `delete salida: ${s.id}`);
+    const res = await ghPut(cFile, JSON.stringify(cData, null, 2), cSha, `delete salida: ${depId}`);
     cSha = res.sha;
 
     if (typeof hideSaveBar === 'function') hideSaveBar();

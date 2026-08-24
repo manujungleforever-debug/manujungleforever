@@ -92,8 +92,29 @@ salidasRoutes.put('/', async (c) => {
   const body = await c.req.json();
   const list = Array.isArray(body) ? body : (body.salidas || [body]);
 
+  // Prune any departures removed from the dataset
+  if (Array.isArray(body) || body.salidas) {
+    const incomingIds = new Set(list.map((d: any) => (d.id || '').toUpperCase()).filter(Boolean));
+    const allDbDeps = await db.select({ id: schema.departures.id }).from(schema.departures).all();
+    for (const dbDep of allDbDeps) {
+      if (!incomingIds.has(dbDep.id.toUpperCase())) {
+        await db.delete(schema.passengers).where(or(
+          eq(schema.passengers.departureId, dbDep.id),
+          eq(schema.passengers.departureId, dbDep.id.toLowerCase()),
+          eq(schema.passengers.departureId, dbDep.id.toUpperCase())
+        ));
+        await db.delete(schema.departures).where(or(
+          eq(schema.departures.id, dbDep.id),
+          eq(schema.departures.id, dbDep.id.toLowerCase()),
+          eq(schema.departures.id, dbDep.id.toUpperCase())
+        ));
+      }
+    }
+  }
+
   await Promise.all(list.map(async (dep: any) => {
     if (!dep || !dep.id) return;
+    const depId = (dep.id || '').toUpperCase();
     const tourNombre = dep.tour_nombre || dep.nombre || 'Tour';
     const fechaSalida = dep.fecha_salida || new Date().toISOString().split('T')[0];
     const fechaRetorno = dep.fecha_retorno || dep.fecha_regreso || null;
@@ -108,7 +129,7 @@ salidasRoutes.put('/', async (c) => {
     const estado = dep.estado || 'confirmada';
 
     await db.insert(schema.departures).values({
-      id: dep.id,
+      id: depId,
       tourId: dep.tour_id || null,
       tourNombre,
       fechaSalida,
@@ -143,9 +164,9 @@ salidasRoutes.put('/', async (c) => {
     if (Array.isArray(dep.pasajeros) || Array.isArray(dep.passengers)) {
       const paxs = dep.pasajeros || dep.passengers || [];
       await db.delete(schema.passengers).where(or(
-        eq(schema.passengers.departureId, dep.id),
-        eq(schema.passengers.departureId, dep.id.toLowerCase()),
-        eq(schema.passengers.departureId, dep.id.toUpperCase())
+        eq(schema.passengers.departureId, depId),
+        eq(schema.passengers.departureId, depId.toLowerCase()),
+        eq(schema.passengers.departureId, depId.toUpperCase())
       ));
 
       for (const p of paxs) {
@@ -153,7 +174,7 @@ salidasRoutes.put('/', async (c) => {
         const paxId = p.id || ('PAX-' + String(Date.now()).slice(-6) + '-' + Math.floor(Math.random() * 10000));
         await db.insert(schema.passengers).values({
           id: paxId,
-          departureId: dep.id,
+          departureId: depId,
           nombreCompleto: p.nombre_completo || p.nombreCompleto,
           nacionalidad: p.nacionalidad || null,
           fechaNacimiento: p.fecha_nacimiento || p.fechaNacimiento || null,
