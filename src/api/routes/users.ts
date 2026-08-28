@@ -20,6 +20,7 @@ usersRoutes.get('/', async (c) => {
     email: schema.users.email,
     name: schema.users.name,
     role: schema.users.role,
+    foto: schema.users.foto,
     createdAt: schema.users.createdAt,
     updatedAt: schema.users.updatedAt
   }).from(schema.users).orderBy(desc(schema.users.createdAt)).all();
@@ -61,12 +62,13 @@ usersRoutes.post('/', async (c) => {
     name: body.name,
     passwordHash: pHash,
     role,
+    foto: body.foto || null,
     createdAt: body.created_at || new Date().toISOString()
   });
 
   return c.json({
     ok: true,
-    user: { id, email: body.email, name: body.name, role }
+    user: { id, email: body.email, name: body.name, role, foto: body.foto || null }
   }, 201);
 });
 
@@ -85,6 +87,7 @@ usersRoutes.put('/:id', async (c) => {
   const updates: Partial<typeof schema.users.$inferInsert> = {
     name: body.name,
     role,
+    foto: body.foto !== undefined ? (body.foto || null) : undefined,
     updatedAt: new Date().toISOString()
   };
 
