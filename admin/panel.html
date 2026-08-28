@@ -982,39 +982,45 @@ nav.mnav a.btn-panel-link:hover {
 
         async function loadStats() {
             try {
-                // Fetch Reclamos from D1 API
                 const token = sessionStorage.getItem('cms_token');
-                const recRes = await fetch('/api/admin/reclamos', {
-                    headers: { Authorization: `Bearer ${token}` }
-                });
-                let pendingReclamos = 0;
-                if (recRes.ok) {
-                    const reclamos = await recRes.json();
-                    pendingReclamos = reclamos.filter(r => r.estado !== 'Atendido').length;
-                }
+                const headers = { 'Content-Type': 'application/json' };
+                if (token) headers['Authorization'] = 'Bearer ' + token;
 
-                // Fetch Tours count
-                const toursRes = await fetch('/data/tours.json');
+                // Fetch all stats in parallel from D1 endpoints
+                const [toursRes, blogRes, testRes, recRes] = await Promise.allSettled([
+                    fetch('/api/tours', { headers }),
+                    fetch('/api/blog',  { headers }),
+                    fetch('/api/testimonios', { headers }),
+                    fetch('/api/reclamos', { headers })
+                ]);
+
+                // Tours count
                 let toursCount = 0;
-                if (toursRes.ok) {
-                    const toursData = await toursRes.json();
-                    toursCount = (toursData.tours || []).length;
+                if (toursRes.status === 'fulfilled' && toursRes.value.ok) {
+                    const d = await toursRes.value.json().catch(() => ({}));
+                    toursCount = (d.tours || []).length;
                 }
 
-                // Fetch Testimonials count
-                const testRes = await fetch('/data/testimonials.json');
-                let testCount = 0;
-                if (testRes.ok) {
-                    const testData = await testRes.json();
-                    testCount = (testData.testimonials || []).length;
-                }
-
-                // Fetch Blog Posts count
-                const blogRes = await fetch('/data/posts-index.json');
+                // Blog count
                 let blogCount = 0;
-                if (blogRes.ok) {
-                    const blogData = await blogRes.json();
-                    blogCount = (blogData.posts || []).length;
+                if (blogRes.status === 'fulfilled' && blogRes.value.ok) {
+                    const d = await blogRes.value.json().catch(() => ({}));
+                    blogCount = (d.posts || []).length;
+                }
+
+                // Testimonios count
+                let testCount = 0;
+                if (testRes.status === 'fulfilled' && testRes.value.ok) {
+                    const d = await testRes.value.json().catch(() => ({}));
+                    testCount = (d.testimonios || d.testimonials || []).length;
+                }
+
+                // Reclamos pendientes count
+                let pendingReclamos = 0;
+                if (recRes.status === 'fulfilled' && recRes.value.ok) {
+                    const d = await recRes.value.json().catch(() => ({}));
+                    const lista = d.reclamos || (Array.isArray(d) ? d : []);
+                    pendingReclamos = lista.filter(r => r.estado !== 'Atendido').length;
                 }
 
                 // Update DOM elements
@@ -1023,6 +1029,7 @@ nav.mnav a.btn-panel-link:hover {
                 document.getElementById('stat-testim').textContent = testCount;
                 document.getElementById('stat-reclamos').textContent = pendingReclamos;
 
+                // Badge de notificación en tarjeta Reclamos
                 const badge = document.getElementById('badge-reclamos-menu');
                 if (badge) {
                     if (pendingReclamos > 0) {
@@ -1033,6 +1040,7 @@ nav.mnav a.btn-panel-link:hover {
                     }
                 }
 
+                // Ocultar módulo de Usuarios si no es Super User
                 if (!isSuperUser()) {
                     const cardU = document.getElementById('card-usuarios');
                     if (cardU) cardU.style.display = 'none';
