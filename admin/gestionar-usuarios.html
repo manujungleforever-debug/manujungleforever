@@ -633,6 +633,8 @@ function updateAvatarPreview(inputId, prevId) {
   }
 }
 
+var cSha=null, cFile='www.manujungleforever.com/data/users.json', cData=null, saveFnRef=null;
+
 document.addEventListener('DOMContentLoaded',()=>{
   if(!token)return;
   if (typeof tsParticles !== 'undefined') {
@@ -655,21 +657,10 @@ document.addEventListener('DOMContentLoaded',()=>{
 async function viewUsers() {
   set('<div class="loading" style="padding:40px 0;display:flex;align-items:center;gap:12px;color:var(--muted);"><div class="spinner" style="width:20px;height:20px;border-radius:50%;border:2px solid rgba(45,212,191,.2);border-top-color:var(--teal);animation:spin .8s linear infinite;"></div> Cargando usuarios...</div>');
   try {
-    const data = await apiUsers('GET', '');
-    // Normalise D1 roles to panel roles and cache locally
-    const rawUsers = (data.users || []).map(u => ({
-      id:            u.id,
-      email:         u.email,
-      name:          u.name,
-      role:          u.role === 'admin' ? 'superuser' : 'normal',
-      foto:          u.foto || u.avatar || '',
-      activo:        u.activo !== false,
-      password_hash: '(stored in D1)',
-      created_at:    u.createdAt || u.created_at || '',
-      updated_at:    u.updatedAt || u.updated_at || ''
-    }));
-    cData = { users: rawUsers };
-    const users = rawUsers;
+    const res = await ghGet(cFile);
+    cSha = res.sha;
+    cData = JSON.parse(res.content || '{"users":[]}');
+    const users = cData.users || [];
 
     const superCount = users.filter(u => u.role === 'superuser').length;
     const normalCount = users.filter(u => u.role === 'normal').length;
@@ -909,24 +900,26 @@ window.editUser = function(idx) {
     if (pass && pass !== passConf) throw new Error('Las contraseñas no coinciden.');
     if (pass && pass.length < 6) throw new Error('La contraseña debe tener al menos 6 caracteres.');
 
-    // Payload para /api/users
-    const payload = { name, email, role, foto, activo };
-    if (pass) payload.password = pass;
-
-    if (idx === -1) {
-      // Crear nuevo usuario
-      if (!pass) payload.password = '123456aytana';
-      await apiUsers('POST', '', payload);
-    } else {
-      // Actualizar usuario existente
-      await apiUsers('PUT', '/' + encodeURIComponent(u.id), payload);
-    }
-
     // Si es el usuario actual, actualizar la sesión
     if (email === cUser.toLowerCase()) {
       sessionStorage.setItem('cms_name', name);
       sessionStorage.setItem('cms_avatar', foto || '');
     }
+
+    if (idx === -1) {
+      if (!pass) u.password_hash = await sha256('123456aytana');
+      else u.password_hash = await sha256(pass);
+      u.id = 'usr_' + Date.now();
+      u.created_at = new Date().toISOString();
+      u.updated_at = new Date().toISOString();
+      cData.users.push(u);
+    } else {
+      if (pass) u.password_hash = await sha256(pass);
+      u.updated_at = new Date().toISOString();
+    }
+
+    const res = await ghPut(cFile, JSON.stringify(cData, null, 2), cSha, 'update user');
+    cSha = res.sha;
 
     document.querySelector('.back-btn').textContent = '← Usuarios (guardado ✓)';
     setTimeout(() => { viewUsers(); }, 1200);
@@ -941,7 +934,9 @@ window.deleteUser = async function(idx) {
   }
   if (!confirm(`¿Estás seguro de eliminar permanentemente al usuario "${u.name} (${u.email})"?`)) return;
 
-  await apiUsers('DELETE', '/' + encodeURIComponent(u.id));
+  cData.users.splice(idx, 1);
+  const res = await ghPut(cFile, JSON.stringify(cData, null, 2), cSha, `delete user: ${u.email}`);
+  cSha = res.sha;
   await viewUsers();
 };
 </script>

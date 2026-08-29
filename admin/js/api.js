@@ -76,85 +76,19 @@ async function ghGet(path) {
   const ds = _classify(path);
 
   // ── site_content pages ──
-  if (ds.startsWith('content:')) {
-    const key = ds.split(':')[1];
-    const d = await _d1('GET', '/api/content/' + key);
-    let content = d.data || d;
-    if (content && typeof content === 'object' && content.data && typeof content.data === 'object' && !Array.isArray(content.data)) {
-      content = { ...content.data, ...content };
-    }
-    // strip meta fields injected by the API
-    const { key: _k, updatedAt: _u, data: _d, ...clean } = (typeof content === 'object' && content ? content : {});
-    return {
-      content: JSON.stringify(clean, null, 2),
-      sha: 'd1:' + key
-    };
-  }
+  // (Eliminado para que use archivo local)
 
   // ── tours ──
-  if (ds === 'tours') {
-    const d = await _d1('GET', '/api/tours');
-    return { content: JSON.stringify({ tours: d.tours || [] }, null, 2), sha: 'd1:tours' };
-  }
+  // (Eliminado para que use archivo local)
 
   // ── blog index / list ──
-  if (ds === 'blog:index' || ds === 'blog:list') {
-    const d = await _d1('GET', '/api/blog');
-    const posts = (d.posts || []).map(p => ({
-      slug:       p.slug,
-      title:      p.titulo,
-      titulo:     p.titulo,
-      autor:      p.autor,
-      date:       p.fecha,
-      fecha:      p.fecha,
-      category:   p.categoria,
-      categoria:  p.categoria,
-      excerpt:    p.extracto,
-      extracto:   p.extracto,
-      image:      p.imagen_hero,
-      imagen_hero:p.imagen_hero,
-      estado:     p.estado,
-      id:         p.id
-    }));
-    return {
-      content: JSON.stringify({ posts }, null, 2),
-      sha: 'd1:blog',
-      files: posts.map(p => ({
-        name: p.slug + '.md',
-        path: 'www.manujungleforever.com/posts/' + p.slug + '.md',
-        sha:  'd1:' + p.id
-      }))
-    };
-  }
+  // (Eliminado para que use archivo local)
 
   // ── single blog post (markdown path) ──
-  if (ds === 'blog:post') {
-    const slug = path.split('/').pop().replace('.md', '');
-    const d = await _d1('GET', '/api/blog/' + encodeURIComponent(slug));
-    const p = d.post || {};
-    // Build a markdown-like content string the panel can parse
-    const fm = [
-      '---',
-      'title: ' + (p.titulo || ''),
-      'author: ' + (p.autor || 'Manu Jungle Forever'),
-      'date: ' + (p.fecha || ''),
-      'category: ' + (p.categoria || ''),
-      'excerpt: ' + (p.extracto || ''),
-      'image: ' + (p.imagen_hero || ''),
-      'status: ' + (p.estado || 'publicado'),
-      'id: ' + (p.id || ''),
-      '---',
-      p.contenido || ''
-    ].join('\n');
-    return { content: fm, sha: 'd1:' + (p.id || slug) };
-  }
+  // (Eliminado para que use archivo local)
 
   // ── testimonials ──
-  if (ds === 'testimonials') {
-    const d = await _d1('GET', '/api/testimonios');
-    const list = d.testimonios || d.testimonials || [];
-    return { content: JSON.stringify({ testimonials: list }, null, 2), sha: 'd1:testimonials' };
-  }
+  // (Eliminado para que use archivo local)
 
   // ── departures ──
   if (ds === 'departures') {
@@ -169,22 +103,7 @@ async function ghGet(path) {
   }
 
   // ── users ──
-  if (ds === 'users') {
-    const d = await _d1('GET', '/api/users');
-    // Map D1 fields to panel-expected fields
-    const users = (d.users || []).map(u => ({
-      id:            u.id,
-      email:         u.email,
-      name:          u.name,
-      role:          u.role === 'admin' ? 'superuser' : (u.role || 'normal'),
-      foto:          u.foto || u.avatar || '',
-      activo:        true,
-      password_hash: '(stored in D1)',
-      created_at:    u.createdAt || u.created_at || '',
-      updated_at:    u.updatedAt || u.updated_at || ''
-    }));
-    return { content: JSON.stringify({ users }, null, 2), sha: 'd1:users' };
-  }
+  // (Eliminado para que use archivo local)
 
   // ── Fallback: static files via GitHub proxy (HTML templates) ──
   _checkAuth();
@@ -208,47 +127,13 @@ async function ghPut(path, content, sha, msg) {
   catch { parsed = { _raw: content }; }
 
   // ── site_content pages ──
-  if (ds.startsWith('content:')) {
-    const key = ds.split(':')[1];
-    let clean = parsed;
-    if (clean && typeof clean === 'object' && clean.data && typeof clean.data === 'object' && !Array.isArray(clean.data)) {
-      const { data: nd, key: _k, updatedAt: _u, ...rest } = clean;
-      clean = { ...nd, ...rest };
-    }
-    if (clean && typeof clean === 'object') {
-      delete clean.key;
-      delete clean.updatedAt;
-      delete clean.data;
-    }
-    const d = await _d1('PUT', '/api/content/' + key, clean);
-    return { ok: true, sha: 'd1:' + key + ':' + Date.now() };
-  }
+  // (Eliminado para que use archivo local)
 
   // ── tours ──
-  if (ds === 'tours') {
-    const d = await _d1('POST', '/api/tours', parsed);
-    return { ok: true, sha: 'd1:tours:' + Date.now() };
-  }
+  // (Eliminado para que use archivo local)
 
   // ── blog index (update = batch upsert) ──
-  if (ds === 'blog:index') {
-    const posts = parsed?.posts || [];
-    for (const p of posts) {
-      await _d1('POST', '/api/blog', {
-        id:         p.id,
-        slug:       p.slug,
-        titulo:     p.title || p.titulo,
-        autor:      p.autor || p.author || 'Manu Jungle Forever',
-        fecha:      p.date || p.fecha,
-        categoria:  p.category || p.categoria,
-        extracto:   p.excerpt || p.extracto,
-        contenido:  p.contenido || p.content || '',
-        imagen_hero:p.image || p.imagen_hero,
-        estado:     p.estado || 'publicado'
-      });
-    }
-    return { ok: true, sha: 'd1:blog:' + Date.now() };
-  }
+  // (Eliminado para que use archivo local)
 
   // ── single blog post (markdown) ──
   if (ds === 'blog:post') {
@@ -283,11 +168,7 @@ async function ghPut(path, content, sha, msg) {
   }
 
   // ── testimonials ──
-  if (ds === 'testimonials') {
-    const list = parsed?.testimonials || parsed?.testimonios || (Array.isArray(parsed) ? parsed : [parsed]);
-    const d = await _d1('POST', '/api/testimonios', list);
-    return { ok: true, sha: 'd1:testimonials:' + Date.now() };
-  }
+  // (Eliminado para que use archivo local)
 
   // ── departures — batch upsert ──
   if (ds === 'departures') {

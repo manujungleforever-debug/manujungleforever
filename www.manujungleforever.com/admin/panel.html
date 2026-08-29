@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -981,42 +981,52 @@ nav.mnav a.btn-panel-link:hover {
         });
 
         async function loadStats() {
+            let pendingReclamos = 0;
+            let toursCount = 0;
+            let testCount = 0;
+            let blogCount = 0;
+
             try {
                 // Fetch Reclamos from D1 API
                 const token = sessionStorage.getItem('cms_token');
-                const recRes = await fetch('/api/reclamos', {
+                const recRes = await fetch('/api/reclamos?t=' + Date.now(), {
                     headers: { Authorization: `Bearer ${token}` }
                 });
-                let pendingReclamos = 0;
                 if (recRes.ok) {
-                    const reclamos = await recRes.json();
-                    pendingReclamos = reclamos.filter(r => r.estado !== 'Atendido').length;
+                    const recData = await recRes.json();
+                    const reclamosArr = recData.reclamos || recData || [];
+                    pendingReclamos = (Array.isArray(reclamosArr) ? reclamosArr : []).filter(r => r.estado !== 'Atendido').length;
                 }
+            } catch (e) { console.error('Error cargando reclamos:', e); }
 
+            try {
                 // Fetch Tours count
-                const toursRes = await fetch('/data/tours.json');
-                let toursCount = 0;
+                const toursRes = await fetch('/data/tours.json?t=' + Date.now());
                 if (toursRes.ok) {
                     const toursData = await toursRes.json();
                     toursCount = (toursData.tours || []).length;
                 }
+            } catch (e) { console.error('Error cargando tours:', e); }
 
+            try {
                 // Fetch Testimonials count
-                const testRes = await fetch('/data/testimonials.json');
-                let testCount = 0;
+                const testRes = await fetch('/data/testimonials.json?t=' + Date.now());
                 if (testRes.ok) {
                     const testData = await testRes.json();
                     testCount = (testData.testimonials || []).length;
                 }
+            } catch (e) { console.error('Error cargando testimonios:', e); }
 
+            try {
                 // Fetch Blog Posts count
-                const blogRes = await fetch('/data/posts-index.json');
-                let blogCount = 0;
+                const blogRes = await fetch('/data/posts-index.json?t=' + Date.now());
                 if (blogRes.ok) {
                     const blogData = await blogRes.json();
                     blogCount = (blogData.posts || []).length;
                 }
+            } catch (e) { console.error('Error cargando blog:', e); }
 
+            try {
                 // Update DOM elements
                 document.getElementById('stat-tours').textContent = toursCount;
                 document.getElementById('stat-blog').textContent = blogCount;
