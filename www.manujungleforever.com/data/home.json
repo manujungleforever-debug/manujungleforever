@@ -83,7 +83,7 @@
         "descripcion": "Perfect for adventurous nature lovers — this expedition takes you deep into the forest. Camp, fish, hike, and learn survival skills.",
         "boton_texto": "View Details",
         "enlace": "guided-tours/index.html#amazon",
-        "imagen": "/media/usuarios/kemmesik-gmail-com/avatar_1787257830305.jpg",
+        "imagen": "/media/medios/home/1787022329175-bere69-the-1865639.jpg",
         "imagen_alt": "Manu Expedition"
       }
     ]
@@ -128,22 +128,52 @@
     "image": "/wp-content/uploads/2020/10/Hidden-Jungle-Cusco-Jaguar.jpg",
     "image_alt": "Manu National Park wildlife - Jaguar",
     "animals": [
-      { "emoji": "🐆", "name": "Jaguar" },
-      { "emoji": "🦜", "name": "Macaws" },
-      { "emoji": "🐊", "name": "Caimans" },
-      { "emoji": "🐒", "name": "Monkeys" },
-      { "emoji": "🦦", "name": "Giant Otters" },
-      { "emoji": "🐢", "name": "River Turtles" },
-      { "emoji": "🦫", "name": "Capybaras" },
-      { "emoji": "🐍", "name": "Anaconda" },
-      { "emoji": "🦋", "name": "Butterflies" },
-      { "emoji": "🐦", "name": "Cock-of-the-Rock" }
+      {
+        "emoji": "🐆",
+        "name": "Jaguar"
+      },
+      {
+        "emoji": "🦜",
+        "name": "Macaws"
+      },
+      {
+        "emoji": "🐊",
+        "name": "Caimans"
+      },
+      {
+        "emoji": "🐒",
+        "name": "Monkeys"
+      },
+      {
+        "emoji": "🦦",
+        "name": "Giant Otters"
+      },
+      {
+        "emoji": "🐢",
+        "name": "River Turtles"
+      },
+      {
+        "emoji": "🦫",
+        "name": "Capybaras"
+      },
+      {
+        "emoji": "🐍",
+        "name": "Anaconda"
+      },
+      {
+        "emoji": "🦋",
+        "name": "Butterflies"
+      },
+      {
+        "emoji": "🐦",
+        "name": "Cock-of-the-Rock"
+      }
     ]
   },
   "cta_section": {
     "eyebrow": "Ready to Explore?",
     "title": "Let's Go to the Jungle. Plan Your Trip Today.",
-    "text": "Contact us and we'll build your perfect jungle adventure — whether a 3-day wildlife tour or a 6-day deep Amazon expedition. We reply within 24 hours.",
+    "text": "Let's Go to the Jungle. Plan Your Trip Today.",
     "image": "/wp-content/uploads/2018/02/placeholder.jpg",
     "btn_text": "Book a Tour",
     "btn_url": "contact/index.html"
@@ -156,24 +186,23 @@
       {
         "icon": "fas fa-people-roof",
         "title": "Family Business Supporting Locals",
-        "tag": "Local Roots",
-        "text": "We live in Peru, we love Peru. We work with our native family and local professionals to operate our tours to Manu National Park. Every trip you take directly supports the local community of Nuevo Edén.",
-        "feature": "100% Locally Owned & Reinvested"
+        "text": "We live in Peru, we love Peru. We work with our native family and local professionals to operate our tours to Manu National Park. Every trip you take directly supports the local community of Nuevo Edén."
       },
       {
         "icon": "fas fa-compass",
         "title": "Guided Tours or Independent Trips",
-        "tag": "Flexible Travel",
-        "text": "We offer expert-led guided expeditions as well as tailored independent journeys for travelers who want flexibility. Whatever your style, we craft the experience to fit you perfectly.",
-        "feature": "Customized & Private Itineraries"
+        "text": "We offer expert-led guided expeditions as well as tailored independent journeys for travelers who want flexibility. Whatever your style, we craft the experience to fit you perfectly."
       },
       {
         "icon": "fas fa-seedling",
         "title": "Sustainable Tourism",
-        "tag": "Eco-Shield",
-        "text": "The Amazon Rainforest is one of our planet's most critical ecosystems under constant threat. We are passionate about using low-impact eco-tourism as an active shield to protect the jungle and its wildlife.",
-        "feature": "Anti-Deforestation & Conservation"
+        "text": "The Amazon Rainforest is one of our planet's most critical ecosystems under constant threat. We are passionate about using low-impact eco-tourism as an active shield to protect the jungle and its wildlife."
       }
     ]
+  },
+  "tours_header": {
+    "title": "Guided Tours",
+    "subtitle": "Curated Jungle Expeditions",
+    "description": "Our itineraries are meticulously designed to cater to true nature enthusiasts. From deep-forest survival treks for the intrepid explorer, to focused wildlife spotting cruises along the riverbanks, our routes guarantee a transformative encounter with the wild."
   }
 }
