@@ -53,7 +53,7 @@
         "descripcion": "Manu National Park tours from Cusco where you travel by van through the cloud forest, then search for Peruvian Amazon animals by boat. See caimans, macaws, capybaras, and the elusive jaguar. Beautiful scenery, local food, incredible nature — appropriate for all travelers.",
         "boton_texto": "Explore This Tour",
         "enlace": "guided-tours/index.html#wildlife",
-        "imagen": "/media/1787018009678-willife.jpeg",
+        "imagen": "/media/medios/home/1787018009678-willife.jpeg",
         "imagen_alt": "Jungle Wildlife Tour"
       },
       {
@@ -68,7 +68,7 @@
         "descripcion": "Our most authentic Peru Amazon tour takes you through villages along the winding road from Cusco to Manu. Spot animals in the cloud forest, taste local flavors, and visit hidden gems.",
         "boton_texto": "View Details",
         "enlace": "guided-tours/index.html#rainforest",
-        "imagen": "/media/1787019022145-mohamed-hassan-sunset-3754082.jpg",
+        "imagen": "/media/Manú National Park/Parque_nacional_del_manu_19.jpg",
         "imagen_alt": "Rainforest Road Trip"
       },
       {
@@ -109,7 +109,7 @@
       "Flexible Departures",
       "Guided or Independent"
     ],
-    "image": "/wp-content/uploads/2022/10/Wildlife-quest-3days-machuwasi.jpg",
+    "image": "/media/sin-copyright-/pexels-jeffstapleton-6034716.jpg",
     "image_alt": "Wildlife quest at Machu Wasi – Manu National Park",
     "cta_text": "Our Full Story",
     "cta_url": "about/index.html"
@@ -118,14 +118,14 @@
     "eyebrow": "Heritage & Purpose",
     "title": "WHAT MAKES US UNIQUE?",
     "text": "Born in the heart of Manu, we are a proudly local, family-owned company. Our lodge and trail network in Nuevo Edén are not just a tourist destination, but the childhood home of our co-founder, Jordy. We firmly believe that ecotourism is the strongest and most sustainable shield to preserve the Amazon. Through our work, we aim to uplift the community and protect the species that inhabit the jungle. Without responsible tourism, this paradise would face the constant threat of deforestation and destructive agriculture. We are driven by a deep passion to share the culture, biodiversity, and spirit of Manu National Park with you.",
-    "image": "/wp-content/uploads/2022/10/Hero-About-Us.jpg",
+    "image": "/media/medios/home/1787019022145-mohamed-hassan-sunset-3754082.jpg",
     "image_alt": "Manu Jungle Forever Family and Guides"
   },
   "wildlife_section": {
     "eyebrow": "Biodiversity",
     "title": "Wildlife in the Peruvian Rainforest",
     "text": "The Manu Biosphere is globally recognized as an unparalleled haven for biodiversity. Navigating its ancient tributaries, you will witness a thriving, complex ecosystem completely untouched by modern civilization. Our expert trackers will guide you through hidden trails, revealing a spectacular array of exotic species in their pure, natural habitats.",
-    "image": "/wp-content/uploads/2020/10/Hidden-Jungle-Cusco-Jaguar.jpg",
+    "image": "/media/medios/home/1787015599134-gayulo-animals-3524518.jpg",
     "image_alt": "Manu National Park wildlife - Jaguar",
     "animals": [
       {
@@ -174,7 +174,7 @@
     "eyebrow": "Ready to Explore?",
     "title": "Let's Go to the Jungle. Plan Your Trip Today.",
     "text": "Let's Go to the Jungle. Plan Your Trip Today.",
-    "image": "/wp-content/uploads/2018/02/placeholder.jpg",
+    "image": "/media/medios/home/1787018890459-letsgo.jpg",
     "btn_text": "Book a Tour",
     "btn_url": "contact/index.html"
   },
