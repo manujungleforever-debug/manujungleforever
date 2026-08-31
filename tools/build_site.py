@@ -287,6 +287,9 @@ def build_site():
                         spt.clear()
                         for c in spt_soup.children: spt.append(c)
                         modified = True
+                if ab.get('image'):
+                    img = soup.select_one('#about .spi img')
+                    if img: img['src'] = fix_img_path(ab['image']); modified = True
                 if ab.get('image_alt'):
                     img = soup.select_one('#about .spi img')
                     if img: img['alt'] = clean_mojibake(ab['image_alt']); img['title'] = clean_mojibake(ab['image_alt']); modified = True
@@ -302,6 +305,9 @@ def build_site():
                 if uq.get('text'):
                     p = soup.select_one('#unique-content .spt p')
                     if p: p.string = clean_mojibake(uq['text']); modified = True
+                if uq.get('image'):
+                    img = soup.select_one('#unique-content .spi img')
+                    if img: img['src'] = fix_img_path(uq['image']); modified = True
                 if uq.get('image_alt'):
                     img = soup.select_one('#unique-content .spi img')
                     if img: img['alt'] = clean_mojibake(uq['image_alt']); img['title'] = clean_mojibake(uq['image_alt']); modified = True
