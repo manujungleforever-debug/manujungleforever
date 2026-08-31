@@ -1871,10 +1871,15 @@ font, font > font, font[style], font > font[style] {
   width: 100%;
 }
 .in-hero .h1 {
-  max-width: 860px;
-  margin: 0 auto;
-  line-height: 1.2;
-}
+    max-width: 860px;
+    margin: 0 auto;
+    line-height: 1.2;
+    background: linear-gradient(135deg, var(--a), var(--v));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+  }
 
 /* Article body container */
 .article-w, .article-container {
