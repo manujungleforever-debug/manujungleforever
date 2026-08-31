@@ -675,7 +675,7 @@
       "slug": "5-day-amazon-expedition",
       "nombre": "5-Day Amazon Expedition",
       "categoria": "expedition",
-      "estado": "activo",
+      "estado": "pausado",
       "duracion_dias": 5,
       "duracion_noches": 4,
       "precio_desde": 1250,
