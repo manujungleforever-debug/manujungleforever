@@ -268,8 +268,8 @@ def build_site():
                         if p and c2.get('descripcion'): p.string = clean_mojibake(c2['descripcion'])
                         modified = True
 
-            if h_data.get('about'):
-                ab = h_data['about']
+            if h_data.get('about_section'):
+                ab = h_data['about_section']
                 if ab.get('eyebrow'):
                     ey = soup.select_one('#about .ey')
                     if ey: ey.string = clean_mojibake(ab['eyebrow']); modified = True
@@ -282,7 +282,7 @@ def build_site():
                         # Clear old paragraphs except the button
                         btn = spt.select_one('a.btn')
                         btn_html = str(btn) if btn else ''
-                        p_html = ''.join([f"<p class='ld'>{clean_mojibake(p)}</p>" for p in ab['paragraphs']])
+                        p_html = ''.join([f"<p class='ld'>{clean_mojibake(p.get('text', '') if isinstance(p, dict) else p)}</p>" for p in ab['paragraphs']])
                         spt_soup = BeautifulSoup(p_html + btn_html, 'html.parser')
                         spt.clear()
                         for c in spt_soup.children: spt.append(c)
