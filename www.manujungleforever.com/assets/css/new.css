@@ -1866,7 +1866,7 @@ font, font > font, font[style], font > font[style] {
 }
 .in-hero .cx {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   text-align: center;
   width: 100%;
 }
