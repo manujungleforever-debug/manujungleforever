@@ -92,6 +92,19 @@
 
       // 4. Contact page specifics
       if (isContactPage) {
+        if (cData.titulo_pagina) {
+          const h1 = document.querySelector('.in-hero .h1');
+          if (h1) h1.textContent = cData.titulo_pagina;
+        }
+        if (cData.subtitulo_pagina) {
+          const hs = document.querySelector('.in-hero .hs');
+          if (hs) hs.textContent = cData.subtitulo_pagina;
+        }
+        if (cData.hero_image && !cData.hero_image.includes('placeholder.jpg')) {
+          const hero = document.querySelector('.in-hero');
+          if (hero) hero.style.backgroundImage = `url('${fixImgPath(cData.hero_image)}')`;
+        }
+
         const dynPhones = document.getElementById('dyn-contact-phones');
         if (dynPhones) {
           let html = '';
