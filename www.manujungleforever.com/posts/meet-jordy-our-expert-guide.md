@@ -4,7 +4,7 @@ date: 2026-08-11
 categoria: Our Team
 publicado: true
 extracto: Get to know Jordy, our passionate and experienced guide who will take you deep into the heart of the Manu National Park.
-imagen: /media/sin-copyright-/8306484-hd_1280_720_24fps.mp4
+imagen: /media/medios/home/1787019267046-3071145-sure-2677608.jpg
 imagen_alt: Jordy in the Manu Jungle
 ---
 
