@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
 <link rel="icon" href="../assets/img/logo.png">
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="js/api.js"></script>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 /* ── UNIFIED ADMIN BACKGROUND & THEME TOKENS ── */
@@ -137,9 +138,10 @@ main { flex-grow:1; max-width:1200px !important; width:100% !important; margin:0
 .esec-h { font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--gold); border-bottom:1px solid rgba(255,255,255,.07); padding-bottom:8px; margin-bottom:16px; }
 .grow2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
 .grow3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; }
-.ff { display:flex; flex-direction:column; gap:6px; margin-bottom:12px; }
-.ff label { font-size:.7rem; font-weight:600; text-transform:uppercase; letter-spacing:.8px; color:var(--muted); }
-.ff input,.ff textarea,.ff select { background:rgba(3,8,7,.65); border:1px solid rgba(255,255,255,.1); color:var(--fg); padding:10px 13px; border-radius:10px; font-size:.85rem; outline:none; transition:.25s; width:100%; }
+.ff { display:flex; flex-direction:column; gap:6px; margin-bottom:14px; width:100%; box-sizing:border-box; }
+.ff label { font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.8px; color:var(--muted); min-height:18px; display:flex; align-items:flex-end; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-bottom:0; }
+.ff input,.ff select { height:42px; min-height:42px; line-height:1.4; background:rgba(3,8,7,.65); border:1px solid rgba(255,255,255,.1); color:var(--fg); padding:8px 12px; border-radius:10px; font-size:.85rem; outline:none; transition:.25s; width:100%; box-sizing:border-box; }
+.ff textarea { background:rgba(3,8,7,.65); border:1px solid rgba(255,255,255,.1); color:var(--fg); padding:10px 13px; border-radius:10px; font-size:.85rem; outline:none; transition:.25s; width:100%; box-sizing:border-box; }
 .ff input:focus,.ff textarea:focus,.ff select:focus { border-color:var(--teal); box-shadow:0 0 10px var(--teal-g); }
 .ff select option { background:#0a1f1b; color:var(--fg); }
 .hint { font-size:.7rem; color:var(--muted); }
@@ -605,8 +607,8 @@ window.addEventListener('error', function(e) {
 });
 </script>
 <script>
-const API = '/api/cms';
-const MEDIA_API = '/api/media';
+var API = window.API || '/api/cms';
+var MEDIA_API = window.MEDIA_API || '/api/media';
 let token = sessionStorage.getItem('cms_token');
 let cUser = sessionStorage.getItem('cms_user') || '';
 let cSection = 'testimonials';
@@ -796,94 +798,8 @@ function switchSection_DIS(id) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// API WRAPPERS (GITHUB & R2)
+// API WRAPPERS (CENTRALIZED IN js/api.js)
 // ─────────────────────────────────────────────────────────────────────────────
-async function ghGet(path) {
-  const r = await fetch(`${API}/file?path=${encodeURIComponent(path)}`,{headers:{Authorization:`Bearer ${token}`}});
-  if (r.status===401){sessionStorage.clear();location.reload();}
-  if (r.status===404){return {files:[]};}
-  if (!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e.error||'Error al cargar');}
-  return r.json();
-}
-
-async function ghPut(path, content, sha, msg, attempt = 1) {
-    const maxAttempts = 4;
-    try {
-      const r = await fetch(`${API}/file`, {
-        method: 'PUT',
-        headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ path, content, sha, message: msg || `update: ${path}` })
-      });
-      if (r.status === 401) { sessionStorage.clear(); location.reload(); }
-      
-      let d;
-      try { d = await r.json(); } catch(e) {
-        if (attempt < maxAttempts) {
-          await new Promise(res => setTimeout(res, 2000 * attempt));
-          return ghPut(path, content, sha, msg, attempt + 1);
-        }
-        throw new Error("Timeout de red. Verifica tu conexión y vuelve a intentarlo.");
-      }
-      
-      if (!r.ok) {
-        let errStr = d.error || 'Error al guardar';
-        if (r.status === 503 || errStr.includes('No server is currently available') || errStr.includes('503') || errStr.includes('Conflict')) {
-          if (attempt < maxAttempts) {
-            await new Promise(res => setTimeout(res, 2500 * attempt));
-            return ghPut(path, content, sha, msg, attempt + 1);
-          }
-          errStr = "Los servidores de GitHub están temporalmente fuera de servicio. Por favor, intenta de nuevo en unos minutos.";
-        }
-        throw new Error(errStr);
-      }
-      return d;
-    } catch (err) {
-      if (attempt < maxAttempts && (err.message.toLowerCase().includes('fetch') || err.message.toLowerCase().includes('network'))) {
-        await new Promise(res => setTimeout(res, 2000 * attempt));
-        return ghPut(path, content, sha, msg, attempt + 1);
-      }
-      throw err;
-    }
-  }
-
-async function ghDelete(path, sha, msg, attempt = 1) {
-    const maxAttempts = 4;
-    try {
-      const r = await fetch(`${API}/file`, {
-        method: 'DELETE',
-        headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ path, sha, message: msg || `delete: ${path}` })
-      });
-      if (r.status === 401) { sessionStorage.clear(); location.reload(); }
-      
-      let d;
-      try { d = await r.json(); } catch(e) {
-        if (attempt < maxAttempts) {
-          await new Promise(res => setTimeout(res, 2000 * attempt));
-          return ghDelete(path, sha, msg, attempt + 1);
-        }
-        throw new Error("Timeout de red. Verifica tu conexión y vuelve a intentarlo.");
-      }
-      
-      if (!r.ok) {
-        let errStr = d.error || 'Error al eliminar';
-        if (r.status === 503 || errStr.includes('No server is currently available') || errStr.includes('503') || errStr.includes('Conflict')) {
-          if (attempt < maxAttempts) {
-            await new Promise(res => setTimeout(res, 2500 * attempt));
-            return ghDelete(path, sha, msg, attempt + 1);
-          }
-        }
-        throw new Error(errStr);
-      }
-      return d;
-    } catch (err) {
-      if (attempt < maxAttempts && (err.message.toLowerCase().includes('fetch') || err.message.toLowerCase().includes('network'))) {
-        await new Promise(res => setTimeout(res, 2000 * attempt));
-        return ghDelete(path, sha, msg, attempt + 1);
-      }
-      throw err;
-    }
-  }
 
 // R2 Media API
 async function r2GetList() {
@@ -1988,8 +1904,135 @@ async function viewTestims() {
     </div>`);
 }
 
-window.editTestim = function(idx) {
+const COUNTRIES_LIST = [
+  { name: 'United Kingdom', flag: '🇬🇧', label: '🇬🇧 United Kingdom (Reino Unido)' },
+  { name: 'United States', flag: '🇺🇸', label: '🇺🇸 United States (Estados Unidos)' },
+  { name: 'Germany', flag: '🇩🇪', label: '🇩🇪 Germany (Alemania)' },
+  { name: 'France', flag: '🇫🇷', label: '🇫🇷 France (Francia)' },
+  { name: 'Italy', flag: '🇮🇹', label: '🇮🇹 Italy (Italia)' },
+  { name: 'Spain', flag: '🇪🇸', label: '🇪🇸 Spain (España)' },
+  { name: 'Canada', flag: '🇨🇦', label: '🇨🇦 Canada (Canadá)' },
+  { name: 'Australia', flag: '🇦🇺', label: '🇦🇺 Australia' },
+  { name: 'Netherlands', flag: '🇳🇱', label: '🇳🇱 Netherlands (Países Bajos)' },
+  { name: 'Switzerland', flag: '🇨🇭', label: '🇨🇭 Switzerland (Suiza)' },
+  { name: 'Austria', flag: '🇦🇹', label: '🇦🇹 Austria' },
+  { name: 'Belgium', flag: '🇧🇪', label: '🇧🇪 Belgium (Bélgica)' },
+  { name: 'Brazil', flag: '🇧🇷', label: '🇧🇷 Brazil (Brasil)' },
+  { name: 'Argentina', flag: '🇦🇷', label: '🇦🇷 Argentina' },
+  { name: 'Chile', flag: '🇨🇱', label: '🇨🇱 Chile' },
+  { name: 'Colombia', flag: '🇨🇴', label: '🇨🇴 Colombia' },
+  { name: 'Mexico', flag: '🇲🇽', label: '🇲🇽 Mexico (México)' },
+  { name: 'Peru', flag: '🇵🇪', label: '🇵🇪 Peru (Perú)' },
+  { name: 'Japan', flag: '🇯🇵', label: '🇯🇵 Japan (Japón)' },
+  { name: 'China', flag: '🇨🇳', label: '🇨🇳 China' },
+  { name: 'South Africa', flag: '🇿🇦', label: '🇿🇦 South Africa (Sudáfrica)' },
+  { name: 'New Zealand', flag: '🇳🇿', label: '🇳🇿 New Zealand (Nueva Zelanda)' },
+  { name: 'Sweden', flag: '🇸🇪', label: '🇸🇪 Sweden (Suecia)' },
+  { name: 'Norway', flag: '🇳🇴', label: '🇳🇴 Norway (Noruega)' },
+  { name: 'Denmark', flag: '🇩🇰', label: '🇩🇰 Denmark (Dinamarca)' },
+  { name: 'Finland', flag: '🇫🇮', label: '🇫🇮 Finland (Finlandia)' },
+  { name: 'Ireland', flag: '🇮🇪', label: '🇮🇪 Ireland (Irlanda)' },
+  { name: 'Portugal', flag: '🇵🇹', label: '🇵🇹 Portugal' },
+  { name: 'Poland', flag: '🇵🇱', label: '🇵🇱 Poland (Polonia)' },
+  { name: 'Czech Republic', flag: '🇨🇿', label: '🇨🇿 Czech Republic (República Checa)' },
+  { name: 'Israel', flag: '🇮🇱', label: '🇮🇱 Israel' },
+  { name: 'India', flag: '🇮🇳', label: '🇮🇳 India' },
+  { name: 'South Korea', flag: '🇰🇷', label: '🇰🇷 South Korea (Corea del Sur)' },
+  { name: 'Singapore', flag: '🇸🇬', label: '🇸🇬 Singapore (Singapur)' },
+  { name: 'Costa Rica', flag: '🇨🇷', label: '🇨🇷 Costa Rica' },
+  { name: 'Ecuador', flag: '🇪🇨', label: '🇪🇨 Ecuador' },
+  { name: 'Bolivia', flag: '🇧🇴', label: '🇧🇴 Bolivia' },
+  { name: 'Uruguay', flag: '🇺🇾', label: '🇺🇾 Uruguay' },
+  { name: 'Paraguay', flag: '🇵🇾', label: '🇵🇾 Paraguay' },
+  { name: 'Guatemala', flag: '🇬🇹', label: '🇬🇹 Guatemala' },
+  { name: 'Panama', flag: '🇵🇦', label: '🇵🇦 Panama (Panamá)' }
+];
+
+window.setFlagQuick = function(flag, country) {
+  const pSelect = document.getElementById('tm-p');
+  const flInput = document.getElementById('tm-fl');
+  if (pSelect && country) {
+    for (let opt of pSelect.options) {
+      if (opt.value.toLowerCase() === country.toLowerCase()) {
+        opt.selected = true;
+        break;
+      }
+    }
+  }
+  if (flInput) flInput.value = flag;
+};
+
+let cachedToursList = [];
+async function loadToursForTestims() {
+  if (cachedToursList.length > 0) return cachedToursList;
+  try {
+    const res = await fetch('/api/tours');
+    if (res.ok) {
+      const data = await res.json();
+      cachedToursList = (data.tours || [])
+        .map(tr => (tr.nombre || tr.titulo || tr.id || '').replace(/ÔÇô/g, ' - ').replace(/–/g, ' - ').replace(/\s+-\s+/g, ' - ').trim())
+        .filter(Boolean);
+    }
+  } catch (e) {
+    console.warn('Could not load tours list:', e);
+  }
+  if (!cachedToursList.length) {
+    cachedToursList = [
+      '3-Day Wildlife Quest - Machu Wasi',
+      '4-Day Wildlife Quest - Machu Wasi',
+      '4-Day Wildlife Quest - Nuevo Eden',
+      '5-Day Wildlife Quest - Nuevo Eden',
+      '6-Day Wildlife Quest - Blanquillo',
+      'Manu Reserved Zone - 6 Days',
+      'Wildlife Photography Tour - 8 Days',
+      '5-Day Amazon Expedition',
+      '6-Day Amazon Expedition',
+      '2-Day Road Trip',
+      '5-Day Road Trip',
+      '7-Day Deep Amazon Wildlife Quest',
+      'Live Like a Local - 4D/3N',
+      'Live Like a Local - 5D/4N'
+    ];
+  }
+  return cachedToursList;
+}
+
+window.editTestim = async function(idx) {
   const t= idx === -1 ? {nombre:'', pais:'', bandera:'', tour:'', fecha:'', rating:5, origen:'web', texto:'', foto:'', activo:true} : cData.testimonials[idx];
+  const toursList = await loadToursForTestims();
+  const currentTour = (t.tour || t.tour_nombre || '').replace(/ÔÇô/g, ' - ').replace(/–/g, ' - ').replace(/\s+-\s+/g, ' - ').trim();
+
+  let hasMatch = false;
+  let toursOptionsHtml = toursList.map(name => {
+    const isSel = currentTour && (
+      name.toLowerCase() === currentTour.toLowerCase() ||
+      name.toLowerCase().includes(currentTour.toLowerCase()) ||
+      currentTour.toLowerCase().includes(name.toLowerCase())
+    );
+    if (isSel) hasMatch = true;
+    return `<option value="${esc(name)}" ${isSel ? 'selected' : ''}>${esc(name)}</option>`;
+  }).join('');
+
+  if (currentTour && !hasMatch) {
+    toursOptionsHtml = `<option value="${esc(currentTour)}" selected>${esc(currentTour)}</option>` + toursOptionsHtml;
+  }
+
+  const currentPais = (t.pais || '').trim();
+  let hasCountryMatch = false;
+  let countriesOptionsHtml = COUNTRIES_LIST.map(c => {
+    const isSel = currentPais && (
+      c.name.toLowerCase() === currentPais.toLowerCase() ||
+      c.label.toLowerCase().includes(currentPais.toLowerCase()) ||
+      currentPais.toLowerCase().includes(c.name.toLowerCase())
+    );
+    if (isSel) hasCountryMatch = true;
+    return `<option value="${esc(c.name)}" data-flag="${c.flag}" ${isSel ? 'selected' : ''}>${esc(c.label)}</option>`;
+  }).join('');
+
+  if (currentPais && !hasCountryMatch) {
+    countriesOptionsHtml = `<option value="${esc(currentPais)}" selected>${esc(currentPais)}</option>` + countriesOptionsHtml;
+  }
+
   set(`
     <button class="back-btn" onclick="route('testimonials')">← Volver a testimonios</button>
     <div class="eform">
@@ -1997,14 +2040,40 @@ window.editTestim = function(idx) {
         <div class="esec-h">Datos del Testimonio</div>
         <div class="grow2">
           <div class="ff"><label>Nombre del cliente</label><input id="tm-n" value="${esc(t.nombre)}" placeholder="Ej: James W."></div>
-          <div class="ff"><label>País</label><input id="tm-p" value="${esc(t.pais)}" placeholder="Ej: United Kingdom"></div>
+          <div class="ff">
+            <label>País del cliente</label>
+            <select id="tm-p">
+              <option value="">-- Seleccionar País --</option>
+              ${countriesOptionsHtml}
+            </select>
+          </div>
         </div>
         <div class="grow2">
-          <div class="ff"><label>Bandera emoji</label><input id="tm-fl" value="${esc(t.bandera||'')}" placeholder="Ej: 🇬🇧 🇺🇸 🇩🇪 🇮🇹"><span class="hint">Ej: 🇺🇸 🇬🇧 🇩🇪 🇮🇹 🇫🇷 🇪🇸</span></div>
-          <div class="ff"><label>Tour realizado</label><input id="tm-t" value="${esc(t.tour)}" placeholder="Ej: Amazon Expedition"></div>
+          <div class="ff">
+            <label>Bandera emoji <span style="font-weight:400;color:var(--teal);font-size:0.8rem;">(Auto-asignada)</span></label>
+            <div style="display:flex;align-items:center;gap:10px;">
+              <input id="tm-fl" value="${esc(t.bandera||'')}" placeholder="Auto (ej: 🇬🇧)" style="max-width:110px;font-size:1.2rem;text-align:center;">
+              <div style="display:flex;gap:5px;flex-wrap:wrap;align-items:center;">
+                <button type="button" class="btn-sm" style="padding:4px 8px;font-size:1.05rem;cursor:pointer;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:6px;" onclick="setFlagQuick('🇬🇧','United Kingdom')">🇬🇧</button>
+                <button type="button" class="btn-sm" style="padding:4px 8px;font-size:1.05rem;cursor:pointer;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:6px;" onclick="setFlagQuick('🇺🇸','United States')">🇺🇸</button>
+                <button type="button" class="btn-sm" style="padding:4px 8px;font-size:1.05rem;cursor:pointer;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:6px;" onclick="setFlagQuick('🇩🇪','Germany')">🇩🇪</button>
+                <button type="button" class="btn-sm" style="padding:4px 8px;font-size:1.05rem;cursor:pointer;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:6px;" onclick="setFlagQuick('🇮🇹','Italy')">🇮🇹</button>
+                <button type="button" class="btn-sm" style="padding:4px 8px;font-size:1.05rem;cursor:pointer;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:6px;" onclick="setFlagQuick('🇫🇷','France')">🇫🇷</button>
+                <button type="button" class="btn-sm" style="padding:4px 8px;font-size:1.05rem;cursor:pointer;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:6px;" onclick="setFlagQuick('🇪🇸','Spain')">🇪🇸</button>
+                <button type="button" class="btn-sm" style="padding:4px 8px;font-size:1.05rem;cursor:pointer;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:6px;" onclick="setFlagQuick('🇵🇪','Peru')">🇵🇪</button>
+              </div>
+            </div>
+          </div>
+          <div class="ff">
+            <label>Tour realizado</label>
+            <select id="tm-t">
+              <option value="">-- Seleccionar Tour Realizado --</option>
+              ${toursOptionsHtml}
+            </select>
+          </div>
         </div>
         <div class="grow3">
-          <div class="ff"><label>Fecha del viaje</label><input type="text" id="tm-f" value="${esc(t.fecha)}" placeholder="Ej: 2025 o Mayo 2025"></div>
+          <div class="ff"><label>Fecha del viaje</label><input type="date" id="tm-f" value="${(t.fecha && t.fecha.length===10) ? esc(t.fecha) : (t.fecha && /^\d{4}$/.test(t.fecha) ? t.fecha + '-01-01' : (t.fecha || ''))}"></div>
           <div class="ff"><label>Origen / Plataforma</label>
             <select id="tm-orig">
               <option value="web" ${(!t.origen || t.origen==='web')?'selected':''}>🌐 Web Directa</option>
@@ -2028,12 +2097,33 @@ window.editTestim = function(idx) {
         </div>
       </div>
     </div>`);
-  document.getElementById('tm-a').addEventListener('change',e=>{
-    document.getElementById('tm-lbl').textContent=e.target.checked?'✅ Visible':'🔒 Oculto';
-  });
+
+  const flInput = document.getElementById('tm-fl');
+  const pSelect = document.getElementById('tm-p');
+  if (pSelect) {
+    pSelect.addEventListener('change', e => {
+      const opt = e.target.selectedOptions[0];
+      const flag = opt?.dataset?.flag;
+      if (flag && flInput) {
+        flInput.value = flag;
+      } else if (flInput) {
+        const match = COUNTRIES_LIST.find(c => c.name.toLowerCase() === e.target.value.toLowerCase());
+        if (match) flInput.value = match.flag;
+      }
+    });
+  }
+
+  const tmA = document.getElementById('tm-a');
+  if (tmA) {
+    tmA.addEventListener('change', e => {
+      const lbl = document.getElementById('tm-lbl');
+      if (lbl) lbl.textContent = e.target.checked ? '✅ Visible' : '🔒 Oculto';
+    });
+  }
+
   showSaveBar(async()=>{
     const updated = {...t,nombre:v('tm-n'),pais:v('tm-p'),bandera:v('tm-fl'),
-      tour:v('tm-t'),fecha:v('tm-f'),origen:v('tm-orig')||'web',rating:+v('tm-r'),texto:v('tm-tx'),
+      tour:v('tm-t'),fecha:v('tm-f'),origen:v('tm-orig')||'web',rating:+v('tm-r'),texto:v('tm-tx'),comentario:v('tm-tx'),
       foto:v('tm-img'),activo:document.getElementById('tm-a').checked};
     if(idx===-1){
       if(!updated.id) updated.id = Date.now();
@@ -2133,12 +2223,12 @@ function buildFM(fm,body) {
 async function viewReclamos() {
   set(`<div class="loading"><div class="spinner"></div> Cargando reclamos...</div>`);
   try {
-    const r = await fetch('/api/admin/reclamos', {
+    const r = await fetch('/api/reclamos', {
       headers: { Authorization: `Bearer ${token}` }
     });
     if (r.status === 401) { sessionStorage.clear(); location.reload(); }
     if (!r.ok) throw new Error('Error al cargar');
-    const reclamos = await r.json();
+    const raw = await r.json(); const reclamos = Array.isArray(raw) ? raw : (raw.reclamos || []);
     window.currentReclamosData = reclamos;
     
     let html = `
@@ -2393,13 +2483,13 @@ async function submitReclamoReply() {
   statusDiv.style.display = 'none';
   
   try {
-    const r = await fetch('/api/admin/responder-reclamo', {
+    const r = await fetch('/api/reclamos/' + id + '/responder', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${sessionStorage.getItem('cms_token')}`
       },
-      body: JSON.stringify({ id: id, detalle_respuesta: reply })
+      body: JSON.stringify({ detalle_respuesta: reply })
     });
     
     const d = await r.json();

@@ -981,58 +981,73 @@ nav.mnav a.btn-panel-link:hover {
         });
 
         async function loadStats() {
-            let pendingReclamos = 0;
-            let toursCount = 0;
-            let testCount = 0;
-            let blogCount = 0;
-
             try {
-                // Fetch Reclamos from D1 API
                 const token = sessionStorage.getItem('cms_token');
-                const recRes = await fetch('/api/reclamos?t=' + Date.now(), {
-                    headers: { Authorization: `Bearer ${token}` }
-                });
-                if (recRes.ok) {
-                    const recData = await recRes.json();
-                    const reclamosArr = recData.reclamos || recData || [];
-                    pendingReclamos = (Array.isArray(reclamosArr) ? reclamosArr : []).filter(r => r.estado !== 'Atendido').length;
-                }
-            } catch (e) { console.error('Error cargando reclamos:', e); }
+                const headers = { 'Content-Type': 'application/json' };
+                if (token) headers['Authorization'] = 'Bearer ' + token;
 
-            try {
-                // Fetch Tours count
-                const toursRes = await fetch('/data/tours.json?t=' + Date.now());
-                if (toursRes.ok) {
-                    const toursData = await toursRes.json();
-                    toursCount = (toursData.tours || []).length;
-                }
-            } catch (e) { console.error('Error cargando tours:', e); }
+                // 1. Reclamos (D1 API)
+                let pendingReclamos = 0;
+                try {
+                    const recRes = await fetch('/api/reclamos?t=' + Date.now(), { headers });
+                    if (recRes.ok) {
+                        const d = await recRes.json().catch(() => ({}));
+                        const reclamosArr = d.reclamos || (Array.isArray(d) ? d : []);
+                        pendingReclamos = (Array.isArray(reclamosArr) ? reclamosArr : []).filter(r => r && r.estado !== 'Atendido').length;
+                    }
+                } catch(e) { console.warn('Reclamos stat warning:', e); }
 
-            try {
-                // Fetch Testimonials count
-                const testRes = await fetch('/data/testimonials.json?t=' + Date.now());
-                if (testRes.ok) {
-                    const testData = await testRes.json();
-                    testCount = (testData.testimonials || []).length;
-                }
-            } catch (e) { console.error('Error cargando testimonios:', e); }
+                // 2. Tours (/data/tours.json)
+                let toursCount = 0;
+                try {
+                    const toursRes = await fetch('/data/tours.json?t=' + Date.now());
+                    if (toursRes.ok) {
+                        const d = await toursRes.json().catch(() => ({}));
+                        toursCount = (d.tours || (Array.isArray(d) ? d : [])).length;
+                    }
+                } catch(e) { console.warn('Tours stat warning:', e); }
 
-            try {
-                // Fetch Blog Posts count
-                const blogRes = await fetch('/data/posts-index.json?t=' + Date.now());
-                if (blogRes.ok) {
-                    const blogData = await blogRes.json();
-                    blogCount = (blogData.posts || []).length;
-                }
-            } catch (e) { console.error('Error cargando blog:', e); }
+                // 3. Testimonios (/api/testimonios with /data/testimonials.json fallback)
+                let testCount = 0;
+                try {
+                    const testRes = await fetch('/api/testimonios?t=' + Date.now(), { headers });
+                    if (testRes.ok) {
+                        const d = await testRes.json().catch(() => ({}));
+                        const list = d.testimonios || d.testimonials || (Array.isArray(d) ? d : []);
+                        testCount = list.length;
+                    } else {
+                        const testStatic = await fetch('/data/testimonials.json?t=' + Date.now());
+                        if (testStatic.ok) {
+                            const d = await testStatic.json().catch(() => ({}));
+                            testCount = (d.testimonials || d.testimonios || []).length;
+                        }
+                    }
+                } catch(e) { console.warn('Testimonios stat warning:', e); }
 
-            try {
+                // 4. Blog Posts (/data/posts-index.json)
+                let blogCount = 0;
+                try {
+                    const blogRes = await fetch('/data/posts-index.json?t=' + Date.now());
+                    if (blogRes.ok) {
+                        const d = await blogRes.json().catch(() => ({}));
+                        blogCount = (d.posts || (Array.isArray(d) ? d : [])).length;
+                    }
+                } catch(e) { console.warn('Blog stat warning:', e); }
+
                 // Update DOM elements
-                document.getElementById('stat-tours').textContent = toursCount;
-                document.getElementById('stat-blog').textContent = blogCount;
-                document.getElementById('stat-testim').textContent = testCount;
-                document.getElementById('stat-reclamos').textContent = pendingReclamos;
+                const elTours = document.getElementById('stat-tours');
+                if (elTours) elTours.textContent = toursCount;
 
+                const elBlog = document.getElementById('stat-blog');
+                if (elBlog) elBlog.textContent = blogCount;
+
+                const elTest = document.getElementById('stat-testim');
+                if (elTest) elTest.textContent = testCount;
+
+                const elRec = document.getElementById('stat-reclamos');
+                if (elRec) elRec.textContent = pendingReclamos;
+
+                // Badge de notificación en tarjeta Reclamos
                 const badge = document.getElementById('badge-reclamos-menu');
                 if (badge) {
                     if (pendingReclamos > 0) {
@@ -1043,6 +1058,7 @@ nav.mnav a.btn-panel-link:hover {
                     }
                 }
 
+                // Ocultar módulo de Usuarios si no es Super User
                 if (!isSuperUser()) {
                     const cardU = document.getElementById('card-usuarios');
                     if (cardU) cardU.style.display = 'none';

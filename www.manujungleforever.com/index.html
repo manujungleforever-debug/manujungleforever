@@ -13,12 +13,204 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous">
-<link rel="stylesheet" href="assets/css/new.css">
+<link rel="stylesheet" href="assets/css/new.css?v=30">
 <style>
 .hv iframe { position: absolute; top: 50%; left: 50%; width: 100vw; height: 56.25vw; min-height: 100%; min-width: 177.77vh; transform: translate(-50%, -50%); pointer-events: none; border: 0; }
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"TouristAttraction","name":"Manu Jungle Forever","url":"https://www.manujungleforever.com/","description":"Guided tours from Cusco to the Manu National Park in the Peruvian Amazon.","telephone":"+51901525679","email":"discover@manujungleforever.com","address":{"@type":"PostalAddress","addressLocality":"Nuevo Eden","addressCountry":"PE"},"sameAs":["https://www.facebook.com/manujungleforever","https://www.instagram.com/manujungleforever/",]}</script>
 <style>
+/* ══ GUIDED TOURS (WARM JUNGLE PALETTE & MODERN CARDS) ══════════════════ */
+#tours {
+  background: radial-gradient(circle at 50% 10%, rgba(61, 35, 15, 0.45) 0%, rgba(30, 16, 8, 0.95) 55%, rgba(18, 10, 5, 1) 100%) !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+#tours .tr-intro {
+  text-align: center !important;
+  max-width: 780px !important;
+  margin: 0 auto 48px auto !important;
+}
+#tours .tr-intro .ey {
+  color: var(--teal, #2dd4bf) !important;
+  font-size: 0.82rem !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.15em !important;
+  display: inline-block !important;
+  margin-bottom: 8px !important;
+}
+#tours .tr-intro .h2 {
+  font-family: 'Syne', 'Montserrat', sans-serif !important;
+  font-size: 2.5rem !important;
+  font-weight: 800 !important;
+  color: #ffffff !important;
+  margin-bottom: 14px !important;
+  letter-spacing: -0.02em !important;
+}
+#tours .tr-intro .ld {
+  font-size: 0.96rem !important;
+  color: rgba(226, 232, 240, 0.85) !important;
+  line-height: 1.65 !important;
+}
+#tours .tr-main {
+  display: grid !important;
+  grid-template-columns: 1.45fr 1fr !important;
+  gap: 20px !important;
+  margin-bottom: 20px !important;
+  width: 100% !important;
+}
+@media (max-width: 900px) {
+  #tours .tr-main {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+}
+#tours .tr-right-col {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 20px !important;
+  height: 100% !important;
+}
+#tours .tc {
+  position: relative !important;
+  overflow: hidden !important;
+  border-radius: 22px !important;
+  border: 1px solid rgba(201, 168, 76, 0.22) !important;
+  background: #1a0e08 !important;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  cursor: pointer !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+#tours .tc:hover {
+  transform: translateY(-6px) !important;
+  border-color: rgba(45, 212, 191, 0.5) !important;
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.75), 0 0 25px rgba(45, 212, 191, 0.2) !important;
+}
+#tours .tc-xl {
+  min-height: 560px !important;
+  height: 100% !important;
+}
+#tours .tc-md {
+  min-height: 270px !important;
+  flex: 1 !important;
+}
+#tours .tc img {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+  display: block !important;
+  z-index: 1 !important;
+}
+#tours .tc:hover img {
+  transform: scale(1.08) !important;
+}
+#tours .tov {
+  position: absolute !important;
+  inset: 0 !important;
+  background: linear-gradient(to top, rgba(16, 9, 4, 0.98) 0%, rgba(16, 9, 4, 0.65) 50%, rgba(16, 9, 4, 0.1) 100%) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-end !important;
+  padding: 32px 28px !important;
+  transition: background 0.4s ease !important;
+  z-index: 2 !important;
+  box-sizing: border-box !important;
+}
+#tours .tc:hover .tov {
+  background: linear-gradient(to top, rgba(16, 9, 4, 0.99) 0%, rgba(16, 9, 4, 0.75) 55%, rgba(16, 9, 4, 0.2) 100%) !important;
+}
+#tours .tbg {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 7px !important;
+  padding: 6px 14px !important;
+  border-radius: 30px !important;
+  font-size: 0.72rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  margin-bottom: 10px !important;
+  width: fit-content !important;
+  backdrop-filter: blur(10px) !important;
+}
+#tours .ton {
+  background: rgba(16, 185, 129, 0.2) !important;
+  border: 1px solid rgba(52, 211, 153, 0.45) !important;
+  color: #34d399 !important;
+  box-shadow: 0 0 14px rgba(16, 185, 129, 0.25) !important;
+}
+#tours .tt {
+  font-family: 'Syne', 'Montserrat', sans-serif !important;
+  font-size: 1.75rem !important;
+  font-weight: 800 !important;
+  color: #ffffff !important;
+  line-height: 1.2 !important;
+  margin-bottom: 10px !important;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8) !important;
+}
+#tours .tc-md .tt {
+  font-size: 1.28rem !important;
+  margin-bottom: 8px !important;
+}
+#tours .tm {
+  display: flex !important;
+  gap: 8px !important;
+  flex-wrap: wrap !important;
+  margin-bottom: 14px !important;
+}
+#tours .tm span {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  font-size: 0.76rem !important;
+  font-weight: 600 !important;
+  color: rgba(255, 255, 255, 0.95) !important;
+  background: rgba(20, 10, 5, 0.75) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  padding: 4px 10px !important;
+  border-radius: 20px !important;
+  backdrop-filter: blur(6px) !important;
+}
+#tours .tm span i {
+  color: var(--teal, #2dd4bf) !important;
+  font-size: 0.75rem !important;
+}
+#tours .tp {
+  font-size: 0.88rem !important;
+  color: rgba(226, 232, 240, 0.92) !important;
+  line-height: 1.6 !important;
+  margin-bottom: 18px !important;
+  max-width: 520px !important;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.8) !important;
+}
+#tours .tbtn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 10px 22px !important;
+  border-radius: 30px !important;
+  font-size: 0.84rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.02em !important;
+  background: linear-gradient(135deg, var(--teal, #0d9488), #2dd4bf) !important;
+  color: #0c0805 !important;
+  box-shadow: 0 4px 16px rgba(45, 212, 191, 0.35) !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  width: fit-content !important;
+  text-decoration: none !important;
+}
+#tours .tbtn:hover {
+  transform: translateY(-2px) scale(1.03) !important;
+  box-shadow: 0 8px 25px rgba(45, 212, 191, 0.55) !important;
+  color: #000 !important;
+}
+
 /* ══ VIBRANT TOUR DETAIL CARDS (HOME) ══════════════════ */
 #tours .tr-row {
   display: grid !important;
@@ -43,7 +235,7 @@
   justify-content: flex-start !important;
   border-radius: 18px !important;
   border: 1px solid rgba(45, 212, 191, 0.2) !important;
-  background: linear-gradient(145deg, rgba(8, 28, 24, 0.9), rgba(3, 12, 10, 0.97)) !important;
+  background: linear-gradient(145deg, rgba(30, 16, 6, 0.9), rgba(26,14,6, 0.97)) !important;
   backdrop-filter: blur(14px) !important;
   position: relative !important;
   overflow: hidden !important;
@@ -73,21 +265,21 @@
   height: 4px;
 }
 #tours .tc-sm-roadtrip {
-  background: linear-gradient(145deg, rgba(10, 36, 26, 0.92), rgba(3, 16, 12, 0.98)) !important;
+  background: linear-gradient(145deg, rgba(36, 18, 6, 0.92), rgba(20, 10, 4, 0.98)) !important;
   border-color: rgba(16, 185, 129, 0.28) !important;
 }
 #tours .tc-sm-roadtrip::before {
   background: linear-gradient(90deg, #10b981, #2dd4bf) !important;
 }
 #tours .tc-sm-expedition {
-  background: linear-gradient(145deg, rgba(14, 30, 44, 0.92), rgba(3, 14, 22, 0.98)) !important;
+  background: linear-gradient(145deg, rgba(36, 18, 8, 0.92), rgba(18, 9, 4, 0.98)) !important;
   border-color: rgba(56, 189, 248, 0.28) !important;
 }
 #tours .tc-sm-expedition::before {
   background: linear-gradient(90deg, #38bdf8, #818cf8) !important;
 }
 #tours .tc-sm-allinclusive {
-  background: linear-gradient(145deg, rgba(36, 28, 12, 0.92), rgba(16, 12, 4, 0.98)) !important;
+  background: linear-gradient(145deg, rgba(40, 20, 6, 0.92), rgba(22, 12, 4, 0.98)) !important;
   border-color: rgba(245, 158, 11, 0.28) !important;
 }
 #tours .tc-sm-allinclusive::before {
@@ -212,7 +404,7 @@
 
 /* ══ UNIQUE CONTENT SECTION (WIDE & WELL-PROPORTIONED) ══ */
 .unique-section {
-  background: linear-gradient(180deg, #030806 0%, #051410 50%, #030806 100%) !important;
+  background: linear-gradient(180deg, #1a0e08 0%, #261408 50%, #1a0e08 100%) !important;
   padding: 55px 0 65px 0 !important;
   border-top: 1px solid rgba(45, 212, 191, 0.12) !important;
   border-bottom: 1px solid rgba(45, 212, 191, 0.12) !important;
@@ -283,7 +475,7 @@
   align-items: center !important;
   gap: 7px !important;
   padding: 6px 14px !important;
-  background: rgba(3, 12, 10, 0.85) !important;
+  background: rgba(26,14,6, 0.85) !important;
   backdrop-filter: blur(10px) !important;
   border: 1px solid rgba(45, 212, 191, 0.4) !important;
   border-radius: 30px !important;
@@ -300,7 +492,7 @@
   bottom: 0 !important;
   inset-inline: 0 !important;
   z-index: 5 !important;
-  background: linear-gradient(to top, rgba(3, 12, 10, 0.92) 0%, rgba(3, 12, 10, 0.4) 60%, transparent 100%) !important;
+  background: linear-gradient(to top, rgba(26,14,6, 0.92) 0%, rgba(26,14,6, 0.4) 60%, transparent 100%) !important;
   padding: 16px 20px !important;
   color: #fff !important;
 }
@@ -373,7 +565,7 @@
 
 /* ══ OUR PILLARS SECTION (WHY-US) REDESIGN ══════════════════ */
 #why-us {
-  background: radial-gradient(circle at 50% 0%, rgba(45, 212, 191, 0.08) 0%, #030806 75%) !important;
+  background: radial-gradient(circle at 50% 0%, rgba(45, 212, 191, 0.08) 0%, #1a0e08 75%) !important;
   padding: 85px 0 !important;
   border-top: 1px solid rgba(255, 255, 255, 0.06) !important;
   position: relative !important;
@@ -404,7 +596,7 @@
 
 .pillar-card {
   position: relative !important;
-  background: rgba(8, 20, 16, 0.65) !important;
+  background: rgba(26, 14, 6, 0.65) !important;
   backdrop-filter: blur(14px) !important;
   border-radius: 22px !important;
   padding: 38px 32px 34px !important;
@@ -706,7 +898,7 @@
 <section class="sp" id="about">
   <div class="spi rl" style="position:relative; overflow:hidden; border-radius:18px;">
     <img src="wp-content/uploads/2022/10/Wildlife-quest-3days-machuwasi.jpg" alt="Wildlife quest at Machu Wasi – Manu National Park" loading="lazy" width="800" height="640">
-    <div class="spi-caption" style="position: absolute; bottom: 0; inset-inline: 0; background: linear-gradient(to top, rgba(3,12,10,0.88) 0%, rgba(3,12,10,0.3) 60%, transparent 100%); padding: 18px 22px; color: #fff;">
+    <div class="spi-caption" style="position: absolute; bottom: 0; inset-inline: 0; background: linear-gradient(to top, rgba(26,14,6,0.88) 0%, rgba(26,14,6,0.3) 60%, transparent 100%); padding: 18px 22px; color: #fff;">
       <span style="font-size: 0.88rem; font-weight: 600; color: rgba(255,255,255,0.95); display: flex; align-items: center; gap: 8px;">
         <i class="fas fa-camera" style="color: var(--teal, #2dd4bf);"></i> <span class="caption-text">Wildlife quest at Machu Wasi – Manu National Park</span>
       </span>
@@ -729,83 +921,83 @@
   </div>
 </section>
 
-<section class="sec" id="tours" style="background:var(--k);padding-bottom:0">
+<section class="sec" id="tours" style="background: radial-gradient(circle at 50% 10%, rgba(61, 35, 15, 0.45) 0%, rgba(30, 16, 8, 0.95) 55%, #120a05 100%) !important; padding-bottom:0;">
   <div class="cx">
     <div class="tr-intro r">
       <span class="ey">Guided Tours</span>
       <h2 class="h2">Curated Jungle Expeditions</h2>
-    <p class="ld">Our itineraries are meticulously designed to cater to true nature enthusiasts. From deep-forest survival treks for the intrepid explorer, to focused wildlife spotting cruises along the riverbanks, our routes guarantee a transformative encounter with the wild.</p>
+      <p class="ld">Our itineraries are meticulously designed to cater to true nature enthusiasts. From deep-forest survival treks for the intrepid explorer, to focused wildlife spotting cruises along the riverbanks, our routes guarantee a transformative encounter with the wild.</p>
     </div>
-  </div>
-  <div class="tr-main r">
-    <div class="tc tc-xl">
-      <img src="/media/1787018009678-willife.jpeg" alt="Manu National Park wildlife tour from Cusco" loading="lazy" width="900" height="600">
-      <div class="tov">
-        <span class="tbg ton"><i class="fas fa-circle" style="font-size:.5rem"></i> Available Now</span>
-        <h2 class="tt">Jungle Wildlife Tour</h2>
-        <div class="tm"><span><i class="far fa-calendar-alt"></i> 3, 4, 5, 6 or 8 Days</span><span><i class="fas fa-users"></i> 2–8 Passengers</span><span><i class="fas fa-ship"></i> Van &amp; Boat</span></div>
-        <p class="tp">Manu National Park tours from Cusco where you travel by van through the cloud forest, then search for Peruvian Amazon animals by boat. See caimans, macaws, capybaras, and the elusive jaguar. Beautiful scenery, local food, incredible nature — appropriate for all travelers.</p>
-        <a href="guided-tours/index.html#wildlife" class="tbtn">Explore This Tour <i class="fas fa-arrow-right"></i></a>
-      </div>
-    </div>
-    <div class="tr-right-col">
-      <div class="tc tc-md">
-        <img src="/media/1787019022145-mohamed-hassan-sunset-3754082.jpg" alt="Rainforest Road Trip from Cusco to Manu" loading="lazy" width="600" height="290">
+    <div class="tr-main r">
+      <div class="tc tc-xl">
+        <img src="/media/1787018009678-willife.jpeg" alt="Manu National Park wildlife tour from Cusco" loading="lazy" width="900" height="600">
         <div class="tov">
           <span class="tbg ton"><i class="fas fa-circle" style="font-size:.5rem"></i> Available Now</span>
-          <h2 class="tt">Rainforest Road Trip</h2>
-          <div class="tm"><span><i class="far fa-calendar-alt"></i> 4 or 5 Days</span><span><i class="fas fa-users"></i> 1–3 Passengers</span><span><i class="fas fa-truck"></i> Private 4×4</span></div>
-          <a href="guided-tours/index.html#rainforest" class="tbtn">View Details <i class="fas fa-arrow-right"></i></a>
+          <h2 class="tt">Jungle Wildlife Tour</h2>
+          <div class="tm"><span><i class="far fa-calendar-alt"></i> 3, 4, 5, 6 or 8 Days</span><span><i class="fas fa-users"></i> 2–8 Passengers</span><span><i class="fas fa-ship"></i> Van &amp; Boat</span></div>
+          <p class="tp">Manu National Park tours from Cusco where you travel by van through the cloud forest, then search for Peruvian Amazon animals by boat. See caimans, macaws, capybaras, and the elusive jaguar. Beautiful scenery, local food, incredible nature — appropriate for all travelers.</p>
+          <a href="guided-tours/index.html#wildlife" class="tbtn">Explore This Tour <i class="fas fa-arrow-right"></i></a>
         </div>
       </div>
-      <div class="tc tc-md">
-        <img src="/media/usuarios/kemmesik-gmail-com/avatar_1787257830305.jpg" alt="Manu Amazon Expedition from Cusco" loading="lazy" width="600" height="290">
-        <div class="tov">
-          <span class="tbg ton"><i class="fas fa-circle" style="font-size:.5rem"></i> Available Now</span>
-          <h2 class="tt">Manu Expedition</h2>
-          <div class="tm"><span><i class="far fa-calendar-alt"></i> 5 or 6 Days</span><span><i class="fas fa-users"></i> 2–8 Passengers</span><span><i class="fas fa-hiking"></i> Van, Boat &amp; Hiking</span></div>
-          <a href="guided-tours/index.html#amazon" class="tbtn">View Details <i class="fas fa-arrow-right"></i></a>
+      <div class="tr-right-col">
+        <div class="tc tc-md">
+          <img src="/media/1787019022145-mohamed-hassan-sunset-3754082.jpg" alt="Rainforest Road Trip from Cusco to Manu" loading="lazy" width="600" height="290">
+          <div class="tov">
+            <span class="tbg ton"><i class="fas fa-circle" style="font-size:.5rem"></i> Available Now</span>
+            <h2 class="tt">Rainforest Road Trip</h2>
+            <div class="tm"><span><i class="far fa-calendar-alt"></i> 4 or 5 Days</span><span><i class="fas fa-users"></i> 1–3 Passengers</span><span><i class="fas fa-truck"></i> Private 4×4</span></div>
+            <a href="guided-tours/index.html#rainforest" class="tbtn">View Details <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+        <div class="tc tc-md">
+          <img src="assets/img/hike.png" alt="Manu Amazon Expedition from Cusco" loading="lazy" width="600" height="290">
+          <div class="tov">
+            <span class="tbg ton"><i class="fas fa-circle" style="font-size:.5rem"></i> Available Now</span>
+            <h2 class="tt">Manu Expedition</h2>
+            <div class="tm"><span><i class="far fa-calendar-alt"></i> 5 or 6 Days</span><span><i class="fas fa-users"></i> 2–8 Passengers</span><span><i class="fas fa-hiking"></i> Van, Boat &amp; Hiking</span></div>
+            <a href="guided-tours/index.html#amazon" class="tbtn">View Details <i class="fas fa-arrow-right"></i></a>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="tr-row">
-    <div class="tc tc-sm tc-sm-roadtrip">
-      <div class="tc-sm-header">
-        <div class="tc-sm-icon"><i class="fas fa-route"></i></div>
-        <div class="tc-sm-titles">
-          <span class="tc-sm-tag">Scenic Adventure</span>
-          <h3>Rainforest Road Trip · Details</h3>
+    <div class="tr-row">
+      <div class="tc tc-sm tc-sm-roadtrip">
+        <div class="tc-sm-header">
+          <div class="tc-sm-icon"><i class="fas fa-route"></i></div>
+          <div class="tc-sm-titles">
+            <span class="tc-sm-tag">Scenic Adventure</span>
+            <h3>Rainforest Road Trip · Details</h3>
+          </div>
         </div>
+        <p>Our most authentic Peru Amazon tour takes you through villages along the winding road from Cusco to Manu. Spot animals in the cloud forest, taste local flavors, and visit hidden gems. Great for small, adventurous groups on a budget. <span class="tc-sm-note"><i class="fas fa-cloud-sun"></i> Not available Dec–Mar (rainy season).</span></p>
       </div>
-      <p>Our most authentic Peru Amazon tour takes you through villages along the winding road from Cusco to Manu. Spot animals in the cloud forest, taste local flavors, and visit hidden gems. Great for small, adventurous groups on a budget. <span class="tc-sm-note"><i class="fas fa-cloud-sun"></i> Not available Dec–Mar (rainy season).</span></p>
-    </div>
-    <div class="tc tc-sm tc-sm-expedition">
-      <div class="tc-sm-header">
-        <div class="tc-sm-icon"><i class="fas fa-campground"></i></div>
-        <div class="tc-sm-titles">
-          <span class="tc-sm-tag">Deep Wilderness</span>
-          <h3>Manu Expedition · Details</h3>
+      <div class="tc tc-sm tc-sm-expedition">
+        <div class="tc-sm-header">
+          <div class="tc-sm-icon"><i class="fas fa-campground"></i></div>
+          <div class="tc-sm-titles">
+            <span class="tc-sm-tag">Deep Wilderness</span>
+            <h3>Manu Expedition · Details</h3>
+          </div>
         </div>
+        <p>Perfect for adventurous nature lovers — this expedition takes you deep into the forest. Camp, fish, hike, and learn survival skills. Travel by van through the cloud forest, by boat along riverbanks, then hike deep into the jungle wearing rubber boots. Our experienced local team organizes everything.</p>
       </div>
-      <p>Perfect for adventurous nature lovers — this expedition takes you deep into the forest. Camp, fish, hike, and learn survival skills. Travel by van through the cloud forest, by boat along riverbanks, then hike deep into the jungle wearing rubber boots. Our experienced local team organizes everything.</p>
-    </div>
-    <div class="tc tc-sm tc-sm-allinclusive">
-      <div class="tc-sm-header">
-        <div class="tc-sm-icon"><i class="fas fa-shield-halved"></i></div>
-        <div class="tc-sm-titles">
-          <span class="tc-sm-tag">All-Inclusive Guarantee</span>
-          <h3>All Tours Include</h3>
+      <div class="tc tc-sm tc-sm-allinclusive">
+        <div class="tc-sm-header">
+          <div class="tc-sm-icon"><i class="fas fa-shield-halved"></i></div>
+          <div class="tc-sm-titles">
+            <span class="tc-sm-tag">All-Inclusive Guarantee</span>
+            <h3>All Tours Include</h3>
+          </div>
         </div>
-      </div>
-      <p style="margin-bottom:10px; font-size:0.82rem; color:rgba(255,255,255,0.7);">Everything you need for an unforgettable, safe, and fully supported Amazon expedition:</p>
-      <div class="tc-sm-pills">
-        <span><i class="fas fa-van-shuttle"></i> Private Transport</span>
-        <span><i class="fas fa-utensils"></i> All Meals &amp; Snacks</span>
-        <span><i class="fas fa-bottle-water"></i> Pure Water</span>
-        <span><i class="fas fa-shoe-prints"></i> Rubber Boots</span>
-        <span><i class="fas fa-user-check"></i> Bilingual Guide</span>
-        <span><i class="fas fa-hotel"></i> Jungle Lodges</span>
+        <p style="margin-bottom:10px; font-size:0.82rem; color:rgba(255,255,255,0.7);">Everything you need for an unforgettable, safe, and fully supported Amazon expedition:</p>
+        <div class="tc-sm-pills">
+          <span><i class="fas fa-van-shuttle"></i> Private Transport</span>
+          <span><i class="fas fa-utensils"></i> All Meals &amp; Snacks</span>
+          <span><i class="fas fa-bottle-water"></i> Pure Water</span>
+          <span><i class="fas fa-shoe-prints"></i> Rubber Boots</span>
+          <span><i class="fas fa-user-check"></i> Bilingual Guide</span>
+          <span><i class="fas fa-hotel"></i> Jungle Lodges</span>
+        </div>
       </div>
     </div>
   </div>
@@ -821,7 +1013,7 @@
             <i class="fas fa-leaf"></i> 100% Local Conservation
           </div>
           <img src="wp-content/uploads/2022/10/Hero-About-Us.jpg" alt="Manu Jungle Forever Family and Guides" loading="lazy">
-          <div class="spi-caption" style="position: absolute; bottom: 0; inset-inline: 0; background: linear-gradient(to top, rgba(3,12,10,0.92) 0%, rgba(3,12,10,0.4) 60%, transparent 100%); padding: 16px 20px; color: #fff;">
+          <div class="spi-caption" style="position: absolute; bottom: 0; inset-inline: 0; background: linear-gradient(to top, rgba(26,14,6,0.92) 0%, rgba(26,14,6,0.4) 60%, transparent 100%); padding: 16px 20px; color: #fff;">
             <span style="font-size: 0.85rem; font-weight: 600; color: rgba(255,255,255,0.95); display: flex; align-items: center; gap: 8px;">
               <i class="fas fa-camera" style="color: var(--teal, #2dd4bf);"></i> <span class="caption-text">Manu Jungle Forever Family and Guides</span>
             </span>
@@ -907,7 +1099,7 @@
   .testim-card {
     position: relative;
     overflow: hidden;
-    background: linear-gradient(155deg, rgba(255,255,255,0.05) 0%, rgba(5,13,8,0.82) 100%);
+    background: linear-gradient(155deg, rgba(255,255,255,0.05) 0%, rgba(10,7,4,0.82) 100%);
     border: 1px solid rgba(255,255,255,0.09);
     border-radius: 22px;
     padding: 38px 32px 32px 32px;

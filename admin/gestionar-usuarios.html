@@ -11,6 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
 <link rel="icon" href="../assets/img/logo.png">
+<script src="js/api.js"></script>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
@@ -481,12 +482,12 @@ nav.mnav a.btn-panel-link:hover {
 
 <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
 <script>
-const API = '/api/cms';
-const MEDIA_API = '/api/media';
+var API = window.API || '/api/cms';
+var MEDIA_API = window.MEDIA_API || '/api/media';
 let token = sessionStorage.getItem('cms_token');
 let cUser = sessionStorage.getItem('cms_user') || '';
 let cRole = sessionStorage.getItem('cms_role') || 'normal';
-var cData=null, saveFnRef=null;
+var cSha=null, cFile='www.manujungleforever.com/data/users.json', cData=null, saveFnRef=null;
 
 function set(h){ document.getElementById('mc').innerHTML=h; }
 function v(id){ return document.getElementById(id)?.value??''; }
@@ -528,15 +529,8 @@ document.getElementById('btn-save').addEventListener('click', async () => {
 });
 document.getElementById('btn-cancel-save').addEventListener('click',()=>{hideSaveBar();viewUsers();});
 
-// ── Helpers D1 /api/users ──
-async function apiUsers(method, path, body) {
-  const opts = { method, headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` } };
-  if (body !== undefined) opts.body = JSON.stringify(body);
-  const r = await fetch('/api/users' + (path || ''), opts);
-  if (r.status === 401) { sessionStorage.clear(); location.reload(); return {}; }
-  if (!r.ok) { const e = await r.json().catch(() => ({})); throw new Error(e.error || `Error ${method} /api/users`); }
-  return r.json().catch(() => ({}));
-}
+// API WRAPPERS (CENTRALIZED IN js/api.js)
+// ─────────────────────────────────────────────────────────────────────────────
 
 // ── R2 UPLOAD HELPER ──
 async function r2Upload(file, progressEl) {
@@ -633,8 +627,6 @@ function updateAvatarPreview(inputId, prevId) {
   }
 }
 
-var cSha=null, cFile='www.manujungleforever.com/data/users.json', cData=null, saveFnRef=null;
-
 document.addEventListener('DOMContentLoaded',()=>{
   if(!token)return;
   if (typeof tsParticles !== 'undefined') {
@@ -657,9 +649,9 @@ document.addEventListener('DOMContentLoaded',()=>{
 async function viewUsers() {
   set('<div class="loading" style="padding:40px 0;display:flex;align-items:center;gap:12px;color:var(--muted);"><div class="spinner" style="width:20px;height:20px;border-radius:50%;border:2px solid rgba(45,212,191,.2);border-top-color:var(--teal);animation:spin .8s linear infinite;"></div> Cargando usuarios...</div>');
   try {
-    const res = await ghGet(cFile);
-    cSha = res.sha;
-    cData = JSON.parse(res.content || '{"users":[]}');
+    const data = await ghGet(cFile);
+    cSha = data.sha;
+    cData = JSON.parse(data.content);
     const users = cData.users || [];
 
     const superCount = users.filter(u => u.role === 'superuser').length;
@@ -801,8 +793,8 @@ window.uploadUserAvatar = async function(input) {
 };
 
 window.editUser = function(idx) {
-  const u = idx === -1
-    ? { id: 'usr_' + Date.now(), email: '', name: '', role: 'normal', activo: true, password_hash: '', foto: '' }
+  const u = idx === -1 
+    ? { id: 'usr_' + Date.now(), email: '', name: '', role: 'normal', activo: true, password_hash: '', foto: '' } 
     : cData.users[idx];
   const isSuperAccount = ['kemmesik@gmail.com', 'jordyleonidas@manujungleforever.com'].includes((u.email || '').toLowerCase());
   const foto = u.foto || u.avatar || '';
@@ -897,30 +889,63 @@ window.editUser = function(idx) {
     const passConf = v('u-pass-conf').trim();
 
     if (!name || !email) throw new Error('Nombre y correo son obligatorios.');
-    if (pass && pass !== passConf) throw new Error('Las contraseñas no coinciden.');
-    if (pass && pass.length < 6) throw new Error('La contraseña debe tener al menos 6 caracteres.');
+
+    let newHash = u.password_hash;
+    if (idx === -1) {
+      const finalPass = pass || '123456aytana';
+      if (pass && pass !== passConf) throw new Error('Las contraseñas no coinciden.');
+      newHash = await sha256(finalPass);
+    } else {
+      if (pass) {
+        if (pass !== passConf) throw new Error('Las contraseñas no coinciden.');
+        if (pass.length < 6) throw new Error('La contraseña debe tener al menos 6 caracteres.');
+        newHash = await sha256(pass);
+      }
+    }
+
+    const updated = {
+      id: u.id || ('usr_' + Date.now()),
+      email,
+      name,
+      role,
+      foto,
+      password_hash: newHash,
+      activo,
+      created_at: u.created_at || new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+      // For new users, pass plain password so D1 can hash with its own method
+      ...(idx === -1 ? { _new_password: pass || '123456aytana' } : {})
+    };
+
+
+    if (idx === -1) {
+      if (cData.users.some(x => x.email.toLowerCase() === email)) {
+        throw new Error('Ya existe un usuario con este correo electrónico.');
+      }
+      cData.users.unshift(updated);
+    } else {
+      cData.users[idx] = updated;
+    }
 
     // Si es el usuario actual, actualizar la sesión
     if (email === cUser.toLowerCase()) {
-      sessionStorage.setItem('cms_name', name);
-      sessionStorage.setItem('cms_avatar', foto || '');
+      sessionStorage.setItem('cms_name', updated.name);
+      sessionStorage.setItem('cms_avatar', updated.foto || '');
+      const huser = document.getElementById('huser');
+      if (huser && typeof window.isSuperUser === 'function') {
+        const isSuper = window.isSuperUser();
+        const roleBadge = isSuper 
+          ? '<span style="font-size:0.68rem;background:rgba(201,168,76,0.2);color:#c9a84c;padding:2px 7px;border-radius:6px;margin-left:6px;border:1px solid rgba(201,168,76,0.3);">SUPER USER</span>'
+          : '<span style="font-size:0.68rem;background:rgba(45,212,191,0.15);color:#2dd4bf;padding:2px 7px;border-radius:6px;margin-left:6px;border:1px solid rgba(45,212,191,0.3);">EDITOR</span>';
+        const avatarHtml = updated.foto 
+          ? `<img src="${esc(updated.foto)}" style="width:26px;height:26px;border-radius:50%;object-fit:cover;border:1.5px solid ${isSuper ? '#c9a84c' : '#2dd4bf'};vertical-align:middle;margin-right:6px;display:inline-block;">`
+          : `<span style="font-size:1rem;margin-right:4px;vertical-align:middle;">👤</span>`;
+        huser.innerHTML = `${avatarHtml}<span style="vertical-align:middle;">${updated.name}</span> ${roleBadge}`;
+      }
     }
 
-    if (idx === -1) {
-      if (!pass) u.password_hash = await sha256('123456aytana');
-      else u.password_hash = await sha256(pass);
-      u.id = 'usr_' + Date.now();
-      u.created_at = new Date().toISOString();
-      u.updated_at = new Date().toISOString();
-      cData.users.push(u);
-    } else {
-      if (pass) u.password_hash = await sha256(pass);
-      u.updated_at = new Date().toISOString();
-    }
-
-    const res = await ghPut(cFile, JSON.stringify(cData, null, 2), cSha, 'update user');
+    const res = await ghPut(cFile, JSON.stringify(cData, null, 2), cSha, `update user: ${updated.email}`);
     cSha = res.sha;
-
     document.querySelector('.back-btn').textContent = '← Usuarios (guardado ✓)';
     setTimeout(() => { viewUsers(); }, 1200);
   });

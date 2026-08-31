@@ -135,10 +135,6 @@ main { flex-grow:1; max-width:1200px !important; width:100% !important; margin:0
 .badge.warn{ background:rgba(245,158,11,.18); color:#fbbf24; border:1px solid rgba(245,158,11,.3); }
 /* ══ EFORM LAYOUT ══════════════════════════════════════ */
 .eform { max-width:1200px; width:100%; margin:0 auto 60px auto; display:flex; flex-direction:column; gap:18px; box-sizing:border-box; }
-@media (min-width: 1100px) {
-  .eform { display:grid; grid-template-columns:1fr 1fr; gap:1.25rem; align-items:stretch; }
-  .eform > .esec.full-width { grid-column: 1 / -1; }
-}
 /* ══ SECTION CARDS ══════════════════════════════════════ */
 .esec { position:relative; background:linear-gradient(145deg,rgba(11,38,35,0.70),rgba(3,12,10,0.85)); backdrop-filter:blur(14px); border:1px solid rgba(45,212,191,0.12); border-radius:18px; padding:24px; box-shadow:0 4px 24px rgba(0,0,0,0.35),inset 0 1px 0 rgba(255,255,255,0.04); transition:border-color .3s,box-shadow .3s; }
 .esec:hover { border-color:rgba(45,212,191,0.22); box-shadow:0 6px 32px rgba(0,0,0,0.45),inset 0 1px 0 rgba(255,255,255,0.05); }
@@ -1546,57 +1542,59 @@ async function viewHome() {
   set(`
     <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-contenido"><i class="ph ph-house"></i></div><div><p class="pt" style="margin-bottom:0">Página de Inicio</p><p class="ps">Contenido principal del sitio</p></div></div>
     <div class="eform">
-      <!-- 1. HERO (PORTADA) -->
-      <div class="esec"><div class="esec-h">Hero (Portada)</div>
-        <div class="ff"><label>Título principal</label><input id="h-t" name="inicio_hero_title" value="${esc(d.hero?.title||'')}"></div>
-        <div class="ff"><label>Título énfasis (parte resaltada)</label><input id="h-e" name="inicio_hero_emphasis" value="${esc(d.hero?.title_emphasis||'')}"></div>
-        <div class="ff"><label>Subtítulo / descripción</label><textarea id="h-s" name="inicio_hero_subtitle">${esc(d.hero?.subtitle||'')}</textarea></div>
-        <div class="grow2">
-          <div class="ff"><label>Texto de ubicación</label><input id="h-l" name="inicio_hero_location" value="${esc(d.hero?.location_tag||'')}"></div>
-          <div class="ff"><label>ID video YouTube</label><input id="h-v" name="inicio_hero_video" value="${esc(d.hero?.video_id||'')}">
-            <span class="hint">Solo el ID, ej: <code>dQw4w9WgXcQ</code></span></div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(400px, 1fr));gap:20px;align-items:start;">
+        <!-- 1. HERO (PORTADA) -->
+        <div class="esec" style="margin-bottom:0;"><div class="esec-h">Hero (Portada)</div>
+          <div class="ff"><label>Título principal</label><input id="h-t" name="inicio_hero_title" value="${esc(d.hero?.title === 'What Will' ? 'What Will You' : (d.hero?.title || 'What Will You'))}"></div>
+          <div class="ff"><label>Título énfasis (parte resaltada)</label><input id="h-e" name="inicio_hero_emphasis" value="${esc(d.hero?.title_emphasis||'Discover?')}"></div>
+          <div class="ff"><label>Subtítulo / descripción</label><textarea id="h-s" name="inicio_hero_subtitle" style="min-height:90px;">${esc(d.hero?.subtitle||'')}</textarea></div>
+          <div class="grow2">
+            <div class="ff"><label>Texto de ubicación</label><input id="h-l" name="inicio_hero_location" value="${esc(d.hero?.location_tag||'')}"></div>
+            <div class="ff"><label>ID video YouTube</label><input id="h-v" name="inicio_hero_video" value="${esc(d.hero?.video_id||'')}">
+              <span class="hint">Solo el ID, ej: <code>dQw4w9WgXcQ</code></span></div>
+          </div>
         </div>
-      </div>
 
-      <!-- 1.1 PUNTUACIONES Y ESTADÍSTICAS (STATS & RANKING DEL SITIO) -->
-      <div class="esec"><div class="esec-h">Puntuaciones y Estadísticas (Stats & Rankings)</div>
-        <p class="hint" style="margin-bottom:12px;">Métricas mostradas en la barra superior bajo el Hero</p>
-        <div style="display:flex;flex-direction:column;gap:10px;">
-          <div style="background:rgba(3,18,14,0.6);border:1px solid rgba(45,212,191,0.15);border-radius:10px;padding:10px;">
-            <p style="font-size:0.75rem;font-weight:700;color:var(--teal);margin-bottom:6px;">ESTADÍSTICA 1 (VIAJEROS)</p>
-            <div class="grow3">
-              <div class="ff"><label>Valor</label><input id="st-v-0" value="${esc(d.stats?.[0]?.value ?? 500)}" placeholder="500"></div>
-              <div class="ff"><label>Sufijo</label><input id="st-s-0" value="${esc(d.stats?.[0]?.suffix ?? '+')}" placeholder="+"></div>
-              <div class="ff"><label>Etiqueta</label><input id="st-l-0" value="${esc(d.stats?.[0]?.label ?? 'Travelers Guided')}" placeholder="Travelers Guided"></div>
-            </div>
-          </div>
-          <div style="background:rgba(3,18,14,0.6);border:1px solid rgba(45,212,191,0.15);border-radius:10px;padding:10px;">
-            <p style="font-size:0.75rem;font-weight:700;color:var(--teal);margin-bottom:6px;">ESTADÍSTICA 2 (AÑOS)</p>
-            <div class="grow3">
-              <div class="ff"><label>Valor</label><input id="st-v-1" value="${esc(d.stats?.[1]?.value ?? 10)}" placeholder="10"></div>
-              <div class="ff"><label>Sufijo</label><input id="st-s-1" value="${esc(d.stats?.[1]?.suffix ?? '+')}" placeholder="+"></div>
-              <div class="ff"><label>Etiqueta</label><input id="st-l-1" value="${esc(d.stats?.[1]?.label ?? 'Years Experience')}" placeholder="Years Experience"></div>
-            </div>
-          </div>
-          <div style="background:rgba(3,18,14,0.6);border:1px solid rgba(45,212,191,0.15);border-radius:10px;padding:10px;">
-            <p style="font-size:0.75rem;font-weight:700;color:var(--teal);margin-bottom:6px;">ESTADÍSTICA 3 (OPCIONES DE TOUR)</p>
-            <div class="grow3">
-              <div class="ff"><label>Valor</label><input id="st-v-2" value="${esc(d.stats?.[2]?.value ?? 12)}" placeholder="12"></div>
-              <div class="ff"><label>Sufijo</label><input id="st-s-2" value="${esc(d.stats?.[2]?.suffix ?? '')}" placeholder=""></div>
-              <div class="ff"><label>Etiqueta</label><input id="st-l-2" value="${esc(d.stats?.[2]?.label ?? 'Tour Options')}" placeholder="Tour Options"></div>
-            </div>
-          </div>
-          <div style="background:rgba(3,18,14,0.6);border:1px solid rgba(45,212,191,0.15);border-radius:10px;padding:10px;">
-            <p style="font-size:0.75rem;font-weight:700;color:var(--teal);margin-bottom:6px;">PUNTUACIÓN / RANKING GENERAL</p>
-            <div class="grow2">
-              <div class="ff">
-                <label>Calificación (Rating)</label>
-                <input id="st-v-3" value="${esc(String(d.stats?.[3]?.value ?? '4.9').replace(/[★*]/g, '').trim())}" placeholder="4.9">
-                <span class="hint">Solo el número (ej: <code>4.9</code>). El icono de estrella es fijo.</span>
+        <!-- 1.1 PUNTUACIONES Y ESTADÍSTICAS (STATS & RANKING DEL SITIO) -->
+        <div class="esec" style="margin-bottom:0;"><div class="esec-h">Puntuaciones y Estadísticas (Stats & Rankings)</div>
+          <p class="hint" style="margin-bottom:12px;">Métricas mostradas en la barra superior bajo el Hero</p>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="background:rgba(3,18,14,0.6);border:1px solid rgba(45,212,191,0.15);border-radius:10px;padding:10px;">
+              <p style="font-size:0.75rem;font-weight:700;color:var(--teal);margin-bottom:6px;">ESTADÍSTICA 1 (VIAJEROS)</p>
+              <div class="grow3">
+                <div class="ff"><label>Valor</label><input id="st-v-0" value="${esc(d.stats?.[0]?.value ?? 500)}" placeholder="500"></div>
+                <div class="ff"><label>Sufijo</label><input id="st-s-0" value="${esc(d.stats?.[0]?.suffix ?? '+')}" placeholder="+"></div>
+                <div class="ff"><label>Etiqueta</label><input id="st-l-0" value="${esc(d.stats?.[0]?.label ?? 'Travelers Guided')}" placeholder="Travelers Guided"></div>
               </div>
-              <div class="ff">
-                <label>Etiqueta</label>
-                <input id="st-l-3" value="${esc(d.stats?.[3]?.label ?? 'Average Rating')}" placeholder="Average Rating">
+            </div>
+            <div style="background:rgba(3,18,14,0.6);border:1px solid rgba(45,212,191,0.15);border-radius:10px;padding:10px;">
+              <p style="font-size:0.75rem;font-weight:700;color:var(--teal);margin-bottom:6px;">ESTADÍSTICA 2 (AÑOS)</p>
+              <div class="grow3">
+                <div class="ff"><label>Valor</label><input id="st-v-1" value="${esc(d.stats?.[1]?.value ?? 10)}" placeholder="10"></div>
+                <div class="ff"><label>Sufijo</label><input id="st-s-1" value="${esc(d.stats?.[1]?.suffix ?? '+')}" placeholder="+"></div>
+                <div class="ff"><label>Etiqueta</label><input id="st-l-1" value="${esc(d.stats?.[1]?.label ?? 'Years Experience')}" placeholder="Years Experience"></div>
+              </div>
+            </div>
+            <div style="background:rgba(3,18,14,0.6);border:1px solid rgba(45,212,191,0.15);border-radius:10px;padding:10px;">
+              <p style="font-size:0.75rem;font-weight:700;color:var(--teal);margin-bottom:6px;">ESTADÍSTICA 3 (OPCIONES DE TOUR)</p>
+              <div class="grow3">
+                <div class="ff"><label>Valor</label><input id="st-v-2" value="${esc(d.stats?.[2]?.value ?? 12)}" placeholder="12"></div>
+                <div class="ff"><label>Sufijo</label><input id="st-s-2" value="${esc(d.stats?.[2]?.suffix ?? '')}" placeholder=""></div>
+                <div class="ff"><label>Etiqueta</label><input id="st-l-2" value="${esc(d.stats?.[2]?.label ?? 'Tour Options')}" placeholder="Tour Options"></div>
+              </div>
+            </div>
+            <div style="background:rgba(3,18,14,0.6);border:1px solid rgba(45,212,191,0.15);border-radius:10px;padding:10px;">
+              <p style="font-size:0.75rem;font-weight:700;color:var(--teal);margin-bottom:6px;">PUNTUACIÓN / RANKING GENERAL</p>
+              <div class="grow2">
+                <div class="ff">
+                  <label>Calificación (Rating)</label>
+                  <input id="st-v-3" value="${esc(String(d.stats?.[3]?.value ?? '4.9').replace(/[★*]/g, '').trim())}" placeholder="4.9">
+                  <span class="hint">Solo el número (ej: <code>4.9</code>). El icono de estrella es fijo.</span>
+                </div>
+                <div class="ff">
+                  <label>Etiqueta</label>
+                  <input id="st-l-3" value="${esc(d.stats?.[3]?.label ?? 'Average Rating')}" placeholder="Average Rating">
+                </div>
               </div>
             </div>
           </div>
@@ -2417,12 +2415,12 @@ function buildFM(fm,body) {
 async function viewReclamos() {
   set(`<div class="loading"><div class="spinner"></div> Cargando reclamos...</div>`);
   try {
-    const r = await fetch('/api/admin/reclamos', {
+    const r = await fetch('/api/reclamos', {
       headers: { Authorization: `Bearer ${token}` }
     });
     if (r.status === 401) { sessionStorage.clear(); location.reload(); }
     if (!r.ok) throw new Error('Error al cargar');
-    const reclamos = await r.json();
+    const raw = await r.json(); const reclamos = Array.isArray(raw) ? raw : (raw.reclamos || []);
     window.currentReclamosData = reclamos;
     
     let html = `
@@ -2677,13 +2675,13 @@ async function submitReclamoReply() {
   statusDiv.style.display = 'none';
   
   try {
-    const r = await fetch('/api/admin/responder-reclamo', {
+    const r = await fetch('/api/reclamos/' + id + '/responder', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${sessionStorage.getItem('cms_token')}`
       },
-      body: JSON.stringify({ id: id, detalle_respuesta: reply })
+      body: JSON.stringify({ detalle_respuesta: reply })
     });
     
     const d = await r.json();

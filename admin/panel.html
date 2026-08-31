@@ -986,48 +986,66 @@ nav.mnav a.btn-panel-link:hover {
                 const headers = { 'Content-Type': 'application/json' };
                 if (token) headers['Authorization'] = 'Bearer ' + token;
 
-                // Fetch all stats in parallel from D1 endpoints
-                const [toursRes, blogRes, testRes, recRes] = await Promise.allSettled([
-                    fetch('/api/tours', { headers }),
-                    fetch('/api/blog',  { headers }),
-                    fetch('/api/testimonios', { headers }),
-                    fetch('/api/reclamos', { headers })
-                ]);
-
-                // Tours count
-                let toursCount = 0;
-                if (toursRes.status === 'fulfilled' && toursRes.value.ok) {
-                    const d = await toursRes.value.json().catch(() => ({}));
-                    toursCount = (d.tours || []).length;
-                }
-
-                // Blog count
-                let blogCount = 0;
-                if (blogRes.status === 'fulfilled' && blogRes.value.ok) {
-                    const d = await blogRes.value.json().catch(() => ({}));
-                    blogCount = (d.posts || []).length;
-                }
-
-                // Testimonios count
-                let testCount = 0;
-                if (testRes.status === 'fulfilled' && testRes.value.ok) {
-                    const d = await testRes.value.json().catch(() => ({}));
-                    testCount = (d.testimonios || d.testimonials || []).length;
-                }
-
-                // Reclamos pendientes count
+                // 1. Reclamos (D1 API)
                 let pendingReclamos = 0;
-                if (recRes.status === 'fulfilled' && recRes.value.ok) {
-                    const d = await recRes.value.json().catch(() => ({}));
-                    const lista = d.reclamos || (Array.isArray(d) ? d : []);
-                    pendingReclamos = lista.filter(r => r.estado !== 'Atendido').length;
-                }
+                try {
+                    const recRes = await fetch('/api/reclamos?t=' + Date.now(), { headers });
+                    if (recRes.ok) {
+                        const d = await recRes.json().catch(() => ({}));
+                        const reclamosArr = d.reclamos || (Array.isArray(d) ? d : []);
+                        pendingReclamos = (Array.isArray(reclamosArr) ? reclamosArr : []).filter(r => r && r.estado !== 'Atendido').length;
+                    }
+                } catch(e) { console.warn('Reclamos stat warning:', e); }
+
+                // 2. Tours (/data/tours.json)
+                let toursCount = 0;
+                try {
+                    const toursRes = await fetch('/data/tours.json?t=' + Date.now());
+                    if (toursRes.ok) {
+                        const d = await toursRes.json().catch(() => ({}));
+                        toursCount = (d.tours || (Array.isArray(d) ? d : [])).length;
+                    }
+                } catch(e) { console.warn('Tours stat warning:', e); }
+
+                // 3. Testimonios (/api/testimonios with /data/testimonials.json fallback)
+                let testCount = 0;
+                try {
+                    const testRes = await fetch('/api/testimonios?t=' + Date.now(), { headers });
+                    if (testRes.ok) {
+                        const d = await testRes.json().catch(() => ({}));
+                        const list = d.testimonios || d.testimonials || (Array.isArray(d) ? d : []);
+                        testCount = list.length;
+                    } else {
+                        const testStatic = await fetch('/data/testimonials.json?t=' + Date.now());
+                        if (testStatic.ok) {
+                            const d = await testStatic.json().catch(() => ({}));
+                            testCount = (d.testimonials || d.testimonios || []).length;
+                        }
+                    }
+                } catch(e) { console.warn('Testimonios stat warning:', e); }
+
+                // 4. Blog Posts (/data/posts-index.json)
+                let blogCount = 0;
+                try {
+                    const blogRes = await fetch('/data/posts-index.json?t=' + Date.now());
+                    if (blogRes.ok) {
+                        const d = await blogRes.json().catch(() => ({}));
+                        blogCount = (d.posts || (Array.isArray(d) ? d : [])).length;
+                    }
+                } catch(e) { console.warn('Blog stat warning:', e); }
 
                 // Update DOM elements
-                document.getElementById('stat-tours').textContent = toursCount;
-                document.getElementById('stat-blog').textContent = blogCount;
-                document.getElementById('stat-testim').textContent = testCount;
-                document.getElementById('stat-reclamos').textContent = pendingReclamos;
+                const elTours = document.getElementById('stat-tours');
+                if (elTours) elTours.textContent = toursCount;
+
+                const elBlog = document.getElementById('stat-blog');
+                if (elBlog) elBlog.textContent = blogCount;
+
+                const elTest = document.getElementById('stat-testim');
+                if (elTest) elTest.textContent = testCount;
+
+                const elRec = document.getElementById('stat-reclamos');
+                if (elRec) elRec.textContent = pendingReclamos;
 
                 // Badge de notificación en tarjeta Reclamos
                 const badge = document.getElementById('badge-reclamos-menu');
