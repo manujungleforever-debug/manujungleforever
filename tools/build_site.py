@@ -79,8 +79,17 @@ def build_site():
         if 'admin' in filepath.replace('\\', '/') or 'api' in filepath.replace('\\', '/'):
             continue
             
-        with open(filepath, 'r', encoding='utf-8') as f:
-            html = f.read()
+        enc = 'utf-8'
+        try:
+            with open(filepath, 'r', encoding='utf-8') as f:
+                html = f.read()
+        except UnicodeDecodeError:
+            try:
+                with open(filepath, 'r', encoding='cp1252') as f:
+                    html = f.read()
+                enc = 'cp1252'
+            except Exception:
+                continue
             
         soup = BeautifulSoup(html, 'html.parser')
         modified = False
@@ -327,8 +336,8 @@ def build_site():
                     p = soup.select_one('#wildlife .lead')
                     if p: p.string = clean_mojibake(wl['text']); modified = True
                     
-            if h_data.get('call_to_action'):
-                cta = h_data['call_to_action']
+            if h_data.get('cta_section'):
+                cta = h_data['cta_section']
                 if cta.get('eyebrow'):
                     ey = soup.select_one('#plan-trip .ey')
                     if ey: ey.string = clean_mojibake(cta['eyebrow']); modified = True
@@ -338,6 +347,11 @@ def build_site():
                 if cta.get('text'):
                     p = soup.select_one('#plan-trip p.ld')
                     if p: p.string = clean_mojibake(cta['text']); modified = True
+                if cta.get('image'):
+                    ci = soup.select_one('#plan-trip .ci')
+                    if ci:
+                        ci['style'] = f"background:url('{fix_img_path(cta['image'])}') center/cover no-repeat;min-height:500px;"
+                        modified = True
                     
             if h_data.get('pillars'):
                 pil = h_data['pillars']
@@ -450,7 +464,7 @@ def build_site():
                 
         # Write changes back
         if modified:
-            with open(filepath, 'w', encoding='utf-8') as f:
+            with open(filepath, 'w', encoding=enc) as f:
                 f.write(str(soup))
             print(f"Updated {os.path.relpath(filepath, ROOT_DIR)}")
             
