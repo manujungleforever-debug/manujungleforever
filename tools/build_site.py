@@ -131,20 +131,22 @@ def build_site():
             h_data = load_json('home.json')
             if h_data.get('hero'):
                 ht = soup.select_one('.hb .ht')
-                if ht and h_data['hero'].get('eyebrow'):
-                    # Manually update inner HTML to preserve the icon
-                    # bs4 clearing string clears children, so we rebuild
+                if ht and h_data['hero'].get('location_tag'):
                     icon = soup.new_tag('i')
                     icon['class'] = ['fas', 'fa-map-marker-alt']
                     ht.clear()
                     ht.append(icon)
-                    ht.append(f" {clean_mojibake(h_data['hero']['eyebrow'])}")
+                    ht.append(f" {clean_mojibake(h_data['hero']['location_tag'])}")
                     modified = True
                 
                 h1 = soup.select_one('.hb .h1')
-                if h1 and h_data['hero'].get('title'):
-                    # h1 might have <em> tags inside. Let's just set the text for now or parse it as HTML
-                    h1_soup = BeautifulSoup(clean_mojibake(h_data['hero']['title']), 'html.parser')
+                if h1:
+                    t = clean_mojibake(h_data['hero'].get('title', ''))
+                    e = clean_mojibake(h_data['hero'].get('title_emphasis', ''))
+                    if t.strip().lower() == 'what will' and 'you' not in e.lower():
+                        t = 'What Will You'
+                    html_content = f"{t}<br><em>{e}</em>" if e else t
+                    h1_soup = BeautifulSoup(html_content, 'html.parser')
                     h1.clear()
                     for child in h1_soup.children:
                         h1.append(child)
