@@ -385,7 +385,8 @@ def build_site():
                 p_html = ' <span class="sep" style="opacity:0.5; margin:0 6px;">/</span> '.join(p_parts)
                 dyn_phones_soup = BeautifulSoup(p_html, 'html.parser')
                 dyn_phones.clear()
-                for child in dyn_phones_soup.children: dyn_phones.append(child)
+                for child in list(dyn_phones_soup.contents):
+                    dyn_phones.append(child)
                 modified = True
                 
             dyn_email = soup.find(id='dyn-contact-email')
@@ -408,15 +409,17 @@ def build_site():
                 
             hor = c_data.get('horario', {})
             dyn_hours = soup.find(id='dyn-contact-hours')
-            if dyn_hours and (hor.get('dias') or hor.get('horas') or hor.get('nota')):
-                h_parts = []
-                if hor.get('dias') or hor.get('horas'):
-                    h_parts.append(f"<strong>{hor.get('dias') or 'Monday – Sunday'}</strong>: {hor.get('horas') or '8:00 AM – 8:00 PM (Peru Time)'}")
-                if hor.get('nota'):
-                    h_parts.append(f'<span style="font-size:0.82rem;color:rgba(255,255,255,0.6)">{hor.get("nota")}</span>')
-                hours_soup = BeautifulSoup('<br>'.join(h_parts), 'html.parser')
+            if dyn_hours:
+                dias = clean_mojibake(hor.get('dias') or 'Monday – Sunday')
+                horas = clean_mojibake(hor.get('horas') or '8:00 AM – 8:00 PM (Peru Time)')
+                nota = clean_mojibake(hor.get('nota') or 'We typically respond within 24 hours')
+                
+                h_html = f'''<div style="font-weight:600; color:#fff;">{dias}</div><div style="color:rgba(255,255,255,0.85); font-size:0.95rem; margin-top:2px;">{horas}</div><div style="color:var(--teal, #2dd4bf); font-size:0.85rem; margin-top:4px; display:flex; align-items:center; gap:5px;"><i class="far fa-clock" style="font-size:0.8rem;"></i> {nota}</div>'''
+                
+                hours_soup = BeautifulSoup(h_html, 'html.parser')
                 dyn_hours.clear()
-                for child in hours_soup.children: dyn_hours.append(child)
+                for child in list(hours_soup.contents):
+                    dyn_hours.append(child)
                 modified = True
 
             # Contact social row
