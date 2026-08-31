@@ -1,17 +1,6 @@
 {
   "posts": [
     {
-      "title": "Discovering the Untamed Wildlife of Manu National Park",
-      "date": "2026-08-16",
-      "category": "Wildlife",
-      "excerpt": "Explore the incredible biodiversity of Manu National Park. From elusive jaguars to vibrant macaws, discover why this untouched Amazonian paradise is a must-visit for wildlife enthusiasts.",
-      "image": "/media/1787015599134-gayulo-animals-3524518.jpg",
-      "imagen_alt": "Vibrant scarlet macaws gathering at a clay lick in Manu National Park.",
-      "publicado": true,
-      "slug": "discovering-wildlife-manu-national-park",
-      "url": "discovering-wildlife-manu-national-park/index.html"
-    },
-    {
       "slug": "amazon-rainforest-tour-to-manu-national-park-from-cusco",
       "url": "amazon-rainforest-tour-to-manu-national-park-from-cusco/index.html",
       "title": "Amazon Rainforest Tour to Manu National Park from Cusco",
