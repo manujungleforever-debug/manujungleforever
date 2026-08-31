@@ -26,7 +26,7 @@ jobs:
           python-version: '3.11'
 
       - name: Run Build Script
-        run: python tools/build_site.py
+        run: pip install beautifulsoup4 && python tools/build_site.py
 
       - name: Commit and Push Changes
         run: |
