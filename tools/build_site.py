@@ -361,10 +361,17 @@ def build_site():
                 
             dyn_phones = soup.find(id='dyn-contact-phones')
             if dyn_phones:
-                p_html = ''
-                if phone1: p_html += f'<a href="tel:{phone1.replace(" ", "").replace("-","")}">{"".join(phone1)}</a><br>'
-                if wa_num_clean:
-                    p_html += f'<a href="{wa_link}" target="_blank" rel="noopener">{"+" + wa_num_clean}</a>'
+                p_parts = []
+                if phone1:
+                    clean_p1 = ''.join([c for c in phone1 if c.isdigit() or c == '+'])
+                    p_parts.append(f'<a href="tel:{clean_p1}">{phone1}</a>')
+                
+                phone2 = cp.get('telefono_2') or g_data.get('phone_secondary')
+                wa_display = phone2 if phone2 else (f"+{wa_num_clean}" if wa_num_clean else "")
+                if wa_display:
+                    p_parts.append(f'<a href="{wa_link}" target="_blank" rel="noopener">{wa_display}</a>')
+                
+                p_html = ' <span class="sep" style="opacity:0.5; margin:0 6px;">/</span> '.join(p_parts)
                 dyn_phones_soup = BeautifulSoup(p_html, 'html.parser')
                 dyn_phones.clear()
                 for child in dyn_phones_soup.children: dyn_phones.append(child)
@@ -379,10 +386,8 @@ def build_site():
             dyn_loc = soup.find(id='dyn-contact-location')
             if dyn_loc:
                 if maps_url: dyn_loc['href'] = maps_url
-                loc_html = '<br>'.join(addr_parts) or address_text
-                loc_soup = BeautifulSoup(loc_html, 'html.parser')
-                dyn_loc.clear()
-                for child in loc_soup.children: dyn_loc.append(child)
+                loc_html = ', '.join(addr_parts) if addr_parts else address_text
+                dyn_loc.string = loc_html
                 modified = True
                 
             map_iframe = soup.select_one('.map-container iframe')
