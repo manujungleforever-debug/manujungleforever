@@ -32,6 +32,18 @@ def clean_mojibake(text):
         text = text.replace(bad, good)
     return text
 
+def format_phone(num_str):
+    if not num_str:
+        return ""
+    digits = ''.join(filter(str.isdigit, str(num_str)))
+    if len(digits) == 11 and digits.startswith('51'):
+        return f"+51 {digits[2:5]} {digits[5:8]} {digits[8:]}"
+    elif len(digits) == 9:
+        return f"+51 {digits[0:3]} {digits[3:6]} {digits[6:]}"
+    elif len(digits) > 4:
+        return f"+{digits}"
+    return str(num_str)
+
 def build_site():
     print(f"Starting SSG Build in {ROOT_DIR}...")
     
@@ -44,7 +56,7 @@ def build_site():
     cp = c_data.get('contacto_principal', {})
     dir_info = c_data.get('direccion', {})
     
-    phone1 = cp.get('telefono_1') or g_data.get('phone_primary') or '+51 901 525 679'
+    phone1 = cp.get('telefono_1') or g_data.get('phone_primary') or '+51 931 022 183'
     email = cp.get('email') or g_data.get('email') or 'discover@manujungleforever.com'
     wa_num = (cp.get('whatsapp') or g_data.get('whatsapp_number') or '51901525679')
     wa_num_clean = ''.join(filter(str.isdigit, wa_num))
@@ -364,10 +376,9 @@ def build_site():
                 p_parts = []
                 if phone1:
                     clean_p1 = ''.join([c for c in phone1 if c.isdigit() or c == '+'])
-                    p_parts.append(f'<a href="tel:{clean_p1}">{phone1}</a>')
+                    p_parts.append(f'<a href="tel:{clean_p1}">{format_phone(phone1)}</a>')
                 
-                phone2 = cp.get('telefono_2') or g_data.get('phone_secondary')
-                wa_display = phone2 if phone2 else (f"+{wa_num_clean}" if wa_num_clean else "")
+                wa_display = format_phone(wa_num_clean) if wa_num_clean else (cp.get('telefono_2') or '')
                 if wa_display:
                     p_parts.append(f'<a href="{wa_link}" target="_blank" rel="noopener">{wa_display}</a>')
                 
@@ -411,6 +422,12 @@ def build_site():
             # Contact social row
             sr = soup.select_one('.social-row')
             if sr:
+                # Ensure all social links have class soc-btn
+                for a_el in sr.select('a'):
+                    if 'soc-btn' not in a_el.get('class', []):
+                        a_el['class'] = a_el.get('class', []) + ['soc-btn']
+                        modified = True
+
                 def update_social_c(label, url):
                     a = sr.select_one(f'a[aria-label="{label}"]')
                     if a and url: a['href'] = url

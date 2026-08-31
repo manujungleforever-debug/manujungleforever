@@ -5,10 +5,9 @@ on:
     branches:
       - main
     paths:
-      - 'www.manujungleforever.com/data/global.json'
-      - 'www.manujungleforever.com/data/contact.json'
-      - 'www.manujungleforever.com/data/about.json'
+      - 'www.manujungleforever.com/data/**'
       - 'tools/build_site.py'
+      - '.github/workflows/build.yml'
 
 permissions:
   contents: write
