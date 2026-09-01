@@ -1,25 +1,24 @@
 /**
  * thinking-orb.js — Ultra-Fine Fiber-Optic "Solving" Orb Loader
  * Inspired by orbs.jakubantalik.com ("Solving" preset)
- * Features intertwined neon cyan/turquoise parametric filaments, micro-sparks,
- * fluid vortex tension, and 60fps lightweight canvas rendering.
+ * High-DPI Canvas 2D with additive blending (lighter), ultra-fine 0.5-0.8px filaments,
+ * fluid 3D precession harmonics, and clean non-duplicated DOM layout.
  */
 
 (function() {
   class SolvingOrb {
     constructor(options = {}) {
       this.text = options.text || 'Guardando cambios...';
-      this.subtext = options.subtext || 'Sincronizando datos con GitHub y Cloudflare Pages';
       this.size = options.size || 48; // Canvas display size in px
       this.speed = options.speed || 0.022;
-      this.strandCount = options.strandCount || 20; // Number of intertwined fiber filaments
-      this.pointsPerStrand = options.pointsPerStrand || 64; // Resolution per filament
-      this.nodeSparkCount = options.nodeSparkCount || 36; // Luminous crossover nodes
+      this.strandCount = options.strandCount || 24; // Number of intertwined fiber filaments
+      this.pointsPerStrand = options.pointsPerStrand || 72; // Resolution per filament loop
+      this.nodeSparkCount = options.nodeSparkCount || 40; // Luminous crossover micro-nodes
       
       this.time = 0;
       this.rotX = 0.45;
       this.rotY = 0.2;
-      this.rotZ = 0.1;
+      this.rotZ = 0.15;
       this.animId = null;
       this.active = false;
       
@@ -34,7 +33,7 @@
           strandIdx: Math.floor(Math.random() * this.strandCount),
           tOffset: Math.random() * Math.PI * 2,
           speedMult: 0.8 + Math.random() * 0.4,
-          sizeMult: 0.7 + Math.random() * 0.6
+          sizeMult: 0.6 + Math.random() * 0.4
         });
       }
     }
@@ -49,31 +48,21 @@
       pill.className = 'thinking-orb-pill solving-preset';
       
       const canvas = document.createElement('canvas');
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = this.size * dpr;
-      canvas.height = this.size * dpr;
+      const dpr = Math.max(1, window.devicePixelRatio || 1);
+      canvas.width = Math.round(this.size * dpr);
+      canvas.height = Math.round(this.size * dpr);
       canvas.style.width = this.size + 'px';
       canvas.style.height = this.size + 'px';
       canvas.className = 'thinking-orb-canvas';
 
-      const labelWrap = document.createElement('div');
-      labelWrap.className = 'thinking-orb-text-col';
-
-      const mainLabel = document.createElement('div');
+      const mainLabel = document.createElement('span');
       mainLabel.className = 'thinking-orb-title';
       const cleanTitle = this.text.replace(/\.+$/, '');
       mainLabel.innerHTML = `${cleanTitle}<span class="thinking-dots"><span>.</span><span>.</span><span>.</span></span>`;
 
-      labelWrap.appendChild(mainLabel);
-      if (this.subtext) {
-        const subLabel = document.createElement('div');
-        subLabel.className = 'thinking-orb-subtext';
-        subLabel.textContent = this.subtext;
-        labelWrap.appendChild(subLabel);
-      }
-
+      // Structure: Pill contains ONLY the canvas and main title
       pill.appendChild(canvas);
-      pill.appendChild(labelWrap);
+      pill.appendChild(mainLabel);
       
       container.innerHTML = '';
       container.appendChild(pill);
@@ -113,8 +102,8 @@
       if (!ctx) return;
 
       const dpr = this.dpr;
-      const w = this.size * dpr;
-      const h = this.size * dpr;
+      const w = this.canvas.width;
+      const h = this.canvas.height;
       const cx = w / 2;
       const cy = h / 2;
       const baseR = (this.size * 0.40) * dpr;
@@ -125,7 +114,7 @@
       const coreGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, baseR * 1.05);
       coreGrad.addColorStop(0, 'rgba(0, 242, 254, 0.28)');
       coreGrad.addColorStop(0.45, 'rgba(16, 185, 129, 0.12)');
-      coreGrad.addColorStop(0.85, 'rgba(6, 182, 212, 0.04)');
+      coreGrad.addColorStop(0.85, 'rgba(6, 182, 212, 0.03)');
       coreGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
       ctx.fillStyle = coreGrad;
       ctx.beginPath();
@@ -148,7 +137,7 @@
         let x2 = x1 * cosZ - y1 * sinZ;
         let y2 = y1 * cosZ + x1 * sinZ;
 
-        const fov = 350 * dpr;
+        const fov = 360 * dpr;
         const scale = fov / (fov + z2);
         return {
           px: cx + x2 * scale,
@@ -159,15 +148,15 @@
       };
 
       ctx.save();
+      // Additive blending for vivid optical radiance
       ctx.globalCompositeOperation = 'lighter';
 
-      // 2. Render Intertwined Fiber Optic Strands ("Solving" Harmonic Mesh)
+      // 2. Render Intertwined Ultra-Fine Fiber Optic Strands (Solving Mesh)
       const numStrands = this.strandCount;
       const ptsPerStrand = this.pointsPerStrand;
       const t = this.time;
 
       for (let s = 0; s < numStrands; s++) {
-        // Spatial angle orientation of each filament loop
         const phi = (s / numStrands) * Math.PI;
         const phaseOffset = s * 0.35 + (s % 2 === 0 ? t * 0.4 : -t * 0.3);
         
@@ -178,12 +167,11 @@
         for (let p = 0; p <= ptsPerStrand; p++) {
           const theta = (p / ptsPerStrand) * Math.PI * 2;
           
-          // Solving fluid tension wave formula
+          // Organic harmonic fluid wave equation
           const wave1 = Math.sin(theta * 3 + t * 2.2 + phaseOffset) * 0.16;
-          const wave2 = Math.cos(theta * 5 - t * 1.6 + phi) * 0.09;
+          const wave2 = Math.cos(theta * 5 - t * 1.6 + phi) * 0.08;
           const r = baseR * (0.92 + wave1 + wave2);
 
-          // Parametric spherical torus coordinates
           const x0 = r * Math.cos(theta) * Math.cos(phi);
           const y0 = r * Math.sin(theta);
           const z0 = r * Math.cos(theta) * Math.sin(phi);
@@ -201,24 +189,24 @@
 
         avgZ /= (ptsPerStrand + 1);
 
-        // Filament Depth Coloring (Cian #00f2fe to Turquoise #10b981 to Deep Teal #06b6d4)
+        // Depth-based transparency & ultra-fine linewidth (0.5px – 0.8px)
         const depthNorm = Math.max(0, Math.min(1, (avgZ + baseR) / (baseR * 2)));
-        const alpha = 0.22 + depthNorm * 0.55;
+        const alpha = 0.18 + depthNorm * 0.52;
         
-        ctx.lineWidth = Math.max(0.65, 0.9 * dpr * (0.8 + depthNorm * 0.4));
+        ctx.lineWidth = Math.max(0.5 * dpr, 0.72 * dpr * (0.8 + depthNorm * 0.35));
         
         if (s % 3 === 0) {
           ctx.strokeStyle = `rgba(0, 242, 254, ${alpha})`; // Electric Cyan
         } else if (s % 3 === 1) {
-          ctx.strokeStyle = `rgba(45, 212, 191, ${alpha * 0.95})`; // Neon Teal
+          ctx.strokeStyle = `rgba(45, 212, 191, ${alpha * 0.92})`; // Neon Turquoise
         } else {
-          ctx.strokeStyle = `rgba(16, 185, 129, ${alpha * 0.85})`; // Emerald Mint
+          ctx.strokeStyle = `rgba(16, 185, 129, ${alpha * 0.85})`; // Mint Emerald
         }
         
         ctx.stroke();
       }
 
-      // 3. Render Luminous Node Sparks (Intersection Energy Particles)
+      // 3. Render Luminous Node Micro-Sparks (radius <= 0.8px)
       for (let n = 0; n < this.nodeOffsets.length; n++) {
         const node = this.nodeOffsets[n];
         const theta = node.tOffset + t * node.speedMult;
@@ -233,15 +221,15 @@
 
         const proj = project(x0, y0, z0);
 
-        if (proj.z > -baseR * 0.4) {
+        if (proj.z > -baseR * 0.35) {
           const sparkNorm = Math.max(0.2, (proj.z + baseR) / (baseR * 2));
-          const sparkSize = Math.max(0.7, 1.1 * dpr * node.sizeMult * sparkNorm);
+          const sparkRadius = Math.max(0.45 * dpr, 0.75 * dpr * node.sizeMult * sparkNorm);
 
           ctx.beginPath();
-          ctx.arc(proj.px, proj.py, sparkSize, 0, Math.PI * 2);
+          ctx.arc(proj.px, proj.py, sparkRadius, 0, Math.PI * 2);
           
           if (sparkNorm > 0.65) {
-            ctx.fillStyle = `rgba(255, 255, 255, ${Math.min(1, sparkNorm * 1.3)})`;
+            ctx.fillStyle = `rgba(255, 255, 255, ${Math.min(1, sparkNorm * 1.4)})`;
           } else {
             ctx.fillStyle = `rgba(0, 242, 254, ${sparkNorm * 0.95})`;
           }
@@ -253,7 +241,7 @@
     }
   }
 
-  // Inject updated CSS for the Solving Orb modal capsule
+  // Inject CSS for the Solving Orb modal and pill
   function injectSolvingStyles() {
     if (document.getElementById('solving-orb-custom-styles')) return;
     const s = document.createElement('style');
@@ -282,7 +270,7 @@
         background: radial-gradient(circle at 50% 30%, rgba(18, 30, 36, 0.95) 0%, rgba(8, 14, 18, 0.98) 100%) !important;
         border: 1.5px solid rgba(0, 242, 254, 0.35) !important;
         border-radius: 24px !important;
-        padding: 24px 32px !important;
+        padding: 26px 34px !important;
         box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85),
                     0 0 35px rgba(0, 242, 254, 0.22),
                     inset 0 1px 1px rgba(255, 255, 255, 0.15) !important;
@@ -297,7 +285,7 @@
       .thinking-orb-pill.solving-preset {
         display: inline-flex !important;
         align-items: center !important;
-        gap: 16px !important;
+        gap: 14px !important;
         background: rgba(12, 22, 28, 0.75) !important;
         backdrop-filter: blur(14px) !important;
         -webkit-backdrop-filter: blur(14px) !important;
@@ -309,27 +297,14 @@
                     inset 0 1px 1px rgba(255, 255, 255, 0.12) !important;
         transition: all 0.3s ease !important;
       }
-      .thinking-orb-text-col {
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: flex-start !important;
-        text-align: left !important;
-      }
       .thinking-orb-title {
         font-family: 'Poppins', 'Outfit', system-ui, -apple-system, sans-serif !important;
-        font-size: 0.96rem !important;
+        font-size: 0.98rem !important;
         font-weight: 700 !important;
         color: #ffffff !important;
         letter-spacing: 0.2px !important;
         display: inline-flex !important;
         align-items: baseline !important;
-      }
-      .thinking-orb-subtext {
-        font-size: 0.78rem !important;
-        color: rgba(255, 255, 255, 0.65) !important;
-        font-weight: 400 !important;
-        margin-top: 3px !important;
-        letter-spacing: 0.2px !important;
       }
       .thinking-modal-subtext {
         color: rgba(255, 255, 255, 0.68) !important;
@@ -362,22 +337,22 @@
   }
 
   // Global HTML template generator
-  window.getThinkingLoaderHTML = function(text, subtext) {
+  window.getThinkingLoaderHTML = function(text) {
     injectSolvingStyles();
     const id = 'orb_' + Math.random().toString(36).substr(2, 9);
     setTimeout(() => {
       const el = document.getElementById(id);
-      if (el) window.renderThinkingOrb(el, text, subtext);
+      if (el) window.renderThinkingOrb(el, text);
     }, 15);
     return `<div class="thinking-orb-container"><div id="${id}"></div></div>`;
   };
 
   // Helper to mount and auto-animate in any container
-  window.renderThinkingOrb = function(targetEl, text, subtext) {
+  window.renderThinkingOrb = function(targetEl, text) {
     injectSolvingStyles();
     if (typeof targetEl === 'string') targetEl = document.querySelector(targetEl);
     if (!targetEl) return null;
-    const orb = new SolvingOrb({ size: 42, text: text || 'Guardando cambios...', subtext: subtext || '' });
+    const orb = new SolvingOrb({ size: 42, text: text || 'Guardando cambios...' });
     orb.renderTo(targetEl);
     return orb;
   };
@@ -398,7 +373,7 @@
       </div>
     `;
     const mount = document.getElementById('thinking-orb-mount');
-    const orb = new SolvingOrb({ size: 54, text: title, subtext: '' });
+    const orb = new SolvingOrb({ size: 52, text: title });
     orb.renderTo(mount);
     overlay.classList.add('active');
     window._activeThinkingOrb = orb;
