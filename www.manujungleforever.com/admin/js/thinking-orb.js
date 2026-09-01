@@ -1,23 +1,23 @@
 /**
- * thinking-orb.js — Ultra-Fine Fiber-Optic "Solving" Orb Loader
- * Inspired by orbs.jakubantalik.com ("Solving" preset)
- * High-DPI Canvas 2D with additive blending (lighter), ultra-fine 0.5-0.8px filaments,
- * fluid 3D precession harmonics, and clean non-duplicated DOM layout.
+ * thinking-orb.js — Mathematically Perfect Spherical Solving Orb
+ * Features strict spherical clamping (100% round 3D silhouette),
+ * intertwined geodesic/orbital fiber filaments (0.5-0.7px ultra-fine),
+ * luminous core mass, depth-attenuated alpha, and 60 FPS requestAnimationFrame.
  */
 
 (function() {
   class SolvingOrb {
     constructor(options = {}) {
       this.text = options.text || 'Guardando cambios...';
-      this.size = options.size || 48; // Canvas display size in px
-      this.speed = options.speed || 0.022;
-      this.strandCount = options.strandCount || 24; // Number of intertwined fiber filaments
-      this.pointsPerStrand = options.pointsPerStrand || 72; // Resolution per filament loop
-      this.nodeSparkCount = options.nodeSparkCount || 40; // Luminous crossover micro-nodes
+      this.size = options.size || 48; // Display size in px
+      this.speed = options.speed || 0.016;
+      this.strandCount = options.strandCount || 28; // Number of spherical orbital rings
+      this.pointsPerStrand = options.pointsPerStrand || 80; // Smooth curve resolution
+      this.nodeSparkCount = options.nodeSparkCount || 36; // Luminous surface nodes
       
       this.time = 0;
-      this.rotX = 0.45;
-      this.rotY = 0.2;
+      this.rotX = 0.35;
+      this.rotY = 0.0;
       this.rotZ = 0.15;
       this.animId = null;
       this.active = false;
@@ -26,14 +26,13 @@
     }
 
     initNodes() {
-      // Pre-calculate node sparks along the harmonic sphere
+      // Micro-sparks distributed along the spherical orbital rings
       this.nodeOffsets = [];
       for (let i = 0; i < this.nodeSparkCount; i++) {
         this.nodeOffsets.push({
-          strandIdx: Math.floor(Math.random() * this.strandCount),
-          tOffset: Math.random() * Math.PI * 2,
-          speedMult: 0.8 + Math.random() * 0.4,
-          sizeMult: 0.6 + Math.random() * 0.4
+          strandIdx: i % this.strandCount,
+          thetaOffset: (i / this.nodeSparkCount) * Math.PI * 2,
+          speedMult: 0.85 + (i % 5) * 0.08
         });
       }
     }
@@ -60,7 +59,7 @@
       const cleanTitle = this.text.replace(/\.+$/, '');
       mainLabel.innerHTML = `${cleanTitle}<span class="thinking-dots"><span>.</span><span>.</span><span>.</span></span>`;
 
-      // Structure: Pill contains ONLY the canvas and main title
+      // Clean structure: Pill has ONLY the canvas and the title
       pill.appendChild(canvas);
       pill.appendChild(mainLabel);
       
@@ -80,9 +79,9 @@
       const animate = () => {
         if (!this.active) return;
         this.time += this.speed;
-        this.rotY += this.speed * 0.85;
-        this.rotX += this.speed * 0.45;
-        this.rotZ += this.speed * 0.3;
+        this.rotY += 0.014;
+        this.rotX += 0.007;
+        this.rotZ += 0.004;
         this.draw();
         this.animId = requestAnimationFrame(animate);
       };
@@ -106,22 +105,22 @@
       const h = this.canvas.height;
       const cx = w / 2;
       const cy = h / 2;
-      const baseR = (this.size * 0.40) * dpr;
+      const baseR = (this.size * 0.41) * dpr;
 
       ctx.clearRect(0, 0, w, h);
 
-      // 1. Center Glow Nebula Core
-      const coreGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, baseR * 1.05);
-      coreGrad.addColorStop(0, 'rgba(0, 242, 254, 0.28)');
-      coreGrad.addColorStop(0.45, 'rgba(16, 185, 129, 0.12)');
-      coreGrad.addColorStop(0.85, 'rgba(6, 182, 212, 0.03)');
+      // 1. Internal Core Mass Gradient (Solid Sphere Density & Inner Glow)
+      const coreGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, baseR * 0.98);
+      coreGrad.addColorStop(0, 'rgba(0, 242, 254, 0.32)');
+      coreGrad.addColorStop(0.40, 'rgba(45, 212, 191, 0.16)');
+      coreGrad.addColorStop(0.75, 'rgba(16, 185, 129, 0.06)');
       coreGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
       ctx.fillStyle = coreGrad;
       ctx.beginPath();
-      ctx.arc(cx, cy, baseR * 1.1, 0, Math.PI * 2);
+      ctx.arc(cx, cy, baseR * 1.0, 0, Math.PI * 2);
       ctx.fill();
 
-      // 3D Rotation Matrix Trigonometry
+      // 3D Precession Rotation Matrix
       const cosX = Math.cos(this.rotX), sinX = Math.sin(this.rotX);
       const cosY = Math.cos(this.rotY), sinY = Math.sin(this.rotY);
       const cosZ = Math.cos(this.rotZ), sinZ = Math.sin(this.rotZ);
@@ -137,44 +136,49 @@
         let x2 = x1 * cosZ - y1 * sinZ;
         let y2 = y1 * cosZ + x1 * sinZ;
 
-        const fov = 360 * dpr;
+        const fov = 380 * dpr;
         const scale = fov / (fov + z2);
         return {
           px: cx + x2 * scale,
           py: cy + y2 * scale,
-          z: z2,
-          scale: scale
+          z: z2
         };
       };
 
       ctx.save();
-      // Additive blending for vivid optical radiance
+      // Optical additive blending for brilliant glowing filaments
       ctx.globalCompositeOperation = 'lighter';
 
-      // 2. Render Intertwined Ultra-Fine Fiber Optic Strands (Solving Mesh)
       const numStrands = this.strandCount;
       const ptsPerStrand = this.pointsPerStrand;
       const t = this.time;
 
+      // 2. Strict Spherical Orbital Filaments (Mathematically Clamped Sphere Surface)
       for (let s = 0; s < numStrands; s++) {
+        // Inclination angle for orbital plane
         const phi = (s / numStrands) * Math.PI;
-        const phaseOffset = s * 0.35 + (s % 2 === 0 ? t * 0.4 : -t * 0.3);
+        // Precession phase angle
+        const psi = s * 0.42 + t * (s % 2 === 0 ? 0.35 : -0.28);
         
+        const cosPhi = Math.cos(phi), sinPhi = Math.sin(phi);
+        const cosPsi = Math.cos(psi), sinPsi = Math.sin(psi);
+
         ctx.beginPath();
         let firstPt = true;
         let avgZ = 0;
 
         for (let p = 0; p <= ptsPerStrand; p++) {
           const theta = (p / ptsPerStrand) * Math.PI * 2;
-          
-          // Organic harmonic fluid wave equation
-          const wave1 = Math.sin(theta * 3 + t * 2.2 + phaseOffset) * 0.16;
-          const wave2 = Math.cos(theta * 5 - t * 1.6 + phi) * 0.08;
-          const r = baseR * (0.92 + wave1 + wave2);
+          const cosTheta = Math.cos(theta);
+          const sinTheta = Math.sin(theta);
 
-          const x0 = r * Math.cos(theta) * Math.cos(phi);
-          const y0 = r * Math.sin(theta);
-          const z0 = r * Math.cos(theta) * Math.sin(phi);
+          // Subtle organic breathing clamped strictly between 0% and 2.5%
+          const r = baseR * (1.0 + 0.025 * Math.sin(theta * 3 + t * 2.0));
+
+          // Strict spherical geodesic coordinates: u = cos(theta), v = sin(theta)*cos(phi), w = sin(theta)*sin(phi)
+          const x0 = r * (cosTheta * cosPsi - sinTheta * cosPhi * sinPsi);
+          const y0 = r * (cosTheta * sinPsi + sinTheta * cosPhi * cosPsi);
+          const z0 = r * (sinTheta * sinPhi);
 
           const proj = project(x0, y0, z0);
           avgZ += proj.z;
@@ -189,47 +193,53 @@
 
         avgZ /= (ptsPerStrand + 1);
 
-        // Depth-based transparency & ultra-fine linewidth (0.5px – 0.8px)
+        // Depth Attenuation: Back strands (z < 0) are dim (0.18-0.35); front strands (z > 0) are bright (0.75-1.0)
         const depthNorm = Math.max(0, Math.min(1, (avgZ + baseR) / (baseR * 2)));
-        const alpha = 0.18 + depthNorm * 0.52;
+        const alpha = avgZ > 0 ? (0.65 + depthNorm * 0.35) : (0.16 + depthNorm * 0.45);
         
-        ctx.lineWidth = Math.max(0.5 * dpr, 0.72 * dpr * (0.8 + depthNorm * 0.35));
-        
+        // Strict ultra-fine line width: 0.55px to 0.70px
+        ctx.lineWidth = Math.max(0.5 * dpr, 0.65 * dpr * (0.85 + depthNorm * 0.3));
+
         if (s % 3 === 0) {
           ctx.strokeStyle = `rgba(0, 242, 254, ${alpha})`; // Electric Cyan
         } else if (s % 3 === 1) {
-          ctx.strokeStyle = `rgba(45, 212, 191, ${alpha * 0.92})`; // Neon Turquoise
+          ctx.strokeStyle = `rgba(45, 212, 191, ${alpha * 0.95})`; // Neon Turquoise
         } else {
-          ctx.strokeStyle = `rgba(16, 185, 129, ${alpha * 0.85})`; // Mint Emerald
+          ctx.strokeStyle = `rgba(6, 182, 212, ${alpha * 0.88})`; // Vibrant Teal
         }
-        
+
         ctx.stroke();
       }
 
-      // 3. Render Luminous Node Micro-Sparks (radius <= 0.8px)
+      // 3. Luminous Surface Sparks at Intersection Nodes
       for (let n = 0; n < this.nodeOffsets.length; n++) {
         const node = this.nodeOffsets[n];
-        const theta = node.tOffset + t * node.speedMult;
-        const phi = (node.strandIdx / numStrands) * Math.PI;
+        const s = node.strandIdx;
+        const phi = (s / numStrands) * Math.PI;
+        const psi = s * 0.42 + t * (s % 2 === 0 ? 0.35 : -0.28);
+        const theta = node.thetaOffset + t * node.speedMult;
 
-        const wave = Math.sin(theta * 3 + t * 2.2) * 0.15;
-        const r = baseR * (0.92 + wave);
+        const cosPhi = Math.cos(phi), sinPhi = Math.sin(phi);
+        const cosPsi = Math.cos(psi), sinPsi = Math.sin(psi);
+        const cosTheta = Math.cos(theta), sinTheta = Math.sin(theta);
 
-        const x0 = r * Math.cos(theta) * Math.cos(phi);
-        const y0 = r * Math.sin(theta);
-        const z0 = r * Math.cos(theta) * Math.sin(phi);
+        const r = baseR * (1.0 + 0.025 * Math.sin(theta * 3 + t * 2.0));
+        const x0 = r * (cosTheta * cosPsi - sinTheta * cosPhi * sinPsi);
+        const y0 = r * (cosTheta * sinPsi + sinTheta * cosPhi * cosPsi);
+        const z0 = r * (sinTheta * sinPhi);
 
         const proj = project(x0, y0, z0);
 
-        if (proj.z > -baseR * 0.35) {
+        // Only draw visible sparks on the frontal/upper hemisphere
+        if (proj.z > -baseR * 0.25) {
           const sparkNorm = Math.max(0.2, (proj.z + baseR) / (baseR * 2));
-          const sparkRadius = Math.max(0.45 * dpr, 0.75 * dpr * node.sizeMult * sparkNorm);
+          const sparkRadius = Math.max(0.45 * dpr, 0.65 * dpr * sparkNorm);
 
           ctx.beginPath();
           ctx.arc(proj.px, proj.py, sparkRadius, 0, Math.PI * 2);
           
           if (sparkNorm > 0.65) {
-            ctx.fillStyle = `rgba(255, 255, 255, ${Math.min(1, sparkNorm * 1.4)})`;
+            ctx.fillStyle = `rgba(255, 255, 255, ${Math.min(1, sparkNorm * 1.35)})`;
           } else {
             ctx.fillStyle = `rgba(0, 242, 254, ${sparkNorm * 0.95})`;
           }
@@ -241,7 +251,7 @@
     }
   }
 
-  // Inject CSS for the Solving Orb modal and pill
+  // Inject styles for the Solving Orb modal and pill
   function injectSolvingStyles() {
     if (document.getElementById('solving-orb-custom-styles')) return;
     const s = document.createElement('style');
@@ -318,7 +328,7 @@
         display: block !important;
         flex-shrink: 0 !important;
         border-radius: 50% !important;
-        filter: drop-shadow(0 0 10px rgba(0, 242, 254, 0.6)) !important;
+        filter: drop-shadow(0 0 12px rgba(0, 242, 254, 0.65)) !important;
       }
       .thinking-dots span {
         display: inline-block;
