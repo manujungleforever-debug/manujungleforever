@@ -1717,28 +1717,65 @@ window.toggleBulkSelect = function() {
   updateBulkActionButtons();
 };
 
-window.handleBulkDelete = function() {
+window.handleBulkDelete = async function() {
   if (selectedMedia.size === 0) return;
   const count = selectedMedia.size;
-  if (confirm(`¿Estás seguro de eliminar los ${count} elementos seleccionados?`)) {
-    console.log("IDs a eliminar:", Array.from(selectedMedia));
-    showToast(`✓ Se han eliminado ${count} elemento(s).`);
-    selectedMedia.clear();
-    toggleSelectionMode();
-    loadMedia();
+  if (confirm(`¿Estás seguro de eliminar los ${count} elementos seleccionados de forma permanente?`)) {
+    const paths = Array.from(selectedMedia);
+    try {
+      showToast('Eliminando...');
+      const res = await fetch(`${MEDIA_API}/bulk-delete`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ paths })
+      });
+      const data = await res.json();
+      
+      if (!res.ok) throw new Error(data.error || 'Error del servidor');
+      
+      showToast(`✓ Se han eliminado ${count} elemento(s).`);
+      selectedMedia.clear();
+      toggleSelectionMode();
+      loadMedia(); // Recarga los datos actualizados
+    } catch (e) {
+      alert('Error al eliminar: ' + e.message);
+      showToast('X Error en la operación', true);
+    }
   }
 };
 
-window.handleBulkMove = function() {
+window.handleBulkMove = async function() {
   if (selectedMedia.size === 0) return;
   const count = selectedMedia.size;
-  const dest = prompt(`Mover ${count} elementos.\n\nIngresa la ruta de destino (ej. 'viajes/2026'):`);
+  const dest = prompt(`Mover ${count} elementos.\n\nIngresa la ruta de destino (ej. 'viajes/2026') o deja en blanco para mover a la Raíz:`);
+  
   if (dest !== null) {
-    console.log(`Mover IDs:`, Array.from(selectedMedia), `hacia -> ${dest}`);
-    showToast(`✓ Se movieron ${count} elemento(s) a ${dest}`);
-    selectedMedia.clear();
-    toggleSelectionMode();
-    loadMedia();
+    const paths = Array.from(selectedMedia);
+    try {
+      showToast('Moviendo...');
+      const res = await fetch(`${MEDIA_API}/bulk-move`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ paths, destination: dest })
+      });
+      const data = await res.json();
+      
+      if (!res.ok) throw new Error(data.error || 'Error del servidor');
+      
+      showToast(`✓ Se movieron ${count} elemento(s).`);
+      selectedMedia.clear();
+      toggleSelectionMode();
+      loadMedia(); // Recarga los datos actualizados
+    } catch (e) {
+      alert('Error al mover: ' + e.message);
+      showToast('X Error en la operación', true);
+    }
   }
 };
 
