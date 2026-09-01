@@ -16,11 +16,11 @@
       "email": "jordyleonidas@manujungleforever.com",
       "name": "Jordy Leonidas",
       "role": "superuser",
-      "foto": "",
+      "foto": "/media/usuarios/jordyleonidas-manujungleforever-com/avatar_1788278886670.jpg",
       "password_hash": "90fe56da9493eb43cb554725ce2814ba6f314f0b544a1e350e95ad9e9789a2e5",
       "activo": true,
       "created_at": "2026-08-19T00:00:00.000Z",
-      "updated_at": "2026-08-19T00:00:00.000Z"
+      "updated_at": "2026-09-01T16:08:09.665Z"
     },
     {
       "id": "usr_gloria",
