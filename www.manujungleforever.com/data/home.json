@@ -13,13 +13,13 @@
   },
   "stats": [
     {
-      "value": 1500,
+      "value": 3000,
       "suffix": "+",
       "label": "Travelers Guided",
       "type": "counter"
     },
     {
-      "value": 5,
+      "value": 10,
       "suffix": "+",
       "label": "Years Experience",
       "type": "counter"
