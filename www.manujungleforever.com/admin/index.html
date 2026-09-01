@@ -143,25 +143,25 @@ body {
       max-width: 380px;
     }
     .ls-feature-card:hover {
-      border-color: rgba(250, 204, 21, 0.45);
+      border-color: rgba(45, 212, 191, 0.45);
       background: rgba(255, 255, 255, 0.045);
       transform: translateY(-2px);
-      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.45), 0 0 25px rgba(250, 204, 21, 0.12);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.45), 0 0 25px rgba(45, 212, 191, 0.12);
     }
     .ls-feature-icon {
       width: 48px;
       height: 48px;
       border-radius: 14px;
-      background: rgba(250, 204, 21, 0.10);
-      border: 1.5px solid rgba(250, 204, 21, 0.35);
+      background: rgba(16, 185, 129, 0.12);
+      border: 1.5px solid rgba(16, 185, 129, 0.35);
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      box-shadow: 0 0 16px rgba(250, 204, 21, 0.15);
+      box-shadow: 0 0 16px rgba(16, 185, 129, 0.15);
     }
     .ls-feature-icon.teal {
-      background: rgba(45, 212, 191, 0.10);
+      background: rgba(45, 212, 191, 0.12);
       border-color: rgba(45, 212, 191, 0.35);
       box-shadow: 0 0 16px rgba(45, 212, 191, 0.15);
     }
@@ -278,31 +278,32 @@ body {
     .btn-login {
       width: 100%;
       padding: 14px 24px;
-      background: linear-gradient(135deg, #10b981 0%, #14b8a6 50%, #34d399 100%);
+      background: #00b894;
       color: #022c22;
       font-weight: 800;
-      font-size: 1.02rem;
+      font-size: 1.05rem;
       border: none;
       border-radius: 14px;
-      box-shadow: 0 4px 20px rgba(16, 185, 129, 0.35);
+      box-shadow: 0 4px 20px rgba(0, 184, 148, 0.35);
       cursor: pointer;
       transition: all 0.25s ease;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
+      gap: 12px;
       letter-spacing: 0.2px;
       margin-top: 12px;
     }
     .btn-login:hover {
-      box-shadow: 0 6px 28px rgba(16, 185, 129, 0.55);
+      background: #00a884;
+      box-shadow: 0 6px 28px rgba(0, 184, 148, 0.55);
       transform: translateY(-2px) scale(1.01);
-      filter: brightness(1.05);
     }
     .login-btn-arrow {
-      stroke: #022c22;
+      stroke: #FACC15 !important;
       transition: transform 0.25s ease;
       flex-shrink: 0;
+      filter: drop-shadow(0 0 6px rgba(250, 204, 21, 0.6));
     }
     .btn-login:hover .login-btn-arrow {
       transform: translateX(6px);
@@ -1112,7 +1113,7 @@ nav.mnav a:hover, nav.mnav a.active {
       <div style="display:flex; flex-direction:column; gap:16px; width:100%;">
         <div class="ls-feature-card">
           <div class="ls-feature-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FACC15" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
               <polyline points="14 2 14 8 20 8"></polyline>
               <line x1="16" y1="13" x2="8" y2="13"></line>
@@ -1189,9 +1190,8 @@ nav.mnav a:hover, nav.mnav a.active {
         </div>
         <button class="btn-login" id="btn-login">
           <span>Iniciar Sesión</span>
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#022c22" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" class="login-btn-arrow">
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-            <polyline points="12 5 19 12 12 19"></polyline>
+          <svg class="login-btn-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FACC15" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
           </svg>
         </button>
         
