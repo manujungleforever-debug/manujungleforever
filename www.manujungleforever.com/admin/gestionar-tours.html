@@ -453,7 +453,7 @@ header {
     filter: brightness(1.1) !important;
 }
 
-/* Fila 2: Barra de NavegaciÛn */
+/* Fila 2: Barra de Navegaci√≥n */
 .header-nav-row {
     width: 100% !important;
     display: flex !important;
@@ -540,13 +540,13 @@ nav.mnav a.btn-panel-link:hover {
       </a>
       <div class="user-sec">
         <span id="huser"></span>
-        <button onclick="logout()" class="btn-logout" title="Cerrar sesiÛn">
+        <button onclick="logout()" class="btn-logout" title="Cerrar sesi√≥n">
           <i class="ph ph-sign-out"></i> Salir
         </button>
       </div>
     </div>
 
-    <!-- Fila 2: Men˙ de NavegaciÛn dedicado -->
+    <!-- Fila 2: Men√∫ de Navegaci√≥n dedicado -->
     <div class="header-nav-row">
       <nav class="mnav">
         <a href="panel.html" class=""><i class="ph ph-house"></i> Panel</a>
@@ -602,7 +602,7 @@ nav.mnav a.btn-panel-link:hover {
 window.addEventListener('error', function(e) {
   const mc = document.getElementById('mc') || document.body;
   if(mc) {
-    mc.innerHTML = '<div style="padding:40px;max-width:600px;margin:40px auto;background:#fff;border-radius:12px;box-shadow:0 10px 25px rgba(0,0,0,0.1);text-align:center"><h2 style="color:#ef4444;margin-bottom:10px">? Error CrÌtico del Panel</h2><p style="color:#64748b;margin-bottom:20px">El sistema no pudo renderizar esta vista debido a un error interno.</p><div style="text-align:left;background:#0f172a;color:#cbd5e1;padding:15px;border-radius:8px;font-family:monospace;font-size:12px;overflow-x:auto;margin-bottom:20px">' + (e.error ? e.error.stack : e.message) + '</div><button onclick="location.reload()" style="background:#0d9488;color:#fff;border:none;padding:10px 20px;border-radius:8px;cursor:pointer;font-weight:600">Recargar Panel</button></div>';
+    mc.innerHTML = '<div style="padding:40px;max-width:600px;margin:40px auto;background:#fff;border-radius:12px;box-shadow:0 10px 25px rgba(0,0,0,0.1);text-align:center"><h2 style="color:#ef4444;margin-bottom:10px">? Error Cr√≠tico del Panel</h2><p style="color:#64748b;margin-bottom:20px">El sistema no pudo renderizar esta vista debido a un error interno.</p><div style="text-align:left;background:#0f172a;color:#cbd5e1;padding:15px;border-radius:8px;font-family:monospace;font-size:12px;overflow-x:auto;margin-bottom:20px">' + (e.error ? e.error.stack : e.message) + '</div><button onclick="location.reload()" style="background:#0d9488;color:#fff;border:none;padding:10px 20px;border-radius:8px;cursor:pointer;font-weight:600">Recargar Panel</button></div>';
   }
 });
 </script>
@@ -805,7 +805,7 @@ function switchSection_DIS(id) {
 async function r2GetList() {
   const r = await fetch(`${MEDIA_API}`,{headers:{Authorization:`Bearer ${token}`}});
   if (r.status===401){sessionStorage.clear();location.reload();}
-  const d=await r.json(); if(!r.ok)throw new Error(d.error||'Error al cargar galerÌa');
+  const d=await r.json(); if(!r.ok)throw new Error(d.error||'Error al cargar galer√≠a');
   return d.files || [];
 }
 
@@ -822,12 +822,12 @@ async function r2Upload(file, progressEl) {
   });
   if (r.status===401){sessionStorage.clear();location.reload();}
   
-  // Tratar de parsear JSON, si falla es porque Cloudflare devolviÛ HTML (ej. error 500)
+  // Tratar de parsear JSON, si falla es porque Cloudflare devolvi√≥ HTML (ej. error 500)
   let d;
   try {
     d = await r.json();
   } catch(e) {
-    throw new Error(`Error del servidor (HTTP ${r.status}). Verifica que MEDIA_BUCKET estÈ configurado.`);
+    throw new Error(`Error del servidor (HTTP ${r.status}). Verifica que MEDIA_BUCKET est√© configurado.`);
   }
   
   if(!r.ok) throw new Error(d.error||'Error subiendo archivo');
@@ -858,7 +858,7 @@ async function openMediaModal(callback) {
   document.getElementById('media-modal').classList.add('open');
   
   const body = document.getElementById('media-modal-body');
-  body.innerHTML = `<div class="loading"><div class="spinner"></div> Cargando galerÌa...</div>`;
+  body.innerHTML = `<div class="loading"><div class="spinner"></div> Cargando galer√≠a...</div>`;
   
   try {
     currentMediaFiles = await r2GetList();
@@ -870,7 +870,7 @@ async function openMediaModal(callback) {
 
 function renderMediaGrid(container, files, isModal) {
   if (!files.length) {
-    container.innerHTML = `<div class="empty">La galerÌa est· vacÌa.</div>`;
+    container.innerHTML = `<div class="empty">La galer√≠a est√° vac√≠a.</div>`;
     return;
   }
   
@@ -883,14 +883,14 @@ function renderMediaGrid(container, files, isModal) {
           ? `<video src="${f.url}" preload="metadata"></video>` 
           : `<img src="${f.url}" loading="lazy" alt="${f.key}">`}
         <div class="m-name">${f.key}</div>
-        ${!isModal ? `<button class="btn-del" onclick="event.stopPropagation(); deleteMedia('${f.key}')">◊</button>` : ''}
+        ${!isModal ? `<button class="btn-del" onclick="event.stopPropagation(); deleteMedia('${f.key}')">√ó</button>` : ''}
       </div>`;
     }).join('')}
   </div>`;
 }
 
 function selectMediaItem(idx, el, isModal) {
-  if (!isModal) return; // Solo selecciÛn en modal
+  if (!isModal) return; // Solo selecci√≥n en modal
   const parent = el.parentElement;
   parent.querySelectorAll('.m-item').forEach(e => e.classList.remove('selected'));
   el.classList.add('selected');
@@ -934,7 +934,7 @@ async function handleMediaUploadEvent(e) {
   }
   
   if (errorCount > 0) {
-    alert(`Ocurrieron ${errorCount} errores al subir.\\n⁄ltimo error: ${lastError}\\nSi es un error 500 o 503, revisa que Cloudflare tenga configurada la variable MEDIA_BUCKET correctamente o intenta en un par de minutos.`);
+    alert(`Ocurrieron ${errorCount} errores al subir.\\n√öltimo error: ${lastError}\\nSi es un error 500 o 503, revisa que Cloudflare tenga configurada la variable MEDIA_BUCKET correctamente o intenta en un par de minutos.`);
   }
   
   if (inModal) {
@@ -942,7 +942,7 @@ async function handleMediaUploadEvent(e) {
     currentMediaFiles = await r2GetList();
     renderMediaGrid(body, currentMediaFiles, true);
   } else {
-    route('media'); // Si est· en la vista principal
+    route('media'); // Si est√° en la vista principal
   }
 }
 
@@ -980,7 +980,7 @@ function imgWidget(id, label, value='', hint='') {
     <div class="img-field-wrap">
       <div class="img-input-row">
         <input id="${id}" value="${esc(value)}" placeholder="URL o ruta de imagen" oninput="updateImgPreview('${id}','${pid}')">
-        <button type="button" class="btn-secondary" onclick="pickImage('${id}','${pid}')">??? Seleccionar</button>
+        <button type="button" class="btn-secondary" onclick="pickImage('${id}','${pid}')">üîç Seleccionar</button>
       </div>
       ${value ? `<img class="img-preview show" id="${pid}" src="${esc(value)}" alt="">` : `<img class="img-preview" id="${pid}" alt="">`}
       ${hint?`<span class="hint">${hint}</span>`:''}
@@ -993,7 +993,7 @@ function imgWidget(id, label, value='', hint='') {
 async function viewMedia() {
   set(`
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
-      <div style="display:flex;align-items:center;"><div class="btn-card-icon card-icon-medios"><i class="ph ph-image"></i></div><div><p class="pt" style="margin-bottom:0">Biblioteca de Medios</p><p class="ps">Gestiona todas las im·genes y videos (Cloudflare R2)</p></div></div>
+      <div style="display:flex;align-items:center;"><div class="btn-card-icon card-icon-medios"><i class="ph ph-image"></i></div><div><p class="pt" style="margin-bottom:0">Biblioteca de Medios</p><p class="ps">Gestiona todas las im√°genes y videos (Cloudflare R2)</p></div></div>
       <div style="display:flex;gap:8px;align-items:center;">
         <span id="main-upload-prog" style="font-size:.8rem;color:var(--gold);margin-right:8px;"></span>
         <button class="btn-primary" onclick="document.getElementById('media-upload').click()">?? Subir archivo(s)</button>
@@ -1012,7 +1012,7 @@ async function viewMedia() {
 }
 
 async function deleteMedia(key) {
-  if (confirm(`øEst·s seguro de eliminar el archivo "${key}" permanentemente?`)) {
+  if (confirm(`¬øEst√°s seguro de eliminar el archivo "${key}" permanentemente?`)) {
     try {
       await r2Delete(key);
       route('media');
@@ -1028,10 +1028,10 @@ function mdToolbar(textareaId) {
     ['**B**','**','**'],['*I*','*','*'],['~~S~~','~~','~~'],
     ['# H1','# ',''],['## H2','## ',''],['### H3','### ',''],
     ['?? Link','[','](url)'],['> Cita','> ',''],['- Lista','- ',''],
-    ['1. Lista','1. ',''],['```CÛdigo','```\n','\n```'],
+    ['1. Lista','1. ',''],['```C√≥digo','```\n','\n```'],
   ];
   return `<div class="md-wrap">
-      <div class="md-toolbar">${cmds.map(([l,b,a])=>`<button type="button" onclick="mdWrap('${textareaId}','${b.replace(/\n/g,'\\n').replace(/'/g,"\\'")}','${a.replace(/\n/g,'\\n').replace(/'/g,"\\'")}')" title="${l}">${l}</button>`).join('')} <button type="button" onclick="openMediaModal((url) => { mdWrap('${textareaId}', '![alt](', url + ')') })" title="Insertar Imagen de R2">??? R2</button></div>
+      <div class="md-toolbar">${cmds.map(([l,b,a])=>`<button type="button" onclick="mdWrap('${textareaId}','${b.replace(/\n/g,'\\n').replace(/'/g,"\\'")}','${a.replace(/\n/g,'\\n').replace(/'/g,"\\'")}')" title="${l}">${l}</button>`).join('')} <button type="button" onclick="openMediaModal((url) => { mdWrap('${textareaId}', '![alt](', url + ')') })" title="Insertar Imagen de R2">?‚òÅÔ∏è R2</button></div>
     <textarea id="${textareaId}" style="width:100%; box-sizing:border-box; resize:vertical; min-height:320px; font-family:monospace; font-size:.83rem; line-height:1.6; border:none; border-radius:0; background:rgba(255,255,255,.03); padding:12px; color:var(--fg); outline:none;"></textarea>
   </div>`;
 }
@@ -1050,12 +1050,12 @@ function mdWrap(id, before, after) {
 // -----------------------------------------------------------------------------
 async function route(id) {
   hideSaveBar(); cFile=null; cSha=null; cData=null;
-  set(`<div class="loading"><div class="spinner"></div> CargandoÖ</div>`);
+  set(`<div class="loading"><div class="spinner"></div> Cargando¬Ö</div>`);
   try {
     const views = {blog:viewBlog,home:viewHome,about:viewAbout,contact:viewContact,global:viewGlobal,
       tours:viewTours,departures:viewDeps,testimonials:viewTestims, media:viewMedia, reclamos:viewReclamos};
     if (views[id]) await views[id]();
-    else set(`<p>SecciÛn no encontrada.</p>`);
+    else set(`<p>Secci√≥n no encontrada.</p>`);
   } catch(e) {
     set(`<p style="color:var(--danger);padding:20px">? ${e.message}</p>`);
   }
@@ -1110,7 +1110,7 @@ async function publishBlogPost(slug, fm, mdBody) {
 }
 
 async function viewBlog() {
-  set('<div class="loading"><div class="spinner"></div> Cargando artÌculos del blog...</div>');
+  set('<div class="loading"><div class="spinner"></div> Cargando art√≠culos del blog...</div>');
   try {
     let posts = [];
     let idxSha = null;
@@ -1154,10 +1154,10 @@ async function viewBlog() {
     let html = `
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:22px">
         <div>
-          <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-blog"><i class="ph ph-pencil"></i></div><p class="pt" style="margin-bottom:0">ArtÌculos del Blog</p></div>
-          <p class="ps">${posts.length} artÌculos registrados (ordenados por fecha m·s reciente)</p>
+          <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-blog"><i class="ph ph-pencil"></i></div><p class="pt" style="margin-bottom:0">Art√≠culos del Blog</p></div>
+          <p class="ps">${posts.length} art√≠culos registrados (ordenados por fecha m√°s reciente)</p>
         </div>
-        <button class="btn-primary" onclick="newBlog()">+ Nuevo artÌculo</button>
+        <button class="btn-primary" onclick="newBlog()">+ Nuevo art√≠culo</button>
       </div>
       <div class="blog-grid" style="display:grid;gap:14px;">`;
 
@@ -1179,7 +1179,7 @@ async function viewBlog() {
               <span style="font-size:0.75rem;color:var(--muted);display:inline-flex;align-items:center;gap:4px;"><i class="ph ph-calendar"></i> ${p.date || '2026-08-16'}</span>
             </div>
             <h3>${esc(p.title)}</h3>
-            <span>/${p.slug}.md ${p.excerpt ? 'ó ' + esc(p.excerpt) : ''}</span>
+            <span>/${p.slug}.md ${p.excerpt ? '¬ó ' + esc(p.excerpt) : ''}</span>
           </div>
           <div class="li-actions">
             <button class="btn-edit" onclick="editBlog('${file.path}','${file.sha}')"><i class="ph ph-pencil"></i> Editar</button>
@@ -1191,7 +1191,7 @@ async function viewBlog() {
     html += '</div>';
     set(html);
   } catch(e) {
-    set('<div class="empty">Error al cargar artÌculos del blog: ' + e.message + '</div>');
+    set('<div class="empty">Error al cargar art√≠culos del blog: ' + e.message + '</div>');
   }
 }
 
@@ -1201,10 +1201,10 @@ function newBlog() {
     <button class="back-btn" onclick="route('blog')">? Volver al blog</button>
     <div class="eform">
       <div class="esec">
-        <div class="esec-h">Nuevo ArtÌculo</div>
+        <div class="esec-h">Nuevo Art√≠culo</div>
         <div class="ff"><label>Slug URL (sin espacios, solo guiones)</label>
           <input id="f-slug" placeholder="mi-nuevo-articulo" oninput="this.value=this.value.toLowerCase().replace(/[^a-z0-9-]/g,'-')">
-          <span class="hint">El archivo se guardar· como: <code id="slug-preview">mi-nuevo-articulo.md</code></span>
+          <span class="hint">El archivo se guardar√° como: <code id="slug-preview">mi-nuevo-articulo.md</code></span>
         </div>
         ${blogFields({title:'',date:new Date().toISOString().split('T')[0],categoria:'Wildlife',publicado:true,extracto:'',imagen:'',imagen_alt:''})}
       </div>
@@ -1235,7 +1235,7 @@ async function editBlog(path, sha) {
     <button class="back-btn" onclick="route('blog')">? Volver al blog</button>
     <div class="eform">
       <div class="esec">
-        <div class="esec-h">InformaciÛn del ArtÌculo</div>
+        <div class="esec-h">Informaci√≥n del Art√≠culo</div>
         ${blogFields(fm)}
       </div>
       <div class="esec"><div class="esec-h">Contenido (Markdown)</div>${mdToolbar('f-body')}</div>
@@ -1254,18 +1254,18 @@ async function editBlog(path, sha) {
 function blogFields(fm) {
   return `
     <div class="grow2">
-      <div class="ff"><label>TÌtulo del artÌculo</label><input id="f-title" value="${esc(fm.title||'')}"></div>
-      <div class="ff"><label>Fecha de publicaciÛn</label><input type="date" id="f-date" value="${esc(fm.date||'')}"></div>
+      <div class="ff"><label>T√≠tulo del art√≠culo</label><input id="f-title" value="${esc(fm.title||'')}"></div>
+      <div class="ff"><label>Fecha de publicaci√≥n</label><input type="date" id="f-date" value="${esc(fm.date||'')}"></div>
     </div>
     <div class="grow2">
-      <div class="ff"><label>CategorÌa</label>
-        <select id="f-cat" onchange="if(this.value==='__add_new__') addCustomItem('f-cat', 'Nombre de la nueva categorÌa del blog:')">
+      <div class="ff"><label>Categor√≠a</label>
+        <select id="f-cat" onchange="if(this.value==='__add_new__') addCustomItem('f-cat', 'Nombre de la nueva categor√≠a del blog:')">
         ${(() => {
           const baseCats = ['Wildlife', 'Conservation', 'Sustainability', 'Manu Park', 'Travel Tips'];
           const currentCat = fm.categoria || 'Wildlife';
           const allCats = Array.from(new Set([...baseCats, currentCat].filter(Boolean)));
           return allCats.map(c => `<option value="${esc(c)}" ${currentCat === c ? 'selected' : ''}>${esc(c)}</option>`).join('') +
-                 '<option value="__add_new__" style="font-weight:bold;color:var(--teal);">+ AÒadir nueva categorÌa...</option>';
+                 '<option value="__add_new__" style="font-weight:bold;color:var(--teal);">+ A√±adir nueva categor√≠a...</option>';
         })()}
       </select>
       </div>
@@ -1277,7 +1277,7 @@ function blogFields(fm) {
       </div>
     </div>
     <div class="ff"><label>Extracto (resumen para el listado)</label><textarea id="f-ext" style="min-height:70px">${esc(fm.extracto||'')}</textarea></div>
-    ${imgWidget('f-img','Imagen de portada',fm.imagen||'','Recomendado: 1200◊600px')}
+    ${imgWidget('f-img','Imagen de portada',fm.imagen||'','Recomendado: 1200√ó600px')}
     <div class="ff"><label>Texto alternativo de la imagen</label><input id="f-imgalt" value="${esc(fm.imagen_alt||'')}"></div>
     <script>document.getElementById('f-pub').addEventListener('change',e=>{document.getElementById('pub-lbl').textContent=e.target.checked?'? Publicado':'?? Borrador';})<\/script>`;
 }
@@ -1298,37 +1298,37 @@ async function viewHome() {
   cFile='www.manujungleforever.com/data/home.json'; cSha=data.sha;
   const d=JSON.parse(data.content); cData=d;
   set(`
-    <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-contenido"><i class="ph ph-house"></i></div><div><p class="pt" style="margin-bottom:0">P·gina de Inicio</p><p class="ps">Contenido principal del sitio</p></div></div>
+    <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-contenido"><i class="ph ph-house"></i></div><div><p class="pt" style="margin-bottom:0">P√°gina de Inicio</p><p class="ps">Contenido principal del sitio</p></div></div>
     <div class="eform">
       <div class="esec"><div class="esec-h">Hero (Portada)</div>
-        <div class="ff"><label>TÌtulo principal</label><input id="h-t" value="${esc(d.hero?.title||'')}"></div>
-        <div class="ff"><label>TÌtulo Ènfasis (parte resaltada)</label><input id="h-e" value="${esc(d.hero?.title_emphasis||'')}"></div>
-        <div class="ff"><label>SubtÌtulo / descripciÛn</label><textarea id="h-s">${esc(d.hero?.subtitle||'')}</textarea></div>
+        <div class="ff"><label>T√≠tulo principal</label><input id="h-t" value="${esc(d.hero?.title||'')}"></div>
+        <div class="ff"><label>T√≠tulo √©nfasis (parte resaltada)</label><input id="h-e" value="${esc(d.hero?.title_emphasis||'')}"></div>
+        <div class="ff"><label>Subt√≠tulo / descripci√≥n</label><textarea id="h-s">${esc(d.hero?.subtitle||'')}</textarea></div>
         <div class="grow2">
-          <div class="ff"><label>Texto de ubicaciÛn</label><input id="h-l" value="${esc(d.hero?.location_tag||'')}"></div>
+          <div class="ff"><label>Texto de ubicaci√≥n</label><input id="h-l" value="${esc(d.hero?.location_tag||'')}"></div>
           <div class="ff"><label>ID video YouTube</label><input id="h-v" value="${esc(d.hero?.video_id||'')}">
             <span class="hint">Solo el ID, ej: <code>dQw4w9WgXcQ</code></span></div>
         </div>
       </div>
-      <div class="esec"><div class="esec-h">SecciÛn Sobre Nosotros</div>
+      <div class="esec"><div class="esec-h">Secci√≥n Sobre Nosotros</div>
         <div class="grow2">
-          <div class="ff"><label>Eyebrow (texto pequeÒo encima)</label><input id="a-ey" value="${esc(d.about_section?.eyebrow||'')}"></div>
-          <div class="ff"><label>TÌtulo</label><input id="a-t" value="${esc(d.about_section?.title||'')}"></div>
+          <div class="ff"><label>Eyebrow (texto peque√±o encima)</label><input id="a-ey" value="${esc(d.about_section?.eyebrow||'')}"></div>
+          <div class="ff"><label>T√≠tulo</label><input id="a-t" value="${esc(d.about_section?.title||'')}"></div>
         </div>
-        <div class="ff"><label>P·rrafos (separados por lÌnea en blanco)</label>
+        <div class="ff"><label>P√°rrafos (separados por l√≠nea en blanco)</label>
           <textarea id="a-p" style="min-height:120px">${(d.about_section?.paragraphs||[]).map(p=>p.text||p).join('\n\n')}</textarea></div>
-        ${imgWidget('a-img','Imagen de la secciÛn',d.about_section?.image||'')}
+        ${imgWidget('a-img','Imagen de la secci√≥n',d.about_section?.image||'')}
         <div class="ff"><label>Texto alt de la imagen</label><input id="a-ia" value="${esc(d.about_section?.image_alt||'')}"></div>
       </div>
       <div class="esec"><div class="esec-h">Pilares / Valores</div>
-        <div class="ff"><label>TÌtulo de la secciÛn</label><input id="p-t" value="${esc(d.pillars_section?.title||'')}"></div>
+        <div class="ff"><label>T√≠tulo de la secci√≥n</label><input id="p-t" value="${esc(d.pillars_section?.title||'')}"></div>
         ${(d.pillars_section?.pillars||[]).map((p,i)=>`
           <div style="background:var(--card2);border-radius:8px;padding:12px;margin-bottom:8px">
             <p style="font-size:.72rem;color:var(--gold);font-weight:600;margin-bottom:10px">PILAR ${i+1}</p>
             <div class="grow3">
-              <div class="ff"><label>Õcono (FontAwesome)</label><input id="pi-ic${i}" value="${esc(p.icon||'')}"><span class="hint">ej: fas fa-leaf</span></div>
-              <div class="ff"><label>TÌtulo</label><input id="pi-ti${i}" value="${esc(p.title||'')}"></div>
-              <div class="ff"><label>DescripciÛn</label><input id="pi-tx${i}" value="${esc(p.text||'')}"></div>
+              <div class="ff"><label>√çcono (FontAwesome)</label><input id="pi-ic${i}" value="${esc(p.icon||'')}"><span class="hint">ej: fas fa-leaf</span></div>
+              <div class="ff"><label>T√≠tulo</label><input id="pi-ti${i}" value="${esc(p.title||'')}"></div>
+              <div class="ff"><label>Descripci√≥n</label><input id="pi-tx${i}" value="${esc(p.text||'')}"></div>
             </div>
           </div>`).join('')}
       </div>
@@ -1354,26 +1354,26 @@ async function viewAbout() {
   cFile='www.manujungleforever.com/data/about.json'; cSha=data.sha;
   const d=JSON.parse(data.content); cData=d;
   set(`
-    <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-contenido"><i class="ph ph-info"></i></div><div><p class="pt" style="margin-bottom:0">P·gina Sobre Nosotros</p><p class="ps">Contenido de "About Us"</p></div></div>
+    <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-contenido"><i class="ph ph-info"></i></div><div><p class="pt" style="margin-bottom:0">P√°gina Sobre Nosotros</p><p class="ps">Contenido de "About Us"</p></div></div>
     <div class="eform">
       <div class="esec"><div class="esec-h">General</div>
-        <div class="ff"><label>TÌtulo de la p·gina</label><input id="ab-t" value="${esc(d.titulo_pagina||'')}"></div>
-        <div class="ff"><label>SubtÌtulo de la p·gina</label><textarea id="ab-s">${esc(d.subtitulo_pagina||'')}</textarea></div>
+        <div class="ff"><label>T√≠tulo de la p√°gina</label><input id="ab-t" value="${esc(d.titulo_pagina||'')}"></div>
+        <div class="ff"><label>Subt√≠tulo de la p√°gina</label><textarea id="ab-s">${esc(d.subtitulo_pagina||'')}</textarea></div>
         ${imgWidget('ab-img','Imagen Hero',d.hero_image||'')}
       </div>
       <div class="esec"><div class="esec-h">Historia</div>
         <div class="grow2">
           <div class="ff"><label>Eyebrow</label><input id="ab-he" value="${esc(d.historia?.eyebrow||'')}"></div>
-          <div class="ff"><label>TÌtulo</label><input id="ab-ht" value="${esc(d.historia?.titulo||'')}"></div>
+          <div class="ff"><label>T√≠tulo</label><input id="ab-ht" value="${esc(d.historia?.titulo||'')}"></div>
         </div>
-        <div class="ff"><label>P·rrafos (separados por lÌnea en blanco)</label>
+        <div class="ff"><label>P√°rrafos (separados por l√≠nea en blanco)</label>
           <textarea id="ab-hp" style="min-height:120px">${(d.historia?.paragrafos||[]).join('\n\n')}</textarea></div>
         ${imgWidget('ab-himg','Imagen Historia',d.historia?.imagen||'')}
       </div>
-      <div class="esec"><div class="esec-h">MisiÛn</div>
+      <div class="esec"><div class="esec-h">Misi√≥n</div>
         <div class="grow2">
           <div class="ff"><label>Eyebrow</label><input id="ab-me" value="${esc(d.mision?.eyebrow||'')}"></div>
-          <div class="ff"><label>TÌtulo</label><input id="ab-mt" value="${esc(d.mision?.titulo||'')}"></div>
+          <div class="ff"><label>T√≠tulo</label><input id="ab-mt" value="${esc(d.mision?.titulo||'')}"></div>
         </div>
         <div class="ff"><label>Texto</label><textarea id="ab-mtex" style="min-height:80px">${esc(d.mision?.texto||'')}</textarea></div>
       </div>
@@ -1408,38 +1408,38 @@ async function viewContact() {
   cFile='www.manujungleforever.com/data/contact.json'; cSha=data.sha;
   const d=JSON.parse(data.content); cData=d;
   set(`
-    <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-contenido"><i class="ph ph-phone"></i></div><div><p class="pt" style="margin-bottom:0">P·gina de Contacto</p><p class="ps">InformaciÛn de contacto y datos de la empresa</p></div></div>
+    <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-contenido"><i class="ph ph-phone"></i></div><div><p class="pt" style="margin-bottom:0">P√°gina de Contacto</p><p class="ps">Informaci√≥n de contacto y datos de la empresa</p></div></div>
     <div class="eform">
-      <div class="esec"><div class="esec-h">Textos de la P·gina</div>
-        <div class="ff"><label>TÌtulo</label><input id="c-tit" value="${esc(d.titulo_pagina||'')}"></div>
-        <div class="ff"><label>SubtÌtulo</label><input id="c-sub" value="${esc(d.subtitulo_pagina||'')}"></div>
+      <div class="esec"><div class="esec-h">Textos de la P√°gina</div>
+        <div class="ff"><label>T√≠tulo</label><input id="c-tit" value="${esc(d.titulo_pagina||'')}"></div>
+        <div class="ff"><label>Subt√≠tulo</label><input id="c-sub" value="${esc(d.subtitulo_pagina||'')}"></div>
         ${imgWidget('c-hero','Imagen hero',d.hero_image||'')}
       </div>
       <div class="esec"><div class="esec-h">Datos de Contacto</div>
         <div class="grow2">
           <div class="ff"><label>Email principal</label><input id="c-em" value="${esc(d.contacto_principal?.email||'')}"></div>
-          <div class="ff"><label>WhatsApp (solo n˙meros)</label><input id="c-wa" value="${esc(d.contacto_principal?.whatsapp||'')}"><span class="hint">Ej: 51901525679</span></div>
+          <div class="ff"><label>WhatsApp (solo n√∫meros)</label><input id="c-wa" value="${esc(d.contacto_principal?.whatsapp||'')}"><span class="hint">Ej: 51901525679</span></div>
         </div>
         <div class="grow2">
-          <div class="ff"><label>TelÈfono 1</label><input id="c-t1" value="${esc(d.contacto_principal?.telefono_1||'')}"></div>
-          <div class="ff"><label>TelÈfono 2</label><input id="c-t2" value="${esc(d.contacto_principal?.telefono_2||'')}"></div>
+          <div class="ff"><label>Tel√©fono 1</label><input id="c-t1" value="${esc(d.contacto_principal?.telefono_1||'')}"></div>
+          <div class="ff"><label>Tel√©fono 2</label><input id="c-t2" value="${esc(d.contacto_principal?.telefono_2||'')}"></div>
         </div>
         <div class="ff"><label>Mensaje WhatsApp por defecto</label><input id="c-wam" value="${esc(d.contacto_principal?.whatsapp_texto||'')}"></div>
       </div>
-      <div class="esec"><div class="esec-h">DirecciÛn</div>
+      <div class="esec"><div class="esec-h">Direcci√≥n</div>
         <div class="grow2">
           <div class="ff"><label>Nombre del lugar</label><input id="c-pn" value="${esc(d.direccion?.nombre||'')}"></div>
           <div class="ff"><label>Localidad / Ciudad</label><input id="c-pc" value="${esc(d.direccion?.localidad||'')}"></div>
         </div>
         <div class="grow2">
-          <div class="ff"><label>PaÌs</label><input id="c-py" value="${esc(d.direccion?.pais||'')}"></div>
+          <div class="ff"><label>Pa√≠s</label><input id="c-py" value="${esc(d.direccion?.pais||'')}"></div>
           <div class="ff"><label>URL Google Maps</label><input id="c-maps" value="${esc(d.direccion?.maps_url||'')}"></div>
         </div>
       </div>
-      <div class="esec"><div class="esec-h">Horario de AtenciÛn</div>
+      <div class="esec"><div class="esec-h">Horario de Atenci√≥n</div>
         <div class="grow2">
-          <div class="ff"><label>DÌas</label><input id="c-hd" value="${esc(d.horario?.dias||'')}"><span class="hint">Ej: Lunes ñ Domingo</span></div>
-          <div class="ff"><label>Horas</label><input id="c-hh" value="${esc(d.horario?.horas||'')}"><span class="hint">Ej: 7:00 AM ñ 8:00 PM</span></div>
+          <div class="ff"><label>D√≠as</label><input id="c-hd" value="${esc(d.horario?.dias||'')}"><span class="hint">Ej: Lunes ¬ñ Domingo</span></div>
+          <div class="ff"><label>Horas</label><input id="c-hh" value="${esc(d.horario?.horas||'')}"><span class="hint">Ej: 7:00 AM ¬ñ 8:00 PM</span></div>
         </div>
         <div class="ff"><label>Nota adicional</label><input id="c-hn" value="${esc(d.horario?.nota||'')}"></div>
       </div>
@@ -1462,16 +1462,16 @@ async function viewGlobal() {
   cFile='www.manujungleforever.com/data/global.json'; cSha=data.sha;
   const d=JSON.parse(data.content); cData=d;
   set(`
-    <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-contenido"><i class="ph ph-gear"></i></div><div><p class="pt" style="margin-bottom:0">Datos Globales del Sitio</p><p class="ps">InformaciÛn general de marca, redes sociales y SEO</p></div></div>
+    <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-contenido"><i class="ph ph-gear"></i></div><div><p class="pt" style="margin-bottom:0">Datos Globales del Sitio</p><p class="ps">Informaci√≥n general de marca, redes sociales y SEO</p></div></div>
     <div class="eform">
       <div class="esec"><div class="esec-h">Identidad de Marca</div>
         <div class="grow2">
           <div class="ff"><label>Nombre del negocio</label><input id="g-n" value="${esc(d.site_name||'')}"></div>
           <div class="ff"><label>Eslogan</label><input id="g-sl" value="${esc(d.slogan||'')}"></div>
         </div>
-        <div class="ff"><label>Tagline (descripciÛn breve)</label><textarea id="g-tg">${esc(d.tagline||'')}</textarea></div>
+        <div class="ff"><label>Tagline (descripci√≥n breve)</label><textarea id="g-tg">${esc(d.tagline||'')}</textarea></div>
       </div>
-      <div class="esec"><div class="esec-h">Im·genes del Sitio</div>
+      <div class="esec"><div class="esec-h">Im√°genes del Sitio</div>
         ${imgWidget('g-logo','Logo principal',d.logo_main||'')}
         ${imgWidget('g-fav','Favicon',d.favicon||'')}
       </div>
@@ -1490,8 +1490,8 @@ async function viewGlobal() {
         </div>
       </div>
       <div class="esec"><div class="esec-h">SEO por Defecto</div>
-        <div class="ff"><label>Sufijo del tÌtulo</label><input id="g-ts" value="${esc(d.seo?.default_title_suffix||'')}"><span class="hint">Ej: | Manu Jungle Forever</span></div>
-        <div class="ff"><label>DescripciÛn por defecto</label><textarea id="g-td">${esc(d.seo?.default_description||'')}</textarea></div>
+        <div class="ff"><label>Sufijo del t√≠tulo</label><input id="g-ts" value="${esc(d.seo?.default_title_suffix||'')}"><span class="hint">Ej: | Manu Jungle Forever</span></div>
+        <div class="ff"><label>Descripci√≥n por defecto</label><textarea id="g-td">${esc(d.seo?.default_description||'')}</textarea></div>
         ${imgWidget('g-og','Imagen OG por defecto',d.seo?.default_og_image||'')}
       </div>
       <div class="esec"><div class="esec-h">Copyright</div>
@@ -1517,7 +1517,7 @@ async function viewTours() {
   cData=JSON.parse(data.content);
   const ts=cData.tours||[];
   
-  // AgrupaciÛn
+  // Agrupaci√≥n
   const grouped = {};
   ts.forEach((t, i) => {
     const cat = (t.categoria || 'Otros').toUpperCase();
@@ -1553,7 +1553,7 @@ async function viewTours() {
             ${t.destacado ? '<i class="ph-fill ph-star" style="color:#fbbf24; font-size:1rem;" title="Destacado en portada"></i>' : ''}
           </h3>
           <div style="color:#9ca3af; font-size:0.85rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
-            ${t.descripcion_corta || 'Sin descripciÛn corta.'}
+            ${t.descripcion_corta || 'Sin descripci√≥n corta.'}
           </div>
         </div>
         
@@ -1740,7 +1740,7 @@ async function publishTourPage(slug, tourObj) {
   if (heroImg.startsWith('/')) heroImg = '..' + heroImg;
   
   const durStr = `${tourObj.duracion_dias || 1} Days / ${tourObj.duracion_noches || 0} Nights`;
-  const capStr = `${tourObj.capacidad_min || 1}ñ${tourObj.capacidad_max || 8} Travelers`;
+  const capStr = `${tourObj.capacidad_min || 1}¬ñ${tourObj.capacidad_max || 8} Travelers`;
   
   const metaTitle = `${tourObj.nombre || 'Tour'} | Manu Jungle Forever`;
   let metaDesc = (tourObj.descripcion_corta || tourObj.descripcion_larga || '').replace(/\r?\n|\r/g, ' ').replace(/\s+/g, ' ').trim();
@@ -1796,7 +1796,7 @@ async function unpublishTourPage(slug) {
 }
 
 window.editTour = function(idx) {
-  const t= idx === -1 ? {nombre:'', estado:'activo', categoria:'wildlife', duracion_dias:1, duracion_noches:0, precio_desde:0, capacidad_min:1, capacidad_max:12, dificultad:'F·cil', temporada:'', descripcion_corta:'', descripcion_larga:'', imagen_hero:'', galeria:[], itinerario:[], incluye:[], no_incluye:[], destacado:false} : cData.tours[idx];
+  const t= idx === -1 ? {nombre:'', estado:'activo', categoria:'wildlife', duracion_dias:1, duracion_noches:0, precio_desde:0, capacidad_min:1, capacidad_max:12, dificultad:'F√°cil', temporada:'', descripcion_corta:'', descripcion_larga:'', imagen_hero:'', galeria:[], itinerario:[], incluye:[], no_incluye:[], destacado:false} : cData.tours[idx];
   
   let currentItinerary = JSON.parse(JSON.stringify(t.itinerario || []));
   
@@ -1815,29 +1815,29 @@ window.editTour = function(idx) {
           
           <!-- TARJETA 1 -->
           <div style="background: rgba(17,24,39,0.5); border: 1px solid rgba(255,255,255,0.05); padding: 24px; border-radius: 16px;">
-            <h3 style="color: #10b981; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">InformaciÛn General</h3>
+            <h3 style="color: #10b981; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">Informaci√≥n General</h3>
             
             <div class="ff" style="margin-bottom:14px"><label>Nombre del tour</label><input id="t-n" value="${esc(t.nombre)}"></div>
             
             <div style="display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:14px;align-items:start;margin-bottom:14px">
-              <div class="ff"><label>CategorÌa</label>
-                <select id="t-c" onchange="if(this.value==='__add_new__') addCustomItem('t-c', 'Nombre de la nueva categorÌa:')">
+              <div class="ff"><label>Categor√≠a</label>
+                <select id="t-c" onchange="if(this.value==='__add_new__') addCustomItem('t-c', 'Nombre de la nueva categor√≠a:')">
                   ${(() => {
                     const baseCats = ['wildlife', 'cultural', 'expedition', 'birdwatching', 'machu wasi', 'roadtrip', 'photography'];
                     const existingCats = (cData?.tours || []).map(x => x.categoria).filter(Boolean);
                     const allCats = Array.from(new Set([...baseCats, ...existingCats, t.categoria].filter(Boolean)));
                     return allCats.map(c => `<option value="${esc(c)}" ${t.categoria === c ? 'selected' : ''}>${esc(c)}</option>`).join('') +
-                           '<option value="__add_new__" style="font-weight:bold;color:#2dd4bf;">+ AÒadir categorÌa...</option>';
+                           '<option value="__add_new__" style="font-weight:bold;color:#2dd4bf;">+ A√±adir categor√≠a...</option>';
                   })()}
                 </select>
               </div>
               <div class="ff"><label>Precio ($ USD)</label><input type="number" id="t-p" value="${t.precio_desde}" min="0"></div>
-              <div class="ff"><label>Cap. MÌnima</label><input type="number" id="t-cmin" value="${t.capacidad_min}" min="1"></div>
-              <div class="ff"><label>Cap. M·xima</label><input type="number" id="t-cmax" value="${t.capacidad_max}" min="1"></div>
+              <div class="ff"><label>Cap. M√≠nima</label><input type="number" id="t-cmin" value="${t.capacidad_min}" min="1"></div>
+              <div class="ff"><label>Cap. M√°xima</label><input type="number" id="t-cmax" value="${t.capacidad_max}" min="1"></div>
             </div>
             
             <div style="display:grid;grid-template-columns:1.2fr 1.5fr 1fr 1fr;gap:14px;align-items:start;margin-bottom:14px">
-              <div class="ff"><label>Dificultad</label><select id="t-dif"><option value="F·cil" ${t.dificultad==='F·cil'?'selected':''}>Easy</option><option value="Moderado" ${t.dificultad==='Moderado'?'selected':''}>Moderate</option><option value="DifÌcil" ${t.dificultad==='DifÌcil'?'selected':''}>Hard</option></select></div>
+              <div class="ff"><label>Dificultad</label><select id="t-dif"><option value="F√°cil" ${t.dificultad==='F√°cil'?'selected':''}>Easy</option><option value="Moderado" ${t.dificultad==='Moderado'?'selected':''}>Moderate</option><option value="Dif√≠cil" ${t.dificultad==='Dif√≠cil'?'selected':''}>Hard</option></select></div>
               <div class="ff"><label>Temporada</label>
                 <select id="t-tmp" onchange="if(this.value==='__add_new__') addCustomItem('t-tmp', 'Nombre de la nueva temporada:')">
                   ${(() => {
@@ -1846,11 +1846,11 @@ window.editTour = function(idx) {
                     const currentSeason = t.temporada || 'All year';
                     const allSeasons = Array.from(new Set([...baseSeasons, ...existingSeasons, currentSeason].filter(Boolean)));
                     return allSeasons.map(s => `<option value="${esc(s)}" ${currentSeason === s ? 'selected' : ''}>${esc(s)}</option>`).join('') +
-                           '<option value="__add_new__" style="font-weight:bold;color:#2dd4bf;">+ AÒadir temporada...</option>';
+                           '<option value="__add_new__" style="font-weight:bold;color:#2dd4bf;">+ A√±adir temporada...</option>';
                   })()}
                 </select>
               </div>
-              <div class="ff"><label>DÌas</label><input type="number" id="t-d" value="${t.duracion_dias||1}" min="1"></div>
+              <div class="ff"><label>D√≠as</label><input type="number" id="t-d" value="${t.duracion_dias||1}" min="1"></div>
               <div class="ff"><label>Noches</label><input type="number" id="t-dn" value="${t.duracion_noches||0}" min="0"></div>
             </div>
           </div>
@@ -1858,15 +1858,15 @@ window.editTour = function(idx) {
           <!-- TARJETA 2: DESCRIPCIONES -->
           <div style="background: rgba(17,24,39,0.5); border: 1px solid rgba(255,255,255,0.05); padding: 24px; border-radius: 16px;">
             <h3 style="color: #10b981; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">Descripciones</h3>
-            <div class="ff" style="margin-bottom:12px"><label>DescripciÛn corta (tarjetas)</label><textarea id="t-dc" style="min-height:80px">${esc(t.descripcion_corta||'')}</textarea></div>
-            <div class="ff"><label>DescripciÛn completa (Markdown)</label>${mdToolbar('t-dl')}</div>
+            <div class="ff" style="margin-bottom:12px"><label>Descripci√≥n corta (tarjetas)</label><textarea id="t-dc" style="min-height:80px">${esc(t.descripcion_corta||'')}</textarea></div>
+            <div class="ff"><label>Descripci√≥n completa (Markdown)</label>${mdToolbar('t-dl')}</div>
           </div>
 
-          <!-- TARJETA ITINERARIO DIN¡MICO -->
+          <!-- TARJETA ITINERARIO DIN√ÅMICO -->
           <div style="background: rgba(17,24,39,0.5); border: 1px solid rgba(255,255,255,0.05); padding: 24px; border-radius: 16px;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
-              <h3 style="color: #10b981; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin: 0;">Itinerario DÌa a DÌa</h3>
-              <span id="it-days-badge" style="font-size:0.75rem; color:#d1d5db; background:rgba(255,255,255,0.05); padding:3px 8px; border-radius:6px; border:1px solid rgba(255,255,255,0.1);">${t.duracion_dias || 1} DÌas</span>
+              <h3 style="color: #10b981; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin: 0;">Itinerario D√≠a a D√≠a</h3>
+              <span id="it-days-badge" style="font-size:0.75rem; color:#d1d5db; background:rgba(255,255,255,0.05); padding:3px 8px; border-radius:6px; border:1px solid rgba(255,255,255,0.1);">${t.duracion_dias || 1} D√≠as</span>
             </div>
             <div id="itinerary-days-container" style="display: flex; flex-direction: column; gap: 14px;"></div>
           </div>
@@ -1878,9 +1878,9 @@ window.editTour = function(idx) {
           <!-- TARJETA 3 -->
           <div style="background: rgba(17,24,39,0.5); border: 1px solid rgba(255,255,255,0.05); padding: 24px; border-radius: 16px;">
             <h3 style="color: #10b981; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">Estado y Visibilidad</h3>
-            <div class="ff" style="margin-bottom:12px"><label>Estado</label><select id="t-e"><option ${t.estado==='activo'?'selected':''} value="activo">? Active</option><option ${t.estado==='pausado'?'selected':''} value="pausado">?? Paused</option><option ${t.estado==='seasonal'?'selected':''} value="seasonal">?? Seasonal</option><option ${t.estado==='inactivo'?'selected':''} value="inactivo">? Inactive</option></select></div>
+            <div class="ff" style="margin-bottom:12px"><label>Estado</label><select id="t-e"><option ${t.estado==='activo'?'selected':''} value="activo">? Active</option><option ${t.estado==='pausado'?'selected':''} value="pausado">‚è∏Ô∏è Paused</option><option ${t.estado==='seasonal'?'selected':''} value="seasonal">?? Seasonal</option><option ${t.estado==='inactivo'?'selected':''} value="inactivo">? Inactive</option></select></div>
             <div class="ff"><label>Destacado en portada</label>
-              <div class="tgl-wrap" style="margin-top:6px"><label class="tgl"><input type="checkbox" id="t-dest" ${t.destacado?'checked':''}><span class="tgl-s"></span></label><span style="font-size:.83rem;color:var(--muted)">${t.destacado?'SÌ, aparece en portada':'No aparece en portada'}</span></div>
+              <div class="tgl-wrap" style="margin-top:6px"><label class="tgl"><input type="checkbox" id="t-dest" ${t.destacado?'checked':''}><span class="tgl-s"></span></label><span style="font-size:.83rem;color:var(--muted)">${t.destacado?'S√≠, aparece en portada':'No aparece en portada'}</span></div>
             </div>
           </div>
           
@@ -1922,7 +1922,7 @@ window.editTour = function(idx) {
     }
     
     const badge = document.getElementById('it-days-badge');
-    if (badge) badge.textContent = `${totalDays} ${totalDays === 1 ? 'DÌa' : 'DÌas'}`;
+    if (badge) badge.textContent = `${totalDays} ${totalDays === 1 ? 'D√≠a' : 'D√≠as'}`;
     
     let html = '';
     for (let i = 1; i <= totalDays; i++) {
@@ -1930,15 +1930,15 @@ window.editTour = function(idx) {
       html += `
         <div class="it-day-card" data-day="${i}" style="background: rgba(0,0,0,0.25); border: 1px solid rgba(45,212,191,0.18); border-radius: 12px; padding: 16px;">
           <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px;">
-            <span style="background: #10b981; color: #020617; font-size: 0.72rem; font-weight: 800; padding: 3px 8px; border-radius: 6px;">DÕA ${i}</span>
-            <span style="font-size:0.8rem; color:#9ca3af;">Actividades y ruta del dÌa ${i}</span>
+            <span style="background: #10b981; color: #020617; font-size: 0.72rem; font-weight: 800; padding: 3px 8px; border-radius: 6px;">D√çA ${i}</span>
+            <span style="font-size:0.8rem; color:#9ca3af;">Actividades y ruta del d√≠a ${i}</span>
           </div>
           <div class="ff" style="margin-bottom:10px;">
-            <label>TÌtulo del dÌa ${i}</label>
+            <label>T√≠tulo del d√≠a ${i}</label>
             <input class="it-title-inp" id="it-t-${i}" value="${esc(item.titulo || '')}" placeholder="ej: Cusco ? Bosque Nuboso ? Machu Wasi Lodge">
           </div>
           <div class="ff">
-            <label>DescripciÛn de actividades</label>
+            <label>Descripci√≥n de actividades</label>
             <textarea class="it-desc-ta" id="it-d-${i}" style="min-height:90px; line-height:1.5;" placeholder="Detalles de caminatas, safari en bote, comidas, avistamiento...">${esc(item.descripcion || '')}</textarea>
           </div>
         </div>`;
@@ -2077,7 +2077,7 @@ window.viewPax = function(idx) {
       <tr style="border-bottom:1px solid rgba(255,255,255,.1);color:var(--muted)">
         <th style="padding:8px">Nombre / Pasaporte</th>
         <th style="padding:8px">Contacto</th>
-        <th style="padding:8px">Dietas / MÈdicas</th>
+        <th style="padding:8px">Dietas / M√©dicas</th>
         <th style="padding:8px">Pago</th>
       </tr>`;
     pax.forEach(p => {
@@ -2096,7 +2096,7 @@ window.viewPax = function(idx) {
   
   document.getElementById('media-modal-body').innerHTML = html;
   const headerTitle = document.getElementById('media-modal-body').parentElement.querySelector('.modal-h h3');
-  if (headerTitle) headerTitle.innerHTML = '?? GestiÛn de Pasajeros';
+  if (headerTitle) headerTitle.innerHTML = '?? Gesti√≥n de Pasajeros';
   
   const confirmBtn = document.getElementById('media-confirm');
   if (confirmBtn) confirmBtn.style.display = 'none';
@@ -2130,14 +2130,14 @@ async function viewDeps() {
   
   set(`
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
-      <div style="display:flex;align-items:center;"><div class="btn-card-icon card-icon-salidas"><i class="ph ph-calendar"></i></div><div><p class="pt" style="margin-bottom:0">Salidas Programadas</p><p class="ps">Control de cupos, logÌstica y ventas</p></div></div>
+      <div style="display:flex;align-items:center;"><div class="btn-card-icon card-icon-salidas"><i class="ph ph-calendar"></i></div><div><p class="pt" style="margin-bottom:0">Salidas Programadas</p><p class="ps">Control de cupos, log√≠stica y ventas</p></div></div>
       <button class="btn-primary" onclick="editDep(-1)">+ Crear Nueva Salida</button>
     </div>
     
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:15px;margin-bottom:20px;">
       <div class="esec" style="padding:15px;"><div style="font-size:2rem;font-weight:bold;color:var(--teal)">${activas}</div><div style="font-size:.8rem;color:var(--muted)">Salidas Activas</div></div>
       <div class="esec" style="padding:15px;"><div style="font-size:2rem;font-weight:bold;color:#34d399">${vendidas}</div><div style="font-size:.8rem;color:var(--muted)">Plazas Vendidas Totales</div></div>
-      <div class="esec" style="padding:15px;"><div style="font-size:2rem;font-weight:bold;color:var(--gold)">${sal.length}</div><div style="font-size:.8rem;color:var(--muted)">Salidas HistÛricas</div></div>
+      <div class="esec" style="padding:15px;"><div style="font-size:2rem;font-weight:bold;color:var(--gold)">${sal.length}</div><div style="font-size:.8rem;color:var(--muted)">Salidas Hist√≥ricas</div></div>
     </div>
     
     <div style="display:flex;gap:10px;margin-bottom:20px;align-items:center">
@@ -2175,7 +2175,7 @@ async function viewDeps() {
             
             <div style="margin-bottom:12px">
               <div style="display:flex;justify-content:space-between;font-size:.75rem;margin-bottom:4px;">
-                <span>OcupaciÛn: ${sold} / ${s.plazas_totales} (${s.plazas_disponibles} disp.)</span>
+                <span>Ocupaci√≥n: ${sold} / ${s.plazas_totales} (${s.plazas_disponibles} disp.)</span>
                 <span>${pct}%</span>
               </div>
               <div style="width:100%;height:8px;background:rgba(255,255,255,.1);border-radius:4px;overflow:hidden">
@@ -2184,8 +2184,8 @@ async function viewDeps() {
             </div>
             
             <div style="display:flex;gap:15px;font-size:.78rem;color:var(--muted);border-top:1px solid rgba(255,255,255,.06);padding-top:10px">
-              <div><span style="color:var(--fg)">GuÌa:</span> ${s.guia_asignado || 'Sin asignar'}</div>
-              <div><span style="color:var(--fg)">MÌnimo:</span> ${s.plazas_minimas||2} pax (${sold >= (s.plazas_minimas||2) ? '<span style="color:#34d399">Alcanzado ?</span>' : '<span style="color:#f87171">Faltan '+( (s.plazas_minimas||2) - sold )+'</span>'})</div>
+              <div><span style="color:var(--fg)">Gu√≠a:</span> ${s.guia_asignado || 'Sin asignar'}</div>
+              <div><span style="color:var(--fg)">M√≠nimo:</span> ${s.plazas_minimas||2} pax (${sold >= (s.plazas_minimas||2) ? '<span style="color:#34d399">Alcanzado ?</span>' : '<span style="color:#f87171">Faltan '+( (s.plazas_minimas||2) - sold )+'</span>'})</div>
             </div>
           </div>
           
@@ -2224,19 +2224,19 @@ window.editDep = async function(idx) {
         <div class="ff"><label>Nombre del tour (Sobreescribir)</label><input id="d-n" value="${esc(s.tour_nombre)}"></div>
       </div>
       <div class="grow3">
-        <div class="ff"><label>ID ˙nico</label><input id="d-id" value="${esc(s.id)}"></div>
+        <div class="ff"><label>ID √∫nico</label><input id="d-id" value="${esc(s.id)}"></div>
         <div class="ff"><label>Fecha de salida</label><input type="date" id="d-s" value="${esc(s.fecha_salida)}"></div>
         <div class="ff"><label>Fecha de regreso</label><input type="date" id="d-r" value="${esc(s.fecha_regreso)}"></div>
       </div>
       <div class="grow3">
         <div class="ff"><label>Precio (${s.moneda||'USD'})</label><input type="number" id="d-p" value="${s.precio}"></div>
         <div class="ff"><label>Plazas totales</label><input type="number" id="d-t" value="${s.plazas_totales}"></div>
-        <div class="ff"><label>MÌnimo de pasajeros</label><input type="number" id="d-min" value="${s.plazas_minimas||2}"></div>
+        <div class="ff"><label>M√≠nimo de pasajeros</label><input type="number" id="d-min" value="${s.plazas_minimas||2}"></div>
       </div>
       <div class="grow3">
         <div class="ff"><label>Plazas disponibles</label><input type="number" id="d-d" value="${s.plazas_disponibles}"></div>
         <div class="ff"><label>Estado</label><select id="d-e">${['disponible','limitado','completo','cancelado','cerrado'].map(e=>`<option ${s.estado===e?'selected':''} value="${e}">${e}</option>`).join('')}</select></div>
-        <div class="ff"><label>GuÌa Asignado</label><input id="d-g" value="${esc(s.guia_asignado||'')}"></div>
+        <div class="ff"><label>Gu√≠a Asignado</label><input id="d-g" value="${esc(s.guia_asignado||'')}"></div>
       </div>
       <div class="ff"><label>Notas adicionales / Internas</label><textarea id="d-no" style="min-height:80px">${esc(s.notas||'')}</textarea></div>
       <div style="margin-top:20px;padding-top:15px;border-top:1px solid rgba(255,255,255,.06);display:flex;justify-content:flex-end">
@@ -2272,8 +2272,8 @@ async function viewTestims() {
       ${ts.map((t,i)=>`
         <div class="li">
           <div class="li-info">
-            <h3>${t.nombre} ${t.bandera||''} ó ${'?'.repeat(t.rating||5)} <span class="badge ${t.activo?'on':'off'}">${t.activo?'visible':'oculto'}</span></h3>
-            <span>${t.pais} ∑ ${t.tour} ∑ ${t.fecha}</span>
+            <h3>${t.nombre} ${t.bandera||''} ¬ó ${'?'.repeat(t.rating||5)} <span class="badge ${t.activo?'on':'off'}">${t.activo?'visible':'oculto'}</span></h3>
+            <span>${t.pais} ¬∑ ${t.tour} ¬∑ ${t.fecha}</span>
           </div>
           <div class="li-actions">
             <button class="btn-edit" onclick="editTestim(${i})">Editar</button>
@@ -2289,7 +2289,7 @@ window.editTestim = function(idx) {
     <div class="eform"><div class="esec"><div class="esec-h">Datos del Testimonio</div>
       <div class="grow2">
         <div class="ff"><label>Nombre del cliente</label><input id="tm-n" value="${esc(t.nombre)}"></div>
-        <div class="ff"><label>PaÌs</label><input id="tm-p" value="${esc(t.pais)}"></div>
+        <div class="ff"><label>Pa√≠s</label><input id="tm-p" value="${esc(t.pais)}"></div>
       </div>
       <div class="grow2">
         <div class="ff"><label>Bandera emoji</label><input id="tm-fl" value="${esc(t.bandera||'')}"><span class="hint">Ej: ???? ???? ???? ????</span></div>
@@ -2302,7 +2302,7 @@ window.editTestim = function(idx) {
       </div>
       <div class="grow2">
         <div class="ff"><label>Fecha del viaje</label><input type="date" id="tm-f" value="${esc(t.fecha)}"></div>
-        <div class="ff"><label>CalificaciÛn (estrellas)</label><select id="tm-r"><option ${t.rating==5?'selected':''} value="5">????? (5)</option><option ${t.rating==4?'selected':''} value="4">???? (4)</option><option ${t.rating==3?'selected':''} value="3">??? (3)</option></select></div>
+        <div class="ff"><label>Calificaci√≥n (estrellas)</label><select id="tm-r"><option ${t.rating==5?'selected':''} value="5">????? (5)</option><option ${t.rating==4?'selected':''} value="4">???? (4)</option><option ${t.rating==3?'selected':''} value="3">??? (3)</option></select></div>
       </div>
       <div class="ff"><label>Texto del testimonio</label><textarea id="tm-tx" style="min-height:120px">${esc(t.texto)}</textarea></div>
       ${imgWidget('tm-img','Foto del cliente (opcional)',t.foto||'')}
@@ -2331,8 +2331,8 @@ window.editTestim = function(idx) {
 // DELETE
 // -----------------------------------------------------------------------------
 function confirmDelete(path, sha, label, backFn) {
-  document.getElementById('del-title').textContent=`øEliminar este ${label}?`;
-  document.getElementById('del-msg').textContent=`"${path.split('/').pop()}" ó Esta acciÛn no se puede deshacer.`;
+  document.getElementById('del-title').textContent=`¬øEliminar este ${label}?`;
+  document.getElementById('del-msg').textContent=`"${path.split('/').pop()}" ¬ó Esta acci√≥n no se puede deshacer.`;
   document.getElementById('del-modal').classList.add('open');
   document.getElementById('del-confirm').onclick = async () => {
     try {
@@ -2356,13 +2356,13 @@ function showSaveBar_DIS(fn) {
   const st=document.getElementById('save-status');
   bar.style.display='flex'; st.textContent=''; st.className='save-status';
   btn.onclick=async()=>{
-    btn.disabled=true; st.textContent='GuardandoÖ'; st.className='save-status';
+    btn.disabled=true; st.textContent='Guardando¬Ö'; st.className='save-status';
     try { await fn(); st.textContent='? Guardado correctamente'; st.className='save-status ok'; }
     catch(e) { st.textContent='? '+e.message; st.className='save-status err'; }
     finally { btn.disabled=false; }
   };
   document.getElementById('btn-cancel-save').onclick=()=>{
-    if(confirm('øDescartar cambios?')){ hideSaveBar(); route(cSection); }
+    if(confirm('¬øDescartar cambios?')){ hideSaveBar(); route(cSection); }
   };
 }
 function hideSaveBar_DIS() { document.getElementById('save-bar').style.display='none'; saveFnRef=null; }
@@ -2417,7 +2417,7 @@ async function viewReclamos() {
     
     let html = `
     <div style="display:flex;align-items:center;margin-bottom:20px;"><div class="btn-card-icon card-icon-reclamos"><i class="ph ph-scales"></i></div><h2 class="pt" style="margin-bottom:0">Libro de Reclamaciones</h2></div>
-    <p class="ps">AuditorÌa y exportaciÛn de quejas y reclamos legales.</p>
+    <p class="ps">Auditor√≠a y exportaci√≥n de quejas y reclamos legales.</p>
 
     <!-- Filtros tipo Wachicargo -->
     <div style="background:var(--card);border:1px solid var(--bdr);border-radius:14px;padding:20px;margin-bottom:20px;display:flex;gap:15px;align-items:flex-end;flex-wrap:nowrap;">
@@ -2425,7 +2425,7 @@ async function viewReclamos() {
         <label style="font-size:0.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;margin-bottom:6px;display:block;">Buscar</label>
         <div style="position:relative;">
           <i class="ph ph-magnifying-glass" style="position:absolute;left:12px;top:10px;color:var(--muted);"></i>
-          <input type="text" id="r-search" placeholder="CÛdigo, nombre o documento..." style="width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:var(--fg);padding:9px 12px 9px 36px;border-radius:10px;font-size:0.85rem;outline:none;">
+          <input type="text" id="r-search" placeholder="C√≥digo, nombre o documento..." style="width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:var(--fg);padding:9px 12px 9px 36px;border-radius:10px;font-size:0.85rem;outline:none;">
         </div>
       </div>
       <div style="flex:1;min-width:120px;">
@@ -2454,7 +2454,7 @@ async function viewReclamos() {
       <table style="width:100%;border-collapse:collapse;text-align:left;">
         <thead>
           <tr style="border-bottom:1px solid var(--bdr);font-size:0.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">
-            <th style="padding:16px 20px;">CÛdigo</th>
+            <th style="padding:16px 20px;">C√≥digo</th>
             <th style="padding:16px 20px;">Fecha</th>
             <th style="padding:16px 20px;">Cliente</th>
             <th style="padding:16px 20px;">Tipo</th>
@@ -2480,7 +2480,7 @@ async function viewReclamos() {
           <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:15px;margin-bottom:15px;display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:0.85rem;">
             <div><strong style="color:var(--muted)">Cliente:</strong> <span id="mr-cliente"></span></div>
             <div><strong style="color:var(--muted)">Doc/DNI:</strong> <span id="mr-dni"></span></div>
-            <div><strong style="color:var(--muted)">TelÈfono:</strong> <span id="mr-tel"></span></div>
+            <div><strong style="color:var(--muted)">Tel√©fono:</strong> <span id="mr-tel"></span></div>
             <div><strong style="color:var(--muted)">Correo:</strong> <span id="mr-email"></span></div>
             <div style="grid-column:1/-1;"><strong style="color:var(--muted)">Domicilio:</strong> <span id="mr-domicilio"></span></div>
           </div>
@@ -2497,8 +2497,8 @@ async function viewReclamos() {
           
           <div id="mr-respuesta-box" style="margin-top:20px;border-top:1px solid rgba(255,255,255,.08);padding-top:20px;">
             <h4 style="font-size:0.95rem;margin-bottom:8px;color:var(--teal);">Respuesta Oficial</h4>
-            <p style="font-size:0.75rem;color:var(--muted);margin-bottom:12px;">Escriba la respuesta que se enviar· autom·ticamente al correo del cliente. Este texto ser· el contenido principal del correo oficial.</p>
-            <textarea id="mr-reply" style="width:100%;padding:12px;border:1px solid rgba(255,255,255,.1);border-radius:10px;background:rgba(0,0,0,.3);color:var(--fg);font-family:inherit;font-size:0.85rem;min-height:120px;outline:none;" placeholder="Estimado cliente, en relaciÛn a su reclamo..."></textarea>
+            <p style="font-size:0.75rem;color:var(--muted);margin-bottom:12px;">Escriba la respuesta que se enviar√° autom√°ticamente al correo del cliente. Este texto ser√° el contenido principal del correo oficial.</p>
+            <textarea id="mr-reply" style="width:100%;padding:12px;border:1px solid rgba(255,255,255,.1);border-radius:10px;background:rgba(0,0,0,.3);color:var(--fg);font-family:inherit;font-size:0.85rem;min-height:120px;outline:none;" placeholder="Estimado cliente, en relaci√≥n a su reclamo..."></textarea>
             
             <div id="mr-status" style="margin-top:10px;display:none;padding:10px;border-radius:8px;font-size:0.8rem;"></div>
           </div>
@@ -2531,7 +2531,7 @@ function renderReclamosRows(list) {
   const tbody = document.getElementById('r-tbody');
   if (!tbody) return;
   if (!list || list.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="6" style="padding:40px;text-align:center;color:var(--muted);">No se encontraron reclamos que coincidan con la b˙squeda.</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="6" style="padding:40px;text-align:center;color:var(--muted);">No se encontraron reclamos que coincidan con la b√∫squeda.</td></tr>`;
     return;
   }
   
@@ -2597,7 +2597,7 @@ function exportReclamos() {
   const list = window.currentReclamosData || [];
   if (!list.length) return alert('No hay datos para exportar.');
   
-  let csv = 'CÛdigo,Fecha,Cliente,Documento,TelÈfono,Correo,Tipo,Estado\n';
+  let csv = 'C√≥digo,Fecha,Cliente,Documento,Tel√©fono,Correo,Tipo,Estado\n';
   list.forEach(r => {
     csv += `"${r.codigo_reclamo}","${r.fecha}","${r.nombres}","${r.documento}","${r.telefono}","${r.correo}","${r.tipo}","${r.estado}"\n`;
   });
@@ -2618,7 +2618,7 @@ function openReclamoModal(id) {
   
   window.currentReclamoId = id;
   
-  document.getElementById('mr-title').textContent = `${r.tipo.toUpperCase()} N∞ ${r.codigo_reclamo}`;
+  document.getElementById('mr-title').textContent = `${r.tipo.toUpperCase()} N¬∞ ${r.codigo_reclamo}`;
   document.getElementById('mr-subtitle').textContent = `Registrado el: ${r.fecha}`;
   document.getElementById('mr-cliente').textContent = r.nombres;
   document.getElementById('mr-dni').textContent = r.documento;
@@ -2741,7 +2741,7 @@ window.openMediaModal = async function(callback) {
   openModal('media-modal');
   
   const body = document.getElementById('media-modal-body');
-  body.innerHTML = `<div class="loading"><div class="spinner"></div> Cargando galerÌa...</div>`;
+  body.innerHTML = `<div class="loading"><div class="spinner"></div> Cargando galer√≠a...</div>`;
   
   try {
     window.currentMediaFiles = await r2GetList();
@@ -2776,8 +2776,8 @@ window.updateImgPreview = function(inputId, previewId) {
 };
 
 window.deleteBlog = async function(path, sha, name) {
-  if (confirm(`øEst·s seguro de eliminar permanentemente el artÌculo "${name}"?`)) {
-    set(`<div class="loading"><div class="spinner"></div> Eliminando artÌculo...</div>`);
+  if (confirm(`¬øEst√°s seguro de eliminar permanentemente el art√≠culo "${name}"?`)) {
+    set(`<div class="loading"><div class="spinner"></div> Eliminando art√≠culo...</div>`);
     try {
       await ghDelete(path, sha, `delete post: ${name}`);
       const slug = path.split('/').pop().replace('.md', '');
@@ -2797,7 +2797,7 @@ window.deleteBlog = async function(path, sha, name) {
 
       await viewBlog();
     } catch(e) {
-      alert(`Error al eliminar artÌculo: ${e.message}`);
+      alert(`Error al eliminar art√≠culo: ${e.message}`);
       await viewBlog();
     }
   }
@@ -2808,7 +2808,7 @@ window.deleteTour = async function(idx) {
   const tour = cData.tours[idx];
   const tourName = tour.nombre;
   const slug = tour.slug || tour.id;
-  if (confirm(`øEst·s seguro de eliminar permanentemente el tour "${tourName}"?`)) {
+  if (confirm(`¬øEst√°s seguro de eliminar permanentemente el tour "${tourName}"?`)) {
     set(`<div class="loading"><div class="spinner"></div> Eliminando tour...</div>`);
     cData.tours.splice(idx, 1);
     try {
@@ -2854,7 +2854,7 @@ window.deleteTour = async function(idx) {
 window.deleteDep = async function(idx) {
   if (!cData || !cData.salidas || !cData.salidas[idx]) return;
   const depId = cData.salidas[idx].id;
-  if (confirm(`øEst·s seguro de eliminar permanentemente la salida "${depId}"?`)) {
+  if (confirm(`¬øEst√°s seguro de eliminar permanentemente la salida "${depId}"?`)) {
     set(`<div class="loading"><div class="spinner"></div> Eliminando salida...</div>`);
     cData.salidas.splice(idx, 1);
     try {
@@ -2871,7 +2871,7 @@ window.deleteDep = async function(idx) {
 window.deleteTestim = async function(idx) {
   if (!cData || !cData.testimonials || !cData.testimonials[idx]) return;
   const name = cData.testimonials[idx].nombre;
-  if (confirm(`øEst·s seguro de eliminar permanentemente el testimonio de "${name}"?`)) {
+  if (confirm(`¬øEst√°s seguro de eliminar permanentemente el testimonio de "${name}"?`)) {
     set(`<div class="loading"><div class="spinner"></div> Eliminando testimonio...</div>`);
     cData.testimonials.splice(idx, 1);
     try {
