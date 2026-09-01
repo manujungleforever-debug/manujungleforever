@@ -453,7 +453,7 @@ header {
     filter: brightness(1.1) !important;
 }
 
-/* Fila 2: Barra de Navegación */
+/* Fila 2: Barra de Navegaci&oacute;n */
 .header-nav-row {
     width: 100% !important;
     display: flex !important;
@@ -540,13 +540,13 @@ nav.mnav a.btn-panel-link:hover {
       </a>
       <div class="user-sec">
         <span id="huser"></span>
-        <button onclick="logout()" class="btn-logout" title="Cerrar sesión">
+        <button onclick="logout()" class="btn-logout" title="Cerrar sesi&oacute;n">
           <i class="ph ph-sign-out"></i> Salir
         </button>
       </div>
     </div>
 
-    <!-- Fila 2: Menú de Navegación dedicado -->
+    <!-- Fila 2: Men&uacute; de Navegaci&oacute;n dedicado -->
     <div class="header-nav-row">
       <nav class="mnav">
         <a href="panel.html" class=""><i class="ph ph-house"></i> Panel</a>
@@ -602,7 +602,7 @@ nav.mnav a.btn-panel-link:hover {
 window.addEventListener('error', function(e) {
   const mc = document.getElementById('mc') || document.body;
   if(mc) {
-    mc.innerHTML = '<div style="padding:40px;max-width:600px;margin:40px auto;background:#fff;border-radius:12px;box-shadow:0 10px 25px rgba(0,0,0,0.1);text-align:center"><h2 style="color:#ef4444;margin-bottom:10px">? Error Crítico del Panel</h2><p style="color:#64748b;margin-bottom:20px">El sistema no pudo renderizar esta vista debido a un error interno.</p><div style="text-align:left;background:#0f172a;color:#cbd5e1;padding:15px;border-radius:8px;font-family:monospace;font-size:12px;overflow-x:auto;margin-bottom:20px">' + (e.error ? e.error.stack : e.message) + '</div><button onclick="location.reload()" style="background:#0d9488;color:#fff;border:none;padding:10px 20px;border-radius:8px;cursor:pointer;font-weight:600">Recargar Panel</button></div>';
+    mc.innerHTML = '<div style="padding:40px;max-width:600px;margin:40px auto;background:#fff;border-radius:12px;box-shadow:0 10px 25px rgba(0,0,0,0.1);text-align:center"><h2 style="color:#ef4444;margin-bottom:10px">? Error Cr&iacute;tico del Panel</h2><p style="color:#64748b;margin-bottom:20px">El sistema no pudo renderizar esta vista debido a un error interno.</p><div style="text-align:left;background:#0f172a;color:#cbd5e1;padding:15px;border-radius:8px;font-family:monospace;font-size:12px;overflow-x:auto;margin-bottom:20px">' + (e.error ? e.error.stack : e.message) + '</div><button onclick="location.reload()" style="background:#0d9488;color:#fff;border:none;padding:10px 20px;border-radius:8px;cursor:pointer;font-weight:600">Recargar Panel</button></div>';
   }
 });
 </script>
@@ -805,7 +805,7 @@ function switchSection_DIS(id) {
 async function r2GetList() {
   const r = await fetch(`${MEDIA_API}`,{headers:{Authorization:`Bearer ${token}`}});
   if (r.status===401){sessionStorage.clear();location.reload();}
-  const d=await r.json(); if(!r.ok)throw new Error(d.error||'Error al cargar galería');
+  const d=await r.json(); if(!r.ok)throw new Error(d.error||'Error al cargar galer&iacute;a');
   return d.files || [];
 }
 
@@ -822,12 +822,12 @@ async function r2Upload(file, progressEl) {
   });
   if (r.status===401){sessionStorage.clear();location.reload();}
   
-  // Tratar de parsear JSON, si falla es porque Cloudflare devolvió HTML (ej. error 500)
+  // Tratar de parsear JSON, si falla es porque Cloudflare devolvi&oacute; HTML (ej. error 500)
   let d;
   try {
     d = await r.json();
   } catch(e) {
-    throw new Error(`Error del servidor (HTTP ${r.status}). Verifica que MEDIA_BUCKET esté configurado.`);
+    throw new Error(`Error del servidor (HTTP ${r.status}). Verifica que MEDIA_BUCKET est&eacute; configurado.`);
   }
   
   if(!r.ok) throw new Error(d.error||'Error subiendo archivo');
@@ -858,7 +858,7 @@ async function openMediaModal(callback) {
   document.getElementById('media-modal').classList.add('open');
   
   const body = document.getElementById('media-modal-body');
-  body.innerHTML = `<div class="loading"><div class="spinner"></div> Cargando galería...</div>`;
+  body.innerHTML = `<div class="loading"><div class="spinner"></div> Cargando galer&iacute;a...</div>`;
   
   try {
     currentMediaFiles = await r2GetList();
@@ -870,7 +870,7 @@ async function openMediaModal(callback) {
 
 function renderMediaGrid(container, files, isModal) {
   if (!files.length) {
-    container.innerHTML = `<div class="empty">La galería está vacía.</div>`;
+    container.innerHTML = `<div class="empty">La galer&iacute;a est&aacute; vac&iacute;a.</div>`;
     return;
   }
   
@@ -890,7 +890,7 @@ function renderMediaGrid(container, files, isModal) {
 }
 
 function selectMediaItem(idx, el, isModal) {
-  if (!isModal) return; // Solo selección en modal
+  if (!isModal) return; // Solo selecci&oacute;n en modal
   const parent = el.parentElement;
   parent.querySelectorAll('.m-item').forEach(e => e.classList.remove('selected'));
   el.classList.add('selected');
@@ -934,7 +934,7 @@ async function handleMediaUploadEvent(e) {
   }
   
   if (errorCount > 0) {
-    alert(`Ocurrieron ${errorCount} errores al subir.\\nÚltimo error: ${lastError}\\nSi es un error 500 o 503, revisa que Cloudflare tenga configurada la variable MEDIA_BUCKET correctamente o intenta en un par de minutos.`);
+    alert(`Ocurrieron ${errorCount} errores al subir.\\n&Uacute;ltimo error: ${lastError}\\nSi es un error 500 o 503, revisa que Cloudflare tenga configurada la variable MEDIA_BUCKET correctamente o intenta en un par de minutos.`);
   }
   
   if (inModal) {
@@ -942,7 +942,7 @@ async function handleMediaUploadEvent(e) {
     currentMediaFiles = await r2GetList();
     renderMediaGrid(body, currentMediaFiles, true);
   } else {
-    route('media'); // Si está en la vista principal
+    route('media'); // Si est&aacute; en la vista principal
   }
 }
 
@@ -993,7 +993,7 @@ function imgWidget(id, label, value='', hint='') {
 async function viewMedia() {
   set(`
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
-      <div style="display:flex;align-items:center;"><div class="btn-card-icon card-icon-medios"><i class="ph ph-image"></i></div><div><p class="pt" style="margin-bottom:0">Biblioteca de Medios</p><p class="ps">Gestiona todas las imágenes y videos (Cloudflare R2)</p></div></div>
+      <div style="display:flex;align-items:center;"><div class="btn-card-icon card-icon-medios"><i class="ph ph-image"></i></div><div><p class="pt" style="margin-bottom:0">Biblioteca de Medios</p><p class="ps">Gestiona todas las im&aacute;genes y videos (Cloudflare R2)</p></div></div>
       <div style="display:flex;gap:8px;align-items:center;">
         <span id="main-upload-prog" style="font-size:.8rem;color:var(--gold);margin-right:8px;"></span>
         <button class="btn-primary" onclick="document.getElementById('media-upload').click()">?? Subir archivo(s)</button>
@@ -1012,7 +1012,7 @@ async function viewMedia() {
 }
 
 async function deleteMedia(key) {
-  if (confirm(`¿Estás seguro de eliminar el archivo "${key}" permanentemente?`)) {
+  if (confirm(`¿Est&aacute;s seguro de eliminar el archivo "${key}" permanentemente?`)) {
     try {
       await r2Delete(key);
       route('media');
@@ -1028,7 +1028,7 @@ function mdToolbar(textareaId) {
     ['**B**','**','**'],['*I*','*','*'],['~~S~~','~~','~~'],
     ['# H1','# ',''],['## H2','## ',''],['### H3','### ',''],
     ['?? Link','[','](url)'],['> Cita','> ',''],['- Lista','- ',''],
-    ['1. Lista','1. ',''],['```Código','```\n','\n```'],
+    ['1. Lista','1. ',''],['```C&oacute;digo','```\n','\n```'],
   ];
   return `<div class="md-wrap">
       <div class="md-toolbar">${cmds.map(([l,b,a])=>`<button type="button" onclick="mdWrap('${textareaId}','${b.replace(/\n/g,'\\n').replace(/'/g,"\\'")}','${a.replace(/\n/g,'\\n').replace(/'/g,"\\'")}')" title="${l}">${l}</button>`).join('')} <button type="button" onclick="openMediaModal((url) => { mdWrap('${textareaId}', '![alt](', url + ')') })" title="Insertar Imagen de R2">?☁️ R2</button></div>
@@ -1055,7 +1055,7 @@ async function route(id) {
     const views = {blog:viewBlog,home:viewHome,about:viewAbout,contact:viewContact,global:viewGlobal,
       tours:viewTours,departures:viewDeps,testimonials:viewTestims, media:viewMedia, reclamos:viewReclamos};
     if (views[id]) await views[id]();
-    else set(`<p>Sección no encontrada.</p>`);
+    else set(`<p>Secci&oacute;n no encontrada.</p>`);
   } catch(e) {
     set(`<p style="color:var(--danger);padding:20px">? ${e.message}</p>`);
   }
@@ -1110,7 +1110,7 @@ async function publishBlogPost(slug, fm, mdBody) {
 }
 
 async function viewBlog() {
-  set('<div class="loading"><div class="spinner"></div> Cargando artículos del blog...</div>');
+  set('<div class="loading"><div class="spinner"></div> Cargando art&iacute;culos del blog...</div>');
   try {
     let posts = [];
     let idxSha = null;
@@ -1154,10 +1154,10 @@ async function viewBlog() {
     let html = `
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:22px">
         <div>
-          <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-blog"><i class="ph ph-pencil"></i></div><p class="pt" style="margin-bottom:0">Artículos del Blog</p></div>
-          <p class="ps">${posts.length} artículos registrados (ordenados por fecha más reciente)</p>
+          <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-blog"><i class="ph ph-pencil"></i></div><p class="pt" style="margin-bottom:0">Art&iacute;culos del Blog</p></div>
+          <p class="ps">${posts.length} art&iacute;culos registrados (ordenados por fecha m&aacute;s reciente)</p>
         </div>
-        <button class="btn-primary" onclick="newBlog()">+ Nuevo artículo</button>
+        <button class="btn-primary" onclick="newBlog()">+ Nuevo art&iacute;culo</button>
       </div>
       <div class="blog-grid" style="display:grid;gap:14px;">`;
 
@@ -1191,20 +1191,20 @@ async function viewBlog() {
     html += '</div>';
     set(html);
   } catch(e) {
-    set('<div class="empty">Error al cargar artículos del blog: ' + e.message + '</div>');
+    set('<div class="empty">Error al cargar art&iacute;culos del blog: ' + e.message + '</div>');
   }
 }
 
 function newBlog() {
   cFile=null; cSha=null;
   set(`
-    <button class="back-btn" onclick="route('blog')">? Volver al blog</button>
+    <button class="back-btn" onclick="route('blog')">&#8592; Volver al blog</button>
     <div class="eform">
       <div class="esec">
-        <div class="esec-h">Nuevo Artículo</div>
+        <div class="esec-h">Nuevo Art&iacute;culo</div>
         <div class="ff"><label>Slug URL (sin espacios, solo guiones)</label>
           <input id="f-slug" placeholder="mi-nuevo-articulo" oninput="this.value=this.value.toLowerCase().replace(/[^a-z0-9-]/g,'-')">
-          <span class="hint">El archivo se guardará como: <code id="slug-preview">mi-nuevo-articulo.md</code></span>
+          <span class="hint">El archivo se guardar&aacute; como: <code id="slug-preview">mi-nuevo-articulo.md</code></span>
         </div>
         ${blogFields({title:'',date:new Date().toISOString().split('T')[0],categoria:'Wildlife',publicado:true,extracto:'',imagen:'',imagen_alt:''})}
       </div>
@@ -1232,10 +1232,10 @@ async function editBlog(path, sha) {
   cFile=path; cSha=data.sha;
   const fm=parseFM(data.content);
   set(`
-    <button class="back-btn" onclick="route('blog')">? Volver al blog</button>
+    <button class="back-btn" onclick="route('blog')">&#8592; Volver al blog</button>
     <div class="eform">
       <div class="esec">
-        <div class="esec-h">Información del Artículo</div>
+        <div class="esec-h">Informaci&oacute;n del Art&iacute;culo</div>
         ${blogFields(fm)}
       </div>
       <div class="esec"><div class="esec-h">Contenido (Markdown)</div>${mdToolbar('f-body')}</div>
@@ -1254,18 +1254,18 @@ async function editBlog(path, sha) {
 function blogFields(fm) {
   return `
     <div class="grow2">
-      <div class="ff"><label>Título del artículo</label><input id="f-title" value="${esc(fm.title||'')}"></div>
-      <div class="ff"><label>Fecha de publicación</label><input type="date" id="f-date" value="${esc(fm.date||'')}"></div>
+      <div class="ff"><label>T&iacute;tulo del art&iacute;culo</label><input id="f-title" value="${esc(fm.title||'')}"></div>
+      <div class="ff"><label>Fecha de publicaci&oacute;n</label><input type="date" id="f-date" value="${esc(fm.date||'')}"></div>
     </div>
     <div class="grow2">
-      <div class="ff"><label>Categoría</label>
-        <select id="f-cat" onchange="if(this.value==='__add_new__') addCustomItem('f-cat', 'Nombre de la nueva categoría del blog:')">
+      <div class="ff"><label>Categor&iacute;a</label>
+        <select id="f-cat" onchange="if(this.value==='__add_new__') addCustomItem('f-cat', 'Nombre de la nueva categor&iacute;a del blog:')">
         ${(() => {
           const baseCats = ['Wildlife', 'Conservation', 'Sustainability', 'Manu Park', 'Travel Tips'];
           const currentCat = fm.categoria || 'Wildlife';
           const allCats = Array.from(new Set([...baseCats, currentCat].filter(Boolean)));
           return allCats.map(c => `<option value="${esc(c)}" ${currentCat === c ? 'selected' : ''}>${esc(c)}</option>`).join('') +
-                 '<option value="__add_new__" style="font-weight:bold;color:var(--teal);">+ Añadir nueva categoría...</option>';
+                 '<option value="__add_new__" style="font-weight:bold;color:var(--teal);">+ A&ntilde;adir nueva categor&iacute;a...</option>';
         })()}
       </select>
       </div>
@@ -1298,37 +1298,37 @@ async function viewHome() {
   cFile='www.manujungleforever.com/data/home.json'; cSha=data.sha;
   const d=JSON.parse(data.content); cData=d;
   set(`
-    <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-contenido"><i class="ph ph-house"></i></div><div><p class="pt" style="margin-bottom:0">Página de Inicio</p><p class="ps">Contenido principal del sitio</p></div></div>
+    <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-contenido"><i class="ph ph-house"></i></div><div><p class="pt" style="margin-bottom:0">P&aacute;gina de Inicio</p><p class="ps">Contenido principal del sitio</p></div></div>
     <div class="eform">
       <div class="esec"><div class="esec-h">Hero (Portada)</div>
-        <div class="ff"><label>Título principal</label><input id="h-t" value="${esc(d.hero?.title||'')}"></div>
-        <div class="ff"><label>Título énfasis (parte resaltada)</label><input id="h-e" value="${esc(d.hero?.title_emphasis||'')}"></div>
-        <div class="ff"><label>Subtítulo / descripción</label><textarea id="h-s">${esc(d.hero?.subtitle||'')}</textarea></div>
+        <div class="ff"><label>T&iacute;tulo principal</label><input id="h-t" value="${esc(d.hero?.title||'')}"></div>
+        <div class="ff"><label>T&iacute;tulo &eacute;nfasis (parte resaltada)</label><input id="h-e" value="${esc(d.hero?.title_emphasis||'')}"></div>
+        <div class="ff"><label>Subt&iacute;tulo / descripci&oacute;n</label><textarea id="h-s">${esc(d.hero?.subtitle||'')}</textarea></div>
         <div class="grow2">
-          <div class="ff"><label>Texto de ubicación</label><input id="h-l" value="${esc(d.hero?.location_tag||'')}"></div>
+          <div class="ff"><label>Texto de ubicaci&oacute;n</label><input id="h-l" value="${esc(d.hero?.location_tag||'')}"></div>
           <div class="ff"><label>ID video YouTube</label><input id="h-v" value="${esc(d.hero?.video_id||'')}">
             <span class="hint">Solo el ID, ej: <code>dQw4w9WgXcQ</code></span></div>
         </div>
       </div>
-      <div class="esec"><div class="esec-h">Sección Sobre Nosotros</div>
+      <div class="esec"><div class="esec-h">Secci&oacute;n Sobre Nosotros</div>
         <div class="grow2">
-          <div class="ff"><label>Eyebrow (texto pequeño encima)</label><input id="a-ey" value="${esc(d.about_section?.eyebrow||'')}"></div>
-          <div class="ff"><label>Título</label><input id="a-t" value="${esc(d.about_section?.title||'')}"></div>
+          <div class="ff"><label>Eyebrow (texto peque&ntilde;o encima)</label><input id="a-ey" value="${esc(d.about_section?.eyebrow||'')}"></div>
+          <div class="ff"><label>T&iacute;tulo</label><input id="a-t" value="${esc(d.about_section?.title||'')}"></div>
         </div>
-        <div class="ff"><label>Párrafos (separados por línea en blanco)</label>
+        <div class="ff"><label>P&aacute;rrafos (separados por l&iacute;nea en blanco)</label>
           <textarea id="a-p" style="min-height:120px">${(d.about_section?.paragraphs||[]).map(p=>p.text||p).join('\n\n')}</textarea></div>
-        ${imgWidget('a-img','Imagen de la sección',d.about_section?.image||'')}
+        ${imgWidget('a-img','Imagen de la secci&oacute;n',d.about_section?.image||'')}
         <div class="ff"><label>Texto alt de la imagen</label><input id="a-ia" value="${esc(d.about_section?.image_alt||'')}"></div>
       </div>
       <div class="esec"><div class="esec-h">Pilares / Valores</div>
-        <div class="ff"><label>Título de la sección</label><input id="p-t" value="${esc(d.pillars_section?.title||'')}"></div>
+        <div class="ff"><label>T&iacute;tulo de la secci&oacute;n</label><input id="p-t" value="${esc(d.pillars_section?.title||'')}"></div>
         ${(d.pillars_section?.pillars||[]).map((p,i)=>`
           <div style="background:var(--card2);border-radius:8px;padding:12px;margin-bottom:8px">
             <p style="font-size:.72rem;color:var(--gold);font-weight:600;margin-bottom:10px">PILAR ${i+1}</p>
             <div class="grow3">
-              <div class="ff"><label>Ícono (FontAwesome)</label><input id="pi-ic${i}" value="${esc(p.icon||'')}"><span class="hint">ej: fas fa-leaf</span></div>
-              <div class="ff"><label>Título</label><input id="pi-ti${i}" value="${esc(p.title||'')}"></div>
-              <div class="ff"><label>Descripción</label><input id="pi-tx${i}" value="${esc(p.text||'')}"></div>
+              <div class="ff"><label>&Iacute;cono (FontAwesome)</label><input id="pi-ic${i}" value="${esc(p.icon||'')}"><span class="hint">ej: fas fa-leaf</span></div>
+              <div class="ff"><label>T&iacute;tulo</label><input id="pi-ti${i}" value="${esc(p.title||'')}"></div>
+              <div class="ff"><label>Descripci&oacute;n</label><input id="pi-tx${i}" value="${esc(p.text||'')}"></div>
             </div>
           </div>`).join('')}
       </div>
@@ -1354,26 +1354,26 @@ async function viewAbout() {
   cFile='www.manujungleforever.com/data/about.json'; cSha=data.sha;
   const d=JSON.parse(data.content); cData=d;
   set(`
-    <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-contenido"><i class="ph ph-info"></i></div><div><p class="pt" style="margin-bottom:0">Página Sobre Nosotros</p><p class="ps">Contenido de "About Us"</p></div></div>
+    <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-contenido"><i class="ph ph-info"></i></div><div><p class="pt" style="margin-bottom:0">P&aacute;gina Sobre Nosotros</p><p class="ps">Contenido de "About Us"</p></div></div>
     <div class="eform">
       <div class="esec"><div class="esec-h">General</div>
-        <div class="ff"><label>Título de la página</label><input id="ab-t" value="${esc(d.titulo_pagina||'')}"></div>
-        <div class="ff"><label>Subtítulo de la página</label><textarea id="ab-s">${esc(d.subtitulo_pagina||'')}</textarea></div>
+        <div class="ff"><label>T&iacute;tulo de la p&aacute;gina</label><input id="ab-t" value="${esc(d.titulo_pagina||'')}"></div>
+        <div class="ff"><label>Subt&iacute;tulo de la p&aacute;gina</label><textarea id="ab-s">${esc(d.subtitulo_pagina||'')}</textarea></div>
         ${imgWidget('ab-img','Imagen Hero',d.hero_image||'')}
       </div>
       <div class="esec"><div class="esec-h">Historia</div>
         <div class="grow2">
           <div class="ff"><label>Eyebrow</label><input id="ab-he" value="${esc(d.historia?.eyebrow||'')}"></div>
-          <div class="ff"><label>Título</label><input id="ab-ht" value="${esc(d.historia?.titulo||'')}"></div>
+          <div class="ff"><label>T&iacute;tulo</label><input id="ab-ht" value="${esc(d.historia?.titulo||'')}"></div>
         </div>
-        <div class="ff"><label>Párrafos (separados por línea en blanco)</label>
+        <div class="ff"><label>P&aacute;rrafos (separados por l&iacute;nea en blanco)</label>
           <textarea id="ab-hp" style="min-height:120px">${(d.historia?.paragrafos||[]).join('\n\n')}</textarea></div>
         ${imgWidget('ab-himg','Imagen Historia',d.historia?.imagen||'')}
       </div>
-      <div class="esec"><div class="esec-h">Misión</div>
+      <div class="esec"><div class="esec-h">Misi&oacute;n</div>
         <div class="grow2">
           <div class="ff"><label>Eyebrow</label><input id="ab-me" value="${esc(d.mision?.eyebrow||'')}"></div>
-          <div class="ff"><label>Título</label><input id="ab-mt" value="${esc(d.mision?.titulo||'')}"></div>
+          <div class="ff"><label>T&iacute;tulo</label><input id="ab-mt" value="${esc(d.mision?.titulo||'')}"></div>
         </div>
         <div class="ff"><label>Texto</label><textarea id="ab-mtex" style="min-height:80px">${esc(d.mision?.texto||'')}</textarea></div>
       </div>
@@ -1408,37 +1408,37 @@ async function viewContact() {
   cFile='www.manujungleforever.com/data/contact.json'; cSha=data.sha;
   const d=JSON.parse(data.content); cData=d;
   set(`
-    <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-contenido"><i class="ph ph-phone"></i></div><div><p class="pt" style="margin-bottom:0">Página de Contacto</p><p class="ps">Información de contacto y datos de la empresa</p></div></div>
+    <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-contenido"><i class="ph ph-phone"></i></div><div><p class="pt" style="margin-bottom:0">P&aacute;gina de Contacto</p><p class="ps">Informaci&oacute;n de contacto y datos de la empresa</p></div></div>
     <div class="eform">
-      <div class="esec"><div class="esec-h">Textos de la Página</div>
-        <div class="ff"><label>Título</label><input id="c-tit" value="${esc(d.titulo_pagina||'')}"></div>
-        <div class="ff"><label>Subtítulo</label><input id="c-sub" value="${esc(d.subtitulo_pagina||'')}"></div>
+      <div class="esec"><div class="esec-h">Textos de la P&aacute;gina</div>
+        <div class="ff"><label>T&iacute;tulo</label><input id="c-tit" value="${esc(d.titulo_pagina||'')}"></div>
+        <div class="ff"><label>Subt&iacute;tulo</label><input id="c-sub" value="${esc(d.subtitulo_pagina||'')}"></div>
         ${imgWidget('c-hero','Imagen hero',d.hero_image||'')}
       </div>
       <div class="esec"><div class="esec-h">Datos de Contacto</div>
         <div class="grow2">
           <div class="ff"><label>Email principal</label><input id="c-em" value="${esc(d.contacto_principal?.email||'')}"></div>
-          <div class="ff"><label>WhatsApp (solo números)</label><input id="c-wa" value="${esc(d.contacto_principal?.whatsapp||'')}"><span class="hint">Ej: 51901525679</span></div>
+          <div class="ff"><label>WhatsApp (solo n&uacute;meros)</label><input id="c-wa" value="${esc(d.contacto_principal?.whatsapp||'')}"><span class="hint">Ej: 51901525679</span></div>
         </div>
         <div class="grow2">
-          <div class="ff"><label>Teléfono 1</label><input id="c-t1" value="${esc(d.contacto_principal?.telefono_1||'')}"></div>
-          <div class="ff"><label>Teléfono 2</label><input id="c-t2" value="${esc(d.contacto_principal?.telefono_2||'')}"></div>
+          <div class="ff"><label>Tel&eacute;fono 1</label><input id="c-t1" value="${esc(d.contacto_principal?.telefono_1||'')}"></div>
+          <div class="ff"><label>Tel&eacute;fono 2</label><input id="c-t2" value="${esc(d.contacto_principal?.telefono_2||'')}"></div>
         </div>
         <div class="ff"><label>Mensaje WhatsApp por defecto</label><input id="c-wam" value="${esc(d.contacto_principal?.whatsapp_texto||'')}"></div>
       </div>
-      <div class="esec"><div class="esec-h">Dirección</div>
+      <div class="esec"><div class="esec-h">Direcci&oacute;n</div>
         <div class="grow2">
           <div class="ff"><label>Nombre del lugar</label><input id="c-pn" value="${esc(d.direccion?.nombre||'')}"></div>
           <div class="ff"><label>Localidad / Ciudad</label><input id="c-pc" value="${esc(d.direccion?.localidad||'')}"></div>
         </div>
         <div class="grow2">
-          <div class="ff"><label>País</label><input id="c-py" value="${esc(d.direccion?.pais||'')}"></div>
+          <div class="ff"><label>Pa&iacute;s</label><input id="c-py" value="${esc(d.direccion?.pais||'')}"></div>
           <div class="ff"><label>URL Google Maps</label><input id="c-maps" value="${esc(d.direccion?.maps_url||'')}"></div>
         </div>
       </div>
-      <div class="esec"><div class="esec-h">Horario de Atención</div>
+      <div class="esec"><div class="esec-h">Horario de Atenci&oacute;n</div>
         <div class="grow2">
-          <div class="ff"><label>Días</label><input id="c-hd" value="${esc(d.horario?.dias||'')}"><span class="hint">Ej: Lunes  Domingo</span></div>
+          <div class="ff"><label>D&iacute;as</label><input id="c-hd" value="${esc(d.horario?.dias||'')}"><span class="hint">Ej: Lunes  Domingo</span></div>
           <div class="ff"><label>Horas</label><input id="c-hh" value="${esc(d.horario?.horas||'')}"><span class="hint">Ej: 7:00 AM  8:00 PM</span></div>
         </div>
         <div class="ff"><label>Nota adicional</label><input id="c-hn" value="${esc(d.horario?.nota||'')}"></div>
@@ -1462,16 +1462,16 @@ async function viewGlobal() {
   cFile='www.manujungleforever.com/data/global.json'; cSha=data.sha;
   const d=JSON.parse(data.content); cData=d;
   set(`
-    <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-contenido"><i class="ph ph-gear"></i></div><div><p class="pt" style="margin-bottom:0">Datos Globales del Sitio</p><p class="ps">Información general de marca, redes sociales y SEO</p></div></div>
+    <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-contenido"><i class="ph ph-gear"></i></div><div><p class="pt" style="margin-bottom:0">Datos Globales del Sitio</p><p class="ps">Informaci&oacute;n general de marca, redes sociales y SEO</p></div></div>
     <div class="eform">
       <div class="esec"><div class="esec-h">Identidad de Marca</div>
         <div class="grow2">
           <div class="ff"><label>Nombre del negocio</label><input id="g-n" value="${esc(d.site_name||'')}"></div>
           <div class="ff"><label>Eslogan</label><input id="g-sl" value="${esc(d.slogan||'')}"></div>
         </div>
-        <div class="ff"><label>Tagline (descripción breve)</label><textarea id="g-tg">${esc(d.tagline||'')}</textarea></div>
+        <div class="ff"><label>Tagline (descripci&oacute;n breve)</label><textarea id="g-tg">${esc(d.tagline||'')}</textarea></div>
       </div>
-      <div class="esec"><div class="esec-h">Imágenes del Sitio</div>
+      <div class="esec"><div class="esec-h">Im&aacute;genes del Sitio</div>
         ${imgWidget('g-logo','Logo principal',d.logo_main||'')}
         ${imgWidget('g-fav','Favicon',d.favicon||'')}
       </div>
@@ -1490,8 +1490,8 @@ async function viewGlobal() {
         </div>
       </div>
       <div class="esec"><div class="esec-h">SEO por Defecto</div>
-        <div class="ff"><label>Sufijo del título</label><input id="g-ts" value="${esc(d.seo?.default_title_suffix||'')}"><span class="hint">Ej: | Manu Jungle Forever</span></div>
-        <div class="ff"><label>Descripción por defecto</label><textarea id="g-td">${esc(d.seo?.default_description||'')}</textarea></div>
+        <div class="ff"><label>Sufijo del t&iacute;tulo</label><input id="g-ts" value="${esc(d.seo?.default_title_suffix||'')}"><span class="hint">Ej: | Manu Jungle Forever</span></div>
+        <div class="ff"><label>Descripci&oacute;n por defecto</label><textarea id="g-td">${esc(d.seo?.default_description||'')}</textarea></div>
         ${imgWidget('g-og','Imagen OG por defecto',d.seo?.default_og_image||'')}
       </div>
       <div class="esec"><div class="esec-h">Copyright</div>
@@ -1525,7 +1525,7 @@ async function viewTours() {
         return `<div class="li">
           <div class="li-info">
             <h3>${t.nombre} <span class="badge ${stCls}">${stLbl}</span></h3>
-            <span>${t.duracion_dias} días · $${t.precio_desde} USD · ${t.categoria} · ${t.dificultad}</span>
+            <span>${t.duracion_dias} d&iacute;as · $${t.precio_desde} USD · ${t.categoria} · ${t.dificultad}</span>
           </div>
           <div class="li-actions"><button class="btn-edit" onclick="editTour(${i})">Editar</button><button class="btn-danger" onclick="deleteTour(${i})">???</button></div>
         </div>`;
@@ -1534,58 +1534,58 @@ async function viewTours() {
 }
 
 window.editTour = function(idx) {
-  const t= idx === -1 ? {nombre:'', estado:'activo', categoria:'wildlife', duracion_dias:1, duracion_noches:0, precio_desde:0, capacidad_min:1, capacidad_max:12, dificultad:'Fácil', temporada:'', descripcion_corta:'', descripcion_larga:'', imagen_hero:'', galeria:[], itinerario:[], incluye:[], no_incluye:[], destacado:false} : cData.tours[idx];
+  const t= idx === -1 ? {nombre:'', estado:'activo', categoria:'wildlife', duracion_dias:1, duracion_noches:0, precio_desde:0, capacidad_min:1, capacidad_max:12, dificultad:'F&aacute;cil', temporada:'', descripcion_corta:'', descripcion_larga:'', imagen_hero:'', galeria:[], itinerario:[], incluye:[], no_incluye:[], destacado:false} : cData.tours[idx];
   set(`
-    <button class="back-btn" onclick="route('tours')">? Volver a tours</button>
+    <button class="back-btn" onclick="route('tours')">&#8592; Volver a tours</button>
     <div class="eform">
-      <div class="esec"><div class="esec-h">Información General</div>
+      <div class="esec"><div class="esec-h">Informaci&oacute;n General</div>
         <div class="grow2">
           <div class="ff"><label>Nombre del tour</label><input id="t-n" value="${esc(t.nombre)}"></div>
           <div class="ff"><label>Estado</label><select id="t-e"><option ${t.estado==='activo'?'selected':''} value="activo">? Activo</option><option ${t.estado==='pausado'?'selected':''} value="pausado">?? Pausado</option><option ${t.estado==='seasonal'?'selected':''} value="seasonal">?? De Temporada</option><option ${t.estado==='inactivo'?'selected':''} value="inactivo">? Inactivo</option></select></div>
         </div>
         <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:12px;margin-bottom:12px">
-          <div class="ff"><label>Categoría</label>
-            <select id="t-c" onchange="if(this.value==='__add_new__') addCustomItem('t-c', 'Nombre de la nueva categoría:')">
+          <div class="ff"><label>Categor&iacute;a</label>
+            <select id="t-c" onchange="if(this.value==='__add_new__') addCustomItem('t-c', 'Nombre de la nueva categor&iacute;a:')">
               ${(() => {
                 const baseCats = ['wildlife', 'cultural', 'expedition', 'birdwatching', 'machu wasi'];
                 const existingCats = (cData?.tours || []).map(x => x.categoria).filter(Boolean);
                 const allCats = Array.from(new Set([...baseCats, ...existingCats, t.categoria].filter(Boolean)));
                 return allCats.map(c => `<option value="${esc(c)}" ${t.categoria === c ? 'selected' : ''}>${esc(c)}</option>`).join('') +
-                       '<option value="__add_new__" style="font-weight:bold;color:#2dd4bf;">+ Añadir categoría...</option>';
+                       '<option value="__add_new__" style="font-weight:bold;color:#2dd4bf;">+ A&ntilde;adir categor&iacute;a...</option>';
               })()}
             </select>
           </div>
           <div class="ff"><label>Precio desde (USD)</label><input type="number" id="t-p" value="${t.precio_desde}" min="0"></div>
-          <div class="ff"><label>Cap. mínima</label><input type="number" id="t-cmin" value="${t.capacidad_min}" min="1"></div>
-          <div class="ff"><label>Cap. máxima</label><input type="number" id="t-cmax" value="${t.capacidad_max}" min="1"></div>
+          <div class="ff"><label>Cap. m&iacute;nima</label><input type="number" id="t-cmin" value="${t.capacidad_min}" min="1"></div>
+          <div class="ff"><label>Cap. m&aacute;xima</label><input type="number" id="t-cmax" value="${t.capacidad_max}" min="1"></div>
         </div>
         <div style="display:grid;grid-template-columns:1fr 2fr 1fr 1fr;gap:12px;margin-bottom:12px">
-          <div class="ff"><label>Dificultad</label><select id="t-dif"><option ${t.dificultad==='Fácil'?'selected':''}>Fácil</option><option ${t.dificultad==='Moderado'?'selected':''}>Moderado</option><option ${t.dificultad==='Difícil'?'selected':''}>Difícil</option></select></div>
+          <div class="ff"><label>Dificultad</label><select id="t-dif"><option ${t.dificultad==='F&aacute;cil'?'selected':''}>F&aacute;cil</option><option ${t.dificultad==='Moderado'?'selected':''}>Moderado</option><option ${t.dificultad==='Dif&iacute;cil'?'selected':''}>Dif&iacute;cil</option></select></div>
           <div class="ff"><label>Temporada</label>
             <select id="t-tmp" onchange="if(this.value==='__add_new__') addCustomItem('t-tmp', 'Nombre de la nueva temporada:')">
               ${(() => {
-                const baseSeasons = ['Todo el año', 'Mayo - Octubre (Temporada Seca)', 'Noviembre - Abril (Temporada de Lluvias)', 'Junio - Septiembre'];
+                const baseSeasons = ['Todo el a&ntilde;o', 'Mayo - Octubre (Temporada Seca)', 'Noviembre - Abril (Temporada de Lluvias)', 'Junio - Septiembre'];
                 const existingSeasons = (cData?.tours || []).map(x => x.temporada).filter(Boolean);
-                const currentSeason = t.temporada || 'Todo el año';
+                const currentSeason = t.temporada || 'Todo el a&ntilde;o';
                 const allSeasons = Array.from(new Set([...baseSeasons, ...existingSeasons, currentSeason].filter(Boolean)));
                 return allSeasons.map(s => `<option value="${esc(s)}" ${currentSeason === s ? 'selected' : ''}>${esc(s)}</option>`).join('') +
-                       '<option value="__add_new__" style="font-weight:bold;color:#2dd4bf;">+ Añadir temporada...</option>';
+                       '<option value="__add_new__" style="font-weight:bold;color:#2dd4bf;">+ A&ntilde;adir temporada...</option>';
               })()}
             </select>
           </div>
-          <div class="ff"><label>Duración (días)</label><input type="number" id="t-d" value="${t.duracion_dias||1}" min="1"></div>
-          <div class="ff"><label>Duración (noches)</label><input type="number" id="t-dn" value="${t.duracion_noches||0}" min="0"></div>
+          <div class="ff"><label>Duraci&oacute;n (d&iacute;as)</label><input type="number" id="t-d" value="${t.duracion_dias||1}" min="1"></div>
+          <div class="ff"><label>Duraci&oacute;n (noches)</label><input type="number" id="t-dn" value="${t.duracion_noches||0}" min="0"></div>
         </div>
         <div class="ff"><label>Destacado en portada</label>
-          <div class="tgl-wrap" style="margin-top:6px"><label class="tgl"><input type="checkbox" id="t-dest" ${t.destacado?'checked':''}><span class="tgl-s"></span></label><span style="font-size:.83rem;color:var(--muted)">${t.destacado?'Sí, aparece en portada':'No aparece en portada'}</span></div>
+          <div class="tgl-wrap" style="margin-top:6px"><label class="tgl"><input type="checkbox" id="t-dest" ${t.destacado?'checked':''}><span class="tgl-s"></span></label><span style="font-size:.83rem;color:var(--muted)">${t.destacado?'S&iacute;, aparece en portada':'No aparece en portada'}</span></div>
         </div>
       </div>
         ${imgWidget('t-img','Imagen hero / principal',t.imagen_hero||'')}
         <div class="ff"><label>Texto alt imagen</label><input id="t-imgalt" value="${esc(t.imagen_alt||'')}"></div>
       </div>
       <div class="esec"><div class="esec-h">Descripciones</div>
-        <div class="ff"><label>Descripción corta (tarjetas)</label><textarea id="t-dc" style="min-height:80px">${esc(t.descripcion_corta||'')}</textarea></div>
-        <div class="ff"><label>Descripción completa (Markdown)</label>${mdToolbar('t-dl')}</div>
+        <div class="ff"><label>Descripci&oacute;n corta (tarjetas)</label><textarea id="t-dc" style="min-height:80px">${esc(t.descripcion_corta||'')}</textarea></div>
+        <div class="ff"><label>Descripci&oacute;n completa (Markdown)</label>${mdToolbar('t-dl')}</div>
       </div>
     </div>`);
   document.getElementById('t-dl').value=t.descripcion_larga||''; if(t.imagen_hero) updateImgPreview('t-img','t-img-prev');
@@ -1659,7 +1659,7 @@ window.viewPax = function(idx) {
       <tr style="border-bottom:1px solid rgba(255,255,255,.1);color:var(--muted)">
         <th style="padding:8px">Nombre / Pasaporte</th>
         <th style="padding:8px">Contacto</th>
-        <th style="padding:8px">Dietas / Médicas</th>
+        <th style="padding:8px">Dietas / M&eacute;dicas</th>
         <th style="padding:8px">Pago</th>
       </tr>`;
     pax.forEach(p => {
@@ -1678,7 +1678,7 @@ window.viewPax = function(idx) {
   
   document.getElementById('media-modal-body').innerHTML = html;
   const headerTitle = document.getElementById('media-modal-body').parentElement.querySelector('.modal-h h3');
-  if (headerTitle) headerTitle.innerHTML = '?? Gestión de Pasajeros';
+  if (headerTitle) headerTitle.innerHTML = '?? Gesti&oacute;n de Pasajeros';
   
   const confirmBtn = document.getElementById('media-confirm');
   if (confirmBtn) confirmBtn.style.display = 'none';
@@ -1712,14 +1712,14 @@ async function viewDeps() {
   
   set(`
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
-      <div style="display:flex;align-items:center;"><div class="btn-card-icon card-icon-salidas"><i class="ph ph-calendar"></i></div><div><p class="pt" style="margin-bottom:0">Salidas Programadas</p><p class="ps">Control de cupos, logística y ventas</p></div></div>
+      <div style="display:flex;align-items:center;"><div class="btn-card-icon card-icon-salidas"><i class="ph ph-calendar"></i></div><div><p class="pt" style="margin-bottom:0">Salidas Programadas</p><p class="ps">Control de cupos, log&iacute;stica y ventas</p></div></div>
       <button class="btn-primary" onclick="editDep(-1)">+ Crear Nueva Salida</button>
     </div>
     
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:15px;margin-bottom:20px;">
       <div class="esec" style="padding:15px;"><div style="font-size:2rem;font-weight:bold;color:var(--teal)">${activas}</div><div style="font-size:.8rem;color:var(--muted)">Salidas Activas</div></div>
       <div class="esec" style="padding:15px;"><div style="font-size:2rem;font-weight:bold;color:#34d399">${vendidas}</div><div style="font-size:.8rem;color:var(--muted)">Plazas Vendidas Totales</div></div>
-      <div class="esec" style="padding:15px;"><div style="font-size:2rem;font-weight:bold;color:var(--gold)">${sal.length}</div><div style="font-size:.8rem;color:var(--muted)">Salidas Históricas</div></div>
+      <div class="esec" style="padding:15px;"><div style="font-size:2rem;font-weight:bold;color:var(--gold)">${sal.length}</div><div style="font-size:.8rem;color:var(--muted)">Salidas Hist&oacute;ricas</div></div>
     </div>
     
     <div style="display:flex;gap:10px;margin-bottom:20px;align-items:center">
@@ -1757,7 +1757,7 @@ async function viewDeps() {
             
             <div style="margin-bottom:12px">
               <div style="display:flex;justify-content:space-between;font-size:.75rem;margin-bottom:4px;">
-                <span>Ocupación: ${sold} / ${s.plazas_totales} (${s.plazas_disponibles} disp.)</span>
+                <span>Ocupaci&oacute;n: ${sold} / ${s.plazas_totales} (${s.plazas_disponibles} disp.)</span>
                 <span>${pct}%</span>
               </div>
               <div style="width:100%;height:8px;background:rgba(255,255,255,.1);border-radius:4px;overflow:hidden">
@@ -1766,8 +1766,8 @@ async function viewDeps() {
             </div>
             
             <div style="display:flex;gap:15px;font-size:.78rem;color:var(--muted);border-top:1px solid rgba(255,255,255,.06);padding-top:10px">
-              <div><span style="color:var(--fg)">Guía:</span> ${s.guia_asignado || 'Sin asignar'}</div>
-              <div><span style="color:var(--fg)">Mínimo:</span> ${s.plazas_minimas||2} pax (${sold >= (s.plazas_minimas||2) ? '<span style="color:#34d399">Alcanzado ?</span>' : '<span style="color:#f87171">Faltan '+( (s.plazas_minimas||2) - sold )+'</span>'})</div>
+              <div><span style="color:var(--fg)">Gu&iacute;a:</span> ${s.guia_asignado || 'Sin asignar'}</div>
+              <div><span style="color:var(--fg)">M&iacute;nimo:</span> ${s.plazas_minimas||2} pax (${sold >= (s.plazas_minimas||2) ? '<span style="color:#34d399">Alcanzado ?</span>' : '<span style="color:#f87171">Faltan '+( (s.plazas_minimas||2) - sold )+'</span>'})</div>
             </div>
           </div>
           
@@ -1794,7 +1794,7 @@ window.editDep = async function(idx) {
   const s= idx === -1 ? {tour_id:'', tour_nombre:'', id:'dep-'+Date.now(), fecha_salida:'', fecha_regreso:'', precio:0, moneda:'USD', plazas_totales:8, plazas_minimas:2, plazas_disponibles:8, estado:'disponible', guia_asignado:'', notas:'', pasajeros:[]} : cData.salidas[idx];
   
   set(`
-    <button class="back-btn" onclick="route('departures')">? Volver a salidas</button>
+    <button class="back-btn" onclick="route('departures')">&#8592; Volver a salidas</button>
     <div class="eform"><div class="esec"><div class="esec-h">Datos de la Salida</div>
       <div class="grow2">
         <div class="ff"><label>Seleccionar Tour Base</label>
@@ -1806,19 +1806,19 @@ window.editDep = async function(idx) {
         <div class="ff"><label>Nombre del tour (Sobreescribir)</label><input id="d-n" value="${esc(s.tour_nombre)}"></div>
       </div>
       <div class="grow3">
-        <div class="ff"><label>ID único</label><input id="d-id" value="${esc(s.id)}"></div>
+        <div class="ff"><label>ID &uacute;nico</label><input id="d-id" value="${esc(s.id)}"></div>
         <div class="ff"><label>Fecha de salida</label><input type="date" id="d-s" value="${esc(s.fecha_salida)}"></div>
         <div class="ff"><label>Fecha de regreso</label><input type="date" id="d-r" value="${esc(s.fecha_regreso)}"></div>
       </div>
       <div class="grow3">
         <div class="ff"><label>Precio (${s.moneda||'USD'})</label><input type="number" id="d-p" value="${s.precio}"></div>
         <div class="ff"><label>Plazas totales</label><input type="number" id="d-t" value="${s.plazas_totales}"></div>
-        <div class="ff"><label>Mínimo de pasajeros</label><input type="number" id="d-min" value="${s.plazas_minimas||2}"></div>
+        <div class="ff"><label>M&iacute;nimo de pasajeros</label><input type="number" id="d-min" value="${s.plazas_minimas||2}"></div>
       </div>
       <div class="grow3">
         <div class="ff"><label>Plazas disponibles</label><input type="number" id="d-d" value="${s.plazas_disponibles}"></div>
         <div class="ff"><label>Estado</label><select id="d-e">${['disponible','limitado','completo','cancelado','cerrado'].map(e=>`<option ${s.estado===e?'selected':''} value="${e}">${e}</option>`).join('')}</select></div>
-        <div class="ff"><label>Guía Asignado</label><input id="d-g" value="${esc(s.guia_asignado||'')}"></div>
+        <div class="ff"><label>Gu&iacute;a Asignado</label><input id="d-g" value="${esc(s.guia_asignado||'')}"></div>
       </div>
       <div class="ff"><label>Notas adicionales / Internas</label><textarea id="d-no" style="min-height:80px">${esc(s.notas||'')}</textarea></div>
       <div style="margin-top:20px;padding-top:15px;border-top:1px solid rgba(255,255,255,.06);display:flex;justify-content:flex-end">
@@ -1867,11 +1867,11 @@ async function viewTestims() {
 window.editTestim = function(idx) {
   const t= idx === -1 ? {nombre:'', pais:'', bandera:'', tour:'', fecha:'', rating:5, texto:'', foto:'', activo:true} : cData.testimonials[idx];
   set(`
-    <button class="back-btn" onclick="route('testimonials')">? Volver a testimonios</button>
+    <button class="back-btn" onclick="route('testimonials')">&#8592; Volver a testimonios</button>
     <div class="eform"><div class="esec"><div class="esec-h">Datos del Testimonio</div>
       <div class="grow2">
         <div class="ff"><label>Nombre del cliente</label><input id="tm-n" value="${esc(t.nombre)}"></div>
-        <div class="ff"><label>País</label><input id="tm-p" value="${esc(t.pais)}"></div>
+        <div class="ff"><label>Pa&iacute;s</label><input id="tm-p" value="${esc(t.pais)}"></div>
       </div>
       <div class="grow2">
         <div class="ff"><label>Bandera emoji</label><input id="tm-fl" value="${esc(t.bandera||'')}"><span class="hint">Ej: ???? ???? ???? ????</span></div>
@@ -1884,7 +1884,7 @@ window.editTestim = function(idx) {
       </div>
       <div class="grow2">
         <div class="ff"><label>Fecha del viaje</label><input type="date" id="tm-f" value="${esc(t.fecha)}"></div>
-        <div class="ff"><label>Calificación (estrellas)</label><select id="tm-r"><option ${t.rating==5?'selected':''} value="5">????? (5)</option><option ${t.rating==4?'selected':''} value="4">???? (4)</option><option ${t.rating==3?'selected':''} value="3">??? (3)</option></select></div>
+        <div class="ff"><label>Calificaci&oacute;n (estrellas)</label><select id="tm-r"><option ${t.rating==5?'selected':''} value="5">????? (5)</option><option ${t.rating==4?'selected':''} value="4">???? (4)</option><option ${t.rating==3?'selected':''} value="3">??? (3)</option></select></div>
       </div>
       <div class="ff"><label>Texto del testimonio</label><textarea id="tm-tx" style="min-height:120px">${esc(t.texto)}</textarea></div>
       ${imgWidget('tm-img','Foto del cliente (opcional)',t.foto||'')}
@@ -1914,7 +1914,7 @@ window.editTestim = function(idx) {
 // -----------------------------------------------------------------------------
 function confirmDelete(path, sha, label, backFn) {
   document.getElementById('del-title').textContent=`¿Eliminar este ${label}?`;
-  document.getElementById('del-msg').textContent=`"${path.split('/').pop()}"  Esta acción no se puede deshacer.`;
+  document.getElementById('del-msg').textContent=`"${path.split('/').pop()}"  Esta acci&oacute;n no se puede deshacer.`;
   document.getElementById('del-modal').classList.add('open');
   document.getElementById('del-confirm').onclick = async () => {
     try {
@@ -1999,7 +1999,7 @@ async function viewReclamos() {
     
     let html = `
     <div style="display:flex;align-items:center;margin-bottom:20px;"><div class="btn-card-icon card-icon-reclamos"><i class="ph ph-scales"></i></div><h2 class="pt" style="margin-bottom:0">Libro de Reclamaciones</h2></div>
-    <p class="ps">Auditoría y exportación de quejas y reclamos legales.</p>
+    <p class="ps">Auditor&iacute;a y exportaci&oacute;n de quejas y reclamos legales.</p>
 
     <!-- Filtros tipo Wachicargo -->
     <div style="background:var(--card);border:1px solid var(--bdr);border-radius:14px;padding:20px;margin-bottom:20px;display:flex;gap:15px;align-items:flex-end;flex-wrap:nowrap;">
@@ -2007,7 +2007,7 @@ async function viewReclamos() {
         <label style="font-size:0.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;margin-bottom:6px;display:block;">Buscar</label>
         <div style="position:relative;">
           <i class="ph ph-magnifying-glass" style="position:absolute;left:12px;top:10px;color:var(--muted);"></i>
-          <input type="text" id="r-search" placeholder="Código, nombre o documento..." style="width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:var(--fg);padding:9px 12px 9px 36px;border-radius:10px;font-size:0.85rem;outline:none;">
+          <input type="text" id="r-search" placeholder="C&oacute;digo, nombre o documento..." style="width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:var(--fg);padding:9px 12px 9px 36px;border-radius:10px;font-size:0.85rem;outline:none;">
         </div>
       </div>
       <div style="flex:1;min-width:120px;">
@@ -2036,7 +2036,7 @@ async function viewReclamos() {
       <table style="width:100%;border-collapse:collapse;text-align:left;">
         <thead>
           <tr style="border-bottom:1px solid var(--bdr);font-size:0.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">
-            <th style="padding:16px 20px;">Código</th>
+            <th style="padding:16px 20px;">C&oacute;digo</th>
             <th style="padding:16px 20px;">Fecha</th>
             <th style="padding:16px 20px;">Cliente</th>
             <th style="padding:16px 20px;">Tipo</th>
@@ -2062,7 +2062,7 @@ async function viewReclamos() {
           <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:15px;margin-bottom:15px;display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:0.85rem;">
             <div><strong style="color:var(--muted)">Cliente:</strong> <span id="mr-cliente"></span></div>
             <div><strong style="color:var(--muted)">Doc/DNI:</strong> <span id="mr-dni"></span></div>
-            <div><strong style="color:var(--muted)">Teléfono:</strong> <span id="mr-tel"></span></div>
+            <div><strong style="color:var(--muted)">Tel&eacute;fono:</strong> <span id="mr-tel"></span></div>
             <div><strong style="color:var(--muted)">Correo:</strong> <span id="mr-email"></span></div>
             <div style="grid-column:1/-1;"><strong style="color:var(--muted)">Domicilio:</strong> <span id="mr-domicilio"></span></div>
           </div>
@@ -2079,8 +2079,8 @@ async function viewReclamos() {
           
           <div id="mr-respuesta-box" style="margin-top:20px;border-top:1px solid rgba(255,255,255,.08);padding-top:20px;">
             <h4 style="font-size:0.95rem;margin-bottom:8px;color:var(--teal);">Respuesta Oficial</h4>
-            <p style="font-size:0.75rem;color:var(--muted);margin-bottom:12px;">Escriba la respuesta que se enviará automáticamente al correo del cliente. Este texto será el contenido principal del correo oficial.</p>
-            <textarea id="mr-reply" style="width:100%;padding:12px;border:1px solid rgba(255,255,255,.1);border-radius:10px;background:rgba(0,0,0,.3);color:var(--fg);font-family:inherit;font-size:0.85rem;min-height:120px;outline:none;" placeholder="Estimado cliente, en relación a su reclamo..."></textarea>
+            <p style="font-size:0.75rem;color:var(--muted);margin-bottom:12px;">Escriba la respuesta que se enviar&aacute; autom&aacute;ticamente al correo del cliente. Este texto ser&aacute; el contenido principal del correo oficial.</p>
+            <textarea id="mr-reply" style="width:100%;padding:12px;border:1px solid rgba(255,255,255,.1);border-radius:10px;background:rgba(0,0,0,.3);color:var(--fg);font-family:inherit;font-size:0.85rem;min-height:120px;outline:none;" placeholder="Estimado cliente, en relaci&oacute;n a su reclamo..."></textarea>
             
             <div id="mr-status" style="margin-top:10px;display:none;padding:10px;border-radius:8px;font-size:0.8rem;"></div>
           </div>
@@ -2113,7 +2113,7 @@ function renderReclamosRows(list) {
   const tbody = document.getElementById('r-tbody');
   if (!tbody) return;
   if (!list || list.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="6" style="padding:40px;text-align:center;color:var(--muted);">No se encontraron reclamos que coincidan con la búsqueda.</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="6" style="padding:40px;text-align:center;color:var(--muted);">No se encontraron reclamos que coincidan con la b&uacute;squeda.</td></tr>`;
     return;
   }
   
@@ -2179,7 +2179,7 @@ function exportReclamos() {
   const list = window.currentReclamosData || [];
   if (!list.length) return alert('No hay datos para exportar.');
   
-  let csv = 'Código,Fecha,Cliente,Documento,Teléfono,Correo,Tipo,Estado\n';
+  let csv = 'C&oacute;digo,Fecha,Cliente,Documento,Tel&eacute;fono,Correo,Tipo,Estado\n';
   list.forEach(r => {
     csv += `"${r.codigo_reclamo}","${r.fecha}","${r.nombres}","${r.documento}","${r.telefono}","${r.correo}","${r.tipo}","${r.estado}"\n`;
   });
@@ -2323,7 +2323,7 @@ window.openMediaModal = async function(callback) {
   openModal('media-modal');
   
   const body = document.getElementById('media-modal-body');
-  body.innerHTML = `<div class="loading"><div class="spinner"></div> Cargando galería...</div>`;
+  body.innerHTML = `<div class="loading"><div class="spinner"></div> Cargando galer&iacute;a...</div>`;
   
   try {
     window.currentMediaFiles = await r2GetList();
@@ -2358,8 +2358,8 @@ window.updateImgPreview = function(inputId, previewId) {
 };
 
 window.deleteBlog = async function(path, sha, name) {
-  if (confirm(`¿Estás seguro de eliminar permanentemente el artículo "${name}"?`)) {
-    set(`<div class="loading"><div class="spinner"></div> Eliminando artículo...</div>`);
+  if (confirm(`¿Est&aacute;s seguro de eliminar permanentemente el art&iacute;culo "${name}"?`)) {
+    set(`<div class="loading"><div class="spinner"></div> Eliminando art&iacute;culo...</div>`);
     try {
       await ghDelete(path, sha, `delete post: ${name}`);
       const slug = path.split('/').pop().replace('.md', '');
@@ -2379,7 +2379,7 @@ window.deleteBlog = async function(path, sha, name) {
 
       await viewBlog();
     } catch(e) {
-      alert(`Error al eliminar artículo: ${e.message}`);
+      alert(`Error al eliminar art&iacute;culo: ${e.message}`);
       await viewBlog();
     }
   }
@@ -2388,7 +2388,7 @@ window.deleteBlog = async function(path, sha, name) {
 window.deleteTour = async function(idx) {
   if (!cData || !cData.tours || !cData.tours[idx]) return;
   const tourName = cData.tours[idx].nombre;
-  if (confirm(`¿Estás seguro de eliminar permanentemente el tour "${tourName}"?`)) {
+  if (confirm(`¿Est&aacute;s seguro de eliminar permanentemente el tour "${tourName}"?`)) {
     set(`<div class="loading"><div class="spinner"></div> Eliminando tour...</div>`);
     cData.tours.splice(idx, 1);
     try {
@@ -2405,7 +2405,7 @@ window.deleteTour = async function(idx) {
 window.deleteDep = async function(idx) {
   if (!cData || !cData.salidas || !cData.salidas[idx]) return;
   const depId = cData.salidas[idx].id;
-  if (confirm(`¿Estás seguro de eliminar permanentemente la salida "${depId}"?`)) {
+  if (confirm(`¿Est&aacute;s seguro de eliminar permanentemente la salida "${depId}"?`)) {
     set(`<div class="loading"><div class="spinner"></div> Eliminando salida...</div>`);
     cData.salidas.splice(idx, 1);
     try {
@@ -2422,7 +2422,7 @@ window.deleteDep = async function(idx) {
 window.deleteTestim = async function(idx) {
   if (!cData || !cData.testimonials || !cData.testimonials[idx]) return;
   const name = cData.testimonials[idx].nombre;
-  if (confirm(`¿Estás seguro de eliminar permanentemente el testimonio de "${name}"?`)) {
+  if (confirm(`¿Est&aacute;s seguro de eliminar permanentemente el testimonio de "${name}"?`)) {
     set(`<div class="loading"><div class="spinner"></div> Eliminando testimonio...</div>`);
     cData.testimonials.splice(idx, 1);
     try {
