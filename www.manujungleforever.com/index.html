@@ -882,18 +882,26 @@
 <div aria-hidden="true" class="hsc">Scroll<div class="hl"></div></div>
 </section>
 <style>
-  /* STATS & ABOUT TOURS-STYLE MODERNIZATION */
+  /* STATS & ABOUT TOURS-STYLE MODERNIZATION (FULL-WIDTH) */
   .st-modern {
-    padding: 64px 0 44px 0;
+    padding: 64px 0 40px 0;
     position: relative;
     z-index: 2;
     background: transparent !important;
     border: none !important;
+    width: 100%;
+  }
+  .st-modern .cx,
+  .about-wrap .cx {
+    max-width: 100% !important;
+    padding: 0 4% !important;
+    width: 100%;
+    box-sizing: border-box;
   }
   .st-modern .sg {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
+    gap: 24px;
     width: 100%;
   }
   .st-card {
@@ -902,7 +910,7 @@
     -webkit-backdrop-filter: blur(14px);
     border: 1px solid rgba(45, 212, 191, 0.18) !important;
     border-radius: 20px !important;
-    padding: 28px 20px !important;
+    padding: 32px 24px !important;
     text-align: center;
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45) !important;
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
@@ -916,7 +924,7 @@
   }
   .st-card .sn {
     font-family: 'Montserrat', sans-serif;
-    font-size: 2.5rem;
+    font-size: 2.7rem;
     font-weight: 800;
     background: linear-gradient(135deg, #2dd4bf 0%, #34d399 50%, #38bdf8 100%);
     -webkit-background-clip: text;
@@ -928,24 +936,25 @@
     line-height: 1;
   }
   .st-card .sl {
-    font-size: 0.76rem;
+    font-size: 0.78rem;
     font-weight: 600;
     color: rgba(255, 255, 255, 0.7);
     text-transform: uppercase;
     letter-spacing: 0.12em;
-    margin-top: 10px;
+    margin-top: 12px;
     display: block;
   }
 
-  /* ABOUT SECTION SPACING & TOURS GLASSMORPHISM */
+  /* ABOUT SECTION SPACING & TOURS GLASSMORPHISM (FULL-WIDTH) */
   .about-wrap {
-    padding: 0 0 84px 0;
+    padding: 0 0 88px 0;
     position: relative;
     z-index: 2;
+    width: 100%;
   }
   .about-grid {
     display: grid;
-    grid-template-columns: 1.05fr 0.95fr;
+    grid-template-columns: 1fr 1fr;
     gap: 32px;
     align-items: stretch;
     width: 100%;
@@ -957,7 +966,7 @@
     background: rgba(22, 13, 7, 0.75) !important;
     border: 1px solid rgba(45, 212, 191, 0.18) !important;
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5) !important;
-    min-height: 480px;
+    min-height: 520px;
     height: 100%;
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
   }
@@ -988,7 +997,7 @@
     -webkit-backdrop-filter: blur(14px) !important;
     border: 1px solid rgba(45, 212, 191, 0.18) !important;
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5) !important;
-    padding: 48px 40px !important;
+    padding: 56px 48px !important;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -1003,7 +1012,7 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    font-size: 0.75rem;
+    font-size: 0.78rem;
     font-weight: 700;
     letter-spacing: 0.16em;
     text-transform: uppercase;
@@ -1019,6 +1028,14 @@
     border-radius: 2px;
   }
 
+  @media (max-width: 1100px) {
+    .about-card-text {
+      padding: 40px 32px !important;
+    }
+    .about-card-img {
+      min-height: 440px;
+    }
+  }
   @media (max-width: 992px) {
     .st-modern .sg {
       grid-template-columns: repeat(2, 1fr);
@@ -1052,7 +1069,7 @@
   }
 </style>
 <div class="st st-modern">
-  <div class="cx">
+  <div class="cx" style="max-width: 100%; padding: 0 4%;">
     <div class="sg">
       <div class="si st-card r"><span class="sn" data-suffix="+" data-target="1500">0</span><span class="sl">Travelers Guided</span></div>
       <div class="si st-card r"><span class="sn" data-suffix="+" data-target="5">0</span><span class="sl">Years Experience</span></div>
@@ -1062,7 +1079,7 @@
   </div>
 </div>
 <section class="about-wrap" id="about">
-  <div class="cx">
+  <div class="cx" style="max-width: 100%; padding: 0 4%;">
     <div class="about-grid">
       <div class="spi rl about-card-img">
         <img alt="Wildlife quest at Machu Wasi – Manu National Park" height="640" loading="lazy" src="/media/sin-copyright-/pexels-fabricio-miranda-59602090-32968220.jpg" title="Wildlife quest at Machu Wasi – Manu National Park" width="800"/>
