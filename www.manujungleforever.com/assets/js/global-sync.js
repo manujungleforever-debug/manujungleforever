@@ -44,6 +44,16 @@
 
       // 6. Home Page Dynamic Hydration (e.g. Wildlife Section)
       await syncHomePage();
+
+      // 7. Automatic Media Attributions Micro-Badges
+      if (typeof window.hydrateMediaAttributions === 'function') {
+        window.hydrateMediaAttributions();
+      } else {
+        const s = document.createElement('script');
+        s.src = '/assets/js/attribution-hydrator.js?v=1';
+        s.defer = true;
+        document.head.appendChild(s);
+      }
     } catch(err) {
       console.warn('Sync error:', err);
     }
