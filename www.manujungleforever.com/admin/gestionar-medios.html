@@ -765,7 +765,7 @@ header {
     filter: brightness(1.1) !important;
 }
 
-/* Fila 2: Barra de Navegaci&oacute;n */
+/* Fila 2: Barra de Navegación */
 .header-nav-row {
     width: 100% !important;
     display: flex !important;
@@ -852,13 +852,13 @@ nav.mnav a.btn-panel-link:hover {
       </a>
       <div class="user-sec">
         <span id="huser"></span>
-        <button onclick="logout()" class="btn-logout" title="Cerrar sesi&oacute;n">
+        <button onclick="logout()" class="btn-logout" title="Cerrar sesión">
           <i class="ph ph-sign-out"></i> Salir
         </button>
       </div>
     </div>
 
-    <!-- Fila 2: Men&uacute; de Navegaci&oacute;n dedicado -->
+    <!-- Fila 2: Menú de Navegación dedicado -->
     <div class="header-nav-row">
       <nav class="mnav">
         <a href="panel.html" class=""><i class="ph ph-house"></i> Panel</a>
@@ -922,28 +922,28 @@ nav.mnav a.btn-panel-link:hover {
       <div class="search-box">
         <i class="ph ph-magnifying-glass"></i>
         <input type="text" id="search-input" placeholder="Buscar archivo o carpeta..." oninput="handleSearch(this.value)">
-        <button class="search-clear" id="search-clear" onclick="clearSearch()">&times;</button>
+        <button class="search-clear" id="search-clear" onclick="clearSearch()">×</button>
       </div>
 
       <select class="select-filter" id="filter-type" onchange="renderCurrentView()">
         <option value="all">📁 Todos los tipos</option>
-        <option value="images">🖼️ Im&aacute;genes (JPG, PNG, WebP)</option>
+        <option value="images">🖼️ Imágenes (JPG, PNG, WebP)</option>
         <option value="videos">🎬 Videos (MP4, WebM)</option>
         <option value="docs">📄 Documentos (PDF)</option>
       </select>
 
       <select class="select-filter" id="filter-sort" onchange="renderCurrentView()">
-        <option value="date-desc">🕒 M&aacute;s recientes primero</option>
-        <option value="date-asc">🕒 M&aacute;s antiguos primero</option>
+        <option value="date-desc">🕒 Más recientes primero</option>
+        <option value="date-asc">🕒 Más antiguos primero</option>
         <option value="name-asc">🔤 Nombre (A - Z)</option>
         <option value="name-desc">🔤 Nombre (Z - A)</option>
-        <option value="size-desc">📦 Mayor tama&ntilde;o</option>
-        <option value="size-asc">📦 Menor tama&ntilde;o</option>
+        <option value="size-desc">📦 Mayor tamaño</option>
+        <option value="size-asc">📦 Menor tamaño</option>
       </select>
 
       <div class="view-switcher">
-        <button class="view-btn active" id="btn-view-grid" onclick="setViewMode('grid')" title="Cuadr&iacute;cula Grande"><i class="ph ph-squares-four"></i></button>
-        <button class="view-btn" id="btn-view-compact" onclick="setViewMode('compact')" title="Cuadr&iacute;cula Compacta"><i class="ph ph-grid-four"></i></button>
+        <button class="view-btn active" id="btn-view-grid" onclick="setViewMode('grid')" title="Cuadrícula Grande"><i class="ph ph-squares-four"></i></button>
+        <button class="view-btn" id="btn-view-compact" onclick="setViewMode('compact')" title="Cuadrícula Compacta"><i class="ph ph-grid-four"></i></button>
         <button class="view-btn" id="btn-view-table" onclick="setViewMode('table')" title="Lista Detallada"><i class="ph ph-list-dashes"></i></button>
       </div>
     </div>
@@ -964,7 +964,7 @@ nav.mnav a.btn-panel-link:hover {
   <div class="lightbox-box">
     <div class="lightbox-header">
       <div class="lightbox-title" id="lb-title">Detalle del Archivo</div>
-      <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+      <button class="lightbox-close" onclick="closeLightbox()">×</button>
     </div>
     <div class="lightbox-body">
       <div class="lightbox-preview-col" id="lb-preview-col">
@@ -980,7 +980,7 @@ nav.mnav a.btn-panel-link:hover {
           <span class="info-val" id="lb-key">-</span>
         </div>
         <div class="info-row">
-          <span class="info-label">Tama&ntilde;o</span>
+          <span class="info-label">Tamaño</span>
           <span class="info-val" id="lb-size">-</span>
         </div>
         <div class="info-row">
@@ -988,7 +988,7 @@ nav.mnav a.btn-panel-link:hover {
           <span class="info-val" id="lb-date">-</span>
         </div>
         <div class="info-row" style="margin-top:8px;">
-          <span class="info-label">Enlace P&uacute;blico Directo</span>
+          <span class="info-label">Enlace Público Directo</span>
           <div class="url-copy-box">
             <input type="text" id="lb-url" readonly>
             <button class="btn-primary" onclick="copyLbUrl()"><i class="ph ph-copy"></i> Copiar</button>
@@ -1006,7 +1006,7 @@ nav.mnav a.btn-panel-link:hover {
 <!-- Toast -->
 <div class="toast-msg" id="toast-msg">
   <i class="ph ph-check-circle" style="font-size:1.2rem;"></i>
-  <span id="toast-text">Acci&oacute;n completada</span>
+  <span id="toast-text">Acción completada</span>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
@@ -1038,7 +1038,7 @@ function formatDate(iso) {
 }
 
 function esc(s) {
-  return String(s || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  return String(s || '').replace(/&/g, '&').replace(/"/g, '"').replace(/</g, '<').replace(/>/g, '>');
 }
 
 function showToast(text) {
@@ -1083,7 +1083,7 @@ function getFolderContents(path) {
   allR2Files.forEach(f => {
     const key = f.key || '';
     if (!cleanPath) {
-      // Nivel ra&iacute;z
+      // Nivel raíz
       if (key.includes('/')) {
         const topFolder = key.split('/')[0];
         if (!folderMap.has(topFolder)) {
@@ -1121,11 +1121,11 @@ function getFolderContents(path) {
   };
 }
 
-// ── FILTROS Y ORDENACI&Oacute;N ──
+// ── FILTROS Y ORDENACIÓN ──
 function filterAndSortFiles(files) {
   let list = [...files];
 
-  // B&uacute;squeda
+  // Búsqueda
   if (searchQuery.trim()) {
     const q = searchQuery.toLowerCase().trim();
     list = list.filter(f => f.key.toLowerCase().includes(q));
@@ -1141,7 +1141,7 @@ function filterAndSortFiles(files) {
     list = list.filter(f => /\.(pdf|docx?|xlsx?)$/i.test(f.key));
   }
 
-  // Ordenaci&oacute;n
+  // Ordenación
   const sortMode = document.getElementById('filter-sort')?.value || 'date-desc';
   list.sort((a, b) => {
     if (sortMode === 'date-desc') return new Date(b.uploaded || 0) - new Date(a.uploaded || 0);
@@ -1167,7 +1167,7 @@ function renderCurrentView() {
   const filteredFiles = filterAndSortFiles(files);
   const container = document.getElementById('explorer-content');
 
-  // Si estamos en b&uacute;squeda global
+  // Si estamos en búsqueda global
   if (searchQuery.trim()) {
     const allFiltered = filterAndSortFiles(allR2Files);
     renderSearchResults(container, allFiltered);
@@ -1178,7 +1178,7 @@ function renderCurrentView() {
     container.innerHTML = `
       <div style="text-align:center;padding:60px 20px;color:var(--muted);">
         <i class="ph ph-folder-open" style="font-size:3.5rem;color:rgba(45,212,191,0.3);margin-bottom:12px;display:block;"></i>
-        <p style="font-size:1.1rem;font-weight:600;color:#fff;">Esta carpeta est&aacute; vac&iacute;a</p>
+        <p style="font-size:1.1rem;font-weight:600;color:#fff;">Esta carpeta está vacía</p>
         <p style="font-size:0.85rem;margin-top:4px;">Sube archivos o crea una nueva subcarpeta para comenzar.</p>
       </div>`;
     return;
@@ -1231,7 +1231,7 @@ function renderSearchResults(container, list) {
     container.innerHTML = `<div style="text-align:center;padding:60px 20px;color:var(--muted);">No se encontraron archivos que coincidan con "<strong>${esc(searchQuery)}</strong>".</div>`;
     return;
   }
-  let html = `<div class="section-title"><i class="ph ph-magnifying-glass"></i> Resultados de b&uacute;squeda (${list.length})</div>`;
+  let html = `<div class="section-title"><i class="ph ph-magnifying-glass"></i> Resultados de búsqueda (${list.length})</div>`;
   if (currentViewMode === 'table') {
     html += renderTable(list);
   } else {
@@ -1314,7 +1314,7 @@ function renderTable(files) {
   files.forEach(f => {
     const ext = getFileExtension(f.key);
     const fileName = f.key.split('/').pop();
-    const folderPath = f.key.includes('/') ? f.key.slice(0, f.key.lastIndexOf('/')) : 'Ra&iacute;z';
+    const folderPath = f.key.includes('/') ? f.key.slice(0, f.key.lastIndexOf('/')) : 'Raíz';
     const thumb = isImage(ext) 
       ? `<img src="${esc(f.url)}" class="table-thumb" loading="lazy">` 
       : `<div class="table-doc-icon"><i class="ph ph-file"></i></div>`;
@@ -1354,7 +1354,7 @@ function renderTable(files) {
             <th>Nombre</th>
             <th>Carpeta</th>
             <th>Tipo</th>
-            <th>Tama&ntilde;o</th>
+            <th>Tamaño</th>
             <th>Fecha</th>
             <th style="text-align:right;">Acciones</th>
           </tr>
@@ -1364,7 +1364,7 @@ function renderTable(files) {
     </div>`;
 }
 
-// ── NAVEGACI&Oacute;N Y BREADCRUMBS ──
+// ── NAVEGACIÓN Y BREADCRUMBS ──
 function updateBreadcrumbs() {
   const container = document.getElementById('breadcrumbs-container');
   const btnUp = document.getElementById('btn-up-level');
@@ -1372,13 +1372,13 @@ function updateBreadcrumbs() {
 
   if (!clean) {
     btnUp.style.display = 'none';
-    container.innerHTML = `<span class="crumb-item active"><i class="ph ph-hard-drive"></i> Ra&iacute;z (Almacenamiento R2)</span>`;
+    container.innerHTML = `<span class="crumb-item active"><i class="ph ph-hard-drive"></i> Raíz (Almacenamiento R2)</span>`;
     return;
   }
 
   btnUp.style.display = 'inline-flex';
   const parts = clean.split('/');
-  let html = `<span class="crumb-item" onclick="navigateToFolder('')"><i class="ph ph-hard-drive"></i> Ra&iacute;z</span>`;
+  let html = `<span class="crumb-item" onclick="navigateToFolder('')"><i class="ph ph-hard-drive"></i> Raíz</span>`;
 
   let accumulated = '';
   parts.forEach((p, idx) => {
@@ -1420,7 +1420,7 @@ window.setViewMode = function(mode) {
   renderCurrentView();
 };
 
-// ── B&Uacute;SQUEDA ──
+// ── BÚSQUEDA ──
 window.handleSearch = function(val) {
   searchQuery = val;
   document.getElementById('search-clear').style.display = val ? 'block' : 'none';
@@ -1500,7 +1500,7 @@ async function uploadFileList(files, targetFolder, isFolderUpload = false) {
   }
 
   statsLabel.textContent = originalText;
-  showToast(`✓ ${successCount} de ${files.length} archivo(s) subido(s) con &eacute;xito.`);
+  showToast(`✓ ${successCount} de ${files.length} archivo(s) subido(s) con éxito.`);
   await loadMedia();
 }
 
@@ -1543,7 +1543,7 @@ window.copyFileUrl = function(url) {
 };
 
 window.deleteFile = async function(key) {
-  if (!confirm(`¿Est&aacute;s seguro de eliminar permanentemente "${key}" de Cloudflare R2?`)) return;
+  if (!confirm(`¿Estás seguro de eliminar permanentemente "${key}" de Cloudflare R2?`)) return;
 
   try {
     const r = await fetch(`${MEDIA_API}/${encodeURIComponent(key)}`, {
@@ -1625,7 +1625,7 @@ window.toggleSelectionMode = function() {
   
   if (isSelectionMode) {
     container.classList.add('selection-active');
-    btnMode.innerHTML = '<i class="ph ph-x"></i> <span class="hide-mobile">Cancelar Selecci&oacute;n</span>';
+    btnMode.innerHTML = '<i class="ph ph-x"></i> <span class="hide-mobile">Cancelar Selección</span>';
     btnMode.style.color = '#fff';
     btnMode.style.borderColor = 'rgba(255,255,255,0.2)';
     
@@ -1657,7 +1657,7 @@ window.handleCardClick = function(id, event, type) {
     }
     toggleItemSelection(id);
   } else {
-    if (event && event.target.closest('button')) return; // ignora clics en botones de acci&oacute;n dentro de la card
+    if (event && event.target.closest('button')) return; // ignora clics en botones de acción dentro de la card
     if (type === 'folder') navigateToFolder(id);
     else openLightbox(id);
   }
@@ -1720,7 +1720,7 @@ window.toggleBulkSelect = function() {
 window.handleBulkDelete = async function() {
   if (selectedMedia.size === 0) return;
   const count = selectedMedia.size;
-  if (confirm(`¿Est&aacute;s seguro de eliminar los ${count} elementos seleccionados de forma permanente?`)) {
+  if (confirm(`¿Estás seguro de eliminar los ${count} elementos seleccionados de forma permanente?`)) {
     const paths = Array.from(selectedMedia);
     try {
       showToast('Eliminando...');
@@ -1742,7 +1742,7 @@ window.handleBulkDelete = async function() {
       loadMedia(); // Recarga los datos actualizados
     } catch (e) {
       alert('Error al eliminar: ' + e.message);
-      showToast('X Error en la operaci&oacute;n', true);
+      showToast('X Error en la operación', true);
     }
   }
 };
@@ -1750,7 +1750,7 @@ window.handleBulkDelete = async function() {
 window.handleBulkMove = async function() {
   if (selectedMedia.size === 0) return;
   const count = selectedMedia.size;
-  const dest = prompt(`Mover ${count} elementos.\n\nIngresa la ruta de destino (ej. 'viajes/2026') o deja en blanco para mover a la Ra&iacute;z:`);
+  const dest = prompt(`Mover ${count} elementos.\n\nIngresa la ruta de destino (ej. 'viajes/2026') o deja en blanco para mover a la Raíz:`);
   
   if (dest !== null) {
     const paths = Array.from(selectedMedia);
@@ -1774,12 +1774,12 @@ window.handleBulkMove = async function() {
       loadMedia(); // Recarga los datos actualizados
     } catch (e) {
       alert('Error al mover: ' + e.message);
-      showToast('X Error en la operaci&oacute;n', true);
+      showToast('X Error en la operación', true);
     }
   }
 };
 
-// ── INICIALIZACI&Oacute;N ──
+// ── INICIALIZACIÓN ──
 document.addEventListener('DOMContentLoaded', () => {
   if (!token) return;
   if (typeof tsParticles !== 'undefined') {

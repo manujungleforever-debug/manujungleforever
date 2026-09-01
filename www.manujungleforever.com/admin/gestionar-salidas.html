@@ -483,7 +483,7 @@ header {
     filter: brightness(1.1) !important;
 }
 
-/* Fila 2: Barra de Navegaci&oacute;n */
+/* Fila 2: Barra de Navegación */
 .header-nav-row {
     width: 100% !important;
     display: flex !important;
@@ -570,13 +570,13 @@ nav.mnav a.btn-panel-link:hover {
       </a>
       <div class="user-sec">
         <span id="huser"></span>
-        <button onclick="logout()" class="btn-logout" title="Cerrar sesi&oacute;n">
+        <button onclick="logout()" class="btn-logout" title="Cerrar sesión">
           <i class="ph ph-sign-out"></i> Salir
         </button>
       </div>
     </div>
 
-    <!-- Fila 2: Men&uacute; de Navegaci&oacute;n dedicado -->
+    <!-- Fila 2: Menú de Navegación dedicado -->
     <div class="header-nav-row">
       <nav class="mnav">
         <a href="panel.html" class=""><i class="ph ph-house"></i> Panel</a>
@@ -602,7 +602,7 @@ nav.mnav a.btn-panel-link:hover {
 <!-- Floating Toast Notification -->
 <div class="toast-msg" id="toast-msg">
   <i class="ph ph-check-circle" id="toast-icon" style="font-size:1.3rem;"></i>
-  <span id="toast-text">Acci&oacute;n completada con &eacute;xito</span>
+  <span id="toast-text">Acción completada con éxito</span>
 </div>
 <div class="modal-bg" id="del-modal">
   <div class="modal">
@@ -617,8 +617,8 @@ nav.mnav a.btn-panel-link:hover {
 <div class="modal-bg" id="pax-modal">
   <div class="modal lg" style="background:#111827;border:1px solid rgba(255,255,255,0.1)">
     <div class="modal-h" style="border-bottom:1px solid rgba(255,255,255,0.1);padding-bottom:15px;margin-bottom:15px">
-      <h3 style="color:#fff;margin:0" id="pax-modal-h">👥 Gesti&oacute;n de Pasajeros</h3>
-      <button onclick="closeModal('pax-modal')" style="background:none;border:none;color:var(--muted);font-size:1.5rem;cursor:pointer">&times;</button>
+      <h3 style="color:#fff;margin:0" id="pax-modal-h">👥 Gestión de Pasajeros</h3>
+      <button onclick="closeModal('pax-modal')" style="background:none;border:none;color:var(--muted);font-size:1.5rem;cursor:pointer">×</button>
     </div>
     <div class="modal-body" id="pax-modal-body" style="padding:30px"></div>
   </div>
@@ -647,7 +647,7 @@ nav.mnav a.btn-panel-link:hover {
 window.addEventListener('error', function(e) {
   const mc = document.getElementById('mc') || document.body;
   if(mc) {
-    mc.innerHTML = '<div style="padding:40px;max-width:600px;margin:40px auto;background:#fff;border-radius:12px;box-shadow:0 10px 25px rgba(0,0,0,0.1);text-align:center"><h2 style="color:#ef4444;margin-bottom:10px">❌ Error Cr&iacute;tico del Panel</h2><p style="color:#64748b;margin-bottom:20px">El sistema no pudo renderizar esta vista debido a un error interno.</p><div style="text-align:left;background:#0f172a;color:#cbd5e1;padding:15px;border-radius:8px;font-family:monospace;font-size:12px;overflow-x:auto;margin-bottom:20px">' + (e.error ? e.error.stack : e.message) + '</div><button onclick="location.reload()" style="background:#0d9488;color:#fff;border:none;padding:10px 20px;border-radius:8px;cursor:pointer;font-weight:600">Recargar Panel</button></div>';
+    mc.innerHTML = '<div style="padding:40px;max-width:600px;margin:40px auto;background:#fff;border-radius:12px;box-shadow:0 10px 25px rgba(0,0,0,0.1);text-align:center"><h2 style="color:#ef4444;margin-bottom:10px">❌ Error Crítico del Panel</h2><p style="color:#64748b;margin-bottom:20px">El sistema no pudo renderizar esta vista debido a un error interno.</p><div style="text-align:left;background:#0f172a;color:#cbd5e1;padding:15px;border-radius:8px;font-family:monospace;font-size:12px;overflow-x:auto;margin-bottom:20px">' + (e.error ? e.error.stack : e.message) + '</div><button onclick="location.reload()" style="background:#0d9488;color:#fff;border:none;padding:10px 20px;border-radius:8px;cursor:pointer;font-weight:600">Recargar Panel</button></div>';
   }
 });
 </script>
@@ -669,14 +669,14 @@ window.removeCustomGuide = function(selectId) {
   if (!sel) return;
   const realOptions = Array.from(sel.options).filter(o => o.value && !o.value.startsWith('__'));
   if (!realOptions.length) {
-    if (typeof showToast === 'function') showToast('No hay gu&iacute;as registrados para eliminar.', true);
-    else alert('No hay gu&iacute;as registrados para eliminar.');
+    if (typeof showToast === 'function') showToast('No hay guías registrados para eliminar.', true);
+    else alert('No hay guías registrados para eliminar.');
     sel.value = '';
     return;
   }
   const guideListStr = realOptions.map((o, idx) => `${idx + 1}. ${o.value}`).join('\n');
   setTimeout(async function() {
-    const choice = prompt(`Escriba el N&Uacute;MERO o el NOMBRE del gu&iacute;a que desea eliminar de la lista:\n\n${guideListStr}`);
+    const choice = prompt(`Escriba el NÚMERO o el NOMBRE del guía que desea eliminar de la lista:\n\n${guideListStr}`);
     if (choice && choice.trim()) {
       const cleanChoice = choice.trim();
       let target = null;
@@ -689,7 +689,7 @@ window.removeCustomGuide = function(selectId) {
       }
       
       if (target) {
-        if (confirm(`¿Eliminar permanentemente al gu&iacute;a "${target}" de la lista?\n(Las salidas que lo ten&iacute;an asignado quedar&aacute;n sin gu&iacute;a asignado).`)) {
+        if (confirm(`¿Eliminar permanentemente al guía "${target}" de la lista?\n(Las salidas que lo tenían asignado quedarán sin guía asignado).`)) {
           const optToRemove = Array.from(sel.options).find(o => o.value === target);
           if (optToRemove) optToRemove.remove();
           sel.value = '';
@@ -705,22 +705,22 @@ window.removeCustomGuide = function(selectId) {
             }
 
             try {
-              if (window.showThinkingOverlay) window.showThinkingOverlay('Guardando lista de gu&iacute;as...', 'Sincronizando con Cloudflare D1');
+              if (window.showThinkingOverlay) window.showThinkingOverlay('Guardando lista de guías...', 'Sincronizando con Cloudflare D1');
               const res = await ghPut(cFile, JSON.stringify(cData, null, 2), cSha, `remove guia: ${target}`);
               cSha = res.sha;
               if (window.hideThinkingOverlay) window.hideThinkingOverlay();
-              if (typeof showToast === 'function') showToast(`✅ Gu&iacute;a "${target}" eliminado y guardado correctamente.`);
+              if (typeof showToast === 'function') showToast(`✅ Guía "${target}" eliminado y guardado correctamente.`);
             } catch(e) {
               if (window.hideThinkingOverlay) window.hideThinkingOverlay();
               console.error(e);
-              if (typeof showToast === 'function') showToast(`❌ Error al guardar eliminaci&oacute;n: ${e.message}`, true);
+              if (typeof showToast === 'function') showToast(`❌ Error al guardar eliminación: ${e.message}`, true);
               else alert(`Error: ${e.message}`);
             }
           }
         }
       } else {
-        if (typeof showToast === 'function') showToast('❌ No se encontr&oacute; el gu&iacute;a especificado.', true);
-        else alert('No se encontr&oacute; el gu&iacute;a especificado.');
+        if (typeof showToast === 'function') showToast('❌ No se encontró el guía especificado.', true);
+        else alert('No se encontró el guía especificado.');
       }
     }
     sel.value = '';
@@ -927,7 +927,7 @@ function switchSection_DIS(id) {
 async function r2GetList() {
   const r = await fetch(`${MEDIA_API}`,{headers:{Authorization:`Bearer ${token}`}});
   if (r.status===401){sessionStorage.clear();location.reload();}
-  const d=await r.json(); if(!r.ok)throw new Error(d.error||'Error al cargar galer&iacute;a');
+  const d=await r.json(); if(!r.ok)throw new Error(d.error||'Error al cargar galería');
   return d.files || [];
 }
 
@@ -944,12 +944,12 @@ async function r2Upload(file, progressEl) {
   });
   if (r.status===401){sessionStorage.clear();location.reload();}
   
-  // Tratar de parsear JSON, si falla es porque Cloudflare devolvi&oacute; HTML (ej. error 500)
+  // Tratar de parsear JSON, si falla es porque Cloudflare devolvió HTML (ej. error 500)
   let d;
   try {
     d = await r.json();
   } catch(e) {
-    throw new Error(`Error del servidor (HTTP ${r.status}). Verifica que MEDIA_BUCKET est&eacute; configurado.`);
+    throw new Error(`Error del servidor (HTTP ${r.status}). Verifica que MEDIA_BUCKET esté configurado.`);
   }
   
   if(!r.ok) throw new Error(d.error||'Error subiendo archivo');
@@ -980,7 +980,7 @@ async function openMediaModal(callback) {
   document.getElementById('media-modal').classList.add('open');
   
   const body = document.getElementById('media-modal-body');
-  body.innerHTML = `<div class="loading"><div class="spinner"></div> Cargando galer&iacute;a...</div>`;
+  body.innerHTML = `<div class="loading"><div class="spinner"></div> Cargando galería...</div>`;
   
   try {
     currentMediaFiles = await r2GetList();
@@ -992,7 +992,7 @@ async function openMediaModal(callback) {
 
 function renderMediaGrid(container, files, isModal) {
   if (!files.length) {
-    container.innerHTML = `<div class="empty">La galer&iacute;a est&aacute; vac&iacute;a.</div>`;
+    container.innerHTML = `<div class="empty">La galería está vacía.</div>`;
     return;
   }
   
@@ -1012,7 +1012,7 @@ function renderMediaGrid(container, files, isModal) {
 }
 
 function selectMediaItem(idx, el, isModal) {
-  if (!isModal) return; // Solo selecci&oacute;n en modal
+  if (!isModal) return; // Solo selección en modal
   const parent = el.parentElement;
   parent.querySelectorAll('.m-item').forEach(e => e.classList.remove('selected'));
   el.classList.add('selected');
@@ -1056,7 +1056,7 @@ async function handleMediaUploadEvent(e) {
   }
   
   if (errorCount > 0) {
-    alert(`Ocurrieron ${errorCount} errores al subir.\\n&Uacute;ltimo error: ${lastError}\\nSi es un error 500 o 503, revisa que Cloudflare tenga configurada la variable MEDIA_BUCKET correctamente o intenta en un par de minutos.`);
+    alert(`Ocurrieron ${errorCount} errores al subir.\\nÚltimo error: ${lastError}\\nSi es un error 500 o 503, revisa que Cloudflare tenga configurada la variable MEDIA_BUCKET correctamente o intenta en un par de minutos.`);
   }
   
   if (inModal) {
@@ -1064,7 +1064,7 @@ async function handleMediaUploadEvent(e) {
     currentMediaFiles = await r2GetList();
     renderMediaGrid(body, currentMediaFiles, true);
   } else {
-    route('media'); // Si est&aacute; en la vista principal
+    route('media'); // Si está en la vista principal
   }
 }
 
@@ -1115,7 +1115,7 @@ function imgWidget(id, label, value='', hint='') {
 async function viewMedia() {
   set(`
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
-      <div style="display:flex;align-items:center;"><div class="btn-card-icon card-icon-medios"><i class="ph ph-image"></i></div><div><p class="pt" style="margin-bottom:0">Biblioteca de Medios</p><p class="ps">Gestiona todas las im&aacute;genes y videos (Cloudflare R2)</p></div></div>
+      <div style="display:flex;align-items:center;"><div class="btn-card-icon card-icon-medios"><i class="ph ph-image"></i></div><div><p class="pt" style="margin-bottom:0">Biblioteca de Medios</p><p class="ps">Gestiona todas las imágenes y videos (Cloudflare R2)</p></div></div>
       <div style="display:flex;gap:8px;align-items:center;">
         <span id="main-upload-prog" style="font-size:.8rem;color:var(--gold);margin-right:8px;"></span>
         <button class="btn-primary" onclick="document.getElementById('media-upload').click()">📁 Subir archivo(s)</button>
@@ -1134,7 +1134,7 @@ async function viewMedia() {
 }
 
 async function deleteMedia(key) {
-  if (confirm(`¿Est&aacute;s seguro de eliminar el archivo "${key}" permanentemente?`)) {
+  if (confirm(`¿Estás seguro de eliminar el archivo "${key}" permanentemente?`)) {
     try {
       await r2Delete(key);
       route('media');
@@ -1150,7 +1150,7 @@ function mdToolbar(textareaId) {
     ['**B**','**','**'],['*I*','*','*'],['~~S~~','~~','~~'],
     ['# H1','# ',''],['## H2','## ',''],['### H3','### ',''],
     ['🔗 Link','[','](url)'],['> Cita','> ',''],['- Lista','- ',''],
-    ['1. Lista','1. ',''],['```C&oacute;digo','```\n','\n```'],
+    ['1. Lista','1. ',''],['```Código','```\n','\n```'],
   ];
   return `<div class="md-wrap">
       <div class="md-toolbar">${cmds.map(([l,b,a])=>`<button type="button" onclick="mdWrap('${textareaId}','${b.replace(/\n/g,'\\n').replace(/'/g,"\\'")}','${a.replace(/\n/g,'\\n').replace(/'/g,"\\'")}')" title="${l}">${l}</button>`).join('')} <button type="button" onclick="openMediaModal((url) => { mdWrap('${textareaId}', '![alt](', url + ')') })" title="Insertar Imagen de R2">🖼️ R2</button></div>
@@ -1177,7 +1177,7 @@ async function route(id) {
     const views = {blog:viewBlog,home:viewHome,about:viewAbout,contact:viewContact,global:viewGlobal,
       tours:viewTours,departures:viewDeps,testimonials:viewTestims, media:viewMedia, reclamos:viewReclamos};
     if (views[id]) await views[id]();
-    else set(`<p>Secci&oacute;n no encontrada.</p>`);
+    else set(`<p>Sección no encontrada.</p>`);
   } catch(e) {
     set(`<p style="color:var(--danger);padding:20px">❌ ${e.message}</p>`);
   }
@@ -1232,7 +1232,7 @@ async function publishBlogPost(slug, fm, mdBody) {
 }
 
 async function viewBlog() {
-  set('<div class="loading"><div class="spinner"></div> Cargando art&iacute;culos del blog...</div>');
+  set('<div class="loading"><div class="spinner"></div> Cargando artículos del blog...</div>');
   try {
     let posts = [];
     let idxSha = null;
@@ -1276,10 +1276,10 @@ async function viewBlog() {
     let html = `
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:22px">
         <div>
-          <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-blog"><i class="ph ph-pencil"></i></div><p class="pt" style="margin-bottom:0">Art&iacute;culos del Blog</p></div>
-          <p class="ps">${posts.length} art&iacute;culos registrados (ordenados por fecha m&aacute;s reciente)</p>
+          <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-blog"><i class="ph ph-pencil"></i></div><p class="pt" style="margin-bottom:0">Artículos del Blog</p></div>
+          <p class="ps">${posts.length} artículos registrados (ordenados por fecha más reciente)</p>
         </div>
-        <button class="btn-primary" onclick="newBlog()">+ Nuevo art&iacute;culo</button>
+        <button class="btn-primary" onclick="newBlog()">+ Nuevo artículo</button>
       </div>
       <div class="blog-grid" style="display:grid;gap:14px;">`;
 
@@ -1313,7 +1313,7 @@ async function viewBlog() {
     html += '</div>';
     set(html);
   } catch(e) {
-    set('<div class="empty">Error al cargar art&iacute;culos del blog: ' + e.message + '</div>');
+    set('<div class="empty">Error al cargar artículos del blog: ' + e.message + '</div>');
   }
 }
 
@@ -1323,10 +1323,10 @@ function newBlog() {
     <button class="back-btn" onclick="route('blog')">← Volver al blog</button>
     <div class="eform">
       <div class="esec">
-        <div class="esec-h">Nuevo Art&iacute;culo</div>
+        <div class="esec-h">Nuevo Artículo</div>
         <div class="ff"><label>Slug URL (sin espacios, solo guiones)</label>
           <input id="f-slug" placeholder="mi-nuevo-articulo" oninput="this.value=this.value.toLowerCase().replace(/[^a-z0-9-]/g,'-')">
-          <span class="hint">El archivo se guardar&aacute; como: <code id="slug-preview">mi-nuevo-articulo.md</code></span>
+          <span class="hint">El archivo se guardará como: <code id="slug-preview">mi-nuevo-articulo.md</code></span>
         </div>
         ${blogFields({title:'',date:new Date().toISOString().split('T')[0],categoria:'Wildlife',publicado:true,extracto:'',imagen:'',imagen_alt:''})}
       </div>
@@ -1357,7 +1357,7 @@ async function editBlog(path, sha) {
     <button class="back-btn" onclick="route('blog')">← Volver al blog</button>
     <div class="eform">
       <div class="esec">
-        <div class="esec-h">Informaci&oacute;n del Art&iacute;culo</div>
+        <div class="esec-h">Información del Artículo</div>
         ${blogFields(fm)}
       </div>
       <div class="esec"><div class="esec-h">Contenido (Markdown)</div>${mdToolbar('f-body')}</div>
@@ -1376,18 +1376,18 @@ async function editBlog(path, sha) {
 function blogFields(fm) {
   return `
     <div class="grow2">
-      <div class="ff"><label>T&iacute;tulo del art&iacute;culo</label><input id="f-title" value="${esc(fm.title||'')}"></div>
-      <div class="ff"><label>Fecha de publicaci&oacute;n</label><input type="date" id="f-date" value="${esc(fm.date||'')}"></div>
+      <div class="ff"><label>Título del artículo</label><input id="f-title" value="${esc(fm.title||'')}"></div>
+      <div class="ff"><label>Fecha de publicación</label><input type="date" id="f-date" value="${esc(fm.date||'')}"></div>
     </div>
     <div class="grow2">
-      <div class="ff"><label>Categor&iacute;a</label>
-        <select id="f-cat" onchange="if(this.value==='__add_new__') addCustomItem('f-cat', 'Nombre de la nueva categor&iacute;a del blog:')">
+      <div class="ff"><label>Categoría</label>
+        <select id="f-cat" onchange="if(this.value==='__add_new__') addCustomItem('f-cat', 'Nombre de la nueva categoría del blog:')">
         ${(() => {
           const baseCats = ['Wildlife', 'Conservation', 'Sustainability', 'Manu Park', 'Travel Tips'];
           const currentCat = fm.categoria || 'Wildlife';
           const allCats = Array.from(new Set([...baseCats, currentCat].filter(Boolean)));
           return allCats.map(c => `<option value="${esc(c)}" ${currentCat === c ? 'selected' : ''}>${esc(c)}</option>`).join('') +
-                 '<option value="__add_new__" style="font-weight:bold;color:var(--teal);">+ A&ntilde;adir nueva categor&iacute;a...</option>';
+                 '<option value="__add_new__" style="font-weight:bold;color:var(--teal);">+ Añadir nueva categoría...</option>';
         })()}
       </select>
       </div>
@@ -1420,37 +1420,37 @@ async function viewHome() {
   cFile='www.manujungleforever.com/data/home.json'; cSha=data.sha;
   const d=JSON.parse(data.content); cData=d;
   set(`
-    <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-contenido"><i class="ph ph-house"></i></div><div><p class="pt" style="margin-bottom:0">P&aacute;gina de Inicio</p><p class="ps">Contenido principal del sitio</p></div></div>
+    <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-contenido"><i class="ph ph-house"></i></div><div><p class="pt" style="margin-bottom:0">Página de Inicio</p><p class="ps">Contenido principal del sitio</p></div></div>
     <div class="eform">
       <div class="esec"><div class="esec-h">Hero (Portada)</div>
-        <div class="ff"><label>T&iacute;tulo principal</label><input id="h-t" value="${esc(d.hero?.title||'')}"></div>
-        <div class="ff"><label>T&iacute;tulo &eacute;nfasis (parte resaltada)</label><input id="h-e" value="${esc(d.hero?.title_emphasis||'')}"></div>
-        <div class="ff"><label>Subt&iacute;tulo / descripci&oacute;n</label><textarea id="h-s">${esc(d.hero?.subtitle||'')}</textarea></div>
+        <div class="ff"><label>Título principal</label><input id="h-t" value="${esc(d.hero?.title||'')}"></div>
+        <div class="ff"><label>Título énfasis (parte resaltada)</label><input id="h-e" value="${esc(d.hero?.title_emphasis||'')}"></div>
+        <div class="ff"><label>Subtítulo / descripción</label><textarea id="h-s">${esc(d.hero?.subtitle||'')}</textarea></div>
         <div class="grow2">
-          <div class="ff"><label>Texto de ubicaci&oacute;n</label><input id="h-l" value="${esc(d.hero?.location_tag||'')}"></div>
+          <div class="ff"><label>Texto de ubicación</label><input id="h-l" value="${esc(d.hero?.location_tag||'')}"></div>
           <div class="ff"><label>ID video YouTube</label><input id="h-v" value="${esc(d.hero?.video_id||'')}">
             <span class="hint">Solo el ID, ej: <code>dQw4w9WgXcQ</code></span></div>
         </div>
       </div>
-      <div class="esec"><div class="esec-h">Secci&oacute;n Sobre Nosotros</div>
+      <div class="esec"><div class="esec-h">Sección Sobre Nosotros</div>
         <div class="grow2">
-          <div class="ff"><label>Eyebrow (texto peque&ntilde;o encima)</label><input id="a-ey" value="${esc(d.about_section?.eyebrow||'')}"></div>
-          <div class="ff"><label>T&iacute;tulo</label><input id="a-t" value="${esc(d.about_section?.title||'')}"></div>
+          <div class="ff"><label>Eyebrow (texto pequeño encima)</label><input id="a-ey" value="${esc(d.about_section?.eyebrow||'')}"></div>
+          <div class="ff"><label>Título</label><input id="a-t" value="${esc(d.about_section?.title||'')}"></div>
         </div>
-        <div class="ff"><label>P&aacute;rrafos (separados por l&iacute;nea en blanco)</label>
+        <div class="ff"><label>Párrafos (separados por línea en blanco)</label>
           <textarea id="a-p" style="min-height:120px">${(d.about_section?.paragraphs||[]).map(p=>p.text||p).join('\n\n')}</textarea></div>
-        ${imgWidget('a-img','Imagen de la secci&oacute;n',d.about_section?.image||'')}
+        ${imgWidget('a-img','Imagen de la sección',d.about_section?.image||'')}
         <div class="ff"><label>Texto alt de la imagen</label><input id="a-ia" value="${esc(d.about_section?.image_alt||'')}"></div>
       </div>
       <div class="esec"><div class="esec-h">Pilares / Valores</div>
-        <div class="ff"><label>T&iacute;tulo de la secci&oacute;n</label><input id="p-t" value="${esc(d.pillars_section?.title||'')}"></div>
+        <div class="ff"><label>Título de la sección</label><input id="p-t" value="${esc(d.pillars_section?.title||'')}"></div>
         ${(d.pillars_section?.pillars||[]).map((p,i)=>`
           <div style="background:var(--card2);border-radius:8px;padding:12px;margin-bottom:8px">
             <p style="font-size:.72rem;color:var(--gold);font-weight:600;margin-bottom:10px">PILAR ${i+1}</p>
             <div class="grow3">
-              <div class="ff"><label>&Iacute;cono (FontAwesome)</label><input id="pi-ic${i}" value="${esc(p.icon||'')}"><span class="hint">ej: fas fa-leaf</span></div>
-              <div class="ff"><label>T&iacute;tulo</label><input id="pi-ti${i}" value="${esc(p.title||'')}"></div>
-              <div class="ff"><label>Descripci&oacute;n</label><input id="pi-tx${i}" value="${esc(p.text||'')}"></div>
+              <div class="ff"><label>Ícono (FontAwesome)</label><input id="pi-ic${i}" value="${esc(p.icon||'')}"><span class="hint">ej: fas fa-leaf</span></div>
+              <div class="ff"><label>Título</label><input id="pi-ti${i}" value="${esc(p.title||'')}"></div>
+              <div class="ff"><label>Descripción</label><input id="pi-tx${i}" value="${esc(p.text||'')}"></div>
             </div>
           </div>`).join('')}
       </div>
@@ -1476,26 +1476,26 @@ async function viewAbout() {
   cFile='www.manujungleforever.com/data/about.json'; cSha=data.sha;
   const d=JSON.parse(data.content); cData=d;
   set(`
-    <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-contenido"><i class="ph ph-info"></i></div><div><p class="pt" style="margin-bottom:0">P&aacute;gina Sobre Nosotros</p><p class="ps">Contenido de "About Us"</p></div></div>
+    <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-contenido"><i class="ph ph-info"></i></div><div><p class="pt" style="margin-bottom:0">Página Sobre Nosotros</p><p class="ps">Contenido de "About Us"</p></div></div>
     <div class="eform">
       <div class="esec"><div class="esec-h">General</div>
-        <div class="ff"><label>T&iacute;tulo de la p&aacute;gina</label><input id="ab-t" value="${esc(d.titulo_pagina||'')}"></div>
-        <div class="ff"><label>Subt&iacute;tulo de la p&aacute;gina</label><textarea id="ab-s">${esc(d.subtitulo_pagina||'')}</textarea></div>
+        <div class="ff"><label>Título de la página</label><input id="ab-t" value="${esc(d.titulo_pagina||'')}"></div>
+        <div class="ff"><label>Subtítulo de la página</label><textarea id="ab-s">${esc(d.subtitulo_pagina||'')}</textarea></div>
         ${imgWidget('ab-img','Imagen Hero',d.hero_image||'')}
       </div>
       <div class="esec"><div class="esec-h">Historia</div>
         <div class="grow2">
           <div class="ff"><label>Eyebrow</label><input id="ab-he" value="${esc(d.historia?.eyebrow||'')}"></div>
-          <div class="ff"><label>T&iacute;tulo</label><input id="ab-ht" value="${esc(d.historia?.titulo||'')}"></div>
+          <div class="ff"><label>Título</label><input id="ab-ht" value="${esc(d.historia?.titulo||'')}"></div>
         </div>
-        <div class="ff"><label>P&aacute;rrafos (separados por l&iacute;nea en blanco)</label>
+        <div class="ff"><label>Párrafos (separados por línea en blanco)</label>
           <textarea id="ab-hp" style="min-height:120px">${(d.historia?.paragrafos||[]).join('\n\n')}</textarea></div>
         ${imgWidget('ab-himg','Imagen Historia',d.historia?.imagen||'')}
       </div>
-      <div class="esec"><div class="esec-h">Misi&oacute;n</div>
+      <div class="esec"><div class="esec-h">Misión</div>
         <div class="grow2">
           <div class="ff"><label>Eyebrow</label><input id="ab-me" value="${esc(d.mision?.eyebrow||'')}"></div>
-          <div class="ff"><label>T&iacute;tulo</label><input id="ab-mt" value="${esc(d.mision?.titulo||'')}"></div>
+          <div class="ff"><label>Título</label><input id="ab-mt" value="${esc(d.mision?.titulo||'')}"></div>
         </div>
         <div class="ff"><label>Texto</label><textarea id="ab-mtex" style="min-height:80px">${esc(d.mision?.texto||'')}</textarea></div>
       </div>
@@ -1530,37 +1530,37 @@ async function viewContact() {
   cFile='www.manujungleforever.com/data/contact.json'; cSha=data.sha;
   const d=JSON.parse(data.content); cData=d;
   set(`
-    <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-contenido"><i class="ph ph-phone"></i></div><div><p class="pt" style="margin-bottom:0">P&aacute;gina de Contacto</p><p class="ps">Informaci&oacute;n de contacto y datos de la empresa</p></div></div>
+    <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-contenido"><i class="ph ph-phone"></i></div><div><p class="pt" style="margin-bottom:0">Página de Contacto</p><p class="ps">Información de contacto y datos de la empresa</p></div></div>
     <div class="eform">
-      <div class="esec"><div class="esec-h">Textos de la P&aacute;gina</div>
-        <div class="ff"><label>T&iacute;tulo</label><input id="c-tit" value="${esc(d.titulo_pagina||'')}"></div>
-        <div class="ff"><label>Subt&iacute;tulo</label><input id="c-sub" value="${esc(d.subtitulo_pagina||'')}"></div>
+      <div class="esec"><div class="esec-h">Textos de la Página</div>
+        <div class="ff"><label>Título</label><input id="c-tit" value="${esc(d.titulo_pagina||'')}"></div>
+        <div class="ff"><label>Subtítulo</label><input id="c-sub" value="${esc(d.subtitulo_pagina||'')}"></div>
         ${imgWidget('c-hero','Imagen hero',d.hero_image||'')}
       </div>
       <div class="esec"><div class="esec-h">Datos de Contacto</div>
         <div class="grow2">
           <div class="ff"><label>Email principal</label><input id="c-em" value="${esc(d.contacto_principal?.email||'')}"></div>
-          <div class="ff"><label>WhatsApp (solo n&uacute;meros)</label><input id="c-wa" value="${esc(d.contacto_principal?.whatsapp||'')}"><span class="hint">Ej: 51901525679</span></div>
+          <div class="ff"><label>WhatsApp (solo números)</label><input id="c-wa" value="${esc(d.contacto_principal?.whatsapp||'')}"><span class="hint">Ej: 51901525679</span></div>
         </div>
         <div class="grow2">
-          <div class="ff"><label>Tel&eacute;fono 1</label><input id="c-t1" value="${esc(d.contacto_principal?.telefono_1||'')}"></div>
-          <div class="ff"><label>Tel&eacute;fono 2</label><input id="c-t2" value="${esc(d.contacto_principal?.telefono_2||'')}"></div>
+          <div class="ff"><label>Teléfono 1</label><input id="c-t1" value="${esc(d.contacto_principal?.telefono_1||'')}"></div>
+          <div class="ff"><label>Teléfono 2</label><input id="c-t2" value="${esc(d.contacto_principal?.telefono_2||'')}"></div>
         </div>
         <div class="ff"><label>Mensaje WhatsApp por defecto</label><input id="c-wam" value="${esc(d.contacto_principal?.whatsapp_texto||'')}"></div>
       </div>
-      <div class="esec"><div class="esec-h">Direcci&oacute;n</div>
+      <div class="esec"><div class="esec-h">Dirección</div>
         <div class="grow2">
           <div class="ff"><label>Nombre del lugar</label><input id="c-pn" value="${esc(d.direccion?.nombre||'')}"></div>
           <div class="ff"><label>Localidad / Ciudad</label><input id="c-pc" value="${esc(d.direccion?.localidad||'')}"></div>
         </div>
         <div class="grow2">
-          <div class="ff"><label>Pa&iacute;s</label><input id="c-py" value="${esc(d.direccion?.pais||'')}"></div>
+          <div class="ff"><label>País</label><input id="c-py" value="${esc(d.direccion?.pais||'')}"></div>
           <div class="ff"><label>URL Google Maps</label><input id="c-maps" value="${esc(d.direccion?.maps_url||'')}"></div>
         </div>
       </div>
-      <div class="esec"><div class="esec-h">Horario de Atenci&oacute;n</div>
+      <div class="esec"><div class="esec-h">Horario de Atención</div>
         <div class="grow2">
-          <div class="ff"><label>D&iacute;as</label><input id="c-hd" value="${esc(d.horario?.dias||'')}"><span class="hint">Ej: Lunes – Domingo</span></div>
+          <div class="ff"><label>Días</label><input id="c-hd" value="${esc(d.horario?.dias||'')}"><span class="hint">Ej: Lunes – Domingo</span></div>
           <div class="ff"><label>Horas</label><input id="c-hh" value="${esc(d.horario?.horas||'')}"><span class="hint">Ej: 7:00 AM – 8:00 PM</span></div>
         </div>
         <div class="ff"><label>Nota adicional</label><input id="c-hn" value="${esc(d.horario?.nota||'')}"></div>
@@ -1584,16 +1584,16 @@ async function viewGlobal() {
   cFile='www.manujungleforever.com/data/global.json'; cSha=data.sha;
   const d=JSON.parse(data.content); cData=d;
   set(`
-    <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-contenido"><i class="ph ph-gear"></i></div><div><p class="pt" style="margin-bottom:0">Datos Globales del Sitio</p><p class="ps">Informaci&oacute;n general de marca, redes sociales y SEO</p></div></div>
+    <div style="display:flex;align-items:center;margin-bottom:15px;"><div class="btn-card-icon card-icon-contenido"><i class="ph ph-gear"></i></div><div><p class="pt" style="margin-bottom:0">Datos Globales del Sitio</p><p class="ps">Información general de marca, redes sociales y SEO</p></div></div>
     <div class="eform">
       <div class="esec"><div class="esec-h">Identidad de Marca</div>
         <div class="grow2">
           <div class="ff"><label>Nombre del negocio</label><input id="g-n" value="${esc(d.site_name||'')}"></div>
           <div class="ff"><label>Eslogan</label><input id="g-sl" value="${esc(d.slogan||'')}"></div>
         </div>
-        <div class="ff"><label>Tagline (descripci&oacute;n breve)</label><textarea id="g-tg">${esc(d.tagline||'')}</textarea></div>
+        <div class="ff"><label>Tagline (descripción breve)</label><textarea id="g-tg">${esc(d.tagline||'')}</textarea></div>
       </div>
-      <div class="esec"><div class="esec-h">Im&aacute;genes del Sitio</div>
+      <div class="esec"><div class="esec-h">Imágenes del Sitio</div>
         ${imgWidget('g-logo','Logo principal',d.logo_main||'')}
         ${imgWidget('g-fav','Favicon',d.favicon||'')}
       </div>
@@ -1612,8 +1612,8 @@ async function viewGlobal() {
         </div>
       </div>
       <div class="esec"><div class="esec-h">SEO por Defecto</div>
-        <div class="ff"><label>Sufijo del t&iacute;tulo</label><input id="g-ts" value="${esc(d.seo?.default_title_suffix||'')}"><span class="hint">Ej: | Manu Jungle Forever</span></div>
-        <div class="ff"><label>Descripci&oacute;n por defecto</label><textarea id="g-td">${esc(d.seo?.default_description||'')}</textarea></div>
+        <div class="ff"><label>Sufijo del título</label><input id="g-ts" value="${esc(d.seo?.default_title_suffix||'')}"><span class="hint">Ej: | Manu Jungle Forever</span></div>
+        <div class="ff"><label>Descripción por defecto</label><textarea id="g-td">${esc(d.seo?.default_description||'')}</textarea></div>
         ${imgWidget('g-og','Imagen OG por defecto',d.seo?.default_og_image||'')}
       </div>
       <div class="esec"><div class="esec-h">Copyright</div>
@@ -1647,7 +1647,7 @@ async function viewTours() {
         return `<div class="li">
           <div class="li-info">
             <h3>${t.nombre} <span class="badge ${stCls}">${stLbl}</span></h3>
-            <span>${t.duracion_dias} d&iacute;as · $${t.precio_desde} USD · ${t.categoria} · ${t.dificultad}</span>
+            <span>${t.duracion_dias} días · $${t.precio_desde} USD · ${t.categoria} · ${t.dificultad}</span>
           </div>
           <div class="li-actions"><button class="btn-edit" onclick="editTour(${i})">Editar</button><button class="btn-danger" onclick="deleteTour(${i})">🗑️</button></div>
         </div>`;
@@ -1656,7 +1656,7 @@ async function viewTours() {
 }
 
 window.editTour = function(idx) {
-  const t = idx === -1 ? {nombre:'', estado:'activo', categoria:'wildlife', duracion_dias:1, duracion_noches:0, precio_desde:0, capacidad_min:1, capacidad_max:12, dificultad:'F&aacute;cil', temporada:'', descripcion_corta:'', descripcion_larga:'', imagen_hero:'', galeria:[], itinerario:[], incluye:[], no_incluye:[], destacado:false} : cData.tours[idx];
+  const t = idx === -1 ? {nombre:'', estado:'activo', categoria:'wildlife', duracion_dias:1, duracion_noches:0, precio_desde:0, capacidad_min:1, capacidad_max:12, dificultad:'Fácil', temporada:'', descripcion_corta:'', descripcion_larga:'', imagen_hero:'', galeria:[], itinerario:[], incluye:[], no_incluye:[], destacado:false} : cData.tours[idx];
   set(`
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
       <button class="back-btn" onclick="route('tours')" style="margin-bottom:0">← Volver a tours</button>
@@ -1666,29 +1666,29 @@ window.editTour = function(idx) {
       <div style="display: grid; gap: 32px; grid-template-columns: 2fr 1fr;" class="tour-layout-grid">
         <div style="display: flex; flex-direction: column; gap: 24px;">
           <div style="background: rgba(17,24,39,0.5); border: 1px solid rgba(255,255,255,0.05); padding: 24px; border-radius: 16px;">
-            <h3 style="color: #10b981; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">Informaci&oacute;n General</h3>
+            <h3 style="color: #10b981; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">Información General</h3>
             
             <div class="ff" style="margin-bottom:14px"><label>Nombre del tour</label><input id="t-n" value="${esc(t.nombre)}"></div>
             
             <div style="display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:14px;align-items:start;margin-bottom:14px">
-              <div class="ff"><label>Categor&iacute;a</label>
-                <select id="t-c" onchange="if(this.value==='__add_new__') addCustomItem('t-c', 'Nombre de la nueva categor&iacute;a:')">
+              <div class="ff"><label>Categoría</label>
+                <select id="t-c" onchange="if(this.value==='__add_new__') addCustomItem('t-c', 'Nombre de la nueva categoría:')">
                   ${(() => {
                     const baseCats = ['wildlife', 'cultural', 'expedition', 'birdwatching', 'machu wasi', 'roadtrip', 'photography'];
                     const existingCats = (cData?.tours || []).map(x => x.categoria).filter(Boolean);
                     const allCats = Array.from(new Set([...baseCats, ...existingCats, t.categoria].filter(Boolean)));
                     return allCats.map(c => `<option value="${esc(c)}" ${t.categoria === c ? 'selected' : ''}>${esc(c)}</option>`).join('') +
-                           '<option value="__add_new__" style="font-weight:bold;color:#2dd4bf;">+ A&ntilde;adir categor&iacute;a...</option>';
+                           '<option value="__add_new__" style="font-weight:bold;color:#2dd4bf;">+ Añadir categoría...</option>';
                   })()}
                 </select>
               </div>
               <div class="ff"><label>Precio ($ USD)</label><input type="number" id="t-p" value="${t.precio_desde}" min="0"></div>
-              <div class="ff"><label>Cap. M&iacute;nima</label><input type="number" id="t-cmin" value="${t.capacidad_min}" min="1"></div>
-              <div class="ff"><label>Cap. M&aacute;xima</label><input type="number" id="t-cmax" value="${t.capacidad_max}" min="1"></div>
+              <div class="ff"><label>Cap. Mínima</label><input type="number" id="t-cmin" value="${t.capacidad_min}" min="1"></div>
+              <div class="ff"><label>Cap. Máxima</label><input type="number" id="t-cmax" value="${t.capacidad_max}" min="1"></div>
             </div>
             
             <div style="display:grid;grid-template-columns:1.2fr 1.5fr 1fr 1fr;gap:14px;align-items:start;margin-bottom:14px">
-              <div class="ff"><label>Dificultad</label><select id="t-dif"><option value="F&aacute;cil" ${t.dificultad==='F&aacute;cil'?'selected':''}>Easy</option><option value="Moderado" ${t.dificultad==='Moderado'?'selected':''}>Moderate</option><option value="Dif&iacute;cil" ${t.dificultad==='Dif&iacute;cil'?'selected':''}>Hard</option></select></div>
+              <div class="ff"><label>Dificultad</label><select id="t-dif"><option value="Fácil" ${t.dificultad==='Fácil'?'selected':''}>Easy</option><option value="Moderado" ${t.dificultad==='Moderado'?'selected':''}>Moderate</option><option value="Difícil" ${t.dificultad==='Difícil'?'selected':''}>Hard</option></select></div>
               <div class="ff"><label>Temporada</label>
                 <select id="t-tmp" onchange="if(this.value==='__add_new__') addCustomItem('t-tmp', 'Nombre de la nueva temporada:')">
                   ${(() => {
@@ -1697,19 +1697,19 @@ window.editTour = function(idx) {
                     const currentSeason = t.temporada || 'All year';
                     const allSeasons = Array.from(new Set([...baseSeasons, ...existingSeasons, currentSeason].filter(Boolean)));
                     return allSeasons.map(s => `<option value="${esc(s)}" ${currentSeason === s ? 'selected' : ''}>${esc(s)}</option>`).join('') +
-                           '<option value="__add_new__" style="font-weight:bold;color:#2dd4bf;">+ A&ntilde;adir temporada...</option>';
+                           '<option value="__add_new__" style="font-weight:bold;color:#2dd4bf;">+ Añadir temporada...</option>';
                   })()}
                 </select>
               </div>
-              <div class="ff"><label>D&iacute;as</label><input type="number" id="t-d" value="${t.duracion_dias||1}" min="1"></div>
+              <div class="ff"><label>Días</label><input type="number" id="t-d" value="${t.duracion_dias||1}" min="1"></div>
               <div class="ff"><label>Noches</label><input type="number" id="t-dn" value="${t.duracion_noches||0}" min="0"></div>
             </div>
           </div>
           
           <div style="background: rgba(17,24,39,0.5); border: 1px solid rgba(255,255,255,0.05); padding: 24px; border-radius: 16px;">
             <h3 style="color: #10b981; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">Descripciones</h3>
-            <div class="ff" style="margin-bottom:12px"><label>Descripci&oacute;n corta (tarjetas)</label><textarea id="t-dc" style="min-height:80px">${esc(t.descripcion_corta||'')}</textarea></div>
-            <div class="ff"><label>Descripci&oacute;n completa (Markdown)</label>${mdToolbar('t-dl')}</div>
+            <div class="ff" style="margin-bottom:12px"><label>Descripción corta (tarjetas)</label><textarea id="t-dc" style="min-height:80px">${esc(t.descripcion_corta||'')}</textarea></div>
+            <div class="ff"><label>Descripción completa (Markdown)</label>${mdToolbar('t-dl')}</div>
           </div>
         </div>
 
@@ -1830,7 +1830,7 @@ window.viewPax = function(idx) {
       <span>Selecciona los pasajeros para incluirlos en el <strong>Manifiesto Oficial</strong></span>
     </div>
     <div style="display:flex;gap:10px;flex-wrap:wrap;">
-      <button class="btn-primary" onclick="editPax(${idx}, -1)">+ A&ntilde;adir Pasajero</button>
+      <button class="btn-primary" onclick="editPax(${idx}, -1)">+ Añadir Pasajero</button>
       <button style="background:rgba(59,130,246,0.1);color:#60a5fa;border:1px solid rgba(59,130,246,0.3);padding:8px 16px;border-radius:8px;cursor:pointer;font-weight:600;display:flex;align-items:center;gap:6px;transition:background 0.2s;" onmouseover="this.style.background='rgba(59,130,246,0.2)'" onmouseout="this.style.background='rgba(59,130,246,0.1)'" onclick="exportPaxCSV(${idx})">⬇ Exportar CSV (<span id="pax-selected-count-csv">${pax.length}</span>)</button>
       <button style="background:rgba(245,158,11,0.12);color:#fbbf24;border:1px solid rgba(245,158,11,0.3);padding:8px 16px;border-radius:8px;cursor:pointer;font-weight:600;display:flex;align-items:center;gap:6px;transition:background 0.2s;" onmouseover="this.style.background='rgba(245,158,11,0.2)'" onmouseout="this.style.background='rgba(245,158,11,0.12)'" onclick="exportPaxPDF(${idx})">📄 Exportar Manifiesto PDF (<span id="pax-selected-count">${pax.length}</span>)</button>
     </div>
@@ -1848,7 +1848,7 @@ window.viewPax = function(idx) {
           <th style="padding:0 15px 10px 15px;width:75px;border-bottom:1px solid rgba(255,255,255,0.1)">Foto</th>
           <th style="padding:0 15px 10px 15px;border-bottom:1px solid rgba(255,255,255,0.1)">Nombre / Pasaporte</th>
           <th style="padding:0 15px 10px 15px;border-bottom:1px solid rgba(255,255,255,0.1)">Contacto</th>
-          <th style="padding:0 15px 10px 15px;border-bottom:1px solid rgba(255,255,255,0.1)">Dietas / M&eacute;dicas</th>
+          <th style="padding:0 15px 10px 15px;border-bottom:1px solid rgba(255,255,255,0.1)">Dietas / Médicas</th>
           <th style="padding:0 15px 10px 15px;border-bottom:1px solid rgba(255,255,255,0.1)">Pago</th>
           <th style="padding:0 15px 10px 15px;text-align:right;border-bottom:1px solid rgba(255,255,255,0.1)">Acciones</th>
         </tr>`;
@@ -1881,9 +1881,9 @@ window.viewPax = function(idx) {
 };
 
   window.editPax = function(sIdx, pIdx) {
-    const countries = ["Peruana (PER)", "Estadounidense (USA)", "Canadiense (CAN)", "Brit&aacute;nica (GBR)", "Alemana (GER)", "Francesa (FRA)", "Australiana (AUS)", "Espa&ntilde;ola (ESP)", "Italiana (ITA)", "Holandesa (NED)", "Suiza (SUI)", "Brasile&ntilde;a (BRA)", "Argentina (ARG)", "Colombiana (COL)", "Chilena (CHI)"];
-    const diets = ["Ninguna", "Vegetariano", "Vegano", "Sin Gluten (Cel&iacute;aco)", "Alergia a Nueces/Man&iacute;", "Intolerante a la Lactosa", "Pescetariano"];
-    const meds = ["Ninguna", "Asma", "Diabetes", "Hipertensi&oacute;n", "Problemas Card&iacute;acos", "Alergia a Picaduras (Abejas)", "Epilepsia"];
+    const countries = ["Peruana (PER)", "Estadounidense (USA)", "Canadiense (CAN)", "Británica (GBR)", "Alemana (GER)", "Francesa (FRA)", "Australiana (AUS)", "Española (ESP)", "Italiana (ITA)", "Holandesa (NED)", "Suiza (SUI)", "Brasileña (BRA)", "Argentina (ARG)", "Colombiana (COL)", "Chilena (CHI)"];
+    const diets = ["Ninguna", "Vegetariano", "Vegano", "Sin Gluten (Celíaco)", "Alergia a Nueces/Maní", "Intolerante a la Lactosa", "Pescetariano"];
+    const meds = ["Ninguna", "Asma", "Diabetes", "Hipertensión", "Problemas Cardíacos", "Alergia a Picaduras (Abejas)", "Epilepsia"];
     
     const makeSelect = (id, options, val) => {
       let isCustom = val && !options.includes(val);
@@ -1895,9 +1895,9 @@ window.viewPax = function(idx) {
       options.forEach(o => {
         html += `<option value="${o}" ${val === o ? 'selected' : ''}>${o}</option>`;
       });
-      html += `<option value="_custom_" ${isCustom ? 'selected' : ''}>+ A&ntilde;adir Nuevo...</option>`;
+      html += `<option value="_custom_" ${isCustom ? 'selected' : ''}>+ Añadir Nuevo...</option>`;
       html += `</select>`;
-      html += `<input type="text" id="${id}-c" value="${isCustom ? val : ''}" style="display:${isCustom ? 'block' : 'none'}; margin-top:8px;" placeholder="Escriba aqu&iacute;...">`;
+      html += `<input type="text" id="${id}-c" value="${isCustom ? val : ''}" style="display:${isCustom ? 'block' : 'none'}; margin-top:8px;" placeholder="Escriba aquí...">`;
       return html;
     };
   const s = cData.salidas[sIdx];
@@ -1922,8 +1922,8 @@ window.viewPax = function(idx) {
         <div class="ff"><label>Email</label><input id="p-e" value="${esc(p.email||'')}"></div>
       </div>
               <div class="grow2">
-          <div class="ff"><label>Restricciones Diet&eacute;ticas</label>${makeSelect('p-rd', diets, p.restricciones_dieteticas)}</div>
-          <div class="ff"><label>Condiciones M&eacute;dicas</label>${makeSelect('p-cm', meds, p.condiciones_medicas)}</div>
+          <div class="ff"><label>Restricciones Dietéticas</label>${makeSelect('p-rd', diets, p.restricciones_dieteticas)}</div>
+          <div class="ff"><label>Condiciones Médicas</label>${makeSelect('p-cm', meds, p.condiciones_medicas)}</div>
         </div>
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:18px;">
           <div class="ff"><label>Costo del Tour ($ USD)</label><input type="number" id="p-costo" value="${p.costo || cData.salidas[sIdx].precio || 0}" oninput="calcPaxPrice('costo')"></div>
@@ -1939,12 +1939,12 @@ window.viewPax = function(idx) {
         </div>
 
       <div class="ff" style="margin-top:10px">
-        <label>Fotograf&iacute;a del Pasajero (URL o Galer&iacute;a)</label>
+        <label>Fotografía del Pasajero (URL o Galería)</label>
                   <div class="img-input-row" style="margin-bottom:10px; display:flex; gap:8px; flex-wrap:nowrap;">
             <input id="p-foto" value="${esc(p.foto||'')}" placeholder="https://..." oninput="updateImgPreview('p-foto', 'p-foto-prev')" style="flex:1; min-width:200px;">
-            <button class="btn-secondary" onclick="pickImage('p-foto', 'p-foto-prev')" title="Elegir de galer&iacute;a"><i class="ph ph-image"></i> Galer&iacute;a</button>
+            <button class="btn-secondary" onclick="pickImage('p-foto', 'p-foto-prev')" title="Elegir de galería"><i class="ph ph-image"></i> Galería</button>
             <button class="btn-primary" onclick="triggerPaxUpload(${sIdx})" style="background:#0284c7;color:white;border:none;white-space:nowrap;" title="Subir desde tu dispositivo"><i class="ph ph-upload-simple"></i> Subir Foto</button>
-            <button class="btn-primary" onclick="takePaxPhoto(${sIdx})" style="background:var(--teal);color:white;border:none;white-space:nowrap;" title="Tomar foto con c&aacute;mara"><i class="ph ph-camera"></i> Tomar Foto</button>
+            <button class="btn-primary" onclick="takePaxPhoto(${sIdx})" style="background:var(--teal);color:white;border:none;white-space:nowrap;" title="Tomar foto con cámara"><i class="ph ph-camera"></i> Tomar Foto</button>
             <input type="file" id="p-upload-file" accept="image/*" style="display:none" onchange="uploadPaxPhoto(this, ${sIdx})">
             <input type="file" id="p-camera-file" accept="image/*" capture="environment" style="display:none" onchange="uploadPaxPhoto(this, ${sIdx})">
           </div>
@@ -2014,7 +2014,7 @@ window.viewPax = function(idx) {
   window.takePaxPhoto = function(sIdx) {
     const name = document.getElementById('p-n') ? document.getElementById('p-n').value.trim() : '';
     if (!name) {
-      alert("Por favor, ingrese primero el 'Nombre Completo' del pasajero antes de tomar la fotograf&iacute;a para archivarlo correctamente.");
+      alert("Por favor, ingrese primero el 'Nombre Completo' del pasajero antes de tomar la fotografía para archivarlo correctamente.");
       document.getElementById('p-n').focus();
       return;
     }
@@ -2119,7 +2119,7 @@ window.deletePax = function(sIdx, pIdx) {
   const confirmBtn = document.getElementById('del-confirm');
 
   if (titleEl) titleEl.textContent = '¿Eliminar Pasajero?';
-  if (msgEl) msgEl.innerHTML = `¿Est&aacute;s seguro de que deseas eliminar al pasajero <strong>"${paxName}"</strong> de la salida ${s.id}?<br><br><span style="color:var(--danger)">Esta acci&oacute;n eliminar&aacute; permanentemente los datos del pasajero.</span>`;
+  if (msgEl) msgEl.innerHTML = `¿Estás seguro de que deseas eliminar al pasajero <strong>"${paxName}"</strong> de la salida ${s.id}?<br><br><span style="color:var(--danger)">Esta acción eliminará permanentemente los datos del pasajero.</span>`;
 
   if (confirmBtn) {
     confirmBtn.onclick = async () => {
@@ -2249,7 +2249,7 @@ window.exportPaxPDF = async function(idx) {
     doc.setTextColor(15, 23, 42); // slate-900
     doc.text("MANIFIESTO DE PASAJEROS", 196, 25, { align: 'right' });
     
-    // --- INFO BLOCK (redise&ntilde;ado compacto) ---
+    // --- INFO BLOCK (rediseñado compacto) ---
     doc.setFillColor(245, 251, 250);
     doc.setDrawColor(210, 230, 228);
     doc.roundedRect(14, 40, 182, 23, 2, 2, 'FD');
@@ -2272,7 +2272,7 @@ window.exportPaxPDF = async function(idx) {
     doc.text(`${s.fecha_salida || 'TBD'} al ${s.fecha_retorno || 'TBD'}`, 35, 53.5);
 
     doc.setTextColor(...infoLabelColor); doc.setFont(undefined, 'bold');
-    doc.text('Gu&iacute;a:', 20, 60);
+    doc.text('Guía:', 20, 60);
     doc.setTextColor(...infoValueColor); doc.setFont(undefined, 'normal');
     doc.text(s.guia_asignado || 'No asignado', 31, 60);
 
@@ -2297,7 +2297,7 @@ window.exportPaxPDF = async function(idx) {
         if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
           age--;
         }
-        edad = age.toString() + ' a&ntilde;os';
+        edad = age.toString() + ' años';
       }
       return [
         i + 1,
@@ -2457,7 +2457,7 @@ window.exportPaxPDF = async function(idx) {
         // FOOTER premium
         const pageH = doc.internal.pageSize.height;
         const pageW = doc.internal.pageSize.width;
-        // L&iacute;nea separadora
+        // Línea separadora
         doc.setDrawColor(13, 148, 136);
         doc.setLineWidth(0.4);
         doc.line(data.settings.margin.left, pageH - 14, pageW - data.settings.margin.right, pageH - 14);
@@ -2468,7 +2468,7 @@ window.exportPaxPDF = async function(idx) {
         const timestamp = now.toLocaleString('es-PE');
         doc.text(`Generado: ${timestamp}`, data.settings.margin.left, pageH - 9);
         doc.text(
-          `P&aacute;g. ${doc.internal.getNumberOfPages()}`,
+          `Pág. ${doc.internal.getNumberOfPages()}`,
           pageW - data.settings.margin.right,
           pageH - 9,
           { align: 'right' }
@@ -2492,7 +2492,7 @@ async function viewDeps() {
   cData=JSON.parse(data.content);
   const sal=cData.salidas||[];
   
-  // Ordenar salidas num&eacute;ricamente descendente (ej. 011, 010, 009)
+  // Ordenar salidas numéricamente descendente (ej. 011, 010, 009)
   sal.sort((a,b) => {
     const numA = parseInt((a.id||'').replace(/\D/g, ''), 10);
     const numB = parseInt((b.id||'').replace(/\D/g, ''), 10);
@@ -2526,14 +2526,14 @@ async function viewDeps() {
   
   set(`
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
-      <div style="display:flex;align-items:center;"><div class="btn-card-icon card-icon-salidas"><i class="ph ph-calendar"></i></div><div><p class="pt" style="margin-bottom:0">Salidas Programadas</p><p class="ps">Control de cupos, log&iacute;stica y ventas</p></div></div>
+      <div style="display:flex;align-items:center;"><div class="btn-card-icon card-icon-salidas"><i class="ph ph-calendar"></i></div><div><p class="pt" style="margin-bottom:0">Salidas Programadas</p><p class="ps">Control de cupos, logística y ventas</p></div></div>
       <button class="btn-primary" onclick="editDep(-1)">+ Crear Nueva Salida</button>
     </div>
     
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:15px;margin-bottom:20px;">
       <div class="esec" style="padding:15px;"><div style="font-size:2rem;font-weight:bold;color:var(--teal)">${activas}</div><div style="font-size:.8rem;color:var(--muted)">Salidas Activas</div></div>
       <div class="esec" style="padding:15px;"><div style="font-size:2rem;font-weight:bold;color:#34d399">${vendidas}</div><div style="font-size:.8rem;color:var(--muted)">Plazas Vendidas Totales</div></div>
-      <div class="esec" style="padding:15px;"><div style="font-size:2rem;font-weight:bold;color:var(--gold)">${sal.length}</div><div style="font-size:.8rem;color:var(--muted)">Salidas Hist&oacute;ricas</div></div>
+      <div class="esec" style="padding:15px;"><div style="font-size:2rem;font-weight:bold;color:var(--gold)">${sal.length}</div><div style="font-size:.8rem;color:var(--muted)">Salidas Históricas</div></div>
     </div>
     
     <div style="display:flex;gap:10px;margin-bottom:20px;align-items:center">
@@ -2575,7 +2575,7 @@ async function viewDeps() {
             
             <div style="margin-bottom:12px">
               <div style="display:flex;justify-content:space-between;font-size:.75rem;margin-bottom:4px;">
-                <span>Ocupaci&oacute;n: ${sold} / ${s.plazas_totales} (${s.plazas_disponibles} disp.)</span>
+                <span>Ocupación: ${sold} / ${s.plazas_totales} (${s.plazas_disponibles} disp.)</span>
                 <span>${pct}%</span>
               </div>
               <div style="width:100%;height:8px;background:rgba(255,255,255,.1);border-radius:4px;overflow:hidden">
@@ -2584,8 +2584,8 @@ async function viewDeps() {
             </div>
             
             <div style="display:flex;gap:15px;font-size:.78rem;color:var(--muted);border-top:1px solid rgba(255,255,255,.06);padding-top:10px">
-              <div><span style="color:var(--fg)">Gu&iacute;a:</span> ${s.guia_asignado || 'Sin asignar'}</div>
-              <div><span style="color:var(--fg)">M&iacute;nimo:</span> ${s.plazas_minimas||2} pax (${sold >= (s.plazas_minimas||2) ? '<span style="color:#34d399">Alcanzado ✓</span>' : '<span style="color:#f87171">Faltan '+( (s.plazas_minimas||2) - sold )+'</span>'})</div>
+              <div><span style="color:var(--fg)">Guía:</span> ${s.guia_asignado || 'Sin asignar'}</div>
+              <div><span style="color:var(--fg)">Mínimo:</span> ${s.plazas_minimas||2} pax (${sold >= (s.plazas_minimas||2) ? '<span style="color:#34d399">Alcanzado ✓</span>' : '<span style="color:#f87171">Faltan '+( (s.plazas_minimas||2) - sold )+'</span>'})</div>
             </div>
           </div>
           
@@ -2645,20 +2645,20 @@ window.editDep = async function(idx) {
         <div class="ff"><label>Nombre del tour (Sobreescribir)</label><input id="d-n" value="${esc(s.tour_nombre)}"></div>
       </div>
       <div class="grow3">
-        <div class="ff"><label>ID &uacute;nico</label><input id="d-id" value="${esc((s.id || '').toUpperCase())}"></div>
+        <div class="ff"><label>ID único</label><input id="d-id" value="${esc((s.id || '').toUpperCase())}"></div>
         <div class="ff"><label>Fecha de salida</label><input type="date" id="d-s" value="${esc(s.fecha_salida)}"></div>
         <div class="ff"><label>Fecha de regreso</label><input type="date" id="d-r" value="${esc(s.fecha_regreso)}"></div>
       </div>
       <div class="grow3">
         <div class="ff"><label>Precio ($ USD)</label><input type="number" id="d-p" value="${s.precio ?? 0}"></div>
         <div class="ff"><label>Plazas totales</label><input type="number" id="d-t" value="${s.plazas_totales ?? s.cupos_totales ?? 8}"></div>
-        <div class="ff"><label>M&iacute;nimo de pasajeros</label><input type="number" id="d-min" value="${s.plazas_minimas ?? s.cupos_minimos ?? 2}"></div>
+        <div class="ff"><label>Mínimo de pasajeros</label><input type="number" id="d-min" value="${s.plazas_minimas ?? s.cupos_minimos ?? 2}"></div>
       </div>
       <div class="grow3">
         <div class="ff"><label>Plazas disponibles</label><input type="number" id="d-d" value="${s.plazas_disponibles ?? s.cupos_disponibles ?? 8}"></div>
         <div class="ff"><label>Estado</label><select id="d-e">${['disponible','limitado','completo','cancelado','cerrado'].map(e=>`<option ${s.estado===e?'selected':''} value="${e}">${e}</option>`).join('')}</select></div>
-        <div class="ff"><label>Gu&iacute;a Asignado</label>
-          <select id="d-g" onchange="if(this.value==='__add_new__') addCustomItem('d-g', 'Nombre completo del nuevo gu&iacute;a:'); else if(this.value==='__remove_guide__') removeCustomGuide('d-g');">
+        <div class="ff"><label>Guía Asignado</label>
+          <select id="d-g" onchange="if(this.value==='__add_new__') addCustomItem('d-g', 'Nombre completo del nuevo guía:'); else if(this.value==='__remove_guide__') removeCustomGuide('d-g');">
             <option value="">-- Sin asignar / Por definir --</option>
             ${(() => {
               const savedGuides = Array.isArray(cData?.guias) ? cData.guias : [];
@@ -2666,8 +2666,8 @@ window.editDep = async function(idx) {
               const currentGuide = (s.guia_asignado || '').trim();
               const allGuides = Array.from(new Set([...savedGuides, ...existingGuides, currentGuide].filter(Boolean))).sort();
               return allGuides.map(g => `<option value="${esc(g)}" ${currentGuide === g ? 'selected' : ''}>${esc(g)}</option>`).join('') +
-                     '<option value="__add_new__" style="font-weight:bold;color:#2dd4bf;">+ A&ntilde;adir nuevo gu&iacute;a...</option>' +
-                     '<option value="__remove_guide__" style="font-weight:bold;color:#ef4444;">- Eliminar un gu&iacute;a de la lista...</option>';
+                     '<option value="__add_new__" style="font-weight:bold;color:#2dd4bf;">+ Añadir nuevo guía...</option>' +
+                     '<option value="__remove_guide__" style="font-weight:bold;color:#ef4444;">- Eliminar un guía de la lista...</option>';
             })()}
           </select>
         </div>
@@ -2748,7 +2748,7 @@ window.deleteDep = function(idx) {
   const confirmBtn = document.getElementById('del-confirm');
 
   if (titleEl) titleEl.textContent = '¿Eliminar Salida Programada?';
-  if (msgEl) msgEl.innerHTML = `¿Est&aacute;s seguro de que deseas eliminar la salida <strong>"${depId} - ${tourName}"</strong>?<br><br><span style="color:var(--danger)">Esta acci&oacute;n eliminar&aacute; permanentemente la salida y todos sus datos asociados en Cloudflare D1.</span>`;
+  if (msgEl) msgEl.innerHTML = `¿Estás seguro de que deseas eliminar la salida <strong>"${depId} - ${tourName}"</strong>?<br><br><span style="color:var(--danger)">Esta acción eliminará permanentemente la salida y todos sus datos asociados en Cloudflare D1.</span>`;
 
   if (confirmBtn) {
     confirmBtn.onclick = async () => {
@@ -2814,7 +2814,7 @@ window.editTestim = function(idx) {
     <div class="eform"><div class="esec"><div class="esec-h">Datos del Testimonio</div>
       <div class="grow2">
         <div class="ff"><label>Nombre del cliente</label><input id="tm-n" value="${esc(t.nombre)}"></div>
-        <div class="ff"><label>Pa&iacute;s</label><input id="tm-p" value="${esc(t.pais)}"></div>
+        <div class="ff"><label>País</label><input id="tm-p" value="${esc(t.pais)}"></div>
       </div>
       <div class="grow2">
         <div class="ff"><label>Bandera emoji</label><input id="tm-fl" value="${esc(t.bandera||'')}"><span class="hint">Ej: 🇺🇸 🇬🇧 🇩🇪 🇦🇺</span></div>
@@ -2827,7 +2827,7 @@ window.editTestim = function(idx) {
       </div>
       <div class="grow2">
         <div class="ff"><label>Fecha del viaje</label><input type="date" id="tm-f" value="${esc(t.fecha)}"></div>
-        <div class="ff"><label>Calificaci&oacute;n (estrellas)</label><select id="tm-r"><option ${t.rating==5?'selected':''} value="5">⭐⭐⭐⭐⭐ (5)</option><option ${t.rating==4?'selected':''} value="4">⭐⭐⭐⭐ (4)</option><option ${t.rating==3?'selected':''} value="3">⭐⭐⭐ (3)</option></select></div>
+        <div class="ff"><label>Calificación (estrellas)</label><select id="tm-r"><option ${t.rating==5?'selected':''} value="5">⭐⭐⭐⭐⭐ (5)</option><option ${t.rating==4?'selected':''} value="4">⭐⭐⭐⭐ (4)</option><option ${t.rating==3?'selected':''} value="3">⭐⭐⭐ (3)</option></select></div>
       </div>
       <div class="ff"><label>Texto del testimonio</label><textarea id="tm-tx" style="min-height:120px">${esc(t.texto)}</textarea></div>
       ${imgWidget('tm-img','Foto del cliente (opcional)',t.foto||'')}
@@ -2857,7 +2857,7 @@ window.editTestim = function(idx) {
 // ─────────────────────────────────────────────────────────────────────────────
 function confirmDelete(path, sha, label, backFn) {
   document.getElementById('del-title').textContent=`¿Eliminar este ${label}?`;
-  document.getElementById('del-msg').textContent=`"${path.split('/').pop()}" — Esta acci&oacute;n no se puede deshacer.`;
+  document.getElementById('del-msg').textContent=`"${path.split('/').pop()}" — Esta acción no se puede deshacer.`;
   document.getElementById('del-modal').classList.add('open');
   document.getElementById('del-confirm').onclick = async () => {
     try {
@@ -2897,7 +2897,7 @@ function hideSaveBar_DIS() { document.getElementById('save-bar').style.display='
 // ─────────────────────────────────────────────────────────────────────────────
 function set_DIS(h){ document.getElementById('mc').innerHTML=h; }
 function v(id){ return document.getElementById(id)?.value??''; }
-function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function esc(s){ return String(s).replace(/&/g,'&').replace(/"/g,'"').replace(/</g,'<').replace(/>/g,'>'); }
 
 function parseFM(raw) {
   const m=raw.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);
@@ -2942,7 +2942,7 @@ async function viewReclamos() {
     
     let html = `
     <div style="display:flex;align-items:center;margin-bottom:20px;"><div class="btn-card-icon card-icon-reclamos"><i class="ph ph-scales"></i></div><h2 class="pt" style="margin-bottom:0">Libro de Reclamaciones</h2></div>
-    <p class="ps">Auditor&iacute;a y exportaci&oacute;n de quejas y reclamos legales.</p>
+    <p class="ps">Auditoría y exportación de quejas y reclamos legales.</p>
 
     <!-- Filtros tipo Wachicargo -->
     <div style="background:var(--card);border:1px solid var(--bdr);border-radius:14px;padding:20px;margin-bottom:20px;display:flex;gap:15px;align-items:flex-end;flex-wrap:nowrap;">
@@ -2950,7 +2950,7 @@ async function viewReclamos() {
         <label style="font-size:0.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;margin-bottom:6px;display:block;">Buscar</label>
         <div style="position:relative;">
           <i class="ph ph-magnifying-glass" style="position:absolute;left:12px;top:10px;color:var(--muted);"></i>
-          <input type="text" id="r-search" placeholder="C&oacute;digo, nombre o documento..." style="width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:var(--fg);padding:9px 12px 9px 36px;border-radius:10px;font-size:0.85rem;outline:none;">
+          <input type="text" id="r-search" placeholder="Código, nombre o documento..." style="width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:var(--fg);padding:9px 12px 9px 36px;border-radius:10px;font-size:0.85rem;outline:none;">
         </div>
       </div>
       <div style="flex:1;min-width:120px;">
@@ -2979,7 +2979,7 @@ async function viewReclamos() {
       <table style="width:100%;border-collapse:collapse;text-align:left;">
         <thead>
           <tr style="border-bottom:1px solid var(--bdr);font-size:0.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">
-            <th style="padding:16px 20px;">C&oacute;digo</th>
+            <th style="padding:16px 20px;">Código</th>
             <th style="padding:16px 20px;">Fecha</th>
             <th style="padding:16px 20px;">Cliente</th>
             <th style="padding:16px 20px;">Tipo</th>
@@ -3005,7 +3005,7 @@ async function viewReclamos() {
           <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:15px;margin-bottom:15px;display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:0.85rem;">
             <div><strong style="color:var(--muted)">Cliente:</strong> <span id="mr-cliente"></span></div>
             <div><strong style="color:var(--muted)">Doc/DNI:</strong> <span id="mr-dni"></span></div>
-            <div><strong style="color:var(--muted)">Tel&eacute;fono:</strong> <span id="mr-tel"></span></div>
+            <div><strong style="color:var(--muted)">Teléfono:</strong> <span id="mr-tel"></span></div>
             <div><strong style="color:var(--muted)">Correo:</strong> <span id="mr-email"></span></div>
             <div style="grid-column:1/-1;"><strong style="color:var(--muted)">Domicilio:</strong> <span id="mr-domicilio"></span></div>
           </div>
@@ -3022,8 +3022,8 @@ async function viewReclamos() {
           
           <div id="mr-respuesta-box" style="margin-top:20px;border-top:1px solid rgba(255,255,255,.08);padding-top:20px;">
             <h4 style="font-size:0.95rem;margin-bottom:8px;color:var(--teal);">Respuesta Oficial</h4>
-            <p style="font-size:0.75rem;color:var(--muted);margin-bottom:12px;">Escriba la respuesta que se enviar&aacute; autom&aacute;ticamente al correo del cliente. Este texto ser&aacute; el contenido principal del correo oficial.</p>
-            <textarea id="mr-reply" style="width:100%;padding:12px;border:1px solid rgba(255,255,255,.1);border-radius:10px;background:rgba(0,0,0,.3);color:var(--fg);font-family:inherit;font-size:0.85rem;min-height:120px;outline:none;" placeholder="Estimado cliente, en relaci&oacute;n a su reclamo..."></textarea>
+            <p style="font-size:0.75rem;color:var(--muted);margin-bottom:12px;">Escriba la respuesta que se enviará automáticamente al correo del cliente. Este texto será el contenido principal del correo oficial.</p>
+            <textarea id="mr-reply" style="width:100%;padding:12px;border:1px solid rgba(255,255,255,.1);border-radius:10px;background:rgba(0,0,0,.3);color:var(--fg);font-family:inherit;font-size:0.85rem;min-height:120px;outline:none;" placeholder="Estimado cliente, en relación a su reclamo..."></textarea>
             
             <div id="mr-status" style="margin-top:10px;display:none;padding:10px;border-radius:8px;font-size:0.8rem;"></div>
           </div>
@@ -3056,7 +3056,7 @@ function renderReclamosRows(list) {
   const tbody = document.getElementById('r-tbody');
   if (!tbody) return;
   if (!list || list.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="6" style="padding:40px;text-align:center;color:var(--muted);">No se encontraron reclamos que coincidan con la b&uacute;squeda.</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="6" style="padding:40px;text-align:center;color:var(--muted);">No se encontraron reclamos que coincidan con la búsqueda.</td></tr>`;
     return;
   }
   
@@ -3122,7 +3122,7 @@ function exportReclamos() {
   const list = window.currentReclamosData || [];
   if (!list.length) return alert('No hay datos para exportar.');
   
-  let csv = 'C&oacute;digo,Fecha,Cliente,Documento,Tel&eacute;fono,Correo,Tipo,Estado\n';
+  let csv = 'Código,Fecha,Cliente,Documento,Teléfono,Correo,Tipo,Estado\n';
   list.forEach(r => {
     csv += `"${r.codigo_reclamo}","${r.fecha}","${r.nombres}","${r.documento}","${r.telefono}","${r.correo}","${r.tipo}","${r.estado}"\n`;
   });
@@ -3266,7 +3266,7 @@ window.openMediaModal = async function(callback) {
   openModal('media-modal');
   
   const body = document.getElementById('media-modal-body');
-  body.innerHTML = `<div class="loading"><div class="spinner"></div> Cargando galer&iacute;a...</div>`;
+  body.innerHTML = `<div class="loading"><div class="spinner"></div> Cargando galería...</div>`;
   
   try {
     window.currentMediaFiles = await r2GetList();
@@ -3301,8 +3301,8 @@ window.updateImgPreview = function(inputId, previewId) {
 };
 
 window.deleteBlog = async function(path, sha, name) {
-  if (confirm(`¿Est&aacute;s seguro de eliminar permanentemente el art&iacute;culo "${name}"?`)) {
-    set(`<div class="loading"><div class="spinner"></div> Eliminando art&iacute;culo...</div>`);
+  if (confirm(`¿Estás seguro de eliminar permanentemente el artículo "${name}"?`)) {
+    set(`<div class="loading"><div class="spinner"></div> Eliminando artículo...</div>`);
     try {
       await ghDelete(path, sha, `delete post: ${name}`);
       const slug = path.split('/').pop().replace('.md', '');
@@ -3322,7 +3322,7 @@ window.deleteBlog = async function(path, sha, name) {
 
       await viewBlog();
     } catch(e) {
-      alert(`Error al eliminar art&iacute;culo: ${e.message}`);
+      alert(`Error al eliminar artículo: ${e.message}`);
       await viewBlog();
     }
   }

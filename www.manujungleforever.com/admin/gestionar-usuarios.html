@@ -6,7 +6,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<title>Gesti&oacute;n de Usuarios - Manu Jungle Admin</title>
+<title>Gestión de Usuarios - Manu Jungle Admin</title>
 <meta name="robots" content="noindex,nofollow">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
@@ -133,7 +133,7 @@ main { flex-grow:1; max-width:1200px !important; width:100% !important; margin:0
 .user-avatar.normal { background:rgba(45,212,191,0.15); color:#2dd4bf; border:2px solid rgba(45,212,191,0.4); }
 .user-avatar-img { width:100%; height:100%; object-fit:cover; border-radius:50%; }
 
-/* Modal Galer&iacute;a */
+/* Modal Galería */
 .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.85); backdrop-filter:blur(8px); z-index:999999; display:none; align-items:center; justify-content:center; padding:20px; }
 .modal-overlay.open { display:flex; }
 .modal-box { background:#0a1a17; border:1px solid rgba(45,212,191,0.3); border-radius:18px; max-width:850px; width:100%; max-height:85vh; display:flex; flex-direction:column; overflow:hidden; box-shadow:0 20px 60px rgba(0,0,0,0.9); }
@@ -350,7 +350,7 @@ header {
     filter: brightness(1.1) !important;
 }
 
-/* Fila 2: Barra de Navegaci&oacute;n */
+/* Fila 2: Barra de Navegación */
 .header-nav-row {
     width: 100% !important;
     display: flex !important;
@@ -437,13 +437,13 @@ nav.mnav a.btn-panel-link:hover {
       </a>
       <div class="user-sec">
         <span id="huser"></span>
-        <button onclick="logout()" class="btn-logout" title="Cerrar sesi&oacute;n">
+        <button onclick="logout()" class="btn-logout" title="Cerrar sesión">
           <i class="ph ph-sign-out"></i> Salir
         </button>
       </div>
     </div>
 
-    <!-- Fila 2: Men&uacute; de Navegaci&oacute;n dedicado -->
+    <!-- Fila 2: Menú de Navegación dedicado -->
     <div class="header-nav-row">
       <nav class="mnav">
         <a href="panel.html" class=""><i class="ph ph-house"></i> Panel</a>
@@ -466,12 +466,12 @@ nav.mnav a.btn-panel-link:hover {
   <button class="btn-primary" id="btn-save"><i class="ph ph-floppy-disk"></i> Guardar cambios</button>
 </div>
 
-<!-- Modal Galer&iacute;a -->
+<!-- Modal Galería -->
 <div class="modal-overlay" id="gallery-modal">
   <div class="modal-box">
     <div class="modal-header">
-      <div class="modal-title"><i class="ph ph-image"></i> Galer&iacute;a de Medios R2</div>
-      <button class="modal-close" onclick="closeGalleryModal()">&times;</button>
+      <div class="modal-title"><i class="ph ph-image"></i> Galería de Medios R2</div>
+      <button class="modal-close" onclick="closeGalleryModal()">×</button>
     </div>
     <div class="modal-body">
       <div id="gallery-loading" class="loading" style="padding:20px;text-align:center;">Cargando medios...</div>
@@ -491,7 +491,7 @@ var cSha=null, cFile='www.manujungleforever.com/data/users.json', cData=null, sa
 
 function set(h){ document.getElementById('mc').innerHTML=h; }
 function v(id){ return document.getElementById(id)?.value??''; }
-function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function esc(s){ return String(s||'').replace(/&/g,'&').replace(/"/g,'"').replace(/</g,'<').replace(/>/g,'>'); }
 
 function showSaveBar(fn,msg){
   saveFnRef=fn;
@@ -550,14 +550,14 @@ async function r2Upload(file, progressEl) {
   try {
     d = await r.json();
   } catch(e) {
-    throw new Error(`Error del servidor (HTTP ${r.status}). Verifica la configuraci&oacute;n de R2.`);
+    throw new Error(`Error del servidor (HTTP ${r.status}). Verifica la configuración de R2.`);
   }
   
   if(!r.ok) throw new Error(d.error||'Error subiendo archivo');
   return d.file;
 }
 
-// ── GALER&Iacute;A MODAL ──
+// ── GALERÍA MODAL ──
 let targetInputId = null;
 let targetPrevId = null;
 
@@ -576,7 +576,7 @@ async function pickImage(inputId, prevId) {
     loader.style.display = 'none';
     const files = d.files || [];
     if (files.length === 0) {
-      grid.innerHTML = '<p style="color:var(--muted);grid-column:1/-1;">No hay im&aacute;genes en R2 todav&iacute;a.</p>';
+      grid.innerHTML = '<p style="color:var(--muted);grid-column:1/-1;">No hay imágenes en R2 todavía.</p>';
       return;
     }
     files.forEach(f => {
@@ -589,7 +589,7 @@ async function pickImage(inputId, prevId) {
       grid.appendChild(item);
     });
   } catch(e) {
-    loader.textContent = 'Error al cargar galer&iacute;a: ' + e.message;
+    loader.textContent = 'Error al cargar galería: ' + e.message;
   }
 }
 
@@ -662,7 +662,7 @@ async function viewUsers() {
         <div style="display:flex;align-items:center;">
           <div class="btn-card-icon card-icon-users"><i class="ph ph-users-three"></i></div>
           <div>
-            <p class="pt" style="margin-bottom:0">Gesti&oacute;n de Usuarios y Perfiles</p>
+            <p class="pt" style="margin-bottom:0">Gestión de Usuarios y Perfiles</p>
             <p class="ps">${users.length} cuentas registradas con avatar y control de roles</p>
           </div>
         </div>
@@ -741,7 +741,7 @@ window.takeUserAvatarPhoto = function() {
   const name = document.getElementById('u-name') ? document.getElementById('u-name').value.trim() : '';
   const email = document.getElementById('u-email') ? document.getElementById('u-email').value.trim() : '';
   if (!name && !email) {
-    alert('Por favor, ingresa el Nombre o Correo del usuario antes de tomar la fotograf&iacute;a.');
+    alert('Por favor, ingresa el Nombre o Correo del usuario antes de tomar la fotografía.');
     document.getElementById('u-name').focus();
     return;
   }
@@ -819,13 +819,13 @@ window.editUser = function(idx) {
             </div>
             <div style="display:flex;gap:8px;flex-wrap:nowrap;">
               <button type="button" class="btn-primary" id="btn-upload-avatar" onclick="triggerUserAvatarUpload()" style="background:#0284c7;color:white;border:none;" title="Subir desde tu dispositivo"><i class="ph ph-upload-simple"></i> Subir Foto</button>
-              <button type="button" class="btn-primary" onclick="takeUserAvatarPhoto()" style="background:var(--teal);color:#030807;border:none;" title="Tomar foto con la c&aacute;mara"><i class="ph ph-camera"></i> Tomar Foto</button>
-              <button type="button" class="btn-secondary" onclick="pickImage('u-foto', 'u-foto-prev')" title="Elegir de galer&iacute;a R2"><i class="ph ph-image"></i> Galer&iacute;a</button>
+              <button type="button" class="btn-primary" onclick="takeUserAvatarPhoto()" style="background:var(--teal);color:#030807;border:none;" title="Tomar foto con la cámara"><i class="ph ph-camera"></i> Tomar Foto</button>
+              <button type="button" class="btn-secondary" onclick="pickImage('u-foto', 'u-foto-prev')" title="Elegir de galería R2"><i class="ph ph-image"></i> Galería</button>
               ${foto ? `<button type="button" class="btn-danger" onclick="removeUserAvatar()" title="Quitar foto"><i class="ph ph-trash"></i> Quitar</button>` : ''}
               <input type="file" id="u-upload-file" accept="image/*" style="display:none" onchange="uploadUserAvatar(this)">
               <input type="file" id="u-camera-file" accept="image/*" capture="environment" style="display:none" onchange="uploadUserAvatar(this)">
             </div>
-            <span class="hint">Las fotos se guardan autom&aacute;ticamente en Cloudflare R2 organizadas en la carpeta <code>usuarios/{email}/</code>.</span>
+            <span class="hint">Las fotos se guardan automáticamente en Cloudflare R2 organizadas en la carpeta <code>usuarios/{email}/</code>.</span>
           </div>
         </div>
       </div>
@@ -839,7 +839,7 @@ window.editUser = function(idx) {
             <input id="u-name" value="${esc(u.name)}" placeholder="Ej: Gloria">
           </div>
           <div class="ff">
-            <label>Correo Electr&oacute;nico (Login)</label>
+            <label>Correo Electrónico (Login)</label>
             <input type="email" id="u-email" value="${esc(u.email)}" placeholder="usuario@manujungleforever.com" ${isSuperAccount ? 'readonly style="opacity:0.75;"' : ''}>
           </div>
         </div>
@@ -848,9 +848,9 @@ window.editUser = function(idx) {
             <label>Rol de Usuario</label>
             <select id="u-role" ${isSuperAccount ? 'disabled' : ''}>
               <option value="superuser" ${u.role === 'superuser' ? 'selected' : ''}>⭐ Super User (Acceso total a todo el panel y usuarios)</option>
-              <option value="normal" ${u.role === 'normal' ? 'selected' : ''}>📝 Editor / Normal (Gesti&oacute;n y edici&oacute;n de Posts y Contenido)</option>
+              <option value="normal" ${u.role === 'normal' ? 'selected' : ''}>📝 Editor / Normal (Gestión y edición de Posts y Contenido)</option>
             </select>
-            ${isSuperAccount ? '<span class="hint">El rol de este Super Usuario est&aacute; protegido.</span>' : ''}
+            ${isSuperAccount ? '<span class="hint">El rol de este Super Usuario está protegido.</span>' : ''}
           </div>
           <div class="ff">
             <label>Estado de Cuenta</label>
@@ -864,16 +864,16 @@ window.editUser = function(idx) {
 
       <!-- SEGURIDAD -->
       <div class="esec">
-        <div class="esec-h">Seguridad y Cambio de Contrase&ntilde;a</div>
+        <div class="esec-h">Seguridad y Cambio de Contraseña</div>
         <div class="grow2">
           <div class="ff">
-            <label>${idx === -1 ? 'Contrase&ntilde;a Inicial *' : 'Nueva Contrase&ntilde;a (Opcional)'}</label>
-            <input type="password" id="u-pass" placeholder="${idx === -1 ? 'M&iacute;nimo 6 caracteres' : 'Dejar en blanco para mantener la actual'}">
+            <label>${idx === -1 ? 'Contraseña Inicial *' : 'Nueva Contraseña (Opcional)'}</label>
+            <input type="password" id="u-pass" placeholder="${idx === -1 ? 'Mínimo 6 caracteres' : 'Dejar en blanco para mantener la actual'}">
             <span class="hint">Por defecto: <code>123456aytana</code></span>
           </div>
           <div class="ff">
-            <label>Confirmar Contrase&ntilde;a</label>
-            <input type="password" id="u-pass-conf" placeholder="Repite la contrase&ntilde;a">
+            <label>Confirmar Contraseña</label>
+            <input type="password" id="u-pass-conf" placeholder="Repite la contraseña">
           </div>
         </div>
       </div>
@@ -893,12 +893,12 @@ window.editUser = function(idx) {
     let newHash = u.password_hash;
     if (idx === -1) {
       const finalPass = pass || '123456aytana';
-      if (pass && pass !== passConf) throw new Error('Las contrase&ntilde;as no coinciden.');
+      if (pass && pass !== passConf) throw new Error('Las contraseñas no coinciden.');
       newHash = await sha256(finalPass);
     } else {
       if (pass) {
-        if (pass !== passConf) throw new Error('Las contrase&ntilde;as no coinciden.');
-        if (pass.length < 6) throw new Error('La contrase&ntilde;a debe tener al menos 6 caracteres.');
+        if (pass !== passConf) throw new Error('Las contraseñas no coinciden.');
+        if (pass.length < 6) throw new Error('La contraseña debe tener al menos 6 caracteres.');
         newHash = await sha256(pass);
       }
     }
@@ -920,14 +920,14 @@ window.editUser = function(idx) {
 
     if (idx === -1) {
       if (cData.users.some(x => x.email.toLowerCase() === email)) {
-        throw new Error('Ya existe un usuario con este correo electr&oacute;nico.');
+        throw new Error('Ya existe un usuario con este correo electrónico.');
       }
       cData.users.unshift(updated);
     } else {
       cData.users[idx] = updated;
     }
 
-    // Si es el usuario actual, actualizar la sesi&oacute;n
+    // Si es el usuario actual, actualizar la sesión
     if (email === cUser.toLowerCase()) {
       sessionStorage.setItem('cms_name', updated.name);
       sessionStorage.setItem('cms_avatar', updated.foto || '');
@@ -957,7 +957,7 @@ window.deleteUser = async function(idx) {
   if (['kemmesik@gmail.com', 'jordyleonidas@manujungleforever.com'].includes(u.email.toLowerCase())) {
     return alert('No puedes eliminar este Super Usuario principal.');
   }
-  if (!confirm(`¿Est&aacute;s seguro de eliminar permanentemente al usuario "${u.name} (${u.email})"?`)) return;
+  if (!confirm(`¿Estás seguro de eliminar permanentemente al usuario "${u.name} (${u.email})"?`)) return;
 
   cData.users.splice(idx, 1);
   const res = await ghPut(cFile, JSON.stringify(cData, null, 2), cSha, `delete user: ${u.email}`);
