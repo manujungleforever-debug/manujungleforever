@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+﻿@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 @keyframes logoEntrance {
   0% { opacity: 0; transform: scale(0.6) translateY(-30px); filter: drop-shadow(0 0 0 rgba(16,185,129,0)); }
@@ -141,7 +141,7 @@ img{max-width:100%;height:auto;display:block}a{color:inherit;text-decoration:non
 .tp{font-size:0.88rem;color:rgba(226,232,240,0.9);line-height:1.65;margin-bottom:18px;max-width:520px;text-shadow:0 1px 6px rgba(0,0,0,0.8)}
 .tbtn{display:inline-flex;align-items:center;gap:8px;padding:11px 24px;border-radius:30px;font-size:0.84rem;font-weight:700;letter-spacing:0.02em;background:linear-gradient(135deg,var(--a,#0d9488),var(--al,#2dd4bf));color:#0c0805;box-shadow:0 4px 16px rgba(45,212,191,0.35);transition:all 0.3s cubic-bezier(0.16,1,0.3,1);width:fit-content;text-decoration:none}
 .tbtn:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 8px 25px rgba(45,212,191,0.55);color:#000}
-/* ══ TOURS BOTTOM ROW (PREMIUM VIBRANT DETAIL CARDS) ═════════ */
+/* â•â• TOURS BOTTOM ROW (PREMIUM VIBRANT DETAIL CARDS) â•â•â•â•â•â•â•â•â• */
 .tr-row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -407,7 +407,7 @@ img{max-width:100%;height:auto;display:block}a{color:inherit;text-decoration:non
 .fc p{font-size:.84rem;color:rgba(255,255,255,.38);display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;line-height:1.6}
 .fc i{color:var(--v);margin-top:3px;width:14px;flex-shrink:0}
 .fc a:hover{color:var(--a)}
-.so{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.so{display:flex;gap:10px;flex-wrap:nowrap;margin-top:22px;align-items:center}
 .sc{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:1.05rem;color:#ffffff;transition:var(--t)}
 .sc:hover{background:var(--a);border-color:var(--a);color:#ffffff;transform:translateY(-3px)}
 .fh{font-family:'Montserrat',sans-serif;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.14em;color:rgba(255,255,255,.5);margin-bottom:20px}
@@ -923,7 +923,7 @@ body { top: 0px !important; position: relative !important; }
 
 
 /* =========================================
-   GUIDED TOURS PAGE ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Filter bar & Cards
+   GUIDED TOURS PAGE ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â Filter bar & Cards
    ========================================= */
 
 /* Sticky filter bar */
@@ -1961,7 +1961,7 @@ font, font > font, font[style], font > font[style] {
   font-weight: 700;
 }
 
-/* Elementor junk override ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â strip all WP/Elementor wrappers */
+/* Elementor junk override ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â strip all WP/Elementor wrappers */
 .elementor, .elementor-section, .elementor-container,
 .elementor-column, .elementor-widget-wrap,
 .elementor-element, .elementor-widget-container {
@@ -2069,9 +2069,9 @@ font, font > font, font[style], font > font[style] {
 
 
 
-/* ─────────────────────────────────────────────────────────────
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    MOBILE DRAWER NAVIGATION - SEAMLESS MENU ITEMS
-   ───────────────────────────────────────────────────────────── */
+   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .mo .ml {
   list-style: none !important;
   padding: 0 !important;
