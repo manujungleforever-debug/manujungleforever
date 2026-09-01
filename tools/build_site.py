@@ -279,23 +279,22 @@ def build_site():
 
             if h_data.get('about_section'):
                 ab = h_data['about_section']
-                if ab.get('eyebrow'):
-                    ey = soup.select_one('#about .ey')
-                    if ey: ey.string = clean_mojibake(ab['eyebrow']); modified = True
-                if ab.get('title'):
-                    t = soup.select_one('#about .h2')
-                    if t: t.string = clean_mojibake(ab['title']); modified = True
-                if ab.get('paragraphs'):
-                    spt = soup.select_one('#about .spt')
-                    if spt:
-                        # Clear old paragraphs except the button
-                        btn = spt.select_one('a.btn')
-                        btn_html = str(btn) if btn else ''
-                        p_html = ''.join([f"<p class='ld'>{clean_mojibake(p.get('text', '') if isinstance(p, dict) else p)}</p>" for p in ab['paragraphs']])
-                        spt_soup = BeautifulSoup(p_html + btn_html, 'html.parser')
-                        spt.clear()
-                        for c in spt_soup.children: spt.append(c)
-                        modified = True
+                spt = soup.select_one('#about .spt')
+                if spt:
+                    ey_text = ab.get('eyebrow', 'The Manu Experience')
+                    t_text = ab.get('title', 'Explore The Wilderness')
+                    header_html = f'''<div style="margin-bottom:24px;">
+                        <span class="ey">{clean_mojibake(ey_text)}</span>
+                        <h2 class="h2" style="font-size:clamp(2rem,3.2vw,2.6rem);font-weight:800;color:#fff;margin-bottom:0;line-height:1.15;letter-spacing:-0.02em;">{clean_mojibake(t_text)}</h2>
+                    </div>'''
+                    p_list = ab.get('paragraphs', [])
+                    p_html = ''.join([f"<p class='ld' style='margin-bottom:16px;'>{clean_mojibake(p.get('text', '') if isinstance(p, dict) else p)}</p>" for p in p_list])
+                    btn = spt.select_one('a.btn')
+                    btn_html = str(btn) if btn else ''
+                    spt_soup = BeautifulSoup(header_html + p_html + btn_html, 'html.parser')
+                    spt.clear()
+                    for c in list(spt_soup.children): spt.append(c)
+                    modified = True
                 if ab.get('image'):
                     img = soup.select_one('#about .spi img')
                     if img: img['src'] = fix_img_path(ab['image']); modified = True
