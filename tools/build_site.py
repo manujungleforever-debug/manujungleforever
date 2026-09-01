@@ -178,6 +178,25 @@ def build_site():
                     hs.string = clean_mojibake(h_data['hero']['subtitle'])
                     modified = True
 
+            if h_data.get('stats'):
+                sg = soup.select_one('#home-stats-grid') or soup.select_one('.st-modern .sg') or soup.select_one('.st .sg')
+                if sg:
+                    cards_html = ""
+                    for idx, s in enumerate(h_data['stats']):
+                        val = s.get('value', 0)
+                        sfx = s.get('suffix', '+')
+                        lbl = clean_mojibake(s.get('label', ''))
+                        stype = s.get('type', 'counter')
+                        if stype == 'counter':
+                            cards_html += f'<div class="si st-card r" data-stat-idx="{idx}"><span class="sn" data-bind="stat-val-{idx}" data-suffix="{sfx}" data-target="{val}">0</span><span class="sl" data-bind="stat-lbl-{idx}">{lbl}</span></div>'
+                        else:
+                            clean_val = str(val).replace('★', '').strip()
+                            cards_html += f'<div class="si st-card r" data-stat-idx="{idx}"><span class="sn" data-bind="stat-val-{idx}">{clean_val} <i class="fas fa-star" style="color:var(--teal,#2dd4bf);font-size:0.85em;margin-left:4px;"></i></span><span class="sl" data-bind="stat-lbl-{idx}">{lbl}</span></div>'
+                    sg_soup = BeautifulSoup(cards_html, 'html.parser')
+                    sg.clear()
+                    for c in list(sg_soup.children): sg.append(c)
+                    modified = True
+
             if h_data.get('guided_tours'):
                 th = h_data['guided_tours']
                 if th.get('title'):

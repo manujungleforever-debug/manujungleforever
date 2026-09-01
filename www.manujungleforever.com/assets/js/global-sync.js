@@ -149,11 +149,98 @@
     if (!isHome) return;
 
     try {
-      let hRes = await fetch('/api/content/home?v=' + Date.now()).then(r => r.ok ? r.json() : null).catch(() => null);
-      if (!hRes || (!hRes.wildlife_section && !hRes.data)) {
-        hRes = await fetch('/data/home.json?v=' + Date.now()).then(r => r.ok ? r.json() : null).catch(() => null);
+      const fetchOpts = { cache: 'no-store' };
+      const ts = Date.now();
+      let hRes = await fetch('/api/content/home?t=' + ts, fetchOpts).then(r => r.ok ? r.json() : null).catch(() => null);
+      if (!hRes || (!hRes.stats && !hRes.about_section && !hRes.wildlife_section && !hRes.data)) {
+        hRes = await fetch('/data/home.json?t=' + ts, fetchOpts).then(r => r.ok ? r.json() : null).catch(() => null);
       }
       const hData = (hRes && hRes.data) ? hRes.data : (hRes || {});
+
+      // 1. STATS HYDRATION
+      if (hData.stats && Array.isArray(hData.stats)) {
+        const statsGrid = document.getElementById('home-stats-grid') || document.querySelector('.st-modern .sg') || document.querySelector('.st .sg');
+        if (statsGrid) {
+          hData.stats.forEach((s, idx) => {
+            const card = statsGrid.querySelector(`[data-stat-idx="${idx}"]`) || statsGrid.children[idx];
+            if (card) {
+              const sn = card.querySelector('.sn');
+              const sl = card.querySelector('.sl');
+              if (sl && s.label) sl.textContent = s.label;
+              if (sn) {
+                if (s.type === 'counter') {
+                  const target = parseInt(s.value) || 0;
+                  const suffix = s.suffix !== undefined ? s.suffix : '+';
+                  sn.dataset.target = target;
+                  sn.dataset.suffix = suffix;
+                  if (typeof window.animateCounter === 'function') {
+                    window.animateCounter(sn);
+                  } else {
+                    sn.textContent = target + suffix;
+                  }
+                } else {
+                  const cleanVal = String(s.value).replace(/★/g, '').trim();
+                  sn.innerHTML = `${cleanVal} <i class="fas fa-star" style="color:var(--teal,#2dd4bf);font-size:0.85em;margin-left:4px;"></i>`;
+                }
+              }
+            }
+          });
+        }
+      }
+
+      // 2. HERO HYDRATION
+      const hero = hData.hero;
+      if (hero) {
+        const heroWrap = document.querySelector('.hb') || document.querySelector('.hero');
+        if (heroWrap) {
+          const ht = heroWrap.querySelector('.ht');
+          if (ht && hero.location_tag) {
+            ht.innerHTML = `<i class="fas fa-map-marker-alt"></i> ${hero.location_tag}`;
+          }
+          const h1 = heroWrap.querySelector('.h1');
+          if (h1 && hero.title) {
+            const emp = hero.title_emphasis ? `<br><em>${hero.title_emphasis}</em>` : '';
+            h1.innerHTML = `${hero.title}${emp}`;
+          }
+          const hs = heroWrap.querySelector('.hs');
+          if (hs && hero.subtitle) hs.textContent = hero.subtitle;
+        }
+      }
+
+      // 3. ABOUT SECTION HYDRATION
+      const ab = hData.about_section;
+      if (ab) {
+        const aboutSec = document.getElementById('about');
+        if (aboutSec) {
+          const ey = aboutSec.querySelector('.spt .ey');
+          if (ey && ab.eyebrow) ey.textContent = ab.eyebrow;
+          const t = aboutSec.querySelector('.spt .h2');
+          if (t && ab.title) t.textContent = ab.title;
+          if (ab.paragraphs && Array.isArray(ab.paragraphs)) {
+            const ps = aboutSec.querySelectorAll('.spt p.ld');
+            ab.paragraphs.forEach((pObj, pIdx) => {
+              const pText = typeof pObj === 'string' ? pObj : pObj.text;
+              if (ps[pIdx] && pText) {
+                ps[pIdx].textContent = pText;
+              }
+            });
+          }
+          const img = aboutSec.querySelector('.spi img');
+          if (img && ab.image) {
+            img.src = fixImgPath(ab.image);
+            if (ab.image_alt) {
+              img.alt = ab.image_alt;
+              img.title = ab.image_alt;
+            }
+          }
+          const cap = aboutSec.querySelector('.spi .caption-text');
+          if (cap && (ab.image_caption || ab.image_alt)) {
+            cap.textContent = ab.image_caption || ab.image_alt;
+          }
+        }
+      }
+
+      // 4. WILDLIFE SECTION HYDRATION
       const wl = hData.wildlife_section || hData.wildlife_encounters;
       if (wl) {
         const wlSec = document.getElementById('wildlife');
