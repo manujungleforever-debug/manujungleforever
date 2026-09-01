@@ -204,7 +204,7 @@ def download_and_generate_metadata(output_dir="downloads/Manú National Park"):
         json.dump(metadata_list, mf, indent=2, ensure_ascii=False)
 
     print("\n" + "="*60, flush=True)
-    print(f"[✓] Proceso de Ingesta Completado Exitosamente", flush=True)
+    print(f"[OK] Proceso de Ingesta Completado Exitosamente", flush=True)
     print(f"    - Archivos descargados nuevos: {downloaded_count}", flush=True)
     print(f"    - Archivos previamente existentes: {skipped_count}", flush=True)
     print(f"    - Errores ignorados: {error_count}", flush=True)
