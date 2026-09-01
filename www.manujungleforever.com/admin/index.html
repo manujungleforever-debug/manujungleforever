@@ -68,297 +68,113 @@ body {
     /* -- LOGIN ------------------------------------------- */
     #login-screen {
       display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
+      grid-template-columns: 1fr 1fr;
       min-height: 100vh;
-      background: radial-gradient(ellipse 90% 70% at 50% 40%, #061c16 0%, #030806 85%, #010403 100%);
+      background: transparent;
       position: relative;
-      overflow: hidden;
-      align-items: center;
-      justify-content: center;
       z-index: 1;
     }
-    .ls-ambient-glow-1 {
-      position: absolute;
-      top: -120px;
-      left: -120px;
-      width: 550px;
-      height: 550px;
-      background: radial-gradient(circle, rgba(16, 185, 129, 0.18) 0%, rgba(16, 185, 129, 0) 70%);
-      border-radius: 50%;
-      pointer-events: none;
-      filter: blur(50px);
-      z-index: 0;
-    }
-    .ls-ambient-glow-2 {
-      position: absolute;
-      bottom: -120px;
-      right: -120px;
-      width: 550px;
-      height: 550px;
-      background: radial-gradient(circle, rgba(245, 158, 11, 0.13) 0%, rgba(245, 158, 11, 0) 70%);
-      border-radius: 50%;
-      pointer-events: none;
-      filter: blur(50px);
-      z-index: 0;
-    }
     @keyframes adminLogoEmerging{
-      0%{opacity:0;transform:translateY(30px) scale(0.92);filter:drop-shadow(0 0 0 rgba(255,255,255,0));}
-      100%{opacity:1;transform:translateY(0) scale(1);filter:drop-shadow(0 8px 24px rgba(0,0,0,0.5));}
+      0%{opacity:0;transform:translateY(40px) scale(0.9);filter:drop-shadow(0 0 0 rgba(255,255,255,0));}
+      100%{opacity:1;transform:translateY(0) scale(1);filter:drop-shadow(0 4px 20px rgba(0,0,0,0.3));}
     }
     @keyframes adminLogoFloatWave{
-      0%,100%{transform:translateY(0);filter:drop-shadow(0 8px 24px rgba(0,0,0,0.5));}
-      50%{transform:translateY(-6px);filter:drop-shadow(0 15px 30px rgba(16,185,129,0.25));}
+      0%,100%{transform:translateY(0);filter:drop-shadow(0 4px 20px rgba(0,0,0,0.3));}
+      50%{transform:translateY(-8px);filter:drop-shadow(0 15px 30px rgba(255,255,255,0.25));}
+    }
+    @keyframes waterRipple{
+      0%{width:60px;height:15px;opacity:0.8;}
+      100%{width:220px;height:60px;opacity:0;}
     }
     .ls-left {
-      background: transparent;
-      border-right: none;
+      background: linear-gradient(145deg, #071f1a 0%, #0a2e25 60%, #0f3d32 100%);
+      border-right: 1px solid rgba(45, 212, 191, 0.15);
       color: #fff;
-      padding: 60px 40px 60px 80px;
+      padding: 60px;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      align-items: flex-start;
-      text-align: left;
-      position: relative;
-      z-index: 2;
-    }
-    .ls-left .logo{position:relative;display:inline-block;margin-bottom:20px;}
-    .ls-left .logo img{height:120px;display:block;position:relative;z-index:2;animation:adminLogoEmerging 1.5s cubic-bezier(0.2,0.8,0.2,1) forwards,adminLogoFloatWave 4s ease-in-out 1.5s infinite;will-change:transform,filter;}
-    .ls-left h1{font-size:2.4rem;font-weight:800;margin-bottom:6px;color:#ffffff;letter-spacing:-0.02em;background:linear-gradient(135deg, #ffffff 0%, #34d399 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
-    .ls-left p.ls-tagline{color:rgba(255,255,255,0.65);font-size:0.84rem;letter-spacing:1.5px;font-weight:600;margin-bottom:26px;text-transform:uppercase;}
-    
-    .ls-feature-card {
-      background: rgba(255, 255, 255, 0.025);
-      border: 1px solid rgba(16, 185, 129, 0.22);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-radius: 18px;
-      padding: 14px 18px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-      width: 100%;
-      max-width: 380px;
-    }
-    .ls-feature-card:hover {
-      border-color: rgba(45, 212, 191, 0.45);
-      background: rgba(255, 255, 255, 0.045);
-      transform: translateY(-2px);
-      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.45), 0 0 25px rgba(45, 212, 191, 0.12);
-    }
-    .ls-feature-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 14px;
-      background: rgba(16, 185, 129, 0.12);
-      border: 1.5px solid rgba(16, 185, 129, 0.35);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      box-shadow: 0 0 16px rgba(16, 185, 129, 0.15);
-    }
-    .ls-feature-icon.teal {
-      background: rgba(45, 212, 191, 0.12);
-      border-color: rgba(45, 212, 191, 0.35);
-      box-shadow: 0 0 16px rgba(45, 212, 191, 0.15);
-    }
-    .ls-stats-module {
-      display: flex;
-      align-items: center;
-      background: rgba(255, 255, 255, 0.025);
-      border: 1px solid rgba(16, 185, 129, 0.22);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-radius: 18px;
-      padding: 14px 20px;
-      gap: 16px;
-      margin-top: 24px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-      width: 100%;
-      max-width: 380px;
-      justify-content: space-between;
-    }
-    .ls-stat-item {
-      display: flex;
-      flex-direction: column;
       align-items: center;
       text-align: center;
-      flex: 1;
     }
-    .ls-stat-item:not(:last-child) {
-      border-right: 1px solid rgba(255, 255, 255, 0.08);
-      padding-right: 14px;
+    .ls-left .logo{position:relative;display:inline-block;margin-bottom:30px;}
+    .ls-left .logo::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);background:radial-gradient(ellipse at center,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0) 70%);border-radius:50%;animation:waterRipple 3s infinite ease-out 1.5s;opacity:0;pointer-events:none;}
+    .ls-left .logo img{height:130px;display:block;position:relative;z-index:2;animation:adminLogoEmerging 1.5s cubic-bezier(0.2,0.8,0.2,1) forwards,adminLogoFloatWave 4s ease-in-out 1.5s infinite;will-change:transform,filter;}
+    .ls-left h1{font-size:2rem;font-weight:700;margin-bottom:16px;}
+    .ls-left p{color:rgba(255,255,255,0.8);line-height:1.6;margin-bottom:40px;max-width:400px;}
+    .ls-stats{display:flex;gap:30px;margin-top:20px;}
+    .ls-stat {
+      background: rgba(11, 38, 35, 0.50);
+      padding: 15px 25px;
+      border-radius: 12px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(45, 212, 191, 0.20);
+      color: #fff;
     }
-    .ls-stat-val {
-      font-size: 1.15rem;
-      font-weight: 800;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      margin-bottom: 2px;
-    }
-    .ls-stat-lbl {
-      font-size: 0.72rem;
-      color: #94a3b8;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    .ls-right {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 60px 80px 60px 40px;
-      position: relative;
-      z-index: 2;
-    }
+    .ls-stat h3{font-size:1.5rem;margin-bottom:4px;}
+    .ls-stat span{font-size:0.8rem;opacity:0.8;}
+    .ls-right{display:flex;align-items:center;justify-content:center;padding:40px;}
     .lcard {
-      background: rgba(8, 18, 14, 0.82);
-      border: 1.5px solid rgba(16, 185, 129, 0.28);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      border-radius: 28px;
-      padding: 38px 36px;
+      background: rgba(11, 38, 35, 0.55);
+      border: 1px solid rgba(45, 212, 191, 0.20);
+      border-radius: 20px;
+      padding: 40px;
       width: 100%;
-      max-width: 440px;
-      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.85), 0 0 35px rgba(16, 185, 129, 0.12);
+      max-width: 420px;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
       color: #f1f5f9;
-      position: relative;
     }
-    .lcard h2 {
-      font-size: 1.75rem;
-      font-weight: 800;
-      margin-bottom: 6px;
-      color: #ffffff;
-      letter-spacing: -0.02em;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .lcard p.sub {
-      font-size: 0.90rem;
-      color: #94a3b8;
-      margin-bottom: 26px;
-    }
+    .lcard h2 { font-size: 1.8rem; font-weight: 700; margin-bottom: 8px; color: #ffffff; }
+    .lcard p.sub { font-size: 0.95rem; color: #94a3b8; margin-bottom: 32px; }
     .err-msg{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:8px;padding:12px;color:var(--danger);font-size:0.85rem;margin-bottom:20px;display:none;}
-    .lcard .ff label {
-      color: #cbd5e1;
-      font-weight: 600;
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      margin-bottom: 8px;
-      display: block;
-    }
-    .lcard .ff { margin-bottom: 16px; }
+    .lcard .ff label { color: #cbd5e1; font-weight: 500; font-size: 0.9rem; margin-bottom: 8px; display: block; }
+    .lcard .ff{margin-bottom:16px;}
     .lcard .ff input {
       width: 100%;
-      background: rgba(0, 0, 0, 0.45);
-      border: 1.5px solid rgba(16, 185, 129, 0.30);
-      color: #ffffff;
-      padding: 13px 16px;
-      border-radius: 14px;
-      font-size: 0.96rem;
-      transition: all 0.25s ease;
+      background: rgba(3, 8, 7, 0.70);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #f1f5f9;
+      padding: 14px;
+      border-radius: 10px;
+      font-size: 1rem;
+      transition: all 0.2s;
     }
-    .lcard .ff input:focus {
-      border-color: #FACC15;
-      outline: none;
-      background: rgba(0, 0, 0, 0.70);
-      box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.22);
-    }
-    @keyframes waveHand {
-      0%, 100% { transform: rotate(0deg); }
-      20%, 60% { transform: rotate(14deg); }
-      40%, 80% { transform: rotate(-10deg); }
-    }
+    .lcard .ff input:focus { border-color: var(--teal); outline: none; background: rgba(3, 8, 7, 0.9); box-shadow: 0 0 12px var(--teal-g); }
     .btn-login {
-      width: 100%;
-      padding: 14px 24px;
-      background: #00b894;
-      color: #022c22;
-      font-weight: 800;
-      font-size: 1.05rem;
+      background: var(--teal);
+      color: #030807;
       border: none;
-      border-radius: 14px;
-      box-shadow: 0 4px 20px rgba(0, 184, 148, 0.35);
+      border-radius: 10px;
+      padding: 14px;
+      font-size: 1rem;
+      font-weight: 700;
       cursor: pointer;
-      transition: all 0.25s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      letter-spacing: 0.2px;
-      margin-top: 12px;
+      transition: all 0.2s;
+      width: 100%;
+      margin-top: 10px;
+      box-shadow: 0 4px 14px var(--teal-g);
     }
-    .btn-login:hover {
-      background: #00a884;
-      box-shadow: 0 6px 28px rgba(0, 184, 148, 0.55);
-      transform: translateY(-2px) scale(1.01);
-    }
-    .login-btn-arrow {
-      stroke: #FACC15 !important;
-      transition: transform 0.25s ease;
-      flex-shrink: 0;
-      filter: drop-shadow(0 0 6px rgba(250, 204, 21, 0.6));
-    }
-    .btn-login:hover .login-btn-arrow {
-      transform: translateX(6px);
-    }
-    .ls-quick {
-      margin-top: 32px;
-      padding-top: 22px;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-    }
-    .ls-quick h4 {
-      font-size: 0.76rem;
-      color: #94a3b8;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 12px;
-      font-weight: 600;
-    }
+    .btn-login:hover { background: #16c9b5; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(45,212,191,0.4); }
+    .ls-quick { margin-top: 40px; padding-top: 30px; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+    .ls-quick h4{font-size:0.8rem;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;}
     .ls-quick-card {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(16, 185, 129, 0.2);
-      border-radius: 16px;
-      padding: 12px 16px;
+      background: rgba(11, 38, 35, 0.40);
+      border: 1px solid rgba(45, 212, 191, 0.15);
+      border-radius: 12px;
+      padding: 16px;
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 16px;
       cursor: pointer;
-      transition: all 0.25s ease;
-    }
-    .ls-quick-card:hover {
-      background: rgba(255, 255, 255, 0.06);
-      border-color: rgba(250, 204, 21, 0.5);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 15px rgba(250, 204, 21, 0.12);
-      transform: translateY(-2px);
-    }
-    .ls-quick-card img {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 1.5px solid rgba(45, 212, 191, 0.3);
-    }
-    .ls-quick-info p {
-      font-size: 0.90rem;
-      font-weight: 600;
+      transition: all 0.2s;
       color: #f1f5f9;
     }
-    .ls-quick-info span {
-      font-size: 0.78rem;
-      color: #94a3b8;
-    }
-    @media(max-width:960px){
-      #login-screen{grid-template-columns:1fr;padding:40px 20px;}
-      .ls-left{display:none;}
-      .ls-right{padding:0;width:100%;}
-    }
+    .ls-quick-card:hover { background: rgba(14, 48, 44, 0.65); border-color: var(--teal); transform: translateY(-2px); box-shadow: 0 6px 16px var(--teal-g); }
+    .ls-quick-card img{width:44px;height:44px;border-radius:50%;object-fit:cover;}
+    .ls-quick-info p { font-size: 0.9rem; font-weight: 600; color: #f1f5f9; }
+    .ls-quick-info span{font-size:0.8rem;color:#64748b;}
+    @media(max-width:900px){#login-screen{grid-template-columns:1fr;}.ls-left{display:none;}}
 
     /* -- APP SHELL --------------------------------------- */
     #app{display:none;height:100vh;flex-direction:column;}
@@ -1102,110 +918,58 @@ nav.mnav a:hover, nav.mnav a.active {
 
 <!-- LOGIN -->
   <div id="login-screen">
-    <div class="ls-ambient-glow-1"></div>
-    <div class="ls-ambient-glow-2"></div>
-
     <div class="ls-left">
       <div class="logo"><img src="../assets/img/logo.png" alt="Manu Jungle Forever"></div>
       <h1>Manu Jungle Pro</h1>
-      <p class="ls-tagline">Sistema de Gestión de Contenidos (CMS)</p>
+      <p>SISTEMA DE GESTIÓN DE CONTENIDOS (CMS)</p>
       
-      <div style="display:flex; flex-direction:column; gap:16px; width:100%;">
-        <div class="ls-feature-card">
-          <div class="ls-feature-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-              <polyline points="14 2 14 8 20 8"></polyline>
-              <line x1="16" y1="13" x2="8" y2="13"></line>
-              <line x1="16" y1="17" x2="8" y2="17"></line>
-              <polyline points="10 9 9 9 8 9"></polyline>
-            </svg>
-          </div>
+      <div style="display:flex; flex-direction:column; gap:20px; text-align:left; max-width:300px; margin-top:20px;">
+        <div style="display:flex; align-items:center; gap:16px;">
+          <div style="background:rgba(255,255,255,0.1); width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size: 1.2rem;">??</div>
           <div>
-            <h4 style="margin:0 0 3px 0; font-size:0.96rem; color:#ffffff; font-weight:700;">Gestión de Contenidos</h4>
-            <span style="font-size:0.80rem; color:#94a3b8; line-height:1.4;">Control total de tours, blog y testimonios.</span>
+            <h4 style="margin:0; font-size:0.95rem;">Gestión de Contenidos</h4>
+            <span style="font-size:0.8rem; opacity:0.7;">Control total de tours, blog y testimonios.</span>
           </div>
         </div>
-
-        <div class="ls-feature-card">
-          <div class="ls-feature-icon teal">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2dd4bf" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-              <circle cx="8.5" cy="8.5" r="1.5"></circle>
-              <polyline points="21 15 16 10 5 21"></polyline>
-            </svg>
-          </div>
+        <div style="display:flex; align-items:center; gap:16px;">
+          <div style="background:rgba(255,255,255,0.1); width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size: 1.2rem;"><i class="ph ph-trash"></i></div>
           <div>
-            <h4 style="margin:0 0 3px 0; font-size:0.96rem; color:#ffffff; font-weight:700;">Galería de Medios (R2)</h4>
-            <span style="font-size:0.80rem; color:#94a3b8; line-height:1.4;">Almacenamiento ultra rápido en la nube.</span>
+            <h4 style="margin:0; font-size:0.95rem;">Galería de Medios (R2)</h4>
+            <span style="font-size:0.8rem; opacity:0.7;">Almacenamiento ultra rápido en la nube.</span>
           </div>
         </div>
       </div>
 
-      <div class="ls-stats-module">
-        <div class="ls-stat-item">
-          <div class="ls-stat-val" style="color:#34d399;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-            </svg> 100%
-          </div>
-          <div class="ls-stat-lbl">Seguro</div>
-        </div>
-
-        <div class="ls-stat-item">
-          <div class="ls-stat-val" style="color:#FACC15;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FACC15" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10"></circle>
-              <polyline points="12 6 12 12 16 14"></polyline>
-            </svg> 24/7
-          </div>
-          <div class="ls-stat-lbl">En línea</div>
-        </div>
-
-        <div class="ls-stat-item" style="border-right:none; padding-right:0;">
-          <div class="ls-stat-val" style="color:#FACC15;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="#FACC15" stroke="#FACC15" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-            </svg> PRO
-          </div>
-          <div class="ls-stat-lbl">Rápido</div>
-        </div>
+      <div class="ls-stats">
+        <div class="ls-stat"><h3>100%</h3><span>Seguro</span></div>
+        <div class="ls-stat"><h3>24/7</h3><span>En línea</span></div>
+        <div class="ls-stat"><h3>+?</h3><span>Ultra Rápido</span></div>
       </div>
     </div>
     
     <div class="ls-right">
       <div class="lcard">
-        <h2>
-          Bienvenido de vuelta <span style="display:inline-block; animation:waveHand 2s infinite ease-in-out; transform-origin:70% 70%; font-size:1.85rem; cursor:default;">👋</span>
-        </h2>
+        <h2>Bienvenido de vuelta 👋</h2>
         <p class="sub">Ingresa tus credenciales para acceder al sistema</p>
         <div class="err-msg" id="login-err"></div>
-        <div class="ff" style="margin-bottom:18px;">
+        <div class="ff" style="margin-bottom:16px;">
           <label>Correo electrónico</label>
           <input type="text" id="inp-u" autocomplete="username" placeholder="admin@manujungleforever.com">
         </div>
         <div class="ff" style="margin-bottom:24px;">
           <label>Contraseña</label>
-          <input type="password" id="inp-p" autocomplete="current-password" placeholder="••••••••">
+          <input type="password" id="inp-p" autocomplete="current-password" placeholder="">
         </div>
-        <button class="btn-login" id="btn-login">
-          <span>Iniciar Sesión</span>
-          <svg class="login-btn-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FACC15" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-          </svg>
-        </button>
+        <button class="btn-login" id="btn-login">Iniciar Sesión</button>
         
         <div class="ls-quick">
           <h4>Acceso Rápido</h4>
           <div class="ls-quick-card" onclick="document.getElementById('inp-u').value='manujungleforever@gmail.com'; document.getElementById('inp-p').focus();">
             <img src="../assets/img/logo.png" style="background:#0f172a;" alt="Avatar">
-            <div class="ls-quick-info" style="flex:1;">
+            <div class="ls-quick-info">
               <p>manujungleforever@gmail.com</p>
               <span>Administrador Principal</span>
             </div>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FACC15" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.85;">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
           </div>
         </div>
       </div>
