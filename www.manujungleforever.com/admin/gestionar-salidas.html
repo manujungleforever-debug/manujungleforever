@@ -1153,7 +1153,7 @@ function mdToolbar(textareaId) {
     ['1. Lista','1. ',''],['```Código','```\n','\n```'],
   ];
   return `<div class="md-wrap">
-      <div class="md-toolbar">${cmds.map(([l,b,a])=>`<button type="button" onclick="mdWrap('${textareaId}','${b.replace(/\n/g,'\\n').replace(/'/g,"\\'")}','${a.replace(/\n/g,'\\n').replace(/'/g,"\\'")}')" title="${l}">${l}</button>`).join('')} <button type="button" onclick="openMediaModal((url) => { mdWrap('${textareaId}', '![alt](', url + ')') })" title="Insertar Imagen de R2">🖼️ R2</button></div>
+      <div class="md-toolbar">${cmds.map(([l,b,a])=>`<button type="button" onclick="mdWrap('${textareaId}','${b.replace(/\n/g,'\\n').replace(/'/g,"\\'")}','${a.replace(/\n/g,'\\n').replace(/'/g,"\\'")}')" title="${l.replace(/<[^>]+>/g, '').trim()}">${l}</button>`).join('')} <button type="button" onclick="openMediaModal((url) => { mdWrap('${textareaId}', '![alt](', url + ')') })" title="Insertar Imagen de R2">🖼️ R2</button></div>
     <textarea id="${textareaId}" style="width:100%; box-sizing:border-box; resize:vertical; min-height:320px; font-family:monospace; font-size:.83rem; line-height:1.6; border:none; border-radius:0; background:rgba(255,255,255,.03); padding:12px; color:var(--fg); outline:none;"></textarea>
   </div>`;
 }
