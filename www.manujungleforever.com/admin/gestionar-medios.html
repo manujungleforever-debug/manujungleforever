@@ -900,14 +900,17 @@ nav.mnav a.btn-panel-link:hover {
       </div>
       <style>
         .bulk-actions button:disabled { opacity: 0.4; cursor: not-allowed; pointer-events: none; filter: grayscale(100%); }
-        .bulk-checkbox { position: absolute; top: 12px; left: 12px; z-index: 10; width: 18px; height: 18px; cursor: pointer; accent-color: var(--teal); }
-        .bulk-checkbox-table { width: 16px; height: 16px; cursor: pointer; accent-color: var(--teal); }
+        .bulk-checkbox, .bulk-checkbox-table { display: none; pointer-events: none; }
+        .selection-active .bulk-checkbox { display: block; position: absolute; top: 12px; left: 12px; z-index: 10; width: 18px; height: 18px; accent-color: var(--teal); }
+        .selection-active .bulk-checkbox-table { display: inline-block; width: 16px; height: 16px; accent-color: var(--teal); }
+        .selection-active th .bulk-checkbox-table { pointer-events: auto; }
         .selected-card { border-color: var(--teal) !important; box-shadow: 0 0 15px rgba(45,212,191,0.2) !important; background: var(--card-hover) !important; }
       </style>
       <div class="bulk-actions" style="display:flex;gap:8px;margin-left:auto;align-items:center;">
-        <button class="btn-secondary" id="btn-bulk-select" onclick="toggleBulkSelect()">Seleccionar todo</button>
-        <button class="btn-secondary" id="btn-bulk-move" disabled onclick="handleBulkMove()">Mover</button>
-        <button class="btn-action-del" id="btn-bulk-delete" disabled onclick="handleBulkDelete()" style="padding: 8px 16px; font-size: .86rem; font-weight: 600;">Eliminar</button>
+        <button class="btn-secondary" id="btn-selection-mode" onclick="toggleSelectionMode()" style="border-color:var(--teal); color:var(--teal); font-weight:700;"><i class="ph ph-check-square-offset"></i> <span class="hide-mobile">Seleccionar</span></button>
+        <button class="btn-secondary" id="btn-bulk-select" onclick="toggleBulkSelect()" style="display:none;"><span class="hide-mobile">Seleccionar todo</span></button>
+        <button class="btn-secondary" id="btn-bulk-move" disabled onclick="handleBulkMove()" style="display:none;"><span class="hide-mobile">Mover</span></button>
+        <button class="btn-action-del" id="btn-bulk-delete" disabled onclick="handleBulkDelete()" style="display:none; padding: 8px 16px; font-size: .86rem; font-weight: 600;"><span class="hide-mobile">Eliminar</span></button>
       </div>
       <div style="display:flex;gap:8px;align-items:center;">
         <button class="btn-up-level" id="btn-up-level" onclick="goUpOneLevel()" style="display:none;"><i class="ph ph-arrow-bend-left-up"></i> Subir nivel</button>
@@ -1191,8 +1194,8 @@ function renderCurrentView() {
       const isSelected = selectedMedia.has(f.fullPath) ? 'checked' : '';
       const selectedClass = selectedMedia.has(f.fullPath) ? 'selected-card' : '';
       html += `
-        <div class="folder-card ${selectedClass}" id="card-${esc(f.fullPath)}" style="position:relative;" onclick="if(event.target.tagName !== 'INPUT') navigateToFolder('${esc(f.fullPath)}')">
-          <input type="checkbox" class="bulk-checkbox" data-id="${esc(f.fullPath)}" ${isSelected} onclick="toggleItemSelection('${esc(f.fullPath)}', event)" style="position:relative;top:auto;left:auto;margin-right:2px;z-index:2;">
+        <div class="folder-card ${selectedClass}" id="card-${esc(f.fullPath)}" style="position:relative;" onclick="handleCardClick('${esc(f.fullPath)}', event, 'folder')">
+          <input type="checkbox" class="bulk-checkbox" data-id="${esc(f.fullPath)}" ${isSelected} style="position:relative;top:auto;left:auto;margin-right:2px;z-index:2;">
           <div class="folder-icon"><i class="ph ph-folder-notch-fill"></i></div>
           <div class="folder-info">
             <div class="folder-name" title="${esc(f.name)}">${esc(f.name)}</div>
@@ -1264,9 +1267,9 @@ function renderLargeCard(f) {
   const selectedClass = selectedMedia.has(f.key) ? 'selected-card' : '';
 
   return `
-    <div class="file-card-large ${selectedClass}" id="card-${esc(f.key)}" style="position:relative;">
-      <input type="checkbox" class="bulk-checkbox" data-id="${esc(f.key)}" ${isSelected} onclick="toggleItemSelection('${esc(f.key)}', event)">
-      <div class="file-thumb-wrap" onclick="openLightbox('${esc(f.key)}')">
+    <div class="file-card-large ${selectedClass}" id="card-${esc(f.key)}" style="position:relative;" onclick="handleCardClick('${esc(f.key)}', event, 'file')">
+      <input type="checkbox" class="bulk-checkbox" data-id="${esc(f.key)}" ${isSelected}>
+      <div class="file-thumb-wrap">
         ${mediaThumb}
         <span class="file-format-badge">${ext}</span>
       </div>
@@ -1296,8 +1299,8 @@ function renderCompactCard(f) {
   const selectedClass = selectedMedia.has(f.key) ? 'selected-card' : '';
 
   return `
-    <div class="file-card-compact ${selectedClass}" id="card-${esc(f.key)}" style="position:relative;" onclick="if(event.target.tagName !== 'INPUT') openLightbox('${esc(f.key)}')">
-      <input type="checkbox" class="bulk-checkbox" data-id="${esc(f.key)}" ${isSelected} onclick="toggleItemSelection('${esc(f.key)}', event)">
+    <div class="file-card-compact ${selectedClass}" id="card-${esc(f.key)}" style="position:relative;" onclick="handleCardClick('${esc(f.key)}', event, 'file')">
+      <input type="checkbox" class="bulk-checkbox" data-id="${esc(f.key)}" ${isSelected}>
       <div class="file-thumb-wrap">
         ${mediaThumb}
         <span class="file-format-badge">${ext}</span>
@@ -1313,18 +1316,18 @@ function renderTable(files) {
     const fileName = f.key.split('/').pop();
     const folderPath = f.key.includes('/') ? f.key.slice(0, f.key.lastIndexOf('/')) : 'Raíz';
     const thumb = isImage(ext) 
-      ? `<img src="${esc(f.url)}" class="table-thumb" onclick="openLightbox('${esc(f.key)}')" loading="lazy">` 
+      ? `<img src="${esc(f.url)}" class="table-thumb" loading="lazy">` 
       : `<div class="table-doc-icon"><i class="ph ph-file"></i></div>`;
 
     const isSelected = selectedMedia.has(f.key) ? 'checked' : '';
     const selectedClass = selectedMedia.has(f.key) ? 'selected-card' : '';
 
     rows += `
-      <tr class="${selectedClass}" id="card-${esc(f.key)}">
-        <td style="width:30px;"><input type="checkbox" class="bulk-checkbox-table" data-id="${esc(f.key)}" ${isSelected} onclick="toggleItemSelection('${esc(f.key)}', event)"></td>
+      <tr class="${selectedClass}" id="card-${esc(f.key)}" onclick="handleCardClick('${esc(f.key)}', event, 'file')">
+        <td style="width:30px;"><input type="checkbox" class="bulk-checkbox-table" data-id="${esc(f.key)}" ${isSelected}></td>
         <td style="width:50px;">${thumb}</td>
         <td>
-          <div style="font-weight:600;color:#fff;cursor:pointer;" onclick="openLightbox('${esc(f.key)}')">${esc(fileName)}</div>
+          <div style="font-weight:600;color:#fff;cursor:pointer;">${esc(fileName)}</div>
           <div style="font-size:0.72rem;color:var(--muted);">${esc(f.key)}</div>
         </td>
         <td><span style="font-size:0.8rem;color:var(--teal);">${esc(folderPath)}</span></td>
@@ -1608,12 +1611,59 @@ window.deleteCurrentLbFile = function() {
   }
 };
 
-// ── ACCIONES EN LOTE Y ESTADO ──
+// ── ESTADO Y MODOS ──
+let isSelectionMode = false;
 let selectedMedia = new Set();
 
-window.toggleItemSelection = function(id, event) {
-  if (event) event.stopPropagation();
+window.toggleSelectionMode = function() {
+  isSelectionMode = !isSelectionMode;
+  const container = document.getElementById('mc');
+  const btnMode = document.getElementById('btn-selection-mode');
+  const btnSelect = document.getElementById('btn-bulk-select');
+  const btnMove = document.getElementById('btn-bulk-move');
+  const btnDel = document.getElementById('btn-bulk-delete');
   
+  if (isSelectionMode) {
+    container.classList.add('selection-active');
+    btnMode.innerHTML = '<i class="ph ph-x"></i> <span class="hide-mobile">Cancelar Selección</span>';
+    btnMode.style.color = '#fff';
+    btnMode.style.borderColor = 'rgba(255,255,255,0.2)';
+    
+    btnSelect.style.display = 'inline-flex';
+    btnMove.style.display = 'inline-flex';
+    btnDel.style.display = 'inline-flex';
+  } else {
+    container.classList.remove('selection-active');
+    btnMode.innerHTML = '<i class="ph ph-check-square-offset"></i> <span class="hide-mobile">Seleccionar</span>';
+    btnMode.style.color = 'var(--teal)';
+    btnMode.style.borderColor = 'var(--teal)';
+    
+    btnSelect.style.display = 'none';
+    btnMove.style.display = 'none';
+    btnDel.style.display = 'none';
+    
+    selectedMedia.clear();
+    document.querySelectorAll('.selected-card').forEach(el => el.classList.remove('selected-card'));
+    document.querySelectorAll('.bulk-checkbox, .bulk-checkbox-table').forEach(cb => cb.checked = false);
+    updateBulkActionButtons();
+  }
+};
+
+window.handleCardClick = function(id, event, type) {
+  if (isSelectionMode) {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    toggleItemSelection(id);
+  } else {
+    if (event && event.target.closest('button')) return; // ignora clics en botones de acción dentro de la card
+    if (type === 'folder') navigateToFolder(id);
+    else openLightbox(id);
+  }
+};
+
+window.toggleItemSelection = function(id) {
   const safeId = id.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
   const checkbox = document.querySelector(`input[data-id="${safeId}"]`);
   const card = checkbox ? checkbox.closest('.file-card-large, .file-card-compact, .folder-card, tr') : null;
@@ -1674,7 +1724,7 @@ window.handleBulkDelete = function() {
     console.log("IDs a eliminar:", Array.from(selectedMedia));
     showToast(`✓ Se han eliminado ${count} elemento(s).`);
     selectedMedia.clear();
-    updateBulkActionButtons();
+    toggleSelectionMode();
     loadMedia();
   }
 };
@@ -1687,7 +1737,7 @@ window.handleBulkMove = function() {
     console.log(`Mover IDs:`, Array.from(selectedMedia), `hacia -> ${dest}`);
     showToast(`✓ Se movieron ${count} elemento(s) a ${dest}`);
     selectedMedia.clear();
-    updateBulkActionButtons();
+    toggleSelectionMode();
     loadMedia();
   }
 };
