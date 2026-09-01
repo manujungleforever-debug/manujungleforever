@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html lang="en"><head>
 <meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/>
@@ -881,7 +881,29 @@
 </div>
 <div aria-hidden="true" class="hsc">Scroll<div class="hl"></div></div>
 </section>
-<div class="st"><div class="cx sg">
+<style>
+  /* Manu Jungle Modern UI Overrides */
+  .mj-title-block { text-align: center; padding-top: 60px; padding-bottom: 25px; opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
+  .mj-title-block.v { opacity: 1; transform: translateY(0); }
+  
+  .si { transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); border-radius: 12px; }
+  .si:hover { transform: translateY(-8px) scale(1.05); }
+  .si:hover .sn { color: var(--teal, #2dd4bf); text-shadow: 0 0 25px rgba(45,212,191,0.5); }
+  
+  .spi.rl { transition: all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important; box-shadow: 0 10px 30px rgba(0,0,0,0.5); transform-origin: center; }
+  .spi.rl.v:hover { transform: translateY(-12px) scale(1.02) !important; box-shadow: 0 25px 50px rgba(0,0,0,0.7), 0 0 30px rgba(45,212,191,0.2); }
+  .spi.rl::after { content: ''; position: absolute; inset: 0; border: 1px solid rgba(255,255,255,0.05); border-radius: 18px; transition: border-color 0.5s ease; pointer-events: none; }
+  .spi.rl:hover::after { border-color: rgba(45,212,191,0.5); }
+  
+  .spt.rr { transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) !important; padding: 30px 40px; border-radius: 20px; background: rgba(255,255,255,0.015); border: 1px solid rgba(255,255,255,0.03); backdrop-filter: blur(10px); }
+  .spt.rr.v:hover { transform: translateX(8px) translateY(-4px) !important; background: rgba(255,255,255,0.035); border-color: rgba(255,255,255,0.1); box-shadow: -10px 15px 30px rgba(0,0,0,0.3); }
+</style>
+<div class="st">
+  <div class="cx r mj-title-block">
+    <span style="display: block; font-size: 0.85rem; font-weight: 700; color: var(--teal, #2dd4bf); text-transform: uppercase; letter-spacing: 3px; margin-bottom: 12px; opacity: 0.9;">The Manu Experience</span>
+    <h2 style="font-size: clamp(2.2rem, 4vw, 3.2rem); font-weight: 800; color: #fff; margin: 0; line-height: 1.1; letter-spacing: -0.02em;">Explore The Wilderness</h2>
+  </div>
+  <div class="cx sg">
 <div class="si"><span class="sn" data-suffix="+" data-target="1500">0</span><span class="sl">Travelers Guided</span></div>
 <div class="si"><span class="sn" data-suffix="+" data-target="5">0</span><span class="sl">Years Experience</span></div>
 <div class="si"><span class="sn" data-suffix="+" data-target="6">0</span><span class="sl">Tour Options</span></div>
