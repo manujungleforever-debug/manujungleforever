@@ -1089,7 +1089,14 @@
 </span>
 </div>
 </div>
-<div class="spt rr about-card-text"><p class="ld">Embarking on a journey into the world's most biodiverse ecosystem is a life-changing milestone. We specialize in curating breathtaking, raw, and authentic expeditions from Cusco deep into the untamed wilderness of the Manu Biosphere Reserve.</p><p class="ld">Whether you're an avid wildlife photographer tracking the elusive jaguar or a traveler seeking a profound cultural connection, we provide premium, sustainable adventures that respect and protect the Amazon.</p></div>
+<div class="spt rr about-card-text">
+  <div style="margin-bottom: 20px;">
+    <span class="ey">The Manu Experience</span>
+    <h2 class="h2" style="font-size: clamp(2rem, 3.2vw, 2.6rem); font-weight: 800; color: #fff; margin-bottom: 0; line-height: 1.15; letter-spacing: -0.02em;">Explore The Wilderness</h2>
+  </div>
+  <p class="ld" style="margin-bottom: 16px;">Embarking on a journey into the world's most biodiverse ecosystem is a life-changing milestone. We specialize in curating breathtaking, raw, and authentic expeditions from Cusco deep into the untamed wilderness of the Manu Biosphere Reserve.</p>
+  <p class="ld">Whether you're an avid wildlife photographer tracking the elusive jaguar or a traveler seeking a profound cultural connection, we provide premium, sustainable adventures that respect and protect the Amazon.</p>
+</div>
 </div>
 </div>
 </section>
@@ -1216,23 +1223,197 @@
 </div>
 </div>
 </section>
-<section class="wl" id="wildlife">
-<div class="wb"><img alt="Manu National Park wildlife - Jaguar" height="720" loading="lazy" src="wp-content/uploads/2020/10/Hidden-Jungle-Cusco-Jaguar.jpg" width="1280"/></div>
-<div class="cx wi r">
+<style>
+  /* BIODIVERSITY / WILDLIFE SECTION MODERNIZATION (FULL-WIDTH) */
+  .wl-modern {
+    position: relative;
+    padding: 80px 0;
+    overflow: hidden;
+    background: radial-gradient(circle at 50% 20%, rgba(30, 18, 9, 0.6) 0%, rgba(14, 8, 4, 0.95) 70%, #0c0704 100%) !important;
+    width: 100%;
+  }
+  .wl-grid-top {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 36px;
+    align-items: stretch;
+    margin-bottom: 36px;
+    width: 100%;
+  }
+  .wl-text-card {
+    background: rgba(22, 13, 7, 0.75) !important;
+    backdrop-filter: blur(14px) !important;
+    -webkit-backdrop-filter: blur(14px) !important;
+    border: 1px solid rgba(45, 212, 191, 0.18) !important;
+    border-radius: 20px !important;
+    padding: 48px 44px !important;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5) !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
+  .wl-text-card:hover {
+    transform: translateY(-4px) !important;
+    border-color: rgba(45, 212, 191, 0.45) !important;
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.7), 0 0 25px rgba(45, 212, 191, 0.15) !important;
+  }
+  .wl-text-card .ey {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--teal, #2dd4bf);
+    margin-bottom: 14px;
+  }
+  .wl-text-card .ey::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--teal, #2dd4bf);
+    border-radius: 2px;
+  }
+  .wl-img-card {
+    position: relative;
+    border-radius: 20px !important;
+    overflow: hidden !important;
+    background: rgba(22, 13, 7, 0.75) !important;
+    border: 1px solid rgba(45, 212, 191, 0.18) !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55) !important;
+    min-height: 440px;
+    height: 100%;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
+  .wl-img-card:hover {
+    transform: translateY(-5px) !important;
+    border-color: rgba(45, 212, 191, 0.5) !important;
+    box-shadow: 0 24px 54px rgba(0, 0, 0, 0.75), 0 0 30px rgba(45, 212, 191, 0.2) !important;
+  }
+  .wl-img-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+  }
+  .wl-img-card:hover img {
+    transform: scale(1.05) !important;
+  }
+  .wl-img-card .wl-caption {
+    position: absolute;
+    bottom: 0;
+    inset-inline: 0;
+    background: linear-gradient(to top, rgba(12, 7, 3, 0.94) 0%, rgba(12, 7, 3, 0.45) 60%, transparent 100%);
+    padding: 20px 24px;
+    color: #fff;
+  }
+
+  /* Animal Grid */
+  .ag-modern {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    width: 100%;
+  }
+  .ac-card {
+    background: rgba(22, 13, 7, 0.75) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border: 1px solid rgba(45, 212, 191, 0.16) !important;
+    border-radius: 18px !important;
+    padding: 22px 14px !important;
+    text-align: center;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4) !important;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
+  .ac-card:hover {
+    background: rgba(35, 20, 11, 0.9) !important;
+    border-color: rgba(45, 212, 191, 0.5) !important;
+    transform: translateY(-5px) !important;
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.6), 0 0 20px rgba(45, 212, 191, 0.18) !important;
+  }
+  .ac-card .ic {
+    font-size: 2.3rem;
+    margin-bottom: 10px;
+    line-height: 1;
+    display: block;
+  }
+  .ac-card p {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.85);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 0;
+  }
+
+  @media (max-width: 1100px) {
+    .ag-modern {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  @media (max-width: 992px) {
+    .wl-grid-top {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    .wl-text-card {
+      padding: 36px 28px !important;
+    }
+    .wl-img-card {
+      min-height: 360px;
+    }
+    .ag-modern {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+  }
+  @media (max-width: 480px) {
+    .ag-modern {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .ac-card {
+      padding: 16px 10px !important;
+    }
+    .ac-card .ic {
+      font-size: 1.8rem;
+    }
+  }
+</style>
+<section class="wl wl-modern" id="wildlife">
+<div class="cx" style="max-width: 100%; padding: 0 4%;">
+<div class="r">
+<div class="wl-grid-top">
+<div class="wl-text-card rl">
 <span class="ey">Biodiversity</span>
-<h2 class="h2">Wildlife in the Peruvian Rainforest</h2>
-<p class="lead" style="color:rgba(255,255,255,.7)">The Manu Biosphere is globally recognized as an unparalleled haven for biodiversity. Navigating its ancient tributaries, you will witness a thriving, complex ecosystem completely untouched by modern civilization. Our expert trackers will guide you through hidden trails, revealing a spectacular array of exotic species in their pure, natural habitats.</p>
-<div class="ag">
-<div class="ac"><div class="ic">🐆</div><p>Jaguar</p></div>
-<div class="ac"><div class="ic">🦜</div><p>Macaws</p></div>
-<div class="ac"><div class="ic">🐊</div><p>Caimans</p></div>
-<div class="ac"><div class="ic">🐒</div><p>Monkeys</p></div>
-<div class="ac"><div class="ic">🦦</div><p>Giant Otters</p></div>
-<div class="ac"><div class="ic">🐢</div><p>River Turtles</p></div>
-<div class="ac"><div class="ic"><i class="fas fa-paw"></i></div><p>Capybaras</p></div>
-<div class="ac"><div class="ic">🐍</div><p>Anaconda</p></div>
-<div class="ac"><div class="ic">🦋</div><p>Butterflies</p></div>
-<div class="ac"><div class="ic">🐦</div><p>Cock-of-the-Rock</p></div>
+<h2 class="h2" style="font-size: clamp(2rem, 3vw, 2.6rem); font-weight: 800; color: #fff; margin-bottom: 18px; line-height: 1.15; letter-spacing: -0.02em;">Wildlife in the Peruvian Rainforest</h2>
+<p class="ld" style="color: rgba(255,255,255,0.75); font-size: 1.02rem; line-height: 1.85; margin: 0;">The Manu Biosphere is globally recognized as an unparalleled haven for biodiversity. Navigating its ancient tributaries, you will witness a thriving, complex ecosystem completely untouched by modern civilization. Our expert trackers will guide you through hidden trails, revealing a spectacular array of exotic species in their pure, natural habitats.</p>
+</div>
+<div class="wl-img-card rr">
+<img alt="Manu National Park wildlife - Jaguar" height="640" loading="lazy" src="/media/medios/home/1787015599134-gayulo-animals-3524518.jpg" title="Manu National Park wildlife - Jaguar" width="800"/>
+<div class="wl-caption">
+<span style="font-size: 0.88rem; font-weight: 600; color: rgba(255,255,255,0.95); display: flex; align-items: center; gap: 8px;">
+<i class="fas fa-paw" style="color: var(--teal, #2dd4bf);"></i> <span>Manu National Park wildlife - Jaguar</span>
+</span>
+</div>
+</div>
+</div>
+<div class="ag-modern">
+<div class="ac ac-card"><div class="ic">🐆</div><p>Jaguar</p></div>
+<div class="ac ac-card"><div class="ic">🦜</div><p>Macaws</p></div>
+<div class="ac ac-card"><div class="ic">🐊</div><p>Caimans</p></div>
+<div class="ac ac-card"><div class="ic">🐒</div><p>Monkeys</p></div>
+<div class="ac ac-card"><div class="ic">🦦</div><p>Giant Otters</p></div>
+<div class="ac ac-card"><div class="ic">🐢</div><p>River Turtles</p></div>
+<div class="ac ac-card"><div class="ic">🦫</div><p>Capybaras</p></div>
+<div class="ac ac-card"><div class="ic">🐍</div><p>Anaconda</p></div>
+<div class="ac ac-card"><div class="ic">🦋</div><p>Butterflies</p></div>
+<div class="ac ac-card"><div class="ic">🐦</div><p>Cock-of-the-Rock</p></div>
+</div>
 </div>
 </div>
 </section>

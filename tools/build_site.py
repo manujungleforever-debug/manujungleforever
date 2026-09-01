@@ -324,8 +324,8 @@ def build_site():
                     cap = soup.select_one('#unique-content .spi .caption-text')
                     if cap: cap.string = clean_mojibake(uq['image_caption']); modified = True
 
-            if h_data.get('wildlife_encounters'):
-                wl = h_data['wildlife_encounters']
+            if h_data.get('wildlife_section') or h_data.get('wildlife_encounters'):
+                wl = h_data.get('wildlife_section') or h_data.get('wildlife_encounters')
                 if wl.get('eyebrow'):
                     ey = soup.select_one('#wildlife .ey')
                     if ey: ey.string = clean_mojibake(wl['eyebrow']); modified = True
@@ -333,8 +333,21 @@ def build_site():
                     t = soup.select_one('#wildlife .h2')
                     if t: t.string = clean_mojibake(wl['title']); modified = True
                 if wl.get('text'):
-                    p = soup.select_one('#wildlife .lead')
+                    p = soup.select_one('#wildlife .ld') or soup.select_one('#wildlife .lead')
                     if p: p.string = clean_mojibake(wl['text']); modified = True
+                if wl.get('image'):
+                    img = soup.select_one('#wildlife .wl-img-card img') or soup.select_one('#wildlife img')
+                    if img: img['src'] = fix_img_path(wl['image']); modified = True
+                if wl.get('image_alt'):
+                    img = soup.select_one('#wildlife .wl-img-card img') or soup.select_one('#wildlife img')
+                    if img:
+                        img['alt'] = clean_mojibake(wl['image_alt'])
+                        img['title'] = clean_mojibake(wl['image_alt'])
+                        modified = True
+                    cap = soup.select_one('#wildlife .wl-caption span span')
+                    if cap:
+                        cap.string = clean_mojibake(wl['image_alt'])
+                        modified = True
                     
             if h_data.get('cta_section'):
                 cta = h_data['cta_section']

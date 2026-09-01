@@ -41,6 +41,9 @@
 
       // 5. Individual Tour Page dynamic hydration from D1
       await syncTourPage();
+
+      // 6. Home Page Dynamic Hydration (e.g. Wildlife Section)
+      await syncHomePage();
     } catch(err) {
       console.warn('Sync error:', err);
     }
@@ -138,6 +141,45 @@
       }
     } catch (e) {
       console.warn('Tour sync error:', e);
+    }
+  }
+
+  async function syncHomePage() {
+    const isHome = window.location.pathname === '/' || window.location.pathname.endsWith('/index.html') || window.location.pathname === '';
+    if (!isHome) return;
+
+    try {
+      let hRes = await fetch('/api/content/home?v=' + Date.now()).then(r => r.ok ? r.json() : null).catch(() => null);
+      if (!hRes || (!hRes.wildlife_section && !hRes.data)) {
+        hRes = await fetch('/data/home.json?v=' + Date.now()).then(r => r.ok ? r.json() : null).catch(() => null);
+      }
+      const hData = (hRes && hRes.data) ? hRes.data : (hRes || {});
+      const wl = hData.wildlife_section || hData.wildlife_encounters;
+      if (wl) {
+        const wlSec = document.getElementById('wildlife');
+        if (wlSec) {
+          const ey = wlSec.querySelector('.ey');
+          if (ey && wl.eyebrow) ey.textContent = wl.eyebrow;
+          const t = wlSec.querySelector('.h2');
+          if (t && wl.title) t.textContent = wl.title;
+          const p = wlSec.querySelector('.ld') || wlSec.querySelector('.lead');
+          if (p && wl.text) p.textContent = wl.text;
+          const img = wlSec.querySelector('.wl-img-card img') || wlSec.querySelector('img');
+          if (img && wl.image) {
+            img.src = fixImgPath(wl.image);
+            if (wl.image_alt) {
+              img.alt = wl.image_alt;
+              img.title = wl.image_alt;
+            }
+          }
+          const cap = wlSec.querySelector('.wl-caption span span');
+          if (cap && wl.image_alt) {
+            cap.textContent = wl.image_alt;
+          }
+        }
+      }
+    } catch(e) {
+      console.warn('Home sync error:', e);
     }
   }
 
