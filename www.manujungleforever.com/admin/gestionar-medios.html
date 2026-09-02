@@ -1465,7 +1465,7 @@ window.promptCreateFolder = async function() {
     });
     if (r.ok) {
       showToast(`Carpeta "${cleanName}" creada exitosamente.`);
-      await fetchMedia();
+      await loadMedia();
       navigateToFolder(newFolderPath);
     } else {
       showToast('Error al crear la carpeta en R2', true);
