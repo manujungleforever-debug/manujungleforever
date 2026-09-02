@@ -4,15 +4,42 @@
 
   const isVideo = (key) => /\.(mp4|webm|mov)$/i.test(key);
 
-  // ── Credits: strict real metadata only, formatted like Home/About Us ──
+  // ── 1. Fetch JSON attributions to match Home page exactly ──
+  let attributionsMap = {};
+  try {
+    const res = await fetch('/data/attributions.json?t=' + Date.now(), { cache: 'no-store' });
+    if (res.ok) {
+      const list = await res.json();
+      if (Array.isArray(list)) {
+        list.forEach(item => {
+          if (item && item.filename && item.attribution) {
+            attributionsMap[item.filename.toLowerCase()] = item.attribution;
+          }
+        });
+      }
+    }
+  } catch (e) {
+    console.warn('Failed to load attributions.json', e);
+  }
+
+  // ── 2. Credit logic (combining API customMetadata + JSON) ──
   const getRawCredit = (file) => {
-    return file.credit || file.author || file.copyright || '';
+    // Check API metadata first
+    if (file.credit || file.author || file.copyright) {
+      return file.credit || file.author || file.copyright;
+    }
+    // Fallback to JSON attributions based on filename
+    const filename = file.key.split('/').pop().toLowerCase();
+    const jsonMeta = attributionsMap[filename];
+    if (jsonMeta && jsonMeta.author) {
+      return jsonMeta.author;
+    }
+    return '';
   };
 
   const formatCredit = (file) => {
     const raw = getRawCredit(file);
     if (!raw) return '';
-    // Match Home/About Us format: "Photo: Author · CC BY-SA 4.0"
     if (raw.includes('CC BY')) return raw;
     return `Photo: ${raw} · CC BY-SA 4.0`;
   };
@@ -68,7 +95,7 @@
     </div>
   `;
 
-  // ── Card renderers ──
+  // ── Card renderers (credits handled natively) ──
   const renderImageCard = (url, span, file) => `
     <div class="${span} ${cardBase}">
       <a href="${url}" class="glightbox block w-full h-full" ${glightboxAttrs(file)}>
