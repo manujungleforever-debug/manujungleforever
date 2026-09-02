@@ -11,8 +11,8 @@ document.addEventListener('DOMContentLoaded', async () => {
           <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z"></path>
         </svg>
       </div>
-      <h3 class="text-white text-2xl font-semibold mb-3">Discovering New Captures</h3>
-      <p class="text-white/60 text-base max-w-md mx-auto">Our team in the jungle is preparing amazing content. Check back soon!</p>
+      <h3 class="text-white text-2xl font-semibold mb-3">No multimedia files found in R2 bucket</h3>
+      <p class="text-white/60 text-base max-w-md mx-auto">Please upload images or videos to the medios/gallery/imagenes/ or medios/gallery/videos/ directories in the Admin Panel.</p>
     </div>
   `;
 
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   try {
     dynamicGallery.innerHTML = '<div class="w-full text-center text-emerald-500 py-20"><i class="fas fa-spinner fa-spin text-5xl drop-shadow-[0_0_15px_rgba(45,212,191,0.5)]"></i></div>';
     
-    const res = await fetch('/api/media');
+    const res = await fetch('/api/public-gallery');
     if (!res.ok) throw new Error('Failed to fetch media');
     const data = await res.json();
     const files = data.files || [];
@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
     }
   } catch (error) {
-    console.error("Gallery Hydrator Error:", error);
-    dynamicGallery.innerHTML = `<div class="w-full text-center text-red-400 py-12">Failed to load media from Cloudflare R2.</div>`;
+    console.error("Gallery Hydrator Error: Fetch from /api/public-gallery failed.", error);
+    dynamicGallery.innerHTML = getEmptyStateHTML();
   }
 });
