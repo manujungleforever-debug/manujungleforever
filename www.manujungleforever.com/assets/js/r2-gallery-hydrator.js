@@ -1,4 +1,4 @@
-(async function initMasonryMuseumWall() {
+(async function initCollectionWall() {
   const dynamicGallery = document.getElementById('dynamic-r2-gallery');
   if (!dynamicGallery) return;
 
@@ -11,81 +11,78 @@
           <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z"></path>
         </svg>
       </div>
-      <h3 class="text-white text-3xl font-bold mb-3 tracking-wide">Gallery Matrix is Empty</h3>
-      <p class="text-white/60 text-lg max-w-xl mx-auto">Upload media from the admin panel to populate this interactive museum wall.</p>
+      <h3 class="text-white text-3xl font-bold mb-3">Gallery Matrix is Empty</h3>
+      <p class="text-white/60 text-lg max-w-xl mx-auto">Upload media from the admin panel to populate this wall.</p>
     </div>
   `;
 
-  // ── Dramatic height variation cycle — pixel heights, not aspect ratios ──
-  const heightCycle = [
-    '420px',  // tall portrait
-    '240px',  // short landscape
-    '360px',  // medium-tall
-    '200px',  // compact
-    '480px',  // extra tall
-    '280px',  // standard
-    '340px',  // medium
-    '180px',  // tiny
-    '400px',  // tall
-    '260px',  // medium-short
-    '500px',  // giant
-    '220px',  // small
-    '380px',  // tall-ish
-  ];
+  // ── Organic size pattern: mix of horizontal, vertical, giant, and normal ──
+  // H = horizontal wide (2col x 1row), V = vertical tall (1col x 2row),
+  // G = giant (2col x 2row), N = normal square (1col x 1row)
+  const sizePattern = ['G', 'N', 'H', 'V', 'N', 'N', 'H', 'N', 'V', 'N', 'H', 'N', 'G', 'N', 'V', 'H', 'N', 'N', 'N', 'V', 'H', 'N', 'N', 'G'];
 
-  const getHeight = (index) => heightCycle[index % heightCycle.length];
+  const getSpan = (index) => {
+    const size = sizePattern[index % sizePattern.length];
+    switch (size) {
+      case 'G': return 'col-span-2 row-span-2';  // Giant square
+      case 'H': return 'col-span-2 row-span-1';  // Horizontal landscape
+      case 'V': return 'col-span-1 row-span-2';  // Vertical portrait
+      default:  return 'col-span-1 row-span-1';  // Normal
+    }
+  };
 
-  const cardBase = 'break-inside-avoid mb-3 w-full relative overflow-hidden rounded-xl bg-neutral-900 border border-emerald-500/20 group hover:border-emerald-500/60 hover:shadow-[0_0_30px_rgba(16,185,129,0.15)] transition-all duration-300';
+  const cardBase = 'relative overflow-hidden rounded-xl bg-neutral-900 border border-emerald-500/20 group hover:border-emerald-500/60 hover:shadow-[0_0_25px_rgba(16,185,129,0.15)] transition-all duration-300';
 
   const zoomOverlay = (icon) => `
-    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
     <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-      <div class="w-12 h-12 rounded-full bg-emerald-500 text-black flex items-center justify-center shadow-xl transform scale-75 group-hover:scale-100 transition-transform duration-300">
-        <i class="fas fa-${icon} text-sm"></i>
+      <div class="w-11 h-11 rounded-full bg-emerald-500 text-black flex items-center justify-center shadow-xl transform scale-75 group-hover:scale-100 transition-transform duration-300">
+        <i class="fas fa-${icon} text-xs"></i>
       </div>
     </div>
   `;
 
-  const renderImageCard = (url, index) => `
-    <div class="${cardBase}" style="height:${getHeight(index)}">
-      <a href="${url}" class="glightbox block w-full h-full" data-gallery="museum-wall">
+  // ── Card renderers ──
+  const renderImageCard = (url, span) => `
+    <div class="${span} ${cardBase}">
+      <a href="${url}" class="glightbox block w-full h-full" data-gallery="wall">
         <img src="${url}" class="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-105" loading="lazy" alt="Manu Jungle">
         ${zoomOverlay('search-plus')}
       </a>
     </div>
   `;
 
-  const renderVideoCard = (url, index) => `
-    <div class="${cardBase} border-emerald-500/30" style="height:${getHeight(index)}">
-      <a href="${url}" class="glightbox block w-full h-full" data-gallery="museum-wall">
+  const renderVideoCard = (url, span) => `
+    <div class="${span} ${cardBase} border-emerald-500/30">
+      <a href="${url}" class="glightbox block w-full h-full" data-gallery="wall">
         <video autoplay loop muted playsinline class="w-full h-full object-cover"><source src="${url}" type="video/mp4"></video>
-        <div class="absolute top-3 left-3 flex items-center gap-2 bg-black/70 backdrop-blur-md px-3 py-1.5 rounded-full border border-emerald-500/40 z-10">
-          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+        <div class="absolute top-3 left-3 flex items-center gap-2 bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-full border border-emerald-500/40 z-10">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
           <span class="text-white text-[10px] font-black tracking-wider uppercase">Live Stream</span>
         </div>
-        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opacity-50 group-hover:opacity-20 transition-opacity duration-300"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-50 group-hover:opacity-20 transition-opacity duration-300"></div>
         ${zoomOverlay('play')}
       </a>
     </div>
   `;
 
-  const renderSliderCard = (imageUrls, sliderId) => `
-    <div class="${cardBase} border-emerald-500/30" style="height:480px">
+  const renderSliderCard = (imageUrls, sliderId, span) => `
+    <div class="${span} ${cardBase} border-emerald-500/30">
       <div class="absolute inset-0 w-full h-full">
         ${imageUrls.map((url, i) => `
           <div class="absolute inset-0 transition-opacity duration-1000 ease-in-out ${i === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'} slide-${sliderId}">
             <a href="${url}" class="glightbox block w-full h-full" data-gallery="slider-${sliderId}">
-              <img src="${url}" class="w-full h-full object-cover" loading="lazy" alt="Manu Jungle Slider">
+              <img src="${url}" class="w-full h-full object-cover" loading="lazy" alt="Manu Jungle">
             </a>
           </div>
         `).join('')}
       </div>
-      <div class="absolute top-3 left-3 flex items-center gap-2 bg-black/70 backdrop-blur-md px-3 py-1.5 rounded-full border border-emerald-500/40 z-20">
-        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+      <div class="absolute top-3 left-3 flex items-center gap-2 bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-full border border-emerald-500/40 z-20">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
         <span class="text-white text-[10px] font-black tracking-wider uppercase">Live Slider</span>
       </div>
       <div class="absolute bottom-3 right-3 z-20">
-        <span class="bg-black/60 backdrop-blur-sm text-white/70 text-[10px] font-semibold px-2.5 py-1 rounded-full border border-white/10">${imageUrls.length} photos</span>
+        <span class="bg-black/50 backdrop-blur-sm text-white/70 text-[10px] font-semibold px-2 py-0.5 rounded-full">${imageUrls.length} photos</span>
       </div>
       ${zoomOverlay('search-plus')}
     </div>
@@ -110,44 +107,57 @@
     const images = files.filter(f => !isVideo(f.key));
     const videos = files.filter(f => isVideo(f.key));
 
-    // Only 1 slider using first 3 images — keep the rest as individual cards for maximum variety
-    const sliderImages = images.slice(0, 3);
-    const soloImages = images.slice(3);
-    const hasSlider = sliderImages.length >= 2;
-    const sliderId = 'main-slider';
+    // ── Dynamic slider count: 1 slider per every 5 images (scales with content) ──
+    const sliderCount = Math.max(1, Math.floor(images.length / 5));
+    const imagesPerSlider = 3;
+    const sliderPool = sliderCount * imagesPerSlider;
+    const sliderChunks = [];
+    for (let i = 0; i < sliderPool && i < images.length; i += imagesPerSlider) {
+      const chunk = images.slice(i, i + imagesPerSlider);
+      if (chunk.length >= 2) sliderChunks.push(chunk);
+    }
+    const soloImages = images.slice(sliderPool);
+    console.log('[Gallery] Sliders:', sliderChunks.length, '| Solo images:', soloImages.length, '| Videos:', videos.length);
 
-    // ── Interleave everything into one organic stream ──
+    // ── Build the organic interleaved stream ──
     const stream = [];
+    let imgIdx = 0, vidIdx = 0, sliderIdx = 0;
 
-    // Lead with the slider as the hero anchor piece
-    if (hasSlider) {
-      stream.push({ type: 'slider' });
-    }
+    // Total items to place
+    const totalItems = sliderChunks.length + soloImages.length + videos.length;
 
-    // Weave solo images and videos together — drop a video every 2 images
-    let vIdx = 0;
-    soloImages.forEach((img, i) => {
-      stream.push({ type: 'image', url: img.url });
-      if ((i + 1) % 2 === 0 && vIdx < videos.length) {
-        stream.push({ type: 'video', url: videos[vIdx].url });
-        vIdx++;
+    for (let i = 0; i < totalItems; i++) {
+      // Place sliders at positions that get Giant (G) or Vertical (V) spans for visual impact
+      const currentSize = sizePattern[i % sizePattern.length];
+      if ((currentSize === 'G') && sliderIdx < sliderChunks.length) {
+        stream.push({ type: 'slider', idx: sliderIdx });
+        sliderIdx++;
+      } else if ((currentSize === 'H' || currentSize === 'G') && vidIdx < videos.length) {
+        // Videos look best in horizontal or giant slots
+        stream.push({ type: 'video', url: videos[vidIdx].url });
+        vidIdx++;
+      } else if (imgIdx < soloImages.length) {
+        stream.push({ type: 'image', url: soloImages[imgIdx].url });
+        imgIdx++;
+      } else if (vidIdx < videos.length) {
+        stream.push({ type: 'video', url: videos[vidIdx].url });
+        vidIdx++;
+      } else if (sliderIdx < sliderChunks.length) {
+        stream.push({ type: 'slider', idx: sliderIdx });
+        sliderIdx++;
       }
-    });
-    // Append remaining videos
-    while (vIdx < videos.length) {
-      stream.push({ type: 'video', url: videos[vIdx].url });
-      vIdx++;
     }
 
-    // ── Render cards ──
+    // ── Render all cards ──
     let cards = '';
     stream.forEach((item, index) => {
+      const span = getSpan(index);
       if (item.type === 'slider') {
-        cards += renderSliderCard(sliderImages.map(f => f.url), sliderId);
+        cards += renderSliderCard(sliderChunks[item.idx].map(f => f.url), `sl-${item.idx}`, span);
       } else if (item.type === 'video') {
-        cards += renderVideoCard(item.url, index);
+        cards += renderVideoCard(item.url, span);
       } else {
-        cards += renderImageCard(item.url, index);
+        cards += renderImageCard(item.url, span);
       }
     });
 
@@ -159,37 +169,38 @@
               <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
               <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
             </span>
-            <span class="text-sm uppercase tracking-widest text-emerald-400 font-bold">Amazon Museum Wall &bull; ${files.length} Assets</span>
+            <span class="text-sm uppercase tracking-widest text-emerald-400 font-bold">Amazon Collection Wall &bull; ${files.length} Assets</span>
           </div>
           <span class="text-xs text-white/50 tracking-wider hidden sm:inline">Click any piece to expand</span>
         </div>
-        <div class="columns-2 sm:columns-3 md:columns-4 lg:columns-5 xl:columns-6 gap-3">
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 auto-rows-[160px] sm:auto-rows-[180px] md:auto-rows-[200px] gap-3" style="grid-auto-flow: dense;">
           ${cards}
         </div>
       </div>
     `;
 
-    console.log('[Gallery] Museum wall rendered:', stream.length, 'pieces');
+    console.log('[Gallery] Collection wall rendered:', stream.length, 'pieces');
 
     // ── GLightbox ──
     if (typeof GLightbox !== 'undefined') {
       GLightbox({ selector: '.glightbox', touchNavigation: true, loop: true });
     }
 
-    // ── Crossfade slider ──
-    if (hasSlider) {
-      const slides = document.querySelectorAll(`.slide-${sliderId}`);
-      if (slides.length > 1) {
-        let current = 0;
-        setInterval(() => {
-          slides[current].classList.remove('opacity-100', 'z-10');
-          slides[current].classList.add('opacity-0', 'z-0');
-          current = (current + 1) % slides.length;
-          slides[current].classList.remove('opacity-0', 'z-0');
-          slides[current].classList.add('opacity-100', 'z-10');
-        }, 3500);
-      }
-    }
+    // ── Activate all crossfade sliders ──
+    sliderChunks.forEach((chunk, i) => {
+      const slides = document.querySelectorAll(`.slide-sl-${i}`);
+      if (slides.length <= 1) return;
+      let current = 0;
+      setInterval(() => {
+        slides[current].classList.remove('opacity-100', 'z-10');
+        slides[current].classList.add('opacity-0', 'z-0');
+        current = (current + 1) % slides.length;
+        slides[current].classList.remove('opacity-0', 'z-0');
+        slides[current].classList.add('opacity-100', 'z-10');
+      }, 3500);
+    });
+    console.log('[Gallery] Sliders activated:', sliderChunks.length);
 
   } catch (err) {
     console.error('[Gallery] FATAL error:', err);
