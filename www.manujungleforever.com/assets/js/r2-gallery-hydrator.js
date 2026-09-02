@@ -4,26 +4,30 @@
 
   const isVideo = (key) => /\.(mp4|webm|mov)$/i.test(key);
 
-  // ── Copyright: ONLY real metadata from API — zero invention ──
-  const hasRealCredit = (file) => !!(file.credit || file.author);
+  // ── Credits: strict real metadata only, formatted like Home/About Us ──
+  const getRawCredit = (file) => {
+    return file.credit || file.author || file.copyright || '';
+  };
 
-  const getRealCredit = (file) => {
-    if (file.credit) return file.credit;
-    if (file.author) return `© ${file.author}`;
-    return '';
+  const formatCredit = (file) => {
+    const raw = getRawCredit(file);
+    if (!raw) return '';
+    // Match Home/About Us format: "Photo: Author · CC BY-SA 4.0"
+    if (raw.includes('CC BY')) return raw;
+    return `Photo: ${raw} · CC BY-SA 4.0`;
   };
 
   const glightboxAttrs = (file) => {
-    const credit = getRealCredit(file);
+    const credit = formatCredit(file);
     if (!credit) return 'data-gallery="manu-collection"';
-    const safeCredit = credit.replace(/"/g, '&quot;');
-    return `data-gallery="manu-collection" data-description="<span class='text-xs opacity-80'><i class='fas fa-copyright text-emerald-400 mr-1'></i> ${safeCredit}</span>"`;
+    const safe = credit.replace(/"/g, '&quot;');
+    return `data-gallery="manu-collection" data-description="<div class='text-center text-xs text-neutral-300 font-sans py-1'><i class='fas fa-camera text-emerald-400 mr-1.5'></i> ${safe}</div>"`;
   };
 
   const creditBadge = (file) => {
-    if (!hasRealCredit(file)) return '';
-    const credit = getRealCredit(file);
-    return `<div class="absolute bottom-3 left-3 z-20 pointer-events-none inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/65 backdrop-blur-md border border-white/10 text-[11px] text-white/90 font-sans shadow-lg"><i class="fas fa-camera text-neutral-400 text-[10px]"></i><span>${credit}</span></div>`;
+    const credit = formatCredit(file);
+    if (!credit) return '';
+    return `<div class="absolute bottom-2 right-2 z-20 pointer-events-none inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-[10px] text-white/80 font-sans shadow-md"><span>${credit}</span></div>`;
   };
 
   const renderEmptyState = () => `

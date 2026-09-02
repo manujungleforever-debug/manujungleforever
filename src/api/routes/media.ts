@@ -16,7 +16,10 @@ mediaRoutes.get('/gallery', async (c) => {
       .filter(obj => !obj.key.endsWith('.keep_folder') && obj.size > 0)
       .map(obj => ({
         key: obj.key,
-        url: `/media/${obj.key}`
+        url: `/media/${obj.key}`,
+        credit: obj.customMetadata?.credit || '',
+        author: obj.customMetadata?.author || '',
+        copyright: obj.customMetadata?.copyright || ''
       }));
 
     return c.json({ success: true, files }, 200, {
