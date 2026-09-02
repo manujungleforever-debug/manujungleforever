@@ -21,6 +21,28 @@
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"TouristAttraction","name":"Manu Jungle Forever","url":"https://www.manujungleforever.com/","description":"Guided tours from Cusco to the Manu National Park in the Peruvian Amazon.","telephone":"+51901525679","email":"discover@manujungleforever.com","address":{"@type":"PostalAddress","addressLocality":"Nuevo Eden","addressCountry":"PE"},"sameAs":["https://www.facebook.com/manujungleforever","https://www.instagram.com/manujungleforever/",]}</script>
 <style>
+/* ══ HOME MAIN TITLE (ISOLATED) ══════════════════ */
+#home-main-title {
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: clamp(2.5rem, 6.5vw, 5.5rem) !important;
+  font-weight: 800 !important;
+  line-height: 1.1 !important;
+  letter-spacing: -0.03em !important;
+  margin-bottom: 24px !important;
+  text-shadow: 0 4px 24px rgba(0,0,0,0.5) !important;
+  color: #ffffff !important;
+  text-transform: none !important;
+}
+#home-main-title em {
+  font-style: normal !important;
+  background: linear-gradient(135deg, var(--a, #2dd4bf), var(--v, #10b981)) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  text-shadow: none !important;
+  display: inline-block;
+}
+
 /* ══ GUIDED TOURS (WARM JUNGLE PALETTE & MODERN CARDS) ══════════════════ */
 #tours {
   background: radial-gradient(circle at 50% 10%, rgba(61, 35, 15, 0.45) 0%, rgba(30, 16, 8, 0.95) 55%, rgba(18, 10, 5, 1) 100%) !important;
@@ -871,7 +893,7 @@
 <div class="ho"></div>
 <div class="cx hb">
 <p class="ht"><i class="fas fa-map-marker-alt"></i> Cusco, Peru · Manu National Park</p>
-<h1 class="hero-h1 text-white" style="text-shadow: 0 4px 15px rgba(0,0,0,0.5);">What Will You<br><em>Discover?</em></h1>
+<h1 id="home-main-title">What Will You<br><em>Discover?</em></h1>
 <p class="hs">Visit Manu National Park from Cusco — guided jungle tours deep into the Peruvian Amazon. Local. Wild. Authentic.</p>
 <div class="ha">
 <a class="btn ba" href="contact/index.html"><i class="fas fa-compass"></i> Book a Tour</a>
