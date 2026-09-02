@@ -68,23 +68,21 @@
   try {
     dynamicGallery.innerHTML = '<div class="w-full text-center text-emerald-500 py-32"><i class="fas fa-spinner fa-spin text-5xl"></i><p class="text-white/50 text-sm mt-4">Connecting to R2 Bucket...</p></div>';
 
-    // Endpoint registrado en Hono: mediaRoutes.get('/gallery') -> /api/media/gallery
     const res = await fetch('/api/media/gallery');
+    console.log('[Gallery] API status:', res.status);
     if (!res.ok) throw new Error('API response ' + res.status);
 
     const data = await res.json();
     const files = data.files || [];
+    console.log('[Gallery] Files received from API:', files.length, files);
 
-    // Filtra exclusivamente lo que esté subido en las carpetas de medios
-    const validFiles = files.filter(f =>
-      !f.key.endsWith('.keep_folder') &&
-      (f.key.includes('medios/gallery/imagenes/') || f.key.includes('medios/gallery/videos/') || f.key.includes('raiz/medios/gallery/'))
-    );
-
-    const mappedItems = validFiles.map(f => ({
+    // Backend already filters .keep_folder and empty objects — map directly
+    const mappedItems = files.map(f => ({
       type: isVideo(f.key) ? 'video' : 'image',
       url: f.url
     }));
+
+    console.log('[Gallery] Mapped items:', mappedItems.length);
 
     if (mappedItems.length === 0) {
       dynamicGallery.innerHTML = renderEmptyState();
@@ -95,7 +93,7 @@
       }
     }
   } catch (err) {
-    console.error("Dynamic gallery fetch error:", err);
+    console.error('[Gallery] FATAL fetch error:', err);
     dynamicGallery.innerHTML = renderEmptyState();
   }
 })();
