@@ -19,7 +19,7 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"TouristAttraction","name":"Manu Jungle Forever","url":"https://www.manujungleforever.com/","description":"Guided tours from Cusco to the Manu National Park in the Peruvian Amazon.","telephone":"+51901525679","email":"discover@manujungleforever.com","address":{"@type":"PostalAddress","addressLocality":"Nuevo Eden","addressCountry":"PE"},"sameAs":["https://www.facebook.com/manujungleforever","https://www.instagram.com/manujungleforever/",]}</script>
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-5476BC9');</script>
 <script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet"/>
 <style>
   /* Fix tailwind preflight overrides if any */
   #dynamic-r2-gallery { margin-bottom: 40px; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 80px; }
@@ -186,19 +186,17 @@
 <img alt="Cock of the Rock" loading="lazy" src="../assets/media_to_upload/photos/placeholder.jpg" style="width:100%; height:300px; object-fit:cover; border-radius:16px; transition:transform .4s ease;"/>
 </a>
 </div>
-<div id="dynamic-r2-gallery" class="r text-center">
+<div class="r text-center" id="dynamic-r2-gallery">
 <span class="ey">R2 Cloud Storage</span>
-<h2 class="h2 mb-8">Video & Photo Highlights</h2>
+<h2 class="h2 mb-8">Video &amp; Photo Highlights</h2>
 <p class="ld mx-auto mb-12">Immerse yourself in our dynamic gallery, streamed directly from the jungle.</p>
-
 <!-- Swiper Slider -->
 <div class="swiper top-hero-slider w-full h-[60vh] md:h-[70vh] rounded-3xl overflow-hidden mb-12 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
-  <div class="swiper-wrapper" id="r2-slider-wrapper"></div>
-  <div class="swiper-pagination"></div>
-  <div class="swiper-button-prev"></div>
-  <div class="swiper-button-next"></div>
+<div class="swiper-wrapper" id="r2-slider-wrapper"></div>
+<div class="swiper-pagination"></div>
+<div class="swiper-button-prev"></div>
+<div class="swiper-button-next"></div>
 </div>
-
 <!-- Bento Grid -->
 <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-[250px] text-left" id="r2-bento-grid">
 </div>
