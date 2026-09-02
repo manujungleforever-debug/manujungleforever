@@ -20,7 +20,7 @@
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-5476BC9');</script>
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet"/>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
+<link href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" rel="stylesheet"/>
 <style>
   /* Fix tailwind preflight overrides if any */
   #dynamic-r2-gallery { margin-bottom: 40px; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 80px; }
@@ -187,18 +187,17 @@
 <img alt="Cock of the Rock" loading="lazy" src="../assets/media_to_upload/photos/placeholder.jpg" style="width:100%; height:300px; object-fit:cover; border-radius:16px; transition:transform .4s ease;"/>
 </a>
 </div>
-<div id="dynamic-r2-gallery" class="r text-center">
+<div class="r text-center" id="dynamic-r2-gallery">
 <span class="ey">Capturas Naturales</span>
 <h2 class="h2 mb-8 text-white">Galería de Imágenes</h2>
 <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-[250px] text-left mb-16" id="r2-image-grid"></div>
-
 <span class="ey mt-12">Acción en Vivo</span>
 <h2 class="h2 mb-8 text-white">Video Highlights</h2>
 <div class="swiper video-swiper-container w-full h-[50vh] md:h-[65vh] rounded-2xl overflow-hidden mb-12 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
-  <div class="swiper-wrapper" id="r2-video-slider"></div>
-  <div class="swiper-pagination"></div>
-  <div class="swiper-button-prev"></div>
-  <div class="swiper-button-next"></div>
+<div class="swiper-wrapper" id="r2-video-slider"></div>
+<div class="swiper-pagination"></div>
+<div class="swiper-button-prev"></div>
+<div class="swiper-button-next"></div>
 </div>
 </div>
 <!-- CTA -->
