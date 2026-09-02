@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', async () => {
+(async function initGallery() {
   const dynamicGallery = document.getElementById('dynamic-r2-gallery');
   if (!dynamicGallery) return;
 
@@ -100,4 +100,4 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.error("Gallery Hydrator Error: Fetch from /api/public-gallery failed.", error);
     dynamicGallery.innerHTML = getEmptyStateHTML();
   }
-});
+})();
