@@ -16,65 +16,66 @@
     </div>
   `;
 
-  // ── Organic aspect ratio assignment ──
-  const getAspectClass = (index) => {
-    if (index % 7 === 0) return 'aspect-[4/5]';
-    if (index % 5 === 0) return 'aspect-[3/4]';
-    if (index % 4 === 0) return 'aspect-square';
-    if (index % 3 === 0) return 'aspect-[16/9]';
-    if (index % 2 === 0) return 'aspect-[16/10]';
-    return 'aspect-[4/3]';
-  };
+  // ── Dramatic height variation cycle — pixel heights, not aspect ratios ──
+  const heightCycle = [
+    '420px',  // tall portrait
+    '240px',  // short landscape
+    '360px',  // medium-tall
+    '200px',  // compact
+    '480px',  // extra tall
+    '280px',  // standard
+    '340px',  // medium
+    '180px',  // tiny
+    '400px',  // tall
+    '260px',  // medium-short
+    '500px',  // giant
+    '220px',  // small
+    '380px',  // tall-ish
+  ];
 
-  const cardBase = 'break-inside-avoid mb-3 inline-block w-full relative overflow-hidden rounded-xl bg-neutral-900 border border-emerald-500/20 group hover:border-emerald-500/60 transition-all duration-300';
+  const getHeight = (index) => heightCycle[index % heightCycle.length];
 
-  // ── Zoom overlay (shared by all card types) ──
+  const cardBase = 'break-inside-avoid mb-3 w-full relative overflow-hidden rounded-xl bg-neutral-900 border border-emerald-500/20 group hover:border-emerald-500/60 hover:shadow-[0_0_30px_rgba(16,185,129,0.15)] transition-all duration-300';
+
   const zoomOverlay = (icon) => `
-    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400 pointer-events-none"></div>
-    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/30 backdrop-blur-[2px] pointer-events-none">
+    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
       <div class="w-12 h-12 rounded-full bg-emerald-500 text-black flex items-center justify-center shadow-xl transform scale-75 group-hover:scale-100 transition-transform duration-300">
         <i class="fas fa-${icon} text-sm"></i>
       </div>
     </div>
   `;
 
-  // ── Single image card ──
   const renderImageCard = (url, index) => `
-    <div class="${cardBase}">
-      <a href="${url}" class="glightbox block w-full ${getAspectClass(index)}" data-gallery="museum-wall">
+    <div class="${cardBase}" style="height:${getHeight(index)}">
+      <a href="${url}" class="glightbox block w-full h-full" data-gallery="museum-wall">
         <img src="${url}" class="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-105" loading="lazy" alt="Manu Jungle">
         ${zoomOverlay('search-plus')}
       </a>
     </div>
   `;
 
-  // ── Video card ──
-  const renderVideoCard = (url, index) => {
-    const aspect = index % 2 === 0 ? 'aspect-[16/9]' : 'aspect-[3/4]';
-    return `
-      <div class="${cardBase} border-emerald-500/30">
-        <a href="${url}" class="glightbox block w-full ${aspect}" data-gallery="museum-wall">
-          <video autoplay loop muted playsinline class="w-full h-full object-cover"><source src="${url}" type="video/mp4"></video>
-          <div class="absolute top-3 left-3 flex items-center gap-2 bg-black/70 backdrop-blur-md px-3 py-1.5 rounded-full border border-emerald-500/40 z-10">
-            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span class="text-white text-[10px] font-black tracking-wider uppercase">Live Stream</span>
-          </div>
-          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opacity-60 group-hover:opacity-30 transition-opacity duration-400"></div>
-          ${zoomOverlay('play')}
-        </a>
-      </div>
-    `;
-  };
+  const renderVideoCard = (url, index) => `
+    <div class="${cardBase} border-emerald-500/30" style="height:${getHeight(index)}">
+      <a href="${url}" class="glightbox block w-full h-full" data-gallery="museum-wall">
+        <video autoplay loop muted playsinline class="w-full h-full object-cover"><source src="${url}" type="video/mp4"></video>
+        <div class="absolute top-3 left-3 flex items-center gap-2 bg-black/70 backdrop-blur-md px-3 py-1.5 rounded-full border border-emerald-500/40 z-10">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span class="text-white text-[10px] font-black tracking-wider uppercase">Live Stream</span>
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opacity-50 group-hover:opacity-20 transition-opacity duration-300"></div>
+        ${zoomOverlay('play')}
+      </a>
+    </div>
+  `;
 
-  // ── Crossfade slider card ──
   const renderSliderCard = (imageUrls, sliderId) => `
-    <div class="${cardBase} border-emerald-500/30 aspect-[3/4]">
+    <div class="${cardBase} border-emerald-500/30" style="height:480px">
       <div class="absolute inset-0 w-full h-full">
         ${imageUrls.map((url, i) => `
           <div class="absolute inset-0 transition-opacity duration-1000 ease-in-out ${i === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'} slide-${sliderId}">
             <a href="${url}" class="glightbox block w-full h-full" data-gallery="slider-${sliderId}">
               <img src="${url}" class="w-full h-full object-cover" loading="lazy" alt="Manu Jungle Slider">
-              <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-40"></div>
             </a>
           </div>
         `).join('')}
@@ -106,48 +107,43 @@
       return;
     }
 
-    // Separate media types
     const images = files.filter(f => !isVideo(f.key));
     const videos = files.filter(f => isVideo(f.key));
 
-    // Build slider chunks from first images (groups of 3)
-    const sliderChunks = [];
-    const sliderPool = Math.min(images.length, 9);
-    for (let i = 0; i < sliderPool; i += 3) {
-      const chunk = images.slice(i, i + 3);
-      if (chunk.length >= 2) sliderChunks.push(chunk);
+    // Only 1 slider using first 3 images — keep the rest as individual cards for maximum variety
+    const sliderImages = images.slice(0, 3);
+    const soloImages = images.slice(3);
+    const hasSlider = sliderImages.length >= 2;
+    const sliderId = 'main-slider';
+
+    // ── Interleave everything into one organic stream ──
+    const stream = [];
+
+    // Lead with the slider as the hero anchor piece
+    if (hasSlider) {
+      stream.push({ type: 'slider' });
     }
-    const soloImages = images.slice(sliderPool);
 
-    // ── Interleave all items into a single stream for organic mixing ──
-    const allItems = [];
-
-    // Sliders go first as anchor pieces
-    sliderChunks.forEach((chunk, i) => {
-      allItems.push({ type: 'slider', chunk, id: `sl-${i}` });
-    });
-
-    // Interleave solo images and videos organically
+    // Weave solo images and videos together — drop a video every 2 images
     let vIdx = 0;
     soloImages.forEach((img, i) => {
-      allItems.push({ type: 'image', url: img.url });
-      // Drop a video after every 2-3 images for organic dispersal
-      if ((i + 1) % 3 === 0 && vIdx < videos.length) {
-        allItems.push({ type: 'video', url: videos[vIdx].url });
+      stream.push({ type: 'image', url: img.url });
+      if ((i + 1) % 2 === 0 && vIdx < videos.length) {
+        stream.push({ type: 'video', url: videos[vIdx].url });
         vIdx++;
       }
     });
-    // Append any remaining videos
+    // Append remaining videos
     while (vIdx < videos.length) {
-      allItems.push({ type: 'video', url: videos[vIdx].url });
+      stream.push({ type: 'video', url: videos[vIdx].url });
       vIdx++;
     }
 
-    // ── Render the masonry stream ──
+    // ── Render cards ──
     let cards = '';
-    allItems.forEach((item, index) => {
+    stream.forEach((item, index) => {
       if (item.type === 'slider') {
-        cards += renderSliderCard(item.chunk.map(f => f.url), item.id);
+        cards += renderSliderCard(sliderImages.map(f => f.url), sliderId);
       } else if (item.type === 'video') {
         cards += renderVideoCard(item.url, index);
       } else {
@@ -155,7 +151,7 @@
       }
     });
 
-    const html = `
+    dynamicGallery.innerHTML = `
       <div class="w-full max-w-[120rem] mx-auto px-2 sm:px-4 mt-6 mb-32">
         <div class="flex items-center justify-between mb-8 px-2 border-b border-emerald-500/20 pb-4">
           <div class="flex items-center gap-3">
@@ -167,38 +163,33 @@
           </div>
           <span class="text-xs text-white/50 tracking-wider hidden sm:inline">Click any piece to expand</span>
         </div>
-
-        <div class="columns-2 sm:columns-3 md:columns-4 lg:columns-5 xl:columns-6 gap-3 space-y-3">
+        <div class="columns-2 sm:columns-3 md:columns-4 lg:columns-5 xl:columns-6 gap-3">
           ${cards}
         </div>
       </div>
     `;
 
-    dynamicGallery.innerHTML = html;
-    console.log('[Gallery] Museum wall rendered:', allItems.length, 'pieces');
+    console.log('[Gallery] Museum wall rendered:', stream.length, 'pieces');
 
-    // ── Initialize GLightbox ──
+    // ── GLightbox ──
     if (typeof GLightbox !== 'undefined') {
       GLightbox({ selector: '.glightbox', touchNavigation: true, loop: true });
-      console.log('[Gallery] GLightbox initialized');
     }
 
-    // ── Activate crossfade sliders (3.5s interval) ──
-    sliderChunks.forEach((chunk, i) => {
-      const sliderId = `sl-${i}`;
+    // ── Crossfade slider ──
+    if (hasSlider) {
       const slides = document.querySelectorAll(`.slide-${sliderId}`);
-      if (slides.length <= 1) return;
-
-      let current = 0;
-      setInterval(() => {
-        slides[current].classList.remove('opacity-100', 'z-10');
-        slides[current].classList.add('opacity-0', 'z-0');
-        current = (current + 1) % slides.length;
-        slides[current].classList.remove('opacity-0', 'z-0');
-        slides[current].classList.add('opacity-100', 'z-10');
-      }, 3500);
-    });
-    console.log('[Gallery] Sliders activated:', sliderChunks.length);
+      if (slides.length > 1) {
+        let current = 0;
+        setInterval(() => {
+          slides[current].classList.remove('opacity-100', 'z-10');
+          slides[current].classList.add('opacity-0', 'z-0');
+          current = (current + 1) % slides.length;
+          slides[current].classList.remove('opacity-0', 'z-0');
+          slides[current].classList.add('opacity-100', 'z-10');
+        }, 3500);
+      }
+    }
 
   } catch (err) {
     console.error('[Gallery] FATAL error:', err);
