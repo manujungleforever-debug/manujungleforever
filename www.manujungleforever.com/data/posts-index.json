@@ -100,15 +100,15 @@
       "imagen_alt": "Peru Travel Tips"
     },
     {
-      "slug": "sustainable-tourism-in-the-manu-biosphere-reserve-conservation-through-private-agricultural-lands",
-      "url": "sustainable-tourism-in-the-manu-biosphere-reserve-conservation-through-private-agricultural-lands/index.html",
       "title": "Sustainable Tourism in the Manu Biosphere Reserve: Conservation Through Private Agricultural Lands",
       "date": "2026-05-12",
-      "categoria": "Sustainability",
+      "category": "Sustainability",
+      "excerpt": "Sustainable tourism in the Manu Biosphere Reserve promoting conservation, biodiversity, and eco-friendly travel in the Peruvian Amazon.",
+      "image": "/media/man-national-park/flora_parque_nacional_manu_03.jpg",
+      "imagen_alt": "Sustainable Tourism in the Manu Biosphere Reserve",
       "publicado": true,
-      "extracto": "Sustainable tourism in the Manu Biosphere Reserve promoting conservation, biodiversity, and eco-friendly travel in the Peruvian Amazon.",
-      "imagen": "/wp-content/uploads/2022/10/Group-Shot_-exploring-the-beach-.jpg",
-      "imagen_alt": "Sustainable Tourism in the Manu Biosphere Reserve"
+      "slug": "sustainable-tourism-in-the-manu-biosphere-reserve-conservation-through-private-agricultural-lands",
+      "url": "sustainable-tourism-in-the-manu-biosphere-reserve-conservation-through-private-agricultural-lands/index.html"
     },
     {
       "slug": "what-to-see-when-traveling-to-the-peruvian-amazon-complete-guide-2026",
