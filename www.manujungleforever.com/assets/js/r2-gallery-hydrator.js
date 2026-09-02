@@ -4,6 +4,26 @@
 
   const isVideo = (key) => /\.(mp4|webm|mov)$/i.test(key);
 
+  // ── Copyright attribution (visible ONLY in GLightbox fullscreen modal) ──
+  const getTitle = (file) => {
+    if (file.title) return file.title;
+    // Clean filename: remove path, extension, underscores, hyphens
+    const basename = file.key.split('/').pop().replace(/\.[^.]+$/, '');
+    return basename.replace(/[_-]/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+  };
+
+  const getCredit = (file) => {
+    if (file.credit) return file.credit;
+    if (file.author) return `© ${file.author}`;
+    return '© Manu Jungle Forever / All rights reserved';
+  };
+
+  const glightboxAttrs = (file) => {
+    const title = getTitle(file).replace(/"/g, '&quot;');
+    const credit = getCredit(file).replace(/"/g, '&quot;');
+    return `data-title="${title}" data-description="<span class='text-xs opacity-80'><i class='fas fa-copyright text-emerald-400 mr-1'></i> ${credit}</span>"`;
+  };
+
   const renderEmptyState = () => `
     <div class="w-full flex flex-col items-center justify-center p-20 text-center border border-emerald-500/20 rounded-3xl bg-black/40 my-12 backdrop-blur-md">
       <div class="w-24 h-24 rounded-full bg-emerald-500/10 flex items-center justify-center mb-6 border border-emerald-500/30">
@@ -43,18 +63,18 @@
   `;
 
   // ── Card renderers ──
-  const renderImageCard = (url, span) => `
+  const renderImageCard = (url, span, file) => `
     <div class="${span} ${cardBase}">
-      <a href="${url}" class="glightbox block w-full h-full" data-gallery="wall">
+      <a href="${url}" class="glightbox block w-full h-full" data-gallery="manu-collection" ${glightboxAttrs(file)}>
         <img src="${url}" class="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-105" loading="lazy" alt="Manu Jungle">
         ${zoomOverlay('search-plus')}
       </a>
     </div>
   `;
 
-  const renderVideoCard = (url, span) => `
+  const renderVideoCard = (url, span, file) => `
     <div class="${span} ${cardBase} border-emerald-500/30">
-      <a href="${url}" class="glightbox block w-full h-full" data-gallery="wall">
+      <a href="${url}" class="glightbox block w-full h-full" data-gallery="manu-collection" ${glightboxAttrs(file)}>
         <video autoplay loop muted playsinline class="w-full h-full object-cover"><source src="${url}" type="video/mp4"></video>
         <div class="absolute top-3 left-3 flex items-center gap-2 bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-full border border-emerald-500/40 z-10">
           <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
@@ -66,13 +86,13 @@
     </div>
   `;
 
-  const renderSliderCard = (imageUrls, sliderId, span) => `
+  const renderSliderCard = (sliderFiles, sliderId, span) => `
     <div class="${span} ${cardBase} border-emerald-500/30">
       <div class="absolute inset-0 w-full h-full">
-        ${imageUrls.map((url, i) => `
+        ${sliderFiles.map((file, i) => `
           <div class="absolute inset-0 transition-opacity duration-1000 ease-in-out ${i === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'} slide-${sliderId}">
-            <a href="${url}" class="glightbox block w-full h-full" data-gallery="slider-${sliderId}">
-              <img src="${url}" class="w-full h-full object-cover" loading="lazy" alt="Manu Jungle">
+            <a href="${file.url}" class="glightbox block w-full h-full" data-gallery="manu-collection" ${glightboxAttrs(file)}>
+              <img src="${file.url}" class="w-full h-full object-cover" loading="lazy" alt="Manu Jungle">
             </a>
           </div>
         `).join('')}
@@ -82,7 +102,7 @@
         <span class="text-white text-[10px] font-black tracking-wider uppercase">Live Slider</span>
       </div>
       <div class="absolute bottom-3 right-3 z-20">
-        <span class="bg-black/50 backdrop-blur-sm text-white/70 text-[10px] font-semibold px-2 py-0.5 rounded-full">${imageUrls.length} photos</span>
+        <span class="bg-black/50 backdrop-blur-sm text-white/70 text-[10px] font-semibold px-2 py-0.5 rounded-full">${sliderFiles.length} photos</span>
       </div>
       ${zoomOverlay('search-plus')}
     </div>
@@ -134,13 +154,13 @@
         sliderIdx++;
       } else if ((currentSize === 'H' || currentSize === 'G') && vidIdx < videos.length) {
         // Videos look best in horizontal or giant slots
-        stream.push({ type: 'video', url: videos[vidIdx].url });
+        stream.push({ type: 'video', url: videos[vidIdx].url, file: videos[vidIdx] });
         vidIdx++;
       } else if (imgIdx < soloImages.length) {
-        stream.push({ type: 'image', url: soloImages[imgIdx].url });
+        stream.push({ type: 'image', url: soloImages[imgIdx].url, file: soloImages[imgIdx] });
         imgIdx++;
       } else if (vidIdx < videos.length) {
-        stream.push({ type: 'video', url: videos[vidIdx].url });
+        stream.push({ type: 'video', url: videos[vidIdx].url, file: videos[vidIdx] });
         vidIdx++;
       } else if (sliderIdx < sliderChunks.length) {
         stream.push({ type: 'slider', idx: sliderIdx });
@@ -153,11 +173,11 @@
     stream.forEach((item, index) => {
       const span = getSpan(index);
       if (item.type === 'slider') {
-        cards += renderSliderCard(sliderChunks[item.idx].map(f => f.url), `sl-${item.idx}`, span);
+        cards += renderSliderCard(sliderChunks[item.idx], `sl-${item.idx}`, span);
       } else if (item.type === 'video') {
-        cards += renderVideoCard(item.url, span);
+        cards += renderVideoCard(item.url, span, item.file);
       } else {
-        cards += renderImageCard(item.url, span);
+        cards += renderImageCard(item.url, span, item.file);
       }
     });
 
@@ -184,7 +204,13 @@
 
     // ── GLightbox ──
     if (typeof GLightbox !== 'undefined') {
-      GLightbox({ selector: '.glightbox', touchNavigation: true, loop: true });
+      GLightbox({
+        selector: '.glightbox',
+        touchNavigation: true,
+        loop: true,
+        zoomable: true,
+        draggable: true
+      });
     }
 
     // ── Activate all crossfade sliders ──
