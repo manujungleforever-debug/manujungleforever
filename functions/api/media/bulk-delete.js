@@ -15,8 +15,28 @@ export async function onRequestPost(context) {
       return json({ error: 'Array "paths" requerido' }, 400);
     }
 
-    await Promise.all(paths.map(key => env.MEDIA_BUCKET.delete(key)));
-    
+    let keysToDelete = [];
+
+    for (const p of paths) {
+      keysToDelete.push(p); // Delete the item itself (if it's a file)
+      
+      // If it's a folder, list and collect all objects inside it
+      let cursor = undefined;
+      do {
+        const listed = await env.MEDIA_BUCKET.list({ prefix: p + '/', cursor });
+        if (listed && listed.objects) {
+          keysToDelete.push(...listed.objects.map(o => o.key));
+        }
+        cursor = listed.truncated ? listed.cursor : undefined;
+      } while (cursor);
+    }
+
+    // R2 allows deleting an array of keys in a single batch
+    if (keysToDelete.length > 0) {
+      // deduplicate keys just in case
+      keysToDelete = [...new Set(keysToDelete)];
+      await env.MEDIA_BUCKET.delete(keysToDelete);
+    }
     return json({ ok: true, deleted: paths.length });
   } catch (e) {
     return json({ error: 'Error en bulk delete: ' + e.message }, 500);
