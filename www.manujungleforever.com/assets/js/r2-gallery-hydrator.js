@@ -98,6 +98,23 @@
     }
   } catch (error) {
     console.error("Gallery Hydrator Error: Fetch from /api/public-gallery failed.", error);
-    dynamicGallery.innerHTML = getEmptyStateHTML();
+    
+    // INFALLIBLE FALLBACK STRATEGY
+    const fallbackAssets = [
+      { type: 'image', url: '/assets/media_to_upload/photos/placeholder.jpg' },
+      { type: 'image', url: '/assets/media_to_upload/photos/placeholder.jpg' },
+      { type: 'image', url: '/assets/media_to_upload/photos/placeholder.jpg' }
+    ];
+    
+    dynamicGallery.innerHTML = `
+      <div class="w-full mb-8 text-center"><p class="text-white/50 text-sm bg-red-500/10 inline-block px-4 py-2 rounded-full border border-red-500/20"><i class="fas fa-exclamation-triangle mr-2 text-red-400"></i>Live connection to Cloudflare R2 is currently down. Showing offline gallery.</p></div>
+      <div class="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6 w-full px-4 md:px-0 mb-24 mx-auto max-w-7xl">
+        ${fallbackAssets.map(item => createMediaHTML(item)).join('')}
+      </div>
+    `;
+    
+    if (typeof GLightbox !== 'undefined') {
+      GLightbox({ selector: '.glightbox', touchNavigation: true, loop: true });
+    }
   }
 })();
