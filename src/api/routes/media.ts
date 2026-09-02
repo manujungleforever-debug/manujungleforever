@@ -3,7 +3,31 @@ import { Bindings } from '../../db';
 
 export const mediaRoutes = new Hono<{ Bindings: Bindings }>();
 
-// ── GET R2 MEDIA LIST ──
+// ── PUBLIC GALLERY ENDPOINT (No auth required) ──
+mediaRoutes.get('/gallery', async (c) => {
+  const bucket = c.env.MEDIA_BUCKET;
+  if (!bucket) {
+    return c.json({ success: false, error: 'R2 MEDIA_BUCKET not configured' }, 500);
+  }
+
+  try {
+    const list = await bucket.list({ prefix: 'medios/gallery/', limit: 1000 });
+    const files = list.objects
+      .filter(obj => !obj.key.endsWith('.keep_folder') && obj.size > 0)
+      .map(obj => ({
+        key: obj.key,
+        url: `/media/${obj.key}`
+      }));
+
+    return c.json({ success: true, files }, 200, {
+      'Cache-Control': 'public, max-age=120'
+    });
+  } catch (e: any) {
+    return c.json({ success: false, error: e.message }, 500);
+  }
+});
+
+// ── GET R2 MEDIA LIST (Admin - full bucket) ──
 mediaRoutes.get('/', async (c) => {
   const bucket = c.env.MEDIA_BUCKET;
   if (!bucket) {

@@ -68,9 +68,9 @@
   try {
     dynamicGallery.innerHTML = '<div class="w-full text-center text-emerald-500 py-32"><i class="fas fa-spinner fa-spin text-5xl"></i><p class="text-white/50 text-sm mt-4">Connecting to R2 Bucket...</p></div>';
 
-    // Petición al endpoint que lee el bucket en tiempo real
-    const res = await fetch('/api/public-gallery');
-    if (!res.ok) throw new Error('API response failed');
+    // Endpoint registrado en Hono: mediaRoutes.get('/gallery') -> /api/media/gallery
+    const res = await fetch('/api/media/gallery');
+    if (!res.ok) throw new Error('API response ' + res.status);
 
     const data = await res.json();
     const files = data.files || [];
