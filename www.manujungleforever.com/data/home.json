@@ -59,8 +59,8 @@
       {
         "id": "cat-2",
         "categoria": "roadtrip",
-        "disponible": true,
-        "badge_texto": "Available Now",
+        "disponible": false,
+        "badge_texto": "Temporarily Unavailable",
         "titulo": "Rainforest Road Trip",
         "duracion": "4 or 5 Days",
         "pasajeros": "1–3 Passengers",
