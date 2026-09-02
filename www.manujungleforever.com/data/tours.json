@@ -6,7 +6,7 @@
       "categoria": "expedition",
       "duracion_dias": 10,
       "duracion_noches": 9,
-      "precio_desde": 2000,
+      "precio_desde": 1500,
       "capacidad_min": 8,
       "capacidad_max": 12,
       "dificultad": "Moderado",
