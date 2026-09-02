@@ -12,7 +12,7 @@
         </svg>
       </div>
       <h3 class="text-white text-2xl font-semibold mb-3">No multimedia files found in R2 bucket</h3>
-      <p class="text-white/60 text-base max-w-md mx-auto">Please upload images or videos to the medios/gallery/imagenes/ or medios/gallery/videos/ directories in the Admin Panel.</p>
+      <p class="text-white/60 text-base max-w-md mx-auto">Please upload images or videos to the raiz/medios/gallery/imagenes/ or raiz/medios/gallery/videos/ directories in the Admin Panel.</p>
     </div>
   `;
 
@@ -51,15 +51,15 @@
 
   try {
     dynamicGallery.innerHTML = '<div class="w-full text-center text-emerald-500 py-20"><i class="fas fa-spinner fa-spin text-5xl drop-shadow-[0_0_15px_rgba(45,212,191,0.5)]"></i></div>';
-    
+
     const res = await fetch('/api/public-gallery');
     if (!res.ok) throw new Error('Failed to fetch media');
     const data = await res.json();
     const files = data.files || [];
 
-    // FIXED ROUTES: 'medios/gallery/imagenes/' and 'medios/gallery/videos/'
-    const images = files.filter(f => f.key.startsWith('medios/gallery/imagenes/') && !f.key.endsWith('.keep_folder') && !isVideo(f.key)).map(f => f.url);
-    const videos = files.filter(f => f.key.startsWith('medios/gallery/videos/') && !f.key.endsWith('.keep_folder') && isVideo(f.key)).map(f => f.url);
+    // FIXED ROUTES WITH 'raiz/' PREFIX MATCHING BUCKET STRUCTURE
+    const images = files.filter(f => (f.key.startsWith('raiz/medios/gallery/imagenes/') || f.key.startsWith('medios/gallery/imagenes/')) && !f.key.endsWith('.keep_folder') && !isVideo(f.key)).map(f => f.url);
+    const videos = files.filter(f => (f.key.startsWith('raiz/medios/gallery/videos/') || f.key.startsWith('medios/gallery/videos/')) && !f.key.endsWith('.keep_folder') && isVideo(f.key)).map(f => f.url);
 
     let allMedia = [
       ...images.map(url => ({ type: 'image', url })),
@@ -68,14 +68,13 @@
 
     // Organic shuffle (Fisher-Yates)
     for (let i = allMedia.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [allMedia[i], allMedia[j]] = [allMedia[j], allMedia[i]];
+      const j = Math.floor(Math.random() * (i + 1));
+      [allMedia[i], allMedia[j]] = [allMedia[j], allMedia[i]];
     }
 
     if (allMedia.length === 0) {
       dynamicGallery.innerHTML = getEmptyStateHTML();
     } else {
-      // Create unified Masonry/Bento grid
       dynamicGallery.innerHTML = `
         <div class="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6 w-full px-4 md:px-0 mt-8 mb-24 mx-auto max-w-7xl">
           ${allMedia.map(item => createMediaHTML(item)).join('')}
@@ -83,9 +82,9 @@
       `;
 
       if (typeof GLightbox !== 'undefined') {
-        GLightbox({ 
-          selector: '.glightbox', 
-          touchNavigation: true, 
+        GLightbox({
+          selector: '.glightbox',
+          touchNavigation: true,
           loop: true,
           plyr: {
             config: {
@@ -98,21 +97,18 @@
     }
   } catch (error) {
     console.error("Gallery Hydrator Error: Fetch from /api/public-gallery failed.", error);
-    
-    // INFALLIBLE FALLBACK STRATEGY
+
     const fallbackAssets = [
-      { type: 'image', url: '/assets/media_to_upload/photos/placeholder.jpg' },
-      { type: 'image', url: '/assets/media_to_upload/photos/placeholder.jpg' },
       { type: 'image', url: '/assets/media_to_upload/photos/placeholder.jpg' }
     ];
-    
+
     dynamicGallery.innerHTML = `
       <div class="w-full mb-8 text-center"><p class="text-white/50 text-sm bg-red-500/10 inline-block px-4 py-2 rounded-full border border-red-500/20"><i class="fas fa-exclamation-triangle mr-2 text-red-400"></i>Live connection to Cloudflare R2 is currently down. Showing offline gallery.</p></div>
       <div class="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6 w-full px-4 md:px-0 mb-24 mx-auto max-w-7xl">
         ${fallbackAssets.map(item => createMediaHTML(item)).join('')}
       </div>
     `;
-    
+
     if (typeof GLightbox !== 'undefined') {
       GLightbox({ selector: '.glightbox', touchNavigation: true, loop: true });
     }
