@@ -1874,11 +1874,8 @@ font, font > font, font[style], font > font[style] {
     max-width: 860px;
     margin: 0 auto;
     line-height: 1.2;
-    background: linear-gradient(135deg, var(--a), var(--v));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    text-shadow: none;
+    color: #ffffff;
+    text-shadow: 0 4px 15px rgba(0,0,0,.5);
   }
 
 /* Article body container */

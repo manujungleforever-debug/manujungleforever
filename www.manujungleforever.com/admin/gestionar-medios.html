@@ -1524,6 +1524,30 @@ async function uploadFileList(files, targetFolder, isFolderUpload = false) {
       console.error('Error subiendo archivo:', e);
     }
   }
+  
+  // ASEGURAR .keep_folder PARA TODAS LAS CARPETAS (Único Objetivo)
+  const dirsToKeep = new Set();
+  for (const f of files) {
+    let rel = f.webkitRelativePath || f.name;
+    const full = targetFolder ? `${targetFolder}/${rel}` : rel;
+    const dir = full.substring(0, full.lastIndexOf('/'));
+    if (dir) dirsToKeep.add(dir);
+  }
+  
+  for (const dir of dirsToKeep) {
+    try {
+      const keepFile = new File([""], `${dir}/.keep_folder`, { type: 'text/plain' });
+      await fetch(MEDIA_API, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'X-File-Name': encodeURIComponent(keepFile.name),
+          'Content-Type': 'text/plain'
+        },
+        body: keepFile
+      });
+    } catch(e) { console.error('Error creando .keep_folder en', dir, e); }
+  }
 
   statsLabel.textContent = originalText;
   showToast(`✓ ${successCount} de ${files.length} archivo(s) subido(s) con éxito.`);
@@ -1569,6 +1593,12 @@ window.copyFileUrl = function(url) {
 };
 
 window.deleteFile = async function(key) {
+  // PROTEGER .keep_folder DE ELIMINACIÓN DIRECTA (Único Objetivo)
+  if (key.endsWith('.keep_folder')) {
+    showToast('Operación denegada: Este es un archivo protegido del sistema', true);
+    return;
+  }
+  
   if (!confirm(`¿Estás seguro de eliminar permanentemente "${key}" de Cloudflare R2?`)) return;
 
   try {
@@ -1747,9 +1777,16 @@ window.handleBulkDelete = async function() {
   if (selectedMedia.size === 0) return;
   const count = selectedMedia.size;
   if (confirm(`¿Estás seguro de eliminar los ${count} elementos seleccionados de forma permanente?`)) {
-    const paths = Array.from(selectedMedia);
+    // FILTRAR ESTRICTAMENTE CUALQUIER .keep_folder EN BULK DELETE (Único Objetivo)
+    const paths = Array.from(selectedMedia).filter(p => !p.endsWith('.keep_folder'));
+    
+    if (paths.length === 0) {
+      showToast('No hay elementos válidos para eliminar.', true);
+      return;
+    }
+    
+    if (window.showThinkingOverlay) window.showThinkingOverlay('Eliminando...', 'Borrando seleccionados en Cloudflare R2');
     try {
-      showToast('Eliminando...');
       const res = await fetch(`${MEDIA_API}/bulk-delete`, {
         method: 'POST',
         headers: {
