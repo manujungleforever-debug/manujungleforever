@@ -172,13 +172,11 @@
           const cosTheta = Math.cos(theta);
           const sinTheta = Math.sin(theta);
 
-          // Subtle organic breathing clamped strictly between 0% and 2.5%
-          const r = baseR * (1.0 + 0.025 * Math.sin(theta * 3 + t * 2.0));
-
           // Strict spherical geodesic coordinates: u = cos(theta), v = sin(theta)*cos(phi), w = sin(theta)*sin(phi)
-          const x0 = r * (cosTheta * cosPsi - sinTheta * cosPhi * sinPsi);
-          const y0 = r * (cosTheta * sinPsi + sinTheta * cosPhi * cosPsi);
-          const z0 = r * (sinTheta * sinPhi);
+          // 0% deformation: perfect 3D sphere
+          const x0 = baseR * (cosTheta * cosPsi - sinTheta * cosPhi * sinPsi);
+          const y0 = baseR * (cosTheta * sinPsi + sinTheta * cosPhi * cosPsi);
+          const z0 = baseR * (sinTheta * sinPhi);
 
           const proj = project(x0, y0, z0);
           avgZ += proj.z;
@@ -376,10 +374,11 @@
       overlay.id = 'thinking-global-overlay';
       document.body.appendChild(overlay);
     }
+    // Se estructura limpiamente: cápsula central (pill) y subtexto único.
     overlay.innerHTML = `
-      <div class="thinking-modal-card">
+      <div class="thinking-modal-card" style="display:flex; flex-direction:column; align-items:center; gap:16px;">
         <div id="thinking-orb-mount"></div>
-        <div class="thinking-modal-subtext">${subtext}</div>
+        <div class="thinking-modal-subtext" style="text-align:center; opacity:0.8; font-size:0.85rem; margin-top:-8px;">${subtext}</div>
       </div>
     `;
     const mount = document.getElementById('thinking-orb-mount');

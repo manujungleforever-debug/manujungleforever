@@ -1082,6 +1082,8 @@ function getFolderContents(path) {
 
   allR2Files.forEach(f => {
     const key = f.key || '';
+    if (key.endsWith('.keep_folder')) return; // Ocultar estricto
+
     if (!cleanPath) {
       // Nivel raíz
       if (key.includes('/')) {
@@ -1443,13 +1445,37 @@ window.triggerFolderUpload = function() {
   document.getElementById('input-upload-folder').click();
 };
 
-window.promptCreateFolder = function() {
+window.promptCreateFolder = async function() {
   const name = prompt('Nombre de la nueva carpeta:');
   if (!name || !name.trim()) return;
   const cleanName = name.trim().replace(/[^a-z0-9_-]/gi, '-').toLowerCase();
   const newFolderPath = currentPath ? `${currentPath}/${cleanName}` : cleanName;
-  navigateToFolder(newFolderPath);
-  showToast(`Carpeta "${cleanName}" lista. Sube archivos dentro para crearla en R2.`);
+  
+  if (window.showThinkingOverlay) window.showThinkingOverlay('Creando carpeta...', 'Registrando en Cloudflare R2');
+  try {
+    const keepFile = new File([""], `${newFolderPath}/.keep_folder`, { type: 'text/plain' });
+    const r = await fetch(MEDIA_API, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'X-File-Name': encodeURIComponent(keepFile.name),
+        'Content-Type': keepFile.type
+      },
+      body: keepFile
+    });
+    if (r.ok) {
+      showToast(`Carpeta "${cleanName}" creada exitosamente.`);
+      await fetchMedia();
+      navigateToFolder(newFolderPath);
+    } else {
+      showToast('Error al crear la carpeta en R2', true);
+    }
+  } catch (e) {
+    console.error(e);
+    showToast('Error al crear carpeta.', true);
+  } finally {
+    if (window.hideThinkingOverlay) window.hideThinkingOverlay();
+  }
 };
 
 window.handleFilesSelected = async function(input) {
