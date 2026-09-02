@@ -1,4 +1,4 @@
-(async function initBentoMatrix() {
+(async function initMasonryMuseumWall() {
   const dynamicGallery = document.getElementById('dynamic-r2-gallery');
   if (!dynamicGallery) return;
 
@@ -12,68 +12,69 @@
         </svg>
       </div>
       <h3 class="text-white text-3xl font-bold mb-3 tracking-wide">Gallery Matrix is Empty</h3>
-      <p class="text-white/60 text-lg max-w-xl mx-auto">Upload media from the admin panel to populate this interactive wall.</p>
+      <p class="text-white/60 text-lg max-w-xl mx-auto">Upload media from the admin panel to populate this interactive museum wall.</p>
     </div>
   `;
 
-  // ── Determine bento span classes based on index ──
-  const getSpanClasses = (index) => {
-    if (index % 7 === 0) return 'col-span-2 row-span-2';   // Giant
-    if (index % 9 === 0) return 'col-span-1 row-span-2';   // Vertical
-    if (index % 5 === 0) return 'col-span-2 row-span-1';   // Landscape
-    return 'col-span-1 row-span-1';                         // Normal
+  // ── Organic aspect ratio assignment ──
+  const getAspectClass = (index) => {
+    if (index % 7 === 0) return 'aspect-[4/5]';
+    if (index % 5 === 0) return 'aspect-[3/4]';
+    if (index % 4 === 0) return 'aspect-square';
+    if (index % 3 === 0) return 'aspect-[16/9]';
+    if (index % 2 === 0) return 'aspect-[16/10]';
+    return 'aspect-[4/3]';
   };
 
-  // ── Build a single image card ──
-  const renderImageCard = (url, spanClasses) => `
-    <div class="${spanClasses} relative overflow-hidden rounded-xl bg-neutral-900 border border-emerald-500/20 group hover:border-emerald-500/60 transition-all duration-300">
-      <a href="${url}" class="glightbox block w-full h-full" data-gallery="bento-matrix">
-        <img src="${url}" class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110" loading="lazy" alt="Manu Jungle">
-        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400"></div>
-        <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/30 backdrop-blur-[2px]">
-          <div class="w-12 h-12 rounded-full bg-emerald-500 text-black flex items-center justify-center shadow-xl transform scale-75 group-hover:scale-100 transition-transform duration-300">
-            <i class="fas fa-search-plus text-sm"></i>
-          </div>
-        </div>
+  const cardBase = 'break-inside-avoid mb-3 inline-block w-full relative overflow-hidden rounded-xl bg-neutral-900 border border-emerald-500/20 group hover:border-emerald-500/60 transition-all duration-300';
+
+  // ── Zoom overlay (shared by all card types) ──
+  const zoomOverlay = (icon) => `
+    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400 pointer-events-none"></div>
+    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/30 backdrop-blur-[2px] pointer-events-none">
+      <div class="w-12 h-12 rounded-full bg-emerald-500 text-black flex items-center justify-center shadow-xl transform scale-75 group-hover:scale-100 transition-transform duration-300">
+        <i class="fas fa-${icon} text-sm"></i>
+      </div>
+    </div>
+  `;
+
+  // ── Single image card ──
+  const renderImageCard = (url, index) => `
+    <div class="${cardBase}">
+      <a href="${url}" class="glightbox block w-full ${getAspectClass(index)}" data-gallery="museum-wall">
+        <img src="${url}" class="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-105" loading="lazy" alt="Manu Jungle">
+        ${zoomOverlay('search-plus')}
       </a>
     </div>
   `;
 
-  // ── Build a video card ──
-  const renderVideoCard = (url, spanClasses) => `
-    <div class="${spanClasses} relative overflow-hidden rounded-xl bg-neutral-900 border border-emerald-500/20 group hover:border-emerald-500/60 transition-all duration-300">
-      <a href="${url}" class="glightbox block w-full h-full" data-gallery="bento-matrix">
-        <video autoplay loop muted playsinline class="w-full h-full object-cover">
-          <source src="${url}" type="video/mp4">
-        </video>
-        <div class="absolute top-3 left-3 flex items-center gap-2 bg-black/70 backdrop-blur-md px-3 py-1.5 rounded-full border border-emerald-500/40 z-10">
-          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-          <span class="text-white text-[10px] font-black tracking-wider uppercase">Live Stream</span>
-        </div>
-        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opacity-60 group-hover:opacity-30 transition-opacity duration-400"></div>
-        <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/30 backdrop-blur-[2px]">
-          <div class="w-14 h-14 rounded-full bg-emerald-500 text-black flex items-center justify-center shadow-xl">
-            <i class="fas fa-play text-base ml-0.5"></i>
+  // ── Video card ──
+  const renderVideoCard = (url, index) => {
+    const aspect = index % 2 === 0 ? 'aspect-[16/9]' : 'aspect-[3/4]';
+    return `
+      <div class="${cardBase} border-emerald-500/30">
+        <a href="${url}" class="glightbox block w-full ${aspect}" data-gallery="museum-wall">
+          <video autoplay loop muted playsinline class="w-full h-full object-cover"><source src="${url}" type="video/mp4"></video>
+          <div class="absolute top-3 left-3 flex items-center gap-2 bg-black/70 backdrop-blur-md px-3 py-1.5 rounded-full border border-emerald-500/40 z-10">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span class="text-white text-[10px] font-black tracking-wider uppercase">Live Stream</span>
           </div>
-        </div>
-      </a>
-    </div>
-  `;
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opacity-60 group-hover:opacity-30 transition-opacity duration-400"></div>
+          ${zoomOverlay('play')}
+        </a>
+      </div>
+    `;
+  };
 
-  // ── Build a crossfade slider card (giant cell) ──
+  // ── Crossfade slider card ──
   const renderSliderCard = (imageUrls, sliderId) => `
-    <div class="col-span-2 row-span-2 relative overflow-hidden rounded-xl bg-neutral-900 border-2 border-emerald-500/30 group hover:border-emerald-500/60 transition-all duration-300">
-      <div class="absolute inset-0 w-full h-full" id="${sliderId}">
+    <div class="${cardBase} border-emerald-500/30 aspect-[3/4]">
+      <div class="absolute inset-0 w-full h-full">
         ${imageUrls.map((url, i) => `
           <div class="absolute inset-0 transition-opacity duration-1000 ease-in-out ${i === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'} slide-${sliderId}">
-            <a href="${url}" class="glightbox block w-full h-full" data-gallery="bento-slider-${sliderId}">
+            <a href="${url}" class="glightbox block w-full h-full" data-gallery="slider-${sliderId}">
               <img src="${url}" class="w-full h-full object-cover" loading="lazy" alt="Manu Jungle Slider">
-              <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-50"></div>
-              <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/30 backdrop-blur-[2px]">
-                <div class="w-12 h-12 rounded-full bg-emerald-500 text-black flex items-center justify-center shadow-xl transform scale-75 group-hover:scale-100 transition-transform duration-300">
-                  <i class="fas fa-search-plus text-sm"></i>
-                </div>
-              </div>
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-40"></div>
             </a>
           </div>
         `).join('')}
@@ -85,6 +86,7 @@
       <div class="absolute bottom-3 right-3 z-20">
         <span class="bg-black/60 backdrop-blur-sm text-white/70 text-[10px] font-semibold px-2.5 py-1 rounded-full border border-white/10">${imageUrls.length} photos</span>
       </div>
+      ${zoomOverlay('search-plus')}
     </div>
   `;
 
@@ -104,67 +106,76 @@
       return;
     }
 
-    // Separate images and videos
+    // Separate media types
     const images = files.filter(f => !isVideo(f.key));
     const videos = files.filter(f => isVideo(f.key));
 
-    // Build slider chunks from images (groups of 3)
+    // Build slider chunks from first images (groups of 3)
     const sliderChunks = [];
-    const sliderImageCount = Math.min(images.length, 9); // Use up to 9 images for sliders
-    for (let i = 0; i < sliderImageCount; i += 3) {
+    const sliderPool = Math.min(images.length, 9);
+    for (let i = 0; i < sliderPool; i += 3) {
       const chunk = images.slice(i, i + 3);
       if (chunk.length >= 2) sliderChunks.push(chunk);
     }
-    const remainingImages = images.slice(sliderImageCount);
+    const soloImages = images.slice(sliderPool);
 
-    // ── Assemble the grid ──
-    let gridCells = '';
-    let globalIndex = 0;
+    // ── Interleave all items into a single stream for organic mixing ──
+    const allItems = [];
 
-    // 1. Inject slider cells (each takes a giant 2x2 slot)
-    sliderChunks.forEach((chunk, sIdx) => {
-      gridCells += renderSliderCard(chunk.map(f => f.url), `slider-${sIdx}`);
-      globalIndex++;
+    // Sliders go first as anchor pieces
+    sliderChunks.forEach((chunk, i) => {
+      allItems.push({ type: 'slider', chunk, id: `sl-${i}` });
     });
 
-    // 2. Inject video cells
-    videos.forEach((vid) => {
-      const span = getSpanClasses(globalIndex);
-      // Videos get at minimum a 2-col span for impact
-      const videoSpan = globalIndex % 7 === 0 ? 'col-span-2 row-span-2' : 'col-span-2 row-span-1';
-      gridCells += renderVideoCard(vid.url, videoSpan);
-      globalIndex++;
+    // Interleave solo images and videos organically
+    let vIdx = 0;
+    soloImages.forEach((img, i) => {
+      allItems.push({ type: 'image', url: img.url });
+      // Drop a video after every 2-3 images for organic dispersal
+      if ((i + 1) % 3 === 0 && vIdx < videos.length) {
+        allItems.push({ type: 'video', url: videos[vIdx].url });
+        vIdx++;
+      }
+    });
+    // Append any remaining videos
+    while (vIdx < videos.length) {
+      allItems.push({ type: 'video', url: videos[vIdx].url });
+      vIdx++;
+    }
+
+    // ── Render the masonry stream ──
+    let cards = '';
+    allItems.forEach((item, index) => {
+      if (item.type === 'slider') {
+        cards += renderSliderCard(item.chunk.map(f => f.url), item.id);
+      } else if (item.type === 'video') {
+        cards += renderVideoCard(item.url, index);
+      } else {
+        cards += renderImageCard(item.url, index);
+      }
     });
 
-    // 3. Inject remaining image cells with bento pattern
-    remainingImages.forEach((img) => {
-      const span = getSpanClasses(globalIndex);
-      gridCells += renderImageCard(img.url, span);
-      globalIndex++;
-    });
-
-    // ── Wrap everything ──
     const html = `
-      <div class="w-full max-w-[120rem] mx-auto px-4 md:px-8 mt-6 mb-32">
+      <div class="w-full max-w-[120rem] mx-auto px-2 sm:px-4 mt-6 mb-32">
         <div class="flex items-center justify-between mb-8 px-2 border-b border-emerald-500/20 pb-4">
           <div class="flex items-center gap-3">
             <span class="flex h-3 w-3 relative">
               <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
               <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
             </span>
-            <span class="text-sm uppercase tracking-widest text-emerald-400 font-bold">Amazon Live Matrix &bull; ${files.length} Assets Active</span>
+            <span class="text-sm uppercase tracking-widest text-emerald-400 font-bold">Amazon Museum Wall &bull; ${files.length} Assets</span>
           </div>
-          <span class="text-xs text-white/50 tracking-wider hidden sm:inline">Click any asset to expand</span>
+          <span class="text-xs text-white/50 tracking-wider hidden sm:inline">Click any piece to expand</span>
         </div>
 
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 auto-rows-[220px] md:auto-rows-[260px] w-full">
-          ${gridCells}
+        <div class="columns-2 sm:columns-3 md:columns-4 lg:columns-5 xl:columns-6 gap-3 space-y-3">
+          ${cards}
         </div>
       </div>
     `;
 
     dynamicGallery.innerHTML = html;
-    console.log('[Gallery] Matrix rendered:', globalIndex, 'cells');
+    console.log('[Gallery] Museum wall rendered:', allItems.length, 'pieces');
 
     // ── Initialize GLightbox ──
     if (typeof GLightbox !== 'undefined') {
@@ -172,9 +183,9 @@
       console.log('[Gallery] GLightbox initialized');
     }
 
-    // ── Activate crossfade sliders ──
-    sliderChunks.forEach((chunk, sIdx) => {
-      const sliderId = `slider-${sIdx}`;
+    // ── Activate crossfade sliders (3.5s interval) ──
+    sliderChunks.forEach((chunk, i) => {
+      const sliderId = `sl-${i}`;
       const slides = document.querySelectorAll(`.slide-${sliderId}`);
       if (slides.length <= 1) return;
 
@@ -182,9 +193,7 @@
       setInterval(() => {
         slides[current].classList.remove('opacity-100', 'z-10');
         slides[current].classList.add('opacity-0', 'z-0');
-
         current = (current + 1) % slides.length;
-
         slides[current].classList.remove('opacity-0', 'z-0');
         slides[current].classList.add('opacity-100', 'z-10');
       }, 3500);
