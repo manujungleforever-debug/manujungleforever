@@ -1082,7 +1082,7 @@ function getFolderContents(path) {
 
   allR2Files.forEach(f => {
     const key = f.key || '';
-    if (key.endsWith('.keep_folder')) return; // Ocultar estricto
+    const isKeep = key.endsWith('.keep_folder');
 
     if (!cleanPath) {
       // Nivel raíz
@@ -1091,11 +1091,13 @@ function getFolderContents(path) {
         if (!folderMap.has(topFolder)) {
           folderMap.set(topFolder, { name: topFolder, fullPath: topFolder, count: 0, size: 0 });
         }
-        const item = folderMap.get(topFolder);
-        item.count++;
-        item.size += (f.size || 0);
+        if (!isKeep) {
+          const item = folderMap.get(topFolder);
+          item.count++;
+          item.size += (f.size || 0);
+        }
       } else {
-        files.push(f);
+        if (!isKeep) files.push(f);
       }
     } else {
       // Dentro de una subcarpeta
@@ -1107,11 +1109,13 @@ function getFolderContents(path) {
           if (!folderMap.has(nextFolder)) {
             folderMap.set(nextFolder, { name: nextFolder, fullPath: fullFolderPath, count: 0, size: 0 });
           }
-          const item = folderMap.get(nextFolder);
-          item.count++;
-          item.size += (f.size || 0);
+          if (!isKeep) {
+            const item = folderMap.get(nextFolder);
+            item.count++;
+            item.size += (f.size || 0);
+          }
         } else {
-          files.push(f);
+          if (!isKeep) files.push(f);
         }
       }
     }
