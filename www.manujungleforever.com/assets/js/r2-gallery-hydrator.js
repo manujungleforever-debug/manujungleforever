@@ -1,4 +1,4 @@
-(async function initGallery() {
+(async function initMassiveGallery() {
   const dynamicGallery = document.getElementById('dynamic-r2-gallery');
   if (!dynamicGallery) return;
 
@@ -16,33 +16,45 @@
     </div>
   `;
 
-  const createMediaHTML = (item) => {
+  // Genera elementos con una densidad visual masiva (estilo muro interactivo)
+  const createMediaHTML = (item, index) => {
+    // Da variaciones orgánicas de tamaño simulando un bento avanzado si hay muchos elementos
+    const spanClasses = (index % 7 === 0) ? 'sm:col-span-2 sm:row-span-2' : '';
+
     if (item.type === 'video') {
       return `
-        <a href="${item.url}" class="glightbox relative group block mb-6 overflow-hidden rounded-2xl bg-black border border-emerald-500/20 shadow-2xl" data-gallery="r2-gallery" style="break-inside: avoid;">
-          <video autoplay loop muted playsinline class="w-full h-auto object-cover transform transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100">
-            <source src="${item.url}" type="video/mp4">
-          </video>
-          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
-          <div class="absolute bottom-5 left-5 flex items-center gap-3">
-            <span class="flex h-3.5 w-3.5 relative">
-              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span class="relative inline-flex rounded-full h-3.5 w-3.5 bg-emerald-500"></span>
-            </span>
-            <span class="text-white text-sm font-bold tracking-widest uppercase drop-shadow-md">Live Loop</span>
-          </div>
-          <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-             <svg class="w-14 h-14 text-white drop-shadow-xl scale-75 group-hover:scale-100 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path></svg>
+        <a href="${item.url}" class="glightbox relative group block overflow-hidden rounded-xl bg-black border border-emerald-500/30 shadow-2xl transition-all duration-500 hover:scale-[1.02] hover:border-emerald-400 hover:z-20 ${spanClasses}" data-gallery="r2-gallery" style="break-inside: avoid;">
+          <div class="relative w-full h-full min-h-[180px] max-h-[350px]">
+            <video autoplay loop muted playsinline class="w-full h-full object-cover opacity-85 group-hover:opacity-100 transition-opacity duration-500">
+              <source src="${item.url}" type="video/mp4">
+            </video>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-30 transition-opacity duration-500"></div>
+            <div class="absolute bottom-3 left-3 flex items-center gap-2 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full border border-emerald-500/20">
+              <span class="flex h-2.5 w-2.5 relative">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+              </span>
+              <span class="text-white text-xs font-bold tracking-wider uppercase">Live</span>
+            </div>
+            <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/40 backdrop-blur-[2px]">
+              <div class="w-12 h-12 rounded-full bg-emerald-500/90 text-black flex items-center justify-center shadow-lg transform scale-75 group-hover:scale-100 transition-transform duration-300">
+                <i class="fas fa-play text-sm ml-0.5"></i>
+              </div>
+            </div>
           </div>
         </a>
       `;
     } else {
       return `
-        <a href="${item.url}" class="glightbox relative group block mb-6 overflow-hidden rounded-2xl bg-white/[0.02] border border-emerald-500/10 shadow-lg" data-gallery="r2-gallery" style="break-inside: avoid;">
-          <img src="${item.url}" class="w-full h-auto object-cover transform transition-transform duration-700 group-hover:scale-105" loading="lazy" alt="Amazon Wildlife">
-          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
-          <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-             <svg class="w-12 h-12 text-white drop-shadow-md scale-75 group-hover:scale-100 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path></svg>
+        <a href="${item.url}" class="glightbox relative group block overflow-hidden rounded-xl bg-white/[0.02] border border-emerald-500/20 shadow-lg transition-all duration-500 hover:scale-[1.02] hover:border-emerald-400 hover:z-20 ${spanClasses}" data-gallery="r2-gallery" style="break-inside: avoid;">
+          <div class="relative w-full h-full min-h-[160px] max-h-[350px]">
+            <img src="${item.url}" class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110 opacity-90 group-hover:opacity-100" loading="lazy" alt="Manu Jungle Gallery Item">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/40 backdrop-blur-[2px]">
+              <div class="w-12 h-12 rounded-full bg-emerald-500/90 text-black flex items-center justify-center shadow-lg transform scale-75 group-hover:scale-100 transition-transform duration-300">
+                <i class="fas fa-search-plus text-sm"></i>
+              </div>
+            </div>
           </div>
         </a>
       `;
@@ -50,14 +62,14 @@
   };
 
   try {
-    dynamicGallery.innerHTML = '<div class="w-full text-center text-emerald-500 py-20"><i class="fas fa-spinner fa-spin text-5xl drop-shadow-[0_0_15px_rgba(45,212,191,0.5)]"></i></div>';
+    dynamicGallery.innerHTML = '<div class="w-full text-center text-emerald-500 py-32"><i class="fas fa-spinner fa-spin text-5xl drop-shadow-[0_0_15px_rgba(45,212,191,0.5)]"></i><p class="text-white/50 text-sm mt-4">Loading massive multimedia matrix...</p></div>';
 
     const res = await fetch('/api/public-gallery');
     if (!res.ok) throw new Error('Failed to fetch media');
     const data = await res.json();
     const files = data.files || [];
 
-    // FIXED ROUTES WITH 'raiz/' PREFIX MATCHING BUCKET STRUCTURE
+    // Captura estricta con prefijos raiz/ o rutas directas
     const images = files.filter(f => (f.key.startsWith('raiz/medios/gallery/imagenes/') || f.key.startsWith('medios/gallery/imagenes/')) && !f.key.endsWith('.keep_folder') && !isVideo(f.key)).map(f => f.url);
     const videos = files.filter(f => (f.key.startsWith('raiz/medios/gallery/videos/') || f.key.startsWith('medios/gallery/videos/')) && !f.key.endsWith('.keep_folder') && isVideo(f.key)).map(f => f.url);
 
@@ -66,7 +78,7 @@
       ...videos.map(url => ({ type: 'video', url }))
     ];
 
-    // Organic shuffle (Fisher-Yates)
+    // Mezcla orgánica de elementos
     for (let i = allMedia.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [allMedia[i], allMedia[j]] = [allMedia[j], allMedia[i]];
@@ -75,9 +87,16 @@
     if (allMedia.length === 0) {
       dynamicGallery.innerHTML = getEmptyStateHTML();
     } else {
+      // Muro masivo con columnas densas (hasta 5 columnas en pantallas grandes para lograr el efecto de muro lleno de contenido)
       dynamicGallery.innerHTML = `
-        <div class="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6 w-full px-4 md:px-0 mt-8 mb-24 mx-auto max-w-7xl">
-          ${allMedia.map(item => createMediaHTML(item)).join('')}
+        <div class="w-full px-2 md:px-0 mt-4 mb-24 mx-auto max-w-[95rem]">
+          <div class="flex items-center justify-between mb-6 px-2">
+            <span class="text-xs uppercase tracking-widest text-emerald-400 font-semibold"><i class="fas fa-th mr-2"></i>Interactive Amazon Matrix (${allMedia.length} items loaded)</span>
+            <span class="text-xs text-white/40">Click any asset to expand</span>
+          </div>
+          <div class="columns-2 sm:columns-3 md:columns-4 lg:columns-5 gap-4 space-y-4 w-full">
+            ${allMedia.map((item, idx) => createMediaHTML(item, idx)).join('')}
+          </div>
         </div>
       `;
 
@@ -96,16 +115,15 @@
       }
     }
   } catch (error) {
-    console.error("Gallery Hydrator Error: Fetch from /api/public-gallery failed.", error);
+    console.error("Gallery Hydrator Error:", error);
 
-    const fallbackAssets = [
-      { type: 'image', url: '/assets/media_to_upload/photos/placeholder.jpg' }
-    ];
+    // Fallback con múltiples elementos simulados para que no se vea vacío ni triste ante un fallo de red
+    const fallbackAssets = Array(12).fill(0).map(() => ({ type: 'image', url: '/assets/media_to_upload/photos/placeholder.jpg' }));
 
     dynamicGallery.innerHTML = `
-      <div class="w-full mb-8 text-center"><p class="text-white/50 text-sm bg-red-500/10 inline-block px-4 py-2 rounded-full border border-red-500/20"><i class="fas fa-exclamation-triangle mr-2 text-red-400"></i>Live connection to Cloudflare R2 is currently down. Showing offline gallery.</p></div>
-      <div class="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6 w-full px-4 md:px-0 mb-24 mx-auto max-w-7xl">
-        ${fallbackAssets.map(item => createMediaHTML(item)).join('')}
+      <div class="w-full mb-8 text-center"><p class="text-white/50 text-sm bg-red-500/10 inline-block px-4 py-2 rounded-full border border-red-500/20"><i class="fas fa-exclamation-triangle mr-2 text-red-400"></i>Live connection to Cloudflare R2 is down. Showing offline matrix backup.</p></div>
+      <div class="columns-2 sm:columns-3 md:columns-4 lg:columns-5 gap-4 space-y-4 w-full px-2 max-w-[95rem] mx-auto mb-24">
+        ${fallbackAssets.map((item, idx) => createMediaHTML(item, idx)).join('')}
       </div>
     `;
 
