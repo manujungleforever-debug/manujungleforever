@@ -42,7 +42,7 @@
     }
 
     let htmlContent = `
-      <div class="w-full px-4 md:px-6 mt-6 mb-32 mx-auto max-w-[105rem]">
+      <div class="w-full px-4 md:px-8 mt-6 mb-32 mx-auto">
         <div class="flex items-center justify-between mb-8 px-4 border-b border-emerald-500/20 pb-4">
           <div class="flex items-center gap-3">
             <span class="flex h-3 w-3 relative">
