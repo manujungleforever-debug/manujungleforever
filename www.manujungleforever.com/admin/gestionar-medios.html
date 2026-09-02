@@ -1458,7 +1458,7 @@ window.promptCreateFolder = async function() {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
-        'X-File-Name': encodeURIComponent(keepFile.name),
+        'X-File-Name': encodeURIComponent(`${newFolderPath}/.keep_folder`),
         'Content-Type': keepFile.type
       },
       body: keepFile
@@ -1513,7 +1513,7 @@ async function uploadFileList(files, targetFolder, isFolderUpload = false) {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,
-          'X-File-Name': encodeURIComponent(renamedFile.name),
+          'X-File-Name': encodeURIComponent(fullKey),
           'Content-Type': file.type || 'application/octet-stream'
         },
         body: renamedFile
@@ -1541,7 +1541,7 @@ async function uploadFileList(files, targetFolder, isFolderUpload = false) {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,
-          'X-File-Name': encodeURIComponent(keepFile.name),
+          'X-File-Name': encodeURIComponent(`${dir}/.keep_folder`),
           'Content-Type': 'text/plain'
         },
         body: keepFile
