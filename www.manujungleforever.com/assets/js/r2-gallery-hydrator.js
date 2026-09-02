@@ -4,24 +4,26 @@
 
   const isVideo = (key) => /\.(mp4|webm|mov)$/i.test(key);
 
-  // ── Copyright attribution (visible ONLY in GLightbox fullscreen modal) ──
-  const getTitle = (file) => {
-    if (file.title) return file.title;
-    // Clean filename: remove path, extension, underscores, hyphens
-    const basename = file.key.split('/').pop().replace(/\.[^.]+$/, '');
-    return basename.replace(/[_-]/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
-  };
+  // ── Copyright: ONLY real metadata from API — zero invention ──
+  const hasRealCredit = (file) => !!(file.credit || file.author);
 
-  const getCredit = (file) => {
+  const getRealCredit = (file) => {
     if (file.credit) return file.credit;
     if (file.author) return `© ${file.author}`;
-    return '© Manu Jungle Forever / All rights reserved';
+    return '';
   };
 
   const glightboxAttrs = (file) => {
-    const title = getTitle(file).replace(/"/g, '&quot;');
-    const credit = getCredit(file).replace(/"/g, '&quot;');
-    return `data-title="${title}" data-description="<span class='text-xs opacity-80'><i class='fas fa-copyright text-emerald-400 mr-1'></i> ${credit}</span>"`;
+    const credit = getRealCredit(file);
+    if (!credit) return 'data-gallery="manu-collection"';
+    const safeCredit = credit.replace(/"/g, '&quot;');
+    return `data-gallery="manu-collection" data-description="<span class='text-xs opacity-80'><i class='fas fa-copyright text-emerald-400 mr-1'></i> ${safeCredit}</span>"`;
+  };
+
+  const creditBadge = (file) => {
+    if (!hasRealCredit(file)) return '';
+    const credit = getRealCredit(file);
+    return `<div class="absolute bottom-3 left-3 z-20 pointer-events-none inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/65 backdrop-blur-md border border-white/10 text-[11px] text-white/90 font-sans shadow-lg"><i class="fas fa-camera text-neutral-400 text-[10px]"></i><span>${credit}</span></div>`;
   };
 
   const renderEmptyState = () => `
@@ -65,16 +67,17 @@
   // ── Card renderers ──
   const renderImageCard = (url, span, file) => `
     <div class="${span} ${cardBase}">
-      <a href="${url}" class="glightbox block w-full h-full" data-gallery="manu-collection" ${glightboxAttrs(file)}>
+      <a href="${url}" class="glightbox block w-full h-full" ${glightboxAttrs(file)}>
         <img src="${url}" class="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-105" loading="lazy" alt="Manu Jungle">
         ${zoomOverlay('search-plus')}
       </a>
+      ${creditBadge(file)}
     </div>
   `;
 
   const renderVideoCard = (url, span, file) => `
     <div class="${span} ${cardBase} border-emerald-500/30">
-      <a href="${url}" class="glightbox block w-full h-full" data-gallery="manu-collection" ${glightboxAttrs(file)}>
+      <a href="${url}" class="glightbox block w-full h-full" ${glightboxAttrs(file)}>
         <video autoplay loop muted playsinline class="w-full h-full object-cover"><source src="${url}" type="video/mp4"></video>
         <div class="absolute top-3 left-3 flex items-center gap-2 bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-full border border-emerald-500/40 z-10">
           <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
@@ -83,6 +86,7 @@
         <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-50 group-hover:opacity-20 transition-opacity duration-300"></div>
         ${zoomOverlay('play')}
       </a>
+      ${creditBadge(file)}
     </div>
   `;
 
@@ -91,7 +95,7 @@
       <div class="absolute inset-0 w-full h-full">
         ${sliderFiles.map((file, i) => `
           <div class="absolute inset-0 transition-opacity duration-1000 ease-in-out ${i === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'} slide-${sliderId}">
-            <a href="${file.url}" class="glightbox block w-full h-full" data-gallery="manu-collection" ${glightboxAttrs(file)}>
+            <a href="${file.url}" class="glightbox block w-full h-full" ${glightboxAttrs(file)}>
               <img src="${file.url}" class="w-full h-full object-cover" loading="lazy" alt="Manu Jungle">
             </a>
           </div>
