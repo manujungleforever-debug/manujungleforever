@@ -1,10 +1,10 @@
 {
   "hero": {
     "location_tag": "Cusco, Peru · Manu National Park",
-    "title": "What Will You",
+    "title": "What Will You2",
     "title_emphasis": "Discover?",
     "subtitle": "Visit Manu National Park from Cusco — guided jungle tours deep into the Peruvian Amazon. Local. Wild. Authentic.",
-    "video_id": "mwFesIvZ5Zc",
+    "video_id": "dQw4w9WgXcQ",
     "video_start": 4,
     "video_end": 56,
     "cta_primary": "Book a Tour",
@@ -59,8 +59,8 @@
       {
         "id": "cat-2",
         "categoria": "roadtrip",
-        "disponible": true,
-        "badge_texto": "Available Now",
+        "disponible": false,
+        "badge_texto": "Temporarily Unavailable",
         "titulo": "Rainforest Road Trip",
         "duracion": "4 or 5 Days",
         "pasajeros": "1–3 Passengers",
