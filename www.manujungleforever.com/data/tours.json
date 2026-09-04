@@ -499,66 +499,6 @@
       "destacado": false
     },
     {
-      "id": "rainforest-road-trip",
-      "slug": "rainforest-road-trip-from-cusco",
-      "nombre": "Rainforest Road Trip Overview",
-      "categoria": "roadtrip",
-      "estado": "activo",
-      "duracion_dias": 4,
-      "duracion_noches": 3,
-      "precio_desde": 380,
-      "moneda": "USD",
-      "capacidad_min": 1,
-      "capacidad_max": 3,
-      "dificultad": "Fácil",
-      "transporte": [
-        "4x4 privado"
-      ],
-      "temporada": "Abril a Noviembre (no disponible diciembre-marzo)",
-      "descripcion_corta": "El tour más auténtico de la Amazonía peruana: un viaje en 4x4 por las aldeas y paisajes del camino de Cusco a Manu. Presupuesto amigable.",
-      "descripcion_larga": "El Rainforest Road Trip es nuestra opción más económica y auténtica. Viajamos en 4x4 privado por el sinuoso camino de Cusco a Manu, parando en aldeas locales, probando comida tradicional y viendo fauna en el bosque nuboso.",
-      "imagen_hero": "assets/img/hero.png",
-      "imagen_alt": "Rainforest Road Trip from Cusco to Manu",
-      "galeria": [],
-      "itinerario": [
-        {
-          "dia": 1,
-          "titulo": "Cusco → Cloud Forest Villages",
-          "descripcion": "4x4 departure, visit local villages in the cloud forest."
-        },
-        {
-          "dia": 2,
-          "titulo": "Deeper into the Jungle",
-          "descripcion": "Continue towards the rainforest. Swimming in natural pools. Wildlife spotting."
-        },
-        {
-          "dia": 3,
-          "titulo": "Jungle Exploration",
-          "descripcion": "Walks in the lowland forest. Local food experience."
-        },
-        {
-          "dia": 4,
-          "titulo": "Return to Cusco",
-          "descripcion": "Return drive with stops along the way."
-        }
-      ],
-      "incluye": [
-        "4x4 privado",
-        "3 noches de alojamiento",
-        "Comidas locales",
-        "Agua potable",
-        "Guía local"
-      ],
-      "no_incluye": [
-        "Vuelos",
-        "Seguro",
-        "Propinas",
-        "Alcohol"
-      ],
-      "url_reserva": "contact/index.html",
-      "destacado": false
-    },
-    {
       "id": "2-day-rainforest-road-trip",
       "slug": "2-day-rainforest-road-trip",
       "nombre": "2-Day Road Trip",
