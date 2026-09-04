@@ -499,54 +499,6 @@
       "destacado": false
     },
     {
-      "id": "2-day-rainforest-road-trip",
-      "slug": "2-day-rainforest-road-trip",
-      "nombre": "2-Day Road Trip",
-      "categoria": "roadtrip",
-      "estado": "activo",
-      "duracion_dias": 2,
-      "duracion_noches": 1,
-      "precio_desde": 260,
-      "moneda": "USD",
-      "capacidad_min": 1,
-      "capacidad_max": 4,
-      "dificultad": "Fácil",
-      "transporte": [
-        "4x4 privado"
-      ],
-      "temporada": "Abril a Noviembre",
-      "descripcion_corta": "Un viaje corto en 4x4 por la ruta de los Andes hacia el bosque nuboso y la entrada a la selva del Manu.",
-      "descripcion_larga": "Escápate 2 días a la selva en una emocionante travesía 4x4 desde Cusco. Ideal para quienes disponen de poco tiempo pero quieren cruzar los Andes y sentir la magia de la Amazonía.",
-      "imagen_hero": "assets/img/hero.png",
-      "imagen_alt": "2-Day Rainforest Road Trip – Manu National Park",
-      "galeria": [],
-      "itinerario": [
-        {
-          "dia": 1,
-          "titulo": "Cusco → Cloud Forest Villages",
-          "descripcion": "Salida en 4x4 desde Cusco atravesando los Andes hacia el bosque nuboso. Observación de aves y estadía en lodge local."
-        },
-        {
-          "dia": 2,
-          "titulo": "Jungle Exploration → Retorno a Cusco",
-          "descripcion": "Caminata matutina por senderos naturales y viaje de retorno a Cusco por la tarde."
-        }
-      ],
-      "incluye": [
-        "Transporte 4x4 privado",
-        "1 noche de alojamiento",
-        "Todas las comidas",
-        "Guía local bilingüe"
-      ],
-      "no_incluye": [
-        "Vuelos",
-        "Seguro",
-        "Propinas"
-      ],
-      "url_reserva": "contact/index.html",
-      "destacado": false
-    },
-    {
       "id": "5-day-rainforest-road-trip",
       "slug": "5-day-rainforest-road-trip",
       "nombre": "5-Day Road Trip",
