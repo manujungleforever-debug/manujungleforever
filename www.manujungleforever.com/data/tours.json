@@ -2,7 +2,7 @@
   "tours": [
     {
       "nombre": "10 Días al Manu Expedición",
-      "estado": "activo",
+      "estado": "pausado",
       "categoria": "expedition",
       "duracion_dias": 10,
       "duracion_noches": 9,
