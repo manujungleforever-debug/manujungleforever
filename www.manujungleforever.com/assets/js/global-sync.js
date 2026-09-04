@@ -39,13 +39,16 @@
       const addressText = addrParts.join(', ') || gData.address || 'Manu Jungle Forever 17800, Nuevo Eden, Peru';
       const mapsUrl = dir.maps_url || gData.address_maps_url || 'https://www.google.com/maps/d/viewer?mid=12fWz1M5jmQ0jd8rUJY0VUfi6KnRmvnc';
 
-      // 5. Individual Tour Page dynamic hydration from D1
+      // 5. Guided Tours Header & Mobile Menu Dynamic Hydration
+      await syncGuidedToursHeader();
+
+      // 6. Individual Tour Page dynamic hydration from D1
       await syncTourPage();
 
-      // 6. Home Page Dynamic Hydration (e.g. Wildlife Section)
+      // 7. Home Page Dynamic Hydration (e.g. Wildlife Section)
       await syncHomePage();
 
-      // 7. Automatic Media Attributions Micro-Badges
+      // 8. Automatic Media Attributions Micro-Badges
       if (typeof window.hydrateMediaAttributions === 'function') {
         window.hydrateMediaAttributions();
       } else {
@@ -64,6 +67,77 @@
     if (p.startsWith('http://') || p.startsWith('https://') || p.startsWith('data:')) return p;
     if (p.startsWith('/')) return p;
     return '/' + p;
+  }
+
+  async function syncGuidedToursHeader() {
+    const desktopMenus = document.querySelectorAll('.hd .dm, nav .dm');
+    const mobileMenus = document.querySelectorAll('#mdd, .mo .md');
+    if (!desktopMenus.length && !mobileMenus.length) return;
+
+    try {
+      const parts = window.location.pathname.replace(/^\/+|\/+$/g, '').split('/');
+      const isSub = parts.length > 1;
+      const rel = (window.location.protocol === 'file:') ? (isSub ? '../' : '') : '/';
+
+      let tRes = await fetch('/api/tours?public=true&v=' + Date.now()).then(r => r.ok ? r.json() : null).catch(() => null);
+      if (!tRes || (!tRes.tours && !Array.isArray(tRes))) {
+        const jsonPath = (window.location.protocol === 'file:') ? (isSub ? '../data/tours.json' : 'data/tours.json') : '/data/tours.json';
+        tRes = await fetch(jsonPath + '?v=' + Date.now()).then(r => r.ok ? r.json() : null).catch(() => null);
+      }
+      const tours = (tRes && tRes.tours) ? tRes.tours : (Array.isArray(tRes) ? tRes : []);
+      if (!tours.length) return;
+
+      const activeTours = tours.filter(t => t.estado !== 'inactivo' && t.estado !== 'borrador');
+
+      const CAT_MAP = {
+        'wildlife': { label: 'WILDLIFE QUEST', icon: 'fas fa-binoculars' },
+        'roadtrip': { label: 'RAINFOREST ROAD TRIP', icon: 'fas fa-route' },
+        'expedition': { label: 'AMAZON EXPEDITION', icon: 'fas fa-campground' },
+        'cultural': { label: 'CULTURAL EXPEDITION', icon: 'fas fa-landmark' },
+        'birdwatching': { label: 'BIRDWATCHING QUEST', icon: 'fas fa-dove' },
+        'machu wasi': { label: 'MACHU WASI ADVENTURE', icon: 'fas fa-tree' },
+        'photography': { label: 'WILDLIFE PHOTOGRAPHY', icon: 'fas fa-camera' }
+      };
+
+      const order = ['wildlife', 'roadtrip', 'expedition', 'cultural', 'birdwatching', 'machu wasi', 'photography'];
+      const groups = {};
+
+      activeTours.forEach(t => {
+        const cat = (t.categoria || 'wildlife').toLowerCase().trim();
+        if (!groups[cat]) groups[cat] = [];
+        groups[cat].push(t);
+      });
+
+      const allCats = Array.from(new Set([...order.filter(c => groups[c]), ...Object.keys(groups)]));
+
+      let desktopHtml = '';
+      let mobileHtml = '';
+
+      allCats.forEach(cat => {
+        const info = CAT_MAP[cat] || { label: cat.toUpperCase(), icon: 'fas fa-compass' };
+        const items = groups[cat] || [];
+        if (!items.length) return;
+
+        desktopHtml += `\n<span class="dh"><i class="${info.icon}"></i> ${info.label}</span>`;
+        mobileHtml += `\n<span class="dh" style="color:var(--a);font-size:0.8rem;text-transform:uppercase;padding:10px 20px;display:block;"><i class="${info.icon}"></i> ${info.label}</span>`;
+
+        items.forEach(t => {
+          const slug = t.slug || t.id;
+          const url = `${rel}${slug}/index.html`;
+          desktopHtml += `\n<li><a href="${url}">${t.nombre}</a></li>`;
+          mobileHtml += `\n<li><a href="${url}">${t.nombre}</a></li>`;
+        });
+      });
+
+      if (desktopHtml) {
+        desktopMenus.forEach(m => { m.innerHTML = desktopHtml; });
+      }
+      if (mobileHtml) {
+        mobileMenus.forEach(m => { m.innerHTML = mobileHtml; });
+      }
+    } catch(e) {
+      console.warn('Header tour menu sync error:', e);
+    }
   }
 
   async function syncTourPage() {

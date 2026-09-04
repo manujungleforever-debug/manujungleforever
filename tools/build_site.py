@@ -50,6 +50,19 @@ def build_site():
     # Load data
     g_data = load_json('global.json')
     c_data = load_json('contact.json')
+    t_data = load_json('tours.json')
+    active_tours = [t for t in t_data.get('tours', []) if t.get('estado') not in ('inactivo', 'borrador')]
+
+    cat_map = {
+        'wildlife': {'label': 'WILDLIFE QUEST', 'icon': 'fas fa-binoculars'},
+        'roadtrip': {'label': 'RAINFOREST ROAD TRIP', 'icon': 'fas fa-route'},
+        'expedition': {'label': 'AMAZON EXPEDITION', 'icon': 'fas fa-campground'},
+        'cultural': {'label': 'CULTURAL EXPEDITION', 'icon': 'fas fa-landmark'},
+        'birdwatching': {'label': 'BIRDWATCHING QUEST', 'icon': 'fas fa-dove'},
+        'machu wasi': {'label': 'MACHU WASI ADVENTURE', 'icon': 'fas fa-tree'},
+        'photography': {'label': 'WILDLIFE PHOTOGRAPHY', 'icon': 'fas fa-camera'}
+    }
+    order = ['wildlife', 'roadtrip', 'expedition', 'cultural', 'birdwatching', 'machu wasi', 'photography']
     
     # Global fallbacks
     soc = g_data.get('social', {})
@@ -107,43 +120,55 @@ def build_site():
                 el['href'] = wa_link
             modified = True
             
-        # 3. Footer sync
-        footer = soup.select_one('footer.ft')
-        if footer:
-            addr_a = footer.select_one('address.fc a[href*="maps"]')
-            if addr_a:
-                addr_a.string = address_text
-                addr_a['href'] = maps_url
+        # 2b. Guided Tours Header & Mobile Menu Sync
+        if active_tours:
+            rel_dir = os.path.relpath(os.path.dirname(filepath), ROOT_DIR)
+            is_sub = rel_dir != '.'
+            rel = '../' if is_sub else ''
+
+            groups = {}
+            for t in active_tours:
+                cat = (t.get('categoria') or 'wildlife').lower().strip()
+                groups.setdefault(cat, []).append(t)
+
+            all_cats = [c for c in order if c in groups] + [c for c in groups if c not in order]
+
+            desktop_items = []
+            mobile_items = []
+
+            for cat in all_cats:
+                info = cat_map.get(cat, {'label': cat.upper(), 'icon': 'fas fa-compass'})
+                items = groups[cat]
+                if not items:
+                    continue
+
+                desktop_items.append(f'<span class="dh"><i class="{info["icon"]}"></i> {info["label"]}</span>')
+                mobile_items.append(f'<span class="dh" style="color:var(--a);font-size:0.8rem;text-transform:uppercase;padding:10px 20px;display:block;"><i class="{info["icon"]}"></i> {info["label"]}</span>')
+
+                for t in items:
+                    slug = t.get('slug') or t.get('id')
+                    nombre = clean_mojibake(t.get('nombre', ''))
+                    url = f"{rel}{slug}/index.html"
+                    desktop_items.append(f'<li><a href="{url}">{nombre}</a></li>')
+                    mobile_items.append(f'<li><a href="{url}">{nombre}</a></li>')
+
+            dm = soup.select_one('.hd .dm')
+            if dm:
+                dm_soup = BeautifulSoup('\n'.join(desktop_items), 'html.parser')
+                dm.clear()
+                for child in list(dm_soup.contents):
+                    dm.append(child)
                 modified = True
-                
-            phone_a = footer.select_one('address.fc a[href^="tel:"]')
-            if phone_a:
-                phone_a.string = phone1
-                phone_a['href'] = f"tel:{''.join([c for c in phone1 if c.isdigit() or c == '+'])}"
+
+            mdd = soup.select_one('#mdd') or soup.select_one('.md')
+            if mdd:
+                mdd_soup = BeautifulSoup('\n'.join(mobile_items), 'html.parser')
+                mdd.clear()
+                for child in list(mdd_soup.contents):
+                    mdd.append(child)
                 modified = True
-                
-            email_a = footer.select_one('address.fc a[href^="mailto:"]')
-            if email_a:
-                email_a.string = email
-                email_a['href'] = f"mailto:{email}"
-                modified = True
-                
-            # Social links
-            so = footer.select_one('.so')
-            if so:
-                def update_social(label, url):
-                    nonlocal modified
-                    a = so.select_one(f'a[aria-label="{label}"]')
-                    if a and url:
-                        a['href'] = url
-                        modified = True
-                        
-                update_social("Facebook", soc.get('facebook'))
-                update_social("Instagram", soc.get('instagram'))
-                update_social("TripAdvisor", soc.get('tripadvisor'))
-                update_social("Airbnb", soc.get('airbnb'))
-                update_social("WhatsApp", wa_direct)
-                update_social("TikTok", soc.get('tiktok'))
+
+        # 3. Footer sync - DISABLED to strictly comply with project rule: "NUNCA modificar el footer sin autorización"
 
         # 4. Page specific hero updates
         # Assuming we don't know which page is which, we skip dynamic titles unless it's index or contact
