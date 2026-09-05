@@ -148,6 +148,7 @@
 
     const images = document.querySelectorAll('img');
     images.forEach(img => {
+      if (img.classList.contains('testim-avatar') || img.closest('.testim-card') || img.closest('.testim-avatar-fallback') || img.closest('.nl') || img.closest('#preloader') || img.closest('header')) return;
       const src = img.getAttribute('src') || img.currentSrc || '';
       if (!src) return;
 

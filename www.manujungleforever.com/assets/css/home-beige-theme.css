@@ -1100,6 +1100,75 @@ body {
   color: var(--earth-muted) !important;
   font-size: 0.95rem !important;
 }
+
+/* Testimonials Avatar & Fallback (Strict 90x90 round dimensions) */
+.testim-card-footer {
+  display: flex !important;
+  align-items: center !important;
+  gap: 20px !important;
+  margin-top: auto !important;
+  padding-top: 22px !important;
+  border-top: 1px solid rgba(85, 65, 45, 0.12) !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+.testim-avatar {
+  width: 90px !important;
+  height: 90px !important;
+  min-width: 90px !important;
+  max-width: 90px !important;
+  min-height: 90px !important;
+  max-height: 90px !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;
+  border: 3px solid var(--teal, #2dd4bf) !important;
+  box-shadow: 0 6px 22px rgba(45, 212, 191, 0.35) !important;
+  flex-shrink: 0 !important;
+  display: block !important;
+  transition: transform 0.35s ease, box-shadow 0.35s ease !important;
+}
+
+.testim-card:hover .testim-avatar {
+  transform: scale(1.06) !important;
+  box-shadow: 0 8px 28px rgba(45, 212, 191, 0.55) !important;
+}
+
+.testim-avatar-fallback {
+  width: 90px !important;
+  height: 90px !important;
+  min-width: 90px !important;
+  max-width: 90px !important;
+  min-height: 90px !important;
+  max-height: 90px !important;
+  border-radius: 50% !important;
+  background: linear-gradient(135deg, rgba(45,212,191,0.25) 0%, rgba(201,168,76,0.2) 100%) !important;
+  border: 3px solid rgba(45, 212, 191, 0.5) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #2dd4bf !important;
+  font-weight: 800 !important;
+  font-size: 2.1rem !important;
+  flex-shrink: 0 !important;
+  box-shadow: 0 6px 22px rgba(45, 212, 191, 0.25) !important;
+  transition: transform 0.35s ease !important;
+}
+
+.testim-card:hover .testim-avatar-fallback {
+  transform: scale(1.06) !important;
+  border-color: #2dd4bf !important;
+}
+
+.testim-verified-mid {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  margin: 18px 0 !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
+
 .testim-verified-badge {
   display: inline-flex !important;
   align-items: center !important;
@@ -1113,6 +1182,16 @@ body {
   background: rgba(13, 148, 136, 0.10) !important;
   color: var(--brand-teal) !important;
   border: 1px solid rgba(13, 148, 136, 0.25) !important;
+  backdrop-filter: blur(6px) !important;
+  transition: all 0.3s ease !important;
+}
+
+.testim-pagination {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 10px !important;
+  margin-top: 40px !important;
 }
 .testim-pag-btn {
   background: var(--sand-card) !important;
