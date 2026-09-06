@@ -99,7 +99,7 @@ body {
     }
     .ls-left .logo{position:relative;display:inline-block;margin-bottom:30px;}
     .ls-left .logo::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);background:radial-gradient(ellipse at center,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0) 70%);border-radius:50%;animation:waterRipple 3s infinite ease-out 1.5s;opacity:0;pointer-events:none;}
-    .ls-left .logo img{height:130px;display:block;position:relative;z-index:2;animation:adminLogoEmerging 1.5s cubic-bezier(0.2,0.8,0.2,1) forwards,adminLogoFloatWave 4s ease-in-out 1.5s infinite;will-change:transform,filter;}
+    .ls-left .logo img{width:140px;height:140px;object-fit:cover;border-radius:24px;border:2px solid rgba(45,212,191,0.4);box-shadow:0 10px 30px rgba(0,0,0,0.6), 0 0 20px rgba(45,212,191,0.25);display:block;position:relative;z-index:2;animation:adminLogoEmerging 1.5s cubic-bezier(0.2,0.8,0.2,1) forwards,adminLogoFloatWave 4s ease-in-out 1.5s infinite;will-change:transform,filter;}
     .ls-left h1{font-size:2rem;font-weight:700;margin-bottom:16px;}
     .ls-left p{color:rgba(255,255,255,0.8);line-height:1.6;margin-bottom:40px;max-width:400px;}
     .ls-stats{display:flex;gap:30px;margin-top:20px;}
@@ -195,9 +195,13 @@ body {
       padding:20px 0; /* Add padding to prevent any top cutoff */
     }
     .hbrand img{
-      height:100px; /* HUGE LOGO to read slogan */
-      transition:filter 0.4s ease, transform 0.4s ease;
-      filter:drop-shadow(0 2px 8px rgba(0,0,0,0.4));
+      height:80px;
+      width:80px;
+      object-fit:cover;
+      border-radius:16px;
+      border:2px solid rgba(45, 212, 191, 0.35);
+      box-shadow:0 4px 16px rgba(0,0,0,0.5), 0 0 12px rgba(45, 212, 191, 0.2);
+      transition:filter 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
     }
     .hbrand:hover img{
       transform:scale(1.04); /* Subtle scale, no translateY to avoid cutoff */
@@ -919,7 +923,7 @@ nav.mnav a:hover, nav.mnav a.active {
 <!-- LOGIN -->
   <div id="login-screen">
     <div class="ls-left">
-      <div class="logo"><img src="../assets/img/logo.png" alt="Manu Jungle Forever"></div>
+      <div class="logo"><img src="../assets/img/logo.png" alt="Manu Jungle Forever" style="width: 140px; height: 140px; object-fit: cover; border-radius: 24px; border: 2px solid rgba(45, 212, 191, 0.45); box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 0 20px rgba(45,212,191,0.25); display: block; margin: 0 auto;"></div>
       <h1>Manu Jungle Pro</h1>
       <p>SISTEMA DE GESTIÓN DE CONTENIDOS (CMS)</p>
       
@@ -3159,28 +3163,6 @@ window.deleteTestim = async function(idx) {
 
 </script>
 
-
-<script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    const div = document.createElement("div");
-    div.id = "tsparticles";
-    div.style.position = "fixed"; div.style.inset = "0"; div.style.pointerEvents = "none"; div.style.zIndex = "998";
-    document.body.appendChild(div);
-    tsParticles.load("tsparticles", {
-        fpsLimit: 60,
-        particles: {
-            number: { value: 24, density: { enable: true, area: 800 } },
-            color: { value: ["#c9a84c", "#2dd4bf", "#ffffff"] },
-            shape: { type: "circle" },
-            opacity: { value: 0.35, random: true, animation: { enable: true, speed: 0.4, minimumValue: 0.08, sync: false } },
-            size: { value: 2.2, random: true, animation: { enable: true, speed: 0.6, minimumValue: 0.4, sync: false } },
-            move: { enable: true, speed: 0.45, direction: "top", random: true, straight: false, outModes: { default: "out" } }
-        },
-        detectRetina: true
-    });
-});
-</script>
 <script>
 // Accordion
 window.toggleAccordion = function(btn) {

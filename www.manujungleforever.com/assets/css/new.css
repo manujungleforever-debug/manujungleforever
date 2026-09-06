@@ -28,6 +28,8 @@
   /* Contrast Typography (Deep Forest & Rich Earth) */
   --forest-dark:     #0B241C; /* Main headlines - deeply grounded rainforest green */
   --forest-mid:      #133E31; /* Subheadings and strong text */
+  --forest-card:     #11221B; /* Showcase deep jungle cards */
+  --forest-card-glow: rgba(45, 212, 191, 0.25);
   --earth-text:      #2A2118; /* High readability body text */
   --earth-muted:     #5E4F41; /* Secondary descriptions & labels */
   --earth-subtle:    #857463; /* Timestamps & secondary meta */
@@ -2597,4 +2599,159 @@ body h2, body h3, body h4, body h5, body h6 {
 .md.o {
   max-height: 850px;
   overflow-y: auto;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   WCAG AA/AAA CONTRAST ACCESSIBILITY & DYNAMIC JUNGLE PALETTE SYSTEM
+   Strict Legibility: High contrast on warm sand (#F5F0E8 / #EAE2D5)
+   Balanced Aesthetics: Deep Forest Green (#11221B) & Mint Accents (#2DD4BF)
+   ══════════════════════════════════════════════════════════════════ */
+
+/* 1. Universal Body Text Contrast on Sand Canvas (Ratio > 11.5:1) */
+.sec,
+.intro-block,
+.split-right,
+.logistics-container,
+.tour-rich-text,
+.tour-rich-text-custom,
+.itinerary-content,
+.faq-content,
+.blog-content,
+.article-content,
+.post-content,
+.terms-content {
+  color: var(--earth-text) !important;
+}
+
+.tour-rich-text p,
+.tour-rich-text span:not(.flg):not(.fa):not(.fas):not(.far):not(.tbg):not(.tc-badge):not(.ey),
+.tour-rich-text li,
+.tour-rich-text div:not(.elementor-image-box-wrapper):not(.elementor-image-box-img),
+.intro-block p,
+.intro-block span:not(.flg):not(.fa):not(.fas):not(.far):not(.ey),
+.split-right p,
+.split-right span:not(.flg):not(.fa):not(.fas):not(.far):not(.ey),
+.logistics-container p,
+.logistics-container span:not(.flg):not(.fa):not(.fas):not(.far):not(.ey) {
+  color: var(--earth-text) !important;
+}
+
+/* 2. Interior Headings on Sand Canvas (Deep Forest #0B241C, Ratio > 14:1) */
+.sec h2:not(.tt):not(.in-hero h2):not(.tov h2),
+.intro-block h2:not(.in-hero h2):not(.tov h2),
+.split-right h3,
+.split-right h2,
+.logistics-container h3,
+.logistics-container h2,
+.sec h3:not(.in-hero h3):not(.tov h3),
+.sec h4,
+.tour-rich-text h2,
+.tour-rich-text h3,
+.tour-rich-text h4,
+.itinerary-day-title {
+  color: var(--forest-dark) !important;
+  -webkit-text-fill-color: var(--forest-dark) !important;
+  text-shadow: none !important;
+}
+
+/* 3. Hero Titles on Dark Photography Banners (Preserved Brilliant White) */
+.in-hero h1,
+.hero h1,
+#home-main-title,
+h1.text-white,
+.in-hero .h1,
+.hero .h1 {
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.6) !important;
+}
+
+/* 4. Tour Overlay Content on Dark Cards (Preserved Crisp Light) */
+.tov .tt,
+.tov h2,
+.tov h3,
+.tov p,
+.tov .tm span,
+.tc-badge {
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+}
+.tc-badge {
+  color: var(--brand-mint) !important;
+  -webkit-text-fill-color: var(--brand-mint) !important;
+  background: rgba(11, 36, 28, 0.90) !important;
+  border: 1px solid rgba(45, 212, 191, 0.4) !important;
+}
+
+/* 5. Dynamic Jungle Showcase Cards (Deep Forest Green #11221B) */
+.tc-dark,
+.jungle-card,
+.feature-card-dark,
+.wl-text-card {
+  background: var(--forest-card) !important;
+  border: 1px solid var(--forest-card-glow) !important;
+  border-radius: 20px !important;
+  box-shadow: var(--shadow-eco) !important;
+  color: #FFFFFF !important;
+}
+.tc-dark h2, .tc-dark h3, .tc-dark h4,
+.jungle-card h2, .jungle-card h3, .jungle-card h4,
+.feature-card-dark h2, .feature-card-dark h3, .feature-card-dark h4 {
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+}
+.tc-dark p, .jungle-card p, .feature-card-dark p {
+  color: rgba(245, 240, 235, 0.90) !important;
+}
+
+/* 6. Pure Elevated White Cards with Soft Eco-Shadows */
+.split-row,
+.ci-card,
+.faq-item,
+.card-white {
+  background: var(--sand-card) !important;
+  border: 1px solid var(--sand-border) !important;
+  border-radius: 18px !important;
+  box-shadow: var(--shadow-eco) !important;
+  transition: all 0.35s ease !important;
+}
+.split-row:hover,
+.ci-card:hover,
+.faq-item:hover {
+  border-color: var(--sand-border-h) !important;
+  box-shadow: var(--shadow-eco-h) !important;
+  transform: translateY(-3px) !important;
+}
+
+/* 7. Action Buttons & Interactive CTAs */
+.btn-primary,
+.btn.ba,
+.tbtn,
+.nb {
+  background: linear-gradient(135deg, var(--brand-teal) 0%, var(--brand-mint) 100%) !important;
+  color: #0B241C !important;
+  font-weight: 700 !important;
+  border-radius: 26px !important;
+  box-shadow: 0 4px 16px rgba(45, 212, 191, 0.35) !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+.btn-primary:hover,
+.btn.ba:hover,
+.tbtn:hover {
+  transform: translateY(-2px) scale(1.02) !important;
+  box-shadow: 0 8px 24px rgba(45, 212, 191, 0.55) !important;
+  color: #051A13 !important;
+}
+
+/* 8. Strict Particle Blockers (Clean DOM Protection) */
+#tsparticles-footer,
+.tsparticles-canvas-el,
+#tsparticles,
+canvas.tsparticles-canvas-el {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  height: 0 !important;
+  width: 0 !important;
+  opacity: 0 !important;
 }
