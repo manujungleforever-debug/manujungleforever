@@ -296,7 +296,7 @@
 <div class="fr"><label>Phone / WhatsApp <span class="req">*</span></label><input name="phone" placeholder="+51 931 022 183" required="" type="tel"/></div>
 </div>
 <div class="fr"><label>Tour Type <span class="req">*</span></label>
-<select name="tour_type" required="">
+<select name="tour_type" id="tour_type_select" required="">
 <option value="">Select a tour...</option>
 <optgroup label="Wildlife Tours">
 <option>3-Day Wildlife Tour – Machu Wasi</option>
@@ -441,7 +441,103 @@ const bkModal = document.getElementById('bk-modal');
 if(bkModal){
   bkModal.addEventListener('click',function(e){if(e.target===this)closeModal();});
 }
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+// Dynamic Tour Dropdown Hydration
+async function hydrateContactTours() {
+  const tourSelect = document.getElementById('tour_type_select') || document.querySelector('select[name="tour_type"]');
+  if (!tourSelect) return;
+
+  try {
+    let tours = [];
+    const isSub = window.location.pathname.replace(/^\/+|\/+$/g, '').split('/').length > 1;
+    const jsonPath = (window.location.protocol === 'file:') ? (isSub ? '../data/tours.json' : 'data/tours.json') : '/data/tours.json';
+
+    // 1. Fetch from /data/tours.json or /api/tours
+    try {
+      const res = await fetch(jsonPath + '?v=' + Date.now());
+      if (res.ok) {
+        const json = await res.json();
+        tours = (json && json.tours) ? json.tours : (Array.isArray(json) ? json : []);
+      }
+    } catch (e) {
+      console.warn('Fallback checking /api/tours:', e);
+    }
+
+    if (!tours || !tours.length) {
+      try {
+        const res = await fetch('/api/tours?public=true&v=' + Date.now());
+        if (res.ok) {
+          const json = await res.json();
+          tours = (json && json.tours) ? json.tours : (Array.isArray(json) ? json : []);
+        }
+      } catch (e) {}
+    }
+
+    if (!tours || !tours.length) return; // Preserve existing static options as fallback
+
+    // 2. Filter active tours
+    const activeTours = tours.filter(t => t.estado !== 'inactivo' && t.estado !== 'borrador');
+    if (!activeTours.length) return;
+
+    // 3. Category grouping
+    const CAT_LABELS = {
+      'wildlife': 'Wildlife Tours',
+      'roadtrip': 'Rainforest Road Trips',
+      'expedition': 'Amazon Expeditions',
+      'cultural': 'Cultural Expeditions',
+      'birdwatching': 'Birdwatching Quests',
+      'machu wasi': 'Machu Wasi Adventures',
+      'photography': 'Wildlife Photography'
+    };
+
+    const order = ['wildlife', 'roadtrip', 'expedition', 'cultural', 'birdwatching', 'machu wasi', 'photography'];
+    const groups = {};
+
+    activeTours.forEach(t => {
+      const cat = (t.categoria || 'wildlife').toLowerCase().trim();
+      if (!groups[cat]) groups[cat] = [];
+      groups[cat].push(t);
+    });
+
+    const allCats = Array.from(new Set([...order.filter(c => groups[c]), ...Object.keys(groups)]));
+
+    // 4. Build options with optgroups
+    let html = '<option value="">Select a tour...</option>';
+    allCats.forEach(cat => {
+      const groupTours = groups[cat];
+      if (!groupTours || !groupTours.length) return;
+      const label = CAT_LABELS[cat] || (cat.charAt(0).toUpperCase() + cat.slice(1) + ' Tours');
+      html += `<optgroup label="${label}">`;
+      groupTours.forEach(t => {
+        const name = (t.nombre || t.titulo || t.id).trim();
+        const slug = (t.slug || t.id || '').trim();
+        html += `<option value="${name}" data-slug="${slug}">${name}</option>`;
+      });
+      html += `</optgroup>`;
+    });
+    html += '<option value="Not sure – please advise">Not sure – please advise</option>';
+
+    // 5. Pre-selection via URL query parameters
+    const params = new URLSearchParams(window.location.search);
+    const paramTour = (params.get('tour') || params.get('tour_type') || params.get('slug') || params.get('t') || '').toLowerCase().trim();
+
+    tourSelect.innerHTML = html;
+
+    if (paramTour) {
+      for (let i = 0; i < tourSelect.options.length; i++) {
+        const opt = tourSelect.options[i];
+        const val = opt.value.toLowerCase();
+        const slug = (opt.getAttribute('data-slug') || '').toLowerCase();
+        if (val === paramTour || slug === paramTour || val.includes(paramTour) || slug.includes(paramTour)) {
+          tourSelect.selectedIndex = i;
+          break;
+        }
+      }
+    }
+  } catch (err) {
+    console.warn('Error loading dynamic tours in contact form:', err);
+  }
+}
+hydrateContactTours();
 
 // Booking form AJAX
 const bkForm = document.getElementById('bk-form');
@@ -511,5 +607,5 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 </script>
 <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" type="text/javascript"></script>
-<script defer="" src="../assets/js/global-sync.js?v=33"></script>
+<script defer="" src="../assets/js/global-sync.js?v=34"></script>
 </body></html>

@@ -48,7 +48,10 @@
       // 7. Home Page Dynamic Hydration (e.g. Wildlife Section)
       await syncHomePage();
 
-      // 8. Automatic Media Attributions Micro-Badges
+      // 8. Contact & Booking Form Dynamic Tour Selection Hydration
+      await syncContactFormTours();
+
+      // 9. Automatic Media Attributions Micro-Badges
       if (typeof window.hydrateMediaAttributions === 'function') {
         window.hydrateMediaAttributions();
       } else {
@@ -137,6 +140,90 @@
       }
     } catch(e) {
       console.warn('Header tour menu sync error:', e);
+    }
+  }
+
+  async function syncContactFormTours() {
+    const tourSelects = document.querySelectorAll('select[name="tour_type"], select[name="tour"]');
+    if (!tourSelects.length) return;
+
+    try {
+      const parts = window.location.pathname.replace(/^\/+|\/+$/g, '').split('/');
+      const isSub = parts.length > 1;
+      const jsonPath = (window.location.protocol === 'file:') ? (isSub ? '../data/tours.json' : 'data/tours.json') : '/data/tours.json';
+
+      let tRes = await fetch('/api/tours?public=true&v=' + Date.now()).then(r => r.ok ? r.json() : null).catch(() => null);
+      if (!tRes || (!tRes.tours && !Array.isArray(tRes))) {
+        tRes = await fetch(jsonPath + '?v=' + Date.now()).then(r => r.ok ? r.json() : null).catch(() => null);
+      }
+      const tours = (tRes && tRes.tours) ? tRes.tours : (Array.isArray(tRes) ? tRes : []);
+      if (!tours.length) return;
+
+      const activeTours = tours.filter(t => t.estado !== 'inactivo' && t.estado !== 'borrador');
+      if (!activeTours.length) return;
+
+      const CAT_LABELS = {
+        'wildlife': 'Wildlife Tours',
+        'roadtrip': 'Rainforest Road Trips',
+        'expedition': 'Amazon Expeditions',
+        'cultural': 'Cultural Expeditions',
+        'birdwatching': 'Birdwatching Quests',
+        'machu wasi': 'Machu Wasi Adventures',
+        'photography': 'Wildlife Photography'
+      };
+
+      const order = ['wildlife', 'roadtrip', 'expedition', 'cultural', 'birdwatching', 'machu wasi', 'photography'];
+      const groups = {};
+
+      activeTours.forEach(t => {
+        const cat = (t.categoria || 'wildlife').toLowerCase().trim();
+        if (!groups[cat]) groups[cat] = [];
+        groups[cat].push(t);
+      });
+
+      const allCats = Array.from(new Set([...order.filter(c => groups[c]), ...Object.keys(groups)]));
+
+      let optHtml = '<option value="">Select a tour...</option>';
+      allCats.forEach(cat => {
+        const groupTours = groups[cat];
+        if (!groupTours || !groupTours.length) return;
+        const groupLabel = CAT_LABELS[cat] || (cat.charAt(0).toUpperCase() + cat.slice(1) + ' Tours');
+        optHtml += `<optgroup label="${groupLabel}">`;
+        groupTours.forEach(t => {
+          const tName = (t.nombre || t.titulo || t.id).trim();
+          const tSlug = (t.slug || t.id || '').trim();
+          optHtml += `<option value="${tName}" data-slug="${tSlug}">${tName}</option>`;
+        });
+        optHtml += `</optgroup>`;
+      });
+      optHtml += '<option value="Not sure – please advise">Not sure – please advise</option>';
+
+      const params = new URLSearchParams(window.location.search);
+      const paramTour = (params.get('tour') || params.get('tour_type') || params.get('slug') || params.get('t') || '').toLowerCase().trim();
+
+      tourSelects.forEach(select => {
+        const currentVal = select.value;
+        select.innerHTML = optHtml;
+
+        let matched = false;
+        if (paramTour) {
+          for (let i = 0; i < select.options.length; i++) {
+            const opt = select.options[i];
+            const v = opt.value.toLowerCase();
+            const s = (opt.getAttribute('data-slug') || '').toLowerCase();
+            if (v === paramTour || s === paramTour || v.includes(paramTour) || s.includes(paramTour)) {
+              select.selectedIndex = i;
+              matched = true;
+              break;
+            }
+          }
+        }
+        if (!matched && currentVal) {
+          select.value = currentVal;
+        }
+      });
+    } catch (e) {
+      console.warn('Error syncing contact form tours:', e);
     }
   }
 
