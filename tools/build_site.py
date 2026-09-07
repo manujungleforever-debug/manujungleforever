@@ -490,7 +490,7 @@ def build_site():
                 horas = clean_mojibake(hor.get('horas') or '8:00 AM – 8:00 PM (Peru Time)')
                 nota = clean_mojibake(hor.get('nota') or 'We typically respond within 24 hours')
                 
-                h_html = f'''<div style="font-weight:600; color:#fff;">{dias}</div><div style="color:rgba(255,255,255,0.85); font-size:0.95rem; margin-top:2px;">{horas}</div><div style="color:var(--teal, #2dd4bf); font-size:0.85rem; margin-top:4px; display:flex; align-items:center; gap:5px;"><i class="far fa-clock" style="font-size:0.8rem;"></i> {nota}</div>'''
+                h_html = f'''<div class="hours-days" style="font-weight:700; color:var(--forest-dark, #0B241C) !important; font-size:1.05rem;">{dias}</div><div class="hours-time" style="color:var(--earth-text, #2A2118) !important; font-size:0.95rem; font-weight:500; margin-top:2px;">{horas}</div><div class="hours-note" style="color:#0b4d40 !important; font-size:0.85rem; font-weight:600; margin-top:6px; display:inline-flex; align-items:center; gap:6px; background:rgba(11,77,64,0.08); padding:4px 10px; border-radius:6px; width:fit-content;"><i class="far fa-clock" style="font-size:0.8rem; color:#0b4d40 !important;"></i> {nota}</div>'''
                 
                 hours_soup = BeautifulSoup(h_html, 'html.parser')
                 dyn_hours.clear()
