@@ -1120,6 +1120,25 @@ body { top: 0px !important; position: relative !important; }
 .ci-title { font-size: 1.1rem; font-weight: 700; color: var(--forest-dark) !important; margin-bottom: 8px; }
 .ci-sub { font-size: .85rem; color: var(--earth-muted) !important; line-height: 1.5; }
 
+.ci-card .badge-wildlife {
+  background: rgba(13, 148, 136, 0.14) !important;
+  color: #0F766E !important;
+  border: 1px solid rgba(13, 148, 136, 0.3) !important;
+  font-weight: 700 !important;
+}
+.ci-card .badge-expedition {
+  background: rgba(217, 119, 6, 0.14) !important;
+  color: #B45309 !important;
+  border: 1px solid rgba(217, 119, 6, 0.3) !important;
+  font-weight: 700 !important;
+}
+.ci-card .badge-roadtrip {
+  background: rgba(2, 132, 199, 0.14) !important;
+  color: #0369A1 !important;
+  border: 1px solid rgba(2, 132, 199, 0.3) !important;
+  font-weight: 700 !important;
+}
+
 
 /* =========================================
    MODAL BOOKING FORM (bk-modal)

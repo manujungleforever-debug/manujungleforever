@@ -15,7 +15,7 @@
 <link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&amp;family=Outfit:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
 <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
-<link href="../assets/css/new.css?v=39" rel="stylesheet"/>
+<link href="../assets/css/new.css?v=40" rel="stylesheet"/>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"TouristAttraction","name":"Manu Jungle Forever","url":"https://www.manujungleforever.com/","description":"Guided tours from Cusco to the Manu National Park in the Peruvian Amazon.","telephone":"+51901525679","email":"discover@manujungleforever.com","address":{"@type":"PostalAddress","addressLocality":"Nuevo Eden","addressCountry":"PE"},"sameAs":["https://www.facebook.com/manujungleforever","https://www.instagram.com/manujungleforever/",]}</script>
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-5476BC9');</script>
 </head><body>
@@ -118,8 +118,8 @@
 <div class="cx">
 <div class="r" style="text-align:center; margin-bottom:12px">
 <span class="ey">All Articles</span>
-<h2 class="h2 text-white">Stories from the Jungle</h2>
-<p class="ld" style="margin:0 auto">11 articles — tips, guides &amp; stories from the Peruvian Amazon</p>
+<h2 class="h2" style="color: var(--forest-dark) !important; -webkit-text-fill-color: var(--forest-dark) !important; text-shadow: none !important;">Stories from the Jungle</h2>
+<p class="ld" style="margin:0 auto; color: var(--earth-muted) !important;">11 articles — tips, guides &amp; stories from the Peruvian Amazon</p>
 </div>
 <style>
       /* FORCE 2 COLUMNS AND REFERENCE STYLES TO BYPASS CACHE */
@@ -138,18 +138,20 @@
         }
       }
       .ref-card {
-        background: var(--f);
-        border-radius: 16px;
+        background: #FFFFFF;
+        border-radius: 18px;
         overflow: hidden;
         text-decoration: none;
         display: flex;
         flex-direction: column;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        border: 1px solid rgba(255,255,255,0.05);
+        transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        border: 1px solid rgba(100, 80, 60, 0.12);
+        box-shadow: var(--shadow-eco);
       }
       .ref-card:hover {
         transform: translateY(-5px);
-        box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+        box-shadow: var(--shadow-eco-h);
+        border-color: rgba(13, 148, 136, 0.3);
       }
       .ref-img-wrap {
         position: relative;
@@ -171,7 +173,7 @@
         position: absolute;
         bottom: 15px;
         left: 20px;
-        background: var(--v);
+        background: var(--brand-teal);
         color: #ffffff;
         padding: 5px 14px;
         border-radius: 20px;
@@ -182,6 +184,7 @@
         display: flex;
         align-items: center;
         gap: 6px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
       }
       .ref-body {
         padding: 30px 30px 40px;
@@ -196,24 +199,31 @@
         display: flex;
         align-items: center;
         gap: 8px;
+        font-weight: 500;
       }
       .ref-title {
-        color: #fff;
+        color: var(--forest-dark) !important;
+        -webkit-text-fill-color: var(--forest-dark) !important;
         font-family: 'Syne', sans-serif;
-        font-size: 1.5rem;
+        font-size: 1.45rem;
         font-weight: 700;
-        line-height: 1.3;
+        line-height: 1.35;
         margin-bottom: 15px;
+        transition: color 0.25s ease;
+      }
+      .ref-card:hover .ref-title {
+        color: var(--brand-teal) !important;
+        -webkit-text-fill-color: var(--brand-teal) !important;
       }
       .ref-exc {
-        color: rgba(255,255,255,0.65);
+        color: var(--earth-muted) !important;
         font-size: 0.95rem;
-        line-height: 1.6;
+        line-height: 1.65;
         margin-bottom: 25px;
         flex-grow: 1;
       }
       .ref-btn {
-        color: var(--v);
+        color: var(--brand-teal);
         font-size: 0.85rem;
         font-weight: 700;
         text-transform: uppercase;
@@ -221,6 +231,11 @@
         display: flex;
         align-items: center;
         gap: 8px;
+        transition: gap 0.2s ease, color 0.2s ease;
+      }
+      .ref-card:hover .ref-btn {
+        color: #0F766E;
+        gap: 12px;
       }
     </style>
 <div id="blog-grid-override">
@@ -317,10 +332,10 @@
     </script>
 <div id="dynamic-pagination" style="margin-top:56px; display:flex; justify-content:center; gap:12px; align-items:center;"></div>
 <!-- CTA -->
-<div class="r" style="text-align:center; margin-top:80px; padding:64px 40px; background:var(--f); border-radius:24px; border:1px solid rgba(255,255,255,.06)">
+<div class="r" style="text-align:center; margin-top:80px; padding:64px 40px; background:var(--f); border-radius:24px; border:1px solid rgba(100,80,60,0.12); box-shadow: var(--shadow-eco);">
 <span class="ey">Ready to go?</span>
-<h2 class="h2 text-white" style="max-width:560px;margin:0 auto 18px; ">Stop Reading — Start Exploring</h2>
-<p class="ld" style="margin:0 auto 32px">Book your guided tour from Cusco to the Manu National Park. Local. Wild. Authentic.</p>
+<h2 class="h2" style="max-width:560px;margin:0 auto 18px; color: var(--forest-dark) !important; -webkit-text-fill-color: var(--forest-dark) !important; text-shadow: none !important;">Stop Reading — Start Exploring</h2>
+<p class="ld" style="margin:0 auto 32px; color: var(--earth-muted) !important;">Book your guided tour from Cusco to the Manu National Park. Local. Wild. Authentic.</p>
 <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
 <a class="btn ba" href="../guided-tours/index.html"><i class="fas fa-binoculars"></i> See All Tours</a>
 <a class="btn bg2" href="../contact/index.html"><i class="fas fa-envelope"></i> Contact Us</a>
