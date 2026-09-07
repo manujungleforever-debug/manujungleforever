@@ -2455,6 +2455,13 @@ body h2, body h3, body h4, body h5, body h6 {
   text-shadow: none !important;
 }
 
+.sec p.ld,
+.sec .ld,
+.sec .gallery-subtitle,
+.gallery-subtitle {
+  color: var(--earth-muted) !important;
+}
+
 
 /* Contact Page Form Card & Card Content Integration */
 .contact-grid > div:last-child > div {
