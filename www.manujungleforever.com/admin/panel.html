@@ -277,6 +277,33 @@
             font-weight: 700;
             color: var(--text-main);
             line-height: 1.2;
+            display: inline-flex;
+            align-items: center;
+            min-height: 29px;
+        }
+
+        .stat-skeleton {
+            display: inline-block;
+            width: 44px;
+            height: 22px;
+            background: linear-gradient(90deg, rgba(45, 212, 191, 0.08) 25%, rgba(45, 212, 191, 0.22) 50%, rgba(45, 212, 191, 0.08) 75%);
+            background-size: 200% 100%;
+            animation: stat-skeleton-pulse 1.4s ease-in-out infinite;
+            border-radius: 6px;
+        }
+
+        @keyframes stat-skeleton-pulse {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .stat-error {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #f59e0b;
+            font-size: 1.2rem;
+            cursor: help;
         }
 
         .stat-label {
@@ -816,7 +843,7 @@ nav.mnav a.btn-panel-link:hover {
                         <i class="ph ph-map-trifold"></i>
                     </div>
                     <div class="stat-info">
-                        <span class="stat-val" id="stat-tours">-</span>
+                        <span class="stat-val" id="stat-tours"><span class="stat-skeleton"></span></span>
                         <span class="stat-label">Tours Totales</span>
                     </div>
                 </div>
@@ -827,7 +854,7 @@ nav.mnav a.btn-panel-link:hover {
                         <i class="ph ph-pencil"></i>
                     </div>
                     <div class="stat-info">
-                        <span class="stat-val" id="stat-blog">-</span>
+                        <span class="stat-val" id="stat-blog"><span class="stat-skeleton"></span></span>
                         <span class="stat-label">Artículos Blog</span>
                     </div>
                 </div>
@@ -838,7 +865,7 @@ nav.mnav a.btn-panel-link:hover {
                         <i class="ph ph-star"></i>
                     </div>
                     <div class="stat-info">
-                        <span class="stat-val" id="stat-testim">-</span>
+                        <span class="stat-val" id="stat-testim"><span class="stat-skeleton"></span></span>
                         <span class="stat-label">Testimonios</span>
                     </div>
                 </div>
@@ -849,7 +876,7 @@ nav.mnav a.btn-panel-link:hover {
                         <i class="ph ph-scales"></i>
                     </div>
                     <div class="stat-info">
-                        <span class="stat-val" id="stat-reclamos">-</span>
+                        <span class="stat-val" id="stat-reclamos"><span class="stat-skeleton"></span></span>
                         <span class="stat-label">Pendientes</span>
                     </div>
                 </div>
@@ -963,95 +990,123 @@ nav.mnav a.btn-panel-link:hover {
         });
 
         async function loadStats() {
-            try {
-                const token = sessionStorage.getItem('cms_token');
-                const headers = { 'Content-Type': 'application/json' };
-                if (token) headers['Authorization'] = 'Bearer ' + token;
+            const token = sessionStorage.getItem('cms_token');
+            const headers = { 'Content-Type': 'application/json' };
+            if (token) headers['Authorization'] = 'Bearer ' + token;
 
-                // 1. Reclamos (D1 API)
-                let pendingReclamos = 0;
+            // Helper para renderizar cada estado explícito (isLoading, isError, data)
+            const renderStat = (elementId, state) => {
+                const el = document.getElementById(elementId);
+                if (!el) return;
+                if (state.isLoading) {
+                    el.innerHTML = '<span class="stat-skeleton"></span>';
+                } else if (state.isError) {
+                    el.innerHTML = `<span class="stat-error" title="${state.errorMsg || 'Error al sincronizar datos'}"><i class="ph ph-warning-circle"></i> 0</span>`;
+                } else {
+                    el.textContent = state.data ?? 0;
+                }
+            };
+
+            // 1. Estado inicial: isLoading = true en todas las tarjetas
+            ['stat-tours', 'stat-blog', 'stat-testim', 'stat-reclamos'].forEach(id => {
+                renderStat(id, { isLoading: true });
+            });
+
+            // 2. Fetch concurrente e independiente con Promise.allSettled
+            const fetchTours = async () => {
+                const res = await fetch('/data/tours.json?t=' + Date.now());
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const d = await res.json();
+                return (d.tours || (Array.isArray(d) ? d : [])).length;
+            };
+
+            const fetchBlog = async () => {
+                const res = await fetch('/data/posts-index.json?t=' + Date.now());
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const d = await res.json();
+                return (d.posts || (Array.isArray(d) ? d : [])).length;
+            };
+
+            const fetchTestimonios = async () => {
                 try {
-                    const recRes = await fetch('/api/reclamos?t=' + Date.now(), { headers });
-                    if (recRes.ok) {
-                        const d = await recRes.json().catch(() => ({}));
-                        const reclamosArr = d.reclamos || (Array.isArray(d) ? d : []);
-                        pendingReclamos = (Array.isArray(reclamosArr) ? reclamosArr : []).filter(r => r && r.estado !== 'Atendido').length;
+                    const res = await fetch('/api/testimonios?t=' + Date.now(), { headers });
+                    if (res.ok) {
+                        const d = await res.json();
+                        return (d.testimonios || d.testimonials || (Array.isArray(d) ? d : [])).length;
                     }
-                } catch(e) { console.warn('Reclamos stat warning:', e); }
+                } catch (_) {}
+                const fallback = await fetch('/data/testimonials.json?t=' + Date.now());
+                if (!fallback.ok) throw new Error(`HTTP ${fallback.status}`);
+                const d = await fallback.json();
+                return (d.testimonials || d.testimonios || []).length;
+            };
 
-                // 2. Tours (/data/tours.json)
-                let toursCount = 0;
-                try {
-                    const toursRes = await fetch('/data/tours.json?t=' + Date.now());
-                    if (toursRes.ok) {
-                        const d = await toursRes.json().catch(() => ({}));
-                        toursCount = (d.tours || (Array.isArray(d) ? d : [])).length;
-                    }
-                } catch(e) { console.warn('Tours stat warning:', e); }
+            const fetchReclamos = async () => {
+                const res = await fetch('/api/reclamos?t=' + Date.now(), { headers });
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const d = await res.json();
+                const list = d.reclamos || (Array.isArray(d) ? d : []);
+                return (Array.isArray(list) ? list : []).filter(r => r && r.estado !== 'Atendido').length;
+            };
 
-                // 3. Testimonios (/api/testimonios with /data/testimonials.json fallback)
-                let testCount = 0;
-                try {
-                    const testRes = await fetch('/api/testimonios?t=' + Date.now(), { headers });
-                    if (testRes.ok) {
-                        const d = await testRes.json().catch(() => ({}));
-                        const list = d.testimonios || d.testimonials || (Array.isArray(d) ? d : []);
-                        testCount = list.length;
-                    } else {
-                        const testStatic = await fetch('/data/testimonials.json?t=' + Date.now());
-                        if (testStatic.ok) {
-                            const d = await testStatic.json().catch(() => ({}));
-                            testCount = (d.testimonials || d.testimonios || []).length;
-                        }
-                    }
-                } catch(e) { console.warn('Testimonios stat warning:', e); }
+            // Ejecutar en paralelo
+            const [toursRes, blogRes, testRes, recRes] = await Promise.allSettled([
+                fetchTours(),
+                fetchBlog(),
+                fetchTestimonios(),
+                fetchReclamos()
+            ]);
 
-                // 4. Blog Posts (/data/posts-index.json)
-                let blogCount = 0;
-                try {
-                    const blogRes = await fetch('/data/posts-index.json?t=' + Date.now());
-                    if (blogRes.ok) {
-                        const d = await blogRes.json().catch(() => ({}));
-                        blogCount = (d.posts || (Array.isArray(d) ? d : [])).length;
-                    }
-                } catch(e) { console.warn('Blog stat warning:', e); }
+            // 3. Procesar resultados: data o isError sin romper la UI
+            if (toursRes.status === 'fulfilled') {
+                renderStat('stat-tours', { data: toursRes.value });
+            } else {
+                console.warn('Tours stat error:', toursRes.reason);
+                renderStat('stat-tours', { isError: true, errorMsg: 'No se pudieron sincronizar los tours' });
+            }
 
-                // Update DOM elements
-                const elTours = document.getElementById('stat-tours');
-                if (elTours) elTours.textContent = toursCount;
+            if (blogRes.status === 'fulfilled') {
+                renderStat('stat-blog', { data: blogRes.value });
+            } else {
+                console.warn('Blog stat error:', blogRes.reason);
+                renderStat('stat-blog', { isError: true, errorMsg: 'No se pudieron cargar los artículos' });
+            }
 
-                const elBlog = document.getElementById('stat-blog');
-                if (elBlog) elBlog.textContent = blogCount;
+            if (testRes.status === 'fulfilled') {
+                renderStat('stat-testim', { data: testRes.value });
+            } else {
+                console.warn('Testimonios stat error:', testRes.reason);
+                renderStat('stat-testim', { isError: true, errorMsg: 'No se pudieron sincronizar los testimonios' });
+            }
 
-                const elTest = document.getElementById('stat-testim');
-                if (elTest) elTest.textContent = testCount;
+            if (recRes.status === 'fulfilled') {
+                const pending = recRes.value;
+                renderStat('stat-reclamos', { data: pending });
 
-                const elRec = document.getElementById('stat-reclamos');
-                if (elRec) elRec.textContent = pendingReclamos;
-
-                // Badge de notificación en tarjeta Reclamos
                 const badge = document.getElementById('badge-reclamos-menu');
                 if (badge) {
-                    if (pendingReclamos > 0) {
-                        badge.textContent = pendingReclamos > 9 ? '+9' : pendingReclamos;
+                    if (pending > 0) {
+                        badge.textContent = pending > 9 ? '+9' : pending;
                         badge.style.display = 'flex';
                     } else {
                         badge.style.display = 'none';
                     }
                 }
+            } else {
+                console.warn('Reclamos stat error:', recRes.reason);
+                renderStat('stat-reclamos', { isError: true, errorMsg: 'Error conectando con la base de datos de reclamos' });
+            }
 
-                // Ocultar módulo de Usuarios si no es Super User
-                if (!isSuperUser()) {
-                    const cardU = document.getElementById('card-usuarios');
-                    if (cardU) cardU.style.display = 'none';
-                    const navU = document.getElementById('nav-usuarios');
-                    if (navU) navU.style.display = 'none';
-                }
-            } catch (e) {
-                console.error('Error cargando estadísticas:', e);
+            // Ocultar módulo de Usuarios si no es Super User
+            if (typeof isSuperUser === 'function' && !isSuperUser()) {
+                const cardU = document.getElementById('card-usuarios');
+                if (cardU) cardU.style.display = 'none';
+                const navU = document.getElementById('nav-usuarios');
+                if (navU) navU.style.display = 'none';
             }
         }
     </script>
+  <script src="js/ui-dialog.js"></script>
   <script src="js/auto-correct.js"></script>
   <script src="js/thinking-orb.js?v=9"></script>
 </body>
