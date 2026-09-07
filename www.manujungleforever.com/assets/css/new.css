@@ -989,6 +989,7 @@ body { top: 0px !important; position: relative !important; }
   padding: 40px;
   border-radius: 24px;
   border: 1px solid var(--sand-border) !important;
+  margin-top: 56px;
   margin-bottom: 60px;
   box-shadow: var(--shadow-eco) !important;
 }
@@ -1840,7 +1841,7 @@ body { top: 0px !important; position: relative !important; }
   grid-template-columns: 1fr 1.5fr;
   gap: 60px;
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 0 auto 60px;
   align-items: start;
 }
 

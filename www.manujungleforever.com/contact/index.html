@@ -17,6 +17,40 @@
 <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
 <link href="../assets/css/new.css?v=40" rel="stylesheet"/>
 <style>
+  .contact-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1.35fr !important;
+    gap: 44px !important;
+    max-width: 1240px !important;
+    margin: 0 auto 56px !important;
+    align-items: start !important;
+  }
+  .contact-info-card {
+    background: #FFFFFF !important;
+    border: 1px solid rgba(100, 80, 60, 0.14) !important;
+    border-top: 4px solid var(--brand-amber) !important;
+    border-radius: 24px !important;
+    padding: 44px 38px !important;
+    box-shadow: 0 12px 36px rgba(45, 35, 25, 0.08), 0 2px 8px rgba(45, 35, 25, 0.04) !important;
+  }
+  .map-container {
+    margin-top: 36px !important;
+    margin-bottom: 0 !important;
+    height: 360px !important;
+    border-radius: 24px !important;
+    overflow: hidden !important;
+    border: 1px solid rgba(100, 80, 60, 0.14) !important;
+    box-shadow: 0 8px 24px rgba(45, 35, 25, 0.06) !important;
+  }
+  .wa-cta-bar {
+    margin-top: 56px !important;
+    margin-bottom: 70px !important;
+    background: #FFFFFF !important;
+    border: 1px solid rgba(100, 80, 60, 0.14) !important;
+    border-radius: 24px !important;
+    padding: 36px 44px !important;
+    box-shadow: 0 12px 36px rgba(45, 35, 25, 0.06) !important;
+  }
   .booking-inquiry-card {
     background: #FFFFFF !important;
     border: 1px solid rgba(100, 80, 60, 0.14) !important;
@@ -83,9 +117,21 @@
     transform: translateY(-2px);
     box-shadow: 0 12px 32px rgba(13, 148, 136, 0.38);
   }
-  @media (max-width: 600px) {
-    .booking-inquiry-card {
-      padding: 30px 20px !important;
+  @media (max-width: 992px) {
+    .contact-grid {
+      grid-template-columns: 1fr !important;
+      gap: 36px !important;
+      margin-bottom: 40px !important;
+    }
+    .wa-cta-bar {
+      margin-top: 40px !important;
+      flex-direction: column !important;
+      gap: 20px !important;
+      text-align: center !important;
+    }
+    .booking-inquiry-card,
+    .contact-info-card {
+      padding: 32px 22px !important;
     }
   }
 </style>
@@ -191,8 +237,8 @@
 <!-- LEFT: Contact Info -->
 <div>
 <div class="contact-info-card">
-<span class="ey">Reach Out</span>
-<h2 class="h2 text-white" style="margin-bottom:32px; font-size:1.8rem; ">Contact Information</h2>
+<span class="ey"><i class="fas fa-paper-plane" style="font-size: 0.85rem; margin-right: 4px;"></i> Reach Out</span>
+<h2 class="h2" style="margin: 6px 0 28px; font-size: 1.8rem; color: var(--forest-dark) !important; -webkit-text-fill-color: var(--forest-dark) !important; text-shadow: none !important; font-family: 'Syne', sans-serif; font-weight: 700;">Contact Information</h2>
 <div class="contact-info-item">
 <div class="ci-icon"><i class="fas fa-phone"></i></div>
 <div>
@@ -220,7 +266,13 @@
 <div class="ci-icon"><i class="fas fa-clock"></i></div>
 <div>
 <div class="ci-label">Office Hours</div>
-<div class="ci-val" id="dyn-contact-hours"><div style="font-weight:600; color:#fff;">Monday – Sunday</div><div style="color:rgba(255,255,255,0.85); font-size:0.95rem; margin-top:2px;">8:00 AM – 8:00 PM (Peru Time)</div><div style="color:var(--teal, #2dd4bf); font-size:0.85rem; margin-top:4px; display:flex; align-items:center; gap:5px;"><i class="far fa-clock" style="font-size:0.8rem;"></i> We typically respond within 24 hours</div></div>
+<div class="ci-val" id="dyn-contact-hours">
+  <div style="font-weight:700; color:var(--forest-dark); font-size:1.05rem;">Monday – Sunday</div>
+  <div style="color:var(--earth-muted); font-size:0.95rem; margin-top:3px;">8:00 AM – 8:00 PM (Peru Time)</div>
+  <div style="color:var(--brand-teal); font-size:0.85rem; margin-top:6px; font-weight:600; display:flex; align-items:center; gap:6px;">
+    <i class="far fa-clock" style="font-size:0.85rem;"></i> We typically respond within 24 hours
+  </div>
+</div>
 </div>
 </div>
 <div class="social-row">
