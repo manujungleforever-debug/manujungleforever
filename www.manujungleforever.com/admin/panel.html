@@ -916,11 +916,11 @@ nav.mnav a.btn-panel-link:hover {
                 <div class="menu-btn-card" onclick="window.location.href='gestionar-reclamos.html'">
                     <div class="btn-card-icon card-icon-reclamos" style="position: relative;">
                         <i class="ph ph-scales"></i>
-                        <span id="badge-reclamos-menu" style="display:none; position:absolute; top:-6px; right:-6px; background:#facc15; color:#030807; border-radius:50%; width:24px; height:24px; font-size:12px; font-weight:800; display:flex; align-items:center; justify-content:center; border:2px solid var(--bg-color); box-shadow:0 0 10px rgba(250,204,21,0.6); z-index:10;"></span>
+                        <span id="badge-reclamos-menu" style="display:none; position:absolute; top:-6px; right:-6px; background:#facc15; color:#030807; border-radius:50%; width:24px; height:24px; font-size:12px; font-weight:800; align-items:center; justify-content:center; border:2px solid var(--bg-color); box-shadow:0 0 10px rgba(250,204,21,0.6); z-index:10;"></span>
                     </div>
                     <div class="btn-card-content">
                         <span class="btn-card-title">Auditoría Reclamos</span>
-                        <span class="btn-card-desc">Libro de Reclamaciones Virtual regulado por INDECOPI.</span>
+                        <span class="btn-card-desc" id="desc-reclamos">Libro de Reclamaciones Virtual regulado por INDECOPI.</span>
                     </div>
                 </div>
 
@@ -974,6 +974,8 @@ nav.mnav a.btn-panel-link:hover {
         
     </div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
             // Mobile menu
             const btn = document.getElementById('mobile-menu-btn');
             const menu = document.getElementById('mobile-menu');
@@ -988,6 +990,11 @@ nav.mnav a.btn-panel-link:hover {
             // Load Stats
             loadStats();
         });
+
+        // If DOMContentLoaded already fired
+        if (document.readyState === 'complete' || document.readyState === 'interactive') {
+            setTimeout(loadStats, 50);
+        }
 
         async function loadStats() {
             const token = sessionStorage.getItem('cms_token');
@@ -1014,16 +1021,30 @@ nav.mnav a.btn-panel-link:hover {
 
             // 2. Fetch concurrente e independiente con Promise.allSettled
             const fetchTours = async () => {
-                const res = await fetch('/data/tours.json?t=' + Date.now());
-                if (!res.ok) throw new Error(`HTTP ${res.status}`);
-                const d = await res.json();
+                try {
+                    const res = await fetch('/data/tours.json?t=' + Date.now());
+                    if (res.ok) {
+                        const d = await res.json();
+                        return (d.tours || (Array.isArray(d) ? d : [])).length;
+                    }
+                } catch (_) {}
+                const resApi = await fetch('/api/tours?public=true&t=' + Date.now());
+                if (!resApi.ok) throw new Error(`HTTP ${resApi.status}`);
+                const d = await resApi.json();
                 return (d.tours || (Array.isArray(d) ? d : [])).length;
             };
 
             const fetchBlog = async () => {
-                const res = await fetch('/data/posts-index.json?t=' + Date.now());
-                if (!res.ok) throw new Error(`HTTP ${res.status}`);
-                const d = await res.json();
+                try {
+                    const res = await fetch('/data/posts-index.json?t=' + Date.now());
+                    if (res.ok) {
+                        const d = await res.json();
+                        return (d.posts || (Array.isArray(d) ? d : [])).length;
+                    }
+                } catch (_) {}
+                const resApi = await fetch('/api/blog?t=' + Date.now());
+                if (!resApi.ok) throw new Error(`HTTP ${resApi.status}`);
+                const d = await resApi.json();
                 return (d.posts || (Array.isArray(d) ? d : [])).length;
             };
 
@@ -1042,11 +1063,22 @@ nav.mnav a.btn-panel-link:hover {
             };
 
             const fetchReclamos = async () => {
-                const res = await fetch('/api/reclamos?t=' + Date.now(), { headers });
-                if (!res.ok) throw new Error(`HTTP ${res.status}`);
-                const d = await res.json();
-                const list = d.reclamos || (Array.isArray(d) ? d : []);
-                return (Array.isArray(list) ? list : []).filter(r => r && r.estado !== 'Atendido').length;
+                try {
+                    const res = await fetch('/api/reclamos?t=' + Date.now(), { headers });
+                    if (res.ok) {
+                        const d = await res.json();
+                        const list = d.reclamos || d.list || (Array.isArray(d) ? d : []);
+                        return (Array.isArray(list) ? list : []).filter(r => r && (r.estado || '').toLowerCase() === 'pendiente').length;
+                    }
+                } catch (_) {}
+                try {
+                    const fallback = await fetch('/data/reclamos.json?t=' + Date.now());
+                    if (fallback.ok) {
+                        const list = await fallback.json().catch(() => []);
+                        return (Array.isArray(list) ? list : []).filter(r => r && (r.estado || '').toLowerCase() === 'pendiente').length;
+                    }
+                } catch (_) {}
+                return 0;
             };
 
             // Ejecutar en paralelo
@@ -1084,17 +1116,28 @@ nav.mnav a.btn-panel-link:hover {
                 renderStat('stat-reclamos', { data: pending });
 
                 const badge = document.getElementById('badge-reclamos-menu');
+                const descReclamos = document.getElementById('desc-reclamos');
                 if (badge) {
                     if (pending > 0) {
-                        badge.textContent = pending > 9 ? '+9' : pending;
+                        badge.textContent = pending > 9 ? '+9' : String(pending);
                         badge.style.display = 'flex';
                     } else {
+                        badge.textContent = '';
                         badge.style.display = 'none';
+                    }
+                }
+                if (descReclamos) {
+                    if (pending > 0) {
+                        descReclamos.innerHTML = `<span style="color:#facc15; font-weight:600;"><i class="ph ph-warning"></i> ${pending} ${pending === 1 ? 'reclamo pendiente' : 'reclamos pendientes'}</span> · Regulado por INDECOPI`;
+                    } else {
+                        descReclamos.innerHTML = `<span style="color:#10b981; font-weight:500;"><i class="ph ph-check-circle"></i> 0 reclamos pendientes</span> · Regulado por INDECOPI`;
                     }
                 }
             } else {
                 console.warn('Reclamos stat error:', recRes.reason);
                 renderStat('stat-reclamos', { isError: true, errorMsg: 'Error conectando con la base de datos de reclamos' });
+                const badge = document.getElementById('badge-reclamos-menu');
+                if (badge) badge.style.display = 'none';
             }
 
             // Ocultar módulo de Usuarios si no es Super User
