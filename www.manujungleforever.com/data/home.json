@@ -74,8 +74,8 @@
       {
         "id": "cat-3",
         "categoria": "expedition",
-        "disponible": true,
-        "badge_texto": "Available Now",
+        "disponible": false,
+        "badge_texto": "Temporarily Unavailable",
         "titulo": "Manu Expedition",
         "duracion": "5 or 6 Days",
         "pasajeros": "2–8 Passengers",
