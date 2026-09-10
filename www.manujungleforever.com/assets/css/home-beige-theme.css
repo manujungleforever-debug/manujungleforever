@@ -1543,4 +1543,24 @@ body {
 .mo .m-toggle-btn i {
   color: var(--brand-mint, #2DD4BF) !important;
 }
+#mo button,
+#mo .m-toggle-btn,
+#mo #mbt,
+.mo button,
+.mo .m-toggle-btn,
+.mo #mbt {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+#mo button:focus,
+#mo .m-toggle-btn:focus,
+#mo #mbt:focus,
+.mo button:focus,
+.mo .m-toggle-btn:focus,
+.mo #mbt:focus {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
 
