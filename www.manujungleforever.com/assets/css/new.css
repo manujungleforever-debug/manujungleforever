@@ -1136,6 +1136,15 @@ body { top: 0px !important; position: relative !important; }
   color: var(--brand-teal) !important;
   transform: translateY(-2px);
 }
+@media (max-width: 420px) {
+  .tc-footer {
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+  .tc-btn {
+    width: 100% !important;
+  }
+}
 
 /* Category Intro Cards */
 .ci-card {
