@@ -1504,6 +1504,10 @@ body {
 }
 
 @media (max-width: 992px) {
+  .nav-admin-btn,
+  #N .nav-admin-btn {
+    display: none !important;
+  }
   .st-modern {
     padding: 44px 0 24px 0 !important;
   }
@@ -1576,6 +1580,7 @@ body {
 /* ── MOBILE DRAWER NAVIGATION ISOLATION (IMMUNE TO BODY THEME) ── */
 #mo, .mo {
   background: linear-gradient(160deg, rgba(35, 20, 14, 0.98) 0%, rgba(20, 10, 6, 0.99) 100%) !important;
+  padding-top: 135px !important;
 }
 #mo .ml > li > a,
 #mo .ml > li > button,
