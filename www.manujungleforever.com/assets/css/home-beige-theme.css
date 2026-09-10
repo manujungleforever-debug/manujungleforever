@@ -1439,13 +1439,67 @@ body {
 
 /* ── 13. RESPONSIVE BREAKPOINTS (TABLET & MOBILE) ──────────────── */
 @media (max-width: 1024px) {
+  .rl, .rr {
+    transform: none !important;
+    opacity: 1 !important;
+  }
   #unique-content .unique-grid {
     grid-template-columns: 1fr !important;
-    gap: 36px !important;
+    gap: 32px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  #unique-content .unique-media-wrap {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+  }
+  #unique-content .spi {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    min-height: 240px !important;
+    max-height: 380px !important;
+    aspect-ratio: 16 / 10 !important;
+    box-sizing: border-box !important;
+  }
+  #unique-content .unique-text-wrap {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+    padding: 0 !important;
+  }
+  #unique-content .spt {
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  #unique-content .unique-features-grid {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  #unique-content .uf-item {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
   }
   .wl-grid-top {
     grid-template-columns: 1fr !important;
     gap: 24px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  .wl-img-card {
+    min-height: 260px !important;
+    height: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
   }
 }
 
