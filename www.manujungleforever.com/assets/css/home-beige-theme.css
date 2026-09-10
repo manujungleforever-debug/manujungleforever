@@ -1518,3 +1518,29 @@ body {
     padding: 28px 22px !important;
   }
 }
+
+/* ── MOBILE DRAWER NAVIGATION ISOLATION (IMMUNE TO BODY THEME) ── */
+#mo, .mo {
+  background: linear-gradient(160deg, rgba(35, 20, 14, 0.98) 0%, rgba(20, 10, 6, 0.99) 100%) !important;
+}
+#mo .ml > li > a,
+#mo .ml > li > button,
+#mo .m-toggle-btn,
+#mo #mbt,
+.mo .ml > li > a,
+.mo .ml > li > button,
+.mo .m-toggle-btn,
+.mo #mbt {
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  background: transparent !important;
+  font-size: 1.05rem !important;
+  font-weight: 500 !important;
+}
+#mo #mbt i,
+#mo .m-toggle-btn i,
+.mo #mbt i,
+.mo .m-toggle-btn i {
+  color: var(--brand-mint, #2DD4BF) !important;
+}
+

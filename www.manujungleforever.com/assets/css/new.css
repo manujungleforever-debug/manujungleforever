@@ -241,7 +241,27 @@ img{max-width:100%;height:auto;display:block}a{color:inherit;text-decoration:non
   overflow-y: auto;
 }
 .mo.o{transform:translateX(0)}
-.ml>li>a,.m-btn{display:block;padding:14px 0;font-size:1.05rem;font-weight:500;color:#FFFFFF !important;border-bottom:1px solid rgba(223, 198, 168, 0.15) !important;width:100%;text-align:left}
+.ml>li>a,
+.ml>li>button,
+.m-btn,
+.m-toggle-btn,
+#mbt {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 14px 0 !important;
+  font-size: 1.05rem !important;
+  font-weight: 500 !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  background: transparent !important;
+  border: none !important;
+  border-bottom: 1px solid rgba(223, 198, 168, 0.15) !important;
+  width: 100% !important;
+  text-align: left !important;
+  cursor: pointer !important;
+  font-family: inherit !important;
+}
 .md{max-height:0;overflow:hidden;transition:max-height .4s;background:rgba(0,0,0,0.2) !important}
 .md.o{max-height:800px;overflow-y:auto}
 .md a{display:block;padding:9px 0 9px 24px;color:rgba(255,255,255,.82) !important;font-size:.88rem;border-bottom:1px solid rgba(255,255,255,.06) !important}
