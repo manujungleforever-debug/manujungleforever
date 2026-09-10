@@ -1,7 +1,8 @@
 /**
  * media-modal.js — Hierarchical Media Gallery Modal for Admin CMS
  * Implements strict media filtering, Windows-style folder navigation,
- * breadcrumbs bar, visual folder cards, and media selection.
+ * breadcrumbs bar, visual folder cards, automatic post-upload selection,
+ * and robust upload interception to prevent legacy flat grid overwrites.
  */
 
 (function() {
@@ -220,8 +221,10 @@
 
   window.openMediaModal = async function(callback) {
     injectModalStyles();
+    bindUploadCapture();
     modalCallback = callback;
     selectedMediaUrl = null;
+    window.selectedMediaUrl = null;
     modalCurrentPath = '';
 
     const confirmBtn = document.getElementById('media-confirm');
@@ -231,7 +234,10 @@
       window.openModal('media-modal');
     } else {
       const m = document.getElementById('media-modal');
-      if (m) m.classList.add('open');
+      if (m) {
+        m.classList.add('open');
+        m.style.display = 'flex';
+      }
     }
 
     const body = document.getElementById('media-modal-body');
@@ -252,7 +258,6 @@
         rawList = d.files || [];
       }
 
-      // Requirement 1: Strict Media Filtering
       allMediaFiles = (rawList || []).filter(f => isMediaFile(f.key));
       renderExplorer();
     } catch(err) {
@@ -267,20 +272,27 @@
 
   window.selectModalMediaItem = function(url, el) {
     selectedMediaUrl = url;
+    window.selectedMediaUrl = url;
     const body = document.getElementById('media-modal-body');
     if (body) {
       body.querySelectorAll('.m-item.m-file').forEach(item => item.classList.remove('selected'));
     }
-    if (el) el.classList.add('selected');
+    if (el) {
+      el.classList.add('selected');
+    } else if (body) {
+      const matched = body.querySelector(`.m-item.m-file[data-url="${url}"]`);
+      if (matched) matched.classList.add('selected');
+    }
 
     const confirmBtn = document.getElementById('media-confirm');
     if (confirmBtn) confirmBtn.disabled = false;
   };
 
   window.confirmMediaSelect = function() {
-    if (selectedMediaUrl && typeof modalCallback === 'function') {
+    const finalUrl = selectedMediaUrl || window.selectedMediaUrl;
+    if (finalUrl && typeof modalCallback === 'function') {
       try {
-        modalCallback(selectedMediaUrl);
+        modalCallback(finalUrl);
       } catch(e) {
         console.error('Error executing media callback:', e);
       }
@@ -289,7 +301,10 @@
       window.closeModal('media-modal');
     } else {
       const m = document.getElementById('media-modal');
-      if (m) m.classList.remove('open');
+      if (m) {
+        m.classList.remove('open');
+        m.style.display = 'none';
+      }
     }
   };
 
@@ -390,10 +405,14 @@
       filesInDir.forEach(f => {
         const isVideo = /\.(mp4|webm|mov)$/i.test(f.key);
         const fileName = f.key.split('/').pop() || f.key;
-        const isSelected = selectedMediaUrl === f.url;
+        const isSelected = (selectedMediaUrl && (selectedMediaUrl === f.url || selectedMediaUrl.endsWith('/' + fileName)));
 
         gridContent += `
-          <div class="m-item m-file ${isSelected ? 'selected' : ''}" onclick="selectModalMediaItem('${f.url}', this)" title="${fileName}">
+          <div class="m-item m-file ${isSelected ? 'selected' : ''}" 
+               data-url="${f.url}"
+               onclick="selectModalMediaItem('${f.url}', this)" 
+               ondblclick="selectModalMediaItem('${f.url}', this); confirmMediaSelect();"
+               title="${fileName}">
             <div class="m-thumb-wrap">
               ${isVideo ? `
                 <video src="${f.url}" preload="metadata"></video>
@@ -414,10 +433,162 @@
         ${gridContent}
       </div>
     `;
+
+    // If an item is currently selected, ensure confirm button is enabled
+    const confirmBtn = document.getElementById('media-confirm');
+    if (confirmBtn && selectedMediaUrl) {
+      confirmBtn.disabled = false;
+    }
   }
 
-  // Hook upload handlers so they reload the hierarchical explorer after upload
-  document.addEventListener('DOMContentLoaded', () => {
+  // Handle file & folder upload inside the modal
+  async function handleModalUpload(e, isFolderUpload) {
+    const files = Array.from(e.target.files || []);
+    if (!files.length) return;
+    e.target.value = '';
+
+    const progEl = document.getElementById('media-upload-prog') || document.getElementById('main-upload-prog');
+    const currFolder = normalizePath(modalCurrentPath);
+    const token = sessionStorage.getItem('cms_token');
+    const mediaApi = window.MEDIA_API || '/api/media';
+
+    let successCount = 0;
+    let errorCount = 0;
+    let lastError = '';
+    let lastUploadedKey = '';
+    let lastUploadedUrl = '';
+
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      if (!file.type.startsWith('image/') && !file.type.startsWith('video/') && !isMediaFile(file.name)) {
+        continue;
+      }
+
+      let relativePath = file.name;
+      if (isFolderUpload && file.webkitRelativePath) {
+        relativePath = file.webkitRelativePath;
+      }
+      relativePath = relativePath.replace(/^\/+/, '');
+      const fullKey = currFolder ? `${currFolder}/${relativePath}` : relativePath;
+
+      if (progEl) {
+        progEl.textContent = `Subiendo (${i + 1}/${files.length}): ${file.name}...`;
+        progEl.style.color = '#2dd4bf';
+      }
+
+      try {
+        const renamedFile = new File([file], fullKey, { type: file.type || 'application/octet-stream' });
+        const res = await fetch(mediaApi, {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'X-File-Name': encodeURIComponent(fullKey),
+            'Content-Type': file.type || 'application/octet-stream'
+          },
+          body: renamedFile
+        });
+
+        if (!res.ok) {
+          let errJson = {};
+          try { errJson = await res.json(); } catch(_) {}
+          throw new Error(errJson.error || `HTTP ${res.status}`);
+        }
+
+        const d = await res.json();
+        if (d && d.file && d.file.url) {
+          lastUploadedUrl = d.file.url;
+        }
+        lastUploadedKey = fullKey;
+        successCount++;
+      } catch (err) {
+        console.error('Error subiendo archivo en modal:', err);
+        errorCount++;
+        lastError = err.message || 'Error al subir';
+      }
+    }
+
+    // Asegurar .keep_folder para carpetas si aplica
+    if (isFolderUpload || files.some(f => f.webkitRelativePath)) {
+      const dirsToKeep = new Set();
+      for (const f of files) {
+        const rel = (isFolderUpload && f.webkitRelativePath) ? f.webkitRelativePath : f.name;
+        const full = currFolder ? `${currFolder}/${rel}` : rel;
+        const lastSlash = full.lastIndexOf('/');
+        if (lastSlash > 0) {
+          dirsToKeep.add(full.substring(0, lastSlash));
+        }
+      }
+      for (const dir of dirsToKeep) {
+        try {
+          const keepFile = new File([""], `${dir}/.keep_folder`, { type: 'text/plain' });
+          await fetch(mediaApi, {
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${token}`,
+              'X-File-Name': encodeURIComponent(`${dir}/.keep_folder`),
+              'Content-Type': 'text/plain'
+            },
+            body: keepFile
+          });
+        } catch(e) {}
+      }
+    }
+
+    if (progEl) {
+      if (errorCount === 0 && successCount > 0) {
+        progEl.textContent = `✓ ${successCount} archivo(s) subido(s) con éxito.`;
+        progEl.style.color = '#2dd4bf';
+      } else if (successCount > 0) {
+        progEl.textContent = `✓ ${successCount} subido(s), ✗ ${errorCount} error(es): ${lastError}`;
+        progEl.style.color = '#f59e0b';
+      } else {
+        progEl.textContent = `✗ Error subiendo: ${lastError}`;
+        progEl.style.color = '#ef4444';
+      }
+      setTimeout(() => { if (progEl) progEl.textContent = ''; }, 6000);
+    }
+
+    // Recargar lista y auto-seleccionar el archivo subido
+    try {
+      let rawList = [];
+      if (typeof window.r2GetList === 'function') {
+        rawList = await window.r2GetList();
+      } else {
+        const res = await fetch(mediaApi, { headers: { Authorization: `Bearer ${token}` } });
+        const d = await res.json();
+        rawList = d.files || [];
+      }
+      allMediaFiles = (rawList || []).filter(f => isMediaFile(f.key));
+
+      if (lastUploadedKey) {
+        const cleanKey = lastUploadedKey.replace(/^\/+/, '');
+        let found = allMediaFiles.find(f => f.key.replace(/^\/+/, '') === cleanKey);
+        if (!found && lastUploadedUrl) {
+          found = allMediaFiles.find(f => f.url === lastUploadedUrl);
+        }
+        if (!found) {
+          const baseName = cleanKey.split('/').pop();
+          found = allMediaFiles.find(f => f.key.endsWith(baseName));
+        }
+
+        if (found) {
+          const foundClean = found.key.replace(/^\/+/, '');
+          const parentDir = foundClean.includes('/') ? foundClean.substring(0, foundClean.lastIndexOf('/')) : '';
+          modalCurrentPath = parentDir;
+          selectedMediaUrl = found.url;
+          window.selectedMediaUrl = found.url;
+          const confirmBtn = document.getElementById('media-confirm');
+          if (confirmBtn) confirmBtn.disabled = false;
+        }
+      }
+      renderExplorer();
+    } catch (err) {
+      console.error('Error actualizando explorador de medios:', err);
+    }
+  }
+
+  // Intercept upload inputs in CAPTURE phase to prevent any legacy listener from executing
+  function bindUploadCapture() {
     const mediaUploadInput = document.getElementById('media-upload');
     const folderUploadInput = document.getElementById('media-upload-folder');
     const confirmBtn = document.getElementById('media-confirm');
@@ -426,69 +597,58 @@
       confirmBtn.onclick = () => window.confirmMediaSelect();
     }
 
-    async function handleUpload(e) {
-      const files = Array.from(e.target.files || []);
-      if (!files.length) return;
-      e.target.value = '';
-
-      const inModal = document.getElementById('media-modal')?.classList.contains('open') || 
-                      document.getElementById('media-modal')?.classList.contains('active');
-      const progEl = document.getElementById(inModal ? 'media-upload-prog' : 'main-upload-prog');
-
-      let successCount = 0, errorCount = 0, lastError = '';
-
-      for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-        if (!file.type.startsWith('image/') && !file.type.startsWith('video/')) continue;
-        try {
-          if (progEl) progEl.textContent = `Subiendo ${i+1}/${files.length}... (${file.name})`;
-          if (typeof window.r2Upload === 'function') {
-            await window.r2Upload(file, null);
-          } else {
-            const token = sessionStorage.getItem('cms_token');
-            const mediaApi = window.MEDIA_API || '/api/media';
-            await fetch(mediaApi, {
-              method: 'POST',
-              headers: {
-                Authorization: `Bearer ${token}`,
-                'X-File-Name': encodeURIComponent(file.name),
-                'Content-Type': file.type || 'application/octet-stream'
-              },
-              body: file
-            });
-          }
-          successCount++;
-        } catch(err) {
-          console.error(err);
-          errorCount++;
-          lastError = err.message;
-        }
-      }
-
-      if (progEl) {
-        progEl.textContent = `✓ Subidos: ${successCount}` + (errorCount ? `, ✗ Errores: ${errorCount}` : '');
-        setTimeout(() => { if (progEl) progEl.textContent = ''; }, 5000);
-      }
-
+    function onUploadEvent(e, isFolder) {
+      const modal = document.getElementById('media-modal');
+      const inModal = modal && (modal.classList.contains('open') || modal.classList.contains('active') || modal.style.display === 'flex');
       if (inModal) {
-        try {
-          let rawList = [];
-          if (typeof window.r2GetList === 'function') {
-            rawList = await window.r2GetList();
-          } else {
-            const token = sessionStorage.getItem('cms_token');
-            const mediaApi = window.MEDIA_API || '/api/media';
-            const res = await fetch(mediaApi, { headers: { Authorization: `Bearer ${token}` } });
-            const d = await res.json();
-            rawList = d.files || [];
-          }
-          allMediaFiles = (rawList || []).filter(f => isMediaFile(f.key));
-          renderExplorer();
-        } catch(e) {}
+        e.stopImmediatePropagation();
+        e.preventDefault();
+        handleModalUpload(e, isFolder);
       }
     }
 
-    if (mediaUploadInput) mediaUploadInput.addEventListener('change', handleUpload);
-    if (folderUploadInput) folderUploadInput.addEventListener('change', handleUpload);
-  });
+    if (mediaUploadInput && !mediaUploadInput._hasModalCapture) {
+      mediaUploadInput._hasModalCapture = true;
+      mediaUploadInput.addEventListener('change', (e) => onUploadEvent(e, false), true); // CAPTURE!
+    }
+    if (folderUploadInput && !folderUploadInput._hasModalCapture) {
+      folderUploadInput._hasModalCapture = true;
+      folderUploadInput.addEventListener('change', (e) => onUploadEvent(e, true), true); // CAPTURE!
+    }
+  }
+
+  // Intercept legacy global render functions to prevent flat grid overwriting modal
+  const origRenderMediaGrid = window.renderMediaGrid;
+  window.renderMediaGrid = function(container, files, isModal) {
+    const modal = document.getElementById('media-modal');
+    const inModal = isModal || (modal && (modal.classList.contains('open') || modal.classList.contains('active')));
+    if (inModal || (container && container.id === 'media-modal-body')) {
+      renderExplorer();
+      return;
+    }
+    if (typeof origRenderMediaGrid === 'function') {
+      return origRenderMediaGrid(container, files, isModal);
+    }
+  };
+
+  const origSelectMediaItem = window.selectMediaItem;
+  window.selectMediaItem = function(idx, el, isModal) {
+    if (isModal || document.getElementById('media-modal')?.classList.contains('open')) {
+      if (allMediaFiles && allMediaFiles[idx]) {
+        window.selectModalMediaItem(allMediaFiles[idx].url, el);
+      }
+      return;
+    }
+    if (typeof origSelectMediaItem === 'function') {
+      return origSelectMediaItem(idx, el, isModal);
+    }
+  };
+
+  window.renderExplorer = renderExplorer;
+
+  // Initialize immediately and on DOMContentLoaded
+  bindUploadCapture();
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bindUploadCapture);
+  }
 })();
