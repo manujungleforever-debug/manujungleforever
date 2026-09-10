@@ -185,7 +185,7 @@ def build_site():
                     ht.append(f" {clean_mojibake(h_data['hero']['location_tag'])}")
                     modified = True
                 
-                h1 = soup.select_one('.hb .h1')
+                h1 = soup.select_one('.hb #home-main-title') or soup.select_one('.hb .h1') or soup.select_one('.hb h1') or soup.select_one('#home-main-title')
                 if h1:
                     t = clean_mojibake(h_data['hero'].get('title', ''))
                     e = clean_mojibake(h_data['hero'].get('title_emphasis', ''))
@@ -194,7 +194,7 @@ def build_site():
                     html_content = f"{t}<br><em>{e}</em>" if e else t
                     h1_soup = BeautifulSoup(html_content, 'html.parser')
                     h1.clear()
-                    for child in h1_soup.children:
+                    for child in list(h1_soup.contents):
                         h1.append(child)
                     modified = True
                     

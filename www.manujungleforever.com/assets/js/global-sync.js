@@ -368,9 +368,9 @@
           if (ht && hero.location_tag) {
             ht.innerHTML = `<i class="fas fa-map-marker-alt"></i> ${hero.location_tag}`;
           }
-          const h1 = heroWrap.querySelector('.h1');
+          const h1 = heroWrap.querySelector('#home-main-title') || heroWrap.querySelector('.h1') || heroWrap.querySelector('h1');
           if (h1 && hero.title) {
-            const emp = hero.title_emphasis ? `<br><em>${hero.title_emphasis}</em>` : '';
+            const emp = hero.title_emphasis ? `<br/><em>${hero.title_emphasis}</em>` : '';
             h1.innerHTML = `${hero.title}${emp}`;
           }
           const hs = heroWrap.querySelector('.hs');
