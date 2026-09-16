@@ -95,14 +95,51 @@
 
       const activeTours = tours.filter(t => t.estado !== 'inactivo' && t.estado !== 'borrador');
 
+      const CATEGORY_ORDER_MAP = {
+        'manu reserve zone': 1,
+        'reserve': 1,
+        'manu cultural zone': 2,
+        'cultural': 2,
+        'birding & photography': 3,
+        'birding': 3,
+        'birdwatching': 3,
+        'photo': 3,
+        'wildlife': 4,
+        'roadtrip': 5,
+        'expedition': 6
+      };
+
+      function getCategoryRank(catName) {
+        if (!catName) return 9999;
+        const c = catName.toLowerCase().trim();
+        if (CATEGORY_ORDER_MAP[c] !== undefined) return CATEGORY_ORDER_MAP[c];
+        if (c.includes('reserve')) return 1;
+        if (c.includes('cultural')) return 2;
+        if (c.includes('bird') || c.includes('photo')) return 3;
+        if (c.includes('wildlife')) return 4;
+        if (c.includes('road')) return 5;
+        if (c.includes('expedition')) return 6;
+        return 999;
+      }
+
+      function tourSortComparator(a, b) {
+        const durA = Number(a.duracion_dias) > 0 ? Number(a.duracion_dias) : 999999;
+        const durB = Number(b.duracion_dias) > 0 ? Number(b.duracion_dias) : 999999;
+        if (durA !== durB) return durA - durB;
+        const posA = Number(a.posicion) > 0 ? Number(a.posicion) : 999999;
+        const posB = Number(b.posicion) > 0 ? Number(b.posicion) : 999999;
+        if (posA !== posB) return posA - posB;
+        return (a.nombre || '').localeCompare(b.nombre || '');
+      }
+
       const CAT_MAP = {
+        'manu reserve zone': { label: 'MANU RESERVE ZONE', icon: 'fas fa-compass' },
+        'reserve': { label: 'MANU RESERVE ZONE', icon: 'fas fa-compass' },
+        'manu cultural zone': { label: 'MANU CULTURAL ZONE', icon: 'fas fa-compass' },
+        'cultural': { label: 'MANU CULTURAL ZONE', icon: 'fas fa-compass' },
         'birding & photography': { label: 'BIRDING & PHOTOGRAPHY', icon: 'fas fa-compass' },
         'birding': { label: 'BIRDING & PHOTOGRAPHY', icon: 'fas fa-compass' },
         'birdwatching': { label: 'BIRDING & PHOTOGRAPHY', icon: 'fas fa-compass' },
-        'manu cultural zone': { label: 'MANU CULTURAL ZONE', icon: 'fas fa-compass' },
-        'cultural': { label: 'MANU CULTURAL ZONE', icon: 'fas fa-compass' },
-        'manu reserve zone': { label: 'MANU RESERVE ZONE', icon: 'fas fa-compass' },
-        'reserve': { label: 'MANU RESERVE ZONE', icon: 'fas fa-compass' },
         'wildlife': { label: 'WILDLIFE QUEST', icon: 'fas fa-compass' },
         'roadtrip': { label: 'RAINFOREST ROAD TRIP', icon: 'fas fa-compass' },
         'expedition': { label: 'AMAZON EXPEDITION', icon: 'fas fa-compass' },
@@ -110,7 +147,6 @@
         'photography': { label: 'WILDLIFE PHOTOGRAPHY', icon: 'fas fa-compass' }
       };
 
-      const order = ['birding & photography', 'manu cultural zone', 'manu reserve zone', 'wildlife', 'roadtrip', 'expedition', 'cultural', 'birdwatching', 'machu wasi', 'photography'];
       const groups = {};
 
       activeTours.forEach(t => {
@@ -119,7 +155,13 @@
         groups[cat].push(t);
       });
 
-      const allCats = Array.from(new Set([...order.filter(c => groups[c]), ...Object.keys(groups)]));
+      // Sort tours within each category group by numeric duration ascending
+      Object.keys(groups).forEach(cat => {
+        groups[cat].sort(tourSortComparator);
+      });
+
+      // Sort category headings by category rank
+      const allCats = Object.keys(groups).sort((a, b) => getCategoryRank(a) - getCategoryRank(b) || a.localeCompare(b));
 
       // Flatten active tours in exact display order
       const orderedActiveTours = [];

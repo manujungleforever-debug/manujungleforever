@@ -53,21 +53,63 @@ def build_site():
     t_data = load_json('tours.json')
     active_tours = [t for t in t_data.get('tours', []) if t.get('estado') not in ('inactivo', 'borrador')]
 
+    CATEGORY_ORDER_MAP = {
+        'manu reserve zone': 1,
+        'reserve': 1,
+        'manu cultural zone': 2,
+        'cultural': 2,
+        'birding & photography': 3,
+        'birding': 3,
+        'birdwatching': 3,
+        'photo': 3,
+        'wildlife': 4,
+        'roadtrip': 5,
+        'expedition': 6
+    }
+
+    def get_category_rank(cat_name):
+        if not cat_name:
+            return 9999
+        c = str(cat_name).lower().strip()
+        if c in CATEGORY_ORDER_MAP:
+            return CATEGORY_ORDER_MAP[c]
+        if 'reserve' in c: return 1
+        if 'cultural' in c: return 2
+        if 'bird' in c or 'photo' in c: return 3
+        if 'wildlife' in c: return 4
+        if 'road' in c: return 5
+        if 'expedition' in c: return 6
+        return 999
+
+    def tour_sort_key_py(t):
+        cr = get_category_rank(t.get('categoria'))
+        try:
+            dur = float(t.get('duracion_dias') or 999999)
+            if dur <= 0:
+                dur = 999999
+        except Exception:
+            dur = 999999
+        pos = float(t.get('posicion') or 999999)
+        name = str(t.get('nombre', '')).lower()
+        return (cr, dur, pos, name)
+
+    active_tours = sorted(active_tours, key=tour_sort_key_py)
+
     cat_map = {
+        'manu reserve zone': {'label': 'MANU RESERVE ZONE', 'icon': 'fas fa-compass'},
+        'reserve': {'label': 'MANU RESERVE ZONE', 'icon': 'fas fa-compass'},
+        'manu cultural zone': {'label': 'MANU CULTURAL ZONE', 'icon': 'fas fa-compass'},
+        'cultural': {'label': 'MANU CULTURAL ZONE', 'icon': 'fas fa-compass'},
         'birding & photography': {'label': 'BIRDING & PHOTOGRAPHY', 'icon': 'fas fa-compass'},
         'birding': {'label': 'BIRDING & PHOTOGRAPHY', 'icon': 'fas fa-compass'},
         'birdwatching': {'label': 'BIRDING & PHOTOGRAPHY', 'icon': 'fas fa-compass'},
-        'manu cultural zone': {'label': 'MANU CULTURAL ZONE', 'icon': 'fas fa-compass'},
-        'cultural': {'label': 'MANU CULTURAL ZONE', 'icon': 'fas fa-compass'},
-        'manu reserve zone': {'label': 'MANU RESERVE ZONE', 'icon': 'fas fa-compass'},
-        'reserve': {'label': 'MANU RESERVE ZONE', 'icon': 'fas fa-compass'},
         'wildlife': {'label': 'WILDLIFE QUEST', 'icon': 'fas fa-compass'},
         'roadtrip': {'label': 'RAINFOREST ROAD TRIP', 'icon': 'fas fa-compass'},
         'expedition': {'label': 'AMAZON EXPEDITION', 'icon': 'fas fa-compass'},
         'machu wasi': {'label': 'MACHU WASI ADVENTURE', 'icon': 'fas fa-compass'},
         'photography': {'label': 'WILDLIFE PHOTOGRAPHY', 'icon': 'fas fa-compass'}
     }
-    order = ['birding & photography', 'manu cultural zone', 'manu reserve zone', 'wildlife', 'roadtrip', 'expedition', 'cultural', 'birdwatching', 'machu wasi', 'photography']
+    order = ['manu reserve zone', 'manu cultural zone', 'birding & photography', 'wildlife', 'roadtrip', 'expedition', 'cultural', 'birdwatching', 'machu wasi', 'photography']
     
     # Global fallbacks
     soc = g_data.get('social', {})
@@ -137,14 +179,14 @@ def build_site():
                 cat = (t.get('categoria') or 'wildlife').lower().strip()
                 groups.setdefault(cat, []).append(t)
 
-            all_cats = [c for c in order if c in groups] + [c for c in groups if c not in order]
+            all_cats = sorted(groups.keys(), key=lambda c: (get_category_rank(c), c))
 
             desktop_items = []
             mobile_items = []
 
             for cat in all_cats:
                 info = cat_map.get(cat, {'label': cat.upper(), 'icon': 'fas fa-compass'})
-                items = groups[cat]
+                items = sorted(groups[cat], key=lambda t: tour_sort_key_py(t)[1:])
                 if not items:
                     continue
 
@@ -588,11 +630,7 @@ def build_site():
                         'desc': 'Guided jungle expedition exploring the rich biodiversity and untouched ecosystems of Manu.'
                     }
 
-                cats = []
-                for t in active_tours:
-                    cat_val = t.get('categoria', '')
-                    if cat_val and cat_val not in cats:
-                        cats.append(cat_val)
+                cats = sorted(list(set(t.get('categoria', '') for t in active_tours if t.get('categoria'))), key=lambda c: (get_category_rank(c), c))
 
                 f_html = f'''<button class="cat-btn active" data-cat="all" onclick="filterTours('all')" aria-pressed="true">
                   <span class="cat-icon"><i class="fa-solid fa-leaf"></i></span> All Tours <span class="cat-count">{len(active_tours)}</span>
