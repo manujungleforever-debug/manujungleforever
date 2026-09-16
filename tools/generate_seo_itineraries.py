@@ -1,0 +1,1340 @@
+#!/usr/bin/env python3
+"""
+generate_seo_itineraries.py
+Generates comprehensive, high-value SEO content and itineraries for all 10 tours in Manu Jungle Forever.
+"""
+
+import json
+import os
+import pathlib
+
+ROOT_DIR = pathlib.Path(__file__).resolve().parent.parent / "www.manujungleforever.com"
+DATA_FILE = ROOT_DIR / "data" / "tours.json"
+
+TOURS_DATA = {
+    # -------------------------------------------------------------
+    # 1. MANU RESERVE ZONE 6D/5N
+    # -------------------------------------------------------------
+    "manu-reserve-zone-6d-5n": {
+        "descripcion_corta": (
+            "Embark on a premier 6-day expedition into the pristine Reserved Zone of Manu National Park. "
+            "Journey from the cloud-shrouded Andes down to the virgin lowland Amazon, exploring oxbow lakes "
+            "home to endangered Giant River Otters and searching for elusive Jaguars along the Manu River."
+        ),
+        "descripcion_larga": (
+            "### Unveil the Untouched Wilderness of Manu National Park\n\n"
+            "The **Manu Reserve Zone 6D/5N** expedition is our signature wilderness experience, crafted for wildlife enthusiasts, "
+            "ecotourists, and photographers seeking deep immersion in South America's most protected biosphere reserve. "
+            "Covering dramatic ecological altitudinal gradients from high Andean passes at 3,800 meters down to 350 meters above sea level, "
+            "this voyage navigates pristine cloud forests, meandering river valleys, and primary Amazonian rainforest.\n\n"
+            "#### Expedition Highlights:\n"
+            "- **Exclusive Access to the Reserved Zone**: Travel past the Limonal Ranger Station deep into strictly protected primary forest.\n"
+            "- **Oxbow Lake Exploration**: Glide silently across Cocha Salvador on a catamaran to observe resident families of Giant River Otters (*Pteronura brasiliensis*) and Black Caimans.\n"
+            "- **Jaguar Tracking on the Manu River**: Prime riverbank safari along white sandbars where Jaguars (*Panthera onca*) frequently bask during sunny hours.\n"
+            "- **Andean Cock-of-the-Rock Courtship**: Witness the vibrant mating display of Peru's national bird in the Kosñipata cloud forest lek.\n"
+            "- **Expert Indigenous Leadership**: Guided by native naturalist guides with lifelong knowledge of animal tracking, ornithology, and ethno-botany."
+        ),
+        "itinerario": [
+            {
+                "dia": 1,
+                "titulo": "Cusco to Cloud Forest & Cock-of-the-Rock Lek",
+                "subtitulo": "Andean passes, Ninamarca Chullpas & the subtropical cloud forest of San Pedro",
+                "descripcion": (
+                    "We depart Cusco at 5:30 AM in private overland transport, ascending through the picturesque Andean valleys. "
+                    "Our first cultural stop is at the pre-Inca funerary towers of **Ninamarca**, belonging to the Lupaca culture. "
+                    "Continuing through the colonial folklore capital of **Paucartambo**, we climb to the high mountain pass of **Acjanaco (3,800 m / 12,467 ft)**, "
+                    "the official entrance to Manu National Park. Here, the Andes plummet dramatically into the sprawling Amazon basin.\n\n"
+                    "Descending through the misty dwarf elfin forest into the lush **subtropical cloud forest of San Pedro**, we look for Gray-breasted Mountain-Toucans, "
+                    "orchids, giant tree ferns, and primitive mosses. In the afternoon, we visit a world-famous lek to witness the spectacular mating dance of the "
+                    "brilliant scarlet **Andean Cock-of-the-Rock (*Rupicola peruvianus*)**. We also watch for Woolly Monkeys and the elusive Spectacled Bear.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Comfortable eco-lodge in Pilcopata (private rooms, en-suite bathrooms)."
+                ),
+                "imagen": "",
+                "imagen_alt": "Andean Cock-of-the-Rock display in Manu Cloud Forest",
+                "imagen_pie": "Peru's vibrant national bird displaying at the San Pedro lek."
+            },
+            {
+                "dia": 2,
+                "titulo": "Pilcopata to Atalaya Port & Alto Madre de Dios River",
+                "subtitulo": "River boat embarkation, wildlife spotting & journey to Boca Manu",
+                "descripcion": (
+                    "After an early breakfast with fresh Peruvian highland coffee, we drive to **Puerto Atalaya (500 m)**. "
+                    "Here we board our motorized riverboat with experienced local boatmen and begin navigating the fast-flowing waters of the "
+                    "**Alto Madre de Dios River**. Keep binoculars ready as we scan gravel bars and riverbanks for Torrent Ducks, Fasciated Tiger-Herons, "
+                    "Kingfishers, and sunbathing Side-necked Turtles (*Podocnemis unifilis*).\n\n"
+                    "We make a stop at natural hot springs or scenic jungle viewpoints before reaching the confluence where the turbulent Madre de Dios joins the peaceful Manu River. "
+                    "In the late afternoon, we arrive at our lodge near **Boca Manu**, surrounded by lush transitional forest. "
+                    "After dusk, an optional night walk introduces us to the nocturnal biodiversity: tarantulas, bamboo tree frogs, stick insects, and night monkeys.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Boca Manu Eco-Lodge."
+                ),
+                "imagen": "",
+                "imagen_alt": "Motorized boat navigating the Alto Madre de Dios river in Manu",
+                "imagen_pie": "Navigating the gateway rivers toward the Manu Reserved Zone."
+            },
+            {
+                "dia": 3,
+                "titulo": "Boca Manu to Deep Reserved Zone & Casa Matsiguenka",
+                "subtitulo": "Park checkpoint at Limonal, river safari & entering pristine wilderness",
+                "descripcion": (
+                    "At dawn, we enter the pristine waters of the **Manu River**, stopping at the **Limonal Ranger Station** for official park registration. "
+                    "Past Limonal, human settlements cease and only pristine, untouched nature remains. For the next five hours of navigation, all eyes are focused "
+                    "on the sandbars and clay banks: this is world-renowned territory for spotting **Jaguars (*Panthera onca*)** warming up on sunny beaches.\n\n"
+                    "Along the river shores, we frequently encounter families of Capybaras (*Hydrochoerus hydrochaeris*), White and Black Caimans, tapir tracks, "
+                    "and thousands of vibrant butterflies drinking mineral salts. In the afternoon, we arrive at **Casa Matsiguenka Lodge**, a community-owned lodge "
+                    "nested in virgin forest, managed directly by the indigenous Matsiguenka families of Tayakome and Yomibato.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Casa Matsiguenka Lodge inside the Manu Reserved Zone."
+                ),
+                "imagen": "",
+                "imagen_alt": "Jaguar resting on the sandy shores of the Manu River",
+                "imagen_pie": "The elusive Jaguar frequently spotted along the tranquil Manu River sandbars."
+            },
+            {
+                "dia": 4,
+                "titulo": "Cocha Salvador Oxbow Lake & Cocha Otorongo",
+                "subtitulo": "Giant River Otters on silent catamaran & 30m canopy observation tower",
+                "descripcion": (
+                    "We wake up to the booming territorial calls of Red Howler Monkeys (*Alouatta seniculus*). An early morning excursion brings us to "
+                    "**Cocha Salvador**, one of the most biodiverse oxbow lakes in the Amazon. Boarding a silent, stable floating catamaran, we paddle gently across the lake "
+                    "in search of a resident family of **Giant River Otters (*Pteronura brasiliensis*)**, the world's largest freshwater mustelid, known locally as *Lobos de Río*.\n\n"
+                    "We observe these curious creatures hunting fish and social communication up close, while prehistoric Hoatzins (*Opisthocomus hoazin*), Agami Herons, "
+                    "Horned Screamers, and Black Caimans up to 4 meters long populate the lush aquatic vegetation. In the afternoon, we hike through primary terra firme trails "
+                    "under giant Ceiba trees (*Ceiba pentandra*) to **Cocha Otorongo**, ascending a **30-meter observation tower** for sweeping vistas across the canopy "
+                    "where toucans, macaws, and spider monkeys forage.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Casa Matsiguenka Lodge."
+                ),
+                "imagen": "",
+                "imagen_alt": "Family of Giant River Otters playing in Cocha Salvador oxbow lake",
+                "imagen_pie": "The endangered Giant River Otter thriving in protected Cocha Salvador."
+            },
+            {
+                "dia": 5,
+                "titulo": "Casa Matsiguenka to Downstream Manu River & Boca Manu",
+                "subtitulo": "Morning river safari, macaw encounters & downstream rainforest drift",
+                "descripcion": (
+                    "We embark early on our boat to take full advantage of dawn activity along the Manu River. The early hours offer peak chances to encounter "
+                    "tapirs swimming across the river, Tamandua anteaters, herds of Peccaries, or a Jaguar resting near the water's edge. "
+                    "Vast flocks of Blue-and-yellow Macaws, Scarlet Macaws, and Military Macaws fly overhead calling loudly across the morning mist.\n\n"
+                    "After exiting the Limonal checkpoint, we cruise down to the junction with the Madre de Dios River, arriving at our lodge near Boca Manu. "
+                    "In the late afternoon, we walk along primary forest trails to learn about Amazonian medicinal plants—such as Ayahuasca, Cat's Claw (*Uña de Gato*), "
+                    "and dragon's blood resin—guided by our indigenous expert. A nocturnal safari follows dinner to look for glowing click beetles, tree frogs, and night creatures.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Boca Manu Eco-Lodge."
+                ),
+                "imagen": "",
+                "imagen_alt": "Flock of Scarlet Macaws flying over the Amazon canopy in Manu",
+                "imagen_pie": "Vibrant macaws crossing the pristine morning sky above the Manu River."
+            },
+            {
+                "dia": 6,
+                "titulo": "Boca Manu to Atalaya Port & Return to Cusco",
+                "subtitulo": "Upriver scenic navigation, cloud forest ascent & return across the Andes",
+                "descripcion": (
+                    "At daybreak, we board our boat for the final upriver voyage along the Alto Madre de Dios back to **Puerto Atalaya**. "
+                    "Enjoy the cool morning breeze and a last glimpse of snowy Andean peaks looming in the far distance above emerald rainforest ridges. "
+                    "At Atalaya, our private ground vehicle awaits our group.\n\n"
+                    "We drive up through the breathtaking cloud forest of Kosñipata, stopping for lunch with panoramic mountain views and spotting colorful tanagers "
+                    "and hummingbirds along the roadside. Crossing back over the high pass of Acjanaco, we traverse the Andean altiplano and arrive back in Cusco by late afternoon "
+                    "(around 6:00 PM to 7:00 PM), dropping you directly at your hotel.\n\n"
+                    "- **Meals**: Breakfast, Lunch\n"
+                    "- **Drop-off**: Hotel in Cusco."
+                ),
+                "imagen": "",
+                "imagen_alt": "Sunset over the Alto Madre de Dios River on the return to Cusco",
+                "imagen_pie": "Reflections on the river as we conclude our deep Manu expedition."
+            }
+        ]
+    },
+
+    # -------------------------------------------------------------
+    # 2. MANU RESERVE ZONE 7D/6N
+    # -------------------------------------------------------------
+    "manu-reserve-zone-7d-6n": {
+        "descripcion_corta": (
+            "Immerse yourself in 7 unforgettable days exploring the heart of the Manu Reserved Zone. "
+            "With an extra day inside the core protected reserve, maximize your encounters with Jaguars, "
+            "Giant Otters at Cocha Salvador and Cocha Otorongo, and indigenous Matsiguenka forest lore."
+        ),
+        "descripcion_larga": (
+            "### The Comprehensive 7-Day Journey Deep into Manu's Core Sanctuary\n\n"
+            "The **Manu Reserve Zone 7D/6N** expedition is designed for serious nature lovers and wildlife photographers "
+            "who want unhurried, extended time inside the world's most biodiverse national park. "
+            "Spending three full nights inside the inner Reserved Zone doubles your probability of photographing apex predators like the "
+            "Jaguar (*Panthera onca*), Puma, and South American Tapir (*Tapirus terrestris*).\n\n"
+            "#### Why Choose the 7-Day Reserved Zone Itinerary?\n"
+            "- **Extended Time at Cocha Salvador & Cocha Otorongo**: Multiple catamaran sessions across prime oxbow lakes at dawn and dusk.\n"
+            "- **Two High Canopy Observation Towers**: Gain bird's-eye perspectives on canopy bird mixed flocks, cotingas, and primates.\n"
+            "- **Mammal Clay Lick Experience**: Night exploration of inland mineral licks visited by lowland tapirs, pacas, and red brocket deer.\n"
+            "- **Authentic Matsiguenka Cultural Interaction**: Learn ancient bow-and-arrow hunting traditions and ethnobotany from native hosts."
+        ),
+        "itinerario": [
+            {
+                "dia": 1,
+                "titulo": "Cusco through Cloud Forest to Pilcopata",
+                "subtitulo": "Ninamarca pre-Inca chullpas, Acjanaco Pass & San Pedro Cock-of-the-Rock lek",
+                "descripcion": (
+                    "Departing Cusco at 5:00 AM, we head through the high Andean plateau toward Paucartambo and the mysterious pre-Inca tombs of Ninamarca. "
+                    "At Acjanaco pass (3,800 m), we witness where the Andean cordillera abruptly drops into the Amazonian cloud forest. "
+                    "As we descend into the San Pedro cloud forest, we stop at the famous lek of the Andean Cock-of-the-Rock (*Rupicola peruvianus*) "
+                    "to observe up to 20 flamboyant males performing courtship displays. In the evening, we reach Pilcopata for dinner and rest.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Pilcopata Lodge."
+                ),
+                "imagen": "",
+                "imagen_alt": "Cloud forest mist over the slopes of Manu National Park",
+                "imagen_pie": "Dramatic cloud forest scenery descending toward the Kosñipata valley."
+            },
+            {
+                "dia": 2,
+                "titulo": "Pilcopata to Atalaya & Down the Madre de Dios to Boca Manu",
+                "subtitulo": "River boat embarkation, hot springs & transition to lowland Amazon",
+                "descripcion": (
+                    "We drive 45 minutes to Atalaya Port, where our private motorized riverboat is loaded. We set off down the Alto Madre de Dios River, "
+                    "spotting black-bellied hummingbirds, herons, and swallows skimming the water. We enjoy an invigorating dip in natural geothermal "
+                    "hot springs along the riverbanks, followed by a warm lunch on board or on a pristine pebble beach. By late afternoon, we reach the "
+                    "tranquil waters of Boca Manu, gateway to the Manu River.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Boca Manu Eco-Lodge."
+                ),
+                "imagen": "",
+                "imagen_alt": "River boat cruising down the Alto Madre de Dios River",
+                "imagen_pie": "Cruising past tropical riverbanks on the way to Boca Manu."
+            },
+            {
+                "dia": 3,
+                "titulo": "Limonal Checkpoint to Deep Manu & Casa Matsiguenka",
+                "subtitulo": "Entering the strictly protected reserve & Jaguar river safari",
+                "descripcion": (
+                    "Early morning entry through the Limonal Ranger Station into the strictly regulated Reserved Zone. For the next several hours, "
+                    "we motor upstream along the Manu River. In this untouched zone with zero road access, beaches are populated by white caimans, "
+                    "capybaras, horned screamers, and basking river turtles. With sharp eyes and our guide's expertise, we search carefully for Jaguars "
+                    "lounging in the shade of fallen logs. We arrive at Casa Matsiguenka lodge in the heart of the reserve.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Casa Matsiguenka Lodge."
+                ),
+                "imagen": "",
+                "imagen_alt": "Pristine beaches of the Manu River deep inside the reserve",
+                "imagen_pie": "Sandy beaches of the Manu River where wildlife gathers undisturbed."
+            },
+            {
+                "dia": 4,
+                "titulo": "Cocha Salvador Catamaran Safari & Primary Rainforest Trails",
+                "subtitulo": "Encountering Giant River Otters & prehistoric Hoatzin birds",
+                "descripcion": (
+                    "We spend a full morning exploring magnificent **Cocha Salvador** on a quiet, paddle-driven catamaran. Here, a resident family of "
+                    "Giant River Otters fishes actively along the water lilies. We observe their complex social antics, playfulness, and loud barking calls. "
+                    "Monkeys such as Black Spider Monkeys (*Ateles chamek*) and Emperor Tamarins (*Saguinus imperator*) leap among the canopy branches overhead. "
+                    "In the afternoon, we hike through towering ancient Brazil nut (*Bertholletia excelsa*) and Ceiba trees to understand primary rainforest ecology.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Casa Matsiguenka Lodge."
+                ),
+                "imagen": "",
+                "imagen_alt": "Giant River Otter eating a fish in Cocha Salvador",
+                "imagen_pie": "Giant River Otter (*Pteronura brasiliensis*) foraging in Cocha Salvador."
+            },
+            {
+                "dia": 5,
+                "titulo": "Cocha Otorongo Canopy Tower & Mammal Clay Lick",
+                "subtitulo": "30-meter observation tower, canopy birding & tapir tracking",
+                "descripcion": (
+                    "Today we navigate a short distance to **Cocha Otorongo**, another prime oxbow lake. We climb the 30-meter observation tower built around a massive tree, "
+                    "offering a spectacular panoramic view of the lake canopy. From this vantage point, we watch toucans, cotingas, jacamars, and raptors at eye level. "
+                    "Later, we hike to an inland mammal clay lick (*colpa*), discovering footprints of Brazilian Tapirs, Pumas, and White-lipped Peccaries. "
+                    "An optional night walk allows us to spot nocturnal frogs, snakes, and fascinating bioluminescent fungi.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Casa Matsiguenka Lodge."
+                ),
+                "imagen": "",
+                "imagen_alt": "Observation tower rising above the rainforest canopy at Cocha Otorongo",
+                "imagen_pie": "Panoramic view from the 30-meter canopy tower at Cocha Otorongo."
+            },
+            {
+                "dia": 6,
+                "titulo": "Casa Matsiguenka to Downstream Manu River & Boca Manu",
+                "subtitulo": "Dawn river safari, wildlife tracking & Matsiguenka cultural insights",
+                "descripcion": (
+                    "We depart Casa Matsiguenka at dawn, letting the boat drift quietly downstream with the current to maximize wildlife sightings. "
+                    "Dawn is prime time to observe Tapirs swimming across the river or a Jaguar finishing its nocturnal hunt along the sandbars. "
+                    "We stop to visit an indigenous community center to learn how native Matsiguenka people preserve traditional plant medicine, weaving, "
+                    "and sustainable agroforestry. By afternoon, we settle into our lodge near Boca Manu for our farewell jungle dinner.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Boca Manu Eco-Lodge."
+                ),
+                "imagen": "",
+                "imagen_alt": "Dawn mist over the Manu River with wading birds on sandbars",
+                "imagen_pie": "Early morning mist rising over the tranquil waters of the Manu River."
+            },
+            {
+                "dia": 7,
+                "titulo": "Boca Manu to Atalaya Port & Return to Cusco",
+                "subtitulo": "Upriver voyage, cloud forest transition & transfer to Cusco hotel",
+                "descripcion": (
+                    "Following early breakfast, we board our boat for the upstream return voyage along the Alto Madre de Dios River to Puerto Atalaya. "
+                    "Our private bus meets us for the scenic mountain drive through the cloud forest of Kosñipata. We pause at scenic viewpoints for lunch and "
+                    "bird photography, crossing the high Andean pass back toward the Sacred Valley and arriving in Cusco around 6:30 PM.\n\n"
+                    "- **Meals**: Breakfast, Lunch\n"
+                    "- **Drop-off**: Cusco hotel."
+                ),
+                "imagen": "",
+                "imagen_alt": "Travelers returning along the mountain road with panoramic Andes views",
+                "imagen_pie": "Winding mountain roads ascending from the Amazon basin back to Cusco."
+            }
+        ]
+    },
+
+    # -------------------------------------------------------------
+    # 3. MANU RESERVE ZONE TO BLANQUILLO MACAW CLAY LICK 8D/7N
+    # -------------------------------------------------------------
+    "manu-reserve-zone-to-blanquillo-macaw-clay-lick-8d-7n": {
+        "descripcion_corta": (
+            "The ultimate Amazonian wildlife odyssey combining the pristine core of the Manu Reserved Zone "
+            "with the world-famous Blanquillo Macaw Clay Lick and the elevated Camungo canopy tower. "
+            "Witness hundreds of vibrant macaws and parrots in an unforgettable natural amphitheater."
+        ),
+        "descripcion_larga": (
+            "### The Grand Amazonian Circuit: Reserved Zone & Blanquillo Macaw Sanctuary\n\n"
+            "This comprehensive **8-Day / 7-Night expedition** brings together the two most celebrated wildlife spectacles in the southern Peruvian Amazon: "
+            "the virgin wilderness of the **Manu Reserved Zone** (Cocha Salvador, Giant River Otters, and Jaguars) and the legendary **Blanquillo Clay Lick**, "
+            "where hundreds of Red-and-green Macaws, Scarlet Macaws, and Amazons gather daily to ingest mineral-rich clay.\n\n"
+            "#### Exclusive Highlights of the 8-Day Circuit:\n"
+            "- **Comfortable Floating Camouflaged Hide**: Sit just 40 meters from the Blanquillo clay lick for breathtaking, unhurried wildlife photography.\n"
+            "- **Cocha Salvador & Giant Otters**: Explore Manu's premier oxbow lake on silent catamarans.\n"
+            "- **Camungo 45-Meter Canopy Tower**: Stand above the crowns of thousand-year-old Kapok trees overlooking Cocha Camungo.\n"
+            "- **Tapir Clay Lick Observation Platform**: Spend an evening over an inland mineral salt lick where lowland tapirs feed under moonlight.\n"
+            "- **Dual River Exploration**: Cruise both the tranquil blackwater tributaries of the Manu River and the majestic Madre de Dios."
+        ),
+        "itinerario": [
+            {
+                "dia": 1,
+                "titulo": "Cusco to Cloud Forest of Kosñipata",
+                "subtitulo": "Ninamarca Chullpas, Acjanaco mountain pass & San Pedro Cock-of-the-Rock lek",
+                "descripcion": (
+                    "Early 5:00 AM pickup in Cusco. We drive across the Andean highlands, exploring the enigmatic pre-Inca towers of Ninamarca. "
+                    "Crossing the Acjanaco pass (3,800 m), we witness the breathtaking transition from barren puna into dense, misty cloud forest. "
+                    "At the San Pedro lek, we watch the flamboyant mating dance of Peru's national bird, the Andean Cock-of-the-Rock, alongside Woolly Monkeys "
+                    "and crested quetzals. In the evening, we reach Pilcopata for dinner.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Pilcopata Eco-Lodge."
+                ),
+                "imagen": "",
+                "imagen_alt": "Cock-of-the-rock male performing in the Kosñipata cloud forest",
+                "imagen_pie": "Andean Cock-of-the-Rock in the lush canopy of the Kosñipata cloud forest."
+            },
+            {
+                "dia": 2,
+                "titulo": "Pilcopata to Atalaya Port & Downriver to Boca Manu",
+                "subtitulo": "Boat embarkation, river wildlife & thermal springs",
+                "descripcion": (
+                    "After breakfast, we drive to Atalaya Port and board our riverboat. Gliding down the Alto Madre de Dios River, we observe snowy egrets, "
+                    "cormorants, capybaras, and sunning reptiles. We stop at natural thermal springs for a rejuvenating jungle bath before reaching our eco-lodge "
+                    "near Boca Manu. An evening night walk introduces us to nocturnal frogs, tarantulas, and night monkeys.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Boca Manu Eco-Lodge."
+                ),
+                "imagen": "",
+                "imagen_alt": "River boat on the Alto Madre de Dios River with green jungle banks",
+                "imagen_pie": "Scenic river journey through the foothills of the Peruvian Amazon."
+            },
+            {
+                "dia": 3,
+                "titulo": "Boca Manu to Deep Reserved Zone & Casa Matsiguenka",
+                "subtitulo": "Limonal checkpoint, deep Manu river safari & Jaguar territory",
+                "descripcion": (
+                    "We register at the Limonal park ranger station and enter the heart of Manu National Park. Over 5 hours of boat safari on the Manu River "
+                    "give us exceptional chances to spot Jaguars sunbathing on the beaches, families of capybaras, and massive Black Caimans. "
+                    "In the afternoon, we arrive at the community-managed Casa Matsiguenka Lodge deep inside primary rainforest.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Casa Matsiguenka Lodge."
+                ),
+                "imagen": "",
+                "imagen_alt": "Jaguar walking along the Manu riverbank sandbar",
+                "imagen_pie": "Apex predator Jaguar (*Panthera onca*) spotted on the sandy riverbank."
+            },
+            {
+                "dia": 4,
+                "titulo": "Cocha Salvador Catamaran & Cocha Otorongo Tower",
+                "subtitulo": "Giant River Otters family, Black Caimans & 30m canopy tower",
+                "descripcion": (
+                    "At daybreak, we navigate Cocha Salvador on a quiet catamaran, encountering the playful and vocal Giant River Otter family. "
+                    "We observe Hoatzins, Spider Monkeys, and Emperor Tamarins in the surrounding primary trees. Later, we hike through virgin forest to "
+                    "Cocha Otorongo, climbing its 30-meter observation tower for high-canopy birding and breathtaking rainforest panoramas.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Casa Matsiguenka Lodge."
+                ),
+                "imagen": "",
+                "imagen_alt": "Giant River Otters swimming together in Cocha Salvador",
+                "imagen_pie": "Giant River Otters (*Pteronura brasiliensis*) hunting in Cocha Salvador."
+            },
+            {
+                "dia": 5,
+                "titulo": "Manu River to Blanquillo Jungle Lodge & Camungo Tower",
+                "subtitulo": "Exiting the Manu River, Madre de Dios navigation & 45m Camungo canopy tower",
+                "descripcion": (
+                    "We start at dawn drifting down the Manu River for final chances to photograph big cats and tapirs on the beaches. "
+                    "Passing Limonal, we head down the Madre de Dios River to the renowned **Blanquillo Biological Reserve**. "
+                    "In the afternoon, we explore **Cocha Camungo** and climb its spectacular **45-meter canopy tower** attached to an enormous Kapok tree, "
+                    "providing unmatched views of toucans, macaws, and mixed canopy bird flocks.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Blanquillo Jungle Lodge."
+                ),
+                "imagen": "",
+                "imagen_alt": "45-meter observation tower overlooking the canopy of Cocha Camungo",
+                "imagen_pie": "The monumental 45-meter canopy tower at Cocha Camungo."
+            },
+            {
+                "dia": 6,
+                "titulo": "Blanquillo Macaw Clay Lick & Tapir Clay Lick Night Hide",
+                "subtitulo": "Spectacular gathering of macaws & nocturnal tapir observation platform",
+                "descripcion": (
+                    "At 5:30 AM, we enter the comfortable, camouflaged floating blind situated directly in front of the **Blanquillo Macaw Clay Lick**. "
+                    "As the sun warms the cliff, hundreds of green parrots, parakeets, and then brilliant Red-and-green Macaws and Scarlet Macaws gather "
+                    "in a noisy, breathtaking explosion of colors to ingest the mineral clay. "
+                    "After lunch, we rest before walking to the **Tapir Clay Lick**, where we wait quietly on an elevated platform with mosquito netting "
+                    "to observe wild Lowland Tapirs (*Tapirus terrestris*) and pacas feeding at dusk.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Blanquillo Jungle Lodge."
+                ),
+                "imagen": "",
+                "imagen_alt": "Hundreds of red-and-green macaws on the Blanquillo clay lick cliff",
+                "imagen_pie": "Vibrant Red-and-green Macaws feeding on the mineral clay lick at Blanquillo."
+            },
+            {
+                "dia": 7,
+                "titulo": "Blanquillo River Safari to Boca Manu / Colorado",
+                "subtitulo": "River wildlife cruise, native community & transition journey",
+                "descripcion": (
+                    "After morning birding around the Blanquillo reserve trails, we board our boat to navigate upstream toward Boca Manu or explore the rich "
+                    "floodplain forests along the Madre de Dios River. We visit an indigenous native community to gain genuine appreciation for their cultural "
+                    "heritage, basket weaving, and organic cacao cultivation. In the evening, we enjoy our farewell group dinner celebrating an epic journey.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Eco-Lodge."
+                ),
+                "imagen": "",
+                "imagen_alt": "Sunset over the wide Madre de Dios River with reflection of clouds",
+                "imagen_pie": "Golden sunset reflecting on the waters of the Madre de Dios River."
+            },
+            {
+                "dia": 8,
+                "titulo": "Return Journey to Cusco",
+                "subtitulo": "Upstream river transfer to Atalaya & scenic Andean ascent to Cusco",
+                "descripcion": (
+                    "We embark on the final boat section up to Atalaya Port. Rejoining our private ground transport, we ascend the dramatic Manu Road "
+                    "through the cloud forest, enjoying a gourmet picnic lunch on our way over the Andean crest. We arrive in Cusco between 6:00 PM and 7:30 PM, "
+                    "delivering you safely to your hotel with memories of a lifetime.\n\n"
+                    "- **Meals**: Breakfast, Lunch\n"
+                    "- **Drop-off**: Cusco hotel."
+                ),
+                "imagen": "",
+                "imagen_alt": "Scenic view of the Andes mountains on the drive back to Cusco",
+                "imagen_pie": "Ascending from the Amazon lowlands back into the high Andean peaks."
+            }
+        ]
+    },
+
+    # -------------------------------------------------------------
+    # 4. MANU RESERVE ZONE AND BLANQUILLO MACAW CLAY LICK 9D/8N
+    # -------------------------------------------------------------
+    "manu-reserve-zone-and-blanquillo-macaw-clay-lick-9d-8n": {
+        "descripcion_corta": (
+            "The definitive 9-day Amazon expedition: complete exploration of the core Manu Reserved Zone "
+            "plus extended days at the world-famous Blanquillo Macaw Clay Lick and Tapir mineral lick. "
+            "Unrivaled opportunities for wildlife photography, pristine oxbow lakes, and primary rainforest."
+        ),
+        "descripcion_larga": (
+            "### The Master Amazon Expedition: 9 Days in South America's Wildlife Epicenter\n\n"
+            "This **9-Day / 8-Night master expedition** is the most thorough, wildlife-dense itinerary offered anywhere in the Amazon basin. "
+            "By uniting 4 full days inside the strictly protected **Manu Reserved Zone** with 3 days in the **Blanquillo Wildlife Reserve**, "
+            "travelers experience every major ecosystem and photographic highlight of Manu National Park without rushing.\n\n"
+            "#### Why This is the Ultimate Amazon Adventure:\n"
+            "- **Unmatched Jaguar Spotting Probability**: Multiple boat passes through the highest density Jaguar habitat along the Manu River.\n"
+            "- **Two Distinct Oxbow Lake Systems**: Cocha Salvador & Cocha Otorongo in the core reserve, plus Cocha Camungo in Blanquillo.\n"
+            "- **The World-Famous Blanquillo Macaw Clay Lick**: Front-row camouflaged photography of hundreds of feeding macaws and parrots.\n"
+            "- **Nocturnal Tapir Blind**: Overnight or late evening observation over an active lowland tapir mineral lick.\n"
+            "- **Complete Vertical Transect**: From 3,800m Andean passes down to 300m lowland rainforest, recording over 250 bird species and 10 monkey species."
+        ),
+        "itinerario": [
+            {
+                "dia": 1,
+                "titulo": "Cusco to Kosñipata Cloud Forest",
+                "subtitulo": "Ninamarca Chullpas, Acjanaco Pass & San Pedro Cock-of-the-Rock Lek",
+                "descripcion": (
+                    "Early morning pickup from your Cusco hotel at 5:00 AM. We traverse the picturesque Andean landscape, stopping at the pre-Inca "
+                    "tombs of Ninamarca and the colonial town of Paucartambo. We reach Acjanaco pass (3,800 m), the gateway to Manu National Park, "
+                    "where the Andes plunge toward the Amazon plain. Descending into the lush San Pedro cloud forest, we witness the vibrant courtship "
+                    "rituals of the Andean Cock-of-the-Rock at their communal lek. Evening arrival at our lodge in Pilcopata.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Pilcopata Lodge."
+                ),
+                "imagen": "",
+                "imagen_alt": "Cock-of-the-Rock in the lush cloud forest of Manu",
+                "imagen_pie": "Peru's iconic Cock-of-the-Rock displaying in the misty San Pedro canopy."
+            },
+            {
+                "dia": 2,
+                "titulo": "Pilcopata to Puerto Atalaya & Boca Manu",
+                "subtitulo": "River boat embarkation, hot springs & Alto Madre de Dios navigation",
+                "descripcion": (
+                    "We drive to Puerto Atalaya and board our motorized boat. Cruising down the Alto Madre de Dios River, we observe riverine wildlife "
+                    "such as capybaras, cormorants, Kingfishers, and sunning turtles. We take a relaxing break in natural thermal hot springs "
+                    "before continuing past native communities to our comfortable lodge near Boca Manu. Evening night walk searching for nocturnal reptiles and amphibians.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Boca Manu Eco-Lodge."
+                ),
+                "imagen": "",
+                "imagen_alt": "River boat on the Alto Madre de Dios at sunset",
+                "imagen_pie": "Cruising the wide waters of the Alto Madre de Dios River."
+            },
+            {
+                "dia": 3,
+                "titulo": "Boca Manu to Limonal Ranger Station & Deep Manu Reserve",
+                "subtitulo": "Entering the virgin Reserved Zone & Jaguar river safari",
+                "descripcion": (
+                    "We register at the Limonal park post and enter the pristine Manu River. For the next several hours, we glide through one of the most "
+                    "unspoiled river corridors on Earth. White sandbars are scanned for Jaguars, Black Caimans, tapirs, and diverse wading birds. "
+                    "In the afternoon, we reach Casa Matsiguenka Lodge, nestled within virgin primary rainforest.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Casa Matsiguenka Lodge."
+                ),
+                "imagen": "",
+                "imagen_alt": "Jaguar resting on a sandbar along the Manu River",
+                "imagen_pie": "Jaguar resting along the tranquil shores of the Manu River."
+            },
+            {
+                "dia": 4,
+                "titulo": "Cocha Salvador Oxbow Lake: Giant River Otters",
+                "subtitulo": "Catamaran navigation, giant otters family & prehistoric hoatzins",
+                "descripcion": (
+                    "At dawn, we explore the quiet waters of **Cocha Salvador** on a silent catamaran. We spend the morning observing a resident clan of "
+                    "Giant River Otters (*Pteronura brasiliensis*) as they hunt fish, groom, and play. The lake edges are alive with Agami Herons, "
+                    "Hoatzins, and caimans, while Black Spider Monkeys swing through the high canopy. Afternoon trail walk exploring ancient giant trees.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Casa Matsiguenka Lodge."
+                ),
+                "imagen": "",
+                "imagen_alt": "Giant river otter playing in Cocha Salvador with water lilies",
+                "imagen_pie": "Giant River Otter gliding gracefully through the waters of Cocha Salvador."
+            },
+            {
+                "dia": 5,
+                "titulo": "Cocha Otorongo Canopy Tower & Primary Forest Ecology",
+                "subtitulo": "30-meter observation tower, birding & medicinal plant secrets",
+                "descripcion": (
+                    "We travel to **Cocha Otorongo** and climb its 30-meter observation tower for breathtaking panoramic views over the canopy and lake. "
+                    "From here, we spot cotingas, toucans, macaws, and mixed tanager flocks feeding on canopy fruits. In the afternoon, our indigenous guide "
+                    "shares the deep ethno-botanical wisdom of the Matsiguenka, demonstrating how local plants provide medicine, building materials, and natural fibers.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Casa Matsiguenka Lodge."
+                ),
+                "imagen": "",
+                "imagen_alt": "Observation platform in the high canopy of the Manu rainforest",
+                "imagen_pie": "Canopy observation platform offering bird's-eye views across the rainforest."
+            },
+            {
+                "dia": 6,
+                "titulo": "Manu River Downstream to Blanquillo Wildlife Reserve",
+                "subtitulo": "Morning river safari & arrival at Blanquillo Biological Station",
+                "descripcion": (
+                    "We start with a tranquil early morning boat drift down the Manu River, catching the peak activity of wildlife along the beaches. "
+                    "After clearing Limonal, we enter the Madre de Dios River and proceed to the **Blanquillo Biological Reserve**. "
+                    "In the late afternoon, we climb the **45-meter Camungo canopy tower** overlooking oxbow lake Cocha Camungo for an extraordinary sunset above the trees.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Blanquillo Jungle Lodge."
+                ),
+                "imagen": "",
+                "imagen_alt": "Sunset from the top of the 45-meter Camungo canopy tower",
+                "imagen_pie": "Sunset over the endless green canopy from the Camungo tower."
+            },
+            {
+                "dia": 7,
+                "titulo": "Blanquillo Macaw Clay Lick Spectacle & Tapir Lick",
+                "subtitulo": "Front-row camouflaged hide for hundreds of macaws & evening tapir platform",
+                "descripcion": (
+                    "At 5:30 AM, we enter the comfortable floating blind positioned 40 meters from the **Blanquillo Macaw Clay Lick**. "
+                    "Over the next three hours, hundreds of parakeets, parrots, and magnificent Red-and-green Macaws arrive in waves, creating a cacophony of sound "
+                    "and dazzling plumage as they ingest mineral salts. After lunch and an afternoon siesta, we walk to the **Tapir Clay Lick** hide to wait for "
+                    "Lowland Tapirs feeding quietly in the forest under darkness.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Blanquillo Jungle Lodge."
+                ),
+                "imagen": "",
+                "imagen_alt": "Flock of red-and-green macaws feeding on clay lick",
+                "imagen_pie": "Spectacular gathering of macaws at the Blanquillo clay lick."
+            },
+            {
+                "dia": 8,
+                "titulo": "Cocha Camungo & Madre de Dios River Safari to Boca Manu",
+                "subtitulo": "Catamaran navigation, Hoatzin colonies & cultural exchange",
+                "descripcion": (
+                    "We enjoy a peaceful catamaran exploration of Cocha Camungo, observing nesting colonies of Hoatzins, Sungrebes, and Giant Amazonian Otters. "
+                    "In the afternoon, we cruise upriver along the Madre de Dios, stopping to visit an indigenous community to learn about traditional agroforestry, "
+                    "sustainable yucca processing, and native wood craftsmanship. We settle into our lodge near Boca Manu for our celebratory farewell dinner.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Boca Manu Eco-Lodge."
+                ),
+                "imagen": "",
+                "imagen_alt": "Hoatzin bird perched on branch over Cocha Camungo lake",
+                "imagen_pie": "Prehistoric Hoatzin (*Opisthocomus hoazin*) perched by the lake shore."
+            },
+            {
+                "dia": 9,
+                "titulo": "Boca Manu to Atalaya Port & Return to Cusco",
+                "subtitulo": "Upriver boat voyage, scenic mountain drive & return to Cusco",
+                "descripcion": (
+                    "At sunrise, we board our boat for the upstream return along the Alto Madre de Dios River to Puerto Atalaya. "
+                    "Our private overland transport meets us for the journey back up through the Kosñipata cloud forest. We enjoy a delicious lunch "
+                    "with sweeping mountain vistas and cross the Acjanaco pass back into the Andean valley, arriving at your Cusco hotel by evening (approx. 7:00 PM).\n\n"
+                    "- **Meals**: Breakfast, Lunch\n"
+                    "- **Drop-off**: Cusco hotel."
+                ),
+                "imagen": "",
+                "imagen_alt": "Winding Andean road returning to Cusco through the mountains",
+                "imagen_pie": "Scenic journey climbing back up from the Amazon into the Andes."
+            }
+        ]
+    },
+
+    # -------------------------------------------------------------
+    # 5. MANU ADVENTURE 4D/3N (Cultural Zone)
+    # -------------------------------------------------------------
+    "manu-adventure-4d-3n": {
+        "descripcion_corta": (
+            "The ideal 4-day Amazonian adventure from Cusco exploring the Manu Cultural Zone. "
+            "Experience the misty cloud forest, watch the Cock-of-the-Rock courtship dance, navigate the Madre de Dios River, "
+            "and explore tranquil Machuwasi Lake on traditional balsa rafts."
+        ),
+        "descripcion_larga": (
+            "### Fast-Track Amazon Adventure: Cloud Forest & Lowland Jungle in 4 Days\n\n"
+            "The **Manu Adventure 4D/3N** is the perfect short-format expedition for travelers with limited time who still demand an authentic, "
+            "high-impact Amazon rainforest experience. Starting and finishing in Cusco, this tour takes you across the Andes into the lush **Manu Cultural Zone**, "
+            "blending cloud forest wonders with lowland river safaris and oxbow lake navigation.\n\n"
+            "#### Tour Highlights:\n"
+            "- **Andean Cock-of-the-Rock Lek**: Direct morning viewing of Peru's national bird in the Kosñipata cloud forest.\n"
+            "- **Machuwasi Oxbow Lake**: Glide across the lake on wooden balsa rafts to observe prehistoric Hoatzins, horned screamers, and caimans.\n"
+            "- **River Boat Safari**: Navigate the Alto Madre de Dios River searching for capybaras, cormorants, and river turtles.\n"
+            "- **Parrot & Parakeet Clay Lick**: Watch hundreds of colorful parrots gather on river cliffs for their daily mineral feeding.\n"
+            "- **Night Jungle Walks**: Discover nocturnal biodiversity, from tarantulas and tree frogs to bioluminescent insects."
+        ),
+        "itinerario": [
+            {
+                "dia": 1,
+                "titulo": "Cusco to Cloud Forest of San Pedro & Pilcopata",
+                "subtitulo": "Ninamarca pre-Inca tombs, Acjanaco mountain pass & Cock-of-the-Rock lek",
+                "descripcion": (
+                    "We depart Cusco at 5:30 AM in private transport, climbing through the Andean peaks to the archaeological site of **Ninamarca** "
+                    "to admire pre-Inca funerary chullpas. After passing the colonial village of Paucartambo, we reach **Acjanaco (3,800 m)**, "
+                    "where the Andes dramatically meet the Amazon basin. We descend through the mystical cloud forest of San Pedro, where we stop to observe "
+                    "the flamboyant courtship ritual of the brilliant scarlet **Andean Cock-of-the-Rock (*Rupicola peruvianus*)**. "
+                    "We also watch for Woolly Monkeys, quetzals, and rare orchids before arriving at our eco-lodge in Pilcopata for dinner.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Pilcopata Lodge."
+                ),
+                "imagen": "",
+                "imagen_alt": "Andean Cock-of-the-rock in San Pedro cloud forest",
+                "imagen_pie": "Andean Cock-of-the-Rock perched on a mossy branch in the cloud forest."
+            },
+            {
+                "dia": 2,
+                "titulo": "Pilcopata to Puerto Atalaya & Machuwasi Oxbow Lake",
+                "subtitulo": "River boat navigation, balsa rafting on Machuwasi lake & night jungle safari",
+                "descripcion": (
+                    "After an energizing breakfast, we drive to **Puerto Atalaya** and board our motorized riverboat along the **Alto Madre de Dios River**. "
+                    "We watch for Kingfishers, herons, and capybaras on the gravel shores before arriving at our lodge. In the afternoon, we hike through primary "
+                    "rainforest trails to **Machuwasi Lake**, boarding traditional wooden balsa rafts. We silently paddle across the lake, observing prehistoric "
+                    "Hoatzins (*Opisthocomus hoazin*), Horned Screamers, Southern Screamers, and Spectacled Caimans. After nightfall, we set out on a thrilling night walk "
+                    "in search of tree frogs, nocturnal insects, tarantulas, and night monkeys.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Rainforest Eco-Lodge."
+                ),
+                "imagen": "",
+                "imagen_alt": "Traditional wooden balsa raft floating on Machuwasi Lake",
+                "imagen_pie": "Navigating Machuwasi Lake on wooden balsa rafts surrounded by aquatic plants."
+            },
+            {
+                "dia": 3,
+                "titulo": "Parrot Clay Lick & Primary Rainforest Trail Exploration",
+                "subtitulo": "Morning parrot spectacle, giant Ceiba trees & medicinal plant trail",
+                "descripcion": (
+                    "At dawn, we take our boat to a nearby **Parrot Clay Lick (*colpa*)**, where Blue-headed Parrots, Dusky-headed Parakeets, and Chestnut-fronted Macaws "
+                    "arrive in noisy flocks to ingest minerals that neutralize toxins in their diet. After breakfast, we embark on an in-depth ecological hike "
+                    "through virgin terra firme forest, learning about medicinal plants, lianas, and towering Ceiba trees. "
+                    "In the afternoon, you can swim in crystal-clear river pools or relax in hammocks listening to the sounds of the jungle.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Rainforest Eco-Lodge."
+                ),
+                "imagen": "",
+                "imagen_alt": "Parrots gathering at the river clay lick in Manu Cultural Zone",
+                "imagen_pie": "Blue-headed Parrots and parakeets feeding on mineral-rich river clay."
+            },
+            {
+                "dia": 4,
+                "titulo": "Puerto Atalaya to Cloud Forest & Return to Cusco",
+                "subtitulo": "Upriver morning cruise & scenic mountain drive back to Cusco",
+                "descripcion": (
+                    "We enjoy our final breakfast in the rainforest before boarding our boat for the upstream ride back to Puerto Atalaya. "
+                    "Our private transport awaits to take us back up the scenic Manu Road through the cloud forest of Kosñipata. "
+                    "We pause for panoramic mountain photographs and lunch along the route, crossing the high Andean pass of Acjanaco and arriving in Cusco "
+                    "by 5:30 PM to 6:30 PM, dropping you directly at your accommodation.\n\n"
+                    "- **Meals**: Breakfast, Lunch\n"
+                    "- **Drop-off**: Hotel in Cusco."
+                ),
+                "imagen": "",
+                "imagen_alt": "Panoramic view of the cloud forest valley during the drive to Cusco",
+                "imagen_pie": "Scenic mountain vistas on the road climbing from Manu back to Cusco."
+            }
+        ]
+    },
+
+    # -------------------------------------------------------------
+    # 6. MANU EXPEDITION 5D/4N (Cultural Zone)
+    # -------------------------------------------------------------
+    "manu-expedition-5d-4n": {
+        "descripcion_corta": (
+            "An enriching 5-day rainforest immersion in the Manu Cultural Zone. "
+            "Features the San Pedro cloud forest Cock-of-the-Rock lek, Machuwasi Lake balsa rafting, "
+            "natural jungle hot springs, native community cultural visits, and prime wildlife trail safaris."
+        ),
+        "descripcion_larga": (
+            "### Immersive 5-Day Expedition through Cloud Forests, Hot Springs & Oxbow Lakes\n\n"
+            "The **Manu Expedition 5D/4N** strikes the perfect balance between wildlife exploration, authentic cultural interaction, "
+            "and active adventure in the Manu Cultural Zone. With an extra day compared to standard short tours, this itinerary lets you journey "
+            "further down the Alto Madre de Dios River to natural volcanic hot springs and indigenous Harakmbut communities.\n\n"
+            "#### Expedition Features:\n"
+            "- **Cock-of-the-Rock Courtship Lek**: Prime afternoon and morning viewing of Peru's national bird in full courtship display.\n"
+            "- **Machuwasi Lake Balsa Rafting**: Encounter prehistoric Hoatzins, Black-capped Donacobius, and caimans.\n"
+            "- **Natural Jungle Thermal Hot Springs**: Relax in soothing, mineral-rich thermal pools surrounded by dense rainforest foliage.\n"
+            "- **Harakmbut Native Community Exchange**: Genuine cultural insight into the traditional lifestyles, crafts, and history of indigenous Amazonian peoples.\n"
+            "- **Night Jungle Safaris**: Guided nocturnal search for tree frogs, glowing click beetles, snakes, and night monkeys."
+        ),
+        "itinerario": [
+            {
+                "dia": 1,
+                "titulo": "Cusco to Kosñipata Cloud Forest & Pilcopata",
+                "subtitulo": "Ninamarca pre-Inca chullpas, Acjanaco Pass & San Pedro Cock-of-the-Rock lek",
+                "descripcion": (
+                    "Departure from Cusco at 5:30 AM in private vehicle. We journey through picturesque Andean valleys, visiting the ancient funerary towers "
+                    "of Ninamarca. Continuing past Paucartambo, we climb to Acjanaco (3,800 m), the gateway to Manu National Park. "
+                    "Descending into the lush cloud forest of San Pedro, we visit the active lek of the Andean Cock-of-the-Rock (*Rupicola peruvianus*), "
+                    "watching their vivid courtship display. We also spot Woolly Monkeys and crested quetzals before continuing to our eco-lodge in Pilcopata.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Pilcopata Lodge."
+                ),
+                "imagen": "",
+                "imagen_alt": "Andean Cock-of-the-Rock displaying bright red plumage",
+                "imagen_pie": "Andean Cock-of-the-Rock in the heart of the Kosñipata cloud forest."
+            },
+            {
+                "dia": 2,
+                "titulo": "Pilcopata to Atalaya Port & Machuwasi Lake",
+                "subtitulo": "River boat navigation, wooden balsa raft safari on Machuwasi lake",
+                "descripcion": (
+                    "We drive to Puerto Atalaya and board our motorized riverboat on the Alto Madre de Dios River. We scan the riverbanks for Fasciated Tiger-Herons, "
+                    "kingfishers, and capybaras. After settling into our lodge, we hike to **Machuwasi Lake** and board traditional wooden balsa rafts to explore "
+                    "the tranquil waters. We observe primitive Hoatzins (*Opisthocomus hoazin*), Horned Screamers, and Spectacled Caimans hiding among reeds. "
+                    "At night, a thrilling walk reveals tree frogs, tarantulas, and night monkeys.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Rainforest Eco-Lodge."
+                ),
+                "imagen": "",
+                "imagen_alt": "Hoatzin bird perched on reeds over the waters of Machuwasi Lake",
+                "imagen_pie": "Prehistoric Hoatzin birds thriving in the aquatic vegetation of Machuwasi Lake."
+            },
+            {
+                "dia": 3,
+                "titulo": "River Safari to Natural Hot Springs & Native Community",
+                "subtitulo": "Thermal springs relaxation & Harakmbut indigenous cultural visit",
+                "descripcion": (
+                    "Today we navigate further down the Alto Madre de Dios River toward natural **thermal hot springs** nestled on the riverbank. "
+                    "We soak in the soothing, mineral-rich warm waters surrounded by pristine jungle greenery and river views. "
+                    "Later, we visit a nearby **Harakmbut indigenous community** to learn about their ancestral traditions, natural medicine, "
+                    "traditional bow-and-arrow craft, and sustainable agroforestry. We return to our lodge in the late afternoon for dinner.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Rainforest Eco-Lodge."
+                ),
+                "imagen": "",
+                "imagen_alt": "Natural thermal hot springs nestled amidst tropical rainforest trees",
+                "imagen_pie": "Natural thermal hot springs on the banks of the Alto Madre de Dios River."
+            },
+            {
+                "dia": 4,
+                "titulo": "Parrot Clay Lick & Primary Rainforest Trail Hike",
+                "subtitulo": "Morning parrot spectacle, giant Ceiba trees & animal tracking",
+                "descripcion": (
+                    "At daybreak, we visit a vibrant **Parrot Clay Lick**, watching hundreds of parrots and parakeets flutter down to the clay cliffs. "
+                    "After breakfast, our naturalist guide leads an in-depth botanical and wildlife trek through primary rainforest trails. "
+                    "We admire giant Ceiba and Brazil nut trees, discover medicinal plants, and track footprints of tapirs, ocelots, and peccaries. "
+                    "In the afternoon, enjoy river swimming or relaxing, followed by a final nocturnal safari to spot tree snakes and glowing bioluminescent fungi.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Rainforest Eco-Lodge."
+                ),
+                "imagen": "",
+                "imagen_alt": "Giant Ceiba tree with enormous buttress roots in Manu rainforest",
+                "imagen_pie": "Monumental Ceiba tree with towering buttress roots in primary rainforest."
+            },
+            {
+                "dia": 5,
+                "titulo": "Atalaya Port to Cloud Forest & Return to Cusco",
+                "subtitulo": "Upriver morning journey & scenic mountain drive across the Andes",
+                "descripcion": (
+                    "We take an early boat back up to Puerto Atalaya, where our private transport is waiting. We ascend the scenic Manu Road through the cloud forest, "
+                    "making stops at high mountain overlooks for bird photography and a relaxed lunch. Crossing the Acjanaco pass, we journey back across the "
+                    "Andean valleys and arrive in Cusco by late afternoon (approximately 6:00 PM), dropping you off at your hotel.\n\n"
+                    "- **Meals**: Breakfast, Lunch\n"
+                    "- **Drop-off**: Hotel in Cusco."
+                ),
+                "imagen": "",
+                "imagen_alt": "Scenic view of Andean mountain pass descending to Cusco",
+                "imagen_pie": "Returning over the high Andean passes with breathtaking panoramic views."
+            }
+        ]
+    },
+
+    # -------------------------------------------------------------
+    # 7. MANU EXPEDITION 6D/5N (Cultural Zone)
+    # -------------------------------------------------------------
+    "manu-expedition-6d-5n": {
+        "descripcion_corta": (
+            "A comprehensive 6-day in-depth journey through the Manu Cultural Zone and Palotoa River basin. "
+            "Experience cloud forest lek displays, Machuwasi Lake, natural thermal baths, petroglyphs exploration, "
+            "and deep primary forest treks with indigenous native guides."
+        ),
+        "descripcion_larga": (
+            "### The Deep Cultural & Ecological Journey: 6 Days in Manu's Buffer Sanctuary\n\n"
+            "The **Manu Expedition 6D/5N** is designed for travelers who want to explore deeper into the wilderness and cultural heritage "
+            "of the Manu Cultural Zone without entering the restricted core reserve. Navigating the Alto Madre de Dios and crystalline Palotoa rivers, "
+            "this expedition brings together rich wildlife viewing, indigenous living cultures, ancient petroglyphs, and pristine primary rainforest trails.\n\n"
+            "#### Key Expedition Highlights:\n"
+            "- **San Pedro Cloud Forest Lek**: Front-row viewing of the Andean Cock-of-the-Rock and subtropical bird flocks.\n"
+            "- **Machuwasi Oxbow Lake**: Balsa raft exploration for primitive Hoatzins and Black Caimans.\n"
+            "- **Palotoa River Tributary**: Pristine, crystal-clear river navigation where wildlife drinks undisturbed.\n"
+            "- **Natural Geothermal Springs**: Relax in open-air thermal pools surrounded by Amazonian foliage.\n"
+            "- **Indigenous Harakmbut Cultural Living**: Discover ancient hunting lore, traditional body painting, and ethno-botanical healing."
+        ),
+        "itinerario": [
+            {
+                "dia": 1,
+                "titulo": "Cusco to San Pedro Cloud Forest & Pilcopata",
+                "subtitulo": "Ninamarca pre-Inca chullpas, Acjanaco Pass & Cock-of-the-Rock lek",
+                "descripcion": (
+                    "Departing Cusco at 5:00 AM, we head through the high Andean plateau, visiting the pre-Inca funerary towers of Ninamarca. "
+                    "At Acjanaco pass (3,800 m), we enter Manu National Park and descend through the misty cloud forest of San Pedro. "
+                    "We spend the afternoon at the vibrant Cock-of-the-Rock lek, observing Peru's national bird in high courtship activity. "
+                    "We arrive at Pilcopata Lodge for dinner and evening relaxation.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Pilcopata Lodge."
+                ),
+                "imagen": "",
+                "imagen_alt": "Andean Cock-of-the-Rock in the Kosñipata cloud forest",
+                "imagen_pie": "Andean Cock-of-the-Rock displaying in the misty San Pedro canopy."
+            },
+            {
+                "dia": 2,
+                "titulo": "Pilcopata to Atalaya Port & Machuwasi Lake",
+                "subtitulo": "River boat navigation, Machuwasi lake balsa rafts & nocturnal safari",
+                "descripcion": (
+                    "We drive to Puerto Atalaya and board our motorized boat down the Alto Madre de Dios River. After arriving at our lodge, "
+                    "we hike to Machuwasi Lake and board traditional balsa rafts to paddle silently along water lily beds. We spot Hoatzins, "
+                    "Horned Screamers, and Spectacled Caimans. After dinner, a night safari reveals tree frogs, tarantulas, and night monkeys.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Rainforest Eco-Lodge."
+                ),
+                "imagen": "",
+                "imagen_alt": "Balsa raft on Machuwasi Lake surrounded by lush vegetation",
+                "imagen_pie": "Navigating Machuwasi Lake on traditional wooden balsa rafts."
+            },
+            {
+                "dia": 3,
+                "titulo": "River Safari to Thermal Hot Springs & Native Community",
+                "subtitulo": "Natural thermal hot springs relaxation & Harakmbut cultural exchange",
+                "descripcion": (
+                    "We navigate downriver to open-air thermal hot springs on the riverbank, relaxing in soothing mineral waters. "
+                    "Later, we visit an authentic Harakmbut indigenous community to learn about traditional forest living, medicinal plants, "
+                    "and ancestral crafts. In the evening, we return to the lodge for dinner and campfire storytelling.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Rainforest Eco-Lodge."
+                ),
+                "imagen": "",
+                "imagen_alt": "Thermal hot springs on the edge of the river surrounded by forest",
+                "imagen_pie": "Relaxing in geothermal hot springs on the banks of the Alto Madre de Dios."
+            },
+            {
+                "dia": 4,
+                "titulo": "Crystal-Clear Palotoa River & Petroglyphs Hike",
+                "subtitulo": "Pristine tributary navigation, primary jungle trails & ancient rock carvings",
+                "descripcion": (
+                    "Today we take smaller boats up the crystal-clear Palotoa River, where clear waters allow views of Amazonian fish swimming below. "
+                    "We hike along pristine trails to inspect ancient petroglyphs carved into massive boulders by early Amazonian inhabitants. "
+                    "Along the trail, we watch for squirrel monkeys, brown capuchins, and toucans.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Palotoa Ecological Lodge."
+                ),
+                "imagen": "",
+                "imagen_alt": "Crystal clear waters of the Palotoa River inside the forest",
+                "imagen_pie": "Crystal-clear waters of the scenic Palotoa River tributary."
+            },
+            {
+                "dia": 5,
+                "titulo": "Parrot Clay Lick & Deep Primary Rainforest Hike",
+                "subtitulo": "Morning parrot spectacle, giant Ceiba trees & night wildlife search",
+                "descripcion": (
+                    "At dawn, we visit an active Parrot Clay Lick to watch hundreds of parrots and parakeets ingest mineral clay. "
+                    "After breakfast, we hike through towering primary rainforest with massive Ceiba and Ironwood trees. "
+                    "In the afternoon, enjoy relaxing or swimming in fresh river pools. A final nocturnal walk uncovers Amazonian night creatures.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Palotoa Ecological Lodge."
+                ),
+                "imagen": "",
+                "imagen_alt": "Parrots feeding on clay lick cliff in the early morning",
+                "imagen_pie": "Parrots gathering at the river clay lick during early morning hours."
+            },
+            {
+                "dia": 6,
+                "titulo": "Palotoa to Atalaya Port & Return to Cusco",
+                "subtitulo": "Upriver boat voyage & scenic mountain drive across the Andes",
+                "descripcion": (
+                    "We take an early boat back to Puerto Atalaya, where our private overland vehicle awaits. "
+                    "We ascend through the cloud forest of Kosñipata, stopping for lunch with panoramic mountain views. "
+                    "Crossing the Acjanaco pass, we return across the Andean valleys to Cusco, arriving at your hotel by 6:00 PM.\n\n"
+                    "- **Meals**: Breakfast, Lunch\n"
+                    "- **Drop-off**: Hotel in Cusco."
+                ),
+                "imagen": "",
+                "imagen_alt": "Scenic view of the Andes on the return drive to Cusco",
+                "imagen_pie": "Climbing from the tropical rainforest back into the high Andes."
+            }
+        ]
+    },
+
+    # -------------------------------------------------------------
+    # 8. BIRDING IN MACHU PICCHU, ABRA MALAGA AND HUACARPAY LAKE 4D/3N
+    # -------------------------------------------------------------
+    "birding-in-machu-picchu--abra-malaga-and-huacarpay-lake-4d-3-n": {
+        "descripcion_corta": (
+            "An elite 4-day ornithological quest targeting high-Andean Polylepis endemics, humid cloud forest specialties, "
+            "and iconic species around the historic sanctuary of Machu Picchu and the high-altitude wetlands of Huacarpay Lake."
+        ),
+        "descripcion_larga": (
+            "### Premier Andean & Cloud Forest Birding: Polylepis Forests to Machu Picchu\n\n"
+            "This specialized **4-Day / 3-Night birdwatching tour** covers the most dramatic elevational transects in the Cusco region, "
+            "from the high-altitude wetlands of Huacarpay Lake (3,050 m) to the critically endangered Polylepis forests of Abra Malaga (4,350 m), "
+            "down into the lush subtropical cloud forest surrounding the Lost City of the Incas at Machu Picchu (2,040 m).\n\n"
+            "#### Target Bird Families & Key Specialties:\n"
+            "- **Huacarpay Lake**: Bearded Mountaineer (*Oreonympha nobilis*, Peruvian endemic), Rusty-fronted Canastero, Plumbeous Rail, Many-colored Rush Tyrant, Puna Teal.\n"
+            "- **Abra Malaga Polylepis**: Royal Cinclodes (*Cinclodes aricomae*, critically endangered), White-browed Tit-Spinetail, Ash-breasted Tit-Tyrant, Tawny Tit-Spinetail, Stripe-headed Antpitta.\n"
+            "- **Machu Picchu Cloud Forest**: Inca Wren (*Pheugopedius eisenmanni*, endemic), Andean Cock-of-the-Rock, Masked Fruiteater, Sclater's Tyrannulet, Green Jay, Highland Motmot.\n"
+            "- **Urubamba River**: Torrent Duck (*Merganetta armata*) and White-capped Dipper foraging in turbulent whitewater rapids."
+        ),
+        "itinerario": [
+            {
+                "dia": 1,
+                "titulo": "Cusco to Huacarpay Lake & Sacred Valley Birding",
+                "subtitulo": "High-Andean wetlands, endemic Bearded Mountaineer & Sacred Valley transect",
+                "descripcion": (
+                    "We begin at 6:00 AM with birding at **Huacarpay Lake (3,050 m)**, a protected wetland south of Cusco. "
+                    "Our primary target is the spectacular **Bearded Mountaineer (*Oreonympha nobilis*)**, a large endemic hummingbird that feeds on yellow *Nicotiana tomentosa* flowers. "
+                    "We also search for Rusty-fronted Canastero, Streak-fronted Thornbird, Many-colored Rush Tyrant, Wren-like Rushbird, Plumbeous Rail, "
+                    "Puna Teal, Yellow-billed Pintail, and Andean Negrito. After lunch, we drive down the Sacred Valley to Ollantaytambo, birding the arid scrub "
+                    "for Giant Hummingbird (*Patagona gigas*), Black-backed Grosbeak, and Green-tailed Trainbearer.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Comfortable birding lodge in Ollantaytambo."
+                ),
+                "imagen": "",
+                "imagen_alt": "Bearded Mountaineer hummingbird perched on a desert branch",
+                "imagen_pie": "The spectacular Bearded Mountaineer (*Oreonympha nobilis*), Peruvian endemic."
+            },
+            {
+                "dia": 2,
+                "titulo": "Abra Malaga Pass Polylepis Endemics & Train to Aguas Calientes",
+                "subtitulo": "High-altitude Polylepis relict forest, Royal Cinclodes & cloud forest descent",
+                "descripcion": (
+                    "We start before dawn to reach the mountain pass of **Abra Malaga (4,350 m)**. We hike into a pristine **Polylepis forest** patch, "
+                    "home to some of the world's most endangered high-altitude birds: the critically endangered **Royal Cinclodes (*Cinclodes aricomae*)**, "
+                    "White-browed Tit-Spinetail, Ash-breasted Tit-Tyrant, Tawny Tit-Spinetail, Line-fronted Canastero, and Puna Tapaculo. "
+                    "Descending the humid east slope, we bird mixed flocks containing Parodi's Hemispingus, Tit-like Dacnis, and Blue-backed Conebill. "
+                    "In the afternoon, we take the scenic train from Ollantaytambo along the Urubamba River to Aguas Calientes.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Hotel in Aguas Calientes (Machu Picchu Pueblo)."
+                ),
+                "imagen": "",
+                "imagen_alt": "Polylepis forest clinging to rugged cliffs at Abra Malaga pass",
+                "imagen_pie": "Ancient Polylepis woodland habitat supporting rare high-Andean endemics."
+            },
+            {
+                "dia": 3,
+                "titulo": "Machu Picchu Historic Sanctuary & Endemic Inca Wren",
+                "subtitulo": "Subtropical cloud forest birding, Inca Wren & guided citadel exploration",
+                "descripcion": (
+                    "We spend the early morning birding the lush bamboo and cloud forest trails along the Urubamba River near the base of the citadel. "
+                    "Here we target the endemic **Inca Wren (*Pheugopedius eisenmanni*)**, alongside Andean Cock-of-the-Rock, Green Jay, Highland Motmot, "
+                    "Masked Fruiteater, Sclater's Tyrannulet, and Golden-headed Quetzal. "
+                    "Later, we ascend to the magnificent **Machu Picchu Inca Citadel** for a guided historical and architectural tour, admiring the seamless harmony "
+                    "between ancient stone architecture and the surrounding cloud forest peaks.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Hotel in Aguas Calientes."
+                ),
+                "imagen": "",
+                "imagen_alt": "Inca Wren perched in bamboo near Machu Picchu sanctuary",
+                "imagen_pie": "Endemic Inca Wren (*Pheugopedius eisenmanni*) in the bamboo thickets of Machu Picchu."
+            },
+            {
+                "dia": 4,
+                "titulo": "Urubamba River Torrent Birds & Scenic Train Return to Cusco",
+                "subtitulo": "Torrent Duck, White-capped Dipper, Ollantaytambo & transfer to Cusco",
+                "descripcion": (
+                    "We dedicate our morning to birding the rushing waters of the Urubamba River, focusing on **Torrent Ducks (*Merganetta armata*)** "
+                    "navigating violent whitewater with ease, as well as White-capped Dippers, Torrent Tyrants, and Mitred Parakeets flying overhead. "
+                    "We take the mid-day panoramic train back to Ollantaytambo, birding scenic river viewpoints on our private drive back to Cusco, "
+                    "arriving at your hotel by early evening with an impressive species tally.\n\n"
+                    "- **Meals**: Breakfast, Lunch\n"
+                    "- **Drop-off**: Hotel in Cusco."
+                ),
+                "imagen": "",
+                "imagen_alt": "Torrent Duck perched on a boulder in rushing river whitewater",
+                "imagen_pie": "Torrent Duck (*Merganetta armata*) resting on a boulder in the Urubamba River."
+            }
+        ]
+    },
+
+    # -------------------------------------------------------------
+    # 9. BIRDING IN MANU ROAD AND ANDES FOOTHILL 6D/5N
+    # -------------------------------------------------------------
+    "birding-in-manu-road-and-andes-foothill-6d-5n": {
+        "descripcion_corta": (
+            "Explore the world-famous Manu Road birding transect across an astonishing 3,300-meter elevational drop. "
+            "Target over 350 avian species from high-Andean Puna and temperate dwarf forest down to subtropical cloud forest "
+            "and Amazonian foothills."
+        ),
+        "descripcion_larga": (
+            "### The World's Greatest Birding Road: Acjanaco to the Amazon Foothills\n\n"
+            "The **Manu Road** is globally revered by ornithologists and birdwatchers as the premier birding transect on the planet. "
+            "Dropping from 3,800 meters at Acjanaco Pass to 500 meters at the Amazonian foothills, this route traverses every distinct altitudinal zone "
+            "on the eastern Andean slope, packing hundreds of tanagers, hummingbirds, antbirds, cotingas, and toucanets into a single 6-day expedition.\n\n"
+            "#### Target Avian Families & Highlights:\n"
+            "- **High Puna & Elfin Forest (3,500m–3,800m)**: Mountain Caracara, Andean Guan, Scribble-tailed Thistletail, Puna Thistletail, Scarlet-bellied Mountain-Tanager.\n"
+            "- **Temperate Cloud Forest (2,600m–3,200m)**: Gray-breasted Mountain-Toucan, Hooded Mountain-Tanager, Marcapata Spinetail, Grass-green Tanager.\n"
+            "- **Subtropical Cloud Forest & Lek (1,400m–2,000m)**: Andean Cock-of-the-Rock lek, Amazonian Umbrellabird, Crested Quetzal, Versicolored Barbet, Paradise Tanager.\n"
+            "- **Foothill Rainforest & Bamboo (500m–1,000m)**: Rufous-vented Ground-Cuckoo, Manu Antbird, Flammulated Pygmy-Tyrant, Bamboo Antshrike, Wire-crested Thorntail.\n"
+            "- **Machuwasi Oxbow Lake & River**: Horned Screamer, Hoatzin, Sunbittern, Black-capped Donacobius, Pale-eyed Pygmy-Tyrant."
+        ),
+        "itinerario": [
+            {
+                "dia": 1,
+                "titulo": "Cusco to Huacarpay Lake, Acjanaco Pass & Wayqecha",
+                "subtitulo": "High-Andean wetlands, Bearded Mountaineer & elfin forest transect",
+                "descripcion": (
+                    "We depart Cusco at 5:00 AM for **Huacarpay Lake**, targeting the endemic Bearded Mountaineer (*Oreonympha nobilis*), "
+                    "Rusty-fronted Canastero, and Many-colored Rush Tyrant. We drive across the Andes to **Acjanaco Pass (3,800 m)**, the gateway to Manu Road. "
+                    "Here in the elfin forest and paramo scrub, we search for Scribble-tailed Thistletail, Puna Thistletail, Moustached Flowerpiercer, "
+                    "and Scarlet-bellied Mountain-Tanager, arriving at our high-altitude cloud forest lodge in Wayqecha for dinner.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Wayqecha Biological Lodge (2,900 m)."
+                ),
+                "imagen": "",
+                "imagen_alt": "Scarlet-bellied Mountain-Tanager perched on mossy branch",
+                "imagen_pie": "Vibrant Scarlet-bellied Mountain-Tanager in the temperate cloud forest."
+            },
+            {
+                "dia": 2,
+                "titulo": "Wayqecha Temperate Cloud Forest to San Pedro Lek",
+                "subtitulo": "Mountain-toucans, multi-species mixed flocks & Cock-of-the-Rock display",
+                "descripcion": (
+                    "Morning birding along the upper Manu Road targeting the rare **Gray-breasted Mountain-Toucan (*Andigena hypoglauca*)**, "
+                    "Hooded Mountain-Tanager, Grass-green Tanager, Marcapata Spinetail, and Golden-collared Tanager. "
+                    "As we descend through the subtropical mist forest, we encounter dazzling mixed flocks with dozens of tanagers, woodcreepers, and flycatchers. "
+                    "In the late afternoon, we visit the San Pedro lek to watch up to 20 male **Andean Cock-of-the-Rocks** in full courtship frenzy.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Bamboo Eco-Lodge in San Pedro (1,400 m)."
+                ),
+                "imagen": "",
+                "imagen_alt": "Gray-breasted Mountain-Toucan in misty cloud forest canopy",
+                "imagen_pie": "Gray-breasted Mountain-Toucan (*Andigena hypoglauca*) in high temperate forest."
+            },
+            {
+                "dia": 3,
+                "titulo": "Subtropical Cloud Forest: Quetzals, Cotingas & Umbrellabirds",
+                "subtitulo": "Amazonian Umbrellabird, Crested Quetzal & dazzling tanager flocks",
+                "descripcion": (
+                    "We spend a full day birding the middle section of the Manu Road, one of the richest bird corridors on Earth. "
+                    "Target species include the bizarre **Amazonian Umbrellabird (*Cephalopterus ornatus*)**, Crested Quetzal, Golden-headed Quetzal, "
+                    "Versicolored Barbet, Blue-banded Toucanet, Speckled Hummingbird, and Violet-fronted Brilliant. "
+                    "Mixed canopy flocks bring Paradise Tanager, Bay-headed Tanager, Green-and-gold Tanager, and Golden Tanager right overhead.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Bamboo Eco-Lodge in San Pedro."
+                ),
+                "imagen": "",
+                "imagen_alt": "Amazonian Umbrellabird displaying in middle Manu Road forest",
+                "imagen_pie": "The remarkable Amazonian Umbrellabird (*Cephalopterus ornatus*) displaying."
+            },
+            {
+                "dia": 4,
+                "titulo": "San Pedro to Foothill Forest & Machuwasi Oxbow Lake",
+                "subtitulo": "Descending to Amazon foothills, bamboo specialties & oxbow lake birds",
+                "descripcion": (
+                    "We bird our way down to the foothill zone (500 m–800 m), targeting Lanceolated Monklet, Black-backed Tody-Flycatcher, "
+                    "and Wire-crested Thorntail. Arriving at the Alto Madre de Dios River, we cross by boat to explore **Machuwasi Lake** on wooden balsa rafts, "
+                    "adding Horned Screamer, Hoatzin, Rufescent Tiger-Heron, Pale-eyed Pygmy-Tyrant, and Black-capped Donacobius to our list. "
+                    "Night birding introduces Common Potoo, Tawny-bellied Screech-Owl, and Black-banded Owl.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Foothill Rainforest Lodge (550 m)."
+                ),
+                "imagen": "",
+                "imagen_alt": "Hoatzin bird perched above the calm waters of Machuwasi Lake",
+                "imagen_pie": "Prehistoric Hoatzin overlooking Machuwasi Lake in the Amazon foothills."
+            },
+            {
+                "dia": 5,
+                "titulo": "Guadalupe Bamboo Specialties & Parrot Clay Lick",
+                "subtitulo": "Bamboo-obligate antbirds, parrot cliff gathering & hummingbird garden",
+                "descripcion": (
+                    "At dawn, we observe parrots and parakeets at a mineral-rich river clay lick. We dedicate the morning to birding dense *Guadua* bamboo patches, "
+                    "searching for bamboo specialists: Bamboo Antshrike, White-cheeked Tody-Tyrant, Flammulated Pygmy-Tyrant, Dot-winged Antwren, "
+                    "and Manu Antbird (*Cercomacra manu*). In the afternoon, we photograph dozens of hummingbird species at lodge feeders, including "
+                    "Rufous-crested Coquette, Gould's Jewelfront, and Koepcke's Hermit.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Foothill Rainforest Lodge."
+                ),
+                "imagen": "",
+                "imagen_alt": "Colorful hummingbird feeding at rainforest flowers in Manu",
+                "imagen_pie": "Rufous-crested Coquette feeding in the lodge hummingbird garden."
+            },
+            {
+                "dia": 6,
+                "titulo": "Final Foothill Birding & Scenic Return to Cusco",
+                "subtitulo": "Morning birding along the Manu Road ascent & return across the Andes",
+                "descripcion": (
+                    "We take an early birding walk along foothill trails to search for any missed targets such as Sunbittern, Fasciated Tiger-Heron, "
+                    "or White-eared Jacamar. We board our private vehicle for the scenic drive back up the Manu Road, stopping at select elevation bands "
+                    "to review our bird list. We cross the high pass of Acjanaco and arrive back in Cusco by late afternoon (around 6:00 PM).\n\n"
+                    "- **Meals**: Breakfast, Lunch\n"
+                    "- **Drop-off**: Hotel in Cusco."
+                ),
+                "imagen": "",
+                "imagen_alt": "Sunbittern displaying beautiful eye-patterned wings",
+                "imagen_pie": "Sunbittern (*Eurypyga helias*) displaying its dramatic patterned wings."
+            }
+        ]
+    },
+
+    # -------------------------------------------------------------
+    # 10. ANDES AND AMAZON BIRDING TOUR 10D/9N
+    # -------------------------------------------------------------
+    "andes-and-amazon-birding-tour-10d-9n": {
+        "descripcion_corta": (
+            "The grand 10-day ornithological odyssey from the high Andes across the world-famous Manu Road "
+            "down into the mega-diverse lowland Amazon basin. Target over 500 species across every major habitat: "
+            "Puna, Polylepis, Elfin Forest, Cloud Forest, Foothills, and Lowland Oxbow Lakes."
+        ),
+        "descripcion_larga": (
+            "### The Master Neotropical Birding Expedition: High Andes to the Amazonian Lowlands\n\n"
+            "Covering an astounding altitudinal gradient from 4,350 meters down to 350 meters above sea level, "
+            "the **Andes and Amazon Birding Tour 10D/9N** is the most complete, scientifically rewarding birdwatching expedition in South America. "
+            "From endemic-rich high-Andean wetlands and Polylepis woodlands, down the legendary Manu Road into primary Amazonian oxbow lakes "
+            "and clay licks, this tour regularly records between 450 and 550 bird species.\n\n"
+            "#### Comprehensive Habitat Breakdown & Avian Targets:\n"
+            "- **High Andes & Huacarpay Lake (3,050m–4,350m)**: Bearded Mountaineer, Royal Cinclodes, White-browed Tit-Spinetail, Andean Negrito, Puna Teal.\n"
+            "- **Acjanaco Paramo & Elfin Forest (3,500m–3,800m)**: Scribble-tailed Thistletail, Puna Thistletail, Scarlet-bellied Mountain-Tanager, Hooded Mountain-Tanager.\n"
+            "- **Upper Manu Cloud Forest (2,000m–2,900m)**: Gray-breasted Mountain-Toucan, Marcapata Spinetail, Grass-green Tanager, Golden-collared Tanager.\n"
+            "- **Subtropical Cloud Forest & Lek (1,200m–1,800m)**: Andean Cock-of-the-Rock lek, Amazonian Umbrellabird, Crested Quetzal, Versicolored Barbet.\n"
+            "- **Foothill Bamboo & River Islands (500m–1,000m)**: Manu Antbird, Flammulated Pygmy-Tyrant, Bamboo Antshrike, Sunbittern, Fasciated Tiger-Heron.\n"
+            "- **Lowland Amazon & Oxbow Lakes (350m)**: Horned Screamer, Agami Heron, Hoatzin, Capped Heron, Spix's Guan, Black-faced Cotinga, Harpy Eagle territory."
+        ),
+        "itinerario": [
+            {
+                "dia": 1,
+                "titulo": "Cusco to Huacarpay Lake & Sacred Valley",
+                "subtitulo": "High-altitude wetland birding, endemic Bearded Mountaineer & Sacred Valley scrub",
+                "descripcion": (
+                    "Early morning birding at **Huacarpay Lake (3,050 m)**, focusing on the endemic **Bearded Mountaineer (*Oreonympha nobilis*)**, "
+                    "Rusty-fronted Canastero, Many-colored Rush Tyrant, Plumbeous Rail, Puna Teal, and Yellow-billed Pintail. "
+                    "In the afternoon, we bird arid mountain scrub near Ollantaytambo for Giant Hummingbird and Green-tailed Trainbearer.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Birding lodge in Sacred Valley."
+                ),
+                "imagen": "",
+                "imagen_alt": "Bearded Mountaineer hummingbird perched on a cactus",
+                "imagen_pie": "Endemic Bearded Mountaineer (*Oreonympha nobilis*) feeding at Huacarpay."
+            },
+            {
+                "dia": 2,
+                "titulo": "Abra Malaga Polylepis Forest to Wayqecha Cloud Forest",
+                "subtitulo": "Critically endangered Royal Cinclodes, high-altitude endemics & Acjanaco Pass",
+                "descripcion": (
+                    "Pre-dawn departure to **Abra Malaga (4,350 m)** to hike into an ancient **Polylepis forest**. "
+                    "We search for the critically endangered **Royal Cinclodes (*Cinclodes aricomae*)**, White-browed Tit-Spinetail, Ash-breasted Tit-Tyrant, "
+                    "and Tawny Tit-Spinetail. We then drive across the high Andes to **Acjanaco Pass (3,800 m)**, entering Manu National Park "
+                    "and arriving at Wayqecha Biological Station for dinner.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Wayqecha Biological Lodge (2,900 m)."
+                ),
+                "imagen": "",
+                "imagen_alt": "High Andean Polylepis tree with twisted reddish bark",
+                "imagen_pie": "Ancient Polylepis woodland, refuge for some of the rarest Andean endemics."
+            },
+            {
+                "dia": 3,
+                "titulo": "Wayqecha Temperate Cloud Forest: Mountain-Toucans",
+                "subtitulo": "Gray-breasted Mountain-Toucan, Hooded Mountain-Tanager & elfin forest mixed flocks",
+                "descripcion": (
+                    "Full morning exploring the upper Manu Road around Wayqecha. We search for **Gray-breasted Mountain-Toucan (*Andigena hypoglauca*)**, "
+                    "Marcapata Spinetail, Hooded Mountain-Tanager, Grass-green Tanager, Barred Fruiteater, and Golden-collared Tanager. "
+                    "In the afternoon, we bird along the road down toward San Pedro, encountering large mixed tanager flocks.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Bamboo Eco-Lodge in San Pedro (1,400 m)."
+                ),
+                "imagen": "",
+                "imagen_alt": "Gray-breasted Mountain-Toucan perched in temperate cloud forest",
+                "imagen_pie": "The magnificent Gray-breasted Mountain-Toucan (*Andigena hypoglauca*)."
+            },
+            {
+                "dia": 4,
+                "titulo": "San Pedro Cloud Forest & Cock-of-the-Rock Lek",
+                "subtitulo": "Courtship displays, Amazonian Umbrellabird & quetzals",
+                "descripcion": (
+                    "Dawn visit to the active **Cock-of-the-Rock lek**, observing intense courtship rituals of Peru's national bird. "
+                    "We spend the day birding the rich middle subtropical forest, targeting Amazonian Umbrellabird, Crested Quetzal, Golden-headed Quetzal, "
+                    "Versicolored Barbet, Blue-banded Toucanet, and Highland Motmot. Lodge hummingbird feeders provide brilliant photographic opportunities.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Bamboo Eco-Lodge in San Pedro."
+                ),
+                "imagen": "",
+                "imagen_alt": "Cock-of-the-Rock displaying bright crimson feathers in the lek",
+                "imagen_pie": "Andean Cock-of-the-Rock in the lush canopy of San Pedro."
+            },
+            {
+                "dia": 5,
+                "titulo": "San Pedro to Amazon Foothills & Atalaya River Embarkation",
+                "subtitulo": "Descending to 500m, Lanceolated Monklet & boat to river lodge",
+                "descripcion": (
+                    "We bird the lower subtropical and foothill forest, looking for Lanceolated Monklet, Wire-crested Thorntail, and Black-backed Tody-Flycatcher. "
+                    "At Puerto Atalaya, we board our motorized boat and head down the Alto Madre de Dios River, spotting Fasciated Tiger-Heron, "
+                    "Amazon Kingfisher, and Black Caracara along the riverbanks, settling into our lodge by afternoon.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Amazon River Lodge (450 m)."
+                ),
+                "imagen": "",
+                "imagen_alt": "River boat on the Alto Madre de Dios surrounded by jungle",
+                "imagen_pie": "Navigating the river gateway into the lowland Amazon basin."
+            },
+            {
+                "dia": 6,
+                "titulo": "Machuwasi Oxbow Lake & River Island Specialties",
+                "subtitulo": "Balsa raft birding, Horned Screamer, Hoatzin & river island successional forest",
+                "descripcion": (
+                    "At daybreak, we navigate **Machuwasi Lake** on wooden balsa rafts. We target Horned Screamer, Hoatzin, Rufescent Tiger-Heron, "
+                    "Pale-eyed Pygmy-Tyrant, Black-capped Donacobius, and Sungrebe. Later, we explore river islands for early successional specialists: "
+                    "Lesser Wagtail-Tyrant, Castelnau's Antshrike, and White-bellied Spinetail.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Amazon River Lodge."
+                ),
+                "imagen": "",
+                "imagen_alt": "Horned Screamer perched beside Machuwasi Lake",
+                "imagen_pie": "The prehistoric-looking Horned Screamer (*Anhima cornuta*) at Machuwasi Lake."
+            },
+            {
+                "dia": 7,
+                "titulo": "Parrot Clay Lick & Bamboo Forest Specialties",
+                "subtitulo": "Parrot cliff spectacle, Manu Antbird & bamboo obligate species",
+                "descripcion": (
+                    "Dawn visit to a river **Parrot Clay Lick**, watching hundreds of parrots and parakeets ingest mineral clay. "
+                    "We spend the rest of the day exploring *Guadua* bamboo stands for bamboo-obligate species: **Manu Antbird (*Cercomacra manu*)**, "
+                    "Bamboo Antshrike, White-cheeked Tody-Tyrant, Flammulated Pygmy-Tyrant, Dot-winged Antwren, and Large-headed Flatbill.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Amazon River Lodge."
+                ),
+                "imagen": "",
+                "imagen_alt": "Flock of blue-headed parrots on the river clay lick",
+                "imagen_pie": "Blue-headed Parrots and parakeets gathered on the river clay lick."
+            },
+            {
+                "dia": 8,
+                "titulo": "Deep Terra Firme Forest Trails & Canopy Observation Tower",
+                "subtitulo": "Canopy flocks, ant-following birds, woodcreepers & toucans",
+                "descripcion": (
+                    "We dedicate today to birding primary terra firme forest trails and climbing a **30-meter canopy tower**. "
+                    "From the tower, we observe canopy frugivores: White-throated Toucan, Spix's Guan, Black-faced Cotinga, and mixed tanager canopy flocks. "
+                    "On the forest floor, we search for army ant swarms and their attendant followers: White-throated Antbird, Hairy-crested Antbird, "
+                    "and Great Rufous Woodcreeper.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Amazon River Lodge."
+                ),
+                "imagen": "",
+                "imagen_alt": "White-throated Toucan perched in the high rainforest canopy",
+                "imagen_pie": "White-throated Toucan (*Ramphastos tucanus*) singing from the canopy."
+            },
+            {
+                "dia": 9,
+                "titulo": "Lowland River Safari & Transitional Forest Birding",
+                "subtitulo": "Capped Heron, Sunbittern, tapir tracks & final night birding",
+                "descripcion": (
+                    "A full day of targeted birding along river margins, oxbow lake edges, and transitional secondary forests. "
+                    "We search for Capped Heron, Sunbittern, Pied Lapwing, Muscovy Duck, and Bat Falcon. "
+                    "After dinner, our final night birding outing targets Crested Owl, Spectacled Owl, Black-banded Owl, and Common Potoo.\n\n"
+                    "- **Meals**: Breakfast, Lunch, Dinner\n"
+                    "- **Overnight**: Amazon River Lodge."
+                ),
+                "imagen": "",
+                "imagen_alt": "Spectacled Owl perched on a liana in the dark forest",
+                "imagen_pie": "Spectacled Owl (*Pulsatrix perspicillata*) on a night walk in the forest."
+            },
+            {
+                "dia": 10,
+                "titulo": "Puerto Atalaya to Cloud Forest & Return to Cusco",
+                "subtitulo": "Upriver voyage, scenic mountain drive & final species tally",
+                "descripcion": (
+                    "We take an early boat back up to Puerto Atalaya, where our private vehicle is ready for the return drive. "
+                    "We ascend the Manu Road, making select stops for birding and photography in the cloud forest. "
+                    "We cross Acjanaco pass back into the Andean valley, reviewing our master bird list (typically 450+ species) "
+                    "and arriving in Cusco by late afternoon (approx. 6:00 PM).\n\n"
+                    "- **Meals**: Breakfast, Lunch\n"
+                    "- **Drop-off**: Hotel in Cusco."
+                ),
+                "imagen": "",
+                "imagen_alt": "Panoramic view of the cloud forest valley during the return journey",
+                "imagen_pie": "Ascending through the cloud forest on the scenic journey back to Cusco."
+            }
+        ]
+    }
+}
+
+def update_tours_json():
+    print(f"Reading {DATA_FILE}...")
+    with open(DATA_FILE, "r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    tours = data.get("tours", [])
+    updated_count = 0
+
+    for tour in tours:
+        slug = tour.get("slug")
+        if slug in TOURS_DATA:
+            content = TOURS_DATA[slug]
+            tour["descripcion_corta"] = content["descripcion_corta"]
+            tour["descripcion_larga"] = content["descripcion_larga"]
+            
+            # Keep any existing images user might have already set, else set itinerary
+            new_itinerary = []
+            for day_data in content["itinerario"]:
+                day_obj = {
+                    "dia": day_data["dia"],
+                    "titulo": day_data["titulo"],
+                    "subtitulo": day_data.get("subtitulo", ""),
+                    "descripcion": day_data["descripcion"],
+                    "imagen": day_data.get("imagen", ""),
+                    "imagen_alt": day_data.get("imagen_alt", ""),
+                    "imagen_pie": day_data.get("imagen_pie", "")
+                }
+                new_itinerary.append(day_obj)
+            
+            tour["itinerario"] = new_itinerary
+            updated_count += 1
+            print(f"[OK] Updated tour: {slug} ({len(new_itinerary)} days, SEO descriptions set)")
+
+    with open(DATA_FILE, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=2, ensure_ascii=False)
+
+    print(f"\nSuccessfully updated {updated_count} tours in {DATA_FILE}!")
+
+if __name__ == "__main__":
+    update_tours_json()

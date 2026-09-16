@@ -19,9 +19,10 @@ def clean_mojibake(text):
 def md_to_html(md):
     if not md: return ''
     md = clean_mojibake(md)
-    md = re.sub(r'### (.*?)\n', r'<h3>\1</h3>\n', md)
-    md = re.sub(r'## (.*?)\n', r'<h2>\1</h2>\n', md)
-    md = re.sub(r'# (.*?)\n', r'<h1>\1</h1>\n', md)
+    md = re.sub(r'#### (.*?)(?:\n|$)', r'<h4>\1</h4>\n', md)
+    md = re.sub(r'### (.*?)(?:\n|$)', r'<h3>\1</h3>\n', md)
+    md = re.sub(r'## (.*?)(?:\n|$)', r'<h2>\1</h2>\n', md)
+    md = re.sub(r'# (.*?)(?:\n|$)', r'<h1>\1</h1>\n', md)
     md = re.sub(r'\*\*(.*?)\*\*', r'<strong>\1</strong>', md)
     md = re.sub(r'\*(.*?)\*', r'<em>\1</em>', md)
     lines = md.split('\n')
@@ -39,7 +40,10 @@ def md_to_html(md):
                 new_lines.append('</ul>')
                 in_list = False
             if stripped:
-                new_lines.append(f'<p style="margin-bottom: 16px; line-height: 1.8;">{stripped}</p>')
+                if stripped.startswith('<h') and stripped.endswith('>'):
+                    new_lines.append(stripped)
+                else:
+                    new_lines.append(f'<p style="margin-bottom: 16px; line-height: 1.8;">{stripped}</p>')
     if in_list:
         new_lines.append('</ul>')
     return '\n'.join(new_lines)
