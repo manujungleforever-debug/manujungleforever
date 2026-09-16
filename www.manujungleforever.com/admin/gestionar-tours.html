@@ -1762,21 +1762,107 @@ async function publishTourPage(slug, tourObj) {
   let itineraryHtml = '';
   const itinerario = Array.isArray(tourObj.itinerario) ? tourObj.itinerario : [];
   if (itinerario.length) {
+    const cleanText = (txt) => (txt || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    const mdTextToHtml = (md) => {
+      if (!md) return '';
+      const lines = md.split('\n');
+      let out = '';
+      let inList = false;
+      lines.forEach(line => {
+        const trimmed = line.trim();
+        if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
+          if (!inList) {
+            out += '<ul style="margin:12px 0; padding-left:22px;">';
+            inList = true;
+          }
+          out += `<li style="margin-bottom:6px;">${cleanText(trimmed.substring(2))}</li>`;
+        } else {
+          if (inList) {
+            out += '</ul>';
+            inList = false;
+          }
+          if (trimmed) {
+            out += `<p style="margin-bottom:14px; line-height:1.8;">${cleanText(trimmed)}</p>`;
+          }
+        }
+      });
+      if (inList) out += '</ul>';
+      return out;
+    };
+
     itinerario.forEach((it, i) => {
       const dayNum = it.dia || (i + 1);
-      const dayTitle = it.titulo ? `Day ${dayNum}: ${it.titulo}` : `Day ${dayNum}`;
+      const dayPad = String(dayNum).padStart(2, '0');
+      const dayTitle = it.titulo ? it.titulo.trim() : `Day ${dayNum}`;
+      const daySubtitle = it.subtitulo ? it.subtitulo.trim() : '';
+      const isOpen = i === 0;
+
+      let bodyInnerHtml = '';
+      const bloques = Array.isArray(it.bloques) ? it.bloques : [];
+
+      if (bloques.length > 0) {
+        bloques.forEach(b => {
+          if (b.tipo === 'imagen' || b.tipo === 'image') {
+            let imgSrc = b.url || '';
+            if (imgSrc && imgSrc.startsWith('/') && !imgSrc.startsWith('//')) {
+              imgSrc = '..' + imgSrc;
+            }
+            if (imgSrc) {
+              bodyInnerHtml += `
+                <figure class="it-figure">
+                  <div class="it-img-box">
+                    <img src="${cleanText(imgSrc)}" alt="${cleanText(b.alt || dayTitle)}" loading="lazy">
+                  </div>
+                  ${b.pie ? `<figcaption class="it-caption">${cleanText(b.pie)}</figcaption>` : ''}
+                </figure>`;
+            }
+          } else {
+            const textContent = b.contenido || b.texto || '';
+            if (textContent.trim()) {
+              bodyInnerHtml += `
+                <div class="it-text-block">
+                  ${mdTextToHtml(textContent)}
+                </div>`;
+            }
+          }
+        });
+      } else if (it.descripcion && it.descripcion.trim()) {
+        bodyInnerHtml += `
+          <div class="it-text-block">
+            ${mdTextToHtml(it.descripcion)}
+          </div>`;
+      }
+
+      if (!bodyInnerHtml.trim()) {
+        bodyInnerHtml = `<p style="color:var(--earth-text, #4B5563); font-style:italic; margin:0;">Detailed highlights for this day will be coordinated with your certified guide.</p>`;
+      }
+
       itineraryHtml += `
-        <div style="background:var(--f); border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:24px;">
-          <h3 style="color:var(--a, #2dd4bf); font-size:1.25rem; font-weight:700; margin-bottom:12px; display:flex; align-items:center; gap:8px;">
-            <i class="far fa-calendar-check" style="font-size:1.1rem;"></i> ${dayTitle}
-          </h3>
-          <p style="color:rgba(255,255,255,0.85); font-size:1rem; line-height:1.75; margin:0;">
-            ${(it.descripcion || '').replace(/\n/g, '<br>')}
-          </p>
+        <div class="it-day-item ${isOpen ? 'is-open' : ''}" data-day="${dayNum}">
+          <button type="button" class="it-day-header" aria-expanded="${isOpen ? 'true' : 'false'}" aria-controls="it-body-${dayNum}" id="it-btn-${dayNum}">
+            <div class="it-day-header-left">
+              <div class="it-day-badge">
+                <span class="it-badge-tag">DAY</span>
+                <span class="it-badge-num">${dayPad}</span>
+              </div>
+              <div class="it-day-titles">
+                <h3 class="it-day-title">${cleanText(dayTitle)}</h3>
+                ${daySubtitle ? `<p class="it-day-subtitle">${cleanText(daySubtitle)}</p>` : ''}
+              </div>
+            </div>
+            <div class="it-day-chevron">
+              <i class="fas fa-chevron-down"></i>
+            </div>
+          </button>
+          <div class="it-day-body" id="it-body-${dayNum}" role="region" aria-labelledby="it-btn-${dayNum}" aria-hidden="${isOpen ? 'false' : 'true'}">
+            <div class="it-content-wrap">
+              ${bodyInnerHtml}
+            </div>
+          </div>
         </div>`;
     });
   } else {
-    itineraryHtml = `<p style="color:rgba(255,255,255,0.6); font-style:italic;">Custom day-by-day itinerary tailored upon request.</p>`;
+    itineraryHtml = `<p style="color:var(--earth-text, #4B5563); font-style:italic; padding:16px 0;">Custom day-by-day itinerary tailored upon request.</p>`;
   }
   
   const { desktopHtml, mobileHtml } = buildGuidedToursMenu(cData.tours, true);
@@ -1843,7 +1929,19 @@ async function unpublishTourPage(slug) {
 window.editTour = function(idx) {
   const t= idx === -1 ? {nombre:'', estado:'activo', categoria:'wildlife', duracion_dias:1, duracion_noches:0, precio_desde:0, capacidad_min:1, capacidad_max:12, dificultad:'Fácil', temporada:'', descripcion_corta:'', descripcion_larga:'', imagen_hero:'', galeria:[], itinerario:[], incluye:[], no_incluye:[], destacado:false} : cData.tours[idx];
   
-  let currentItinerary = JSON.parse(JSON.stringify(t.itinerario || []));
+  let currentItinerary = JSON.parse(JSON.stringify(t.itinerario || [])).map((item, idx) => {
+    let bloques = Array.isArray(item.bloques) ? item.bloques : [];
+    if (bloques.length === 0 && item.descripcion && item.descripcion.trim()) {
+      bloques = [{ tipo: 'texto', contenido: item.descripcion.trim() }];
+    }
+    return {
+      dia: item.dia || (idx + 1),
+      titulo: item.titulo || '',
+      subtitulo: item.subtitulo || '',
+      descripcion: item.descripcion || '',
+      bloques: bloques
+    };
+  });
   
   set(`
     <button class="back-btn" onclick="route('tours')">← Volver a tours</button>
@@ -1913,7 +2011,7 @@ window.editTour = function(idx) {
               <h3 style="color: #10b981; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin: 0;">Itinerario Día a Día</h3>
               <span id="it-days-badge" style="font-size:0.75rem; color:#d1d5db; background:rgba(255,255,255,0.05); padding:3px 8px; border-radius:6px; border:1px solid rgba(255,255,255,0.1);">${t.duracion_dias || 1} Días</span>
             </div>
-            <div id="itinerary-days-container" style="display: flex; flex-direction: column; gap: 14px;"></div>
+            <div id="itinerary-days-container" style="display: flex; flex-direction: column; gap: 16px;"></div>
           </div>
         </div>
 
@@ -1945,14 +2043,97 @@ window.editTour = function(idx) {
     if (!container) return;
     container.querySelectorAll('.it-day-card').forEach(card => {
       const day = parseInt(card.dataset.day);
+      const dayIdx = day - 1;
       const tit = card.querySelector('.it-title-inp')?.value || '';
-      const desc = card.querySelector('.it-desc-ta')?.value || '';
-      if (!currentItinerary[day - 1]) currentItinerary[day - 1] = { dia: day, titulo: '', descripcion: '' };
-      currentItinerary[day - 1].dia = day;
-      currentItinerary[day - 1].titulo = tit;
-      currentItinerary[day - 1].descripcion = desc;
+      const sub = card.querySelector('.it-sub-inp')?.value || '';
+      
+      const blocks = [];
+      card.querySelectorAll('.it-block-card').forEach(bCard => {
+        const bType = bCard.dataset.type;
+        if (bType === 'imagen') {
+          const url = (bCard.querySelector('.it-img-url')?.value || '').trim();
+          const alt = (bCard.querySelector('.it-img-alt')?.value || '').trim();
+          const pie = (bCard.querySelector('.it-img-pie')?.value || '').trim();
+          if (url) {
+            blocks.push({ tipo: 'imagen', url, alt, pie });
+          }
+        } else {
+          const txt = bCard.querySelector('.it-text-ta')?.value || '';
+          blocks.push({ tipo: 'texto', contenido: txt });
+        }
+      });
+
+      if (!currentItinerary[dayIdx]) {
+        currentItinerary[dayIdx] = { dia: day, titulo: '', subtitulo: '', descripcion: '', bloques: [] };
+      }
+      currentItinerary[dayIdx].dia = day;
+      currentItinerary[dayIdx].titulo = tit;
+      currentItinerary[dayIdx].subtitulo = sub;
+      currentItinerary[dayIdx].bloques = blocks;
+      const textOnly = blocks.filter(b => b.tipo === 'texto').map(b => b.contenido).filter(Boolean).join('\n\n');
+      currentItinerary[dayIdx].descripcion = textOnly;
     });
   }
+
+  window.pickItineraryImage = function(dayIndex, blockIndex) {
+    openMediaModal((url) => {
+      const inp = document.getElementById(`it-img-inp-${dayIndex}-${blockIndex}`);
+      const prev = document.getElementById(`it-img-prev-${dayIndex}-${blockIndex}`);
+      if (inp) inp.value = url;
+      if (prev) {
+        prev.src = url;
+        prev.style.display = 'block';
+      }
+      syncItineraryFromDOM();
+      const sb = document.getElementById('save-bar');
+      if (sb && saveFnRef) sb.style.display = 'flex';
+    });
+  };
+
+  window.addItineraryBlock = function(dayIndex, type) {
+    syncItineraryFromDOM();
+    const dayIdx = dayIndex - 1;
+    if (!currentItinerary[dayIdx]) {
+      currentItinerary[dayIdx] = { dia: dayIndex, titulo: '', subtitulo: '', descripcion: '', bloques: [] };
+    }
+    if (!Array.isArray(currentItinerary[dayIdx].bloques)) {
+      currentItinerary[dayIdx].bloques = [];
+    }
+    if (type === 'imagen') {
+      currentItinerary[dayIdx].bloques.push({ tipo: 'imagen', url: '', alt: '', pie: '' });
+    } else {
+      currentItinerary[dayIdx].bloques.push({ tipo: 'texto', contenido: '' });
+    }
+    renderItineraryBlocks();
+    const sb = document.getElementById('save-bar');
+    if (sb && saveFnRef) sb.style.display = 'flex';
+  };
+
+  window.moveItineraryBlock = function(dayIndex, blockIndex, dir) {
+    syncItineraryFromDOM();
+    const dayIdx = dayIndex - 1;
+    const blocks = currentItinerary[dayIdx]?.bloques;
+    if (!blocks) return;
+    const targetIdx = blockIndex + dir;
+    if (targetIdx < 0 || targetIdx >= blocks.length) return;
+    const temp = blocks[blockIndex];
+    blocks[blockIndex] = blocks[targetIdx];
+    blocks[targetIdx] = temp;
+    renderItineraryBlocks();
+    const sb = document.getElementById('save-bar');
+    if (sb && saveFnRef) sb.style.display = 'flex';
+  };
+
+  window.removeItineraryBlock = function(dayIndex, blockIndex) {
+    syncItineraryFromDOM();
+    const dayIdx = dayIndex - 1;
+    const blocks = currentItinerary[dayIdx]?.bloques;
+    if (!blocks) return;
+    blocks.splice(blockIndex, 1);
+    renderItineraryBlocks();
+    const sb = document.getElementById('save-bar');
+    if (sb && saveFnRef) sb.style.display = 'flex';
+  };
 
   function renderItineraryBlocks() {
     const container = document.getElementById('itinerary-days-container');
@@ -1963,7 +2144,7 @@ window.editTour = function(idx) {
     syncItineraryFromDOM();
     
     while (currentItinerary.length < totalDays) {
-      currentItinerary.push({ dia: currentItinerary.length + 1, titulo: '', descripcion: '' });
+      currentItinerary.push({ dia: currentItinerary.length + 1, titulo: '', subtitulo: '', descripcion: '', bloques: [{ tipo: 'texto', contenido: '' }] });
     }
     
     const badge = document.getElementById('it-days-badge');
@@ -1971,20 +2152,92 @@ window.editTour = function(idx) {
     
     let html = '';
     for (let i = 1; i <= totalDays; i++) {
-      const item = currentItinerary[i - 1] || { dia: i, titulo: '', descripcion: '' };
+      const item = currentItinerary[i - 1] || { dia: i, titulo: '', subtitulo: '', descripcion: '', bloques: [] };
+      let bloques = Array.isArray(item.bloques) ? item.bloques : [];
+      if (bloques.length === 0 && item.descripcion) {
+        bloques = [{ tipo: 'texto', contenido: item.descripcion }];
+      } else if (bloques.length === 0) {
+        bloques = [{ tipo: 'texto', contenido: '' }];
+      }
+      item.bloques = bloques;
+
+      let blocksHtml = '';
+      bloques.forEach((b, bIdx) => {
+        if (b.tipo === 'imagen') {
+          blocksHtml += `
+            <div class="it-block-card" data-type="imagen" style="background: rgba(56,189,248,0.06); border: 1px solid rgba(56,189,248,0.25); border-radius: 8px; padding: 12px; margin-bottom: 10px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px;">
+                <span style="font-size:0.75rem; font-weight:700; color:#38bdf8; text-transform:uppercase; display:flex; align-items:center; gap:6px;">
+                  <i class="fas fa-image"></i> Bloque de Imagen
+                </span>
+                <div style="display:flex; gap:4px;">
+                  <button type="button" class="btn-xs" onclick="moveItineraryBlock(${i}, ${bIdx}, -1)" title="Subir bloque" style="background:rgba(255,255,255,0.08); border:none; color:#cbd5e1; border-radius:4px; padding:3px 8px; cursor:pointer;">↑</button>
+                  <button type="button" class="btn-xs" onclick="moveItineraryBlock(${i}, ${bIdx}, 1)" title="Bajar bloque" style="background:rgba(255,255,255,0.08); border:none; color:#cbd5e1; border-radius:4px; padding:3px 8px; cursor:pointer;">↓</button>
+                  <button type="button" class="btn-xs" onclick="removeItineraryBlock(${i}, ${bIdx})" title="Quitar imagen (no borra el archivo de Medios R2)" style="background:rgba(239,68,68,0.18); border:none; color:#f87171; border-radius:4px; padding:3px 8px; cursor:pointer;">✕</button>
+                </div>
+              </div>
+              <div style="display:flex; gap:12px; align-items:flex-start; margin-bottom:8px;">
+                <div style="width:76px; height:54px; flex-shrink:0; background:rgba(0,0,0,0.5); border-radius:6px; overflow:hidden; border:1px solid rgba(255,255,255,0.12);">
+                  <img id="it-img-prev-${i}-${bIdx}" src="${esc(b.url || '')}" style="width:100%; height:100%; object-fit:cover; display:${b.url ? 'block' : 'none'};" alt="">
+                </div>
+                <div style="flex:1;">
+                  <div style="display:flex; gap:8px;">
+                    <input class="it-img-url" id="it-img-inp-${i}-${bIdx}" value="${esc(b.url || '')}" placeholder="URL o seleccionar de Medios" oninput="document.getElementById('it-img-prev-${i}-${bIdx}').src=this.value; document.getElementById('it-img-prev-${i}-${bIdx}').style.display=this.value?'block':'none';" style="flex:1; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.12); border-radius:6px; color:#fff; padding:6px 10px; font-size:0.83rem;">
+                    <button type="button" class="btn-secondary" onclick="pickItineraryImage(${i}, ${bIdx})" style="padding:6px 12px; font-size:0.8rem; white-space:nowrap;">📁 Medios</button>
+                  </div>
+                </div>
+              </div>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                <div>
+                  <input class="it-img-alt" value="${esc(b.alt || '')}" placeholder="Texto alt (accesibilidad)" style="width:100%; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.1); border-radius:6px; color:#fff; padding:5px 8px; font-size:0.8rem;">
+                </div>
+                <div>
+                  <input class="it-img-pie" value="${esc(b.pie || '')}" placeholder="Pie de foto opcional" style="width:100%; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.1); border-radius:6px; color:#fff; padding:5px 8px; font-size:0.8rem;">
+                </div>
+              </div>
+            </div>`;
+        } else {
+          blocksHtml += `
+            <div class="it-block-card" data-type="texto" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 12px; margin-bottom: 10px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px;">
+                <span style="font-size:0.75rem; font-weight:700; color:#2dd4bf; text-transform:uppercase; display:flex; align-items:center; gap:6px;">
+                  <i class="fas fa-paragraph"></i> Bloque de Texto
+                </span>
+                <div style="display:flex; gap:4px;">
+                  <button type="button" class="btn-xs" onclick="moveItineraryBlock(${i}, ${bIdx}, -1)" title="Subir bloque" style="background:rgba(255,255,255,0.08); border:none; color:#cbd5e1; border-radius:4px; padding:3px 8px; cursor:pointer;">↑</button>
+                  <button type="button" class="btn-xs" onclick="moveItineraryBlock(${i}, ${bIdx}, 1)" title="Bajar bloque" style="background:rgba(255,255,255,0.08); border:none; color:#cbd5e1; border-radius:4px; padding:3px 8px; cursor:pointer;">↓</button>
+                  <button type="button" class="btn-xs" onclick="removeItineraryBlock(${i}, ${bIdx})" title="Quitar bloque" style="background:rgba(239,68,68,0.18); border:none; color:#f87171; border-radius:4px; padding:3px 8px; cursor:pointer;">✕</button>
+                </div>
+              </div>
+              <textarea class="it-text-ta" style="width:100%; min-height:85px; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.12); border-radius:6px; color:#fff; padding:8px 10px; font-family:inherit; font-size:0.88rem; line-height:1.5;" placeholder="Párrafos descriptivos de actividades, fauna, comidas, listas con guiones (- item)...">${esc(b.contenido || '')}</textarea>
+            </div>`;
+        }
+      });
+
       html += `
-        <div class="it-day-card" data-day="${i}" style="background: rgba(0,0,0,0.25); border: 1px solid rgba(45,212,191,0.18); border-radius: 12px; padding: 16px;">
-          <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px;">
+        <div class="it-day-card" data-day="${i}" style="background: rgba(0,0,0,0.25); border: 1px solid rgba(45,212,191,0.18); border-radius: 12px; padding: 18px;">
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
             <span style="background: #10b981; color: #020617; font-size: 0.72rem; font-weight: 800; padding: 3px 8px; border-radius: 6px;">DÍA ${i}</span>
-            <span style="font-size:0.8rem; color:#9ca3af;">Actividades y ruta del día ${i}</span>
+            <span style="font-size:0.8rem; color:#9ca3af;">Actividades, ruta y fotografías del día ${i}</span>
           </div>
           <div class="ff" style="margin-bottom:10px;">
             <label>Título del día ${i}</label>
-            <input class="it-title-inp" id="it-t-${i}" value="${esc(item.titulo || '')}" placeholder="ej: Cusco ? Bosque Nuboso ? Machu Wasi Lodge">
+            <input class="it-title-inp" id="it-t-${i}" value="${esc(item.titulo || '')}" placeholder="ej: Cusco → Bosque Nuboso → Machu Wasi Lodge">
           </div>
-          <div class="ff">
-            <label>Descripción de actividades</label>
-            <textarea class="it-desc-ta" id="it-d-${i}" style="min-height:90px; line-height:1.5;" placeholder="Detalles de caminatas, safari en bote, comidas, avistamiento...">${esc(item.descripcion || '')}</textarea>
+          <div class="ff" style="margin-bottom:14px;">
+            <label>Subtítulo / ruta opcional</label>
+            <input class="it-sub-inp" id="it-sub-${i}" value="${esc(item.subtitulo || '')}" placeholder="ej: Manu Road · Cloud forest · Cock-of-the-Rock lek">
+          </div>
+          <div class="it-blocks-list" id="it-blocks-wrap-${i}">
+            ${blocksHtml}
+          </div>
+          <div style="display:flex; gap:8px; margin-top:8px;">
+            <button type="button" class="btn-panel" onclick="addItineraryBlock(${i}, 'texto')" style="padding:6px 12px; font-size:0.78rem;">
+              <i class="fas fa-plus"></i> Añadir texto
+            </button>
+            <button type="button" class="btn-panel" onclick="addItineraryBlock(${i}, 'imagen')" style="padding:6px 12px; font-size:0.78rem;">
+              <i class="fas fa-image"></i> Añadir imagen
+            </button>
           </div>
         </div>`;
     }
@@ -2014,15 +2267,22 @@ window.editTour = function(idx) {
     syncItineraryFromDOM();
     const durDias = Math.max(1, +v('t-d') || 1);
     
-    // Exact duracion_dias elements
+    // Preserve days safely even if durDias is temporarily altered
     const finalItinerary = [];
-    for (let i = 0; i < durDias; i++) {
-      const it = currentItinerary[i] || { dia: i + 1, titulo: '', descripcion: '' };
-      finalItinerary.push({
-        dia: i + 1,
-        titulo: (it.titulo || '').trim(),
-        descripcion: (it.descripcion || '').trim()
-      });
+    const maxDays = Math.max(durDias, currentItinerary.length);
+    for (let i = 0; i < maxDays; i++) {
+      const it = currentItinerary[i];
+      if (!it) continue;
+      const hasContent = (it.titulo && it.titulo.trim()) || (it.subtitulo && it.subtitulo.trim()) || (it.bloques && it.bloques.length > 0) || (it.descripcion && it.descripcion.trim());
+      if (i < durDias || hasContent) {
+        finalItinerary.push({
+          dia: i + 1,
+          titulo: (it.titulo || '').trim(),
+          subtitulo: (it.subtitulo || '').trim(),
+          descripcion: (it.descripcion || '').trim(),
+          bloques: Array.isArray(it.bloques) ? it.bloques : []
+        });
+      }
     }
 
     const updated = {...t,nombre:v('t-n'),estado:v('t-e'),categoria:v('t-c'),

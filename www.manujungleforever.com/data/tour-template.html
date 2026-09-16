@@ -18,7 +18,7 @@
 <link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&amp;family=Outfit:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
 <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
-<link href="../assets/css/new.css?v=39" rel="stylesheet"/>
+<link href="../assets/css/new.css?v=41" rel="stylesheet"/>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"TouristAttraction","name":"{{TITLE}}","url":"{{OG_URL}}","description":"{{META_DESCRIPTION}}","telephone":"+51901525679","email":"discover@manujungleforever.com","address":{"@type":"PostalAddress","addressLocality":"Nuevo Eden","addressCountry":"PE"},"sameAs":["https://www.facebook.com/manujungleforever","https://www.instagram.com/manujungleforever/",]}</script>
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-5476BC9');</script>
 </head><body>
@@ -132,41 +132,273 @@
 </div>
 <!-- Itinerary Section -->
 <div style="margin-top: 50px;">
-<span class="ey" style="color:var(--a, #2dd4bf); font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:8px; display:inline-block;">Day-by-Day Journey</span>
-<h2 class="h2" style="font-size: 2.2rem; margin-bottom: 30px; color: var(--forest-dark);">Tour Itinerary</h2>
-<div class="itinerary-list" style="display:flex; flex-direction:column; gap:20px;">
+<div class="it-sec-header">
+  <div>
+    <span class="ey" style="color:var(--a, #2dd4bf); font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:8px; display:inline-block;">Day-by-Day Journey</span>
+    <h2 class="h2" style="font-size: 2.2rem; margin: 0; color: var(--forest-dark);">Tour Itinerary</h2>
+  </div>
+  <div class="it-controls">
+    <button type="button" class="it-ctrl-btn" id="it-expand-all" aria-label="Expand all days">
+      <i class="fas fa-angles-down" style="font-size:0.75rem;"></i> Expand All
+    </button>
+    <button type="button" class="it-ctrl-btn" id="it-collapse-all" aria-label="Collapse all days">
+      <i class="fas fa-angles-up" style="font-size:0.75rem;"></i> Collapse All
+    </button>
+  </div>
+</div>
+<div class="it-accordion" id="tour-itinerary-accordion">
 {{ITINERARIO_HTML}}
-            </div>
+</div>
 </div>
 </div>
 <!-- Right Column: Sidebar Details & Booking Card -->
+<div class="tour-sidebar-col">
+
+<!-- Pricing & Booking Card -->
+<div class="tour-pricing-card">
+<div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:20px; border-bottom:1px solid rgba(255,255,255,0.12); padding-bottom:16px;">
 <div>
-<div style="position: sticky; top: 100px; background: var(--forest-card); color: #FFFFFF; border:1px solid rgba(45,212,191,0.25); border-radius:20px; padding:32px; box-shadow: 0 15px 40px rgba(0,0,0,0.5);">
-<div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:20px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:16px;">
-<div>
-<span style="font-size:0.75rem; color:var(--c, #9ca3af); text-transform:uppercase; letter-spacing:1px;">Starting From</span>
-<div style="font-size:2.2rem; font-weight:800; color:var(--a, #2dd4bf); line-height:1.1;">${{PRECIO}} <span style="font-size:0.9rem; font-weight:600; color:#fff;">USD</span></div>
+<span class="tour-pricing-label">Starting From</span>
+<div class="tour-pricing-value">${{PRECIO}} <span style="font-size:0.95rem; font-weight:600; color:#FFFFFF; text-shadow:none;">USD</span></div>
 </div>
-<span style="background:rgba(45,212,191,0.15); color:var(--a, #2dd4bf); border:1px solid rgba(45,212,191,0.3); padding:4px 10px; border-radius:8px; font-size:0.75rem; font-weight:700; text-transform:uppercase;">{{DURACION}}</span>
+<span class="tour-pricing-badge">{{DURACION}}</span>
 </div>
-<h3 style="font-size:1.2rem; margin-bottom:18px; color:#fff;">Tour Features</h3>
+<h3 style="font-size:1.2rem; margin-bottom:18px; color:#FFFFFF !important; -webkit-text-fill-color:#FFFFFF !important; font-weight:700;">Tour Features</h3>
 <ul style="display:flex; flex-direction:column; gap:14px; margin-bottom: 28px; padding:0; list-style:none;">
-<li style="display:flex; align-items:center; gap:12px; color:rgba(255,255,255,0.85); font-size:0.95rem;"><i class="fas fa-check-circle" style="color:var(--a, #2dd4bf);"></i> Season: {{TEMPORADA}}</li>
-<li style="display:flex; align-items:center; gap:12px; color:rgba(255,255,255,0.85); font-size:0.95rem;"><i class="fas fa-check-circle" style="color:var(--a, #2dd4bf);"></i> Group Size: {{CAPACIDAD}}</li>
-<li style="display:flex; align-items:center; gap:12px; color:rgba(255,255,255,0.85); font-size:0.95rem;"><i class="fas fa-check-circle" style="color:var(--a, #2dd4bf);"></i> Difficulty: {{DIFICULTAD}}</li>
-<li style="display:flex; align-items:center; gap:12px; color:rgba(255,255,255,0.85); font-size:0.95rem;"><i class="fas fa-check-circle" style="color:var(--a, #2dd4bf);"></i> Expert Born-Local Guides</li>
-<li style="display:flex; align-items:center; gap:12px; color:rgba(255,255,255,0.85); font-size:0.95rem;"><i class="fas fa-check-circle" style="color:var(--a, #2dd4bf);"></i> Transport &amp; Lodging Included</li>
+<li style="display:flex; align-items:center; gap:12px; color:rgba(255,255,255,0.92); font-size:0.95rem;"><i class="fas fa-check-circle" style="color:var(--a, #2dd4bf);"></i> Season: {{TEMPORADA}}</li>
+<li style="display:flex; align-items:center; gap:12px; color:rgba(255,255,255,0.92); font-size:0.95rem;"><i class="fas fa-check-circle" style="color:var(--a, #2dd4bf);"></i> Group Size: {{CAPACIDAD}}</li>
+<li style="display:flex; align-items:center; gap:12px; color:rgba(255,255,255,0.92); font-size:0.95rem;"><i class="fas fa-check-circle" style="color:var(--a, #2dd4bf);"></i> Difficulty: {{DIFICULTAD}}</li>
+<li style="display:flex; align-items:center; gap:12px; color:rgba(255,255,255,0.92); font-size:0.95rem;"><i class="fas fa-check-circle" style="color:var(--a, #2dd4bf);"></i> Expert Born-Local Guides</li>
+<li style="display:flex; align-items:center; gap:12px; color:rgba(255,255,255,0.92); font-size:0.95rem;"><i class="fas fa-check-circle" style="color:var(--a, #2dd4bf);"></i> Transport &amp; Lodging Included</li>
 </ul>
-<a class="btn ba" href="https://api.whatsapp.com/send?phone=51901525679&amp;text=Hello%21%20I%20would%20like%20to%20learn%20more%20about%20your%20jungle%20trips" rel="noopener" style="width:100%; justify-content:center; padding:16px; border:none; border-radius:30px; font-size:1rem; font-weight:700; margin-bottom:12px; text-decoration:none; display:flex; align-items:center; gap:8px;" target="_blank">
+<a class="btn ba" href="https://api.whatsapp.com/send?phone=51901525679&amp;text=Hello%21%20I%20would%20like%20to%20learn%20more%20about%20the%20{{TITLE_ENCODED}}%20tour" rel="noopener" style="width:100%; justify-content:center; padding:16px; border:none; border-radius:30px; font-size:1rem; font-weight:700; margin-bottom:12px; text-decoration:none; display:flex; align-items:center; gap:8px;" target="_blank">
 <i class="fa-brands fa-whatsapp" style="font-size:1.2rem;"></i> Inquire on WhatsApp
-            </a>
-<a class="btn bg2" href="../contact/index.html" style="width:100%; justify-content:center; padding:14px; border-radius:30px; font-size:0.95rem; font-weight:600; text-decoration:none; display:flex; align-items:center; gap:8px; border:1px solid rgba(255,255,255,0.2);">
+</a>
+<a class="btn bg2" href="../contact/index.html" style="width:100%; justify-content:center; padding:14px; border-radius:30px; font-size:0.95rem; font-weight:600; text-decoration:none; display:flex; align-items:center; gap:8px; border:1px solid rgba(255,255,255,0.2); color:#FFFFFF;">
 <i class="fas fa-envelope"></i> Contact Us Online
-            </a>
+</a>
+</div>
+
+<!-- Upcoming Departures Card -->
+<div class="upcoming-deps-card" id="tour-upcoming-deps" data-tour-slug="{{SLUG}}" data-tour-title="{{TITLE}}">
+  <div class="upcoming-deps-head">
+    <span class="upcoming-deps-eyebrow"><i class="far fa-calendar-alt"></i> Departures</span>
+  </div>
+  <h3 class="upcoming-deps-title" style="color: #FFFFFF !important; -webkit-text-fill-color: #FFFFFF !important;">Upcoming Departures</h3>
+  <p class="upcoming-deps-subtitle" style="color: rgba(255, 255, 255, 0.75) !important;">{{CATEGORIA_LABEL}} · Guaranteed Small Groups</p>
+  
+  <div class="dep-mini-list" id="dep-mini-list">
+    <div style="background:rgba(255,255,255,0.06); border-radius:12px; height:50px; animation:pulse 1.5s infinite alternate;"></div>
+    <div style="background:rgba(255,255,255,0.06); border-radius:12px; height:50px; animation:pulse 1.5s infinite alternate; animation-delay: 0.2s;"></div>
+  </div>
+  
+  <a href="../departures/index.html" class="dep-view-all-link">
+    View All Departures <i class="fas fa-arrow-right" style="font-size:0.75rem;"></i>
+  </a>
+</div>
+
 </div>
 </div>
 </div>
-</div>
+</section>
+
+<!-- Scripts for Itinerary Accordion and Departures Widget -->
+<script>
+(function() {
+  const accordion = document.getElementById('tour-itinerary-accordion');
+  if (!accordion) return;
+
+  // Guarantee Day 1 is always expanded on initial open
+  const firstDay = accordion.querySelector('.it-day-item');
+  if (firstDay) {
+    firstDay.classList.add('is-open');
+    const fBtn = firstDay.querySelector('.it-day-header');
+    if (fBtn) fBtn.setAttribute('aria-expanded', 'true');
+    const fBody = firstDay.querySelector('.it-day-body');
+    if (fBody) {
+      fBody.setAttribute('aria-hidden', 'false');
+      fBody.style.display = 'block';
+    }
+  }
+
+  accordion.addEventListener('click', function(e) {
+    const btn = e.target.closest('.it-day-header');
+    if (!btn) return;
+    const item = btn.closest('.it-day-item');
+    if (!item) return;
+
+    const isOpen = item.classList.contains('is-open');
+    if (isOpen) {
+      item.classList.remove('is-open');
+      btn.setAttribute('aria-expanded', 'false');
+      const body = item.querySelector('.it-day-body');
+      if (body) body.setAttribute('aria-hidden', 'true');
+    } else {
+      item.classList.add('is-open');
+      btn.setAttribute('aria-expanded', 'true');
+      const body = item.querySelector('.it-day-body');
+      if (body) body.setAttribute('aria-hidden', 'false');
+    }
+  });
+
+  const btnExpandAll = document.getElementById('it-expand-all');
+  const btnCollapseAll = document.getElementById('it-collapse-all');
+
+  if (btnExpandAll) {
+    btnExpandAll.addEventListener('click', function() {
+      accordion.querySelectorAll('.it-day-item').forEach(item => {
+        item.classList.add('is-open');
+        const btn = item.querySelector('.it-day-header');
+        if (btn) btn.setAttribute('aria-expanded', 'true');
+        const body = item.querySelector('.it-day-body');
+        if (body) body.setAttribute('aria-hidden', 'false');
+      });
+    });
+  }
+
+  if (btnCollapseAll) {
+    btnCollapseAll.addEventListener('click', function() {
+      accordion.querySelectorAll('.it-day-item').forEach(item => {
+        item.classList.remove('is-open');
+        const btn = item.querySelector('.it-day-header');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+        const body = item.querySelector('.it-day-body');
+        if (body) body.setAttribute('aria-hidden', 'true');
+      });
+    });
+  }
+})();
+
+(async function() {
+  const container = document.getElementById('tour-upcoming-deps');
+  const listEl = document.getElementById('dep-mini-list');
+  if (!container || !listEl) return;
+
+  const currentSlug = (container.getAttribute('data-tour-slug') || '').toLowerCase().trim();
+  const currentTitle = (container.getAttribute('data-tour-title') || '').toLowerCase().trim();
+
+  try {
+    let res = await fetch('/api/salidas?v=' + Date.now()).catch(() => null);
+    let data;
+    if (res && res.ok) {
+      data = await res.json();
+    } else {
+      const fallbackRes = await fetch('../data/departures.json?v=' + Date.now());
+      if (fallbackRes.ok) data = await fallbackRes.json();
+    }
+
+    let sal = (data && data.salidas) ? data.salidas : [];
+    const now = new Date();
+    now.setHours(0, 0, 0, 0);
+
+    function matchesCurrentTour(s) {
+      const sTid = (s.tour_id || '').toLowerCase().trim();
+      const sTname = (s.tour_nombre || '').toLowerCase().trim();
+      if (sTid && currentSlug && (sTid === currentSlug || sTid.replace(/[^a-z0-9]/g, '') === currentSlug.replace(/[^a-z0-9]/g, ''))) return true;
+      if (sTname && currentTitle && (sTname.includes(currentTitle) || currentTitle.includes(sTname))) return true;
+      if (sTid && currentSlug) {
+        if (sTid.includes('reserved-zone') && currentSlug.includes('reserve-zone')) {
+          if (sTid.includes('6-day') && currentSlug.includes('6d')) return true;
+          if (sTid.includes('7-day') && currentSlug.includes('7d')) return true;
+        }
+        if (sTid.includes('blanquillo') && currentSlug.includes('blanquillo')) {
+          if (sTid.includes('8-day') && currentSlug.includes('8d')) return true;
+          if (sTid.includes('9-day') && currentSlug.includes('9d')) return true;
+          if (sTid.includes('6-day') && currentSlug.includes('6d')) return true;
+        }
+        if (sTid.includes('nuevo-eden') && currentSlug.includes('expedition-5d') && sTid.includes('5-day')) return true;
+        if (sTid.includes('nuevo-eden') && currentSlug.includes('adventure-4d') && sTid.includes('4-day')) return true;
+        if (sTid.includes('amazon-expedition') && currentSlug.includes('expedition-5d') && sTid.includes('5-day')) return true;
+        if (sTid.includes('amazon-expedition') && currentSlug.includes('expedition-6d') && sTid.includes('6-day')) return true;
+      }
+      return false;
+    }
+
+    const upcoming = sal.filter(s => {
+      if (s.estado === 'cancelado' || s.estado === 'cerrado') return false;
+      if (!matchesCurrentTour(s)) return false;
+      if (!s.fecha_salida) return false;
+      const parts = s.fecha_salida.split('-');
+      if (parts.length < 3) return false;
+      const depDate = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+      return depDate >= now;
+    });
+
+    upcoming.sort((a, b) => new Date(a.fecha_salida) - new Date(b.fecha_salida));
+
+    const topUpcoming = upcoming.slice(0, 3);
+
+    if (topUpcoming.length === 0) {
+      listEl.innerHTML = `
+        <div class="dep-empty-box">
+          <p>No scheduled open groups for this tour at the moment.</p>
+          <a href="https://api.whatsapp.com/send?phone=51901525679&text=Hello!%20I%20am%20interested%20in%20custom%20dates%20for%20the%20${encodeURIComponent(currentTitle || 'tour')}" class="btn ba" style="display:inline-flex; align-items:center; gap:6px; font-size:0.8rem; padding:8px 18px; border-radius:20px; text-decoration:none;" target="_blank" rel="noopener">
+            <i class="fa-brands fa-whatsapp"></i> Inquire Custom Dates
+          </a>
+        </div>`;
+      return;
+    }
+
+    function formatRange(startStr, endStr) {
+      const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      if (!startStr) return 'TBD';
+      const sp = startStr.split('-');
+      const sM = months[parseInt(sp[1]) - 1];
+      const sD = parseInt(sp[2]);
+      const sY = sp[0];
+      if (!endStr) return `${sM} ${sD}, ${sY}`;
+      const ep = endStr.split('-');
+      const eM = months[parseInt(ep[1]) - 1];
+      const eD = parseInt(ep[2]);
+      const eY = ep[0];
+      if (sM === eM && sY === eY) {
+        return `${sM} ${sD} – ${eD}, ${sY}`;
+      }
+      return `${sM} ${sD} – ${eM} ${eD}, ${sY}`;
+    }
+
+    let itemsHtml = '';
+    topUpcoming.forEach(s => {
+      const dateLabel = formatRange(s.fecha_salida, s.fecha_regreso);
+      const spots = Number(s.plazas_disponibles);
+      let spotsHtml = '';
+      if (!isNaN(spots) && spots > 0) {
+        const isLast = spots <= 3;
+        spotsHtml = `<span class="dep-mini-spots ${isLast ? 'last-spots' : ''}">${spots} ${spots === 1 ? 'spot' : 'spots'} left</span>`;
+      } else if (s.estado === 'disponible') {
+        spotsHtml = `<span class="dep-mini-spots" style="background:rgba(45,212,191,0.18); color:#5EEAD4; border-color:rgba(45,212,191,0.38);">Guaranteed</span>`;
+      }
+      const queryMsg = encodeURIComponent(`Hello! I want to join the ${s.tour_nombre || currentTitle} departure on ${s.fecha_salida}`);
+      const waUrl = `https://api.whatsapp.com/send?phone=51901525679&text=${queryMsg}`;
+
+      itemsHtml += `
+        <a href="${waUrl}" class="dep-mini-item" target="_blank" rel="noopener" title="Inquire about this departure">
+          <div class="dep-mini-date">
+            <i class="far fa-calendar-check"></i>
+            <span>${dateLabel}</span>
+          </div>
+          <div class="dep-mini-right">
+            ${spotsHtml}
+            <i class="fas fa-chevron-right dep-mini-arrow"></i>
+          </div>
+        </a>`;
+    });
+
+    listEl.innerHTML = itemsHtml;
+
+  } catch(err) {
+    console.warn('Could not load tour departures:', err);
+    listEl.innerHTML = `
+      <div class="dep-empty-box">
+        <p>Private and custom departures are available year-round.</p>
+        <a href="../contact/index.html" class="btn bg2" style="display:inline-flex; align-items:center; gap:6px; font-size:0.8rem; padding:8px 18px; border-radius:20px; text-decoration:none; color:#FFFFFF;">
+          Contact Us
+        </a>
+      </div>`;
+  }
+})();
+</script>
+
 </section>
 </main>
 <style>
