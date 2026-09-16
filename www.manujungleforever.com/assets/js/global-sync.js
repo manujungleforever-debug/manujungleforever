@@ -3,6 +3,9 @@
     try {
       const isContactPage = window.location.pathname.includes('/contact/') || window.location.pathname.endsWith('/contact');
       
+      // Start Guided Tours Header sync immediately in parallel
+      const toursSyncPromise = syncGuidedToursHeader();
+
       // Fetch both configs in parallel with API first and static fallback
       let [gRes, cRes] = await Promise.all([
         fetch('/api/content/global?v=' + Date.now()).then(r => r.ok ? r.json() : null).catch(() => null),
@@ -39,8 +42,8 @@
       const addressText = addrParts.join(', ') || gData.address || 'Manu Jungle Forever 17800, Nuevo Eden, Peru';
       const mapsUrl = dir.maps_url || gData.address_maps_url || 'https://www.google.com/maps/d/viewer?mid=12fWz1M5jmQ0jd8rUJY0VUfi6KnRmvnc';
 
-      // 5. Guided Tours Header & Mobile Menu Dynamic Hydration
-      await syncGuidedToursHeader();
+      // 5. Await Guided Tours Header sync
+      await toursSyncPromise;
 
       // 6. Individual Tour Page dynamic hydration from D1
       await syncTourPage();
@@ -93,16 +96,21 @@
       const activeTours = tours.filter(t => t.estado !== 'inactivo' && t.estado !== 'borrador');
 
       const CAT_MAP = {
-        'wildlife': { label: 'WILDLIFE QUEST', icon: 'fas fa-binoculars' },
-        'roadtrip': { label: 'RAINFOREST ROAD TRIP', icon: 'fas fa-route' },
-        'expedition': { label: 'AMAZON EXPEDITION', icon: 'fas fa-campground' },
-        'cultural': { label: 'CULTURAL EXPEDITION', icon: 'fas fa-landmark' },
-        'birdwatching': { label: 'BIRDWATCHING QUEST', icon: 'fas fa-dove' },
-        'machu wasi': { label: 'MACHU WASI ADVENTURE', icon: 'fas fa-tree' },
-        'photography': { label: 'WILDLIFE PHOTOGRAPHY', icon: 'fas fa-camera' }
+        'birding & photography': { label: 'BIRDING & PHOTOGRAPHY', icon: 'fas fa-compass' },
+        'birding': { label: 'BIRDING & PHOTOGRAPHY', icon: 'fas fa-compass' },
+        'birdwatching': { label: 'BIRDING & PHOTOGRAPHY', icon: 'fas fa-compass' },
+        'manu cultural zone': { label: 'MANU CULTURAL ZONE', icon: 'fas fa-compass' },
+        'cultural': { label: 'MANU CULTURAL ZONE', icon: 'fas fa-compass' },
+        'manu reserve zone': { label: 'MANU RESERVE ZONE', icon: 'fas fa-compass' },
+        'reserve': { label: 'MANU RESERVE ZONE', icon: 'fas fa-compass' },
+        'wildlife': { label: 'WILDLIFE QUEST', icon: 'fas fa-compass' },
+        'roadtrip': { label: 'RAINFOREST ROAD TRIP', icon: 'fas fa-compass' },
+        'expedition': { label: 'AMAZON EXPEDITION', icon: 'fas fa-compass' },
+        'machu wasi': { label: 'MACHU WASI ADVENTURE', icon: 'fas fa-compass' },
+        'photography': { label: 'WILDLIFE PHOTOGRAPHY', icon: 'fas fa-compass' }
       };
 
-      const order = ['wildlife', 'roadtrip', 'expedition', 'cultural', 'birdwatching', 'machu wasi', 'photography'];
+      const order = ['birding & photography', 'manu cultural zone', 'manu reserve zone', 'wildlife', 'roadtrip', 'expedition', 'cultural', 'birdwatching', 'machu wasi', 'photography'];
       const groups = {};
 
       activeTours.forEach(t => {
@@ -112,6 +120,34 @@
       });
 
       const allCats = Array.from(new Set([...order.filter(c => groups[c]), ...Object.keys(groups)]));
+
+      // Flatten active tours in exact display order
+      const orderedActiveTours = [];
+      allCats.forEach(cat => {
+        (groups[cat] || []).forEach(t => orderedActiveTours.push(t));
+      });
+
+      function isMenuUpToDate(menuEl, expectedTours) {
+        if (!menuEl) return true;
+        const links = Array.from(menuEl.querySelectorAll('li a'));
+        if (links.length !== expectedTours.length) return false;
+        for (let i = 0; i < expectedTours.length; i++) {
+          const href = links[i].getAttribute('href') || '';
+          const slug = expectedTours[i].slug || expectedTours[i].id;
+          if (!href.includes(slug)) return false;
+          if (links[i].textContent.trim() !== (expectedTours[i].nombre || '').trim()) return false;
+        }
+        return true;
+      }
+
+      // Check if both desktop and mobile menus already contain the exact tours
+      const desktopUpToDate = Array.from(desktopMenus).every(m => isMenuUpToDate(m, orderedActiveTours));
+      const mobileUpToDate = Array.from(mobileMenus).every(m => isMenuUpToDate(m, orderedActiveTours));
+
+      if (desktopUpToDate && mobileUpToDate) {
+        // DOM already matches the latest tours perfectly - avoid ANY flicker or re-render
+        return;
+      }
 
       let desktopHtml = '';
       let mobileHtml = '';
@@ -132,11 +168,19 @@
         });
       });
 
-      if (desktopHtml) {
-        desktopMenus.forEach(m => { m.innerHTML = desktopHtml; });
+      if (!desktopUpToDate && desktopHtml) {
+        desktopMenus.forEach(m => {
+          if (!isMenuUpToDate(m, orderedActiveTours)) {
+            m.innerHTML = desktopHtml;
+          }
+        });
       }
-      if (mobileHtml) {
-        mobileMenus.forEach(m => { m.innerHTML = mobileHtml; });
+      if (!mobileUpToDate && mobileHtml) {
+        mobileMenus.forEach(m => {
+          if (!isMenuUpToDate(m, orderedActiveTours)) {
+            m.innerHTML = mobileHtml;
+          }
+        });
       }
     } catch(e) {
       console.warn('Header tour menu sync error:', e);

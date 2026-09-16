@@ -54,15 +54,20 @@ def build_site():
     active_tours = [t for t in t_data.get('tours', []) if t.get('estado') not in ('inactivo', 'borrador')]
 
     cat_map = {
-        'wildlife': {'label': 'WILDLIFE QUEST', 'icon': 'fas fa-binoculars'},
-        'roadtrip': {'label': 'RAINFOREST ROAD TRIP', 'icon': 'fas fa-route'},
-        'expedition': {'label': 'AMAZON EXPEDITION', 'icon': 'fas fa-campground'},
-        'cultural': {'label': 'CULTURAL EXPEDITION', 'icon': 'fas fa-landmark'},
-        'birdwatching': {'label': 'BIRDWATCHING QUEST', 'icon': 'fas fa-dove'},
-        'machu wasi': {'label': 'MACHU WASI ADVENTURE', 'icon': 'fas fa-tree'},
-        'photography': {'label': 'WILDLIFE PHOTOGRAPHY', 'icon': 'fas fa-camera'}
+        'birding & photography': {'label': 'BIRDING & PHOTOGRAPHY', 'icon': 'fas fa-compass'},
+        'birding': {'label': 'BIRDING & PHOTOGRAPHY', 'icon': 'fas fa-compass'},
+        'birdwatching': {'label': 'BIRDING & PHOTOGRAPHY', 'icon': 'fas fa-compass'},
+        'manu cultural zone': {'label': 'MANU CULTURAL ZONE', 'icon': 'fas fa-compass'},
+        'cultural': {'label': 'MANU CULTURAL ZONE', 'icon': 'fas fa-compass'},
+        'manu reserve zone': {'label': 'MANU RESERVE ZONE', 'icon': 'fas fa-compass'},
+        'reserve': {'label': 'MANU RESERVE ZONE', 'icon': 'fas fa-compass'},
+        'wildlife': {'label': 'WILDLIFE QUEST', 'icon': 'fas fa-compass'},
+        'roadtrip': {'label': 'RAINFOREST ROAD TRIP', 'icon': 'fas fa-compass'},
+        'expedition': {'label': 'AMAZON EXPEDITION', 'icon': 'fas fa-compass'},
+        'machu wasi': {'label': 'MACHU WASI ADVENTURE', 'icon': 'fas fa-compass'},
+        'photography': {'label': 'WILDLIFE PHOTOGRAPHY', 'icon': 'fas fa-compass'}
     }
-    order = ['wildlife', 'roadtrip', 'expedition', 'cultural', 'birdwatching', 'machu wasi', 'photography']
+    order = ['birding & photography', 'manu cultural zone', 'manu reserve zone', 'wildlife', 'roadtrip', 'expedition', 'cultural', 'birdwatching', 'machu wasi', 'photography']
     
     # Global fallbacks
     soc = g_data.get('social', {})
@@ -519,6 +524,101 @@ def build_site():
                 update_social_c("TikTok", soc.get('tiktok'))
                 modified = True
                 
+        # Guided Tours page specific: pre-render filters and tour cards to eliminate reload jumping
+        if filepath.endswith('guided-tours\\index.html') or filepath.endswith('guided-tours/index.html'):
+            dyn_filters = soup.find(id='dynamic-filters-container')
+            dyn_tours = soup.find(id='dynamic-tours-container')
+            if dyn_filters and dyn_tours and active_tours:
+                def get_cat_meta_py(cat):
+                    c = (cat or '').lower().strip()
+                    if 'bird' in c or 'photo' in c: return {'icon': '🦅', 'name': 'Birding & Photography', 'class': 'badge-wildlife'}
+                    if 'cultural' in c: return {'icon': '🏛️', 'name': 'Manu Cultural Zone', 'class': 'badge-expedition'}
+                    if 'reserve' in c: return {'icon': '🌿', 'name': 'Manu Reserve Zone', 'class': 'badge-roadtrip'}
+                    if c == 'wildlife': return {'icon': '🦁', 'name': 'Wildlife Quest', 'class': 'badge-wildlife'}
+                    if c == 'roadtrip': return {'icon': '🚐', 'name': 'Road Trip', 'class': 'badge-roadtrip'}
+                    if c == 'expedition': return {'icon': '🏕️', 'name': 'Amazon Expedition', 'class': 'badge-expedition'}
+                    return {'icon': '⭐', 'name': cat, 'class': 'badge-default'}
+
+                cats = []
+                for t in active_tours:
+                    cat_val = t.get('categoria', '')
+                    if cat_val and cat_val not in cats:
+                        cats.append(cat_val)
+
+                f_html = f'''<button class="cat-btn active" data-cat="all" onclick="filterTours('all')">
+                  <span class="cat-icon">🌿</span> All Tours <span class="cat-count">{len(active_tours)}</span>
+                </button>'''
+                for cat_val in cats:
+                    meta = get_cat_meta_py(cat_val)
+                    cnt = len([t for t in active_tours if t.get('categoria') == cat_val])
+                    f_html += f'''<button class="cat-btn" data-cat="{cat_val}" onclick="filterTours('{cat_val}')">
+                      <span class="cat-icon">{meta['icon']}</span> {meta['name']} <span class="cat-count">{cnt}</span>
+                    </button>'''
+
+                dyn_filters_soup = BeautifulSoup(f_html, 'html.parser')
+                dyn_filters.clear()
+                for ch in list(dyn_filters_soup.contents):
+                    dyn_filters.append(ch)
+
+                t_cards_html = ''
+                for t in active_tours:
+                    meta = get_cat_meta_py(t.get('categoria', ''))
+                    status_badge = ''
+                    book_btn = '<a href="../contact/index.html" class="tc-btn tc-btn-ghost"><i class="fas fa-calendar-check"></i> Book Now</a>'
+                    estado = t.get('estado', 'activo')
+                    if estado == 'pausado':
+                        status_badge = '<span class="badge" style="background: rgba(245,158,11,0.35); color: #fde047; border: 1px solid rgba(245,158,11,0.5); text-transform: uppercase; font-weight: 700; font-size: 0.72rem; padding: 4px 12px; border-radius: 20px; backdrop-filter: blur(4px);">PAUSADO</span>'
+                        book_btn = '<button class="tc-btn tc-btn-ghost" disabled style="opacity: 0.5; cursor: not-allowed;"><i class="fas fa-pause-circle"></i> Pausado</button>'
+                    elif estado == 'seasonal':
+                        status_badge = '<span class="badge" style="background: rgba(225,29,72,0.45); color: #fca5a5; border: 1px solid rgba(225,29,72,0.65); text-transform: uppercase; font-weight: 700; font-size: 0.72rem; padding: 4px 12px; border-radius: 20px; backdrop-filter: blur(4px);">SEASONAL</span>'
+                        book_btn = '<a href="../contact/index.html" class="tc-btn tc-btn-ghost"><i class="fas fa-calendar-check"></i> Consultar fechas</a>'
+                    elif estado in ('inactivo', 'borrador'):
+                        status_badge = '<span class="badge" style="background: rgba(239,68,68,0.55); color: #ffffff; border: 1px solid rgba(239,68,68,0.75); text-transform: uppercase; font-weight: 700; font-size: 0.72rem; padding: 4px 12px; border-radius: 20px; backdrop-filter: blur(4px);">INACTIVO</span>'
+                        book_btn = '<button class="tc-btn tc-btn-ghost" disabled style="opacity: 0.5; cursor: not-allowed;"><i class="fas fa-times-circle"></i> No disponible</button>'
+
+                    img_src = fix_img_path(t.get('imagen_hero') or 'assets/img/hero.png')
+                    nombre = clean_mojibake(t.get('nombre', ''))
+                    slug = t.get('slug') or t.get('id')
+                    dur_d = t.get('duracion_dias', 0)
+                    dur_n = t.get('duracion_noches', 0)
+                    cap_min = t.get('capacidad_min', 1)
+                    cap_max = t.get('capacidad_max', 8)
+                    precio = t.get('precio_desde', 0)
+                    desc = clean_mojibake(t.get('descripcion_corta', ''))
+                    cat_val = t.get('categoria', '')
+
+                    t_cards_html += f'''
+                    <div class="tour-card r v" data-cat="{cat_val}" style="{'opacity:0.85;' if estado in ('pausado','inactivo') else ''}">
+                      <div class="tc-img">
+                        <img src="{img_src}" alt="{nombre}" loading="lazy" onerror="this.src=\'../assets/img/hero.png\'">
+                        <div class="tc-badges">
+                          <span class="badge {meta['class']}">{meta['name']}</span>
+                          <span class="badge badge-days">{dur_d} Days</span>
+                          {status_badge}
+                        </div>
+                      </div>
+                      <div class="tc-body">
+                        <div class="tc-cat-label" style="color:var(--a)">{meta['name']}</div>
+                        <div class="tc-title">{nombre}</div>
+                        <div class="tc-specs">
+                          <span class="tc-spec"><i class="fas fa-users"></i> {cap_min}–{cap_max} people</span>
+                          <span class="tc-spec"><i class="fas fa-clock"></i> {dur_d}D / {dur_n}N</span>
+                          <span class="tc-spec"><i class="fas fa-tag"></i> From ${precio} USD</span>
+                        </div>
+                        <p class="tc-desc" style="display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;">{desc}</p>
+                        <div class="tc-footer">
+                          <a href="../{slug}/index.html" class="tc-btn tc-btn-primary">View Itinerary <i class="fas fa-arrow-right"></i></a>
+                          {book_btn}
+                        </div>
+                      </div>
+                    </div>'''
+
+                dyn_tours_soup = BeautifulSoup(t_cards_html, 'html.parser')
+                dyn_tours.clear()
+                for ch in list(dyn_tours_soup.contents):
+                    dyn_tours.append(ch)
+                modified = True
+
         # Write changes back
         if modified:
             with open(filepath, 'w', encoding=enc) as f:
