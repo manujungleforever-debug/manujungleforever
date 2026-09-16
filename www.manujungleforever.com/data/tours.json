@@ -1,6 +1,60 @@
 {
   "tours": [
     {
+      "nombre": "Birding in Manu Road and Andes Foothill 6d/5n",
+      "estado": "activo",
+      "categoria": "Birding & Photography",
+      "duracion_dias": 6,
+      "duracion_noches": 5,
+      "precio_desde": 1500,
+      "capacidad_min": 6,
+      "capacidad_max": 8,
+      "dificultad": "Moderado",
+      "temporada": "All year",
+      "descripcion_corta": "",
+      "descripcion_larga": "",
+      "imagen_hero": "/media/fotos-jordy/img-20260806-wa0094-jpg.jpeg",
+      "galeria": [],
+      "itinerario": [
+        {
+          "dia": 1,
+          "titulo": "",
+          "descripcion": ""
+        },
+        {
+          "dia": 2,
+          "titulo": "",
+          "descripcion": ""
+        },
+        {
+          "dia": 3,
+          "titulo": "",
+          "descripcion": ""
+        },
+        {
+          "dia": 4,
+          "titulo": "",
+          "descripcion": ""
+        },
+        {
+          "dia": 5,
+          "titulo": "",
+          "descripcion": ""
+        },
+        {
+          "dia": 6,
+          "titulo": "",
+          "descripcion": ""
+        }
+      ],
+      "incluye": [],
+      "no_incluye": [],
+      "destacado": false,
+      "imagen_alt": "",
+      "id": "tour-1789572827441",
+      "slug": "birding-in-manu-road-and-andes-foothill-6d-5n"
+    },
+    {
       "nombre": "Birding in Machu Picchu, Abra Malaga and Huacarpay Lake 4d/3 N",
       "estado": "activo",
       "categoria": "Birding & Photography",
