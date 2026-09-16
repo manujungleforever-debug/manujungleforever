@@ -1094,12 +1094,14 @@ body { top: 0px !important; position: relative !important; }
 .tc-img { position: relative; height: 220px; overflow: hidden; }
 .tc-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease; }
 .tour-card:hover .tc-img img { transform: scale(1.08); }
-.tc-badges { position: absolute; top: 16px; left: 16px; display: flex; gap: 8px; flex-wrap: wrap; }
-.badge { padding: 6px 12px; border-radius: 20px; font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; backdrop-filter: blur(8px); }
-.badge-wildlife { background: rgba(16,185,129,0.9); color: #fff; }
-.badge-expedition { background: rgba(201,168,76,0.9); color: #fff; }
-.badge-roadtrip { background: rgba(13,148,136,0.9); color: #fff; }
-.badge-days { background: rgba(11,36,28,0.75); color: #fff; border: 1px solid rgba(255,255,255,0.25); }
+.tc-badges { position: absolute; top: 14px; left: 14px; right: 14px; display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; flex-wrap: wrap; z-index: 2; pointer-events: none; }
+.badge { padding: 6px 14px; border-radius: 20px; font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; backdrop-filter: blur(8px); display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.35); }
+.badge-cat { background: rgba(11, 36, 28, 0.94) !important; color: #FFFFFF !important; border: 1px solid rgba(255, 255, 255, 0.22) !important; max-width: calc(100% - 95px); word-break: break-word; line-height: 1.3 !important; }
+.badge-wildlife { background: rgba(11, 36, 28, 0.94) !important; color: #FFFFFF !important; border: 1px solid rgba(45, 212, 191, 0.35) !important; }
+.badge-expedition { background: rgba(11, 36, 28, 0.94) !important; color: #FFFFFF !important; border: 1px solid rgba(201, 168, 76, 0.35) !important; }
+.badge-roadtrip { background: rgba(11, 36, 28, 0.94) !important; color: #FFFFFF !important; border: 1px solid rgba(13, 148, 136, 0.35) !important; }
+.badge-default { background: rgba(11, 36, 28, 0.94) !important; color: #FFFFFF !important; border: 1px solid rgba(255, 255, 255, 0.22) !important; }
+.badge-days { background: rgba(11, 36, 28, 0.90) !important; color: #FFFFFF !important; border: 1px solid rgba(255, 255, 255, 0.25) !important; margin-left: auto; }
 
 .tc-body { padding: 24px; display: flex; flex-direction: column; flex-grow: 1; }
 .tc-cat-label { font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; margin-bottom: 8px; color: var(--brand-teal) !important; }
@@ -1417,19 +1419,24 @@ body { top: 0px !important; position: relative !important; }
 /* Category intro cards */
 .cat-intro {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
   margin-bottom: 48px;
 }
-@media (max-width: 768px) { .cat-intro { grid-template-columns: 1fr; } }
+@media (max-width: 768px) { .cat-intro { grid-template-columns: 1fr; gap: 16px; } }
 
 .ci-card {
   background: var(--sand-card) !important;
-  border: 1px solid var(--sand-border) !important;
-  border-radius: 16px;
+  border: 1.5px solid var(--sand-border) !important;
+  border-radius: 18px;
   padding: 24px;
   box-shadow: var(--shadow-eco) !important;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  user-select: none;
 }
 .ci-card:hover {
   background: var(--sand-card-warm) !important;
@@ -1437,27 +1444,81 @@ body { top: 0px !important; position: relative !important; }
   transform: translateY(-4px);
   box-shadow: var(--shadow-eco-h) !important;
 }
+.ci-card:focus-visible {
+  outline: 2.5px solid var(--brand-teal) !important;
+  outline-offset: 3px !important;
+}
+.ci-card.active {
+  border-color: var(--brand-teal) !important;
+  background: var(--sand-card-warm) !important;
+  box-shadow: 0 8px 24px rgba(45, 212, 191, 0.25) !important;
+  transform: translateY(-3px);
+}
+.ci-card.active::after {
+  content: '';
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--brand-teal);
+  box-shadow: 0 0 8px var(--brand-teal);
+}
+.ci-card .ci-count {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 20px;
+  background: rgba(13, 148, 136, 0.12);
+  color: #0D9488;
+  border: 1px solid rgba(13, 148, 136, 0.25);
+  transition: all 0.25s ease;
+  white-space: nowrap;
+}
+.ci-card.active .ci-count {
+  background: var(--brand-teal);
+  color: #0B241C;
+  border-color: var(--brand-teal);
+  font-weight: 800;
+}
+.ci-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  width: 100%;
+}
 .ci-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 10px;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.2rem;
-  margin-bottom: 16px;
+  font-size: 1.25rem;
+  margin-bottom: 0;
+  transition: transform 0.3s ease;
 }
-.ci-icon-w { background: rgba(16, 185, 129, 0.15); color: #10B981; }
-.ci-icon-e { background: rgba(201, 168, 76, 0.15); color: #C9A84C; }
-.ci-icon-r { background: rgba(13, 148, 136, 0.15); color: #0D9488; }
+.ci-card:hover .ci-icon {
+  transform: scale(1.08);
+}
+.ci-icon-w, .ci-icon-birding { background: rgba(13, 148, 136, 0.15); color: #0D9488; }
+.ci-icon-e, .ci-icon-cultural { background: rgba(201, 168, 76, 0.18); color: #B45309; }
+.ci-icon-r, .ci-icon-reserve { background: rgba(16, 185, 129, 0.18); color: #059669; }
+.ci-icon-default { background: rgba(13, 148, 136, 0.15); color: #0D9488; }
 .ci-title {
   font-family: 'Syne', sans-serif;
-  font-size: 1.15rem;
+  font-size: 1.18rem;
   font-weight: 700;
   color: var(--forest-dark) !important;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
-.ci-sub { font-size: 0.88rem; color: var(--earth-muted) !important; line-height: 1.6; }
+.ci-sub {
+  font-size: 0.88rem;
+  color: var(--earth-muted) !important;
+  line-height: 1.6;
+}
 
 /* Tour cards grid */
 .tours-grid {
@@ -1522,27 +1583,44 @@ body { top: 0px !important; position: relative !important; }
   position: absolute;
   top: 14px;
   left: 14px;
+  right: 14px;
   display: flex;
-  gap: 6px;
+  gap: 8px;
   flex-wrap: wrap;
+  align-items: center;
   z-index: 3;
 }
 .badge {
   display: inline-flex;
   align-items: center;
-  padding: 4px 10px;
+  padding: 6px 12px;
   border-radius: 20px;
   font-size: 0.72rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-  backdrop-filter: blur(8px);
+  letter-spacing: 0.05em;
+  line-height: 1.2;
 }
-.badge-wildlife { background: rgba(16,185,129,0.9); color: #fff; }
-.badge-expedition { background: rgba(201,168,76,0.9); color: #fff; }
-.badge-roadtrip { background: rgba(13,148,136,0.9); color: #fff; }
-.badge-days { background: rgba(11,36,28,0.75); color: #fff; }
-.badge-unavail { background: rgba(100,80,60,0.7); color: #fff; }
+.badge-cat {
+  background: #0B241C !important;
+  color: #FFFFFF !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.45) !important;
+  white-space: normal;
+  word-break: break-word;
+}
+.badge-wildlife { background: #0B241C !important; color: #FFFFFF !important; border: 1px solid rgba(255, 255, 255, 0.22) !important; }
+.badge-expedition { background: #0B241C !important; color: #FFFFFF !important; border: 1px solid rgba(255, 255, 255, 0.22) !important; }
+.badge-roadtrip { background: #0B241C !important; color: #FFFFFF !important; border: 1px solid rgba(255, 255, 255, 0.22) !important; }
+.badge-default { background: #0B241C !important; color: #FFFFFF !important; border: 1px solid rgba(255, 255, 255, 0.22) !important; }
+.badge-days {
+  background: rgba(11, 36, 28, 0.94) !important;
+  color: #F4EAD4 !important;
+  border: 1px solid rgba(244, 234, 212, 0.3) !important;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4) !important;
+  white-space: nowrap;
+}
+.badge-unavail { background: rgba(100,80,60,0.9); color: #fff; }
 
 .tc-body { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; }
 .tc-cat-label { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; color: var(--brand-teal) !important; }

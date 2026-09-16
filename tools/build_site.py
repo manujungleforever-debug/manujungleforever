@@ -524,20 +524,69 @@ def build_site():
                 update_social_c("TikTok", soc.get('tiktok'))
                 modified = True
                 
-        # Guided Tours page specific: pre-render filters and tour cards to eliminate reload jumping
+        # Guided Tours page specific: pre-render filters, category cards, and tour cards to eliminate reload jumping
         if filepath.endswith('guided-tours\\index.html') or filepath.endswith('guided-tours/index.html'):
             dyn_filters = soup.find(id='dynamic-filters-container')
             dyn_tours = soup.find(id='dynamic-tours-container')
+            dyn_intro = soup.find(id='cat-intro')
             if dyn_filters and dyn_tours and active_tours:
                 def get_cat_meta_py(cat):
                     c = (cat or '').lower().strip()
-                    if 'bird' in c or 'photo' in c: return {'icon': '🦅', 'name': 'Birding & Photography', 'class': 'badge-wildlife'}
-                    if 'cultural' in c: return {'icon': '🏛️', 'name': 'Manu Cultural Zone', 'class': 'badge-expedition'}
-                    if 'reserve' in c: return {'icon': '🌿', 'name': 'Manu Reserve Zone', 'class': 'badge-roadtrip'}
-                    if c == 'wildlife': return {'icon': '🦁', 'name': 'Wildlife Quest', 'class': 'badge-wildlife'}
-                    if c == 'roadtrip': return {'icon': '🚐', 'name': 'Road Trip', 'class': 'badge-roadtrip'}
-                    if c == 'expedition': return {'icon': '🏕️', 'name': 'Amazon Expedition', 'class': 'badge-expedition'}
-                    return {'icon': '⭐', 'name': cat, 'class': 'badge-default'}
+                    if 'bird' in c or 'photo' in c:
+                        return {
+                            'icon': 'fa-solid fa-dove',
+                            'icon_class': 'ci-icon-birding',
+                            'badge_class': 'badge-wildlife',
+                            'name': 'Birding & Photography',
+                            'desc': 'Specialized birdwatching and nature photography quests from the high Andes and cloud forest down into the Amazon foothills.'
+                        }
+                    if 'cultural' in c:
+                        return {
+                            'icon': 'fa-solid fa-landmark',
+                            'icon_class': 'ci-icon-cultural',
+                            'badge_class': 'badge-expedition',
+                            'name': 'Manu Cultural Zone',
+                            'desc': 'Immersive cultural and ecological expeditions exploring indigenous heritage, cloud forest trails, and authentic jungle life.'
+                        }
+                    if 'reserve' in c:
+                        return {
+                            'icon': 'fa-solid fa-shield-halved',
+                            'icon_class': 'ci-icon-reserve',
+                            'badge_class': 'badge-roadtrip',
+                            'name': 'Manu Reserve Zone',
+                            'desc': 'Pristine exploration into the protected core of Manu National Park and the world-renowned Blanquillo macaw clay lick.'
+                        }
+                    if c == 'wildlife':
+                        return {
+                            'icon': 'fa-solid fa-paw',
+                            'icon_class': 'ci-icon-birding',
+                            'badge_class': 'badge-wildlife',
+                            'name': 'Wildlife Quest',
+                            'desc': 'Navigate waterways and pristine jungle trails with expert local trackers to encounter iconic Amazonian wildlife.'
+                        }
+                    if c == 'roadtrip':
+                        return {
+                            'icon': 'fa-solid fa-van-shuttle',
+                            'icon_class': 'ci-icon-reserve',
+                            'badge_class': 'badge-roadtrip',
+                            'name': 'Road Trip',
+                            'desc': 'Scenic overland and river journey traversing the Andes down into the biodiversity hotspots of Manu.'
+                        }
+                    if c == 'expedition':
+                        return {
+                            'icon': 'fa-solid fa-compass',
+                            'icon_class': 'ci-icon-cultural',
+                            'badge_class': 'badge-expedition',
+                            'name': 'Amazon Expedition',
+                            'desc': 'Deep-jungle expedition for adventurers seeking wild camping, river navigation, and off-grid exploration.'
+                        }
+                    return {
+                        'icon': 'fa-solid fa-binoculars',
+                        'icon_class': 'ci-icon-default',
+                        'badge_class': 'badge-default',
+                        'name': cat,
+                        'desc': 'Guided jungle expedition exploring the rich biodiversity and untouched ecosystems of Manu.'
+                    }
 
                 cats = []
                 for t in active_tours:
@@ -545,20 +594,40 @@ def build_site():
                     if cat_val and cat_val not in cats:
                         cats.append(cat_val)
 
-                f_html = f'''<button class="cat-btn active" data-cat="all" onclick="filterTours('all')">
-                  <span class="cat-icon">🌿</span> All Tours <span class="cat-count">{len(active_tours)}</span>
+                f_html = f'''<button class="cat-btn active" data-cat="all" onclick="filterTours('all')" aria-pressed="true">
+                  <span class="cat-icon"><i class="fa-solid fa-leaf"></i></span> All Tours <span class="cat-count">{len(active_tours)}</span>
                 </button>'''
                 for cat_val in cats:
                     meta = get_cat_meta_py(cat_val)
                     cnt = len([t for t in active_tours if t.get('categoria') == cat_val])
-                    f_html += f'''<button class="cat-btn" data-cat="{cat_val}" onclick="filterTours('{cat_val}')">
-                      <span class="cat-icon">{meta['icon']}</span> {meta['name']} <span class="cat-count">{cnt}</span>
+                    f_html += f'''<button class="cat-btn" data-cat="{cat_val}" onclick="filterTours('{cat_val}')" aria-pressed="false">
+                      <span class="cat-icon"><i class="{meta['icon']}"></i></span> {meta['name']} <span class="cat-count">{cnt}</span>
                     </button>'''
 
                 dyn_filters_soup = BeautifulSoup(f_html, 'html.parser')
                 dyn_filters.clear()
                 for ch in list(dyn_filters_soup.contents):
                     dyn_filters.append(ch)
+
+                if dyn_intro:
+                    intro_html = ''
+                    for cat_val in cats:
+                        meta = get_cat_meta_py(cat_val)
+                        cnt = len([t for t in active_tours if t.get('categoria') == cat_val])
+                        t_label = "Tour" if cnt == 1 else "Tours"
+                        intro_html += f'''
+                        <div class="ci-card" data-cat="{cat_val}" role="button" tabindex="0" aria-pressed="false" onclick="filterTours('{cat_val}')" onkeydown="if(event.key==='Enter'||event.key===' '){{event.preventDefault();filterTours('{cat_val}');}}">
+                          <div class="ci-card-top">
+                            <div class="ci-icon {meta['icon_class']}"><i class="{meta['icon']}"></i></div>
+                            <span class="ci-count">{cnt} {t_label}</span>
+                          </div>
+                          <div class="ci-title">{meta['name']}</div>
+                          <div class="ci-sub">{meta['desc']}</div>
+                        </div>'''
+                    dyn_intro_soup = BeautifulSoup(intro_html, 'html.parser')
+                    dyn_intro.clear()
+                    for ch in list(dyn_intro_soup.contents):
+                        dyn_intro.append(ch)
 
                 t_cards_html = ''
                 for t in active_tours:
@@ -592,7 +661,7 @@ def build_site():
                       <div class="tc-img">
                         <img src="{img_src}" alt="{nombre}" loading="lazy" onerror="this.src=\'../assets/img/hero.png\'">
                         <div class="tc-badges">
-                          <span class="badge {meta['class']}">{meta['name']}</span>
+                          <span class="badge badge-cat {meta['badge_class']}">{meta['name']}</span>
                           <span class="badge badge-days">{dur_d} Days</span>
                           {status_badge}
                         </div>

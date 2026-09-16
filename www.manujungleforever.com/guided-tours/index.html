@@ -127,14 +127,14 @@
 </section>
 <!-- Sticky Category Filter Bar -->
 <div class="cat-bar" id="cat-bar">
-<div class="cat-inner" id="dynamic-filters-container"><button class="cat-btn active" data-cat="all" onclick="filterTours('all')">
-<span class="cat-icon">🌿</span> All Tours <span class="cat-count">10</span>
-</button><button class="cat-btn" data-cat="Birding &amp; Photography" onclick="filterTours('Birding &amp; Photography')">
-<span class="cat-icon">🦅</span> Birding &amp; Photography <span class="cat-count">3</span>
-</button><button class="cat-btn" data-cat="Manu Cultural Zone" onclick="filterTours('Manu Cultural Zone')">
-<span class="cat-icon">🏛️</span> Manu Cultural Zone <span class="cat-count">3</span>
-</button><button class="cat-btn" data-cat="Manu Reserve Zone" onclick="filterTours('Manu Reserve Zone')">
-<span class="cat-icon">🌿</span> Manu Reserve Zone <span class="cat-count">4</span>
+<div class="cat-inner" id="dynamic-filters-container"><button aria-pressed="true" class="cat-btn active" data-cat="all" onclick="filterTours('all')">
+<span class="cat-icon"><i class="fa-solid fa-leaf"></i></span> All Tours <span class="cat-count">10</span>
+</button><button aria-pressed="false" class="cat-btn" data-cat="Birding &amp; Photography" onclick="filterTours('Birding &amp; Photography')">
+<span class="cat-icon"><i class="fa-solid fa-dove"></i></span> Birding &amp; Photography <span class="cat-count">3</span>
+</button><button aria-pressed="false" class="cat-btn" data-cat="Manu Cultural Zone" onclick="filterTours('Manu Cultural Zone')">
+<span class="cat-icon"><i class="fa-solid fa-landmark"></i></span> Manu Cultural Zone <span class="cat-count">3</span>
+</button><button aria-pressed="false" class="cat-btn" data-cat="Manu Reserve Zone" onclick="filterTours('Manu Reserve Zone')">
+<span class="cat-icon"><i class="fa-solid fa-shield-halved"></i></span> Manu Reserve Zone <span class="cat-count">4</span>
 </button></div>
 </div>
 <!-- Main content -->
@@ -142,37 +142,36 @@
 <div class="cx">
 <!-- Category intro summary -->
 <div class="cat-intro r" id="cat-intro" style="margin-bottom: 40px;">
-<div class="ci-card" onclick="filterTours('Birding &amp; Photography')" style="cursor:pointer">
-<div style="display:flex; justify-content:space-between; align-items:flex-start">
-<div class="ci-icon ci-icon-w"><i class="fas fa-dove"></i></div>
-<span class="badge badge-wildlife" style="backdrop-filter:none; background:rgba(13,148,136,0.14); color:#0F766E; border:1px solid rgba(13,148,136,0.3); font-weight:700;">Birding</span>
+<div aria-pressed="false" class="ci-card" data-cat="Birding &amp; Photography" onclick="filterTours('Birding &amp; Photography')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();filterTours('Birding &amp; Photography');}" role="button" tabindex="0">
+<div class="ci-card-top">
+<div class="ci-icon ci-icon-birding"><i class="fa-solid fa-dove"></i></div>
+<span class="ci-count">3 Tours</span>
 </div>
 <div class="ci-title">Birding &amp; Photography</div>
 <div class="ci-sub">Specialized birdwatching and nature photography quests from the high Andes and cloud forest down into the Amazon foothills.</div>
 </div>
-<div class="ci-card" onclick="filterTours('Manu Cultural Zone')" style="cursor:pointer">
-<div style="display:flex; justify-content:space-between; align-items:flex-start">
-<div class="ci-icon ci-icon-e"><i class="fas fa-landmark"></i></div>
-<span class="badge badge-expedition" style="backdrop-filter:none; background:rgba(217,119,6,0.14); color:#B45309; border:1px solid rgba(217,119,6,0.3); font-weight:700;">Cultural</span>
+<div aria-pressed="false" class="ci-card" data-cat="Manu Cultural Zone" onclick="filterTours('Manu Cultural Zone')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();filterTours('Manu Cultural Zone');}" role="button" tabindex="0">
+<div class="ci-card-top">
+<div class="ci-icon ci-icon-cultural"><i class="fa-solid fa-landmark"></i></div>
+<span class="ci-count">3 Tours</span>
 </div>
 <div class="ci-title">Manu Cultural Zone</div>
-<div class="ci-sub">Immersive expeditions exploring indigenous heritage, cloud forest trails, and vibrant community-based jungle life.</div>
+<div class="ci-sub">Immersive cultural and ecological expeditions exploring indigenous heritage, cloud forest trails, and authentic jungle life.</div>
 </div>
-<div class="ci-card" onclick="filterTours('Manu Reserve Zone')" style="cursor:pointer">
-<div style="display:flex; justify-content:space-between; align-items:flex-start">
-<div class="ci-icon ci-icon-r"><i class="fas fa-shield-halved"></i></div>
-<span class="badge badge-roadtrip" style="backdrop-filter:none; background:rgba(2,132,199,0.14); color:#0369A1; border:1px solid rgba(2,132,199,0.3); font-weight:700;">Reserve</span>
+<div aria-pressed="false" class="ci-card" data-cat="Manu Reserve Zone" onclick="filterTours('Manu Reserve Zone')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();filterTours('Manu Reserve Zone');}" role="button" tabindex="0">
+<div class="ci-card-top">
+<div class="ci-icon ci-icon-reserve"><i class="fa-solid fa-shield-halved"></i></div>
+<span class="ci-count">4 Tours</span>
 </div>
 <div class="ci-title">Manu Reserve Zone</div>
-<div class="ci-sub">Deep exploration into the pristine core of Manu National Park and the world-renowned Blanquillo macaw clay lick.</div>
-</div>
-</div>
+<div class="ci-sub">Pristine exploration into the protected core of Manu National Park and the world-renowned Blanquillo macaw clay lick.</div>
+</div></div>
 <div class="tours-grid" id="dynamic-tours-container">
 <div class="tour-card r v" data-cat="Birding &amp; Photography" style="">
 <div class="tc-img">
 <img alt="Andes and Amazon Birding Tour 10d/9n" loading="lazy" onerror="this.src='../assets/img/hero.png'" src="/media/fotos-jordy/img-20260723-wa0023-jpg.jpeg"/>
 <div class="tc-badges">
-<span class="badge badge-wildlife">Birding &amp; Photography</span>
+<span class="badge badge-cat badge-wildlife">Birding &amp; Photography</span>
 <span class="badge badge-days">10 Days</span>
 </div>
 </div>
@@ -195,7 +194,7 @@
 <div class="tc-img">
 <img alt="Birding in Manu Road and Andes Foothill 6d/5n" loading="lazy" onerror="this.src='../assets/img/hero.png'" src="/media/fotos-jordy/img-20260806-wa0094-jpg.jpeg"/>
 <div class="tc-badges">
-<span class="badge badge-wildlife">Birding &amp; Photography</span>
+<span class="badge badge-cat badge-wildlife">Birding &amp; Photography</span>
 <span class="badge badge-days">6 Days</span>
 </div>
 </div>
@@ -218,7 +217,7 @@
 <div class="tc-img">
 <img alt="Birding in Machu Picchu, Abra Malaga and Huacarpay Lake 4d/3 N" loading="lazy" onerror="this.src='../assets/img/hero.png'" src="/media/fotos-jordy/img-20260806-wa0109-jpg.jpeg"/>
 <div class="tc-badges">
-<span class="badge badge-wildlife">Birding &amp; Photography</span>
+<span class="badge badge-cat badge-wildlife">Birding &amp; Photography</span>
 <span class="badge badge-days">4 Days</span>
 </div>
 </div>
@@ -241,7 +240,7 @@
 <div class="tc-img">
 <img alt="Manu Expedition 6d/5n" loading="lazy" onerror="this.src='../assets/img/hero.png'" src="/media/fotos-jordy/img-20260722-wa0237-jpg.jpeg"/>
 <div class="tc-badges">
-<span class="badge badge-expedition">Manu Cultural Zone</span>
+<span class="badge badge-cat badge-expedition">Manu Cultural Zone</span>
 <span class="badge badge-days">6 Days</span>
 </div>
 </div>
@@ -264,7 +263,7 @@
 <div class="tc-img">
 <img alt="Manu Expedition 5d/4n" loading="lazy" onerror="this.src='../assets/img/hero.png'" src="/media/fotos-jordy/img-20260806-wa0076-jpg.jpeg"/>
 <div class="tc-badges">
-<span class="badge badge-expedition">Manu Cultural Zone</span>
+<span class="badge badge-cat badge-expedition">Manu Cultural Zone</span>
 <span class="badge badge-days">5 Days</span>
 </div>
 </div>
@@ -287,7 +286,7 @@
 <div class="tc-img">
 <img alt="Manu Adventure 4d/3n" loading="lazy" onerror="this.src='../assets/img/hero.png'" src="/media/fotos-jordy/img-20260806-wa0156-jpg.jpeg"/>
 <div class="tc-badges">
-<span class="badge badge-expedition">Manu Cultural Zone</span>
+<span class="badge badge-cat badge-expedition">Manu Cultural Zone</span>
 <span class="badge badge-days">4 Days</span>
 </div>
 </div>
@@ -310,7 +309,7 @@
 <div class="tc-img">
 <img alt="Manu Reserve Zone and Blanquillo Macaw Clay Lick 9d/8n" loading="lazy" onerror="this.src='../assets/img/hero.png'" src="/media/fotos-jordy/img-20260702-wa0071-jpg.jpeg"/>
 <div class="tc-badges">
-<span class="badge badge-roadtrip">Manu Reserve Zone</span>
+<span class="badge badge-cat badge-roadtrip">Manu Reserve Zone</span>
 <span class="badge badge-days">9 Days</span>
 </div>
 </div>
@@ -333,7 +332,7 @@
 <div class="tc-img">
 <img alt="Manu Reserve Zone to Blanquillo Macaw Clay Lick 8d/7n" loading="lazy" onerror="this.src='../assets/img/hero.png'" src="/media/fotos-jordy/img-20260723-wa0155-jpg.jpeg"/>
 <div class="tc-badges">
-<span class="badge badge-roadtrip">Manu Reserve Zone</span>
+<span class="badge badge-cat badge-roadtrip">Manu Reserve Zone</span>
 <span class="badge badge-days">8 Days</span>
 </div>
 </div>
@@ -356,7 +355,7 @@
 <div class="tc-img">
 <img alt="Manu Reserve Zone 7d/6n" loading="lazy" onerror="this.src='../assets/img/hero.png'" src="/media/fotos-jordy/img-20260725-wa0015-jpg.jpeg"/>
 <div class="tc-badges">
-<span class="badge badge-roadtrip">Manu Reserve Zone</span>
+<span class="badge badge-cat badge-roadtrip">Manu Reserve Zone</span>
 <span class="badge badge-days">7 Days</span>
 </div>
 </div>
@@ -379,7 +378,7 @@
 <div class="tc-img">
 <img alt="Manu Reserve Zone 6d/5n" loading="lazy" onerror="this.src='../assets/img/hero.png'" src="/media/fotos-jordy/img-20260722-wa0122-jpg.jpeg"/>
 <div class="tc-badges">
-<span class="badge badge-roadtrip">Manu Reserve Zone</span>
+<span class="badge badge-cat badge-roadtrip">Manu Reserve Zone</span>
 <span class="badge badge-days">6 Days</span>
 </div>
 </div>
@@ -552,43 +551,124 @@ document.addEventListener("DOMContentLoaded", function() {
       let res = await fetch('/api/tours?public=true').catch(() => null);
       if (!res || !res.ok) res = await fetch('../data/tours.json?v=' + Date.now());
       const data = await res.json();
-      const tours = data.tours;
+      const rawTours = data.tours || [];
+      // Only active tours (ignore draft / inactive)
+      const tours = rawTours.filter(t => t.estado !== 'inactivo' && t.estado !== 'borrador');
       
       const filtersContainer = document.getElementById('dynamic-filters-container');
       const toursContainer = document.getElementById('dynamic-tours-container');
+      const catIntroContainer = document.getElementById('cat-intro');
       
-      // Get unique categories
-      const categories = [...new Set(tours.map(t => t.categoria))];
+      // Get unique categories with at least 1 published tour
+      const categories = [];
+      tours.forEach(t => {
+        if (t.categoria && !categories.includes(t.categoria)) {
+          categories.push(t.categoria);
+        }
+      });
       
-      // Helper for icons and colors
+      // Centralized category metadata & icon mapper
       const getCatMeta = (cat) => {
         const c = (cat || '').toLowerCase().trim();
-        if(c.includes('bird') || c.includes('photo')) return { icon: '🦅', name: 'Birding & Photography', class: 'badge-wildlife' };
-        if(c.includes('cultural')) return { icon: '🏛️', name: 'Manu Cultural Zone', class: 'badge-expedition' };
-        if(c.includes('reserve')) return { icon: '🌿', name: 'Manu Reserve Zone', class: 'badge-roadtrip' };
-        if(c === 'wildlife') return { icon: '🦁', name: 'Wildlife Quest', class: 'badge-wildlife' };
-        if(c === 'roadtrip') return { icon: '🚐', name: 'Road Trip', class: 'badge-roadtrip' };
-        if(c === 'expedition') return { icon: '🏕️', name: 'Amazon Expedition', class: 'badge-expedition' };
-        // Default for new categories
-        return { icon: '⭐', name: cat, class: 'badge-default' };
+        if (c.includes('bird') || c.includes('photo')) {
+          return {
+            icon: 'fa-solid fa-dove',
+            iconClass: 'ci-icon-birding',
+            badgeClass: 'badge-wildlife',
+            name: 'Birding & Photography',
+            desc: 'Specialized birdwatching and nature photography quests from the high Andes and cloud forest down into the Amazon foothills.'
+          };
+        }
+        if (c.includes('cultural')) {
+          return {
+            icon: 'fa-solid fa-landmark',
+            iconClass: 'ci-icon-cultural',
+            badgeClass: 'badge-expedition',
+            name: 'Manu Cultural Zone',
+            desc: 'Immersive cultural and ecological expeditions exploring indigenous heritage, cloud forest trails, and authentic jungle life.'
+          };
+        }
+        if (c.includes('reserve')) {
+          return {
+            icon: 'fa-solid fa-shield-halved',
+            iconClass: 'ci-icon-reserve',
+            badgeClass: 'badge-roadtrip',
+            name: 'Manu Reserve Zone',
+            desc: 'Pristine exploration into the protected core of Manu National Park and the world-renowned Blanquillo macaw clay lick.'
+          };
+        }
+        if (c === 'wildlife') {
+          return {
+            icon: 'fa-solid fa-paw',
+            iconClass: 'ci-icon-birding',
+            badgeClass: 'badge-wildlife',
+            name: 'Wildlife Quest',
+            desc: 'Navigate waterways and pristine jungle trails with expert local trackers to encounter iconic Amazonian wildlife.'
+          };
+        }
+        if (c === 'roadtrip') {
+          return {
+            icon: 'fa-solid fa-van-shuttle',
+            iconClass: 'ci-icon-reserve',
+            badgeClass: 'badge-roadtrip',
+            name: 'Road Trip',
+            desc: 'Scenic overland and river journey traversing the Andes down into the biodiversity hotspots of Manu.'
+          };
+        }
+        if (c === 'expedition') {
+          return {
+            icon: 'fa-solid fa-compass',
+            iconClass: 'ci-icon-cultural',
+            badgeClass: 'badge-expedition',
+            name: 'Amazon Expedition',
+            desc: 'Deep-jungle expedition for adventurers seeking wild camping, river navigation, and off-grid exploration.'
+          };
+        }
+        return {
+          icon: 'fa-solid fa-binoculars',
+          iconClass: 'ci-icon-default',
+          badgeClass: 'badge-default',
+          name: cat,
+          desc: 'Guided jungle expedition exploring the rich biodiversity and untouched ecosystems of Manu.'
+        };
       };
       
-      // Render Filters
-      let filtersHTML = `<button class="cat-btn active" data-cat="all" onclick="filterTours('all')">
-        <span class="cat-icon">🌿</span> All Tours <span class="cat-count">${tours.length}</span>
+      // Render Filter Buttons
+      let filtersHTML = `<button class="cat-btn active" data-cat="all" onclick="filterTours('all')" aria-pressed="true">
+        <span class="cat-icon"><i class="fa-solid fa-leaf"></i></span> All Tours <span class="cat-count">${tours.length}</span>
       </button>`;
       
       categories.forEach(cat => {
         const meta = getCatMeta(cat);
         const count = tours.filter(t => t.categoria === cat).length;
-        filtersHTML += `<button class="cat-btn" data-cat="${cat}" onclick="filterTours('${cat}')">
-          <span class="cat-icon">${meta.icon}</span> ${meta.name} <span class="cat-count">${count}</span>
+        filtersHTML += `<button class="cat-btn" data-cat="${cat}" onclick="filterTours('${cat}')" aria-pressed="false">
+          <span class="cat-icon"><i class="${meta.icon}"></i></span> ${meta.name} <span class="cat-count">${count}</span>
         </button>`;
       });
-      filtersContainer.innerHTML = filtersHTML;
+      if (filtersContainer) filtersContainer.innerHTML = filtersHTML;
+      
+      // Render Category Intro Cards dynamically
+      if (catIntroContainer) {
+        let introHTML = '';
+        categories.forEach(cat => {
+          const meta = getCatMeta(cat);
+          const count = tours.filter(t => t.categoria === cat).length;
+          const tLabel = count === 1 ? 'Tour' : 'Tours';
+          introHTML += `
+          <div class="ci-card" data-cat="${cat}" role="button" tabindex="0" aria-pressed="false" onclick="filterTours('${cat}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();filterTours('${cat}');}">
+            <div class="ci-card-top">
+              <div class="ci-icon ${meta.iconClass}"><i class="${meta.icon}"></i></div>
+              <span class="ci-count">${count} ${tLabel}</span>
+            </div>
+            <div class="ci-title">${meta.name}</div>
+            <div class="ci-sub">${meta.desc}</div>
+          </div>`;
+        });
+        catIntroContainer.innerHTML = introHTML;
+      }
       
       // Render Tours
-      window.allToursData = tours; // save for filtering
+      window.allToursData = tours;
       window.getCatMeta = getCatMeta;
       renderTours(tours);
       
@@ -599,14 +679,15 @@ document.addEventListener("DOMContentLoaded", function() {
 
   function renderTours(toursToRender) {
     const container = document.getElementById('dynamic-tours-container');
-    if(toursToRender.length === 0) {
+    if (!container) return;
+    if (toursToRender.length === 0) {
       container.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding: 40px; color: var(--earth-subtle);">No tours found in this category.</div>`;
       return;
     }
     
     let html = '';
     toursToRender.forEach(t => {
-      const meta = window.getCatMeta(t.categoria);
+      const meta = window.getCatMeta ? window.getCatMeta(t.categoria) : { icon: 'fa-solid fa-binoculars', name: t.categoria, badgeClass: 'badge-default' };
       let statusBadge = '';
       let bookBtn = `<a href="../contact/index.html" class="tc-btn tc-btn-ghost"><i class="fas fa-calendar-check"></i> Book Now</a>`;
       
@@ -628,12 +709,14 @@ document.addEventListener("DOMContentLoaded", function() {
         return '/' + p;
       }
 
+      const slug = t.slug || t.id;
+
       html += `
       <div class="tour-card r v" data-cat="${t.categoria}" style="${(t.estado==='pausado'||t.estado==='inactivo')?'opacity:0.85;':''}">
         <div class="tc-img">
           <img src="${fixImgPath(t.imagen_hero)}" alt="${t.nombre}" loading="lazy" onerror="this.src='../assets/img/hero.png'">
           <div class="tc-badges">
-            <span class="badge ${meta.class}">${meta.name}</span>
+            <span class="badge badge-cat ${meta.badgeClass}">${meta.name}</span>
             <span class="badge badge-days">${t.duracion_dias} Days</span>
             ${statusBadge}
           </div>
@@ -648,7 +731,7 @@ document.addEventListener("DOMContentLoaded", function() {
           </div>
           <p class="tc-desc" style="display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;">${t.descripcion_corta || ''}</p>
           <div class="tc-footer">
-            <a href="../${t.slug}/index.html" class="tc-btn tc-btn-primary">View Itinerary <i class="fas fa-arrow-right"></i></a>
+            <a href="../${slug}/index.html" class="tc-btn tc-btn-primary">View Itinerary <i class="fas fa-arrow-right"></i></a>
             ${bookBtn}
           </div>
         </div>
@@ -658,16 +741,30 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   function filterTours(cat) {
-    // Update active button
-    document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
-    const activeBtn = Array.from(document.querySelectorAll('.cat-btn')).find(b => b.dataset.cat === cat || (cat !== 'all' && b.dataset.cat && b.dataset.cat.toLowerCase().trim() === cat.toLowerCase().trim()));
-    if(activeBtn) activeBtn.classList.add('active');
-    
-    // Filter array
+    // Sincronizar botones de filtro superiores
+    document.querySelectorAll('.cat-btn').forEach(btn => {
+      const isMatch = (cat === 'all' && btn.dataset.cat === 'all') || 
+                      (cat !== 'all' && btn.dataset.cat && btn.dataset.cat.toLowerCase().trim() === cat.toLowerCase().trim());
+      btn.classList.toggle('active', isMatch);
+      btn.setAttribute('aria-pressed', isMatch ? 'true' : 'false');
+    });
+
+    // Sincronizar tarjetas de categoría
+    document.querySelectorAll('.ci-card').forEach(card => {
+      const isMatch = cat !== 'all' && card.dataset.cat && card.dataset.cat.toLowerCase().trim() === cat.toLowerCase().trim();
+      card.classList.toggle('active', isMatch);
+      card.setAttribute('aria-pressed', isMatch ? 'true' : 'false');
+    });
+
+    // Filtrar tours disponibles
     let filtered = window.allToursData || [];
-    if(cat !== 'all') {
+    if (cat !== 'all') {
       const cLow = cat.toLowerCase().trim();
       filtered = filtered.filter(t => (t.categoria || '').toLowerCase().trim() === cLow);
+      // Si la categoría seleccionada no tiene tours, volver automáticamente a "All Tours"
+      if (filtered.length === 0) {
+        return filterTours('all');
+      }
     }
     renderTours(filtered);
   }
