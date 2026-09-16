@@ -1,6 +1,60 @@
 {
   "tours": [
     {
+      "nombre": "Manu Reserve Zone 6d/5n",
+      "estado": "activo",
+      "categoria": "Manu Reserve Zone",
+      "duracion_dias": 6,
+      "duracion_noches": 5,
+      "precio_desde": 1200,
+      "capacidad_min": 6,
+      "capacidad_max": 8,
+      "dificultad": "Moderado",
+      "temporada": "All year",
+      "descripcion_corta": "",
+      "descripcion_larga": "",
+      "imagen_hero": "/media/fotos-jordy/img-20260722-wa0122-jpg.jpeg",
+      "galeria": [],
+      "itinerario": [
+        {
+          "dia": 1,
+          "titulo": "",
+          "descripcion": ""
+        },
+        {
+          "dia": 2,
+          "titulo": "",
+          "descripcion": ""
+        },
+        {
+          "dia": 3,
+          "titulo": "",
+          "descripcion": ""
+        },
+        {
+          "dia": 4,
+          "titulo": "",
+          "descripcion": ""
+        },
+        {
+          "dia": 5,
+          "titulo": "",
+          "descripcion": ""
+        },
+        {
+          "dia": 6,
+          "titulo": "",
+          "descripcion": ""
+        }
+      ],
+      "incluye": [],
+      "no_incluye": [],
+      "destacado": false,
+      "imagen_alt": "",
+      "id": "tour-1789570974162",
+      "slug": "manu-reserve-zone-6d-5n"
+    },
+    {
       "id": "3-day-wildlife-quest-machu-wasi",
       "slug": "3-day-wildlife-quest-machu-wasi",
       "nombre": "Manu Reserve Zone",
