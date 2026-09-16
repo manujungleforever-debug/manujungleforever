@@ -110,39 +110,46 @@ def render_itinerary_accordion(itinerario, tour_title):
         day_subtitle = clean_mojibake(it.get('subtitulo') or '').strip()
         is_open = (i == 0)
 
-        bloques = it.get('bloques') or []
-        body_parts = []
+        desc_text = clean_mojibake(it.get('descripcion') or '').strip()
+        day_img = (it.get('imagen') or '').strip()
+        alt_text = clean_mojibake(it.get('imagen_alt') or day_title).strip()
+        caption = clean_mojibake(it.get('imagen_pie') or '').strip()
 
-        if bloques:
+        bloques = it.get('bloques') or []
+        if not desc_text and bloques:
+            text_blocks = [clean_mojibake(b.get('contenido') or b.get('texto') or '').strip() 
+                           for b in bloques if b.get('tipo', 'texto') not in ('imagen', 'image')]
+            desc_text = '\n\n'.join([t for t in text_blocks if t])
+
+        if not day_img and bloques:
             for b in bloques:
-                b_type = b.get('tipo', 'texto')
-                if b_type in ('imagen', 'image'):
-                    img_url = b.get('url', '')
-                    if img_url.startswith('/') and not img_url.startswith('//'):
-                        img_url = '..' + img_url
-                    alt_text = clean_mojibake(b.get('alt') or day_title)
-                    caption = clean_mojibake(b.get('pie') or '').strip()
-                    cap_html = f'<figcaption class="it-caption">{caption}</figcaption>' if caption else ''
-                    body_parts.append(f"""
+                if b.get('tipo') in ('imagen', 'image') and b.get('url'):
+                    day_img = b.get('url')
+                    if b.get('alt'):
+                        alt_text = clean_mojibake(b.get('alt'))
+                    if b.get('pie'):
+                        caption = clean_mojibake(b.get('pie'))
+                    break
+
+        body_parts = []
+        if desc_text:
+            body_parts.append(f"""
+              <div class="it-text-block">
+                {md_to_html(desc_text)}
+              </div>""")
+
+        if day_img:
+            img_url = day_img
+            if img_url.startswith('/') and not img_url.startswith('//'):
+                img_url = '..' + img_url
+            cap_html = f'<figcaption class="it-caption">{caption}</figcaption>' if caption else ''
+            body_parts.append(f"""
               <figure class="it-figure">
                 <div class="it-img-box">
                   <img src="{img_url}" alt="{alt_text}" loading="lazy">
                 </div>
                 {cap_html}
               </figure>""")
-                else:
-                    content = clean_mojibake(b.get('contenido') or b.get('texto') or '')
-                    if content.strip():
-                        body_parts.append(f"""
-              <div class="it-text-block">
-                {md_to_html(content)}
-              </div>""")
-        elif it.get('descripcion') and it.get('descripcion').strip():
-            desc = clean_mojibake(it.get('descripcion'))
-            body_parts.append(f"""
-              <div class="it-text-block">
-                {md_to_html(desc)}
-              </div>""")
 
         if not body_parts:
             body_parts.append(f'<p style="color:var(--earth-text, #4B5563); font-style:italic; margin:0;">Detailed highlights for this day will be coordinated with your certified guide.</p>')
@@ -227,7 +234,7 @@ def main():
         html_body = md_to_html(t.get('descripcion_larga') or t.get('descripcion_corta') or '')
         itinerary_html = render_itinerary_accordion(t.get('itinerario') or [], tour_name)
 
-        hero_img = t.get('imagen_hero') or '../assets/img/hero.png'
+        hero_img = t.get('imagen_hero') or t.get('imagen_portada') or '../assets/img/hero.png'
         if hero_img.startswith('/') and not hero_img.startswith('//'):
             hero_img = '..' + hero_img
 

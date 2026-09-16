@@ -75,14 +75,20 @@ async function _d1(method, url, body) {
 async function ghGet(path) {
   const ds = _classify(path);
 
-  // ── site_content pages, tours, blog are now purely static JSON (fallback used) ──
+  // ── site_content pages ──
+  // (Eliminado para que use archivo local)
+
+  // ── tours ──
+  // (Eliminado para que use archivo local)
+
+  // ── blog index / list ──
+  // (Eliminado para que use archivo local)
+
+  // ── single blog post (markdown path) ──
+  // (Eliminado para que use archivo local)
 
   // ── testimonials ──
-  if (ds === 'testimonials') {
-    const d = await _d1('GET', '/api/testimonios');
-    const list = d.testimonios || d.testimonials || [];
-    return { content: JSON.stringify({ testimonials: list }, null, 2), sha: 'd1:testimonials' };
-  }
+  // (Eliminado para que use archivo local)
 
   // ── departures ──
   if (ds === 'departures') {
@@ -96,7 +102,8 @@ async function ghGet(path) {
     return { content: JSON.stringify({ reclamos: d.reclamos || [] }, null, 2), sha: 'd1:reclamos' };
   }
 
-  // ── users is now purely static JSON ──
+  // ── users ──
+  // (Eliminado para que use archivo local)
 
   // ── Fallback: static files via GitHub proxy (HTML templates) ──
   _checkAuth();
@@ -119,14 +126,49 @@ async function ghPut(path, content, sha, msg) {
   try { parsed = typeof content === 'string' ? JSON.parse(content) : content; }
   catch { parsed = { _raw: content }; }
 
-  // ── site_content, tours, blog are now purely static JSON (fallback used) ──
+  // ── site_content pages ──
+  // (Eliminado para que use archivo local)
+
+  // ── tours ──
+  // (Eliminado para que use archivo local)
+
+  // ── blog index (update = batch upsert) ──
+  // (Eliminado para que use archivo local)
+
+  // ── single blog post (markdown) ──
+  if (ds === 'blog:post') {
+    // content is a markdown string with frontmatter
+    const slug = path.split('/').pop().replace('.md', '');
+    const raw = typeof content === 'string' ? content : JSON.stringify(content);
+    // Parse frontmatter
+    const fmMatch = raw.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);
+    let post = { slug, contenido: raw };
+    if (fmMatch) {
+      const fmLines = fmMatch[1].split('\n');
+      const fm = {};
+      fmLines.forEach(l => {
+        const idx = l.indexOf(':');
+        if (idx > -1) fm[l.substring(0, idx).trim()] = l.substring(idx + 1).trim();
+      });
+      post = {
+        id:         fm.id || sha?.replace('d1:', '') || undefined,
+        slug,
+        titulo:     fm.title || fm.titulo || slug,
+        autor:      fm.author || fm.autor || 'Manu Jungle Forever',
+        fecha:      fm.date || fm.fecha,
+        categoria:  fm.category || fm.categoria,
+        extracto:   fm.excerpt || fm.extracto,
+        imagen_hero:fm.image || fm.imagen_hero,
+        estado:     fm.status || fm.estado || 'publicado',
+        contenido:  fmMatch[2] || ''
+      };
+    }
+    const d = await _d1('POST', '/api/blog', post);
+    return { ok: true, sha: 'd1:blog:' + (d.id || slug) };
+  }
 
   // ── testimonials ──
-  if (ds === 'testimonials') {
-    const list = parsed?.testimonials || parsed?.testimonios || (Array.isArray(parsed) ? parsed : [parsed]);
-    const d = await _d1('POST', '/api/testimonios', list);
-    return { ok: true, sha: 'd1:testimonials:' + Date.now() };
-  }
+  // (Eliminado para que use archivo local)
 
   // ── departures — batch upsert ──
   if (ds === 'departures') {
@@ -135,7 +177,33 @@ async function ghPut(path, content, sha, msg) {
     return { ok: true, sha: 'd1:salidas:' + Date.now() };
   }
 
-  // ── users is now purely static JSON ──
+  // ── users — batch upsert from panel ──
+  if (ds === 'users') {
+    const list = parsed?.users || (Array.isArray(parsed) ? parsed : [parsed]);
+    for (const u of list) {
+      if (!u || !u.email) continue;
+      const payload = {
+        name:  u.name,
+        email: u.email,
+        role:  u.role === 'superuser' ? 'admin' : 'editor',
+        foto:  u.foto || ''
+      };
+      // Only set password if it's a real hash (not the placeholder)
+      if (u.password_hash && u.password_hash !== '(stored in D1)') {
+        payload.password_hash = u.password_hash;
+      }
+      if (u.id && !u.id.startsWith('usr_new')) {
+        // Try update first
+        const r = await fetch('/api/users/' + encodeURIComponent(u.id), {
+          method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
+        });
+        if (r.status === 404) await _d1('POST', '/api/users', { ...payload, password: '123456aytana' });
+      } else {
+        await _d1('POST', '/api/users', { ...payload, password: u._new_password || '123456aytana' });
+      }
+    }
+    return { ok: true, sha: 'd1:users:' + Date.now() };
+  }
 
   // ── Fallback: GitHub proxy for HTML templates ──
   _checkAuth();
@@ -156,7 +224,14 @@ async function ghPut(path, content, sha, msg) {
 async function ghDelete(path, sha, msg) {
   const ds = _classify(path);
 
-  // ── blog post (static fallback) ──
+  // ── blog post ──
+  if (ds === 'blog:post') {
+    const slug = path.split('/').pop().replace('.md', '');
+    // Find post id from sha or slug
+    const id = sha?.replace('d1:', '') || slug;
+    await _d1('DELETE', '/api/blog/' + encodeURIComponent(id));
+    return { ok: true };
+  }
 
   // ── departure ──
   if (ds === 'departures') {
@@ -172,9 +247,17 @@ async function ghDelete(path, sha, msg) {
     return { ok: true };
   }
 
-  // ── tour (static fallback) ──
+  // ── tour ──
+  if (ds === 'tours') {
+    await _d1('DELETE', '/api/tours/' + encodeURIComponent(path));
+    return { ok: true };
+  }
 
-  // ── user (static fallback) ──
+  // ── user ──
+  if (ds === 'users') {
+    await _d1('DELETE', '/api/users/' + encodeURIComponent(path));
+    return { ok: true };
+  }
 
   // ── Fallback: GitHub proxy ──
   _checkAuth();

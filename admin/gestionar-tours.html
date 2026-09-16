@@ -987,6 +987,142 @@ function imgWidget(id, label, value='', hint='') {
     </div></div>`;
 }
 
+function tourImageWidget(opts) {
+  const id = opts.id;
+  const label = opts.label || 'Imagen';
+  const val = (opts.value || '').trim();
+  const hint = opts.hint || '';
+  const pid = id + '-prev';
+  const fid = id + '-file';
+  const bid = id + '-clear';
+  const pbox = id + '-pbox';
+  const hasVal = Boolean(val);
+
+  return `
+    <div class="tour-img-widget" id="${id}-widget" style="background: rgba(15,23,42,0.45); border: 1px solid rgba(45,212,191,0.22); border-radius: 12px; padding: 14px; margin-bottom: 12px;">
+      <label style="font-size: 0.85rem; font-weight: 700; color: #2dd4bf; display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+        <span><i class="fas fa-image" style="margin-right: 6px;"></i>${label}</span>
+        <span id="${id}-status" style="font-size: 0.75rem; font-weight: 500; color: ${hasVal ? '#34d399' : '#94a3b8'};">${hasVal ? '✓ Imagen configurada' : 'Sin imagen'}</span>
+      </label>
+      
+      <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 8px;">
+        <input id="${id}" class="${opts.inputClass || ''}" value="${esc(val)}" placeholder="URL o ruta (/media/...)" 
+          oninput="handleTourImgChange('${id}')" 
+          style="flex: 1; background: rgba(0,0,0,0.35); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; color: #fff; padding: 8px 12px; font-size: 0.86rem;">
+        
+        <input type="file" id="${fid}" accept="image/*" style="display: none;" onchange="handleTourImgFileUpload('${id}', this)">
+        
+        <button type="button" class="btn-primary" onclick="document.getElementById('${fid}').click()" title="Subir desde la computadora a Cloudflare R2" style="padding: 7px 12px; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 5px; white-space: nowrap;">
+          <i class="fas fa-upload"></i> Subir
+        </button>
+        
+        <button type="button" class="btn-secondary" onclick="pickTourImgModal('${id}')" title="Seleccionar de la biblioteca de Medios R2" style="padding: 7px 12px; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 5px; white-space: nowrap;">
+          <i class="fas fa-images"></i> Medios
+        </button>
+        
+        <button type="button" id="${bid}" onclick="clearTourImgField('${id}')" title="Quitar imagen asociada (no borra el archivo en Cloudflare R2)" style="padding: 7px 10px; font-size: 0.8rem; background: rgba(239,68,68,0.16); color: #f87171; border: 1px solid rgba(239,68,68,0.3); border-radius: 8px; cursor: pointer; display: ${hasVal ? 'inline-flex' : 'none'}; align-items: center; gap: 4px; white-space: nowrap;">
+          <i class="fas fa-trash"></i> Quitar
+        </button>
+      </div>
+
+      <!-- Previsualización -->
+      <div id="${pbox}" style="width: 100%; max-height: 240px; min-height: ${hasVal ? '110px' : '0'}; background: rgba(0,0,0,0.4); border-radius: 10px; overflow: hidden; border: 1px dashed rgba(45,212,191,0.3); display: ${hasVal ? 'flex' : 'none'}; justify-content: center; align-items: center; position: relative; margin-top: 6px;">
+        <img id="${pid}" src="${esc(val)}" style="max-width: 100%; max-height: 240px; width: auto; height: auto; object-fit: contain; display: block;" alt="Vista previa">
+      </div>
+
+      ${opts.showAlt ? `
+      <div style="margin-top: 8px;">
+        <label style="font-size: 0.78rem; color: #cbd5e1; display: block; margin-bottom: 3px;">Texto alternativo (alt)</label>
+        <input id="${id}-alt" class="${opts.altClass || ''}" value="${esc(opts.altValue || '')}" placeholder="Descripción breve de la imagen para SEO y accesibilidad" style="width: 100%; background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; color: #fff; padding: 6px 10px; font-size: 0.82rem;" oninput="if(typeof syncItineraryFromDOM==='function')syncItineraryFromDOM();">
+      </div>` : ''}
+
+      ${opts.showPie ? `
+      <div style="margin-top: 6px;">
+        <label style="font-size: 0.78rem; color: #cbd5e1; display: block; margin-bottom: 3px;">Pie de foto opcional (caption)</label>
+        <input id="${id}-pie" class="${opts.pieClass || ''}" value="${esc(opts.pieValue || '')}" placeholder="ej: Vista panorámica del bosque nuboso al amanecer" style="width: 100%; background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; color: #fff; padding: 6px 10px; font-size: 0.82rem;" oninput="if(typeof syncItineraryFromDOM==='function')syncItineraryFromDOM();">
+      </div>` : ''}
+
+      ${hint ? `<div style="font-size: 0.78rem; color: #94a3b8; margin-top: 6px; line-height: 1.4;">${hint}</div>` : ''}
+    </div>
+  `;
+}
+
+window.handleTourImgChange = function(id) {
+  const inp = document.getElementById(id);
+  const prev = document.getElementById(id + '-prev');
+  const pbox = document.getElementById(id + '-pbox');
+  const btnClear = document.getElementById(id + '-clear');
+  const statusEl = document.getElementById(id + '-status');
+  if (!inp) return;
+  const val = inp.value.trim();
+  if (val) {
+    if (prev) { prev.src = val; }
+    if (pbox) { pbox.style.display = 'flex'; pbox.style.minHeight = '110px'; }
+    if (btnClear) { btnClear.style.display = 'inline-flex'; }
+    if (statusEl) { statusEl.textContent = '✓ Imagen configurada'; statusEl.style.color = '#34d399'; }
+  } else {
+    if (prev) { prev.src = ''; }
+    if (pbox) { pbox.style.display = 'none'; pbox.style.minHeight = '0'; }
+    if (btnClear) { btnClear.style.display = 'none'; }
+    if (statusEl) { statusEl.textContent = 'Sin imagen'; statusEl.style.color = '#94a3b8'; }
+  }
+  if (typeof syncItineraryFromDOM === 'function') syncItineraryFromDOM();
+  const sb = document.getElementById('save-bar');
+  if (sb && typeof saveFnRef !== 'undefined' && saveFnRef) sb.style.display = 'flex';
+};
+
+window.handleTourImgFileUpload = async function(id, inputEl) {
+  const file = inputEl.files && inputEl.files[0];
+  if (!file) return;
+  const statusEl = document.getElementById(id + '-status');
+  if (statusEl) { statusEl.textContent = '⏳ Subiendo a R2...'; statusEl.style.color = '#fbbf24'; }
+  try {
+    const uploaded = await r2Upload(file, null);
+    let url = '';
+    if (uploaded && typeof uploaded === 'object') {
+      url = uploaded.url || uploaded.src || uploaded.key ? ('/media/' + (uploaded.key || '')) : '';
+    } else if (typeof uploaded === 'string') {
+      url = uploaded;
+    }
+    if (!url) {
+      url = `/media/${encodeURIComponent(file.name)}`;
+    }
+    const inp = document.getElementById(id);
+    if (inp) {
+      inp.value = url;
+      handleTourImgChange(id);
+    }
+    if (statusEl) { statusEl.textContent = '✓ Imagen subida'; statusEl.style.color = '#34d399'; }
+  } catch(err) {
+    alert('Error al subir imagen a Cloudflare R2: ' + err.message);
+    if (statusEl) { statusEl.textContent = '❌ Error al subir'; statusEl.style.color = '#f87171'; }
+  } finally {
+    inputEl.value = '';
+  }
+};
+
+window.pickTourImgModal = function(id) {
+  openMediaModal((url) => {
+    const inp = document.getElementById(id);
+    if (inp) {
+      inp.value = url;
+      handleTourImgChange(id);
+    }
+  });
+};
+
+window.clearTourImgField = function(id) {
+  const inp = document.getElementById(id);
+  if (inp) {
+    inp.value = '';
+    handleTourImgChange(id);
+  }
+  const alt = document.getElementById(id + '-alt');
+  if (alt) alt.value = '';
+  const pie = document.getElementById(id + '-pie');
+  if (pie) pie.value = '';
+};
+
 // ─────────────────────────────────────────────────────────────────────────────
 // VIEW: MEDIA GALLERY (MAIN)
 // ─────────────────────────────────────────────────────────────────────────────
@@ -1798,39 +1934,40 @@ async function publishTourPage(slug, tourObj) {
       const isOpen = i === 0;
 
       let bodyInnerHtml = '';
-      const bloques = Array.isArray(it.bloques) ? it.bloques : [];
-
-      if (bloques.length > 0) {
-        bloques.forEach(b => {
-          if (b.tipo === 'imagen' || b.tipo === 'image') {
-            let imgSrc = b.url || '';
-            if (imgSrc && imgSrc.startsWith('/') && !imgSrc.startsWith('//')) {
-              imgSrc = '..' + imgSrc;
-            }
-            if (imgSrc) {
-              bodyInnerHtml += `
-                <figure class="it-figure">
-                  <div class="it-img-box">
-                    <img src="${cleanText(imgSrc)}" alt="${cleanText(b.alt || dayTitle)}" loading="lazy">
-                  </div>
-                  ${b.pie ? `<figcaption class="it-caption">${cleanText(b.pie)}</figcaption>` : ''}
-                </figure>`;
-            }
-          } else {
-            const textContent = b.contenido || b.texto || '';
-            if (textContent.trim()) {
-              bodyInnerHtml += `
-                <div class="it-text-block">
-                  ${mdTextToHtml(textContent)}
-                </div>`;
-            }
-          }
-        });
-      } else if (it.descripcion && it.descripcion.trim()) {
+      const descText = it.descripcion ? it.descripcion.trim() : '';
+      if (descText) {
         bodyInnerHtml += `
           <div class="it-text-block">
-            ${mdTextToHtml(it.descripcion)}
+            ${mdTextToHtml(descText)}
           </div>`;
+      }
+
+      // Check day image (direct property or legacy bloques)
+      let dayImg = it.imagen ? it.imagen.trim() : '';
+      let dayAlt = it.imagen_alt ? it.imagen_alt.trim() : (it.titulo || dayTitle);
+      let dayPie = it.imagen_pie ? it.imagen_pie.trim() : '';
+
+      if (!dayImg && Array.isArray(it.bloques)) {
+        const bImg = it.bloques.find(b => b.tipo === 'imagen' || b.tipo === 'image');
+        if (bImg && bImg.url) {
+          dayImg = bImg.url;
+          dayAlt = bImg.alt || dayAlt;
+          dayPie = bImg.pie || dayPie;
+        }
+      }
+
+      if (dayImg) {
+        let imgSrc = dayImg;
+        if (imgSrc.startsWith('/') && !imgSrc.startsWith('//')) {
+          imgSrc = '..' + imgSrc;
+        }
+        bodyInnerHtml += `
+          <figure class="it-figure">
+            <div class="it-img-box">
+              <img src="${cleanText(imgSrc)}" alt="${cleanText(dayAlt)}" loading="lazy">
+            </div>
+            ${dayPie ? `<figcaption class="it-caption">${cleanText(dayPie)}</figcaption>` : ''}
+          </figure>`;
       }
 
       if (!bodyInnerHtml.trim()) {
@@ -1854,7 +1991,7 @@ async function publishTourPage(slug, tourObj) {
               <i class="fas fa-chevron-down"></i>
             </div>
           </button>
-          <div class="it-day-body" id="it-body-${dayNum}" role="region" aria-labelledby="it-btn-${dayNum}" aria-hidden="${isOpen ? 'false' : 'true'}">
+          <div class="it-day-body" id="it-body-${dayNum}" role="region" aria-labelledby="it-btn-${dayNum}" aria-hidden="${isOpen ? 'false' : 'true'}" style="${isOpen ? 'display:block;' : ''}">
             <div class="it-content-wrap">
               ${bodyInnerHtml}
             </div>
@@ -1874,7 +2011,7 @@ async function publishTourPage(slug, tourObj) {
   const capStr = `${tourObj.capacidad_min || 1}–${tourObj.capacidad_max || 8} Travelers`;
   
   const metaTitle = `${tourObj.nombre || 'Tour'} | Manu Jungle Forever`;
-  let metaDesc = (tourObj.descripcion_corta || tourObj.descripcion_larga || '').replace(/\r?\n|\r/g, ' ').replace(/\s+/g, ' ').trim();
+  let metaDesc = (tourObj.descripcion_corta || tourObj.descripcion_larga || '').replace(/\n+/g, ' ').trim();
   if (metaDesc.length > 155) {
     metaDesc = metaDesc.substring(0, 152);
     const lastSpace = metaDesc.lastIndexOf(' ');
@@ -1927,19 +2064,34 @@ async function unpublishTourPage(slug) {
 }
 
 window.editTour = function(idx) {
-  const t= idx === -1 ? {nombre:'', estado:'activo', categoria:'wildlife', duracion_dias:1, duracion_noches:0, precio_desde:0, capacidad_min:1, capacidad_max:12, dificultad:'Fácil', temporada:'', descripcion_corta:'', descripcion_larga:'', imagen_hero:'', galeria:[], itinerario:[], incluye:[], no_incluye:[], destacado:false} : cData.tours[idx];
+  const t= idx === -1 ? {nombre:'', estado:'activo', categoria:'wildlife', duracion_dias:1, duracion_noches:0, precio_desde:0, capacidad_min:1, capacidad_max:12, dificultad:'Fácil', temporada:'', descripcion_corta:'', descripcion_larga:'', imagen_hero:'', imagen_card:'', imagen_alt:'', galeria:[], itinerario:[{ dia:1, titulo:'', subtitulo:'', descripcion:'', imagen:'', imagen_alt:'', imagen_pie:'' }], incluye:[], no_incluye:[], destacado:false} : cData.tours[idx];
   
   let currentItinerary = JSON.parse(JSON.stringify(t.itinerario || [])).map((item, idx) => {
-    let bloques = Array.isArray(item.bloques) ? item.bloques : [];
-    if (bloques.length === 0 && item.descripcion && item.descripcion.trim()) {
-      bloques = [{ tipo: 'texto', contenido: item.descripcion.trim() }];
+    let dayImg = item.imagen || '';
+    let dayAlt = item.imagen_alt || '';
+    let dayPie = item.imagen_pie || '';
+    let dayDesc = item.descripcion || '';
+
+    if (!dayImg && Array.isArray(item.bloques)) {
+      const bImg = item.bloques.find(b => b.tipo === 'imagen' || b.tipo === 'image');
+      if (bImg) {
+        dayImg = bImg.url || '';
+        dayAlt = bImg.alt || '';
+        dayPie = bImg.pie || '';
+      }
+      if (!dayDesc) {
+        dayDesc = item.bloques.filter(b => b.tipo !== 'imagen' && b.tipo !== 'image').map(b => b.contenido || b.texto || '').join('\n\n');
+      }
     }
+
     return {
       dia: item.dia || (idx + 1),
       titulo: item.titulo || '',
       subtitulo: item.subtitulo || '',
-      descripcion: item.descripcion || '',
-      bloques: bloques
+      descripcion: dayDesc,
+      imagen: dayImg,
+      imagen_alt: dayAlt,
+      imagen_pie: dayPie
     };
   });
   
@@ -2005,7 +2157,7 @@ window.editTour = function(idx) {
             <div class="ff"><label>Descripción completa (Markdown)</label>${mdToolbar('t-dl')}</div>
           </div>
 
-          <!-- TARJETA ITINERARIO DINÁMICO -->
+          <!-- TARJETA ITINERARIO DÍA A DÍA -->
           <div style="background: rgba(17,24,39,0.5); border: 1px solid rgba(255,255,255,0.05); padding: 24px; border-radius: 16px;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
               <h3 style="color: #10b981; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin: 0;">Itinerario Día a Día</h3>
@@ -2018,7 +2170,7 @@ window.editTour = function(idx) {
         <!-- COLUMNA DERECHA -->
         <div style="display: flex; flex-direction: column; gap: 24px;">
           
-          <!-- TARJETA 3 -->
+          <!-- TARJETA 3: ESTADO -->
           <div style="background: rgba(17,24,39,0.5); border: 1px solid rgba(255,255,255,0.05); padding: 24px; border-radius: 16px;">
             <h3 style="color: #10b981; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">Estado y Visibilidad</h3>
             <div class="ff" style="margin-bottom:12px"><label>Estado</label><select id="t-e"><option ${t.estado==='activo'?'selected':''} value="activo">✅ Active</option><option ${t.estado==='pausado'?'selected':''} value="pausado">⏸️ Paused</option><option ${t.estado==='seasonal'?'selected':''} value="seasonal">🍂 Seasonal</option><option ${t.estado==='inactivo'?'selected':''} value="inactivo">❌ Inactive</option></select></div>
@@ -2027,11 +2179,26 @@ window.editTour = function(idx) {
             </div>
           </div>
           
-          <!-- TARJETA 4 -->
+          <!-- TARJETA 4: IMÁGENES DEL TOUR -->
           <div style="background: rgba(17,24,39,0.5); border: 1px solid rgba(255,255,255,0.05); padding: 24px; border-radius: 16px;">
-            <h3 style="color: #10b981; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">Imagen Hero / Principal</h3>
-            <div style="margin-bottom:12px">${imgWidget('t-img','Imagen hero / principal',t.imagen_hero||'')}</div>
-            <div class="ff"><label>Texto alt imagen</label><input id="t-imgalt" value="${esc(t.imagen_alt||'')}"></div>
+            <h3 style="color: #10b981; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">Imágenes del Tour</h3>
+            
+            ${tourImageWidget({
+              id: 't-img',
+              label: 'Imagen de fondo del título / portada',
+              value: t.imagen_hero || t.imagen_portada || '',
+              showAlt: true,
+              altValue: t.imagen_alt || '',
+              hint: 'Fondo del encabezado principal donde aparece el título del tour. Cuenta con superposición oscura para garantizar total legibilidad sobre fotografías claras u oscuras.'
+            })}
+
+            ${tourImageWidget({
+              id: 't-imgcard',
+              label: 'Imagen de tarjeta (Listado / Miniatura)',
+              value: t.imagen_card || '',
+              showAlt: false,
+              hint: 'Fotografía para las tarjetas de tours en Guided Tours y página de inicio. Si se deja vacía, se usará la imagen de portada automáticamente.'
+            })}
           </div>
           
         </div>
@@ -2046,96 +2213,39 @@ window.editTour = function(idx) {
       const dayIdx = day - 1;
       const tit = card.querySelector('.it-title-inp')?.value || '';
       const sub = card.querySelector('.it-sub-inp')?.value || '';
-      
-      const blocks = [];
-      card.querySelectorAll('.it-block-card').forEach(bCard => {
-        const bType = bCard.dataset.type;
-        if (bType === 'imagen') {
-          const url = (bCard.querySelector('.it-img-url')?.value || '').trim();
-          const alt = (bCard.querySelector('.it-img-alt')?.value || '').trim();
-          const pie = (bCard.querySelector('.it-img-pie')?.value || '').trim();
-          if (url) {
-            blocks.push({ tipo: 'imagen', url, alt, pie });
-          }
-        } else {
-          const txt = bCard.querySelector('.it-text-ta')?.value || '';
-          blocks.push({ tipo: 'texto', contenido: txt });
-        }
-      });
+      const desc = card.querySelector('.it-desc-inp')?.value || '';
+      const img = card.querySelector('.it-img-inp')?.value || '';
+      const alt = card.querySelector('.it-img-alt-inp')?.value || '';
+      const pie = card.querySelector('.it-img-pie-inp')?.value || '';
 
       if (!currentItinerary[dayIdx]) {
-        currentItinerary[dayIdx] = { dia: day, titulo: '', subtitulo: '', descripcion: '', bloques: [] };
+        currentItinerary[dayIdx] = { dia: day, titulo: '', subtitulo: '', descripcion: '', imagen: '', imagen_alt: '', imagen_pie: '' };
       }
       currentItinerary[dayIdx].dia = day;
       currentItinerary[dayIdx].titulo = tit;
       currentItinerary[dayIdx].subtitulo = sub;
-      currentItinerary[dayIdx].bloques = blocks;
-      const textOnly = blocks.filter(b => b.tipo === 'texto').map(b => b.contenido).filter(Boolean).join('\n\n');
-      currentItinerary[dayIdx].descripcion = textOnly;
+      currentItinerary[dayIdx].descripcion = desc;
+      currentItinerary[dayIdx].imagen = img;
+      currentItinerary[dayIdx].imagen_alt = alt;
+      currentItinerary[dayIdx].imagen_pie = pie;
     });
   }
 
-  window.pickItineraryImage = function(dayIndex, blockIndex) {
-    openMediaModal((url) => {
-      const inp = document.getElementById(`it-img-inp-${dayIndex}-${blockIndex}`);
-      const prev = document.getElementById(`it-img-prev-${dayIndex}-${blockIndex}`);
-      if (inp) inp.value = url;
-      if (prev) {
-        prev.src = url;
-        prev.style.display = 'block';
-      }
-      syncItineraryFromDOM();
-      const sb = document.getElementById('save-bar');
-      if (sb && saveFnRef) sb.style.display = 'flex';
-    });
-  };
-
-  window.addItineraryBlock = function(dayIndex, type) {
+  window.moveItineraryDay = function(dayIndex, dir) {
     syncItineraryFromDOM();
     const dayIdx = dayIndex - 1;
-    if (!currentItinerary[dayIdx]) {
-      currentItinerary[dayIdx] = { dia: dayIndex, titulo: '', subtitulo: '', descripcion: '', bloques: [] };
-    }
-    if (!Array.isArray(currentItinerary[dayIdx].bloques)) {
-      currentItinerary[dayIdx].bloques = [];
-    }
-    if (type === 'imagen') {
-      currentItinerary[dayIdx].bloques.push({ tipo: 'imagen', url: '', alt: '', pie: '' });
-    } else {
-      currentItinerary[dayIdx].bloques.push({ tipo: 'texto', contenido: '' });
-    }
-    renderItineraryBlocks();
+    const targetIdx = dayIdx + dir;
+    if (targetIdx < 0 || targetIdx >= currentItinerary.length) return;
+    const temp = currentItinerary[dayIdx];
+    currentItinerary[dayIdx] = currentItinerary[targetIdx];
+    currentItinerary[targetIdx] = temp;
+    currentItinerary.forEach((it, idx) => { it.dia = idx + 1; });
+    renderItineraryDays();
     const sb = document.getElementById('save-bar');
     if (sb && saveFnRef) sb.style.display = 'flex';
   };
 
-  window.moveItineraryBlock = function(dayIndex, blockIndex, dir) {
-    syncItineraryFromDOM();
-    const dayIdx = dayIndex - 1;
-    const blocks = currentItinerary[dayIdx]?.bloques;
-    if (!blocks) return;
-    const targetIdx = blockIndex + dir;
-    if (targetIdx < 0 || targetIdx >= blocks.length) return;
-    const temp = blocks[blockIndex];
-    blocks[blockIndex] = blocks[targetIdx];
-    blocks[targetIdx] = temp;
-    renderItineraryBlocks();
-    const sb = document.getElementById('save-bar');
-    if (sb && saveFnRef) sb.style.display = 'flex';
-  };
-
-  window.removeItineraryBlock = function(dayIndex, blockIndex) {
-    syncItineraryFromDOM();
-    const dayIdx = dayIndex - 1;
-    const blocks = currentItinerary[dayIdx]?.bloques;
-    if (!blocks) return;
-    blocks.splice(blockIndex, 1);
-    renderItineraryBlocks();
-    const sb = document.getElementById('save-bar');
-    if (sb && saveFnRef) sb.style.display = 'flex';
-  };
-
-  function renderItineraryBlocks() {
+  function renderItineraryDays() {
     const container = document.getElementById('itinerary-days-container');
     if (!container) return;
     const daysInput = document.getElementById('t-d');
@@ -2144,7 +2254,7 @@ window.editTour = function(idx) {
     syncItineraryFromDOM();
     
     while (currentItinerary.length < totalDays) {
-      currentItinerary.push({ dia: currentItinerary.length + 1, titulo: '', subtitulo: '', descripcion: '', bloques: [{ tipo: 'texto', contenido: '' }] });
+      currentItinerary.push({ dia: currentItinerary.length + 1, titulo: '', subtitulo: '', descripcion: '', imagen: '', imagen_alt: '', imagen_pie: '' });
     }
     
     const badge = document.getElementById('it-days-badge');
@@ -2152,105 +2262,62 @@ window.editTour = function(idx) {
     
     let html = '';
     for (let i = 1; i <= totalDays; i++) {
-      const item = currentItinerary[i - 1] || { dia: i, titulo: '', subtitulo: '', descripcion: '', bloques: [] };
-      let bloques = Array.isArray(item.bloques) ? item.bloques : [];
-      if (bloques.length === 0 && item.descripcion) {
-        bloques = [{ tipo: 'texto', contenido: item.descripcion }];
-      } else if (bloques.length === 0) {
-        bloques = [{ tipo: 'texto', contenido: '' }];
-      }
-      item.bloques = bloques;
-
-      let blocksHtml = '';
-      bloques.forEach((b, bIdx) => {
-        if (b.tipo === 'imagen') {
-          blocksHtml += `
-            <div class="it-block-card" data-type="imagen" style="background: rgba(56,189,248,0.06); border: 1px solid rgba(56,189,248,0.25); border-radius: 8px; padding: 12px; margin-bottom: 10px;">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px;">
-                <span style="font-size:0.75rem; font-weight:700; color:#38bdf8; text-transform:uppercase; display:flex; align-items:center; gap:6px;">
-                  <i class="fas fa-image"></i> Bloque de Imagen
-                </span>
-                <div style="display:flex; gap:4px;">
-                  <button type="button" class="btn-xs" onclick="moveItineraryBlock(${i}, ${bIdx}, -1)" title="Subir bloque" style="background:rgba(255,255,255,0.08); border:none; color:#cbd5e1; border-radius:4px; padding:3px 8px; cursor:pointer;">↑</button>
-                  <button type="button" class="btn-xs" onclick="moveItineraryBlock(${i}, ${bIdx}, 1)" title="Bajar bloque" style="background:rgba(255,255,255,0.08); border:none; color:#cbd5e1; border-radius:4px; padding:3px 8px; cursor:pointer;">↓</button>
-                  <button type="button" class="btn-xs" onclick="removeItineraryBlock(${i}, ${bIdx})" title="Quitar imagen (no borra el archivo de Medios R2)" style="background:rgba(239,68,68,0.18); border:none; color:#f87171; border-radius:4px; padding:3px 8px; cursor:pointer;">✕</button>
-                </div>
-              </div>
-              <div style="display:flex; gap:12px; align-items:flex-start; margin-bottom:8px;">
-                <div style="width:76px; height:54px; flex-shrink:0; background:rgba(0,0,0,0.5); border-radius:6px; overflow:hidden; border:1px solid rgba(255,255,255,0.12);">
-                  <img id="it-img-prev-${i}-${bIdx}" src="${esc(b.url || '')}" style="width:100%; height:100%; object-fit:cover; display:${b.url ? 'block' : 'none'};" alt="">
-                </div>
-                <div style="flex:1;">
-                  <div style="display:flex; gap:8px;">
-                    <input class="it-img-url" id="it-img-inp-${i}-${bIdx}" value="${esc(b.url || '')}" placeholder="URL o seleccionar de Medios" oninput="document.getElementById('it-img-prev-${i}-${bIdx}').src=this.value; document.getElementById('it-img-prev-${i}-${bIdx}').style.display=this.value?'block':'none';" style="flex:1; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.12); border-radius:6px; color:#fff; padding:6px 10px; font-size:0.83rem;">
-                    <button type="button" class="btn-secondary" onclick="pickItineraryImage(${i}, ${bIdx})" style="padding:6px 12px; font-size:0.8rem; white-space:nowrap;">📁 Medios</button>
-                  </div>
-                </div>
-              </div>
-              <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
-                <div>
-                  <input class="it-img-alt" value="${esc(b.alt || '')}" placeholder="Texto alt (accesibilidad)" style="width:100%; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.1); border-radius:6px; color:#fff; padding:5px 8px; font-size:0.8rem;">
-                </div>
-                <div>
-                  <input class="it-img-pie" value="${esc(b.pie || '')}" placeholder="Pie de foto opcional" style="width:100%; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.1); border-radius:6px; color:#fff; padding:5px 8px; font-size:0.8rem;">
-                </div>
-              </div>
-            </div>`;
-        } else {
-          blocksHtml += `
-            <div class="it-block-card" data-type="texto" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 12px; margin-bottom: 10px;">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px;">
-                <span style="font-size:0.75rem; font-weight:700; color:#2dd4bf; text-transform:uppercase; display:flex; align-items:center; gap:6px;">
-                  <i class="fas fa-paragraph"></i> Bloque de Texto
-                </span>
-                <div style="display:flex; gap:4px;">
-                  <button type="button" class="btn-xs" onclick="moveItineraryBlock(${i}, ${bIdx}, -1)" title="Subir bloque" style="background:rgba(255,255,255,0.08); border:none; color:#cbd5e1; border-radius:4px; padding:3px 8px; cursor:pointer;">↑</button>
-                  <button type="button" class="btn-xs" onclick="moveItineraryBlock(${i}, ${bIdx}, 1)" title="Bajar bloque" style="background:rgba(255,255,255,0.08); border:none; color:#cbd5e1; border-radius:4px; padding:3px 8px; cursor:pointer;">↓</button>
-                  <button type="button" class="btn-xs" onclick="removeItineraryBlock(${i}, ${bIdx})" title="Quitar bloque" style="background:rgba(239,68,68,0.18); border:none; color:#f87171; border-radius:4px; padding:3px 8px; cursor:pointer;">✕</button>
-                </div>
-              </div>
-              <textarea class="it-text-ta" style="width:100%; min-height:85px; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.12); border-radius:6px; color:#fff; padding:8px 10px; font-family:inherit; font-size:0.88rem; line-height:1.5;" placeholder="Párrafos descriptivos de actividades, fauna, comidas, listas con guiones (- item)...">${esc(b.contenido || '')}</textarea>
-            </div>`;
-        }
-      });
+      const item = currentItinerary[i - 1] || { dia: i, titulo: '', subtitulo: '', descripcion: '', imagen: '', imagen_alt: '', imagen_pie: '' };
 
       html += `
-        <div class="it-day-card" data-day="${i}" style="background: rgba(0,0,0,0.25); border: 1px solid rgba(45,212,191,0.18); border-radius: 12px; padding: 18px;">
-          <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
-            <span style="background: #10b981; color: #020617; font-size: 0.72rem; font-weight: 800; padding: 3px 8px; border-radius: 6px;">DÍA ${i}</span>
-            <span style="font-size:0.8rem; color:#9ca3af;">Actividades, ruta y fotografías del día ${i}</span>
+        <div class="it-day-card" data-day="${i}" style="background: rgba(0,0,0,0.25); border: 1px solid rgba(45,212,191,0.2); border-radius: 12px; padding: 18px; margin-bottom: 16px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span style="background: #10b981; color: #020617; font-size: 0.75rem; font-weight: 800; padding: 4px 10px; border-radius: 6px; letter-spacing:0.05em;">DÍA ${i}</span>
+              <span style="font-size:0.82rem; color:#9ca3af;">Itinerario y contenido del día ${i}</span>
+            </div>
+            <div style="display:flex; gap:6px;">
+              <button type="button" class="btn-xs" onclick="moveItineraryDay(${i}, -1)" title="Mover día hacia arriba" style="background:rgba(255,255,255,0.08); border:none; color:#cbd5e1; border-radius:4px; padding:4px 9px; cursor:pointer;">↑</button>
+              <button type="button" class="btn-xs" onclick="moveItineraryDay(${i}, 1)" title="Mover día hacia abajo" style="background:rgba(255,255,255,0.08); border:none; color:#cbd5e1; border-radius:4px; padding:4px 9px; cursor:pointer;">↓</button>
+            </div>
           </div>
+
           <div class="ff" style="margin-bottom:10px;">
-            <label>Título del día ${i}</label>
-            <input class="it-title-inp" id="it-t-${i}" value="${esc(item.titulo || '')}" placeholder="ej: Cusco → Bosque Nuboso → Machu Wasi Lodge">
+            <label>Título o recorrido del día ${i}</label>
+            <input class="it-title-inp" id="it-t-${i}" value="${esc(item.titulo || '')}" placeholder="ej: Cusco → Bosque Nuboso → Pilcopata" oninput="if(typeof syncItineraryFromDOM==='function')syncItineraryFromDOM();">
           </div>
+
+          <div class="ff" style="margin-bottom:10px;">
+            <label>Subtítulo o highlights opcional</label>
+            <input class="it-sub-inp" id="it-sub-${i}" value="${esc(item.subtitulo || '')}" placeholder="ej: Manu Road · Cock-of-the-Rock · Cloud Forest" oninput="if(typeof syncItineraryFromDOM==='function')syncItineraryFromDOM();">
+          </div>
+
           <div class="ff" style="margin-bottom:14px;">
-            <label>Subtítulo / ruta opcional</label>
-            <input class="it-sub-inp" id="it-sub-${i}" value="${esc(item.subtitulo || '')}" placeholder="ej: Manu Road · Cloud forest · Cock-of-the-Rock lek">
+            <label>Descripción de las actividades</label>
+            <textarea class="it-desc-inp" id="it-desc-${i}" style="width:100%; min-height:90px; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.12); border-radius:8px; color:#fff; padding:10px; font-family:inherit; font-size:0.88rem; line-height:1.5;" placeholder="Detalla las actividades, fauna, paradas, comidas... (soporta párrafos y listas)" oninput="if(typeof syncItineraryFromDOM==='function')syncItineraryFromDOM();">${esc(item.descripcion || '')}</textarea>
           </div>
-          <div class="it-blocks-list" id="it-blocks-wrap-${i}">
-            ${blocksHtml}
-          </div>
-          <div style="display:flex; gap:8px; margin-top:8px;">
-            <button type="button" class="btn-panel" onclick="addItineraryBlock(${i}, 'texto')" style="padding:6px 12px; font-size:0.78rem;">
-              <i class="fas fa-plus"></i> Añadir texto
-            </button>
-            <button type="button" class="btn-panel" onclick="addItineraryBlock(${i}, 'imagen')" style="padding:6px 12px; font-size:0.78rem;">
-              <i class="fas fa-image"></i> Añadir imagen
-            </button>
-          </div>
+
+          <!-- Imagen del día -->
+          ${tourImageWidget({
+            id: `it-img-${i}`,
+            label: `Imagen del contenido del día ${i}`,
+            value: item.imagen || '',
+            inputClass: 'it-img-inp',
+            showAlt: true,
+            altClass: 'it-img-alt-inp',
+            altValue: item.imagen_alt || '',
+            showPie: true,
+            pieClass: 'it-img-pie-inp',
+            pieValue: item.imagen_pie || '',
+            hint: `Fotografía independiente para el día ${i}. Se muestra dentro del desplegable debajo de la descripción.`
+          })}
         </div>`;
     }
     container.innerHTML = html;
   }
 
-  renderItineraryBlocks();
+  renderItineraryDays();
   document.getElementById('t-dl').value=t.descripcion_larga||''; if(t.imagen_hero) updateImgPreview('t-img','t-img-prev');
 
   const daysInput = document.getElementById('t-d');
   if (daysInput) {
     daysInput.addEventListener('input', () => {
-      renderItineraryBlocks();
+      renderItineraryDays();
       const sb = document.getElementById('save-bar');
       if (sb && saveFnRef) sb.style.display = 'flex';
     });
@@ -2273,14 +2340,16 @@ window.editTour = function(idx) {
     for (let i = 0; i < maxDays; i++) {
       const it = currentItinerary[i];
       if (!it) continue;
-      const hasContent = (it.titulo && it.titulo.trim()) || (it.subtitulo && it.subtitulo.trim()) || (it.bloques && it.bloques.length > 0) || (it.descripcion && it.descripcion.trim());
+      const hasContent = (it.titulo && it.titulo.trim()) || (it.subtitulo && it.subtitulo.trim()) || (it.descripcion && it.descripcion.trim()) || (it.imagen && it.imagen.trim());
       if (i < durDias || hasContent) {
         finalItinerary.push({
           dia: i + 1,
           titulo: (it.titulo || '').trim(),
           subtitulo: (it.subtitulo || '').trim(),
           descripcion: (it.descripcion || '').trim(),
-          bloques: Array.isArray(it.bloques) ? it.bloques : []
+          imagen: (it.imagen || '').trim(),
+          imagen_alt: (it.imagen_alt || '').trim(),
+          imagen_pie: (it.imagen_pie || '').trim()
         });
       }
     }
@@ -2290,7 +2359,8 @@ window.editTour = function(idx) {
       capacidad_min:+v('t-cmin'),capacidad_max:+v('t-cmax'),
       dificultad:v('t-dif'),temporada:v('t-tmp'),
       destacado:document.getElementById('t-dest').checked,
-      imagen_hero:v('t-img'),imagen_alt:v('t-imgalt'),
+      imagen_hero:v('t-img'),imagen_portada:v('t-img'),imagen_card:v('t-imgcard'),
+      imagen_alt:v('t-img-alt')||v('t-imgalt'),
       descripcion_corta:v('t-dc'),descripcion_larga:document.getElementById('t-dl').value,
       itinerario:finalItinerary};
 
