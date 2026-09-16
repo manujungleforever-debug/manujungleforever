@@ -89,7 +89,8 @@ def build_site():
     html_files = glob.glob(os.path.join(ROOT_DIR, '**', '*.html'), recursive=True)
     
     for filepath in html_files:
-        if 'admin' in filepath.replace('\\', '/') or 'api' in filepath.replace('\\', '/'):
+        norm = filepath.replace('\\', '/')
+        if any(x in norm for x in ['/admin/', '/api/', '/data/']) or norm.endswith(('.bak', '.old', '.orig', '_raw.html')):
             continue
             
         enc = 'utf-8'

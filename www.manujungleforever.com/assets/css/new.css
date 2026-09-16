@@ -2222,6 +2222,7 @@ body { top: 0px !important; position: relative !important; }
 .reclamo-btn-submit:hover {
     transform: translateY(-2px);
     background: linear-gradient(135deg, #0F766E 0%, var(--brand-teal) 100%) !important;
+}
   /* =========================================
    Related Cards (More Articles)
    ========================================= */

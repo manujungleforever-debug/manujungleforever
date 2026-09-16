@@ -59,10 +59,10 @@ body {
 /* Logo enhancement on beige header background */
 #N .nl img {
   filter: drop-shadow(0 2px 10px rgba(45, 22, 10, 0.65)) drop-shadow(0 1px 3px rgba(0, 0, 0, 0.5));
-  transition: transform 0.3s ease;
+  transition: none !important;
 }
 #N .nl img:hover {
-  transform: scale(1.03);
+  transform: none !important;
 }
 
 /* Navigation Links */
@@ -297,29 +297,33 @@ body {
   box-shadow: var(--shadow-eco) !important;
   min-height: 520px !important;
   height: 100% !important;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  transition: none !important;
+  transform: none !important;
 }
 .about-card-img:hover {
-  transform: translateY(-4px) !important;
-  border-color: var(--sand-border-h) !important;
-  box-shadow: var(--shadow-eco-h) !important;
+  transform: none !important;
+  border-color: var(--sand-border) !important;
+  box-shadow: var(--shadow-eco) !important;
 }
 .about-card-img img {
   width: 100% !important;
   height: 100% !important;
   object-fit: cover !important;
   display: block !important;
-  transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+  transition: none !important;
+  transform: none !important;
+  filter: none !important;
 }
 .about-card-img:hover img {
-  transform: scale(1.04) !important;
+  transform: none !important;
+  filter: none !important;
 }
 .about-card-img .spi-caption {
   position: absolute !important;
   bottom: 0 !important;
   inset-inline: 0 !important;
-  background: linear-gradient(to top, rgba(11, 36, 28, 0.94) 0%, rgba(11, 36, 28, 0.4) 60%, transparent 100%) !important;
-  padding: 20px 24px !important;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.68) 0%, rgba(0, 0, 0, 0.18) 60%, transparent 100%) !important;
+  padding: 18px 24px !important;
   color: #FFFFFF !important;
 }
 .about-card-text {
@@ -447,15 +451,16 @@ body {
   border: 1px solid rgba(85, 65, 45, 0.15) !important;
   background: #11221B !important;
   box-shadow: var(--shadow-eco) !important;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  transition: none !important;
+  transform: none !important;
   cursor: pointer !important;
   display: flex !important;
   flex-direction: column !important;
 }
 #tours .tc:hover {
-  transform: translateY(-6px) !important;
-  border-color: var(--brand-teal) !important;
-  box-shadow: var(--shadow-eco-h) !important;
+  transform: none !important;
+  border-color: rgba(85, 65, 45, 0.25) !important;
+  box-shadow: var(--shadow-eco) !important;
 }
 #tours .tc-xl {
   min-height: 560px !important;
@@ -472,21 +477,25 @@ body {
   height: 100% !important;
   object-fit: cover !important;
   object-position: center !important;
-  transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+  transition: none !important;
+  transform: none !important;
+  filter: none !important;
   display: block !important;
   z-index: 1 !important;
 }
 #tours .tc:hover img {
-  transform: scale(1.06) !important;
+  transform: none !important;
+  filter: none !important;
 }
 #tours .tov {
   position: absolute !important;
   inset: 0 !important;
-  background: linear-gradient(to top, rgba(11, 28, 22, 0.98) 0%, rgba(11, 28, 22, 0.60) 50%, rgba(11, 28, 22, 0.05) 100%) !important;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0.25) 38%, transparent 65%) !important;
   z-index: 2 !important;
+  transition: none !important;
 }
 #tours .tc:hover .tov {
-  background: linear-gradient(to top, rgba(8, 22, 17, 0.99) 0%, rgba(8, 22, 17, 0.70) 52%, rgba(8, 22, 17, 0.12) 100%) !important;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0.25) 38%, transparent 65%) !important;
 }
 #tours .tc-badge {
   position: absolute !important;
@@ -725,10 +734,14 @@ body {
   height: 100% !important;
   object-fit: cover !important;
   display: block !important;
-  transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+  transition: none !important;
+  transform: none !important;
+  filter: none !important;
 }
-#unique-content .unique-media-wrap:hover .spi img {
-  transform: scale(1.05) !important;
+#unique-content .unique-media-wrap:hover .spi img,
+#unique-content .unique-media-wrap:hover .spi {
+  transform: none !important;
+  filter: none !important;
 }
 #unique-content .unique-badge {
   position: absolute !important;
@@ -754,7 +767,7 @@ body {
   bottom: 0 !important;
   inset-inline: 0 !important;
   z-index: 5 !important;
-  background: linear-gradient(to top, rgba(11, 36, 28, 0.94) 0%, rgba(11, 36, 28, 0.4) 60%, transparent 100%) !important;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.68) 0%, rgba(0, 0, 0, 0.18) 60%, transparent 100%) !important;
   padding: 16px 20px !important;
   color: #FFFFFF !important;
 }
@@ -920,32 +933,36 @@ body {
   overflow: hidden !important;
   background: rgba(11, 36, 28, 0.85) !important;
   border: 1px solid rgba(45, 212, 191, 0.22) !important;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55) !important;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35) !important;
   min-height: 440px !important;
   height: 100% !important;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  transition: none !important;
+  transform: none !important;
 }
 .wl-img-card:hover {
-  transform: translateY(-5px) !important;
-  border-color: rgba(45, 212, 191, 0.5) !important;
-  box-shadow: 0 24px 54px rgba(0, 0, 0, 0.75), 0 0 30px rgba(45, 212, 191, 0.2) !important;
+  transform: none !important;
+  border-color: rgba(45, 212, 191, 0.22) !important;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35) !important;
 }
 .wl-img-card img {
   width: 100% !important;
   height: 100% !important;
   object-fit: cover !important;
   display: block !important;
-  transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+  transition: none !important;
+  transform: none !important;
+  filter: none !important;
 }
 .wl-img-card:hover img {
-  transform: scale(1.05) !important;
+  transform: none !important;
+  filter: none !important;
 }
 .wl-img-card .wl-caption {
   position: absolute !important;
   bottom: 0 !important;
   inset-inline: 0 !important;
-  background: linear-gradient(to top, rgba(7, 25, 19, 0.94) 0%, rgba(7, 25, 19, 0.45) 60%, transparent 100%) !important;
-  padding: 20px 24px !important;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.68) 0%, rgba(0, 0, 0, 0.18) 60%, transparent 100%) !important;
+  padding: 18px 24px !important;
   color: #FFFFFF !important;
 }
 
@@ -1123,15 +1140,18 @@ body {
   border-radius: 50% !important;
   object-fit: cover !important;
   border: 3px solid var(--teal, #2dd4bf) !important;
-  box-shadow: 0 6px 22px rgba(45, 212, 191, 0.35) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12) !important;
   flex-shrink: 0 !important;
   display: block !important;
-  transition: transform 0.35s ease, box-shadow 0.35s ease !important;
+  transition: none !important;
+  transform: none !important;
+  filter: none !important;
 }
 
 .testim-card:hover .testim-avatar {
-  transform: scale(1.06) !important;
-  box-shadow: 0 8px 28px rgba(45, 212, 191, 0.55) !important;
+  transform: none !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12) !important;
+  filter: none !important;
 }
 
 .testim-avatar-fallback {
@@ -1151,13 +1171,15 @@ body {
   font-weight: 800 !important;
   font-size: 2.1rem !important;
   flex-shrink: 0 !important;
-  box-shadow: 0 6px 22px rgba(45, 212, 191, 0.25) !important;
-  transition: transform 0.35s ease !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12) !important;
+  transition: none !important;
+  transform: none !important;
 }
 
 .testim-card:hover .testim-avatar-fallback {
-  transform: scale(1.06) !important;
-  border-color: #2dd4bf !important;
+  transform: none !important;
+  border-color: rgba(45, 212, 191, 0.5) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12) !important;
 }
 
 .testim-verified-mid {
@@ -1249,6 +1271,13 @@ body {
   border-radius: 24px !important;
   border: 1px solid var(--sand-border) !important;
   box-shadow: var(--shadow-eco) !important;
+  transition: none !important;
+  transform: none !important;
+}
+#plan-trip .ci::after {
+  display: none !important;
+  content: none !important;
+  background: none !important;
 }
 
 /* ── 11. MAP / LOCATION SECTION (#location) ────────────────────── */
@@ -1622,4 +1651,59 @@ body {
   outline: none !important;
   box-shadow: none !important;
 }
+
+/* ══════════════════════════════════════════════════════════════════
+   14. ABSOLUTE ZERO ANIMATION, ZERO OSCURIDAD & ZERO BRILLO ON HOME PHOTOS
+   Eliminates all zoom, scale, translateY, hover transforms, entrance shifts,
+   dark tints/overlays and glow filters on all home page photos.
+   ══════════════════════════════════════════════════════════════════ */
+.about-card-img,
+.about-card-img img,
+#tours .tc,
+#tours .tc img,
+#unique-content .spi,
+#unique-content .spi img,
+.wl-img-card,
+.wl-img-card img,
+.testim-avatar,
+.testim-avatar-fallback,
+#plan-trip .ci,
+.ci img,
+#unique-content .unique-media-wrap,
+#unique-content .unique-media-wrap img {
+  transition: none !important;
+  transform: none !important;
+  animation: none !important;
+  filter: none !important;
+}
+
+.about-card-img:hover,
+.about-card-img:hover img,
+#tours .tc:hover,
+#tours .tc:hover img,
+#unique-content .unique-media-wrap:hover .spi,
+#unique-content .unique-media-wrap:hover .spi img,
+#unique-content:hover .spi,
+#unique-content:hover .spi img,
+.wl-img-card:hover,
+.wl-img-card:hover img,
+.testim-card:hover .testim-avatar,
+.testim-card:hover .testim-avatar-fallback,
+#plan-trip .ci:hover,
+#plan-trip .ci:hover img {
+  transform: none !important;
+  transition: none !important;
+  filter: none !important;
+}
+
+/* Remove any dark pseudo-element overlays on photos */
+.spi::after,
+.about-card-img::after,
+#unique-content .spi::after,
+#plan-trip .ci::after {
+  display: none !important;
+  content: none !important;
+  background: none !important;
+}
+
 
