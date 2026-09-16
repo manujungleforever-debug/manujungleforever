@@ -1,6 +1,55 @@
 {
   "tours": [
     {
+      "nombre": "Manu Expedition 5d/4n",
+      "estado": "activo",
+      "categoria": "Manu Cultural Zone",
+      "duracion_dias": 5,
+      "duracion_noches": 4,
+      "precio_desde": 1500,
+      "capacidad_min": 6,
+      "capacidad_max": 8,
+      "dificultad": "Moderado",
+      "temporada": "All year",
+      "descripcion_corta": "",
+      "descripcion_larga": "",
+      "imagen_hero": "/media/fotos-jordy/img-20260806-wa0076-jpg.jpeg",
+      "galeria": [],
+      "itinerario": [
+        {
+          "dia": 1,
+          "titulo": "",
+          "descripcion": ""
+        },
+        {
+          "dia": 2,
+          "titulo": "",
+          "descripcion": ""
+        },
+        {
+          "dia": 3,
+          "titulo": "",
+          "descripcion": ""
+        },
+        {
+          "dia": 4,
+          "titulo": "",
+          "descripcion": ""
+        },
+        {
+          "dia": 5,
+          "titulo": "",
+          "descripcion": ""
+        }
+      ],
+      "incluye": [],
+      "no_incluye": [],
+      "destacado": false,
+      "imagen_alt": "",
+      "id": "tour-1789572461638",
+      "slug": "manu-expedition-5d-4n"
+    },
+    {
       "nombre": "Manu Adventure 4d/3n",
       "estado": "activo",
       "categoria": "Manu Cultural Zone",
