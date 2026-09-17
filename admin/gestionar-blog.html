@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -1031,9 +1031,41 @@ function mdToolbar(textareaId) {
     ['1. Lista','1. ',''],['```Código','```\n','\n```'],
   ];
   return `<div class="md-wrap">
-      <div class="md-toolbar">${cmds.map(([l,b,a])=>`<button type="button" onclick="mdWrap('${textareaId}','${b.replace(/\n/g,'\\n').replace(/'/g,"\\'")}','${a.replace(/\n/g,'\\n').replace(/'/g,"\\'")}')" title="${l}">${l}</button>`).join('')} <button type="button" onclick="openMediaModal((url) => { mdWrap('${textareaId}', '![alt](', url + ')') })" title="Insertar Imagen de R2">🖼️ R2</button></div>
-    <textarea id="${textareaId}" style="width:100%; box-sizing:border-box; resize:vertical; min-height:320px; font-family:monospace; font-size:.83rem; line-height:1.6; border:none; border-radius:0; background:rgba(255,255,255,.03); padding:12px; color:var(--fg); outline:none;"></textarea>
+      <div class="md-toolbar">
+        ${cmds.map(([l,b,a])=>`<button type="button" onclick="mdWrap('${textareaId}','${b.replace(/\n/g,'\\n').replace(/'/g,"\\'")}','${a.replace(/\n/g,'\\n').replace(/'/g,"\\'")}')" title="${l}">${l}</button>`).join('')}
+        <button type="button" onclick="insertBlogImage('${textareaId}')" title="Insertar Foto de la Galería R2 entre textos" style="background:rgba(45,212,191,0.22);border:1px solid var(--teal);color:var(--teal);font-weight:700;display:inline-flex;align-items:center;gap:5px;cursor:pointer;">🖼️ + Insertar Foto</button>
+      </div>
+    <textarea id="${textareaId}" data-case="none" style="width:100%; box-sizing:border-box; resize:vertical; min-height:320px; font-family:monospace; font-size:.83rem; line-height:1.6; border:none; border-radius:0; background:rgba(255,255,255,.03); padding:12px; color:var(--fg); outline:none;"></textarea>
   </div>`;
+}
+
+function insertBlogImage(textareaId) {
+  openMediaModal((url) => {
+    const ta = document.getElementById(textareaId);
+    if (!ta) return;
+    const cleanUrl = (url || '').trim();
+    if (!cleanUrl) return;
+    const alt = prompt('Texto descriptivo o pie de foto (alt):', 'Fauna y flora de Manu') || 'Fauna y flora de Manu';
+    const cleanAlt = alt.replace(/[\[\]]/g, '').trim();
+    
+    // Ensure image is cleanly placed on its own paragraph with double newlines
+    const s = ta.selectionStart, e = ta.selectionEnd;
+    const val = ta.value;
+    const before = val.substring(0, s);
+    const after = val.substring(e);
+    
+    const prefix = before.endsWith('\n\n') ? '' : (before.endsWith('\n') ? '\n' : '\n\n');
+    const suffix = after.startsWith('\n\n') ? '' : (after.startsWith('\n') ? '\n' : '\n\n');
+    const imgMd = `${prefix}![${cleanAlt}](${cleanUrl})${suffix}`;
+    
+    ta.value = before + imgMd + after;
+    ta.focus();
+    const newPos = s + imgMd.length;
+    ta.selectionStart = newPos;
+    ta.selectionEnd = newPos;
+    ta.dispatchEvent(new Event('input', { bubbles: true }));
+    ta.dispatchEvent(new Event('change', { bubbles: true }));
+  });
 }
 
 function mdWrap(id, before, after) {
@@ -1068,7 +1100,17 @@ async function publishBlogPost(slug, fm, mdBody) {
   const tmplData = await ghGet('www.manujungleforever.com/data/post-template.html');
   let tmpl = tmplData.content;
   
-  const htmlBody = marked.parse(mdBody);
+  // Sanitize malformed image tags or URLs before parsing markdown
+  let sanitizedMd = (mdBody || '');
+  // Fix accidental spaces in file extensions inside markdown image/link urls (e.g. . Jpeg -> .jpeg, . Html -> .html)
+  sanitizedMd = sanitizedMd.replace(/\.\s+(jpe?g|png|webp|gif|svg|html|php|com|org)/gi, '.$1');
+  // Fix double exclamation marks e.g. text!![alt](url) -> text\n\n![alt](url)
+  sanitizedMd = sanitizedMd.replace(/!{2,}\[([^\]]*)\]\(([^)]+)\)/g, '\n\n![$1]($2)\n\n');
+  // Fix attached image tags e.g. text![alt](url) -> text\n\n![alt](url)
+  sanitizedMd = sanitizedMd.replace(/([^\n])!\[([^\]]*)\]\(([^)]+)\)/g, '$1\n\n![$2]($3)\n\n');
+  
+  const htmlBody = marked.parse(sanitizedMd);
+
   const dateStr = fm.date ? new Date(fm.date + 'T12:00:00').toLocaleDateString('en-US', {year:'numeric', month:'long', day:'numeric'}) : '';
   const replaceAll = (str, find, replace) => str.split(find).join(replace);
   

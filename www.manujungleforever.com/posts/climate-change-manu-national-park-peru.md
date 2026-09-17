@@ -1,10 +1,10 @@
 ---
-title: "Climate Change in Manu National Park: Protecting the World's Most Vital Biosphere"
+title: Climate Change in Manu National Park: Protecting the World's Most Vital Biosphere
 date: 2026-03-05
 categoria: Conservation
 publicado: true
-extracto: An authoritative analysis of how climate change impacts the elevation gradients of Manu National Park, why this intact mega-corridor acts as a crucial global carbon reservoir, and how community-driven ecotourism serves as frontline defense.
-imagen: /media/fotos-jordy/img-20260702-wa0067-jpg.jpeg
+extracto: "An authoritative analysis of how climate change impacts the elevation gradients of Manu National Park, why this intact mega-corridor acts as a crucial global carbon reservoir, and how community-driven ecotourism serves as frontline defense."
+imagen: /media/1786477360363-jordy.jpg
 imagen_alt: Climate change and conservation in Manu National Park Peru
 ---
 

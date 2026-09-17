@@ -695,8 +695,8 @@ When you travel with **Manu Jungle Forever**, your expedition directly champions
         "title": "The Ultimate Peruvian Amazon Packing List: Essential Gear & Clothing for Manu",
         "date": "2026-02-14",
         "category": "Travel Tips",
-        "image": "/wp-content/uploads/2022/12/packing-list-for-your-trip-to-the-peruvian-jungle.webp",
-        "imagen_alt": "Packing list for your trip to the Peruvian Amazon jungle",
+        "image": "/media/fotos-jordy/img-20260722-wa0131-jpg.jpeg",
+        "imagen_alt": "Bird species in Manu National Park Peruvian Amazon",
         "excerpt": "Prepare for the rainforest with confidence. Our field-tested packing checklist covers breathable quick-dry clothing, waterproof gear, high-performance optics, camera protection against humidity, footwear tips, and essential medical supplies.",
         "content": """## Preparing for the Jungle: What You Actually Need
 
@@ -791,8 +791,11 @@ With the right preparation, your journey into Manu National Park will be seamles
 - Browse our [Complete Tour Itineraries](https://www.manujungleforever.com/guided-tours/index.html)
 - Check our [Departures Schedule](https://www.manujungleforever.com/departures/index.html)
 - [Ask Our Team Any Gear Question](https://www.manujungleforever.com/contact/index.html) before your flight!
+
+![Fauna y aves del Parque Nacional del Manu](/media/fotos-jordy/img-20260722-wa0131-jpg.jpeg)
 """
     },
+
     {
         "slug": "everything-you-need-to-know-before-visiting-machu-picchu",
         "title": "Everything You Need to Know Before Visiting Machu Picchu: Complete 2026 Guide",
@@ -1026,8 +1029,13 @@ imagen_alt: {imagen_alt}
             f.write(fm_content)
         print(f"  [+] Wrote markdown: {md_file_path}")
 
-        # 2. Render Markdown to HTML
-        html_body = md_parser.render(markdown_body)
+        # 2. Render Markdown to HTML with image/link sanitization
+        import re
+        sanitized_md = markdown_body
+        sanitized_md = re.sub(r'\.\s+(jpe?g|png|webp|gif|svg|html|php|com|org)', r'.\1', sanitized_md, flags=re.I)
+        sanitized_md = re.sub(r'!{2,}\[([^\]]*)\]\(([^)]+)\)', r'\n\n![\1](\2)\n\n', sanitized_md)
+        sanitized_md = re.sub(r'([^\n])!\[([^\]]*)\]\(([^)]+)\)', r'\1\n\n![\2](\3)\n\n', sanitized_md)
+        html_body = md_parser.render(sanitized_md)
 
         # 3. Format Date for Template
         try:

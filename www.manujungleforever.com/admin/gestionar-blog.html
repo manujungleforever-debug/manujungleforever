@@ -15,9 +15,9 @@
 <script src="js/api.js"></script>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-/* -- UNIFIED ADMIN BACKGROUND & THEME TOKENS -- */
-/* -- UNIFIED ADMIN BACKGROUND & THEME TOKENS -- */
-/* -- UNIFIED ADMIN BACKGROUND & THEME TOKENS -- */
+/* ── UNIFIED ADMIN BACKGROUND & THEME TOKENS ── */
+/* ── UNIFIED ADMIN BACKGROUND & THEME TOKENS ── */
+/* ── UNIFIED ADMIN BACKGROUND & THEME TOKENS ── */
 :root {
     --bg: #030807;
     --bg-color: #030807;
@@ -96,7 +96,7 @@ header { position:sticky; top:0; z-index:200; background:var(--hbg); backdrop-fi
 .logo-glow  { position:absolute; inset:-5px; background:var(--teal); filter:blur(12px); opacity:.22; border-radius:50%; transition:.3s; }
 .logo-brand:hover .logo-glow { opacity:.5; filter:blur(18px); }
 .logo-wrap img { height:40px; width:auto; position:relative; z-index:2; }
-.brand-name { font-weight:700; font-size:.9rem; letter-spacing:2px; text-transform:uppercase; background:linear-gradient(to right,var(--teal),var(--gold)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+.brand-name { font-weight:700; font-size:.9rem; letter-spacing:2px; text-transform:uppercase; background:linear-gradient(to right,var(--teal),var(--gold)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
 .btn-panel { display:inline-flex; align-items:center; gap:8px; background:rgba(45,212,191,0.12); border:1px solid rgba(45,212,191,0.3); color:var(--teal); padding:8px 18px; border-radius:10px; font-size:.83rem; font-weight:700; text-decoration:none; white-space:nowrap; transition:.25s; flex-shrink:0; }
 .btn-panel:hover { background:var(--teal); color:#030807; box-shadow:0 0 14px var(--teal-g); }
 nav.mnav { display:flex; align-items:center; gap:3px; flex-wrap:nowrap; flex:1; }
@@ -107,7 +107,7 @@ nav.mnav a:hover, nav.mnav a.active { color:var(--teal); background:rgba(45,212,
 
 
 main { flex-grow:1; max-width:1200px !important; width:100% !important; margin:0 auto !important; padding:28px 20px 100px !important; position:relative; z-index:1; box-sizing:border-box; }
-.pt { font-size:1.85rem; font-weight:700; letter-spacing:-.4px; background:linear-gradient(to right,#fff,#cbd5e1); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:4px; }
+.pt { font-size:1.85rem; font-weight:700; letter-spacing:-.4px; background:linear-gradient(to right,#fff,#cbd5e1); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:4px; }
 .ps { color:var(--muted); font-size:.87rem; margin-bottom:20px; }
 .back-btn { display:inline-flex; align-items:center; gap:7px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); color:var(--fg); padding:8px 16px; border-radius:9px; font-size:.82rem; font-weight:600; cursor:pointer; transition:.25s; margin-bottom:20px; }
 .back-btn:hover { background:rgba(255,255,255,.12); }
@@ -261,7 +261,7 @@ code { background:rgba(45,212,191,.1); color:var(--teal); padding:2px 6px; borde
 
 <style>
 
-/* --- 2-ROW CENTERED ADMIN HEADER --- */
+/* ─── 2-ROW CENTERED ADMIN HEADER ─── */
 header {
     position: sticky !important;
     top: 0 !important;
@@ -602,7 +602,7 @@ nav.mnav a.btn-panel-link:hover {
 window.addEventListener('error', function(e) {
   const mc = document.getElementById('mc') || document.body;
   if(mc) {
-    mc.innerHTML = '<div style="padding:40px;max-width:600px;margin:40px auto;background:#fff;border-radius:12px;box-shadow:0 10px 25px rgba(0,0,0,0.1);text-align:center"><h2 style="color:#ef4444;margin-bottom:10px">🚨 Error Crítico del Panel</h2><p style="color:#64748b;margin-bottom:20px">El sistema no pudo renderizar esta vista debido a un error interno.</p><div style="text-align:left;background:#0f172a;color:#cbd5e1;padding:15px;border-radius:8px;font-family:monospace;font-size:12px;overflow-x:auto;margin-bottom:20px">' + (e.error ? e.error.stack : e.message) + '</div><button onclick="location.reload()" style="background:#0d9488;color:#fff;border:none;padding:10px 20px;border-radius:8px;cursor:pointer;font-weight:600">Recargar Panel</button></div>';
+    mc.innerHTML = '<div style="padding:40px;max-width:600px;margin:40px auto;background:#fff;border-radius:12px;box-shadow:0 10px 25px rgba(0,0,0,0.1);text-align:center"><h2 style="color:#ef4444;margin-bottom:10px">❌ Error Crítico del Panel</h2><p style="color:#64748b;margin-bottom:20px">El sistema no pudo renderizar esta vista debido a un error interno.</p><div style="text-align:left;background:#0f172a;color:#cbd5e1;padding:15px;border-radius:8px;font-family:monospace;font-size:12px;overflow-x:auto;margin-bottom:20px">' + (e.error ? e.error.stack : e.message) + '</div><button onclick="location.reload()" style="background:#0d9488;color:#fff;border:none;padding:10px 20px;border-radius:8px;cursor:pointer;font-weight:600">Recargar Panel</button></div>';
   }
 });
 </script>
@@ -666,7 +666,7 @@ document.getElementById('btn-save').addEventListener('click', async () => {
     if (window.hideThinkingOverlay) window.hideThinkingOverlay();
     ss.textContent = 'Guardado correctamente';
     ss.className = 'save-status ok';
-    btn.innerHTML = '<i class="ph ph-check-circle"></i> Guardado ?';
+    btn.innerHTML = '<i class="ph ph-check-circle"></i> Guardado ✓';
     setTimeout(() => {
       btn.disabled = false;
       btn.innerHTML = '<i class="ph ph-floppy-disk"></i> Guardar cambios';
@@ -728,10 +728,10 @@ document.addEventListener('DOMContentLoaded',()=>{
   switchSection('blog');
 });
 
-// -- CMS Logic --------------------------------------------
-// -----------------------------------------------------------------------------
+// ── CMS Logic ────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────────────────
 // NAV
-// -----------------------------------------------------------------------------
+// ─────────────────────────────────────────────────────────────────────────────
 const SECTIONS = [
   { id:'blog',    label:'<i class="ph ph-pencil-line"></i> Blog',       sub:[] },
   { id:'content', label:'<i class="ph ph-files"></i> Contenido',  sub:[
@@ -797,9 +797,9 @@ function switchSection_DIS(id) {
   }
 }
 
-// -----------------------------------------------------------------------------
+// ─────────────────────────────────────────────────────────────────────────────
 // API WRAPPERS (CENTRALIZED IN js/api.js)
-// -----------------------------------------------------------------------------
+// ─────────────────────────────────────────────────────────────────────────────
 
 // R2 Media API
 async function r2GetList() {
@@ -832,7 +832,7 @@ async function r2Upload(file, progressEl) {
   
   if(!r.ok) throw new Error(d.error||'Error subiendo archivo');
   
-  if (progressEl) { progressEl.textContent = '🟢 Completado'; setTimeout(()=>progressEl.textContent='', 2000); }
+  if (progressEl) { progressEl.textContent = '✓ Completado'; setTimeout(()=>progressEl.textContent='', 2000); }
   return d.file;
 }
 
@@ -844,36 +844,110 @@ async function r2Delete(key) {
   return true;
 }
 
-// -----------------------------------------------------------------------------
+// ─────────────────────────────────────────────────────────────────────────────
 // MEDIA LIBRARY MODAL & IMAGE WIDGET
-// -----------------------------------------------------------------------------
+// ─────────────────────────────────────────────────────────────────────────────
 var mediaSelectCallback = null;
 var currentMediaFiles = [];
 var selectedMediaUrl = null;
 
-function renderMediaGrid(container, files, isModal) {
-  if (isModal) {
-    if (typeof window.renderExplorer === 'function') window.renderExplorer();
-    return;
+async function openMediaModal(callback) {
+  mediaSelectCallback = callback;
+  selectedMediaUrl = null;
+  document.getElementById('media-confirm').disabled = true;
+  document.getElementById('media-modal').classList.add('open');
+  
+  const body = document.getElementById('media-modal-body');
+  body.innerHTML = `<div class="loading"><div class="spinner"></div> Cargando galería...</div>`;
+  
+  try {
+    currentMediaFiles = await r2GetList();
+    renderMediaGrid(body, currentMediaFiles, true);
+  } catch(e) {
+    body.innerHTML = `<div class="err-msg" style="display:block">❌ ${e.message}</div>`;
   }
-  if (!files || !files.length) {
+}
+
+function renderMediaGrid(container, files, isModal) {
+  if (!files.length) {
     container.innerHTML = `<div class="empty">La galería está vacía.</div>`;
     return;
   }
+  
   container.innerHTML = `<div class="media-grid">
     ${files.map((f, i) => {
       const isVideo = f.key.match(/\.(mp4|webm)$/i);
       return `
-      <div class="m-item">
+      <div class="m-item" onclick="selectMediaItem(${i}, this, ${isModal})">
         ${isVideo 
           ? `<video src="${f.url}" preload="metadata"></video>` 
           : `<img src="${f.url}" loading="lazy" alt="${f.key}">`}
         <div class="m-name">${f.key}</div>
-        <button class="btn-del" onclick="event.stopPropagation(); deleteMedia('${f.key}')">×</button>
+        ${!isModal ? `<button class="btn-del" onclick="event.stopPropagation(); deleteMedia('${f.key}')">×</button>` : ''}
       </div>`;
     }).join('')}
   </div>`;
 }
+
+function selectMediaItem(idx, el, isModal) {
+  if (!isModal) return; // Solo selección en modal
+  const parent = el.parentElement;
+  parent.querySelectorAll('.m-item').forEach(e => e.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedMediaUrl = currentMediaFiles[idx].url;
+  document.getElementById('media-confirm').disabled = false;
+}
+
+document.getElementById('media-confirm').onclick = () => {
+  if (selectedMediaUrl && mediaSelectCallback) {
+    mediaSelectCallback(selectedMediaUrl);
+  }
+  closeModal('media-modal');
+};
+
+async function handleMediaUploadEvent(e) {
+  const files = Array.from(e.target.files);
+  if (!files.length) return;
+  e.target.value = '';
+  
+  const inModal = document.getElementById('media-modal').classList.contains('open');
+  const progEl = document.getElementById(inModal ? 'media-upload-prog' : 'main-upload-prog');
+  const body = document.getElementById('media-modal-body');
+  
+  let successCount = 0, errorCount = 0, lastError = '';
+  
+  for (let i=0; i<files.length; i++) {
+    const file = files[i];
+    if (!file.type.startsWith('image/') && !file.type.startsWith('video/')) continue;
+    try {
+      if (progEl) progEl.textContent = `Subiendo ${i+1}/${files.length}... (${file.name})`;
+      await r2Upload(file, null);
+      successCount++;
+    } catch(err) {
+      console.error(err); errorCount++; lastError = err.message;
+    }
+  }
+  
+  if (progEl) {
+     progEl.textContent = `✓ Subidos: ${successCount}` + (errorCount ? `, ✗ Errores: ${errorCount}` : '');
+     setTimeout(()=> { if(progEl) progEl.textContent=''; }, 5000);
+  }
+  
+  if (errorCount > 0) {
+    alert(`Ocurrieron ${errorCount} errores al subir.\\nÚltimo error: ${lastError}\\nSi es un error 500 o 503, revisa que Cloudflare tenga configurada la variable MEDIA_BUCKET correctamente o intenta en un par de minutos.`);
+  }
+  
+  if (inModal) {
+    body.innerHTML = `<div class="loading"><div class="spinner"></div> Actualizando...</div>`;
+    currentMediaFiles = await r2GetList();
+    renderMediaGrid(body, currentMediaFiles, true);
+  } else {
+    route('media'); // Si está en la vista principal
+  }
+}
+
+document.getElementById('media-upload').addEventListener('change', handleMediaUploadEvent);
+document.getElementById('media-upload-folder').addEventListener('change', handleMediaUploadEvent);
 
 function pickImage(inputId, previewId) {
   openMediaModal((url) => {
@@ -906,24 +980,24 @@ function imgWidget(id, label, value='', hint='') {
     <div class="img-field-wrap">
       <div class="img-input-row">
         <input id="${id}" value="${esc(value)}" placeholder="URL o ruta de imagen" oninput="updateImgPreview('${id}','${pid}')">
-        <button type="button" class="btn-secondary" onclick="pickImage('${id}','${pid}')">🔍 Seleccionar</button>
+        <button type="button" class="btn-secondary" onclick="pickImage('${id}','${pid}')">🖼️ Seleccionar</button>
       </div>
       ${value ? `<img class="img-preview show" id="${pid}" src="${esc(value)}" alt="">` : `<img class="img-preview" id="${pid}" alt="">`}
       ${hint?`<span class="hint">${hint}</span>`:''}
     </div></div>`;
 }
 
-// -----------------------------------------------------------------------------
+// ─────────────────────────────────────────────────────────────────────────────
 // VIEW: MEDIA GALLERY (MAIN)
-// -----------------------------------------------------------------------------
+// ─────────────────────────────────────────────────────────────────────────────
 async function viewMedia() {
   set(`
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
       <div style="display:flex;align-items:center;"><div class="btn-card-icon card-icon-medios"><i class="ph ph-image"></i></div><div><p class="pt" style="margin-bottom:0">Biblioteca de Medios</p><p class="ps">Gestiona todas las imágenes y videos (Cloudflare R2)</p></div></div>
       <div style="display:flex;gap:8px;align-items:center;">
         <span id="main-upload-prog" style="font-size:.8rem;color:var(--gold);margin-right:8px;"></span>
-        <button class="btn-primary" onclick="document.getElementById('media-upload').click()"><i class="ph ph-upload-simple"></i> Subir archivo(s)</button>
-        <button class="btn-secondary" onclick="document.getElementById('media-upload-folder').click()"><i class="ph ph-folder-plus"></i> Subir carpeta</button>
+        <button class="btn-primary" onclick="document.getElementById('media-upload').click()">📁 Subir archivo(s)</button>
+        <button class="btn-secondary" onclick="document.getElementById('media-upload-folder').click()">📂 Subir carpeta</button>
       </div>
     </div>
     <div id="media-main-grid"><div class="loading"><div class="spinner"></div> Cargando...</div></div>
@@ -933,7 +1007,7 @@ async function viewMedia() {
     currentMediaFiles = await r2GetList();
     renderMediaGrid(document.getElementById('media-main-grid'), currentMediaFiles, false);
   } catch(e) {
-    document.getElementById('media-main-grid').innerHTML = `<p style="color:var(--danger)">? ${e.message}</p>`;
+    document.getElementById('media-main-grid').innerHTML = `<p style="color:var(--danger)">❌ ${e.message}</p>`;
   }
 }
 
@@ -946,20 +1020,52 @@ async function deleteMedia(key) {
   }
 }
 
-// -----------------------------------------------------------------------------
+// ─────────────────────────────────────────────────────────────────────────────
 // MARKDOWN EDITOR TOOLBAR
-// -----------------------------------------------------------------------------
+// ─────────────────────────────────────────────────────────────────────────────
 function mdToolbar(textareaId) {
   const cmds = [
     ['**B**','**','**'],['*I*','*','*'],['~~S~~','~~','~~'],
     ['# H1','# ',''],['## H2','## ',''],['### H3','### ',''],
-    ['<i class="ph ph-link"></i> Link','[','](url)'],['> Cita','> ',''],['- Lista','- ',''],
+    ['🔗 Link','[','](url)'],['> Cita','> ',''],['- Lista','- ',''],
     ['1. Lista','1. ',''],['```Código','```\n','\n```'],
   ];
   return `<div class="md-wrap">
-      <div class="md-toolbar">${cmds.map(([l,b,a])=>`<button type="button" onclick="mdWrap('${textareaId}','${b.replace(/\n/g,'\\n').replace(/'/g,"\\'")}','${a.replace(/\n/g,'\\n').replace(/'/g,"\\'")}')" title="${l.replace(/<[^>]+>/g, '').trim()}">${l}</button>`).join('')} <button type="button" onclick="openMediaModal((url) => { mdWrap('${textareaId}', '![alt](', url + ')') })" title="Insertar Imagen de R2"><i class="ph ph-cloud"></i> R2</button></div>
-    <textarea id="${textareaId}" style="width:100%; box-sizing:border-box; resize:vertical; min-height:320px; font-family:monospace; font-size:.83rem; line-height:1.6; border:none; border-radius:0; background:rgba(255,255,255,.03); padding:12px; color:var(--fg); outline:none;"></textarea>
+      <div class="md-toolbar">
+        ${cmds.map(([l,b,a])=>`<button type="button" onclick="mdWrap('${textareaId}','${b.replace(/\n/g,'\\n').replace(/'/g,"\\'")}','${a.replace(/\n/g,'\\n').replace(/'/g,"\\'")}')" title="${l}">${l}</button>`).join('')}
+        <button type="button" onclick="insertBlogImage('${textareaId}')" title="Insertar Foto de la Galería R2 entre textos" style="background:rgba(45,212,191,0.22);border:1px solid var(--teal);color:var(--teal);font-weight:700;display:inline-flex;align-items:center;gap:5px;cursor:pointer;">🖼️ + Insertar Foto</button>
+      </div>
+    <textarea id="${textareaId}" data-case="none" style="width:100%; box-sizing:border-box; resize:vertical; min-height:320px; font-family:monospace; font-size:.83rem; line-height:1.6; border:none; border-radius:0; background:rgba(255,255,255,.03); padding:12px; color:var(--fg); outline:none;"></textarea>
   </div>`;
+}
+
+function insertBlogImage(textareaId) {
+  openMediaModal((url) => {
+    const ta = document.getElementById(textareaId);
+    if (!ta) return;
+    const cleanUrl = (url || '').trim();
+    if (!cleanUrl) return;
+    const alt = prompt('Texto descriptivo o pie de foto (alt):', 'Fauna y flora de Manu') || 'Fauna y flora de Manu';
+    const cleanAlt = alt.replace(/[\[\]]/g, '').trim();
+    
+    // Ensure image is cleanly placed on its own paragraph with double newlines
+    const s = ta.selectionStart, e = ta.selectionEnd;
+    const val = ta.value;
+    const before = val.substring(0, s);
+    const after = val.substring(e);
+    
+    const prefix = before.endsWith('\n\n') ? '' : (before.endsWith('\n') ? '\n' : '\n\n');
+    const suffix = after.startsWith('\n\n') ? '' : (after.startsWith('\n') ? '\n' : '\n\n');
+    const imgMd = `${prefix}![${cleanAlt}](${cleanUrl})${suffix}`;
+    
+    ta.value = before + imgMd + after;
+    ta.focus();
+    const newPos = s + imgMd.length;
+    ta.selectionStart = newPos;
+    ta.selectionEnd = newPos;
+    ta.dispatchEvent(new Event('input', { bubbles: true }));
+    ta.dispatchEvent(new Event('change', { bubbles: true }));
+  });
 }
 
 function mdWrap(id, before, after) {
@@ -971,30 +1077,40 @@ function mdWrap(id, before, after) {
   ta.focus(); ta.selectionStart=s+before.length; ta.selectionEnd=s+before.length+sel.length;
 }
 
-// -----------------------------------------------------------------------------
+// ─────────────────────────────────────────────────────────────────────────────
 // ROUTER
-// -----------------------------------------------------------------------------
+// ─────────────────────────────────────────────────────────────────────────────
 async function route(id) {
   hideSaveBar(); cFile=null; cSha=null; cData=null;
-  set(`<div class="loading"><div class="spinner"></div> Cargando</div>`);
+  set(`<div class="loading"><div class="spinner"></div> Cargando…</div>`);
   try {
     const views = {blog:viewBlog,home:viewHome,about:viewAbout,contact:viewContact,global:viewGlobal,
       tours:viewTours,departures:viewDeps,testimonials:viewTestims, media:viewMedia, reclamos:viewReclamos};
     if (views[id]) await views[id]();
     else set(`<p>Sección no encontrada.</p>`);
   } catch(e) {
-    set(`<p style="color:var(--danger);padding:20px">? ${e.message}</p>`);
+    set(`<p style="color:var(--danger);padding:20px">❌ ${e.message}</p>`);
   }
 }
 
-// -----------------------------------------------------------------------------
+// ─────────────────────────────────────────────────────────────────────────────
 // BLOG
-// -----------------------------------------------------------------------------
+// ─────────────────────────────────────────────────────────────────────────────
 async function publishBlogPost(slug, fm, mdBody) {
   const tmplData = await ghGet('www.manujungleforever.com/data/post-template.html');
   let tmpl = tmplData.content;
   
-  const htmlBody = marked.parse(mdBody);
+  // Sanitize malformed image tags or URLs before parsing markdown
+  let sanitizedMd = (mdBody || '');
+  // Fix accidental spaces in file extensions inside markdown image/link urls (e.g. . Jpeg -> .jpeg, . Html -> .html)
+  sanitizedMd = sanitizedMd.replace(/\.\s+(jpe?g|png|webp|gif|svg|html|php|com|org)/gi, '.$1');
+  // Fix double exclamation marks e.g. text!![alt](url) -> text\n\n![alt](url)
+  sanitizedMd = sanitizedMd.replace(/!{2,}\[([^\]]*)\]\(([^)]+)\)/g, '\n\n![$1]($2)\n\n');
+  // Fix attached image tags e.g. text![alt](url) -> text\n\n![alt](url)
+  sanitizedMd = sanitizedMd.replace(/([^\n])!\[([^\]]*)\]\(([^)]+)\)/g, '$1\n\n![$2]($3)\n\n');
+  
+  const htmlBody = marked.parse(sanitizedMd);
+
   const dateStr = fm.date ? new Date(fm.date + 'T12:00:00').toLocaleDateString('en-US', {year:'numeric', month:'long', day:'numeric'}) : '';
   const replaceAll = (str, find, replace) => str.split(find).join(replace);
   
@@ -1100,16 +1216,16 @@ async function viewBlog() {
           </div>
           <div class="li-info">
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;flex-wrap:nowrap;">
-              <span class="badge ${isPub ? 'on' : 'warn'}">${isPub ? '<i class="ph ph-check-circle"></i> PUBLICADO' : '<i class="ph ph-pencil-simple"></i> BORRADOR'}</span>
-              <span class="badge" style="background:rgba(45,212,191,0.12);color:var(--teal);border:1px solid rgba(45,212,191,0.25);"><i class="ph ph-trash"></i> ${esc(p.category || 'Wildlife')}</span>
+              <span class="badge ${isPub ? 'on' : 'warn'}">${isPub ? '✅ PUBLICADO' : '📝 BORRADOR'}</span>
+              <span class="badge" style="background:rgba(45,212,191,0.12);color:var(--teal);border:1px solid rgba(45,212,191,0.25);">🏷️ ${esc(p.category || 'Wildlife')}</span>
               <span style="font-size:0.75rem;color:var(--muted);display:inline-flex;align-items:center;gap:4px;"><i class="ph ph-calendar"></i> ${p.date || '2026-08-16'}</span>
             </div>
             <h3>${esc(p.title)}</h3>
-            <span>/${p.slug}.md ${p.excerpt ? ' ' + esc(p.excerpt) : ''}</span>
+            <span>/${p.slug}.md ${p.excerpt ? '— ' + esc(p.excerpt) : ''}</span>
           </div>
           <div class="li-actions">
             <button class="btn-edit" onclick="editBlog('${file.path}','${file.sha}')"><i class="ph ph-pencil"></i> Editar</button>
-            <button class="btn-danger" onclick="deleteBlog('${file.path}','${file.sha}','${file.name.replace(/'/g, "\\'")}')"><i class="ph ph-trash"></i></button>
+            <button class="btn-danger" onclick="deleteBlog('${file.path}','${file.sha}','${file.name.replace(/'/g, "\\'")}')">🗑️</button>
           </div>
         </div>`;
     });
@@ -1148,7 +1264,7 @@ function newBlog() {
     const res=await ghPut(path,content,null,`new post: ${fm.title}`);
     cFile=path; cSha=res.sha;
     await publishBlogPost(slug, fm, document.getElementById('f-body').value);
-    document.querySelector('.back-btn').textContent='<i class="ph ph-notebook"></i> Blog (guardado ?)';
+    document.querySelector('.back-btn').textContent='← Blog (guardado ✓)';
   });
 }
 
@@ -1198,14 +1314,14 @@ function blogFields(fm) {
       <div class="ff"><label>Estado</label>
         <div class="tgl-wrap" style="margin-top:6px">
           <label class="tgl"><input type="checkbox" id="f-pub" ${fm.publicado!==false?'checked':''}><span class="tgl-s"></span></label>
-          <span id="pub-lbl">${fm.publicado!==false?'🟢 Publicado':'🟡 Borrador'}</span>
+          <span id="pub-lbl">${fm.publicado!==false?'✅ Publicado':'📝 Borrador'}</span>
         </div>
       </div>
     </div>
     <div class="ff"><label>Extracto (resumen para el listado)</label><textarea id="f-ext" style="min-height:70px">${esc(fm.extracto||'')}</textarea></div>
     ${imgWidget('f-img','Imagen de portada',fm.imagen||'','Recomendado: 1200×600px')}
     <div class="ff"><label>Texto alternativo de la imagen</label><input id="f-imgalt" value="${esc(fm.imagen_alt||'')}"></div>
-    <script>document.getElementById('f-pub').addEventListener('change',e=>{document.getElementById('pub-lbl').textContent=e.target.checked?'🟢 Publicado':'🟡 Borrador';})<\/script>`;
+    <script>document.getElementById('f-pub').addEventListener('change',e=>{document.getElementById('pub-lbl').textContent=e.target.checked?'✅ Publicado':'📝 Borrador';})<\/script>`;
 }
 
 function readBlogFields() {
@@ -1216,9 +1332,9 @@ function readBlogFields() {
   };
 }
 
-// -----------------------------------------------------------------------------
+// ─────────────────────────────────────────────────────────────────────────────
 // HOME
-// -----------------------------------------------------------------------------
+// ─────────────────────────────────────────────────────────────────────────────
 async function viewHome() {
   const data=await ghGet('www.manujungleforever.com/data/home.json');
   cFile='www.manujungleforever.com/data/home.json'; cSha=data.sha;
@@ -1272,9 +1388,9 @@ async function viewHome() {
 }
 
 
-// -----------------------------------------------------------------------------
+// ─────────────────────────────────────────────────────────────────────────────
 // ABOUT US
-// -----------------------------------------------------------------------------
+// ─────────────────────────────────────────────────────────────────────────────
 async function viewAbout() {
   const data=await ghGet('www.manujungleforever.com/data/about.json');
   cFile='www.manujungleforever.com/data/about.json'; cSha=data.sha;
@@ -1326,9 +1442,9 @@ async function viewAbout() {
   });
 }
 
-// -----------------------------------------------------------------------------
+// ─────────────────────────────────────────────────────────────────────────────
 // CONTACT
-// -----------------------------------------------------------------------------
+// ─────────────────────────────────────────────────────────────────────────────
 async function viewContact() {
   const data=await ghGet('www.manujungleforever.com/data/contact.json');
   cFile='www.manujungleforever.com/data/contact.json'; cSha=data.sha;
@@ -1364,8 +1480,8 @@ async function viewContact() {
       </div>
       <div class="esec"><div class="esec-h">Horario de Atención</div>
         <div class="grow2">
-          <div class="ff"><label>Días</label><input id="c-hd" value="${esc(d.horario?.dias||'')}"><span class="hint">Ej: Lunes  Domingo</span></div>
-          <div class="ff"><label>Horas</label><input id="c-hh" value="${esc(d.horario?.horas||'')}"><span class="hint">Ej: 7:00 AM  8:00 PM</span></div>
+          <div class="ff"><label>Días</label><input id="c-hd" value="${esc(d.horario?.dias||'')}"><span class="hint">Ej: Lunes – Domingo</span></div>
+          <div class="ff"><label>Horas</label><input id="c-hh" value="${esc(d.horario?.horas||'')}"><span class="hint">Ej: 7:00 AM – 8:00 PM</span></div>
         </div>
         <div class="ff"><label>Nota adicional</label><input id="c-hn" value="${esc(d.horario?.nota||'')}"></div>
       </div>
@@ -1380,9 +1496,9 @@ async function viewContact() {
   });
 }
 
-// -----------------------------------------------------------------------------
+// ─────────────────────────────────────────────────────────────────────────────
 // GLOBAL
-// -----------------------------------------------------------------------------
+// ─────────────────────────────────────────────────────────────────────────────
 async function viewGlobal() {
   const data=await ghGet('www.manujungleforever.com/data/global.json');
   cFile='www.manujungleforever.com/data/global.json'; cSha=data.sha;
@@ -1434,9 +1550,9 @@ async function viewGlobal() {
   });
 }
 
-// -----------------------------------------------------------------------------
+// ─────────────────────────────────────────────────────────────────────────────
 // TOURS
-// -----------------------------------------------------------------------------
+// ─────────────────────────────────────────────────────────────────────────────
 async function viewTours() {
   const data=await ghGet('www.manujungleforever.com/data/tours.json');
   cFile='www.manujungleforever.com/data/tours.json'; cSha=data.sha;
@@ -1453,7 +1569,7 @@ async function viewTours() {
             <h3>${t.nombre} <span class="badge ${stCls}">${stLbl}</span></h3>
             <span>${t.duracion_dias} días · $${t.precio_desde} USD · ${t.categoria} · ${t.dificultad}</span>
           </div>
-          <div class="li-actions"><button class="btn-edit" onclick="editTour(${i})">Editar</button><button class="btn-danger" onclick="deleteTour(${i})"><i class="ph ph-trash"></i></button></div>
+          <div class="li-actions"><button class="btn-edit" onclick="editTour(${i})">Editar</button><button class="btn-danger" onclick="deleteTour(${i})">🗑️</button></div>
         </div>`;
       }).join('')}
     </div>`);
@@ -1467,7 +1583,7 @@ window.editTour = function(idx) {
       <div class="esec"><div class="esec-h">Información General</div>
         <div class="grow2">
           <div class="ff"><label>Nombre del tour</label><input id="t-n" value="${esc(t.nombre)}"></div>
-          <div class="ff"><label>Estado</label><select id="t-e"><option ${t.estado==='activo'?'selected':''} value="activo">🟢 Activo</option><option ${t.estado==='pausado'?'selected':''} value="pausado">⏸️ Pausado</option><option ${t.estado==='seasonal'?'selected':''} value="seasonal">De Temporada</option><option ${t.estado==='inactivo'?'selected':''} value="inactivo">🔴 Inactivo</option></select></div>
+          <div class="ff"><label>Estado</label><select id="t-e"><option ${t.estado==='activo'?'selected':''} value="activo">✅ Activo</option><option ${t.estado==='pausado'?'selected':''} value="pausado">⏸️ Pausado</option><option ${t.estado==='seasonal'?'selected':''} value="seasonal">🍂 De Temporada</option><option ${t.estado==='inactivo'?'selected':''} value="inactivo">❌ Inactivo</option></select></div>
         </div>
         <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:12px;margin-bottom:12px">
           <div class="ff"><label>Categoría</label>
@@ -1541,9 +1657,9 @@ window.editTour = function(idx) {
   });
 };
 
-// -----------------------------------------------------------------------------
+// ─────────────────────────────────────────────────────────────────────────────
 // DEPARTURES
-// -----------------------------------------------------------------------------
+// ─────────────────────────────────────────────────────────────────────────────
 window.filterDeps = function() {
   const q = document.getElementById('dep-search').value.toLowerCase();
   const st = document.getElementById('dep-filter-status').value;
@@ -1575,7 +1691,7 @@ window.viewPax = function(idx) {
   
   let html = `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px">
     <h3 style="margin:0">Pasajeros: ${s.tour_nombre} (${s.fecha_salida})</h3>
-    <button class="btn-secondary" onclick="exportPaxCSV(${idx})"><i class="ph ph-export"></i> Exportar CSV</button>
+    <button class="btn-secondary" onclick="exportPaxCSV(${idx})">⬇️ Exportar CSV</button>
   </div>`;
   
   if (pax.length === 0) {
@@ -1604,7 +1720,7 @@ window.viewPax = function(idx) {
   
   document.getElementById('media-modal-body').innerHTML = html;
   const headerTitle = document.getElementById('media-modal-body').parentElement.querySelector('.modal-h h3');
-  if (headerTitle) headerTitle.innerHTML = '?? Gestión de Pasajeros';
+  if (headerTitle) headerTitle.innerHTML = '👥 Gestión de Pasajeros';
   
   const confirmBtn = document.getElementById('media-confirm');
   if (confirmBtn) confirmBtn.style.display = 'none';
@@ -1673,7 +1789,7 @@ async function viewDeps() {
             <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
               <div>
                 <h3 style="margin-bottom:4px;font-size:1.05rem">${s.tour_nombre} <span class="badge ${stCls}" style="vertical-align:middle;font-size:0.6rem">${s.estado.toUpperCase()}</span></h3>
-                <span style="font-size:.8rem;color:var(--muted)">${s.fecha_salida} ? ${s.fecha_regreso}  |  ID: ${s.id}</span>
+                <span style="font-size:.8rem;color:var(--muted)">${s.fecha_salida} ➔ ${s.fecha_regreso} &nbsp;|&nbsp; ID: ${s.id}</span>
               </div>
               <div style="text-align:right">
                 <div style="font-weight:bold;color:var(--gold);font-size:1.1rem">$${s.precio} ${s.moneda||'USD'}</div>
@@ -1693,13 +1809,13 @@ async function viewDeps() {
             
             <div style="display:flex;gap:15px;font-size:.78rem;color:var(--muted);border-top:1px solid rgba(255,255,255,.06);padding-top:10px">
               <div><span style="color:var(--fg)">Guía:</span> ${s.guia_asignado || 'Sin asignar'}</div>
-              <div><span style="color:var(--fg)">Mínimo:</span> ${s.plazas_minimas||2} pax (${sold >= (s.plazas_minimas||2) ? '<span style="color:#34d399">Alcanzado ?</span>' : '<span style="color:#f87171">Faltan '+( (s.plazas_minimas||2) - sold )+'</span>'})</div>
+              <div><span style="color:var(--fg)">Mínimo:</span> ${s.plazas_minimas||2} pax (${sold >= (s.plazas_minimas||2) ? '<span style="color:#34d399">Alcanzado ✓</span>' : '<span style="color:#f87171">Faltan '+( (s.plazas_minimas||2) - sold )+'</span>'})</div>
             </div>
           </div>
           
           <div class="li-actions" style="flex-direction:column;border-left:1px solid rgba(255,255,255,.06);padding-left:15px;margin-left:15px;width:140px;gap:8px;justify-content:center">
-            <button class="btn-primary" style="width:100%;justify-content:center;padding:7px 10px;font-size:.85rem" onclick="viewPax(${i})">?? Pasajeros (${(s.pasajeros||[]).length})</button>
-            <button class="btn-secondary" style="width:100%;justify-content:center;padding:7px 10px;font-size:.85rem" onclick="editDep(${i})"><i class="ph ph-pencil-simple"></i> Editar Salida</button>
+            <button class="btn-primary" style="width:100%;justify-content:center;padding:7px 10px;font-size:.85rem" onclick="viewPax(${i})">👥 Pasajeros (${(s.pasajeros||[]).length})</button>
+            <button class="btn-secondary" style="width:100%;justify-content:center;padding:7px 10px;font-size:.85rem" onclick="editDep(${i})">✏️ Editar Salida</button>
             <div style="display:flex;gap:5px;width:100%">
               <button class="btn-secondary" style="flex:1;padding:5px;font-size:.9rem;justify-content:center" title="Reducir plaza disponible" onclick="adjPlaza(${i},-1)">-1 Disp.</button>
               <button class="btn-secondary" style="flex:1;padding:5px;font-size:.9rem;justify-content:center" title="Aumentar plaza disponible" onclick="adjPlaza(${i},1)">+1 Disp.</button>
@@ -1748,7 +1864,7 @@ window.editDep = async function(idx) {
       </div>
       <div class="ff"><label>Notas adicionales / Internas</label><textarea id="d-no" style="min-height:80px">${esc(s.notas||'')}</textarea></div>
       <div style="margin-top:20px;padding-top:15px;border-top:1px solid rgba(255,255,255,.06);display:flex;justify-content:flex-end">
-        <button class="btn-danger" type="button" onclick="deleteDep(${idx})" ${idx===-1?'style="display:none"':''}><i class="ph ph-trash"></i> Eliminar Salida</button>
+        <button class="btn-danger" type="button" onclick="deleteDep(${idx})" ${idx===-1?'style="display:none"':''}>🗑️ Eliminar Salida</button>
       </div>
     </div></div>`);
   
@@ -1766,9 +1882,9 @@ window.editDep = async function(idx) {
   });
 };
 
-// -----------------------------------------------------------------------------
+// ─────────────────────────────────────────────────────────────────────────────
 // TESTIMONIALS
-// -----------------------------------------------------------------------------
+// ─────────────────────────────────────────────────────────────────────────────
 async function viewTestims() {
   const data=await ghGet('www.manujungleforever.com/data/testimonials.json');
   cFile='www.manujungleforever.com/data/testimonials.json'; cSha=data.sha;
@@ -1780,7 +1896,7 @@ async function viewTestims() {
       ${ts.map((t,i)=>`
         <div class="li">
           <div class="li-info">
-            <h3>${t.nombre} ${t.bandera||''}  ${'?'.repeat(t.rating||5)} <span class="badge ${t.activo?'on':'off'}">${t.activo?'visible':'oculto'}</span></h3>
+            <h3>${t.nombre} ${t.bandera||''} — ${'⭐'.repeat(t.rating||5)} <span class="badge ${t.activo?'on':'off'}">${t.activo?'visible':'oculto'}</span></h3>
             <span>${t.pais} · ${t.tour} · ${t.fecha}</span>
           </div>
           <div class="li-actions">
@@ -1800,26 +1916,26 @@ window.editTestim = function(idx) {
         <div class="ff"><label>País</label><input id="tm-p" value="${esc(t.pais)}"></div>
       </div>
       <div class="grow2">
-        <div class="ff"><label>Bandera emoji</label><input id="tm-fl" value="${esc(t.bandera||'')}"><span class="hint">Ej: <i class="ph ph-trash"></i>? <i class="ph ph-trash"></i>? <i class="ph ph-trash"></i>? <i class="ph ph-trash"></i>?</span></div>
+        <div class="ff"><label>Bandera emoji</label><input id="tm-fl" value="${esc(t.bandera||'')}"><span class="hint">Ej: 🇺🇸 🇬🇧 🇩🇪 🇦🇺</span></div>
         <div class="ff"><label>Tour realizado</label>
           <div style="display:flex;gap:8px;align-items:center">
             <input id="tm-t" value="${esc(t.tour)}" style="flex:1" placeholder="Nombre del tour">
-            <button type="button" class="btn-secondary" style="white-space:nowrap" onclick="pickImage('tm-t','tm-img-prev')"><i class="ph ph-image"></i> Medios</button>
+            <button type="button" class="btn-secondary" style="white-space:nowrap" onclick="pickImage('tm-t','tm-img-prev')">🖼️ Medios</button>
           </div>
         </div>
       </div>
       <div class="grow2">
         <div class="ff"><label>Fecha del viaje</label><input type="date" id="tm-f" value="${esc(t.fecha)}"></div>
-        <div class="ff"><label>Calificación (estrellas)</label><select id="tm-r"><option ${t.rating==5?'selected':''} value="5"><i class="ph ph-trash"></i>?? (5)</option><option ${t.rating==4?'selected':''} value="4"><i class="ph ph-trash"></i>? (4)</option><option ${t.rating==3?'selected':''} value="3"><i class="ph ph-trash"></i> (3)</option></select></div>
+        <div class="ff"><label>Calificación (estrellas)</label><select id="tm-r"><option ${t.rating==5?'selected':''} value="5">⭐⭐⭐⭐⭐ (5)</option><option ${t.rating==4?'selected':''} value="4">⭐⭐⭐⭐ (4)</option><option ${t.rating==3?'selected':''} value="3">⭐⭐⭐ (3)</option></select></div>
       </div>
       <div class="ff"><label>Texto del testimonio</label><textarea id="tm-tx" style="min-height:120px">${esc(t.texto)}</textarea></div>
       ${imgWidget('tm-img','Foto del cliente (opcional)',t.foto||'')}
       <div class="ff"><label>Visibilidad en el sitio</label>
         <div class="tgl-wrap" style="margin-top:6px"><label class="tgl"><input type="checkbox" id="tm-a" ${t.activo?'checked':''}><span class="tgl-s"></span></label>
-        <span id="tm-lbl">${t.activo?'🟢 Visible':'🔴 Oculto'}</span></div>
+        <span id="tm-lbl">${t.activo?'✅ Visible':'❌ Oculto'}</span></div>
       </div>
     </div></div>`);
-  document.getElementById('tm-a').addEventListener('change',e=>{document.getElementById('tm-lbl').textContent=e.target.checked?'🟢 Visible':'🔴 Oculto';});
+  document.getElementById('tm-a').addEventListener('change',e=>{document.getElementById('tm-lbl').textContent=e.target.checked?'✅ Visible':'❌ Oculto';});
   showSaveBar(async()=>{
     const updated = {...t,nombre:v('tm-n'),pais:v('tm-p'),bandera:v('tm-fl'),
       tour:v('tm-t'),fecha:v('tm-f'),rating:+v('tm-r'),texto:v('tm-tx'),
@@ -1835,12 +1951,12 @@ window.editTestim = function(idx) {
   });
 };
 
-// -----------------------------------------------------------------------------
+// ─────────────────────────────────────────────────────────────────────────────
 // DELETE
-// -----------------------------------------------------------------------------
+// ─────────────────────────────────────────────────────────────────────────────
 function confirmDelete(path, sha, label, backFn) {
   document.getElementById('del-title').textContent=`¿Eliminar este ${label}?`;
-  document.getElementById('del-msg').textContent=`"${path.split('/').pop()}"  Esta acción no se puede deshacer.`;
+  document.getElementById('del-msg').textContent=`"${path.split('/').pop()}" — Esta acción no se puede deshacer.`;
   document.getElementById('del-modal').classList.add('open');
   document.getElementById('del-confirm').onclick = async () => {
     try {
@@ -1854,9 +1970,9 @@ function closeModal_DIS(id) { document.getElementById(id).classList.remove('open
 function openModal_DIS(id) { document.getElementById(id).classList.add('open'); }
 window.confirmDelete=confirmDelete; window.closeModal=closeModal;
 
-// -----------------------------------------------------------------------------
+// ─────────────────────────────────────────────────────────────────────────────
 // SAVE BAR
-// -----------------------------------------------------------------------------
+// ─────────────────────────────────────────────────────────────────────────────
 function showSaveBar_DIS(fn) {
   saveFnRef=fn;
   const bar=document.getElementById('save-bar');
@@ -1864,9 +1980,9 @@ function showSaveBar_DIS(fn) {
   const st=document.getElementById('save-status');
   bar.style.display='flex'; st.textContent=''; st.className='save-status';
   btn.onclick=async()=>{
-    btn.disabled=true; st.textContent='Guardando'; st.className='save-status';
-    try { await fn(); st.textContent='? Guardado correctamente'; st.className='save-status ok'; }
-    catch(e) { st.textContent='? '+e.message; st.className='save-status err'; }
+    btn.disabled=true; st.textContent='Guardando…'; st.className='save-status';
+    try { await fn(); st.textContent='✓ Guardado correctamente'; st.className='save-status ok'; }
+    catch(e) { st.textContent='✗ '+e.message; st.className='save-status err'; }
     finally { btn.disabled=false; }
   };
   document.getElementById('btn-cancel-save').onclick=()=>{
@@ -1875,12 +1991,12 @@ function showSaveBar_DIS(fn) {
 }
 function hideSaveBar_DIS() { document.getElementById('save-bar').style.display='none'; saveFnRef=null; }
 
-// -----------------------------------------------------------------------------
+// ─────────────────────────────────────────────────────────────────────────────
 // UTILS
-// -----------------------------------------------------------------------------
+// ─────────────────────────────────────────────────────────────────────────────
 function set_DIS(h){ document.getElementById('mc').innerHTML=h; }
 function v(id){ return document.getElementById(id)?.value??''; }
-function esc(s){ return String(s).replace(/&/g,'&').replace(/"/g,'"').replace(/</g,'<').replace(/>/g,'>'); }
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
 function parseFM(raw) {
   const m=raw.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);
@@ -1909,9 +2025,9 @@ function buildFM(fm,body) {
   return out+`---\n\n${body}`;
 }
 
-// -----------------------------------------------------------------------------
+// ─────────────────────────────────────────────────────────────────────────────
 // RECLAMOS
-// -----------------------------------------------------------------------------
+// ─────────────────────────────────────────────────────────────────────────────
 async function viewReclamos() {
   set(`<div class="loading"><div class="spinner"></div> Cargando reclamos...</div>`);
   try {
@@ -2031,7 +2147,7 @@ async function viewReclamos() {
     renderReclamosRows(reclamos);
     
   } catch(e) {
-    set(`<p style="color:var(--danger);padding:20px;">🔴 Error cargando reclamos: ${e.message}</p>`);
+    set(`<p style="color:var(--danger);padding:20px;">❌ Error cargando reclamos: ${e.message}</p>`);
   }
 }
 
@@ -2166,7 +2282,7 @@ async function submitReclamoReply() {
     statusDiv.style.display = 'block';
     statusDiv.style.background = 'rgba(239,68,68,0.1)';
     statusDiv.style.color = 'var(--danger)';
-    statusDiv.innerHTML = 'Debe escribir una respuesta oficial.';
+    statusDiv.innerHTML = '⚠️ Debe escribir una respuesta oficial.';
     return;
   }
   
@@ -2190,7 +2306,7 @@ async function submitReclamoReply() {
     statusDiv.style.display = 'block';
     statusDiv.style.background = 'rgba(16,185,129,0.1)';
     statusDiv.style.color = 'var(--green)';
-    statusDiv.innerHTML = '? Respuesta enviada y reclamo actualizado exitosamente.';
+    statusDiv.innerHTML = '✅ Respuesta enviada y reclamo actualizado exitosamente.';
     
     setTimeout(() => {
       closeModal('modal-reclamo');
@@ -2255,7 +2371,7 @@ window.openMediaModal = async function(callback) {
     window.currentMediaFiles = await r2GetList();
     renderMediaGrid(body, window.currentMediaFiles, true);
   } catch(e) {
-    body.innerHTML = `<div class="err-msg" style="display:block">? ${e.message}</div>`;
+    body.innerHTML = `<div class="err-msg" style="display:block">❌ ${e.message}</div>`;
   }
 };
 
@@ -2363,7 +2479,6 @@ window.deleteTestim = async function(idx) {
 };
 </script>
   <script src="js/auto-correct.js"></script>
-  <script src="js/media-modal.js?v=3"></script>
   <script src="js/thinking-orb.js?v=9"></script>
 </body>
 </html>

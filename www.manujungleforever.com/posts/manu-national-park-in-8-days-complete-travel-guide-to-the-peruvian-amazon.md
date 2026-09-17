@@ -1,10 +1,10 @@
 ---
-title: "Manu National Park in 8 Days: The Ultimate Expedition Guide & Day-by-Day Itinerary"
+title: Manu National Park in 8 Days: The Ultimate Expedition Guide & Day-by-Day Itinerary
 date: 2026-04-06
 categoria: Manu Park
 publicado: true
-extracto: The definitive 8-day expedition itinerary into the deep Manu Reserved Zone and Blanquillo Macaw Clay Lick. Detailed day-by-day wildlife tracking, oxbow lake catamaran excursions, tapir clay licks, and expert packing advice.
-imagen: /media/fotos-jordy/img-20260702-wa0063-jpg.jpeg
+extracto: "The definitive 8-day expedition itinerary into the deep Manu Reserved Zone and Blanquillo Macaw Clay Lick. Detailed day-by-day wildlife tracking, oxbow lake catamaran excursions, tapir clay licks, and expert packing advice."
+imagen: /wp-content/uploads/2022/10/Wildlife-quest-6dyas-blanquillo_.jpg
 imagen_alt: Manu National Park in 8 days expedition guide
 ---
 

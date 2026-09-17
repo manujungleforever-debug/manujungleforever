@@ -98,7 +98,19 @@
   // ── 4. SENTENCE / DESCRIPTION FORMATTER ──
   function formatSentence(str) {
     if (!str || typeof str !== 'string') return '';
-    let clean = str.trim().replace(/[ \t]+/g, ' ');
+    // If it looks like raw markdown or path, never touch it
+    if (str.includes('![') || str.includes('](') || str.includes('```') || str.startsWith('http') || str.startsWith('/')) {
+      return str;
+    }
+
+    // Protect URLs and file extensions before punctuation spacing
+    const urls = [];
+    let clean = str.replace(/((https?:\/\/[^\s]+)|(\/[a-zA-Z0-9_\-\.\/]+)|([a-zA-Z0-9_\-]+\.[a-zA-Z0-9_\-]+))/g, (m) => {
+      urls.push(m);
+      return `__URL_TOKEN_${urls.length - 1}__`;
+    });
+
+    clean = clean.trim().replace(/[ \t]+/g, ' ');
     if (!clean) return '';
 
     // Fix spacing before punctuation: "hola , como estas ." -> "hola, como estas."
@@ -116,6 +128,9 @@
       clean = clean.replace(regex, replacement);
     });
 
+    // Restore protected URLs and file extensions
+    clean = clean.replace(/__URL_TOKEN_(\d+)__/g, (_, idx) => urls[Number(idx)] || '');
+
     return clean;
   }
 
@@ -123,6 +138,7 @@
   function inferFieldType(el) {
     if (!el) return null;
     const explicit = el.getAttribute('data-case');
+    if (explicit === 'none') return 'none';
     if (explicit) return explicit; // 'name', 'title', 'sentence', 'none'
 
     const id = (el.id || '').toLowerCase();
@@ -130,10 +146,23 @@
     const placeholder = (el.placeholder || '').toLowerCase();
     const label = el.closest('.ff') ? (el.closest('.ff').querySelector('label')?.textContent || '').toLowerCase() : '';
 
-    // Passwords, emails, URLs, dates, numbers must NEVER be transformed
+    // Passwords, emails, URLs, dates, numbers, slugs must NEVER be transformed
     const type = (el.type || '').toLowerCase();
     if (['password', 'email', 'url', 'number', 'date', 'datetime-local', 'file', 'hidden'].includes(type)) return 'none';
-    if (id.includes('pass') || id.includes('email') || id.includes('token') || id.includes('url') || id.includes('slug') || id === 't-slug' || id === 'b-slug') return 'none';
+    if (id.includes('pass') || id.includes('email') || id.includes('token') || id.includes('url') || id.includes('slug') || id === 't-slug' || id === 'b-slug' || id === 'f-slug') return 'none';
+
+    // Markdown editors, code blocks, and textareas inside .md-wrap must NEVER be auto-formatted
+    if (
+      id === 'f-body' || 
+      id.includes('body') || 
+      id === 't-dl' || 
+      id.includes('markdown') ||
+      el.closest('.md-wrap') || 
+      el.classList.contains('md-editor') ||
+      el.classList.contains('code-editor')
+    ) {
+      return 'none';
+    }
 
     // Tour / Blog / Departure Titles
     if (

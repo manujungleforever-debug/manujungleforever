@@ -1,9 +1,9 @@
 ---
-title: "Meet Jordy: Master Naturalist Guide & Native Rainforest Expert at Manu Jungle Forever"
+title: Meet Jordy: Master Naturalist Guide & Native Rainforest Expert at Manu Jungle Forever
 date: 2026-08-11
 categoria: Our Team
 publicado: true
-extracto: Get to know Jordy, lead naturalist guide at Manu Jungle Forever. Born and raised in the heart of the Peruvian Amazon, discover his lifelong journey tracking jaguars, identifying hundreds of bird vocalizations, and sharing the secrets of Manu with travelers.
+extracto: "Get to know Jordy, lead naturalist guide at Manu Jungle Forever. Born and raised in the heart of the Peruvian Amazon, discover his lifelong journey tracking jaguars, identifying hundreds of bird vocalizations, and sharing the secrets of Manu with travelers."
 imagen: /media/medios/home/1787019267046-3071145-sure-2677608.jpg
 imagen_alt: Jordy expert naturalist guide in Manu National Park
 ---
