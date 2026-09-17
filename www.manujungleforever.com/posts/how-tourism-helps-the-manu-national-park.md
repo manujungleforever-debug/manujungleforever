@@ -3,8 +3,8 @@ title: How Sustainable Tourism Protects Manu National Park and Empowers Local Co
 date: 2026-06-22
 categoria: Sustainability
 publicado: true
-extracto: "Explore the vital symbiotic relationship between ethical ecotourism and conservation in Manu. Learn how your journey finances park rangers, preserves ancestral indigenous territories, and creates an economic alternative to illegal deforestation and mining."
-imagen: /wp-content/uploads/2021/01/family-fishing-e1609677595723.jpg
+extracto: Explore the vital symbiotic relationship between ethical ecotourism and conservation in Manu. Learn how your journey finances park rangers, preserves ancestral indigenous territories, and creates an economic alternative to illegal deforestation and mining.
+imagen: /media/fotos-jordy/img-20260630-wa0178-jpg.jpeg
 imagen_alt: Sustainable ecotourism supporting communities in Manu National Park
 ---
 
