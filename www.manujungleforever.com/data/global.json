@@ -42,5 +42,11 @@
     "airbnb": "#",
     "whatsapp": "https://wa.me/51958113016",
     "tiktok": "#"
+  },
+  "hero_images": {
+    "departures": "/media/medios/home/1787019267046-3071145-sure-2677608.jpg",
+    "gallery": "/media/medios/home/1787019267046-3071145-sure-2677608.jpg",
+    "blog": "/media/medios/home/1787019267046-3071145-sure-2677608.jpg",
+    "guided_tours": "/media/medios/home/1787019267046-3071145-sure-2677608.jpg"
   }
 }
