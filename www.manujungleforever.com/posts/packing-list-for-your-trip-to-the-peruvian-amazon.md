@@ -12,9 +12,10 @@ imagen_alt: Packing list for your trip to the Peruvian Amazon jungle
 
 Packing for a trip to the **Peruvian Amazon**—particularly a multi-day expedition into **Manu National Park**—can feel intimidating. You are preparing for an environment famous for heat, sudden torrential downpours, thick mud, humidity, and abundant insect life.
 
-However, with the right gear, clothing, and mindset, traveling in Manu is surprisingly comfortable and deeply rewarding. Having guided thousands of travelers through every season, our team at [Manu Jungle Forever](https://www.manujungleforever.com/) has assembled the definitive, field-tested **Amazon Packing Guide**.
+However, with the right gear, clothing, and mindset, traveling in Manu is surprisingly comfortable and deeply rewarding. Having guided thousands of travelers through every season, our team at [Manu Jungle Forever](https://www. Manujungleforever. Com/) has assembled the definitive, field-tested **Amazon Packing Guide**.
 
 ---
+
 
 ## 1. The Core Rule of Rainforest Clothing: Lightweight, Long & Breathable
 
@@ -32,7 +33,7 @@ Wear **earthy, neutral tones**:
 ### Clothing Checklist:
 - [ ] **4–5 Lightweight, Long-Sleeve Safari Shirts:** With UPF sun protection and ventilation flaps.
 - [ ] **3–4 Pairs of Lightweight Quick-Dry Cargo Pants:** Zip-off convertible pants work exceptionally well.
-- [ ] **1 Warm Fleece Jacket or Light Down Sweater:** Essential for the chilly mountain crossing at Acjanaco Pass (3,560m) and cool night boat breezes.
+- [ ] **1 Warm Fleece Jacket or Light Down Sweater:** Essential for the chilly mountain crossing at Acjanaco Pass (3, 560m) and cool night boat breezes.
 - [ ] **5–6 Pairs of Tall Merino Wool or Synthetic Hiking Socks:** Long socks protect your calves from rubbing against rubber muck boots.
 - [ ] **Quick-Dry Underwear:** Moisture-wicking athletic fabrics.
 - [ ] **1 Wide-Brimmed Sun Hat:** With chin strap for windy riverboat travel.
@@ -55,10 +56,10 @@ Footwear can make or break a rainforest adventure:
 
 You are traveling to the most biodiverse wilderness on Earth; high-quality optics will transform your experience:
 
-- **Binoculars (Essential!):** Every traveler should have their own pair. We strongly recommend **8x42 or 10x42** roof-prism binoculars with waterproof/fog-proof construction (e.g., Nikon Monarch, Bushnell Legend, or Vortex Diamondback).
+- **Binoculars (Essential!):** Every traveler should have their own pair. We strongly recommend **8x42 or 10x42** roof-prism binoculars with waterproof/fog-proof construction (e. G., Nikon Monarch, Bushnell Legend, or Vortex Diamondback).
 - **Camera with Telephoto Lens:** For serious wildlife photography, a 300mm to 600mm focal range is ideal for monkeys and high-canopy birds.
 - **Silica Gel Packs & Ziploc Bags:** Humidity is the enemy of camera electronics. Store camera bodies and lenses in airtight dry bags with reusable silica gel desiccant packs.
-- **High-Capacity Power Bank (20,000 mAh):** While our lodges offer generator/solar charging at set evening hours, a portable battery ensures your phone and camera batteries stay charged throughout long boat outings.
+- **High-Capacity Power Bank (20, 000 mAh):** While our lodges offer generator/solar charging at set evening hours, a portable battery ensures your phone and camera batteries stay charged throughout long boat outings.
 
 ---
 
@@ -76,7 +77,7 @@ You are traveling to the most biodiverse wilderness on Earth; high-quality optic
 ## 5. Critical Expedition Gear
 
 | Item | Why You Need It |
-| :--- | :--- |
+|:--- |:--- |
 | **Heavy-Duty Dry Bag (20L - 30L)** | Keeps your daypack, camera, and optics 100% dry during sudden riverboat rainstorms. |
 | **Headlamp with Red-Light Mode** | Hands-free lighting for night walks and dark lodge paths. Red light doesn't blind wildlife. |
 | **Refillable Aluminum Water Bottle (1L)** | Pure boiled/filtered water is freely available at all our lodges; help us eliminate single-use plastics. |
@@ -98,6 +99,6 @@ You are traveling to the most biodiverse wilderness on Earth; high-quality optic
 
 With the right preparation, your journey into Manu National Park will be seamless, comfortable, and breathtakingly exciting.
 
-- Browse our [Complete Tour Itineraries](https://www.manujungleforever.com/guided-tours/index.html)
-- Check our [Departures Schedule](https://www.manujungleforever.com/departures/index.html)
-- [Ask Our Team Any Gear Question](https://www.manujungleforever.com/contact/index.html) before your flight!
+- Browse our [Complete Tour Itineraries](https://www. Manujungleforever. Com/guided-tours/index. Html)
+- Check our [Departures Schedule](https://www. Manujungleforever. Com/departures/index. Html)
+- [Ask Our Team Any Gear Question](https://www. Manujungleforever. Com/contact/index. Html) before your flight!![alt](/media/fotos-jordy/img-20260722-wa0131-jpg. Jpeg)
