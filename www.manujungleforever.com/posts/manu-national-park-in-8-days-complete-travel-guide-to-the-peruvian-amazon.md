@@ -1,10 +1,10 @@
 ---
-title: Manu National Park in 8 Days: The Ultimate Expedition Guide & Day-by-Day Itinerary
+title: "Manu National Park in 8 Days: The Ultimate Expedition Guide & Day-by-Day Itinerary"
 date: 2026-04-06
 categoria: Manu Park
 publicado: true
-extracto: "The definitive 8-day expedition itinerary into the deep Manu Reserved Zone and Blanquillo Macaw Clay Lick. Detailed day-by-day wildlife tracking, oxbow lake catamaran excursions, tapir clay licks, and expert packing advice."
-imagen: /wp-content/uploads/2022/10/Wildlife-quest-6dyas-blanquillo_.jpg
+extracto: The definitive 8-day expedition itinerary into the deep Manu Reserved Zone and Blanquillo Macaw Clay Lick. Detailed day-by-day wildlife tracking, oxbow lake catamaran excursions, tapir clay licks, and expert packing advice.
+imagen: /media/fotos-jordy/img-20260702-wa0060-jpg.jpeg
 imagen_alt: Manu National Park in 8 days expedition guide
 ---
 
@@ -15,6 +15,8 @@ Eight days is widely recognized by biologists, photographers, and professional g
 A shorter trip allows you to scratch the surface of the Andean Cloud Forest and riverside buffer zones. But an **8-day expedition** gives you the time required to journey past the outer borders, navigate deep into the strictly protected **Manu Reserved Zone**, explore remote oxbow lakes like Cocha Salvador, and marvel at the world-famous **Blanquillo Macaw Clay Lick**.
 
 Below is the complete, day-by-day itinerary and field guide to experiencing Manu in 8 unforgettable days with [Manu Jungle Forever](https://www.manujungleforever.com/).
+
+![Fauna y flora de Manu](/media/fotos-jordy/img-20260702-wa0042-jpg.jpeg)
 
 ---
 
@@ -87,6 +89,8 @@ Below is the complete, day-by-day itinerary and field guide to experiencing Manu
 1. **Luggage Packing:** You will leave your main rolling suitcases safely stored at our office in Cusco. You will bring a 50–60 liter duffle bag or backpack for the 8 days in the jungle.
 2. **Charging Electronics:** Our lodges offer solar electricity and generators at designated evening hours. Bring a high-capacity power bank (20,000 mAh) and extra camera batteries.
 3. **Footwear:** Muck rubber boots (provided by us in all sizes) are worn on muddy forest trails. Bring lightweight running shoes or sandals for around the lodges.
+
+![Fauna y flora de Manu](/media/medios/gallery/imagenes/parque_nacional_del_manu_00-13.jpg)
 
 ### Book Your 8-Day Odyssey:
 - Explore the full itinerary: [Manu Reserve Zone to Blanquillo 8D/7N](https://www.manujungleforever.com/manu-reserve-zone-to-blanquillo-macaw-clay-lick-8d-7n/index.html)
