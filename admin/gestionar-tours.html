@@ -1673,7 +1673,7 @@ async function viewTours() {
       const num = String(index + 1).padStart(2, '0');
       const stCls = t.estado==='activo'?'on':(t.estado==='inactivo'?'off':'warn');
       const stLbl = t.estado ? t.estado.toUpperCase() : 'ACTIVO';
-      const img = t.imagen_hero || '../assets/img/hero.png';
+      const img = t.imagen_card || t.imagen_hero || t.imagen_portada || '../assets/img/hero.png';
       
       htmlList += `
       <div style="display:flex; flex-wrap:nowrap; gap:16px; align-items:center; background:rgba(17,24,39,0.5); border:1px solid rgba(255,255,255,0.05); border-radius:12px; padding:12px; transition:all 0.2s;" onmouseover="this.style.borderColor='rgba(16,185,129,0.5)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.05)'">

@@ -683,7 +683,7 @@ def build_site():
                         status_badge = '<span class="badge" style="background: rgba(239,68,68,0.55); color: #ffffff; border: 1px solid rgba(239,68,68,0.75); text-transform: uppercase; font-weight: 700; font-size: 0.72rem; padding: 4px 12px; border-radius: 20px; backdrop-filter: blur(4px);">INACTIVO</span>'
                         book_btn = '<button class="tc-btn tc-btn-ghost" disabled style="opacity: 0.5; cursor: not-allowed;"><i class="fas fa-times-circle"></i> No disponible</button>'
 
-                    img_src = fix_img_path(t.get('imagen_hero') or 'assets/img/hero.png')
+                    img_src = fix_img_path(t.get('imagen_card') or t.get('imagen_hero') or t.get('imagen_portada') or 'assets/img/hero.png')
                     nombre = clean_mojibake(t.get('nombre', ''))
                     slug = t.get('slug') or t.get('id')
                     dur_d = t.get('duracion_dias', 0)
