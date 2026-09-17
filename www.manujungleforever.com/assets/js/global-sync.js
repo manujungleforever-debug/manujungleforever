@@ -462,6 +462,30 @@
           const hs = heroWrap.querySelector('.hs');
           if (hs && hero.subtitle) hs.textContent = hero.subtitle;
         }
+
+        // Hero Video Hydration (Local / R2 MP4 or YouTube)
+        const hv = document.querySelector('.hero .hv');
+        if (hv) {
+          if (hero.video_url && hero.video_url.trim()) {
+            const vUrl = hero.video_url.trim();
+            const currentVid = hv.querySelector('video source');
+            if (!currentVid || currentVid.getAttribute('src') !== vUrl) {
+              hv.innerHTML = `<video autoplay loop muted playsinline style="width:100%;height:100%;object-fit:cover;pointer-events:none;"><source src="${vUrl}" type="video/mp4"></video>`;
+              const vidEl = hv.querySelector('video');
+              if (vidEl) { vidEl.play().catch(() => {}); }
+            }
+          } else if (hero.video_id && hero.video_id.trim()) {
+            const vId = hero.video_id.trim();
+            const vStart = hero.video_start || 0;
+            const vEnd = hero.video_end || '';
+            const endParam = vEnd ? `&end=${vEnd}` : '';
+            const ytSrc = `https://www.youtube-nocookie.com/embed/${vId}?autoplay=1&mute=1&loop=1&playlist=${vId}&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1&enablejsapi=1&start=${vStart}${endParam}`;
+            const currentIframe = hv.querySelector('iframe');
+            if (!currentIframe || !currentIframe.src.includes(vId)) {
+              hv.innerHTML = `<iframe allow="autoplay; encrypted-media" allowfullscreen="" src="${ytSrc}"></iframe>`;
+            }
+          }
+        }
       }
 
       // 3. ABOUT SECTION HYDRATION

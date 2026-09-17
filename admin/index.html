@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="utf-8">
@@ -1684,10 +1684,19 @@ async function viewHome() {
         <div class="ff"><label>Título principal</label><input id="h-t" value="${esc(d.hero?.title||'')}"></div>
         <div class="ff"><label>Título énfasis (parte resaltada)</label><input id="h-e" value="${esc(d.hero?.title_emphasis||'')}"></div>
         <div class="ff"><label>Subtítulo / descripción</label><textarea id="h-s">${esc(d.hero?.subtitle||'')}</textarea></div>
-        <div class="grow2">
-          <div class="ff"><label>Texto de ubicación</label><input id="h-l" value="${esc(d.hero?.location_tag||'')}"></div>
-          <div class="ff"><label>ID video YouTube</label><input id="h-v" value="${esc(d.hero?.video_id||'')}">
-            <span class="hint">Solo el ID, ej: <code>dQw4w9WgXcQ</code></span></div>
+        <div class="ff"><label>Texto de ubicación</label><input id="h-l" value="${esc(d.hero?.location_tag||'')}"></div>
+        <div class="ff" style="margin-top:12px;">
+          <label style="display:flex;align-items:center;justify-content:space-between;">
+            <span>Video Local o R2 (MP4 / WebM)</span>
+            <button type="button" class="btn-sub" style="font-size:11px;padding:3px 10px;display:inline-flex;align-items:center;gap:5px;border-radius:6px;background:rgba(45,212,191,0.15);color:#2dd4bf;border:1px solid rgba(45,212,191,0.3);cursor:pointer;" onclick="openMediaModal((url)=>{document.getElementById('h-vu').value=url;})"><i class="ph ph-video"></i> Elegir de R2</button>
+          </label>
+          <input id="h-vu" value="${esc(d.hero?.video_url||'')}" placeholder="ej: /media/videos/hero.mp4 o URL de R2">
+          <span class="hint">Ruta de video local o enlace de R2 (máxima prioridad y fluidez en el Hero).</span>
+        </div>
+        <div class="ff" style="margin-top:12px;">
+          <label>ID video YouTube (Alternativa / Respaldo)</label>
+          <input id="h-v" value="${esc(d.hero?.video_id||'')}">
+          <span class="hint">Solo el ID, ej: <code>dQw4w9WgXcQ</code> (se usa si no se define Video Local/R2).</span>
         </div>
       </div>
       <div class="esec"><div class="esec-h">Sección Sobre Nosotros</div>
@@ -1715,7 +1724,7 @@ async function viewHome() {
     </div>`);
   showSaveBar(async()=>{
     const dd={...cData};
-    dd.hero={...d.hero,title:v('h-t'),title_emphasis:v('h-e'),subtitle:v('h-s'),location_tag:v('h-l'),video_id:v('h-v')};
+    dd.hero={...d.hero,title:v('h-t'),title_emphasis:v('h-e'),subtitle:v('h-s'),location_tag:v('h-l'),video_url:v('h-vu'),video_id:v('h-v')};
     const paras=document.getElementById('a-p').value.split(/\n\n+/).map(t=>({text:t.trim()})).filter(p=>p.text);
     dd.about_section={...d.about_section,eyebrow:v('a-ey'),title:v('a-t'),paragraphs:paras,image:v('a-img'),image_alt:v('a-ia')};
     dd.pillars_section={...d.pillars_section,title:v('p-t'),
