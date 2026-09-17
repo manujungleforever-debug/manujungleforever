@@ -136,36 +136,8 @@ async function ghPut(path, content, sha, msg) {
   // (Eliminado para que use archivo local)
 
   // ── single blog post (markdown) ──
-  if (ds === 'blog:post') {
-    // content is a markdown string with frontmatter
-    const slug = path.split('/').pop().replace('.md', '');
-    const raw = typeof content === 'string' ? content : JSON.stringify(content);
-    // Parse frontmatter
-    const fmMatch = raw.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);
-    let post = { slug, contenido: raw };
-    if (fmMatch) {
-      const fmLines = fmMatch[1].split('\n');
-      const fm = {};
-      fmLines.forEach(l => {
-        const idx = l.indexOf(':');
-        if (idx > -1) fm[l.substring(0, idx).trim()] = l.substring(idx + 1).trim();
-      });
-      post = {
-        id:         fm.id || sha?.replace('d1:', '') || undefined,
-        slug,
-        titulo:     fm.title || fm.titulo || slug,
-        autor:      fm.author || fm.autor || 'Manu Jungle Forever',
-        fecha:      fm.date || fm.fecha,
-        categoria:  fm.category || fm.categoria,
-        extracto:   fm.excerpt || fm.extracto,
-        imagen_hero:fm.image || fm.imagen_hero,
-        estado:     fm.status || fm.estado || 'publicado',
-        contenido:  fmMatch[2] || ''
-      };
-    }
-    const d = await _d1('POST', '/api/blog', post);
-    return { ok: true, sha: 'd1:blog:' + (d.id || slug) };
-  }
+  // (Eliminado para que use archivo local / file proxy)
+
 
   // ── testimonials ──
   // (Eliminado para que use archivo local)
@@ -225,13 +197,8 @@ async function ghDelete(path, sha, msg) {
   const ds = _classify(path);
 
   // ── blog post ──
-  if (ds === 'blog:post') {
-    const slug = path.split('/').pop().replace('.md', '');
-    // Find post id from sha or slug
-    const id = sha?.replace('d1:', '') || slug;
-    await _d1('DELETE', '/api/blog/' + encodeURIComponent(id));
-    return { ok: true };
-  }
+  // (Eliminado para que use archivo local / file proxy)
+
 
   // ── departure ──
   if (ds === 'departures') {
