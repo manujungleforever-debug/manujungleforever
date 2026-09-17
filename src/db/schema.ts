@@ -41,7 +41,7 @@ export const tours = sqliteTable('tours', {
 // ── 3. DEPARTURES (SALIDAS) ──
 export const departures = sqliteTable('departures', {
   id: text('id').primaryKey(),
-  tourId: text('tour_id').references(() => tours.id),
+  tourId: text('tour_id'),
   tourNombre: text('tour_nombre').notNull(),
   fechaSalida: text('fecha_salida').notNull(),
   fechaRetorno: text('fecha_retorno'),
