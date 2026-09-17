@@ -1,10 +1,10 @@
 ---
-title: 5 Irresistible Reasons to Visit Manu National Park: Peru’s Wildest Frontier
+title: "5 Irresistible Reasons to Visit Manu National Park: Peru’s Wildest Frontier"
 date: 2026-04-18
 categoria: Manu Park
 publicado: true
-extracto: "Why choose Manu over Tambopata or Iquitos? Explore the 5 decisive reasons why travelers and biologists consider Manu National Park the wildest, purest, and most rewarding rainforest destination in South America."
-imagen: /wp-content/uploads/2022/12/five-reasons-to-visit-manu-national-park.webp
+extracto: Why choose Manu over Tambopata or Iquitos? Explore the 5 decisive reasons why travelers and biologists consider Manu National Park the wildest, purest, and most rewarding rainforest destination in South America.
+imagen: /media/fotos-jordy/20260707_090047.mp4
 imagen_alt: Five reasons to visit Manu National Park Peru
 ---
 
