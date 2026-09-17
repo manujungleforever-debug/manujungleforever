@@ -101,4 +101,6 @@ With the right preparation, your journey into Manu National Park will be seamles
 
 - Browse our [Complete Tour Itineraries](https://www. Manujungleforever. Com/guided-tours/index. Html)
 - Check our [Departures Schedule](https://www. Manujungleforever. Com/departures/index. Html)
-- [Ask Our Team Any Gear Question](https://www. Manujungleforever. Com/contact/index. Html) before your flight!![alt](/media/fotos-jordy/img-20260722-wa0131-jpg. Jpeg)
+- [Ask Our Team Any Gear Question](https://www. Manujungleforever. Com/contact/index. Html) before your flight!! 
+
+[alt](/media/fotos-jordy/img-20260722-wa0131-jpg. Jpeg)
