@@ -1,10 +1,10 @@
 ---
-title: What to See in the Peruvian Amazon: The Definitive 2026 Wildlife & Nature Guide
+title: "What to See in the Peruvian Amazon: The Definitive 2026 Wildlife & Nature Guide"
 date: 2026-03-28
 categoria: Wildlife
 publicado: true
 extracto: "A comprehensive field guide to the wildlife, flora, and natural spectacles of Peru's Amazon rainforest. From macaw clay licks and black caimans to giant kapok trees and nocturnal rainforest safaris, discover what awaits you in the jungle."
-imagen: /wp-content/uploads/2022/10/Road-trip-4-days_1.jpg
+imagen: /media/fotos-jordy/img-20260722-wa0187-jpg.jpeg
 imagen_alt: What to see in the Peruvian Amazon rainforest
 ---
 
@@ -35,6 +35,8 @@ The Peruvian Amazon is home to a spectacular diversity of monkeys:
 
 ### Capybaras (*Hydrochoerus hydrochaeris*)
 The world's largest rodent, capybaras gather in family groups along riverbanks and sandbars. They are semi-aquatic herbivores and a favored prey of jaguars and anacondas.
+
+![Fauna y flora de Manu](/media/fotos-jordy/img-20260702-wa0071-jpg.jpeg)
 
 ---
 
