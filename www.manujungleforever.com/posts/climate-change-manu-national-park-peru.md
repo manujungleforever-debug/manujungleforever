@@ -1,10 +1,10 @@
 ---
-title: Climate Change in Manu National Park: Protecting the World's Most Vital Biosphere
+title: "Climate Change in Manu National Park: Protecting the World's Most Vital Biosphere"
 date: 2026-03-05
 categoria: Conservation
 publicado: true
-extracto: "An authoritative analysis of how climate change impacts the elevation gradients of Manu National Park, why this intact mega-corridor acts as a crucial global carbon reservoir, and how community-driven ecotourism serves as frontline defense."
-imagen: /media/1786477360363-jordy.jpg
+extracto: An authoritative analysis of how climate change impacts the elevation gradients of Manu National Park, why this intact mega-corridor acts as a crucial global carbon reservoir, and how community-driven ecotourism serves as frontline defense.
+imagen: /media/fotos-jordy/img-20260630-wa0208-jpg.jpeg
 imagen_alt: Climate change and conservation in Manu National Park Peru
 ---
 
@@ -78,6 +78,8 @@ Traveling to the Amazon does not have to contribute to environmental degradation
 - **Minimize Single-Use Plastics:** Bring refillable aluminum water bottles and water purification tablets/filters.
 - **Respect Wildlife Regulations:** Maintain respectful distances, never feed or touch wild animals, and support non-intrusive observation techniques.
 - **Become a Global Voice:** Share your experience, photos, and stories. The more the world knows about the irreplaceable value of Manu, the stronger the global consensus to protect it will be.
+
+![Fauna y flora de Manu](/media/fotos-jordy/img-20260702-wa0006-jpg.jpeg)
 
 ---
 
