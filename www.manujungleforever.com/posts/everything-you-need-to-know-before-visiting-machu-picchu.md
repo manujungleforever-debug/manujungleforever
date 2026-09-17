@@ -1,10 +1,10 @@
 ---
-title: Everything You Need to Know Before Visiting Machu Picchu: Complete 2026 Guide
+title: "Everything You Need to Know Before Visiting Machu Picchu: Complete 2026 Guide"
 date: 2026-01-25
 categoria: Travel Tips
 publicado: true
 extracto: "An indispensable insider guide to visiting Machu Picchu: the new circuit regulations, booking deadlines, train options from Ollantaytambo, altitude acclimation in Cusco, and how to seamlessly combine the Incan Citadel with a Manu Amazon expedition."
-imagen: /wp-content/uploads/2023/11/Everything-You-Need-to-Know-Before-Visiting-Machu-Picchu-1.webp
+imagen: /media/medios/gallery/imagenes/manupark1.jpg
 imagen_alt: Everything you need to know before visiting Machu Picchu Peru
 ---
 
@@ -82,6 +82,8 @@ Cusco serves as the shared geographic crossroads for both worlds:
 4. **Days 5–10:** Embark on a [6-day](https://www.manujungleforever.com/manu-expedition-6d-5n/index.html) or [7-day Manu Reserve Zone Expedition](https://www.manujungleforever.com/manu-reserve-zone-7d-6n/index.html) into the heart of the Amazon.
 
 Transitioning directly from the stone sanctuaries of the Incas into the wild canopy of Manu provides an unforgettable contrast between human architectural genius and the raw, untamed power of nature.
+
+![Fauna y flora de Manu](/media/medios/gallery/imagenes/amazon_views.jpg)
 
 ---
 
