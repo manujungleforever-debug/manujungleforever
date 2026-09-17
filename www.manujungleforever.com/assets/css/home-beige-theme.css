@@ -183,7 +183,7 @@ body {
 
 /* ── 3. HERO TITLE & ACCENTS ───────────────────────────────────── */
 #home-main-title {
-  font-family: 'Montserrat', sans-serif !important;
+  font-family: 'Playfair Display', Georgia, serif !important;
   font-size: clamp(2.5rem, 6.5vw, 5.5rem) !important;
   font-weight: 800 !important;
   line-height: 1.1 !important;
@@ -240,7 +240,7 @@ body {
   box-shadow: var(--shadow-eco-h) !important;
 }
 .st-card .sn {
-  font-family: 'Montserrat', sans-serif !important;
+  font-family: 'Playfair Display', Georgia, serif !important;
   font-size: 2.7rem !important;
   font-weight: 800 !important;
   background: linear-gradient(135deg, var(--forest-dark) 0%, var(--brand-teal) 100%) !important;
@@ -365,7 +365,7 @@ body {
 }
 .about-card-text .h2,
 .about-card-text h2 {
-  font-family: 'Syne', 'Montserrat', sans-serif !important;
+  font-family: 'Playfair Display', Georgia, serif !important;
   font-size: clamp(2rem, 3.2vw, 2.6rem) !important;
   font-weight: 800 !important;
   color: var(--forest-dark) !important;
@@ -414,7 +414,7 @@ body {
 }
 #tours .tr-intro .h2,
 #tours .tr-intro h2 {
-  font-family: 'Syne', 'Montserrat', sans-serif !important;
+  font-family: 'Playfair Display', Georgia, serif !important;
   font-size: 2.5rem !important;
   font-weight: 800 !important;
   color: var(--forest-dark) !important;
@@ -523,7 +523,7 @@ body {
   padding: 28px !important;
 }
 #tours .tt {
-  font-family: 'Syne', 'Montserrat', sans-serif !important;
+  font-family: 'Playfair Display', Georgia, serif !important;
   font-size: 1.5rem !important;
   font-weight: 800 !important;
   color: #FFFFFF !important;
@@ -786,7 +786,7 @@ body {
 }
 #unique-content .spt .h2,
 #unique-content .spt h2 {
-  font-family: 'Syne', 'Montserrat', sans-serif !important;
+  font-family: 'Playfair Display', Georgia, serif !important;
   font-size: clamp(1.8rem, 3vw, 2.5rem) !important;
   font-weight: 800 !important;
   color: var(--forest-dark) !important;
@@ -912,7 +912,7 @@ body {
 }
 .wl-text-card .h2,
 .wl-text-card h2 {
-  font-family: 'Syne', 'Montserrat', sans-serif !important;
+  font-family: 'Playfair Display', Georgia, serif !important;
   font-size: clamp(2rem, 3vw, 2.6rem) !important;
   font-weight: 800 !important;
   color: #FFFFFF !important;
@@ -1020,7 +1020,7 @@ body {
 }
 #reviews .r .h2,
 #reviews .r h2 {
-  font-family: 'Syne', 'Montserrat', sans-serif !important;
+  font-family: 'Playfair Display', Georgia, serif !important;
   font-size: clamp(2rem, 3.2vw, 2.6rem) !important;
   font-weight: 800 !important;
   color: var(--forest-dark) !important;
@@ -1294,7 +1294,7 @@ body {
 }
 #location .h2,
 #location h2 {
-  font-family: 'Syne', 'Montserrat', sans-serif !important;
+  font-family: 'Playfair Display', Georgia, serif !important;
   font-size: clamp(2rem, 3.2vw, 2.6rem) !important;
   font-weight: 800 !important;
   color: var(--forest-dark) !important;
@@ -1332,7 +1332,7 @@ body {
 }
 #why-us .h2,
 #why-us h2 {
-  font-family: 'Syne', 'Montserrat', sans-serif !important;
+  font-family: 'Playfair Display', Georgia, serif !important;
   font-size: clamp(2rem, 3.5vw, 2.8rem) !important;
   font-weight: 800 !important;
   color: var(--forest-dark) !important;
