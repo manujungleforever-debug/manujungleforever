@@ -3,8 +3,8 @@ title: How Sustainable Tourism Protects Manu National Park and Empowers Local Co
 date: 2026-06-22
 categoria: Sustainability
 publicado: true
-extracto: "Explore the vital symbiotic relationship between ethical ecotourism and conservation in Manu. Learn how your journey finances park rangers, preserves ancestral indigenous territories, and creates an economic alternative to illegal deforestation and mining."
-imagen: /wp-content/uploads/2021/01/family-fishing-e1609677595723.jpg
+extracto: Explore the vital symbiotic relationship between ethical ecotourism and conservation in Manu. Learn how your journey finances park rangers, preserves ancestral indigenous territories, and creates an economic alternative to illegal deforestation and mining.
+imagen: /media/1789052310712-hb5oj2ruyjdyjbud2onovr56w4.jpg
 imagen_alt: Sustainable ecotourism supporting communities in Manu National Park
 ---
 
@@ -29,6 +29,8 @@ When a local family living along the Manu or Alto Madre de Dios River has to cho
 **Ecotourism proves that an intact, living rainforest is vastly more valuable over the long term than a deforested wasteland.**
 
 ---
+
+![Fauna y flora de Manu](/media/fotos-jordy/img-20260722-wa0237-jpg.jpeg)
 
 ## 2. Direct Financial Support for SERNANP Park Rangers
 
@@ -95,3 +97,6 @@ When you travel with **Manu Jungle Forever**, your expedition directly champions
 - Browse our sustainable [Guided Tours](https://www.manujungleforever.com/guided-tours/index.html)
 - Read our [About Us Page](https://www.manujungleforever.com/about/index.html) to learn about our team
 - [Contact Us Today](https://www.manujungleforever.com/contact/index.html) to reserve your conservation-driven Amazon expedition.
+
+![Fauna y flora de Manu](/media/fotos-jordy/img-20260806-wa0107-jpg.jpeg)
+
