@@ -1,10 +1,10 @@
 ---
-title: Everything You Need to Know Before Visiting Machu Picchu: Complete 2026 Guide
+title: "Everything You Need to Know Before Visiting Machu Picchu: Complete 2026 Guide"
 date: 2026-01-25
 categoria: Travel Tips
 publicado: true
 extracto: "An indispensable insider guide to visiting Machu Picchu: the new circuit regulations, booking deadlines, train options from Ollantaytambo, altitude acclimation in Cusco, and how to seamlessly combine the Incan Citadel with a Manu Amazon expedition."
-imagen: /wp-content/uploads/2023/11/Everything-You-Need-to-Know-Before-Visiting-Machu-Picchu-1.webp
+imagen: /media/fotos-jordy/img-20260702-wa0006-jpg.jpeg
 imagen_alt: Everything you need to know before visiting Machu Picchu Peru
 ---
 
