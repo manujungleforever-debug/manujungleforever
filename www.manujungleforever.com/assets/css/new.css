@@ -3439,3 +3439,31 @@ canvas.tsparticles-canvas-el {
   }
 }
 
+/* --- Professional Editorial Comment Section --- */
+.comment-section-area {
+  background: var(--k, #F5F0E8);
+  padding: 80px 0 100px;
+}
+.comment-card-modern {
+  max-width: 860px;
+  margin: 0 auto;
+  background: #FFFFFF;
+  border: 1px solid rgba(13, 38, 28, 0.08);
+  border-radius: 24px;
+  padding: 48px 52px;
+  box-shadow: 0 16px 45px -10px rgba(7, 24, 17, 0.07), 0 2px 8px rgba(7, 24, 17, 0.03);
+  position: relative;
+  overflow: hidden;
+}
+@media (max-width: 640px) {
+  .comment-grid-2 {
+    grid-template-columns: 1fr !important;
+  }
+  .comment-card-modern {
+    padding: 32px 20px !important;
+    border-radius: 18px !important;
+  }
+  .comment-submit-btn {
+    width: 100% !important;
+  }
+}
