@@ -4,7 +4,7 @@ date: 2026-04-18
 categoria: Manu Park
 publicado: true
 extracto: Why choose Manu over Tambopata or Iquitos? Explore the 5 decisive reasons why travelers and biologists consider Manu National Park the wildest, purest, and most rewarding rainforest destination in South America.
-imagen: /media/fotos-jordy/20260707_090047.mp4
+imagen: /media/1789052310712-hb5oj2ruyjdyjbud2onovr56w4.jpg
 imagen_alt: Five reasons to visit Manu National Park Peru
 ---
 
