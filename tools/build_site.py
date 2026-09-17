@@ -251,6 +251,31 @@ def build_site():
                     hs.string = clean_mojibake(h_data['hero']['subtitle'])
                     modified = True
 
+                # Hero Video (Local / R2 MP4 or YouTube)
+                hero_sec = soup.select_one('.hero')
+                if hero_sec:
+                    hero_sec['style'] = "background: #030805;"
+                    modified = True
+
+                hv = soup.select_one('.hero .hv') or soup.select_one('.hv')
+                if hv:
+                    v_url = (h_data['hero'].get('video_url') or '').strip()
+                    v_id = (h_data['hero'].get('video_id') or '').strip()
+                    if v_url:
+                        hv.clear()
+                        vid_soup = BeautifulSoup(f'<video autoplay loop muted playsinline style="width:100%;height:100%;object-fit:cover;pointer-events:none;"><source src="{v_url}" type="video/mp4"></video>', 'html.parser')
+                        for c in list(vid_soup.children): hv.append(c)
+                        modified = True
+                    elif v_id:
+                        v_start = h_data['hero'].get('video_start', 0)
+                        v_end = h_data['hero'].get('video_end', '')
+                        end_param = f"&end={v_end}" if v_end else ""
+                        yt_src = f"https://www.youtube-nocookie.com/embed/{v_id}?autoplay=1&mute=1&loop=1&playlist={v_id}&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1&enablejsapi=1&start={v_start}{end_param}"
+                        hv.clear()
+                        iframe_tag = soup.new_tag('iframe', allow="autoplay; encrypted-media", allowfullscreen="", src=yt_src)
+                        hv.append(iframe_tag)
+                        modified = True
+
             if h_data.get('stats'):
                 sg = soup.select_one('#home-stats-grid') or soup.select_one('.st-modern .sg') or soup.select_one('.st .sg')
                 if sg:
@@ -479,7 +504,81 @@ def build_site():
                         pg.clear()
                         for c in pg_soup.children: pg.append(c)
                         modified = True
+
+        # Global Hero Images sync for departures, gallery, blog, guided-tours
+        hero_imgs = g_data.get('hero_images', {})
+        if hero_imgs:
+            if (filepath.endswith('departures\\index.html') or filepath.endswith('departures/index.html')) and hero_imgs.get('departures'):
+                hero = soup.select_one('.in-hero')
+                if hero:
+                    hero['style'] = f"background-image: url('{fix_img_path(hero_imgs['departures'])}'); background-size: cover; background-position: center; position: relative;"
+                    modified = True
+            elif (filepath.endswith('news-and-gallery\\index.html') or filepath.endswith('news-and-gallery/index.html')) and hero_imgs.get('gallery'):
+                hero = soup.select_one('.in-hero')
+                if hero:
+                    hero['style'] = f"background-image: url('{fix_img_path(hero_imgs['gallery'])}'); background-size: cover; background-position: center; position: relative;"
+                    modified = True
+            elif (filepath.endswith('blog\\index.html') or filepath.endswith('blog/index.html')) and hero_imgs.get('blog'):
+                hero = soup.select_one('.in-hero')
+                if hero:
+                    hero['style'] = f"background-image: url('{fix_img_path(hero_imgs['blog'])}'); background-size: cover; background-position: center; position: relative;"
+                    modified = True
+            elif (filepath.endswith('guided-tours\\index.html') or filepath.endswith('guided-tours/index.html')) and hero_imgs.get('guided_tours'):
+                hero = soup.select_one('.in-hero')
+                if hero:
+                    hero['style'] = f"background-image: url('{fix_img_path(hero_imgs['guided_tours'])}'); background-size: cover; background-position: center; position: relative;"
+                    modified = True
         
+        # About page specific
+        if filepath.endswith('about\\index.html') or filepath.endswith('about/index.html'):
+            a_data = load_json('about.json')
+            if a_data:
+                if a_data.get('titulo_pagina'):
+                    h1 = soup.select_one('.in-hero .h1')
+                    if h1: h1.string = clean_mojibake(a_data['titulo_pagina']); modified = True
+                if a_data.get('subtitulo_pagina'):
+                    hs = soup.select_one('.in-hero .hs')
+                    if hs: hs.string = clean_mojibake(a_data['subtitulo_pagina']); modified = True
+                if a_data.get('hero_image'):
+                    hero = soup.select_one('.in-hero')
+                    if hero:
+                        hero['style'] = f"background-image: url('{fix_img_path(a_data['hero_image'])}'); background-size: cover; background-position: center; position: relative;"
+                        modified = True
+                hist = a_data.get('historia', {})
+                if hist:
+                    if hist.get('eyebrow'):
+                        ey = soup.select_one('.intro-block .ey')
+                        if ey: ey.string = clean_mojibake(hist['eyebrow']); modified = True
+                    if hist.get('titulo'):
+                        h2 = soup.select_one('.intro-block .h2')
+                        if h2: h2.string = clean_mojibake(hist['titulo']); modified = True
+                    if hist.get('imagen'):
+                        h_img = soup.find(id='dyn-about-history-img')
+                        if h_img:
+                            h_img['src'] = fix_img_path(hist['imagen'])
+                            if hist.get('imagen_alt'):
+                                h_img['alt'] = clean_mojibake(hist['imagen_alt'])
+                            modified = True
+                    if hist.get('imagen_alt'):
+                        h_cap = soup.find(id='dyn-about-history-caption')
+                        if h_cap:
+                            h_cap.clear()
+                            icon = soup.new_tag('i')
+                            icon['class'] = ['fas', 'fa-camera']
+                            icon['style'] = 'color: var(--teal, #2dd4bf);'
+                            h_cap.append(icon)
+                            h_cap.append(f" {clean_mojibake(hist['imagen_alt'])}")
+                            modified = True
+                    if hist.get('paragrafos') and isinstance(hist['paragrafos'], list):
+                        ewc = soup.select_one('.intro-block .elementor-widget-container')
+                        if ewc:
+                            ewc.clear()
+                            for p in hist['paragrafos']:
+                                p_tag = soup.new_tag('p')
+                                p_tag.string = clean_mojibake(p)
+                                ewc.append(p_tag)
+                            modified = True
+
         # Contact page specific
         if filepath.endswith('contact\\index.html') or filepath.endswith('contact/index.html'):
             if c_data.get('titulo_pagina'):

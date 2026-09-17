@@ -1887,6 +1887,17 @@ async function viewGlobal() {
           <div class="ff"><label>Airbnb</label><input id="g-ab" value="${esc(d.social?.airbnb||d.redes_sociales?.airbnb||'')}"></div>
         </div>
       </div>
+      <div class="esec"><div class="esec-h">Imágenes de Cabecera (Heros de Páginas)</div>
+        <p class="hint" style="margin-bottom:14px;">Configura las imágenes de cabecera / fondo para las páginas principales del sitio:</p>
+        <div class="grow2">
+          ${imgWidget('gh-departures', 'Hero Salidas / Departures', d.hero_images?.departures || '', 'Página /departures/')}
+          ${imgWidget('gh-gallery', 'Hero Galería / News & Gallery', d.hero_images?.gallery || '', 'Página /news-and-gallery/')}
+        </div>
+        <div class="grow2">
+          ${imgWidget('gh-blog', 'Hero Blog Principal', d.hero_images?.blog || '', 'Página /blog/')}
+          ${imgWidget('gh-guided-tours', 'Hero Guided Tours', d.hero_images?.guided_tours || '', 'Página /guided-tours/')}
+        </div>
+      </div>
       <div class="esec"><div class="esec-h">SEO por Defecto</div>
         <div class="ff"><label>Sufijo del título</label><input id="g-ts" value="${esc(d.seo?.default_title_suffix||'')}"><span class="hint">Ej: | Manu Jungle Forever</span></div>
         <div class="ff"><label>Descripción por defecto</label><textarea id="g-td">${esc(d.seo?.default_description||'')}</textarea></div>
@@ -1898,6 +1909,12 @@ async function viewGlobal() {
     </div>`);
   showSaveBar(async()=>{
     const dd={...d,site_name:v('g-n'),slogan:v('g-sl'),tagline:v('g-tg'),logo_main:v('g-logo'),favicon:v('g-fav'),copyright:v('g-cp'),
+      hero_images:{
+        departures:v('gh-departures'),
+        gallery:v('gh-gallery'),
+        blog:v('gh-blog'),
+        guided_tours:v('gh-guided-tours')
+      },
       social:{...d.social,facebook:v('g-fb'),instagram:v('g-ig'),tripadvisor:v('g-ta'),youtube:v('g-yt'),tiktok:v('g-tt'),airbnb:v('g-ab')},
       redes_sociales:{facebook:v('g-fb'),instagram:v('g-ig'),tripadvisor:v('g-ta'),airbnb:v('g-ab'),whatsapp:d.redes_sociales?.whatsapp||'https://wa.me/51901525679',tiktok:v('g-tt')},
       seo:{...d.seo,default_title_suffix:v('g-ts'),default_description:v('g-td'),default_og_image:v('g-og')}};

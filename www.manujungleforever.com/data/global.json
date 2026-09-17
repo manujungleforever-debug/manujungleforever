@@ -15,6 +15,12 @@
   "logo_footer": "assets/media_to_upload/photos/placeholder.jpg",
   "favicon": "assets/media_to_upload/photos/placeholder.jpg",
   "apple_touch_icon": "assets/media_to_upload/photos/placeholder.jpg",
+  "hero_images": {
+    "departures": "/media/fotos-jordy/img-20260725-wa0015-jpg.jpeg",
+    "gallery": "/media/medios/home/1787019267046-3071145-sure-2677608.jpg",
+    "blog": "/media/fotos-jordy/img-20260723-wa0155-jpg.jpeg",
+    "guided_tours": "/media/fotos-jordy/img-20260722-wa0122-jpg.jpeg"
+  },
   "social": {
     "facebook": "https://www.facebook.com/manujungleforever",
     "instagram": "https://www.instagram.com/manujungleforever/",

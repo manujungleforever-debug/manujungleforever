@@ -42,6 +42,25 @@
       const addressText = addrParts.join(', ') || gData.address || 'Manu Jungle Forever 17800, Nuevo Eden, Peru';
       const mapsUrl = dir.maps_url || gData.address_maps_url || 'https://www.google.com/maps/d/viewer?mid=12fWz1M5jmQ0jd8rUJY0VUfi6KnRmvnc';
 
+      // 4b. Sync in-hero background for pages with global hero images
+      const heroImgs = gData.hero_images || {};
+      const pathName = window.location.pathname;
+      let targetHeroImg = null;
+      if (pathName.includes('/departures')) targetHeroImg = heroImgs.departures;
+      else if (pathName.includes('/news-and-gallery') || pathName.includes('/gallery')) targetHeroImg = heroImgs.gallery;
+      else if (pathName.endsWith('/blog') || pathName.includes('/blog/index.html') || pathName.endsWith('/blog/')) targetHeroImg = heroImgs.blog;
+      else if (pathName.includes('/guided-tours')) targetHeroImg = heroImgs.guided_tours;
+
+      if (targetHeroImg && targetHeroImg.trim()) {
+        const inHero = document.querySelector('.in-hero');
+        if (inHero) {
+          const cleanHeroImg = fixImgPath(targetHeroImg.trim());
+          inHero.style.backgroundImage = `url('${cleanHeroImg}')`;
+          inHero.style.backgroundSize = 'cover';
+          inHero.style.backgroundPosition = 'center';
+        }
+      }
+
       // 5. Await Guided Tours Header sync
       await toursSyncPromise;
 
@@ -464,15 +483,20 @@
         }
 
         // Hero Video Hydration (Local / R2 MP4 or YouTube)
+        const heroEl = document.querySelector('.hero');
         const hv = document.querySelector('.hero .hv');
         if (hv) {
           if (hero.video_url && hero.video_url.trim()) {
+            if (heroEl) { heroEl.style.background = '#030805'; }
             const vUrl = hero.video_url.trim();
             const currentVid = hv.querySelector('video source');
             if (!currentVid || currentVid.getAttribute('src') !== vUrl) {
               hv.innerHTML = `<video autoplay loop muted playsinline style="width:100%;height:100%;object-fit:cover;pointer-events:none;"><source src="${vUrl}" type="video/mp4"></video>`;
               const vidEl = hv.querySelector('video');
               if (vidEl) { vidEl.play().catch(() => {}); }
+            } else {
+              const vidEl = hv.querySelector('video');
+              if (vidEl && vidEl.paused) { vidEl.play().catch(() => {}); }
             }
           } else if (hero.video_id && hero.video_id.trim()) {
             const vId = hero.video_id.trim();
