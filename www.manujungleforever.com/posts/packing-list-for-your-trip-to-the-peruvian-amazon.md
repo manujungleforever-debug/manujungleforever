@@ -1,10 +1,10 @@
 ---
-title: The Ultimate Peruvian Amazon Packing List: Essential Gear & Clothing for Manu
+title: "The Ultimate Peruvian Amazon Packing List: Essential Gear & Clothing for Manu"
 date: 2026-02-14
 categoria: Travel Tips
 publicado: true
-extracto: "Prepare for the rainforest with confidence. Our field-tested packing checklist covers breathable quick-dry clothing, waterproof gear, high-performance optics, camera protection against humidity, footwear tips, and essential medical supplies."
-imagen: /wp-content/uploads/2022/12/packing-list-for-your-trip-to-the-peruvian-jungle.webp
+extracto: Prepare for the rainforest with confidence. Our field-tested packing checklist covers breathable quick-dry clothing, waterproof gear, high-performance optics, camera protection against humidity, footwear tips, and essential medical supplies.
+imagen: /media/fotos-jordy/img-20260722-wa0070-jpg.jpeg
 imagen_alt: Packing list for your trip to the Peruvian Amazon jungle
 ---
 
