@@ -594,7 +594,7 @@
           "titulo": "Cusco to Huacarpay Lake & Sacred Valley Birding",
           "subtitulo": "High-Andean wetlands, endemic Bearded Mountaineer & Sacred Valley transect",
           "descripcion": "We begin at 6:00 AM with birding at **Huacarpay Lake (3,050 m)**, a protected wetland south of Cusco. Our primary target is the spectacular **Bearded Mountaineer (*Oreonympha nobilis*)**, a large endemic hummingbird that feeds on yellow *Nicotiana tomentosa* flowers. We also search for Rusty-fronted Canastero, Streak-fronted Thornbird, Many-colored Rush Tyrant, Wren-like Rushbird, Plumbeous Rail, Puna Teal, Yellow-billed Pintail, and Andean Negrito. After lunch, we drive down the Sacred Valley to Ollantaytambo, birding the arid scrub for Giant Hummingbird (*Patagona gigas*), Black-backed Grosbeak, and Green-tailed Trainbearer.\n\n- **Meals**: Breakfast, Lunch, Dinner\n- **Overnight**: Comfortable birding lodge in Ollantaytambo.",
-          "imagen": "",
+          "imagen": "/media/fotos-jordy/img-20260722-wa0194-jpg.jpeg",
           "imagen_alt": "Bearded Mountaineer hummingbird perched on a desert branch",
           "imagen_pie": "The spectacular Bearded Mountaineer (*Oreonympha nobilis*), Peruvian endemic."
         },
@@ -631,7 +631,9 @@
       "destacado": false,
       "imagen_alt": "",
       "id": "tour-1789572748170",
-      "slug": "birding-in-machu-picchu--abra-malaga-and-huacarpay-lake-4d-3-n"
+      "slug": "birding-in-machu-picchu--abra-malaga-and-huacarpay-lake-4d-3-n",
+      "imagen_portada": "/media/fotos-jordy/img-20260806-wa0109-jpg.jpeg",
+      "imagen_card": "/media/fotos-jordy/img-20260806-wa0076-jpg.jpeg"
     },
     {
       "nombre": "Birding in Manu Road and Andes Foothill 6d/5n",
