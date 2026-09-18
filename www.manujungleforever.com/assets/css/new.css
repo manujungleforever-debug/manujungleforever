@@ -1185,15 +1185,28 @@ body { top: 0px !important; position: relative !important; }
   transition: all .3s; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer;
 }
 .tc-btn-primary {
-  background: linear-gradient(135deg, var(--brand-teal) 0%, #14B8A6 100%) !important;
-  color: #FFFFFF !important;
+  background: #EDE7DC !important;
+  color: #0B241C !important;
+  -webkit-text-fill-color: #0B241C !important;
+  border: 1px solid rgba(100, 80, 60, 0.2) !important;
   font-weight: 700 !important;
-  box-shadow: 0 4px 14px rgba(13, 148, 136, 0.35) !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12) !important;
+}
+.tc-btn-primary i {
+  color: #0B241C !important;
+  transition: transform 0.25s ease;
 }
 .tc-btn-primary:hover {
-  background: linear-gradient(135deg, #0F766E 0%, var(--brand-teal) 100%) !important;
+  background: #DFD7C8 !important;
+  color: #051A13 !important;
+  -webkit-text-fill-color: #051A13 !important;
+  border-color: rgba(100, 80, 60, 0.35) !important;
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(13, 148, 136, 0.5) !important;
+  box-shadow: 0 7px 20px rgba(0, 0, 0, 0.18) !important;
+}
+.tc-btn-primary:hover i {
+  color: #051A13 !important;
+  transform: translateX(3px);
 }
 .tc-btn-ghost {
   background: var(--sand-card) !important;
@@ -1948,16 +1961,28 @@ body { top: 0px !important; position: relative !important; }
 }
 .tc-btn-primary {
   flex: 1.2;
-  background: linear-gradient(135deg, var(--brand-teal) 0%, #14B8A6 100%) !important;
-  color: #FFFFFF !important;
+  background: #EDE7DC !important;
+  color: #0B241C !important;
+  -webkit-text-fill-color: #0B241C !important;
+  border: 1px solid rgba(100, 80, 60, 0.2) !important;
   font-weight: 700 !important;
-  box-shadow: 0 4px 14px rgba(13, 148, 136, 0.35) !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12) !important;
+}
+.tc-btn-primary i {
+  color: #0B241C !important;
+  transition: transform 0.25s ease;
 }
 .tc-btn-primary:hover {
-  background: linear-gradient(135deg, #0F766E 0%, var(--brand-teal) 100%) !important;
+  background: #DFD7C8 !important;
+  color: #051A13 !important;
+  -webkit-text-fill-color: #051A13 !important;
+  border-color: rgba(100, 80, 60, 0.35) !important;
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(13, 148, 136, 0.5) !important;
-  color: #FFFFFF !important;
+  box-shadow: 0 7px 20px rgba(0, 0, 0, 0.18) !important;
+}
+.tc-btn-primary:hover i {
+  color: #051A13 !important;
+  transform: translateX(3px);
 }
 .tc-btn-ghost {
   flex: 1;
