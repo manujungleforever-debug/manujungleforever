@@ -1612,23 +1612,43 @@ body {
   padding-top: 135px !important;
 }
 #mo .ml > li > a,
-#mo .ml > li > button,
-#mo .m-toggle-btn,
-#mo #mbt,
+#mo .ml > li > button:not(.m-caret-btn),
+#mo .m-toggle-btn:not(.m-caret-btn),
+#mo .m-guided-link,
 .mo .ml > li > a,
-.mo .ml > li > button,
-.mo .m-toggle-btn,
-.mo #mbt {
+.mo .ml > li > button:not(.m-caret-btn),
+.mo .m-toggle-btn:not(.m-caret-btn),
+.mo .m-guided-link {
   color: #FFFFFF !important;
   -webkit-text-fill-color: #FFFFFF !important;
   background: transparent !important;
   font-size: 1.05rem !important;
   font-weight: 500 !important;
 }
+#mo .m-guided-row, .mo .m-guided-row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+}
+#mo .m-caret-btn, .mo .m-caret-btn,
+#mo #mbt.m-caret-btn, .mo #mbt.m-caret-btn {
+  width: 44px !important;
+  min-width: 44px !important;
+  height: 44px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: transparent !important;
+  border: none !important;
+  cursor: pointer !important;
+}
 #mo #mbt i,
 #mo .m-toggle-btn i,
+#mo .m-caret-btn i,
 .mo #mbt i,
-.mo .m-toggle-btn i {
+.mo .m-toggle-btn i,
+.mo .m-caret-btn i {
   color: var(--brand-mint, #2DD4BF) !important;
 }
 #mo button,
