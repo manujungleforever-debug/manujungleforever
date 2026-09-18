@@ -391,68 +391,6 @@
       "slug": "manu-expedition-5d-4n"
     },
     {
-      "nombre": "Birding in Machu Picchu, Abra Malaga and Huacarpay Lake 4d/3 N",
-      "estado": "activo",
-      "categoria": "Birding & Photography",
-      "duracion_dias": 4,
-      "duracion_noches": 3,
-      "precio_desde": 450,
-      "capacidad_min": 6,
-      "capacidad_max": 8,
-      "dificultad": "Fácil",
-      "temporada": "All year",
-      "descripcion_corta": "An elite 4-day ornithological quest targeting high-Andean Polylepis endemics, humid cloud forest specialties, and iconic species around the historic sanctuary of Machu Picchu and the high-altitude wetlands of Huacarpay Lake.",
-      "descripcion_larga": "### Premier Andean & Cloud Forest Birding: Polylepis Forests to Machu Picchu\n\nThis specialized **4-Day / 3-Night birdwatching tour** covers the most dramatic elevational transects in the Cusco region, from the high-altitude wetlands of Huacarpay Lake (3,050 m) to the critically endangered Polylepis forests of Abra Malaga (4,350 m), down into the lush subtropical cloud forest surrounding the Lost City of the Incas at Machu Picchu (2,040 m).\n\n#### Target Bird Families & Key Specialties:\n- **Huacarpay Lake**: Bearded Mountaineer (*Oreonympha nobilis*, Peruvian endemic), Rusty-fronted Canastero, Plumbeous Rail, Many-colored Rush Tyrant, Puna Teal.\n- **Abra Malaga Polylepis**: Royal Cinclodes (*Cinclodes aricomae*, critically endangered), White-browed Tit-Spinetail, Ash-breasted Tit-Tyrant, Tawny Tit-Spinetail, Stripe-headed Antpitta.\n- **Machu Picchu Cloud Forest**: Inca Wren (*Pheugopedius eisenmanni*, endemic), Andean Cock-of-the-Rock, Masked Fruiteater, Sclater's Tyrannulet, Green Jay, Highland Motmot.\n- **Urubamba River**: Torrent Duck (*Merganetta armata*) and White-capped Dipper foraging in turbulent whitewater rapids.",
-      "imagen_hero": "/media/medios/gallery/imagenes/parque_nacional_del_manu_0-23.jpg",
-      "galeria": [],
-      "itinerario": [
-        {
-          "dia": 1,
-          "titulo": "Cusco to Huacarpay Lake & Sacred Valley Birding",
-          "subtitulo": "High-Andean wetlands, endemic Bearded Mountaineer & Sacred Valley transect",
-          "descripcion": "We begin at 6:00 AM with birding at **Huacarpay Lake (3,050 m)**, a protected wetland south of Cusco. Our primary target is the spectacular **Bearded Mountaineer (*Oreonympha nobilis*)**, a large endemic hummingbird that feeds on yellow *Nicotiana tomentosa* flowers. We also search for Rusty-fronted Canastero, Streak-fronted Thornbird, Many-colored Rush Tyrant, Wren-like Rushbird, Plumbeous Rail, Puna Teal, Yellow-billed Pintail, and Andean Negrito. After lunch, we drive down the Sacred Valley to Ollantaytambo, birding the arid scrub for Giant Hummingbird (*Patagona gigas*), Black-backed Grosbeak, and Green-tailed Trainbearer.\n\n- **Meals**: Breakfast, Lunch, Dinner\n- **Overnight**: Comfortable birding lodge in Ollantaytambo.",
-          "imagen": "/media/fotos-jordy/img-20260722-wa0151-jpg.jpeg",
-          "imagen_alt": "Bearded Mountaineer hummingbird perched on a desert branch",
-          "imagen_pie": "The spectacular Bearded Mountaineer (*Oreonympha nobilis*), Peruvian endemic."
-        },
-        {
-          "dia": 2,
-          "titulo": "Abra Malaga Pass Polylepis Endemics & Train to Aguas Calientes",
-          "subtitulo": "High-altitude Polylepis relict forest, Royal Cinclodes & cloud forest descent",
-          "descripcion": "We start before dawn to reach the mountain pass of **Abra Malaga (4,350 m)**. We hike into a pristine **Polylepis forest** patch, home to some of the world's most endangered high-altitude birds: the critically endangered **Royal Cinclodes (*Cinclodes aricomae*)**, White-browed Tit-Spinetail, Ash-breasted Tit-Tyrant, Tawny Tit-Spinetail, Line-fronted Canastero, and Puna Tapaculo. Descending the humid east slope, we bird mixed flocks containing Parodi's Hemispingus, Tit-like Dacnis, and Blue-backed Conebill. In the afternoon, we take the scenic train from Ollantaytambo along the Urubamba River to Aguas Calientes.\n\n- **Meals**: Breakfast, Lunch, Dinner\n- **Overnight**: Hotel in Aguas Calientes (Machu Picchu Pueblo).",
-          "imagen": "",
-          "imagen_alt": "Polylepis forest clinging to rugged cliffs at Abra Malaga pass",
-          "imagen_pie": "Ancient Polylepis woodland habitat supporting rare high-Andean endemics."
-        },
-        {
-          "dia": 3,
-          "titulo": "Machu Picchu Historic Sanctuary & Endemic Inca Wren",
-          "subtitulo": "Subtropical cloud forest birding, Inca Wren & guided citadel exploration",
-          "descripcion": "We spend the early morning birding the lush bamboo and cloud forest trails along the Urubamba River near the base of the citadel. Here we target the endemic **Inca Wren (*Pheugopedius eisenmanni*)**, alongside Andean Cock-of-the-Rock, Green Jay, Highland Motmot, Masked Fruiteater, Sclater's Tyrannulet, and Golden-headed Quetzal. Later, we ascend to the magnificent **Machu Picchu Inca Citadel** for a guided historical and architectural tour, admiring the seamless harmony between ancient stone architecture and the surrounding cloud forest peaks.\n\n- **Meals**: Breakfast, Lunch, Dinner\n- **Overnight**: Hotel in Aguas Calientes.",
-          "imagen": "",
-          "imagen_alt": "Inca Wren perched in bamboo near Machu Picchu sanctuary",
-          "imagen_pie": "Endemic Inca Wren (*Pheugopedius eisenmanni*) in the bamboo thickets of Machu Picchu."
-        },
-        {
-          "dia": 4,
-          "titulo": "Urubamba River Torrent Birds & Scenic Train Return to Cusco",
-          "subtitulo": "Torrent Duck, White-capped Dipper, Ollantaytambo & transfer to Cusco",
-          "descripcion": "We dedicate our morning to birding the rushing waters of the Urubamba River, focusing on **Torrent Ducks (*Merganetta armata*)** navigating violent whitewater with ease, as well as White-capped Dippers, Torrent Tyrants, and Mitred Parakeets flying overhead. We take the mid-day panoramic train back to Ollantaytambo, birding scenic river viewpoints on our private drive back to Cusco, arriving at your hotel by early evening with an impressive species tally.\n\n- **Meals**: Breakfast, Lunch\n- **Drop-off**: Hotel in Cusco.",
-          "imagen": "",
-          "imagen_alt": "Torrent Duck perched on a boulder in rushing river whitewater",
-          "imagen_pie": "Torrent Duck (*Merganetta armata*) resting on a boulder in the Urubamba River."
-        }
-      ],
-      "incluye": [],
-      "no_incluye": [],
-      "destacado": false,
-      "imagen_alt": "",
-      "id": "tour-1789572748170",
-      "slug": "birding-in-machu-picchu--abra-malaga-and-huacarpay-lake-4d-3-n",
-      "imagen_portada": "/media/medios/gallery/imagenes/parque_nacional_del_manu_0-23.jpg",
-      "imagen_card": "/media/fotos-jordy/img-20260722-wa0238-jpg.jpeg"
-    },
-    {
       "nombre": "Birding in Manu Road and Andes Foothill 6d/5n",
       "estado": "activo",
       "categoria": "Birding & Photography",
