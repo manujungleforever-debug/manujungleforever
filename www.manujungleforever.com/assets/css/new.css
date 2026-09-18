@@ -1386,12 +1386,12 @@ body { top: 0px !important; position: relative !important; }
 }
 @media (max-width: 768px) {
   .cat-bar {
-    top: 89px;
+    top: 114px;
   }
 }
 @media (max-width: 480px) {
   .cat-bar {
-    top: 78px;
+    top: 94px;
   }
 }
 
