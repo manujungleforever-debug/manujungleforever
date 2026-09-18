@@ -890,13 +890,14 @@ body {
   display: block !important;
 }
 
-/* ── 8. NOCTURNAL CANOPY WILDLIFE SECTION (#wildlife) ──────────── */
-/* Deep nocturnal forest green accent providing sophisticated contrast */
+/* ── 8. BIODIVERSITY & WILDLIFE SECTION (#wildlife) ─────────────── */
 .wl-modern {
   position: relative !important;
   padding: 85px 0 !important;
   overflow: hidden !important;
-  background: radial-gradient(circle at 50% 20%, #0D281F 0%, #071913 70%, #04100C 100%) !important;
+  background: var(--sand-canvas) !important;
+  border-top: 1px solid var(--sand-border) !important;
+  border-bottom: 1px solid var(--sand-border) !important;
   width: 100% !important;
 }
 .wl-modern .cx {
@@ -914,13 +915,13 @@ body {
   width: 100% !important;
 }
 .wl-text-card {
-  background: rgba(11, 36, 28, 0.85) !important;
-  backdrop-filter: blur(14px) !important;
-  -webkit-backdrop-filter: blur(14px) !important;
-  border: 1px solid rgba(45, 212, 191, 0.22) !important;
+  background: var(--sand-card-warm, #FDFBF7) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: 1px solid var(--sand-border) !important;
   border-radius: 20px !important;
   padding: 48px 44px !important;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5) !important;
+  box-shadow: var(--shadow-eco) !important;
   display: flex !important;
   flex-direction: column !important;
   justify-content: center !important;
@@ -928,8 +929,8 @@ body {
 }
 .wl-text-card:hover {
   transform: translateY(-4px) !important;
-  border-color: rgba(45, 212, 191, 0.45) !important;
-  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.7), 0 0 25px rgba(45, 212, 191, 0.15) !important;
+  border-color: var(--sand-border-h) !important;
+  box-shadow: var(--shadow-eco-h) !important;
 }
 .wl-text-card .ey {
   display: inline-flex !important;
@@ -939,7 +940,7 @@ body {
   font-weight: 700 !important;
   letter-spacing: 0.16em !important;
   text-transform: uppercase !important;
-  color: var(--brand-mint) !important;
+  color: var(--brand-teal) !important;
   margin-bottom: 14px !important;
 }
 .wl-text-card .ey::before {
@@ -947,7 +948,7 @@ body {
   display: block !important;
   width: 24px !important;
   height: 2px !important;
-  background: var(--brand-mint) !important;
+  background: var(--brand-teal) !important;
   border-radius: 2px !important;
 }
 .wl-text-card .h2,
@@ -955,15 +956,15 @@ body {
   font-family: 'Playfair Display', Georgia, serif !important;
   font-size: clamp(2rem, 3vw, 2.6rem) !important;
   font-weight: 800 !important;
-  color: #FFFFFF !important;
-  -webkit-text-fill-color: #FFFFFF !important;
-  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.6) !important;
+  color: var(--forest-dark) !important;
+  -webkit-text-fill-color: var(--forest-dark) !important;
+  text-shadow: none !important;
   margin-bottom: 18px !important;
   line-height: 1.15 !important;
 }
 .wl-text-card .ld,
 .wl-text-card p {
-  color: rgba(240, 248, 245, 0.88) !important;
+  color: var(--earth-text) !important;
   font-size: 1.02rem !important;
   line-height: 1.8 !important;
 }
@@ -971,9 +972,9 @@ body {
   position: relative !important;
   border-radius: 20px !important;
   overflow: hidden !important;
-  background: rgba(11, 36, 28, 0.85) !important;
-  border: 1px solid rgba(45, 212, 191, 0.22) !important;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35) !important;
+  background: var(--sand-card) !important;
+  border: 1px solid var(--sand-border) !important;
+  box-shadow: var(--shadow-eco) !important;
   min-height: 440px !important;
   height: 100% !important;
   transition: none !important;
@@ -981,8 +982,8 @@ body {
 }
 .wl-img-card:hover {
   transform: none !important;
-  border-color: rgba(45, 212, 191, 0.22) !important;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35) !important;
+  border-color: var(--sand-border-h) !important;
+  box-shadow: var(--shadow-eco-h) !important;
 }
 .wl-img-card img {
   width: 100% !important;
@@ -1014,21 +1015,21 @@ body {
   width: 100% !important;
 }
 .ac-card {
-  background: rgba(11, 36, 28, 0.75) !important;
-  backdrop-filter: blur(12px) !important;
-  -webkit-backdrop-filter: blur(12px) !important;
-  border: 1px solid rgba(45, 212, 191, 0.18) !important;
+  background: var(--sand-card-warm, #FDFBF7) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: 1px solid var(--sand-border) !important;
   border-radius: 18px !important;
   padding: 22px 14px !important;
   text-align: center !important;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4) !important;
+  box-shadow: var(--shadow-eco) !important;
   transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 .ac-card:hover {
-  background: rgba(18, 56, 44, 0.95) !important;
-  border-color: var(--brand-mint) !important;
+  background: #FFFFFF !important;
+  border-color: var(--sand-border-h) !important;
   transform: translateY(-4px) !important;
-  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.6), 0 0 20px rgba(45, 212, 191, 0.2) !important;
+  box-shadow: var(--shadow-eco-h) !important;
 }
 .ac-card .ic {
   font-size: 2.3rem !important;
@@ -1038,11 +1039,15 @@ body {
 }
 .ac-card p {
   font-size: 0.8rem !important;
-  font-weight: 600 !important;
-  color: #FFFFFF !important;
+  font-weight: 700 !important;
+  color: var(--forest-dark) !important;
   text-transform: uppercase !important;
   letter-spacing: 0.08em !important;
   margin: 0 !important;
+  transition: color 0.25s ease !important;
+}
+.ac-card:hover p {
+  color: var(--brand-teal) !important;
 }
 
 /* ── 9. TESTIMONIALS SECTION (#reviews) ────────────────────────── */
@@ -1290,22 +1295,48 @@ body {
   padding: 85px 0 !important;
 }
 #plan-trip .cb {
-  background: linear-gradient(145deg, #0D281F 0%, #071913 100%) !important;
-  border: 1px solid rgba(45, 212, 191, 0.25) !important;
+  background: var(--sand-card-warm, #FDFBF7) !important;
+  border: 1px solid var(--sand-border) !important;
   border-radius: 24px !important;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3) !important;
+  box-shadow: var(--shadow-eco) !important;
 }
 #plan-trip .cb .ey {
-  color: var(--brand-mint) !important;
+  color: var(--brand-teal) !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.16em !important;
+  text-transform: uppercase !important;
 }
 #plan-trip .cb .h2,
 #plan-trip .cb h2 {
-  color: #FFFFFF !important;
-  -webkit-text-fill-color: #FFFFFF !important;
+  font-family: 'Playfair Display', Georgia, serif !important;
+  font-size: clamp(2rem, 3.2vw, 2.6rem) !important;
+  font-weight: 800 !important;
+  color: var(--forest-dark) !important;
+  -webkit-text-fill-color: var(--forest-dark) !important;
+  text-shadow: none !important;
+  letter-spacing: -0.02em !important;
 }
 #plan-trip .cb .ld,
 #plan-trip .cb p {
-  color: rgba(240, 248, 245, 0.85) !important;
+  color: var(--earth-text) !important;
+  font-size: 1.05rem !important;
+  line-height: 1.7 !important;
+}
+#plan-trip .cb .cba .btn.bd {
+  background: var(--sand-alt, #EDE7DC) !important;
+  border: 1px solid rgba(100, 80, 60, 0.2) !important;
+  color: var(--forest-dark, #0B241C) !important;
+  -webkit-text-fill-color: var(--forest-dark, #0B241C) !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1) !important;
+}
+#plan-trip .cb .cba .btn.bd:hover {
+  background: #DFD7C8 !important;
+  color: #051A13 !important;
+  -webkit-text-fill-color: #051A13 !important;
+  border-color: rgba(100, 80, 60, 0.35) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 7px 20px rgba(0, 0, 0, 0.15) !important;
 }
 #plan-trip .ci {
   border-radius: 24px !important;
