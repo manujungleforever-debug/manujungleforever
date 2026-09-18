@@ -911,7 +911,7 @@ body {
   grid-template-columns: 1fr 1fr !important;
   gap: 36px !important;
   align-items: stretch !important;
-  margin-bottom: 36px !important;
+  margin-bottom: 0 !important;
   width: 100% !important;
 }
 .wl-text-card {
