@@ -64,8 +64,7 @@ main{overflow-x:clip}
 img{max-width:100%;height:auto;display:block}a{color:inherit;text-decoration:none}ul{list-style:none}button{cursor:pointer;border:none;background:none;font-family:inherit;color:inherit}
 .cx{max-width:1280px;margin:0 auto;padding:0 32px}
 @media(max-width:768px){.cx{padding:0 16px}}
-.skip{position:absolute;top:-60px;left:0;background:var(--brand-teal);color:#FFFFFF;padding:10px 20px;z-index:9999;border-radius:0 0 8px 0;transition:top .3s}.skip:focus{top:0}
-@media(max-width:768px){.skip{display:none}}
+.skip{display:none!important;visibility:hidden!important}
 
 /* NAV (#N) — BEIGE A MARRÓN GRADIENT (#DFC6A8 → #996952) */
 #N {
@@ -290,6 +289,40 @@ img{max-width:100%;height:auto;display:block}a{color:inherit;text-decoration:non
 .md .dh{font-size:.75rem;font-weight:800;color:#DFC6A8 !important;text-transform:uppercase;letter-spacing:.1em;padding:16px 0 8px 10px;margin-top:8px;border-bottom:1px solid rgba(223, 198, 168, 0.15) !important;display:flex;align-items:center;gap:8px}
 .md .dh:first-child{margin-top:0}
 .md .dh i{color:#2DD4BF !important}
+
+/* Mobile: Guided Tours = link + caret split */
+.m-guided-row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  border-bottom: 1px solid rgba(223, 198, 168, 0.15) !important;
+  padding: 0 !important;
+  width: 100% !important;
+}
+.m-guided-link {
+  flex: 1 !important;
+  padding: 14px 0 !important;
+  font-size: 1.05rem !important;
+  font-weight: 500 !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  text-decoration: none !important;
+  display: block !important;
+}
+.m-guided-link:hover { color: #2DD4BF !important; -webkit-text-fill-color: #2DD4BF !important; }
+.m-caret-btn {
+  padding: 14px 4px 14px 16px !important;
+  font-size: 1rem !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  background: transparent !important;
+  border: none !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  transition: transform 0.3s ease !important;
+}
+.m-caret-btn.open { transform: rotate(180deg); }
 
 /* INNER PAGE HERO (all sub-pages) */
 .in-hero{position:relative;padding:220px 0 140px;background-size:cover;background-position:center;background-repeat:no-repeat;text-align:center}

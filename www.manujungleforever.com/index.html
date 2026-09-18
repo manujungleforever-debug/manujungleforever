@@ -20,7 +20,6 @@
 <link href="assets/css/home-beige-theme.css?v=45" rel="stylesheet"/>
 </head><body>
 <noscript><iframe height="0" src="https://www.googletagmanager.com/ns.html?id=GTM-5476BC9" style="display:none;visibility:hidden" width="0"></iframe></noscript>
-<a class="skip" href="#main">Skip to content</a>
 <div id="preloader">
 <img alt="Loading Manu Jungle Forever" src="assets/img/logo.png"/>
 </div>
@@ -97,7 +96,11 @@
 <li><a href="departures/index.html">Departures</a></li>
 <li><a href="news-and-gallery/index.html">Gallery</a></li>
 <li><a href="blog/index.html">Blog</a></li>
-<li><button class="m-toggle-btn" id="mbt" type="button">Guided Tours <i class="fas fa-caret-down"></i></button>
+<li>
+<div class="m-guided-row">
+<a class="m-guided-link" href="guided-tours/index.html">Guided Tours</a>
+<button aria-label="Toggle Guided Tours" class="m-caret-btn" id="mbt" type="button"><i class="fas fa-caret-down"></i></button>
+</div>
 <ul class="md" id="mdd"><span class="dh" style="color:var(--a);font-size:0.8rem;text-transform:uppercase;padding:10px 20px;display:block;"><i class="fas fa-compass"></i> MANU RESERVE ZONE</span>
 <li><a href="manu-reserve-zone-6d-5n/index.html">Manu Reserve Zone 6d/5n</a></li>
 <li><a href="manu-reserve-zone-7d-6n/index.html">Manu Reserve Zone 7d/6n</a></li>
@@ -580,7 +583,7 @@
   const bg=document.getElementById('bg'),mo=document.getElementById('mo');
   bg.addEventListener('click',()=>{const o=mo.classList.toggle('o');bg.classList.toggle('o',o);bg.setAttribute('aria-expanded',o);mo.setAttribute('aria-hidden',!o);document.body.style.overflow=o?'hidden':'';});
   // Mobile dropdown
-  document.getElementById('mbt').addEventListener('click',()=>document.getElementById('mdd').classList.toggle('o'));
+  const mbt=document.getElementById('mbt');if(mbt){mbt.addEventListener('click',()=>{document.getElementById('mdd').classList.toggle('o');mbt.classList.toggle('open');});}
   // Reveal on scroll
   const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('v');obs.unobserve(e.target);}}),{threshold:.1});
   document.querySelectorAll('.r,.rl,.rr').forEach(el=>obs.observe(el));

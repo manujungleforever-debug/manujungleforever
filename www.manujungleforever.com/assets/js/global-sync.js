@@ -243,6 +243,28 @@
           }
         });
       }
+
+      // Upgrade mobile menu button to link + caret button if not already upgraded
+      const oldBtn = document.querySelector('button.m-toggle-btn#mbt');
+      if (oldBtn && !oldBtn.closest('.m-guided-row')) {
+        const parentLi = oldBtn.parentElement;
+        const guidedUrl = `${rel}guided-tours/index.html`;
+        const row = document.createElement('div');
+        row.className = 'm-guided-row';
+        row.innerHTML = `<a class="m-guided-link" href="${guidedUrl}">Guided Tours</a><button aria-label="Toggle Guided Tours" class="m-caret-btn" id="mbt" type="button"><i class="fas fa-caret-down"></i></button>`;
+        parentLi.replaceChild(row, oldBtn);
+      }
+
+      const mbtEl = document.getElementById('mbt');
+      const mddEl = document.getElementById('mdd');
+      if (mbtEl && mddEl && !mbtEl._hasNavToggle) {
+        mbtEl._hasNavToggle = true;
+        mbtEl.addEventListener('click', (e) => {
+          e.stopPropagation();
+          mddEl.classList.toggle('o');
+          mbtEl.classList.toggle('open');
+        });
+      }
     } catch(e) {
       console.warn('Header tour menu sync error:', e);
     }
