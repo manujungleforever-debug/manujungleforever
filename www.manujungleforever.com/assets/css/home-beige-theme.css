@@ -569,23 +569,29 @@ body {
 #tours .tbtn {
   display: inline-flex !important;
   align-items: center !important;
+  justify-content: center !important;
   gap: 8px !important;
-  padding: 10px 22px !important;
-  border-radius: 30px !important;
-  font-size: 0.84rem !important;
+  padding: 10px 24px !important;
+  border-radius: 50px !important;
+  font-size: 0.86rem !important;
   font-weight: 700 !important;
-  letter-spacing: 0.02em !important;
-  background: linear-gradient(135deg, var(--brand-teal), var(--brand-mint)) !important;
-  color: #0B241C !important;
-  box-shadow: 0 4px 16px rgba(45, 212, 191, 0.35) !important;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  letter-spacing: 0.01em !important;
+  background: var(--sand-alt, #EDE7DC) !important;
+  border: 1px solid rgba(100, 80, 60, 0.2) !important;
+  color: var(--forest-dark, #0B241C) !important;
+  -webkit-text-fill-color: var(--forest-dark, #0B241C) !important;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12) !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
   width: fit-content !important;
   text-decoration: none !important;
 }
 #tours .tbtn:hover {
-  transform: translateY(-2px) scale(1.03) !important;
-  box-shadow: 0 8px 24px rgba(45, 212, 191, 0.55) !important;
+  background: #DFD7C8 !important;
   color: #051A13 !important;
+  -webkit-text-fill-color: #051A13 !important;
+  border-color: rgba(100, 80, 60, 0.35) !important;
+  transform: translateY(-2px) scale(1.02) !important;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18) !important;
 }
 
 /* Tour Detail Cards (Lower Row .tr-row .tc-sm) */
