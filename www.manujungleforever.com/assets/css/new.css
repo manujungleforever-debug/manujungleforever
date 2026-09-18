@@ -63,6 +63,7 @@ body{font-family:'Outfit','Inter',sans-serif;background-color:var(--sand-canvas)
 img{max-width:100%;height:auto;display:block}a{color:inherit;text-decoration:none}ul{list-style:none}button{cursor:pointer;border:none;background:none;font-family:inherit;color:inherit}
 .cx{max-width:1280px;margin:0 auto;padding:0 32px}
 .skip{position:absolute;top:-60px;left:0;background:var(--brand-teal);color:#FFFFFF;padding:10px 20px;z-index:9999;border-radius:0 0 8px 0;transition:top .3s}.skip:focus{top:0}
+@media(max-width:768px){.skip{display:none}}
 
 /* NAV (#N) — BEIGE A MARRÓN GRADIENT (#DFC6A8 → #996952) */
 #N {
@@ -1862,6 +1863,44 @@ body { top: 0px !important; position: relative !important; }
 
 .no-results { display: none; text-align: center; padding: 80px 20px; color: var(--earth-muted) !important; grid-column: 1/-1; }
 .no-results i { font-size: 3rem; margin-bottom: 20px; display: block; color: var(--brand-teal); }
+
+/* Tour page 2-col grid — responsive */
+.tour-page-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 50px;
+}
+@media (max-width: 1024px) {
+  .tour-page-grid {
+    grid-template-columns: 1.5fr 1fr;
+    gap: 30px;
+  }
+}
+@media (max-width: 768px) {
+  .tour-page-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  .tour-sidebar-col {
+    order: -1;
+  }
+  .tour-pricing-card {
+    position: static !important;
+  }
+}
+/* Tour rich text overflow protection */
+.tour-rich-text {
+  overflow-wrap: break-word;
+  word-break: break-word;
+  max-width: 100%;
+  overflow: hidden;
+}
+.tour-rich-text table {
+  width: 100%;
+  overflow-x: auto;
+  display: block;
+  -webkit-overflow-scrolling: touch;
+}
 
 
 
