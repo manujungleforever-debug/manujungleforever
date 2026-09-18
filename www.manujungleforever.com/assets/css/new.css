@@ -871,25 +871,61 @@ button.m-caret-btn,
   position: fixed;
   inset: 0;
   z-index: 99999;
-  background: var(--k);
+  background: var(--sand-canvas, #F5F0E8) !important;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: opacity 0.7s ease, visibility 0.7s ease;
+  overflow: hidden;
 }
 #preloader.loaded {
   opacity: 0;
   visibility: hidden;
+  pointer-events: none;
 }
 #preloader img {
-  width: 300px;
+  width: 280px;
   max-width: 80%;
   height: auto;
-  animation: preloaderPulse 1.8s ease-in-out infinite;
+  will-change: transform, opacity, filter;
+  animation: preloaderIntro 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
-@keyframes preloaderPulse {
-  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 15px rgba(16,185,129,0.3)); }
-  50% { transform: scale(1.15); filter: drop-shadow(0 0 50px rgba(16,185,129,0.85)); }
+@keyframes preloaderIntro {
+  0% {
+    opacity: 0;
+    transform: translate3d(-46vw, -46vh, 0) scale(0.16);
+    filter: drop-shadow(0 0 0 rgba(45, 212, 191, 0));
+    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  14% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: drop-shadow(0 6px 18px rgba(45, 212, 191, 0.25));
+    animation-timing-function: ease-in-out;
+  }
+  62% {
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: drop-shadow(0 6px 18px rgba(45, 212, 191, 0.25));
+    animation-timing-function: cubic-bezier(0.34, 1.45, 0.64, 1);
+  }
+  75% {
+    transform: translate3d(0, 0, 0) scale(1.12);
+    filter: drop-shadow(0 0 32px rgba(45, 212, 191, 0.65)) drop-shadow(0 12px 28px rgba(11, 36, 28, 0.25));
+    animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+  }
+  88% {
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: drop-shadow(0 6px 20px rgba(45, 212, 191, 0.22));
+    animation-timing-function: ease-out;
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: drop-shadow(0 6px 20px rgba(45, 212, 191, 0.22));
+  }
 }
 
 
