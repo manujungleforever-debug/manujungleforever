@@ -1808,7 +1808,7 @@ body {
   max-width: 80% !important;
   height: auto !important;
   will-change: transform, opacity, filter !important;
-  animation: preloaderIntro 3.8s cubic-bezier(0.25, 1, 0.35, 1) forwards !important;
+  animation: preloaderIntro 3s cubic-bezier(0.25, 1, 0.5, 1) forwards !important;
 }
 
 
