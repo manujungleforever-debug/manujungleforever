@@ -888,7 +888,7 @@ button.m-caret-btn,
   max-width: 80%;
   height: auto;
   will-change: transform, opacity, filter;
-  animation: preloaderIntro 3.2s linear forwards;
+  animation: preloaderIntro 3.5s linear forwards;
 }
 @keyframes preloaderIntro {
   0% {
@@ -928,33 +928,34 @@ button.m-caret-btn,
     filter: drop-shadow(0 10px 25px rgba(45, 212, 191, 0.25));
     animation-timing-function: linear;
   }
-  60% {
+  58% {
     opacity: 1;
     /* Remonte hacia el centro */
-    transform: translate3d(-4.5vw, 7vh, 0) scale(0.9) rotate(1deg);
+    transform: translate3d(-4.5vw, 6vh, 0) scale(0.9) rotate(1deg);
     filter: drop-shadow(0 8px 22px rgba(45, 212, 191, 0.23));
     animation-timing-function: linear;
   }
-  70% {
+  65% {
     opacity: 1;
-    /* Aterrizaje en el centro */
+    /* Llegada y estabilización en el centro */
     transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
     filter: drop-shadow(0 6px 20px rgba(45, 212, 191, 0.22));
-    animation-timing-function: ease-in-out;
+    animation-timing-function: ease-out;
   }
-  74% {
+  70% {
+    /* Breve asentamiento en el centro antes de latir */
     transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
     filter: drop-shadow(0 6px 20px rgba(45, 212, 191, 0.22));
-    animation-timing-function: cubic-bezier(0.2, 0.8, 0.3, 1.2);
+    animation-timing-function: cubic-bezier(0.2, 0.8, 0.25, 1.25);
   }
-  85% {
-    /* Palpito al final haciendo grande la imagen */
-    transform: translate3d(0, 0, 0) scale(1.18) rotate(0deg);
-    filter: drop-shadow(0 0 45px rgba(45, 212, 191, 0.75)) drop-shadow(0 14px 30px rgba(11, 36, 28, 0.2));
+  82% {
+    /* PALPITACIÓN CLARA Y VISIBLE: Se agranda prominentemente */
+    transform: translate3d(0, 0, 0) scale(1.30) rotate(0deg);
+    filter: drop-shadow(0 0 50px rgba(45, 212, 191, 0.85)) drop-shadow(0 15px 35px rgba(11, 36, 28, 0.28));
     animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
   }
-  96% {
-    /* Regresando a su aspecto original */
+  94% {
+    /* Retorno suave a su tamaño original */
     transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
     filter: drop-shadow(0 8px 24px rgba(45, 212, 191, 0.25));
   }
