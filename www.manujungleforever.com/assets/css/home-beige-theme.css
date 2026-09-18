@@ -1801,14 +1801,14 @@ body {
 #preloader {
   background: var(--sand-canvas, #F5F0E8) !important;
   overflow: hidden !important;
-  transition: opacity 0.85s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.85s cubic-bezier(0.25, 1, 0.5, 1) !important;
+  transition: opacity 0.9s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.9s cubic-bezier(0.25, 1, 0.5, 1) !important;
 }
 #preloader img {
   width: 280px !important;
   max-width: 80% !important;
   height: auto !important;
   will-change: transform, opacity, filter !important;
-  animation: preloaderIntro 3s cubic-bezier(0.25, 1, 0.35, 1) forwards !important;
+  animation: preloaderIntro 3.6s cubic-bezier(0.22, 1, 0.36, 1) forwards !important;
 }
 
 
