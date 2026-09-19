@@ -5,13 +5,14 @@
       "nombre": "James W.",
       "pais": "United Kingdom",
       "bandera": "🇬🇧",
-      "tour": "Amazon Expedition",
+      "tour": "6-Day Amazon Expedition",
       "fecha": "",
       "rating": 4,
       "origen": "tripadvisor",
       "texto": "An absolutely incredible experience. The guides were deeply knowledgeable and passionate about the rainforest. We saw giant river otters, caimans, and countless macaws. The lodge was rustic but perfectly comfortable. Highly recommend this local agency!",
-      "foto": "/media/1786477360363-jordy.jpg",
-      "activo": true
+      "foto": "/media/1789052259127-img-20260709-wa0009-jpg.jpg",
+      "activo": true,
+      "comentario": "An absolutely incredible experience. The guides were deeply knowledgeable and passionate about the rainforest. We saw giant river otters, caimans, and countless macaws. The lodge was rustic but perfectly comfortable. Highly recommend this local agency!"
     },
     {
       "id": 2,
