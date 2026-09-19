@@ -73,10 +73,12 @@
       ],
       "incluye": [],
       "no_incluye": [],
-      "destacado": false,
+      "destacado": true,
       "imagen_alt": "",
       "id": "tour-1789570974162",
-      "slug": "manu-reserve-zone-6d-5n"
+      "slug": "manu-reserve-zone-6d-5n",
+      "imagen_portada": "/media/fotos-jordy/img-20260722-wa0122-jpg.jpeg",
+      "imagen_card": ""
     },
     {
       "nombre": "Manu Reserve Zone 7d/6n",
